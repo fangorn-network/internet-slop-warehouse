@@ -113,5 +113,21 @@
     "tags": ["platformer", "3d", "coins", "robot", "demo", "starter"],
     "author": "the internet slop warehouse", "license": "CC0-1.0",
     "uses": ["robot", "grass-texture", "crate-texture", "coin-sound", "jump-sound", "hit-sound",
-             "platformer-controller", "patrol", "flee-on-see", "collect", "follow-camera", "clip-animator"] }
+             "platformer-controller", "patrol", "flee-on-see", "collect", "follow-camera", "clip-animator"] },
+
+  { "file": "gauntlet.html", "type": "game", "id": "gauntlet",
+    "title": "Gauntlet",
+    "description": "Survive as long as you can in a small grass arena while red robots chase you. A new guard arrives every six seconds, each a little faster and sharper-eyed than the last. Hide behind crates and jump over them. Built from warehouse parts: the robot, the patrol AI, the platformer controller.",
+    "tags": ["survival", "arena", "3d", "robot", "chase", "dodge"],
+    "author": "the internet slop warehouse", "license": "CC0-1.0",
+    "uses": ["robot", "grass-texture", "crate-texture", "jump-sound", "hit-sound",
+             "platformer-controller", "patrol", "follow-camera", "clip-animator"] },
+
+  { "file": "robot-roundup.html", "type": "game", "id": "robot-roundup",
+    "title": "Robot roundup",
+    "description": "A herding game: six skittish green robots wander a field and run from you when you get close. Steer them onto the sandy pen in the corner by coming at them from the far side. Shows the patrol AI with its onSee hook swapped for flee-on-see.",
+    "tags": ["herding", "puzzle", "3d", "robot", "flee", "casual"],
+    "author": "the internet slop warehouse", "license": "CC0-1.0",
+    "uses": ["robot", "grass-texture", "crate-texture", "coin-sound",
+             "platformer-controller", "patrol", "flee-on-see", "follow-camera", "clip-animator"] }
 ]

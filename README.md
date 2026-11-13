@@ -34,8 +34,12 @@ westmarch's indexer Worker, with the warehouse's MCP tools ([worker/tools.js](wo
 
 ```sh
 npm run deploy
-node node_modules/@fangorn-network/westmarch/worker/seed.js baseSepolia.db > worker/seed.sql   # optional: skip the first catch-up
-(cd worker && wrangler d1 execute fangorn-arcade --remote --file seed.sql)
+(cd worker && wrangler secret put INDEXER_KEY)                                                  # a funded Base Sepolia key
+# REQUIRED for a fresh D1 (or a changed repo list): the first catch-up folds the whole chain log, more
+# subrequests than a free-plan run allows. Do it locally once (stop it after the first "root" line), then seed:
+NETWORK=baseSepolia node index.js app.baseSepolia.json
+node node_modules/@fangorn-network/westmarch/worker/seed.js baseSepolia.db > worker/seed.sql
+(cd worker && wrangler d1 execute internet-slop-warehouse --remote --file seed.sql)
 ```
 
 ## Tests

@@ -18,8 +18,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "fangorn-arcade",
-      "database_id": "1cfb83e3-9460-48fb-a0d9-51bf32de8523"
+      "database_name": "internet-slop-warehouse",
+      "database_id": "bfd6a8a9-57c3-4d89-ad9a-287ab95eea85"
     }
   ],
   "ai": {
@@ -41,7 +41,7 @@
       "network": "baseSepolia",
       "publishView": "internet-slop-warehouse-view"
     },
-    "PRIVY_APP_ID" : "cmnxrwbjl00aa0dlart5xkemq"
+    "PRIVY_APP_ID": "cmnxrwbjl00aa0dlart5xkemq"
   },
   "workers_dev": true
 }

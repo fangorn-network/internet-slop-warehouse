@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Robot roundup</title>
+<meta name="description" content="Herd skittish green robots into the pen. They run from you, so come at them from the far side.">
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#bfe3a8;font:14px system-ui,sans-serif}
+  #hud{position:fixed;top:10px;left:12px;color:#fff;text-shadow:0 1px 2px #0008;font-weight:600;pointer-events:none}
+  #msg{position:fixed;inset:0;display:grid;place-items:center;color:#fff;text-shadow:0 2px 4px #0009;font-size:22px;text-align:center;cursor:pointer;background:#0004}
+  #msg small{display:block;font-size:14px;opacity:.85;margin-top:8px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"></div><div id="msg">loading…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+
+const PARTS = {/*PARTS*/};
+const logic = async (id) => import("data:text/javascript;charset=utf-8," + encodeURIComponent((await (await fetch(PARTS[id])).json()).js));
+
+const [controller, patrol, flee, followCam, animator, gltf, grassTex, crateTex] = await Promise.all([
+    logic("platformer-controller"), logic("patrol"), logic("flee-on-see"), logic("follow-camera"), logic("clip-animator"),
+    new GLTFLoader().loadAsync(PARTS["robot"]),
+    new THREE.TextureLoader().loadAsync(PARTS["grass-texture"]), new THREE.TextureLoader().loadAsync(PARTS["crate-texture"]),
+]);
+const audio = new AudioContext();
+const coinBuf = await audio.decodeAudioData(await (await fetch(PARTS["coin-sound"])).arrayBuffer());
+const ding = () => { const s = audio.createBufferSource(); s.buffer = coinBuf; s.connect(audio.destination); s.start(); };
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(55, 1, 0.1, 200);
+scene.background = new THREE.Color(0xbfe3a8); scene.fog = new THREE.Fog(0xbfe3a8, 30, 70);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x446622, 1.2));
+const sun = new THREE.DirectionalLight(0xffffff, 2); sun.position.set(8, 15, 6); sun.castShadow = true;
+Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 20, bottom: -20 }); sun.shadow.mapSize.set(2048, 2048);
+scene.add(sun);
+
+// The field, and a pen in the far corner marked by crate posts and a sandy floor.
+const R = 14, PEN = { x: -10, z: -10, half: 3 };
+for (const t of [grassTex, crateTex]) { t.magFilter = THREE.NearestFilter; t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; }
+const solids = [];
+function block(x, y, z, w, h, d, crate = false) {
+    const tex = (crate ? crateTex : grassTex).clone(); tex.repeat.set(crate ? 1 : w / 2, crate ? 1 : d / 2); tex.needsUpdate = true;
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), new THREE.MeshLambertMaterial({ map: tex }));
+    m.position.set(x, y - h / 2, z); m.castShadow = m.receiveShadow = true; scene.add(m); solids.push(m);
+}
+block(0, 0, 0, 2 * R, 2, 2 * R);
+for (const sx of [-1, 1]) for (const sz of [-1, 1]) block(PEN.x + sx * PEN.half, 1, PEN.z + sz * PEN.half, 0.8, 1, 0.8, true);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(2 * PEN.half, 2 * PEN.half), new THREE.MeshLambertMaterial({ color: 0xe8c872 }));
+floor.rotation.x = -Math.PI / 2; floor.position.set(PEN.x, 0.01, PEN.z); floor.receiveShadow = true; scene.add(floor);
+const inPen = (p) => Math.abs(p.x - PEN.x) < PEN.half && Math.abs(p.z - PEN.z) < PEN.half;
+
+const robot = (tint) => {
+    const m = SkeletonUtils.clone(gltf.scene); m.scale.setScalar(0.35);
+    m.traverse((o) => { if (o.isMesh) { o.castShadow = true; if (tint) { o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(tint)); } } });
+    scene.add(m); return m;
+};
+const player = robot();
+const rand = () => new THREE.Vector3((Math.random() * 2 - 1) * (R - 2), 0, (Math.random() * 2 - 1) * (R - 2));
+
+let over = true, start = 0;
+const systems = [], herd = [], N = 6;
+function begin() {
+    for (const s of systems.splice(0)) s.dispose();
+    for (const h of herd.splice(0)) h.model.removeFromParent();
+    player.position.set(6, 0, 6);
+    const ctl = controller.attach(player, { solids, camera, onFall: () => { player.position.set(6, 0, 6); } });
+    systems.push(ctl, animator.attach(player, { animations: gltf.animations, state: () => ctl.state }),
+        followCam.attach(camera, { target: player, offset: [0, 8, 10] }));
+    for (let i = 0; i < N; i++) {
+        let at; do at = rand(); while (inPen(at) || at.distanceTo(player.position) < 5);
+        const model = robot(0x66ff88); model.position.copy(at);
+        // patrol, with its onSee swapped for flee-on-see: they wander until you come near, then bolt.
+        const h = { model, penned: false };
+        h.ai = patrol.attach(model, { points: [rand(), rand()], target: player, sight: 4.5, speed: 1, alertSpeed: 3.2, onSee: flee.onSee });
+        herd.push(h);
+        systems.push(animator.attach(model, { animations: gltf.animations, state: () => h.penned ? "idle" : h.ai.alert ? "run" : "walk" }));
+    }
+    over = false; start = performance.now(); $msg.style.display = "none";
+}
+
+const $msg = document.getElementById("msg"), $hud = document.getElementById("hud");
+$msg.innerHTML = "Robot roundup<small>WASD / arrows · Shift to run<br>the green robots run from you; herd all six onto the sand<br><br>click to start</small>";
+$msg.onclick = () => { audio.resume(); begin(); };
+
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+camera.position.set(0, 10, 16); camera.lookAt(0, 0, 0);
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+    const dt = clock.getDelta();
+    if (!over) {
+        for (const s of systems) s.update(dt);
+        for (const h of herd) {
+            if (h.penned) continue;
+            h.ai.update(dt);
+            const p = h.model.position; p.x = THREE.MathUtils.clamp(p.x, -R + 0.5, R - 0.5); p.z = THREE.MathUtils.clamp(p.z, -R + 0.5, R - 0.5);
+            if (inPen(p)) { h.penned = true; ding(); }
+        }
+        const n = herd.filter((h) => h.penned).length, t = ((performance.now() - start) / 1000).toFixed(1);
+        $hud.textContent = `penned ${n}/${N} · ${t}s`;
+        if (n === N) { over = true; $msg.innerHTML = `All ${N} rounded up in ${t}s!<small>click to play again</small>`; $msg.style.display = ""; }
+    }
+    renderer.render(scene, camera);
+});
+</script></body></html>
