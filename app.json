@@ -1,0 +1,9 @@
+{
+  "repos": [
+    "internet-slop-warehouse"
+  ],
+  "network": "sandbox",
+  "db": ".sandbox/warehouse.db",
+  "view": "site/view.json",
+  "publishView": "internet-slop-warehouse-view"
+}

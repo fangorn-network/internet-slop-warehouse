@@ -1,0 +1,25 @@
+{
+  "name": "internet-slop-warehouse",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser games built from shared parts, published to Fangorn by their authors and indexed by westmarch",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "build": "rolldown site/src/fangorn.js --format esm --platform browser --minify --no-codeSplitting --file site/fangorn.js",
+    "deploy": "cd worker && wrangler deploy"
+  },
+  "dependencies": {
+    "@fangorn-network/sdk": "^0.1.5",
+    "@fangorn-network/westmarch": "file:../westmarch",
+    "viem": "^2.56.3"
+  },
+  "devDependencies": {
+    "three": "^0.170.0",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

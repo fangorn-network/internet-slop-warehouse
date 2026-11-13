@@ -1,0 +1,7 @@
+node_modules
+*.db*
+.sandbox/
+site/view.json
+worker/seed.sql
+worker/.wrangler/
+.env

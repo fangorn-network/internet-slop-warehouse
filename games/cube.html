@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Cube</title>
+<meta name="description" content="A single green cube turning slowly in the dark. The smallest three.js scene there is.">
+<meta name="keywords" content="demo, minimal, cube, rotation">
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+</head><body><script type="module">
+import * as THREE from "three";
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+camera.position.z = 3;
+const cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshNormalMaterial());
+scene.add(cube);
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+renderer.setAnimationLoop((t) => { cube.rotation.set(t / 1500, t / 1100, 0); renderer.render(scene, camera); });
+</script></body></html>

@@ -1,0 +1,47 @@
+{
+  "account_id": "2e0a41ed3fec719d427dfae6512efddf",
+  "name": "internet-slop-warehouse",
+  "main": "index.js",
+  "compatibility_date": "2025-09-15",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": "../site",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/view.json",
+      "/search",
+      "/mcp"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "fangorn-arcade",
+      "database_id": "1cfb83e3-9460-48fb-a0d9-51bf32de8523"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "triggers": {
+    "crons": [
+      "* * * * *"
+    ]
+  },
+  "alias": {
+    "@huggingface/transformers": "../node_modules/@fangorn-network/westmarch/worker/no-model.js"
+  },
+  "vars": {
+    "CONFIG": {
+      "repos": [
+        "internet-slop-warehouse"
+      ],
+      "network": "baseSepolia",
+      "publishView": "internet-slop-warehouse-view"
+    },
+    "PRIVY_APP_ID" : "cmnxrwbjl00aa0dlart5xkemq"
+  },
+  "workers_dev": true
+}

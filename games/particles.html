@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Drift</title>
+<meta name="description" content="Five thousand points drifting in a slow spiral, like dust in a sunbeam or a galaxy seen from far away. Move the mouse to tilt it.">
+<meta name="keywords" content="demo, particles, space, ambient, calm">
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#05060a}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+</head><body><script type="module">
+import * as THREE from "three";
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+camera.position.z = 6;
+const n = 5000, pos = new Float32Array(n * 3);
+for (let i = 0; i < n; i++) {
+    const r = Math.sqrt(Math.random()) * 4, a = r * 2.2 + (i % 3) * (Math.PI * 2 / 3) + Math.random() * 0.5;
+    pos.set([Math.cos(a) * r, (Math.random() - 0.5) * 0.4, Math.sin(a) * r], i * 3);
+}
+const geo = new THREE.BufferGeometry().setAttribute("position", new THREE.BufferAttribute(pos, 3));
+const points = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.03, color: 0xffd9a0 }));
+scene.add(points);
+let tilt = 0.6;
+addEventListener("pointermove", (e) => { tilt = 0.2 + (e.clientY / innerHeight) * 1.2; });
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+renderer.setAnimationLoop((t) => { points.rotation.y = t / 8000; points.rotation.x += (tilt - points.rotation.x) * 0.05; renderer.render(scene, camera); });
+</script></body></html>

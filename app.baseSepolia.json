@@ -1,0 +1,9 @@
+{
+  "repos": [
+    "internet-slop-warehouse"
+  ],
+  "network": "baseSepolia",
+  "db": "baseSepolia.db",
+  "view": "site/view.json",
+  "publishView": "internet-slop-warehouse-view"
+}

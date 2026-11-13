@@ -1,0 +1,125 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Coin rush</title>
+<meta name="description" content="A tiny third-person platformer built from slop warehouse parts.">
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#8ec5ff;font:14px system-ui,sans-serif}
+  #hud{position:fixed;top:10px;left:12px;color:#fff;text-shadow:0 1px 2px #0008;font-weight:600;pointer-events:none}
+  #msg{position:fixed;inset:0;display:grid;place-items:center;color:#fff;text-shadow:0 2px 4px #0009;font-size:22px;text-align:center;cursor:pointer;background:#0004}
+  #msg small{display:block;font-size:14px;opacity:.85;margin-top:8px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"></div><div id="msg">loading…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+
+// Every part this game builds on, by id → its file, pinned (filled in when it's published).
+const PARTS = {/*PARTS*/};
+// Logic is stored as { js }: import it from its text. Its bare "three" resolves through the import map above.
+const logic = async (id) => import("data:text/javascript;charset=utf-8," + encodeURIComponent((await (await fetch(PARTS[id])).json()).js));
+
+const [controller, patrol, flee, collect, followCam, animator, gltf, grassTex, crateTex] = await Promise.all([
+    logic("platformer-controller"), logic("patrol"), logic("flee-on-see"), logic("collect"), logic("follow-camera"), logic("clip-animator"),
+    new GLTFLoader().loadAsync(PARTS["robot"]),
+    new THREE.TextureLoader().loadAsync(PARTS["grass-texture"]), new THREE.TextureLoader().loadAsync(PARTS["crate-texture"]),
+]);
+const audio = new AudioContext();
+const sounds = Object.fromEntries(await Promise.all(["coin-sound", "jump-sound", "hit-sound"].map(async (id) =>
+    [id, await audio.decodeAudioData(await (await fetch(PARTS[id])).arrayBuffer())])));
+const play = (id) => { const s = audio.createBufferSource(); s.buffer = sounds[id]; s.connect(audio.destination); s.start(); };
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(55, 1, 0.1, 200);
+scene.background = new THREE.Color(0x8ec5ff); scene.fog = new THREE.Fog(0x8ec5ff, 30, 70);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x446622, 1.2));
+const sun = new THREE.DirectionalLight(0xffffff, 2); sun.position.set(8, 15, 6); sun.castShadow = true;
+Object.assign(sun.shadow.camera, { left: -25, right: 25, top: 25, bottom: -25 }); sun.shadow.mapSize.set(2048, 2048);
+scene.add(sun);
+
+// The level: grass platforms and crates (the solids), coins, a star, and two guards.
+for (const t of [grassTex, crateTex]) { t.magFilter = THREE.NearestFilter; t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; }
+const solids = [];
+function block(x, y, z, w, h, d, crate = false) {
+    const tex = (crate ? crateTex : grassTex).clone(); tex.repeat.set(crate ? 1 : w / 2, crate ? 1 : d / 2); tex.needsUpdate = true;
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), new THREE.MeshLambertMaterial({ map: tex }));
+    m.position.set(x, y - h / 2, z); m.castShadow = m.receiveShadow = true; scene.add(m); solids.push(m); return m;
+}
+block(0, 0, 0, 14, 2, 14);                     // the start
+block(0, 0, -15, 10, 2, 10);                   // across the gap
+block(10, 1.2, -10, 5, 2, 5);                  // up to the right
+block(-9, 1.4, -22, 5, 2, 5);                  // high left
+block(3, 1, 3, 1.2, 1, 1.2, true); block(-4, 1, -2, 1.2, 1, 1.2, true); block(-4, 2, -2.2, 1.2, 1, 1.2, true);
+block(2, 1, -15, 1.2, 1, 1.2, true); block(-2, 1, -18, 1.2, 1, 1.2, true);
+
+const coinGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.08, 20).rotateX(Math.PI / 2);
+const coinMat = new THREE.MeshStandardMaterial({ color: 0xffcc33, metalness: 0.8, roughness: 0.3, emissive: 0x442200 });
+const coins = [[3, 1, 0], [-3, 1, 3], [-4, 3.6, -2.2], [0, 1, -12], [3, 1, -19], [-3, 1, -14], [10, 2.2, -10], [-9, 2.4, -22], [5.5, 1, -6]].map(([x, y, z]) => {
+    const c = new THREE.Mesh(coinGeo, coinMat); c.position.set(x, y, z); c.castShadow = true; scene.add(c); return c;
+});
+const star = new THREE.Mesh(new THREE.OctahedronGeometry(0.45), new THREE.MeshStandardMaterial({ color: 0x66ffff, emissive: 0x2288aa }));
+star.position.set(0, 1.2, -18); scene.add(star);
+
+// Characters: the robot (scaled to 1.6 units) for the player, red clones for the guards.
+const robot = (tint) => {
+    const m = SkeletonUtils.clone(gltf.scene); m.scale.setScalar(0.35);
+    m.traverse((o) => { if (o.isMesh) { o.castShadow = true; if (tint) { o.material = o.material.clone(); o.material.color.multiply(new THREE.Color(tint)); } } });
+    scene.add(m); return m;
+};
+const player = robot(); player.position.set(0, 0, 4);
+const guards = [
+    { at: [-4, 0, -14], points: [[-4, 0, -14], [4, 0, -14], [4, 0, -19], [-4, 0, -19]] },
+    { at: [-5, 0, 4], points: [[-5, 0, 4], [-5, 0, -4], [5, 0, -4]] },
+].map(({ at, points }) => ({ model: robot(0xff5555), at, points: points.map((p) => new THREE.Vector3(...p)) }));
+
+// Wiring: every behaviour is attach(object, opts) → { update(dt), dispose() }.
+let score = 0, start = 0, over = true, scaredUntil = 0;
+const systems = [];
+function begin() {
+    for (const s of systems.splice(0)) s.dispose();
+    for (const c of coins) scene.add(c); scene.add(star);
+    player.position.set(0, 0, 4); score = 0; scaredUntil = 0;
+    const ctl = controller.attach(player, { solids, camera, onJump: () => play("jump-sound"),
+        onFall: () => lose("You fell.") });
+    systems.push(ctl, animator.attach(player, { animations: gltf.animations, state: () => ctl.state }), followCam.attach(camera, { target: player }));
+    systems.push(collect.attach(player, { items: coins, onCollect: (c) => { c.removeFromParent(); score++; play("coin-sound"); }, onAll: win }));
+    systems.push(collect.attach(player, { items: [star], onCollect: (s) => { s.removeFromParent(); scaredUntil = performance.now() + 6000; play("coin-sound"); } }));
+    for (const g of guards) {
+        scene.add(g.model); g.model.position.set(...g.at);
+        g.ai = patrol.attach(g.model, { points: g.points, target: player, sight: 7,
+            onTouch: (self) => {
+                if (performance.now() < scaredUntil) { self.removeFromParent(); play("hit-sound"); } // bonked
+                else lose("A guard got you.");
+            } });
+        systems.push(g.ai, animator.attach(g.model, { animations: gltf.animations, state: () => g.ai.alert ? "run" : "walk" }));
+    }
+    over = false; start = performance.now(); $msg.style.display = "none";
+}
+function end(text) { over = true; $msg.innerHTML = text + "<small>click to play again</small>"; $msg.style.display = ""; }
+const lose = (why) => { play("hit-sound"); end(why); };
+const win = () => end(`All ${coins.length} coins in ${((performance.now() - start) / 1000).toFixed(1)}s!`);
+
+const $msg = document.getElementById("msg"), $hud = document.getElementById("hud");
+$msg.innerHTML = "Coin rush<small>WASD / arrows to move · Shift to run · Space to jump<br>grab every coin; the star scares the guards<br><br>click to start</small>";
+$msg.onclick = () => { audio.resume(); begin(); };
+
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+camera.position.set(0, 5, 12); camera.lookAt(0, 0, 0);
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+    const dt = clock.getDelta();
+    if (!over) {
+        // The override, live: while the star lasts, the guards' onSee is flee-on-see instead of patrol's chase.
+        const scared = performance.now() < scaredUntil;
+        for (const g of guards) if (g.ai) g.ai.hooks.onSee = scared ? flee.onSee : patrol.chase;
+        for (const s of systems) s.update(dt);
+        $hud.textContent = `coins ${score}/${coins.length} · ${((performance.now() - start) / 1000).toFixed(1)}s${scared ? " · ★ guards are scared" : ""}`;
+    }
+    renderer.render(scene, camera);
+});
+</script></body></html>

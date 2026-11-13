@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The internet slop warehouse</title>
+<meta name="description" content="Browser games built from shared parts: remix a game, reuse its assets and logic, publish from your agent.">
+<!-- Where the view is, if this site doesn't serve one at ./view.json (the Worker does; so does a local indexer's "view" file):
+     the `view` record of this publisher's repo, on this network. -->
+<meta name="fangorn-view" content="baseSepolia:0xf1a085A7A023541325833b6A546bd7D353502F5A/internet-slop-warehouse-view">
+<style>
+  :root {
+    --bg: #fbfbf8; --fg: #1a1c19; --muted: #6a6f68; --line: #dfe1db; --accent: #2f5d45; --mark: #e6eedb;
+    --font: system-ui, sans-serif; --radius: 3px; --gutter: 16px;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #121412; --fg: #e4e6e0; --muted: #959a92; --line: #2a2e29; --accent: #8fbf9f; --mark: #2d3b2a; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #121412; --fg: #e4e6e0; --muted: #959a92; --line: #2a2e29; --accent: #8fbf9f; --mark: #2d3b2a; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font); }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px var(--gutter); }
+  header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+  .meta { color: var(--muted); font-size: 13px; }
+  input[type=search] { width: 100%; padding: 10px 12px; font: inherit; color: inherit; background: transparent;
+    border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 24px; }
+  input[type=search]:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .card { text-align: left; font: inherit; color: inherit; background: transparent; cursor: pointer;
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .card:hover, .card:focus-visible { border-color: var(--accent); background: var(--mark); outline: none; }
+  .card h2 { margin: 0; font-size: 16px; }
+  .card p { margin: 0; color: var(--muted); font-size: 13px; }
+  .tags { font-size: 12px; color: var(--accent); }
+  .empty { color: var(--muted); }
+  dialog { width: min(1000px, 100vw); max-width: 100vw; padding: 0; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--bg); color: var(--fg); }
+  dialog::backdrop { background: rgb(0 0 0 / 0.6); }
+  .bar { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 14px; flex-wrap: wrap; }
+  .bar button { font: inherit; color: inherit; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 2px 10px; cursor: pointer; }
+  iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; background: #000; }
+  .lineage { padding: 10px 14px; font-size: 13px; color: var(--muted); }
+  .install { display: flex; gap: 8px; align-items: stretch; margin: 0 0 8px; }
+  .install code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; padding: 10px 12px; font: 13px/1.5 ui-monospace, monospace;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--mark); }
+  .install button, .kinds button { font: inherit; color: inherit; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 12px; cursor: pointer; }
+  .kinds { display: flex; gap: 6px; margin-bottom: 12px; }
+  .kinds button[aria-pressed="true"] { border-color: var(--accent); background: var(--mark); color: var(--accent); }
+  .lede { color: var(--muted); font-size: 13px; margin: 0 0 24px; }
+  .lede a { color: var(--accent); }
+  #view { margin: 0; padding: 14px; max-height: 70vh; overflow: auto; font: 13px/1.5 ui-monospace, monospace; white-space: pre-wrap; }
+  #view img { max-width: 100%; display: block; margin: 0 auto; }
+  .lineage button { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+  <header><h1>the internet slop warehouse</h1><span class="meta" id="status">loading…</span></header>
+  <div class="install"><code id="install"></code><button id="copy">Copy</button></div>
+  <p class="lede">Paste that into a terminal to give Claude Code the warehouse, then ask for a game. It remixes what's here and reuses the
+    assets and logic. To publish what it makes back, into your own repo and signed by your wallet,
+    <a id="connect" href="https://fangorn.network/#/connect">connect once</a> (email sign-in). Every part is public; whatever yours builds on gets the credit.</p>
+  <div class="kinds" role="group" aria-label="Show">
+    <button data-kind="game" aria-pressed="true">Games</button><button data-kind="asset" aria-pressed="false">Assets</button><button data-kind="logic" aria-pressed="false">Logic</button>
+  </div>
+  <input type="search" id="q" placeholder="Search the warehouse" aria-label="Search the warehouse" autofocus>
+  <div id="grid"></div>
+</main>
+<dialog id="player">
+  <div class="bar"><strong id="title"></strong><span class="meta" id="by"></span><button id="close">Close</button></div>
+  <!-- The game is someone else's HTML: an opaque origin, scripts only. It can't reach this page, its storage or cookies. -->
+  <iframe id="frame" sandbox="allow-scripts allow-pointer-lock" title="game"></iframe>
+  <div id="view" hidden></div>
+  <div class="lineage" id="lineage"></div>
+</dialog>
+<script type="module">
+// The whole page: the indexer's view (every record, the stitch, the gateway), from ./view.json or found on chain,
+// ranked by meaning where the site has /search (the Worker) and by words otherwise, and played from storage.
+const $ = (id) => document.getElementById(id);
+let view = { records: [] };
+const short = (a) => `${a.slice(0, 6)}…${a.slice(-4)}`;
+const key = (r) => `${r.publisher}/${r.id}`;
+
+let semantic = { q: "", ids: null };
+let kind = "game";
+const by = (r) => r.payload.author ?? short(r.publisher);
+$("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${location.origin}/mcp`;
+$("connect").href = `https://fangorn.network/#/connect?${new URLSearchParams({ app: location.origin, name: "the internet slop warehouse", repos: "internet-slop-warehouse", mcp: `${location.origin}/mcp` })}`;
+$("copy").onclick = async () => { await navigator.clipboard.writeText($("install").textContent); $("copy").textContent = "Copied"; setTimeout(() => $("copy").textContent = "Copy", 1500); };
+for (const b of document.querySelectorAll(".kinds button")) b.onclick = () => {
+    kind = b.dataset.kind;
+    for (const o of document.querySelectorAll(".kinds button")) o.setAttribute("aria-pressed", o === b);
+    render();
+}; // the last /search answer, as record keys in rank order
+
+function rank(q) {
+    const games = view.records.filter((r) => r.type === kind);
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) return games;
+    if (semantic.ids && semantic.q === q) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
+    // word hits over title (x3), tags (x2) and description, until (or where there's no) /search
+    // at the start of a word, and only words of 3+ letters: "a" and "in" would match nearly every description
+    const res = words.filter((w) => w.length > 2).map((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "i"));
+    const score = (r) => res.reduce((s, re) => s + 3 * re.test(r.payload.title)
+        + 2 * r.payload.tags.some((t) => re.test(t)) + re.test(r.payload.description), 0);
+    return games.map((r) => [r, score(r)]).filter(([, s]) => s).sort((a, b) => b[1] - a[1]).map(([r]) => r);
+}
+
+function render() {
+    const hits = rank($("q").value);
+    $("grid").replaceChildren(...hits.map((r) => {
+        const b = document.createElement("button");
+        b.className = "card";
+        b.innerHTML = `<h2></h2><p class="d"></p><span class="tags"></span><span class="meta"></span>`;
+        b.querySelector("h2").textContent = r.payload.title;
+        b.querySelector(".d").textContent = r.payload.description;
+        b.querySelector(".tags").textContent = r.payload.tags.join(" · ");
+        b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (r.payload.uses?.length ? ` · uses ${r.payload.uses.length}` : "");
+        b.onclick = () => play(r);
+        return b;
+    }));
+    if (!hits.length) $("grid").innerHTML = `<p class="empty">${view.records.some((r) => r.type === kind) ? "Nothing matches." : `No ${kind === "logic" ? "logic" : kind + "s"} yet.`}</p>`;
+}
+
+async function play(r) {
+    $("title").textContent = r.payload.title;
+    $("by").textContent = `by ${by(r)}`;
+    if (!$("player").open) $("player").showModal(); // open now: the source can take a moment to come from storage
+    const url = `${view.gateway}/ipfs/${r.payload.src}`, game = r.type === "game";
+    $("frame").hidden = !game; $("view").hidden = game;
+    if (game) {
+        $("frame").srcdoc = `<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#888;font:14px system-ui">loading…</body>`;
+        try { $("frame").srcdoc = (await (await fetch(url)).json()).html; }
+        catch { $("frame").srcdoc = `<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#c66;font:14px system-ui">couldn't load this game from storage</body>`; }
+    } else if (r.payload.mime?.startsWith("image/")) {
+        const img = new Image(); img.src = url; img.alt = r.payload.title; $("view").replaceChildren(img);
+    } else if (r.type === "logic") {
+        $("view").textContent = "loading…";
+        try { $("view").textContent = (await (await fetch(url)).json()).js; } catch { $("view").textContent = "couldn't load this from storage"; }
+    } else {
+        const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = `${r.payload.mime ?? "file"} · open`;
+        $("view").replaceChildren(a);
+    }
+    const links = [];
+    const p = r.payload.parent, parent = p && view.records.find((x) => x.publisher === p.publisher && x.id === p.id);
+    if (p) links.push(["remix of ", parent, parent && parent.cid !== p.cid ? " (an earlier version)" : ""]);
+    for (const u of r.payload.uses ?? []) {
+        const g = view.records.find((x) => key(x) === key(u));
+        links.push(["uses ", g, g && g.cid !== u.cid ? " (an earlier version)" : "", u]);
+    }
+    for (const c of view.records.filter((x) => x.payload.parent && key(x.payload.parent) === key(r))) links.push(["remixed as ", c, ""]);
+    for (const c of view.records.filter((x) => x.payload.uses?.some((u) => key(u) === key(r)))) links.push(["used by ", c, ""]);
+    $("lineage").replaceChildren(...links.map(([pre, g, post, missing = p]) => {
+        const div = document.createElement("div");
+        div.append(pre);
+        const a = document.createElement(g ? "button" : "span");
+        a.textContent = g ? g.payload.title : `${short(missing.publisher)}/${missing.id}`; // a parent the view doesn't have: named, not linked
+        if (g) a.onclick = () => play(g);
+        div.append(a, post);
+        return div;
+    }));
+    if (!$("player").open) $("player").showModal();
+}
+$("close").onclick = () => { $("player").close(); };
+$("player").addEventListener("close", () => { $("frame").srcdoc = ""; $("view").replaceChildren(); });
+let searchable = true, typing;
+$("q").oninput = () => {
+    render();
+    clearTimeout(typing);
+    const q = $("q").value;
+    if (searchable && q.trim()) typing = setTimeout(async () => {
+        try {
+            const res = await fetch(`search?q=${encodeURIComponent(q)}&k=24`);
+            if (!res.ok || !res.headers.get("content-type")?.includes("json")) { searchable = false; return; }
+            // ponytail: the k nearest, however far; a score floor once there are enough games for it to matter
+            semantic = { q, ids: (await res.json()).map(key) };
+            if ($("q").value === q) render();
+        } catch { searchable = false; }
+    }, 250);
+};
+
+let local = true; // ./view.json until it isn't there
+const [network, at] = document.querySelector('meta[name="fangorn-view"]').content.split(":");
+const [publisher, repo] = at.split("/");
+let head, fangorn;
+
+/** The latest view: ./view.json if this site serves one, else the record the indexer keeps on chain (re-read only when its head moves). */
+async function latest() {
+    if (local) {
+        const res = await fetch("view.json", { cache: "no-store" }).catch(() => null);
+        if (res?.ok && res.headers.get("content-type")?.includes("json")) return res.json();
+        local = false;
+    }
+    fangorn ??= await import("./fangorn.js");
+    const now = await fangorn.headOf({ network, publisher, repo });
+    if (now === head) return view;
+    const { file } = await fangorn.readPointed({ network, publisher, repo, id: "view" });
+    head = now;
+    return file;
+}
+
+async function load() {
+    try {
+        const next = await latest();
+        if (next.root === view.root) return;
+        view = next; render();
+        $("status").textContent = `${view.records.length} parts · root ${view.root.slice(0, 12)}… · ${local ? "view from this site" : `view on ${network}`}`;
+    } catch (e) { $("status").textContent = `couldn't read the view: ${e.message}`; }
+}
+load(); setInterval(load, 10000); // a view.json fetch, or one contract read for the head
+</script>
+</body>
+</html>

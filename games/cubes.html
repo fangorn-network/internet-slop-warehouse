@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Cube field</title>
+<meta name="description" content="The single cube, remixed into a field of eighty-one, rippling in a wave. Click to send a new ripple from where you point.">
+<meta name="keywords" content="demo, cube, wave, grid, interactive, remix">
+<style>html,body{margin:0;height:100%;overflow:hidden;background:#000}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+</head><body><script type="module">
+import * as THREE from "three";
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+camera.position.set(0, 9, 11); camera.lookAt(0, 0, 0);
+const cubes = [];
+for (let x = -4; x <= 4; x++) for (let z = -4; z <= 4; z++) {
+    const c = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), new THREE.MeshNormalMaterial());
+    c.position.set(x * 1.1, 0, z * 1.1); scene.add(c); cubes.push(c);
+}
+let origin = new THREE.Vector2(0, 0), start = 0;
+addEventListener("click", (e) => { origin.set((e.clientX / innerWidth - 0.5) * 10, (e.clientY / innerHeight - 0.5) * 10); start = performance.now(); });
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+renderer.setAnimationLoop((t) => {
+    for (const c of cubes) {
+        const d = Math.hypot(c.position.x - origin.x, c.position.z - origin.y);
+        c.position.y = Math.sin(d - (t - start) / 300) * Math.exp(-d / 6) * 0.8;
+        c.rotation.set(t / 1500, t / 1100, 0);
+    }
+    renderer.render(scene, camera);
+});
+</script></body></html>
