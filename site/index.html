@@ -2,79 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The internet slop warehouse</title>
 <meta name="description" content="Browser games built from shared parts: remix a game, reuse its assets and logic, publish from your agent.">
 <!-- Where the view is, if this site doesn't serve one at ./view.json (the Worker does; so does a local indexer's "view" file):
      the `view` record of this publisher's repo, on this network. -->
 <meta name="fangorn-view" content="baseSepolia:0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse-view">
-<style>
-  :root {
-    --bg: #fbfbf8; --fg: #1a1c19; --muted: #6a6f68; --line: #dfe1db; --accent: #2f5d45; --mark: #e6eedb;
-    --font: system-ui, sans-serif; --radius: 3px; --gutter: 16px;
-  }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-    --bg: #121412; --fg: #e4e6e0; --muted: #959a92; --line: #2a2e29; --accent: #8fbf9f; --mark: #2d3b2a; color-scheme: dark; } }
-  :root[data-theme="dark"] {
-    --bg: #121412; --fg: #e4e6e0; --muted: #959a92; --line: #2a2e29; --accent: #8fbf9f; --mark: #2d3b2a; color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font); }
-  main { max-width: 1100px; margin: 0 auto; padding: 32px var(--gutter); }
-  header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
-  h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
-  .meta { color: var(--muted); font-size: 13px; }
-  input[type=search] { width: 100%; padding: 10px 12px; font: inherit; color: inherit; background: transparent;
-    border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 24px; }
-  input[type=search]:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
-  #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-  .card { text-align: left; font: inherit; color: inherit; background: transparent; cursor: pointer;
-    border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 6px; }
-  .card:hover, .card:focus-visible { border-color: var(--accent); background: var(--mark); outline: none; }
-  .card h2 { margin: 0; font-size: 16px; }
-  .card p { margin: 0; color: var(--muted); font-size: 13px; }
-  .tags { font-size: 12px; color: var(--accent); }
-  .empty { color: var(--muted); }
-  dialog { width: min(1000px, 100vw); max-width: 100vw; padding: 0; border: 1px solid var(--line); border-radius: var(--radius);
-    background: var(--bg); color: var(--fg); }
-  dialog::backdrop { background: rgb(0 0 0 / 0.6); }
-  .bar { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 14px; flex-wrap: wrap; }
-  .bar button { font: inherit; color: inherit; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 2px 10px; cursor: pointer; }
-  iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; background: #000; }
-  .lineage { padding: 10px 14px; font-size: 13px; color: var(--muted); }
-  .install { display: flex; gap: 8px; align-items: stretch; margin: 0 0 8px; }
-  .install code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; padding: 10px 12px; font: 13px/1.5 ui-monospace, monospace;
-    border: 1px solid var(--line); border-radius: var(--radius); background: var(--mark); }
-  .install button, .kinds button { font: inherit; color: inherit; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 12px; cursor: pointer; }
-  .kinds { display: flex; gap: 6px; margin-bottom: 12px; }
-  .kinds button[aria-pressed="true"] { border-color: var(--accent); background: var(--mark); color: var(--accent); }
-  .lede { color: var(--muted); font-size: 13px; margin: 0 0 24px; }
-  .lede a { color: var(--accent); }
-  #view { margin: 0; padding: 14px; max-height: 70vh; overflow: auto; font: 13px/1.5 ui-monospace, monospace; white-space: pre-wrap; }
-  #view img { max-width: 100%; display: block; margin: 0 auto; }
-  .lineage button { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
-</style>
+<link rel="stylesheet" href="./warehouse.css">
 </head>
 <body>
+<div class="utility"><span>Public access / digital salvage department</span><span>Take what you need. Make something weird.</span></div>
 <main>
-  <header><h1>the internet slop warehouse</h1><span class="meta" id="status">loading…</span></header>
-  <div class="install"><code id="install"></code><button id="copy">Copy</button></div>
-  <p class="lede">Paste that into a terminal to give Claude Code the warehouse, then ask for a game. It remixes what's here and reuses the
-    assets and logic. To publish what it makes back, into your own repo and signed by your wallet,
-    <a id="connect" href="https://fangorn.network/#/connect">connect once</a> (email sign-in). Every part is public; whatever yours builds on gets the credit.</p>
-  <div class="kinds" role="group" aria-label="Show">
-    <button data-kind="game" aria-pressed="true">Games</button><button data-kind="asset" aria-pressed="false">Assets</button><button data-kind="logic" aria-pressed="false">Logic</button>
-  </div>
-  <input type="search" id="q" placeholder="Search the warehouse" aria-label="Search the warehouse" autofocus>
-  <div id="grid"></div>
+  <header class="masthead">
+    <a class="wordmark" href="./" aria-label="The internet slop warehouse home"><span class="logo" aria-hidden="true">S/W</span><span>SLOP WAREHOUSE<small>INTERNET DIVISION</small></span></a>
+    <nav aria-label="Main navigation"><a href="#inventory">Browse stock ↘</a><a href="#loading-dock">Bring your agent ↗</a></nav>
+    <span class="stock-status" id="status" role="status">Receiving inventory…</span>
+  </header>
+  <section class="hero" aria-labelledby="warehouse-title">
+    <div><div class="eyebrow">Est. whenever / open for questionable business</div>
+      <h1 id="warehouse-title">The internet<br><span class="slop">slop</span> warehouse.</h1>
+      <p class="hero-copy"><strong>Games. Loose parts. Unreasonable potential.</strong><br>Play something strange. Strip it for parts. Let your agent build the next thing. Everything here is somebody else's starting point.</p>
+    </div>
+    <div class="cargo" aria-hidden="true">
+      <div class="crate crate-a"><span class="crate-icon">↗</span><span>PLAYABLE SLOP<small>GAMES / HANDLE WITH CURIOSITY</small></span></div>
+      <div class="crate crate-b"><span class="crate-icon">▧</span><span>LOOSE PARTS<small>MODELS · TEXTURES · SOUNDS</small></span></div>
+      <div class="crate crate-c"><span class="crate-icon">{ }</span><span>GOOD MECHANICS<small>REUSABLE LOGIC / SOME ASSEMBLY REQUIRED</small></span></div>
+      <div class="shipping-stamp">INSPECTED BY<br>ABSOLUTELY NOBODY</div>
+    </div>
+  </section>
+  <div class="hazard" aria-hidden="true"></div>
+  <details class="loading-dock" id="loading-dock">
+    <summary><span class="dock-heading"><b>LOADING DOCK 01</b><span>Your agent has a forklift. Give it the keys.</span></span><span class="dock-action">Get connected</span></summary>
+    <div class="dock-content">
+      <div class="install"><code id="install"></code><button id="copy">Copy</button></div>
+      <p class="lede">Paste this into a terminal to connect Claude Code, then ask it to remix a game or build with the parts here. To publish back to the warehouse, <a id="connect" href="https://fangorn.network/#/connect">connect once</a> with email sign-in. Your work stays signed by your wallet; the parts it uses keep their credit.</p>
+    </div>
+  </details>
+  <section class="inventory" id="inventory" aria-labelledby="inventory-title">
+    <div class="inventory-heading"><h2 id="inventory-title">What's on the <span>shelves.</span></h2><span id="stock-count" role="status">Counting stock…</span></div>
+    <div class="inventory-tools">
+      <div class="kinds" role="group" aria-label="Show">
+        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button>
+      </div>
+      <label class="search-box"><span class="search-symbol" aria-hidden="true">⌕</span><input type="search" id="q" placeholder="Rummage through the warehouse…" aria-label="Search the warehouse"></label>
+    </div>
+    <div class="category-bar">
+      <span class="category-label" id="category-label">Browse by category</span>
+      <div id="categories" role="group" aria-labelledby="category-label"></div>
+      <button id="clear-filters" hidden>Clear filters</button>
+    </div>
+    <div id="grid"></div>
+  </section>
+  <footer class="footer"><span><strong>Internet slop warehouse</strong> / built from shared parts</span><span>One person's slop is another person's game.</span></footer>
 </main>
-<dialog id="player">
-  <div class="bar"><strong id="title"></strong><span class="meta" id="by"></span><button id="close">Close</button></div>
+<dialog id="player" aria-labelledby="title">
+ <div id="player-shell">
+  <div class="bar">
+    <div class="player-heading"><strong id="title"></strong><span class="meta" id="by"></span></div>
+    <div class="player-actions">
+      <button id="share" title="Copy a link to this part">Copy link</button>
+      <button id="restart" hidden title="Start this game again">Restart</button>
+      <button id="expand" hidden aria-pressed="false" title="Fill the browser window">Expand</button>
+      <button id="fullscreen" hidden aria-pressed="false" title="Enter fullscreen">Fullscreen</button>
+      <button id="close" autofocus>Close</button>
+    </div>
+  </div>
+  <p class="player-hint" id="player-hint" hidden>Click the game for keyboard controls. Fullscreen keeps these controls within reach.</p>
+  <p class="player-hint" id="player-message" role="status" hidden></p>
+  <p class="player-hint" id="share-status" role="status" hidden></p>
+  <input id="share-link" aria-label="Link to this part" readonly hidden>
   <!-- The game is someone else's HTML: an opaque origin, scripts only. It can't reach this page, its storage or cookies. -->
-  <iframe id="frame" sandbox="allow-scripts allow-pointer-lock" title="game"></iframe>
+  <iframe id="frame" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen" allowfullscreen title="game"></iframe>
   <div id="view" hidden></div>
-  <div class="lineage" id="lineage"></div>
+  <details class="credits" id="credits"><summary>Parts &amp; credits</summary><div class="lineage" id="lineage"></div></details>
+ </div>
 </dialog>
 <script type="module">
+import { categoriesFor, categoryOptions } from "./catalog.js";
+
 // The whole page: the indexer's view (every record, the stitch, the gateway), from ./view.json or found on chain,
 // ranked by meaning where the site has /search (the Worker) and by words otherwise, and played from storage.
 const $ = (id) => document.getElementById(id);
@@ -84,18 +89,54 @@ const key = (r) => `${r.publisher}/${r.id}`;
 
 let semantic = { q: "", ids: null };
 let kind = "game";
+let category = "all";
 const by = (r) => r.payload.author ?? short(r.publisher);
 $("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${location.origin}/mcp`;
 $("connect").href = `https://fangorn.network/#/connect?${new URLSearchParams({ app: location.origin, name: "the internet slop warehouse", repos: "internet-slop-warehouse", mcp: `${location.origin}/mcp` })}`;
-$("copy").onclick = async () => { await navigator.clipboard.writeText($("install").textContent); $("copy").textContent = "Copied"; setTimeout(() => $("copy").textContent = "Copy", 1500); };
+document.querySelector('a[href="#loading-dock"]').onclick = () => { $("loading-dock").open = true; };
+$("copy").onclick = async () => {
+    try { await navigator.clipboard.writeText($("install").textContent); $("copy").textContent = "Copied ✓"; }
+    catch { getSelection()?.selectAllChildren($("install")); $("copy").textContent = "Select & copy"; }
+    setTimeout(() => $("copy").textContent = "Copy", 2000);
+};
 for (const b of document.querySelectorAll(".kinds button")) b.onclick = () => {
     kind = b.dataset.kind;
+    category = "all";
     for (const o of document.querySelectorAll(".kinds button")) o.setAttribute("aria-pressed", o === b);
     render();
 }; // the last /search answer, as record keys in rank order
 
+$("clear-filters").onclick = () => {
+    category = "all";
+    $("q").value = "";
+    clearTimeout(typing);
+    semantic = { q: "", ids: null };
+    render();
+};
+
+function renderCategories() {
+    const options = categoryOptions(view.records, kind);
+    if (!options.some(([id]) => id === category)) category = "all";
+    // Keep focus on the selected button when filtering with the keyboard.
+    const focused = $("categories").contains(document.activeElement) ? document.activeElement.dataset.category : null;
+    $("categories").replaceChildren(...options.map(([id, label, count]) => {
+        const button = document.createElement("button");
+        button.dataset.category = id;
+        button.setAttribute("aria-pressed", String(category === id));
+        button.append(document.createTextNode(label + " "));
+        const badge = document.createElement("span");
+        badge.className = "count";
+        badge.textContent = count;
+        button.append(badge);
+        button.onclick = () => { category = id; render(); };
+        return button;
+    }));
+    if (focused) [...$("categories").children].find(b => b.dataset.category === focused)?.focus();
+    $("clear-filters").hidden = category === "all" && !$("q").value;
+}
+
 function rank(q) {
-    const games = view.records.filter((r) => r.type === kind);
+    const games = view.records.filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return games;
     if (semantic.ids && semantic.q === q) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
@@ -107,37 +148,138 @@ function rank(q) {
     return games.map((r) => [r, score(r)]).filter(([, s]) => s).sort((a, b) => b[1] - a[1]).map(([r]) => r);
 }
 
+function stockGlyph(r) {
+    // Catalog pictograms, not screenshots: each type gets a recognizable stock marker.
+    const shapes = r.type === "logic"
+        ? '<path d="M30 29 9 50l21 21M70 29l21 21-21 21M59 18 41 82" fill="none" stroke="currentColor" stroke-width="7"/>'
+        : r.type === "asset"
+        ? '<path d="m50 10 36 20v40L50 90 14 70V30Z" fill="currentColor" opacity=".15"/><path d="m50 10 36 20v40L50 90 14 70V30Zm0 40 36-20M50 50 14 30m36 20v40" fill="none" stroke="currentColor" stroke-width="3"/>'
+        : '<path d="M19 28h62l13 43-8 9H70L59 66H41L30 80H14l-8-9Z" fill="currentColor" opacity=".18" stroke="currentColor" stroke-width="3"/><path d="M24 42v21m-10-10h21" stroke="currentColor" stroke-width="5"/><circle cx="72" cy="45" r="5" fill="currentColor"/><circle cx="82" cy="58" r="5" fill="currentColor"/>';
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">${shapes}</svg>`;
+}
 function render() {
+    renderCategories();
     const hits = rank($("q").value);
+    for (const type of ["game", "asset", "logic"]) $("count-" + type).textContent = String(view.records.filter(r => r.type === type).length).padStart(2, "0");
+    const noun = kind === "logic" ? "logic parts" : kind + (hits.length === 1 ? "" : "s");
+    $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} ${noun} ${$("q").value.trim() ? "found" : "in this bin"}`;
     $("grid").replaceChildren(...hits.map((r) => {
         const b = document.createElement("button");
         b.className = "card";
-        b.innerHTML = `<h2></h2><p class="d"></p><span class="tags"></span><span class="meta"></span>`;
+        b.innerHTML = `<span class="card-topline"><span class="stock-number"></span><span class="stock-type"></span></span><span class="card-preview">${stockGlyph(r)}<span class="preview-label"></span><span class="preview-code" aria-hidden="true"></span></span><span class="card-body"><h2></h2><p class="d"></p><span class="tags"></span><span class="meta"></span></span><span class="card-footer"><span class="open-label"></span><span class="license-label"></span></span>`;
+        const number = String(view.records.indexOf(r) + 1).padStart(3, "0");
+        const palette = ["#e5ff50", "#b6d3a4", "#e9b585", "#a5c8d4"];
+        const hash = [...r.id].reduce((n, c) => n + c.charCodeAt(0), 0);
+        b.style.setProperty("--stock-color", palette[hash % palette.length]);
+        b.querySelector(".stock-number").textContent = `STOCK / ${number}`;
+        b.querySelector(".stock-type").textContent = r.type === "game" ? "Playable" : r.type === "logic" ? "Mechanics" : "Raw material";
+        b.querySelector(".preview-label").textContent = r.type === "game" ? "GAME CARTRIDGE" : r.type === "logic" ? "BEHAVIOR MODULE" : r.payload.mime?.split("/")[1]?.toUpperCase() ?? "ASSET";
+        b.querySelector(".preview-code").textContent = `SW—${number}`;
         b.querySelector("h2").textContent = r.payload.title;
         b.querySelector(".d").textContent = r.payload.description;
-        b.querySelector(".tags").textContent = r.payload.tags.join(" · ");
+        b.querySelector(".tags").textContent = r.payload.tags.slice(0, 5).map(t => "#" + t).join(" ");
         b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (r.payload.uses?.length ? ` · uses ${r.payload.uses.length}` : "");
+        b.querySelector(".open-label").textContent = r.type === "game" ? "Play game →" : r.type === "logic" ? "View code →" : "View asset →";
+        b.querySelector(".license-label").textContent = r.payload.license ?? "License unlisted";
         b.onclick = () => play(r);
         return b;
     }));
-    if (!hits.length) $("grid").innerHTML = `<p class="empty">${view.records.some((r) => r.type === kind) ? "Nothing matches." : `No ${kind === "logic" ? "logic" : kind + "s"} yet.`}</p>`;
+    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${view.records.some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
 }
 
+let playerRequest = 0, currentPart = null, gameHTML = null;
+// Links name a publisher and part, so identical IDs from different publishers stay distinct.
+function partURL(r) {
+    const url = new URL(location.href);
+    url.searchParams.set("part", key(r));
+    return url;
+}
+function setPartURL(r) {
+    const url = new URL(location.href);
+    if (r) url.searchParams.set("part", key(r));
+    else url.searchParams.delete("part");
+    if (url.href !== location.href) history.pushState(null, "", url);
+}
+function followPartURL() {
+    const target = new URL(location.href).searchParams.get("part");
+    if (!target) { if ($("player").open) $("player").close(); return; }
+    const r = view.records.find(r => key(r) === target);
+    if (!r) {
+        if ($("player").open) $("player").close();
+        $("status").textContent = "This shared part is not in the warehouse yet. Browse below or try again later.";
+        return;
+    }
+    if (key(currentPart ?? { publisher: "", id: "" }) === target && $("player").open) return;
+    kind = r.type;
+    category = "all";
+    for (const b of document.querySelectorAll(".kinds button")) b.setAttribute("aria-pressed", b.dataset.kind === kind);
+    render(); play(r);
+}
+window.addEventListener("popstate", followPartURL);
+$("share").onclick = async () => {
+    const part = currentPart;
+    if (!part) return;
+    const url = partURL(part).href;
+    try {
+        await navigator.clipboard.writeText(url);
+        if (currentPart !== part) return;
+        $("share-status").textContent = "Link copied";
+    } catch {
+        if (currentPart !== part) return;
+        $("share-link").value = url; $("share-link").hidden = false;
+        $("share-link").focus(); $("share-link").select();
+        $("share-status").textContent = "Select and copy this link:";
+    }
+    $("share-status").hidden = false;
+};
+function showFrame(html, focus = false) {
+    // Replace the browsing context so restart/close always stop the old game, including its audio.
+    const frame = $("frame").cloneNode(false);
+    frame.srcdoc = html;
+    if (focus) frame.addEventListener("load", () => { if ($("player").open && currentPart?.type === "game") frame.focus(); }, { once: true });
+    $("frame").replaceWith(frame);
+}
 async function play(r) {
+    const request = ++playerRequest;
+    currentPart = r; gameHTML = null;
+    setPartURL(r);
+    $("share-status").hidden = true; $("share-link").hidden = true;
+    $("credits").open = false; $("player-message").hidden = true;
     $("title").textContent = r.payload.title;
     $("by").textContent = `by ${by(r)}`;
     if (!$("player").open) $("player").showModal(); // open now: the source can take a moment to come from storage
     const url = `${view.gateway}/ipfs/${r.payload.src}`, game = r.type === "game";
+    document.body.classList.add("player-open");
+    $("player").classList.toggle("playing", game);
+    for (const id of ["restart", "expand", "fullscreen", "player-hint"]) $(id).hidden = !game;
+    $("restart").disabled = true;
+    $("frame").title = r.payload.title;
+    if (!game) {
+        showFrame("");
+        if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        setImmersive(false); setExpanded(false);
+    }
     $("frame").hidden = !game; $("view").hidden = game;
     if (game) {
-        $("frame").srcdoc = `<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#888;font:14px system-ui">loading…</body>`;
-        try { $("frame").srcdoc = (await (await fetch(url)).json()).html; }
-        catch { $("frame").srcdoc = `<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#c66;font:14px system-ui">couldn't load this game from storage</body>`; }
+        showFrame(`<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#888;font:14px system-ui">loading…</body>`);
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Game download failed");
+            const { html } = await response.json();
+            if (typeof html !== "string") throw new Error("Missing game HTML");
+            if (request !== playerRequest || !$("player").open) return;
+            gameHTML = html; showFrame(html, true);
+        } catch {
+            if (request !== playerRequest || !$("player").open) return;
+            showFrame(`<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#c66;font:14px system-ui">Couldn't load this game. Use Restart to try again.</body>`);
+        }
+        $("restart").disabled = false;
     } else if (r.payload.mime?.startsWith("image/")) {
         const img = new Image(); img.src = url; img.alt = r.payload.title; $("view").replaceChildren(img);
     } else if (r.type === "logic") {
         $("view").textContent = "loading…";
-        try { $("view").textContent = (await (await fetch(url)).json()).js; } catch { $("view").textContent = "couldn't load this from storage"; }
+        try { const { js } = await (await fetch(url)).json(); if (request !== playerRequest || !$("player").open) return; $("view").textContent = js; }
+        catch { if (request !== playerRequest || !$("player").open) return; $("view").textContent = "couldn't load this from storage"; }
     } else {
         const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = `${r.payload.mime ?? "file"} · open`;
         $("view").replaceChildren(a);
@@ -160,10 +302,65 @@ async function play(r) {
         div.append(a, post);
         return div;
     }));
-    if (!$("player").open) $("player").showModal();
+    $("credits").hidden = !links.length;
 }
-$("close").onclick = () => { $("player").close(); };
-$("player").addEventListener("close", () => { $("frame").srcdoc = ""; $("view").replaceChildren(); });
+function setImmersive(active) {
+    $("player-shell").classList.toggle("is-immersive", active);
+    const native = !!document.fullscreenElement;
+    $("fullscreen").textContent = active ? (native ? "Exit fullscreen" : "Exit full window") : "Fullscreen";
+    $("fullscreen").title = active ? "Restore player controls" : "Fill the screen with the game";
+    $("fullscreen").setAttribute("aria-pressed", String(active));
+    $("player-message").hidden = true;
+}
+function setExpanded(expanded) {
+    $("player").classList.toggle("is-expanded", expanded);
+    $("expand").textContent = expanded ? "Restore" : "Expand";
+    $("expand").setAttribute("aria-pressed", String(expanded));
+}
+$("expand").onclick = () => { setExpanded(!$("player").classList.contains("is-expanded")); $("frame").focus(); };
+$("fullscreen").onclick = async () => {
+    if ($("player-shell").classList.contains("is-immersive")) {
+        if (document.fullscreenElement) await document.exitFullscreen().catch(() => {});
+        setImmersive(false); setExpanded(false); $("frame").focus(); return;
+    }
+    // Fill the iframe even on iOS, where element fullscreen may be unavailable.
+    setExpanded(true); setImmersive(true);
+    try {
+        if (!$("player-shell").requestFullscreen) throw new Error("Fullscreen unavailable");
+        await $("player-shell").requestFullscreen();
+    } catch {
+        // Full-window mode retains a visible exit control and follows visualViewport.
+        setImmersive(true);
+    }
+    $("frame").focus();
+};
+document.addEventListener("fullscreenchange", () => {
+    const full = !!document.fullscreenElement;
+    setImmersive(full);
+    if (!full) setExpanded(false);
+    $("expand").disabled = full;
+});
+$("restart").onclick = () => {
+    if (gameHTML) { showFrame(gameHTML, true); }
+    else if (currentPart) play(currentPart);
+};
+$("close").onclick = () => { setPartURL(null); $("player").close(); };
+$("player").addEventListener("cancel", () => setPartURL(null));
+$("player").addEventListener("close", () => {
+    ++playerRequest; currentPart = null; gameHTML = null;
+    showFrame(""); $("view").replaceChildren();
+    document.body.classList.remove("player-open"); setImmersive(false); setExpanded(false);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+});
+// Safari's visual viewport follows browser chrome, rotation and the on-screen keyboard.
+function syncPlayerViewport() {
+    const viewport = window.visualViewport;
+    document.documentElement.style.setProperty('--player-height', `${viewport?.height ?? innerHeight}px`);
+    document.documentElement.style.setProperty('--player-width', `${viewport?.width ?? innerWidth}px`);
+}
+syncPlayerViewport();
+window.addEventListener('resize', syncPlayerViewport);
+window.visualViewport?.addEventListener('resize', syncPlayerViewport);
 let searchable = true, typing;
 $("q").oninput = () => {
     render();
@@ -205,7 +402,8 @@ async function load() {
         const next = await latest();
         if (next.root === view.root) return;
         view = next; render();
-        $("status").textContent = `${view.records.length} parts · root ${view.root.slice(0, 12)}… · ${local ? "view from this site" : `view on ${network}`}`;
+        $("status").textContent = `${view.records.length} parts in stock`;
+        followPartURL();
     } catch (e) { $("status").textContent = `couldn't read the view: ${e.message}`; }
 }
 load(); setInterval(load, 10000); // a view.json fetch, or one contract read for the head
