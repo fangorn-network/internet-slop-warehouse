@@ -1,0 +1,30 @@
+{
+  "sharing": {
+    "allTypes": true,
+    "clipboard": true,
+    "fallback": true,
+    "reload": true,
+    "history": true,
+    "escape": true,
+    "missingPart": true
+  },
+  "desktop": {
+    "restart": true,
+    "expand": true,
+    "nativeFullscreen": true,
+    "fullscreenFallback": true,
+    "credits": true,
+    "logicSwitch": true,
+    "staleLoadGuard": true
+  },
+  "mobile": {
+    "viewportPlayer": true,
+    "touchTargets": true,
+    "immersivePortrait": true,
+    "immersiveLandscape": true,
+    "viewportResize": true,
+    "exitFallback": true,
+    "close": true
+  },
+  "errors": []
+}

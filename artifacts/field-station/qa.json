@@ -1,0 +1,28 @@
+{
+  "desktop": {
+    "opaqueSandbox": true,
+    "load": true,
+    "movement": true,
+    "rightDrag": true,
+    "contextMenuSuppressed": true,
+    "selectionSuppressed": true,
+    "reversibleGenerator": true,
+    "radioTuning": true,
+    "noRequiredEnding": true,
+    "stoneBellHit": true,
+    "optionalFinds": true,
+    "sound": true,
+    "notes": true,
+    "pauseResume": true,
+    "drawCalls": 154,
+    "triangles": 1221061
+  },
+  "mobile": {
+    "load": true,
+    "joystick": true,
+    "touchLook": true,
+    "notes": true,
+    "landscape": true
+  },
+  "errors": []
+}

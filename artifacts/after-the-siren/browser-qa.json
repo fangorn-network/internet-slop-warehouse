@@ -1,0 +1,75 @@
+{
+  "desktop": {
+    "movement": true,
+    "pause": true,
+    "loot": {
+      "scrap": 5,
+      "fuel": 2,
+      "meds": 2
+    }
+  },
+  "mobile": {
+    "touchControls": true
+  },
+  "neglectedRefuge": {
+    "mode": "lost",
+    "health": 0,
+    "inventory": {
+      "scrap": 3,
+      "fuel": 1,
+      "meds": 1
+    },
+    "cycle": {
+      "name": "night",
+      "index": 1,
+      "cycle": 2,
+      "elapsed": 18.150000000002446,
+      "remaining": 16.849999999997554,
+      "progress": 0.5185714285714985,
+      "complete": false
+    },
+    "position": {
+      "x": 1100,
+      "y": 865
+    },
+    "barrier": 0,
+    "ward": 36.84000000000093,
+    "enemies": 7,
+    "kills": 0
+  },
+  "activeSurvivor": {
+    "mode": "won",
+    "health": 36,
+    "inventory": {
+      "scrap": 3,
+      "fuel": 1,
+      "meds": 0
+    },
+    "cycle": {
+      "name": "night",
+      "index": 1,
+      "cycle": 3,
+      "elapsed": 35,
+      "remaining": 0,
+      "progress": 1,
+      "complete": true
+    },
+    "position": {
+      "x": 763.9999999999952,
+      "y": 1489.0000000000089
+    },
+    "barrier": 120,
+    "ward": 0,
+    "enemies": 14,
+    "kills": 0
+  },
+  "errors": [],
+  "publishedSandbox": {
+    "src": "bafkreiejgbdj3um5rfj2frhqdinh2tkk6drele72fmdt5ivr54j2f5xiia",
+    "verified": true,
+    "modulesLoaded": true,
+    "started": true,
+    "javascriptErrors": 0,
+    "sandbox": "allow-scripts allow-pointer-lock"
+  }
+}

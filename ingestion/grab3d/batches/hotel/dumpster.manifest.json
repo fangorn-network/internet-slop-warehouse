@@ -1,0 +1,47 @@
+{
+ "slug": "dumpster",
+ "triangles": 15508,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "dumpster.glb",
+   "bytes": 1551936
+  },
+  "blend": {
+   "name": "dumpster.blend",
+   "bytes": 1482762
+  },
+  "fbx": {
+   "name": "dumpster.fbx",
+   "bytes": 2717980
+  },
+  "obj": {
+   "name": "dumpster-obj.zip",
+   "bytes": 1857502
+  },
+  "usdz": {
+   "name": "dumpster.usdz",
+   "bytes": 2535701
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "1.376 x 1.059 x 1.330",
+  "triangles": 15508,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "1100 l wheeled waste container to EN 840-3/-4: 1.37 x 1.07 x 1.33 m, 200 mm swivel castors",
+  "notes": "moss-green painted steel body with pressed beads, reinforced top frame and tapered tipping front; two closed HDPE flat lids on a galvanized hinge rod; front comb lifting bar, DIN side trunnions, tubular push handles on both sides; four swivel castors, the two front ones with brake pedals; no logos or text",
+  "set": "Urban Street Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

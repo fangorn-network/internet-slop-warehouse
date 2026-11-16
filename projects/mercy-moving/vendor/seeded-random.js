@@ -1,0 +1,7 @@
+// CC0. Small serializable PRNG for repeatable worlds and weighted content. Not cryptographic.
+export function attach(object,{seed=1,state=null}={}){
+ const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
+ let value=state===null?hash(seed):state,dead=false;if(!Number.isInteger(value)||value<0||value>4294967295)throw new RangeError('Invalid RNG state');
+ const next=()=>{if(dead)throw Error('RNG disposed');value=(Math.imul(value,1664525)+1013904223)>>>0;return value/4294967296;};
+ return{next,get state(){return value;},int(min,max){if(!Number.isSafeInteger(min)||!Number.isSafeInteger(max)||max<min)throw new RangeError('Invalid integer range');return min+Math.floor(next()*(max-min+1));},pick(entries){if(!Array.isArray(entries)||!entries.length||entries.some(e=>!Number.isFinite(e.weight)||e.weight<0))throw new RangeError('Invalid weighted entries');const total=entries.reduce((n,e)=>n+e.weight,0);if(total<=0)throw new RangeError('No positive weights');let n=next()*total;for(const e of entries){n-=e.weight;if(n<0)return e.value;}return entries.at(-1).value;},update(){},dispose(){dead=true;}};
+}

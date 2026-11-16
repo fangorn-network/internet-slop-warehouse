@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: CC0-1.0
+// Game rules know positions and inventory, never renderer objects or DOM.
+export function attach(actor,{sites=[],radius=2.8,frequency=91.6,openPlay=false,onEvent=()=>{}}={}){
+ const state={items:[],power:false,frequency:88,won:false};let dead=false;
+ const near=site=>site&&Math.hypot(actor.x-site.x,actor.z-site.z)<=radius;
+ const siteBy=id=>sites.find(s=>s.id===id);
+ const emit=(ok,message)=>{onEvent({ok,message,state:{...state,items:[...state.items]}});return{ok,message};};
+ const api={state,get signal(){return state.power?Math.max(0,1-Math.abs(state.frequency-frequency)/1.2):0;},get focus(){return sites.filter(s=>near(s)&&(!s.item||!state.items.includes(s.item))).sort((a,b)=>Math.hypot(actor.x-a.x,actor.z-a.z)-Math.hypot(actor.x-b.x,actor.z-b.z))[0]??null;},
+  use(id){if(dead)return{ok:false,message:'Expedition closed'};const s=siteBy(id);if(!near(s))return emit(false,'Move closer to interact.');
+   if(s.item){if(state.items.includes(s.item))return emit(false,'Already collected.');state.items.push(s.item);return emit(true,s.message);}
+   if(s.id==='generator'){if(openPlay){state.power=!state.power;return emit(true,state.power?'The generator catches. The shelter lights come alive.':'The generator winds down. Listen to the forest.');}if(state.power)return emit(true,'The generator is running. Tune the station radio.');if(!['fuel','fuse'].every(i=>state.items.includes(i)))return emit(false,'The generator needs fuel and a spare fuse. Follow the marked trails.');state.power=true;return emit(true,'Power restored. The station radio is alive.');}
+   if(s.id==='radio'){if(openPlay){if(!state.power)return emit(false,'Switch on the generator to power the radio.');return emit(true,api.signal>.8?'A clear tone from the valley relay. Try another frequency.':'Static and distant fragments. Keep turning the dial.');}if(!state.power)return emit(false,'No power. Restore the generator first.');if(!state.items.includes('log'))return emit(false,'Find the survey log at the overlook for the station frequency.');if(api.signal<.985)return emit(false,'Only static. Tune to the frequency in the survey log.');state.won=true;return emit(true,'Signal received. The valley is listening again.');}
+   return emit(false,'Nothing to use here.');
+  },tune(value){if(!Number.isFinite(value))return;state.frequency=Math.max(88,Math.min(96,Math.round(value*10)/10));},reset(){state.items=[];state.power=false;state.frequency=88;state.won=false;},update(){},dispose(){dead=true;}};return api;
+}

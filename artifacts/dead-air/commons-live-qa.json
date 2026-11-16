@@ -1,0 +1,28 @@
+{
+  "indexed": 10,
+  "pinnedWarehouseParts": true,
+  "opaqueSandbox": true,
+  "peacefulDefault": true,
+  "noHostileBot": true,
+  "holsteredWeapon": true,
+  "publishedModels": 11,
+  "architecture": {
+    "decorated": 190,
+    "profiles": {
+      "home": 151,
+      "shop": 14,
+      "cafe": 8,
+      "building": 13,
+      "civic": 3,
+      "workshop": 1
+    }
+  },
+  "mobileFullscreen": true,
+  "pinch": true,
+  "noAccidentalRoute": true,
+  "construction": true,
+  "exactMapSaveRestore": true,
+  "realAddressSearch": true,
+  "sourceKitBytes": 7715441,
+  "errors": []
+}

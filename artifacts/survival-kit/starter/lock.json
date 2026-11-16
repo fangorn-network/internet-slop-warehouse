@@ -1,0 +1,195 @@
+{
+  "format": "warehouse-survival-starter-v1",
+  "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+  "parent": {
+    "id": "no-road-home",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936"
+  },
+  "parentCid": "bafyreifigmycndx5asqeplk66nefqeoovy26djcwx7ywhmh5hf6f4uvfci",
+  "parts": {
+    "seeded-random": "https://ipfs-test.fangorn.network/ipfs/bafkreiduxybs62ydmy2thka6k67p2kf756nc45cx6qwewwz2nrx435isyi",
+    "grid-navigation": "https://ipfs-test.fangorn.network/ipfs/bafkreig3624wdnu7surrhjssmijvgxalwrcvmzbxvpypjt45h67ipwqctq",
+    "perception-brain": "https://ipfs-test.fangorn.network/ipfs/bafkreihayx7whlaay34yv3hsjzbnd46z3vhaooxewswk7leckguolizzbu",
+    "recipe-book": "https://ipfs-test.fangorn.network/ipfs/bafkreiaicnpl7mpb3hlphvborkecfj2qiiydajiyuldw66wnjqdkrzssxy",
+    "objective-journal": "https://ipfs-test.fangorn.network/ipfs/bafkreibc2xm2piw4o45imwfhkd5362hsu2gjhviacczhjwl6z4jzatzzqu",
+    "save-codec": "https://ipfs-test.fangorn.network/ipfs/bafkreidn4z6x7eqvwyzbfj63ojuvg2jcconunztv2a5bhayrmyo2llfo7y",
+    "survival-kit": "https://ipfs-test.fangorn.network/ipfs/bafkreicb3zlr235zt73ib4bs3zm6kv76gkyxftxkelttajaacyiiuxkufm",
+    "survival-town-view": "https://ipfs-test.fangorn.network/ipfs/bafkreiffaf5mrbeipmuhldhgvuugxccmd2kxq5c2dedq5rpb5johx3zwbm",
+    "no-road-home-scenario": "https://ipfs-test.fangorn.network/ipfs/bafkreidyj2fcpijnxz5neudb2jfosdbtiqsvbpdiykx53onki3k7yl2qb4",
+    "survival-recipe-pack": "https://ipfs-test.fangorn.network/ipfs/bafkreiavbxyhmpb7wmuqsntonh445lj6bdaggogrj3izmz44fhqxyiqybe",
+    "health": "https://ipfs-test.fangorn.network/ipfs/bafkreihl5y6shppfg3mztvkxd2yc7krdeeaaxqtbjaowyyhigp2uw3kimq",
+    "resource-inventory": "https://ipfs-test.fangorn.network/ipfs/bafkreicsekbq77yzxukvxjgzb2wynucqfm2khyr7h7m5f5dhn2ybzezopq",
+    "expedition-shell": "https://ipfs-test.fangorn.network/ipfs/bafkreia7e3czgfc3ayugvo3q4kpilwmkta57qbvarttuhgkba6yz6inure",
+    "ambient-motes": "https://ipfs-test.fangorn.network/ipfs/bafkreiagmkd36o4beczofxhuwsr2lw4q46gbibisbrrsxniv75dn4iereu",
+    "touch-controls": "https://ipfs-test.fangorn.network/ipfs/bafkreie6f27cac6h4vhzqm3rjrtwue5f2ikq5vcw2kzgs3v4xadyha5pqu",
+    "garden-caretaker": "https://ipfs-test.fangorn.network/ipfs/bafkreietucopaif37bgo4ktqziwtfvzec55kg3hqu5zxp4c4kk62gjc2ji",
+    "ph-wooden-crate-01": "https://ipfs-test.fangorn.network/ipfs/bafybeihdxbef66b7io3dyibzoh2nfrfzsmhuexvlkfqzmnhpux7xxs5ydu",
+    "ph-vintage-oil-lamp": "https://ipfs-test.fangorn.network/ipfs/bafybeigpbkkw2wn3daaf4ggfddu6aexqj7gj7nyjjvvl3nbklhidvsqozy"
+  },
+  "uses": [
+    {
+      "id": "seeded-random",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "grid-navigation",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "perception-brain",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "recipe-book",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "objective-journal",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "save-codec",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "survival-kit",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "survival-town-view",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "no-road-home-scenario",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "survival-recipe-pack",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "health",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "resource-inventory",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "expedition-shell",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "ambient-motes",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "touch-controls",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "garden-caretaker",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "ph-wooden-crate-01",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    },
+    {
+      "id": "ph-vintage-oil-lamp",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+    }
+  ],
+  "records": [
+    {
+      "id": "seeded-random",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreiadpsxlegek52iaopp77g2rrpqlkynsiz6crv25b3domplhxwasgy"
+    },
+    {
+      "id": "grid-navigation",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreibfa3thki4lzs3jbi2r5lm2td4cvuc2kgpzpbktjqhqav6ivkfbpq"
+    },
+    {
+      "id": "perception-brain",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreig2qmc3g55dqaloti2rajkzcyc4v5c343laoeioes2ynu6j7422re"
+    },
+    {
+      "id": "recipe-book",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreidlrf3gsyiknjtompedumsbzmifez3232nyjtdfkv5z4svjqzk75u"
+    },
+    {
+      "id": "objective-journal",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreigapmqiamkuhgmg7pz6o6jwebfz7cowxnp4a5hc2yi2cptw3dwziu"
+    },
+    {
+      "id": "save-codec",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreigv4jj7hiyi6fx4cuojqld26d74m3o2ukfyg5hrgu7bvnto7cw7oy"
+    },
+    {
+      "id": "survival-kit",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreibt5q6hv4ckyjpnf7ixoq4x7vg4mo4aiqzk44mfpipzwzbifqi72m"
+    },
+    {
+      "id": "survival-town-view",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreieofomrknjukgs3gabc234yvmatci7hwfw3rwdfmb4oht3jhagax4"
+    },
+    {
+      "id": "no-road-home-scenario",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreiarz2czbulyx6rg6qt4z4mqtjgnjotoefgdu5e76kw4s2ngjqbhi4"
+    },
+    {
+      "id": "survival-recipe-pack",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreidveqkg2xpxdw4j3qgtru4fq7ds5ngqe5igoors26a7ia2wy26zhy"
+    },
+    {
+      "id": "health",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreifgxtfxaqvwnfokyk2ip3jgbzu7nbt7lx2kxs7u5w7wecbuchq4nu"
+    },
+    {
+      "id": "resource-inventory",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreigmjmlhjsk3r2n72hnodi6eol5gpikgawua6y7llqkl7taqdu7qm4"
+    },
+    {
+      "id": "expedition-shell",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreibucda7kbvkfdi7zcqjoukaqhkpykrumovwwlvxzljceth4gst2ca"
+    },
+    {
+      "id": "ambient-motes",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreickyjg3b5x25m36wbqnz5szgbvc6vx5rfn6hunxouhwacr52tbq4e"
+    },
+    {
+      "id": "touch-controls",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreihqmrajxf7dl2otiw5bymos2xubl7dh7xc4kjzm2gxngg446hubsi"
+    },
+    {
+      "id": "garden-caretaker",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreiaazy7gul3j72yb62klr7iu4qnbhhhury2gfetdj7cnu34xjzjo2u"
+    },
+    {
+      "id": "ph-wooden-crate-01",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreidipfewxuax7nqdtmbx2c7snazvxbu3xkpcoz357rhmsrj6gflmd4"
+    },
+    {
+      "id": "ph-vintage-oil-lamp",
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "cid": "bafyreifr4dy4m5uwwpx3ktvstcpxt6vq2yeohk3ggiv7dnkdhqwdibzs7m"
+    }
+  ]
+}

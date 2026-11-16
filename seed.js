@@ -10,7 +10,8 @@
 // A game's `const PARTS = {/*PARTS*/}` is filled in with each part it uses, id → its pinned file's URL.
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { STORED } from "./part.js";
 
 const dir = new URL("./parts/", import.meta.url).pathname;
 const parts = JSON.parse(readFileSync(join(dir, "parts.json"), "utf8"));
@@ -28,10 +29,11 @@ if (process.argv[2] === "--local") {
     mkdirSync(join(out, "parts"), { recursive: true });
     for (const p of parts) {
         const raw = readFileSync(join(dir, p.file));
+        mkdirSync(dirname(join(out, "parts", p.file)), { recursive: true });
         if (p.type === "asset") writeFileSync(join(out, "parts", p.file), raw);
-        if (p.type === "logic") writeFileSync(join(out, "parts", p.file + ".json"), JSON.stringify({ js: raw.toString("utf8") }));
+        if (p.type !== "asset" && p.type !== "game") writeFileSync(join(out, "parts", p.file + ".json"), JSON.stringify({ [STORED[p.type]]: raw.toString("utf8") }));
         if (p.type === "game") {
-            const urls = Object.fromEntries(p.uses.map((id) => { const u = parts.find((x) => x.id === id); return [id, `parts/${u.file}${u.type === "logic" ? ".json" : ""}`]; }));
+            const urls = Object.fromEntries(p.uses.map((id) => { const u = parts.find((x) => x.id === id); return [id, `parts/${u.file}${u.type === "asset" ? "" : ".json"}`]; }));
             writeFileSync(join(out, p.file), fill(raw.toString("utf8"), urls));
         }
     }

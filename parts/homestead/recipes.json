@@ -1,0 +1,38 @@
+[
+  {
+    "id": "axe",
+    "title": "Stone axe \u00b7 double timber",
+    "cost": {
+      "wood": 3,
+      "stone": 2
+    },
+    "gain": {
+      "axe": 1
+    },
+    "station": "workbench"
+  },
+  {
+    "id": "pick",
+    "title": "Stone pick \u00b7 double minerals",
+    "cost": {
+      "wood": 3,
+      "stone": 3
+    },
+    "gain": {
+      "pick": 1
+    },
+    "station": "workbench"
+  },
+  {
+    "id": "copper",
+    "title": "Smelt copper",
+    "cost": {
+      "ore": 3,
+      "wood": 1
+    },
+    "gain": {
+      "copper": 1
+    },
+    "station": "kiln"
+  }
+]

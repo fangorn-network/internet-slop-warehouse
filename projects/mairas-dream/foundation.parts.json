@@ -1,0 +1,90 @@
+[
+  {
+    "id": "mairas-thrift-props",
+    "type": "asset",
+    "file": "../projects/mairas-dream/assets/thrift-kit.glb",
+    "title": "Maira\u2019s Dream \u00b7 20 original thrift-store models",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "description": "Twenty original smooth low-poly meter-scale Y-up models, named overlapping scene children for prototype instantiation. Shelf, racks, clothing, housewares, tools, radio, furniture, register, extinguisher, black cat, cashier, shopper, gray clown manager and car. No external textures or photographic pixels.",
+    "tags": [
+      "mairas-dream",
+      "thrift-store",
+      "low-poly",
+      "models",
+      "cc0"
+    ]
+  },
+  {
+    "id": "mairas-thrift-models",
+    "type": "logic",
+    "kind": "effect",
+    "file": "../projects/mairas-dream/prop-kit.js",
+    "title": "Maira\u2019s Dream \u00b7 editable thrift-store model generators",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "description": "Twenty original texture-free Three.js thrift-store model generators. makePiece(kind,variant) returns ground-origin meter-scale Group. attach adds one model with update and dispose.",
+    "exports": [
+      {
+        "name": "attach",
+        "does": "Attach a generated model.",
+        "signature": "attach(object,opts) \u2192 {update,dispose,\u2026}"
+      },
+      {
+        "name": "makePiece",
+        "does": "Generate a named prototype.",
+        "signature": "makePiece(kind,variant=0) \u2192 THREE.Group"
+      },
+      {
+        "name": "kinds",
+        "does": "Twenty prototype names.",
+        "signature": "string[]"
+      }
+    ],
+    "tags": [
+      "mairas-dream",
+      "thrift-store",
+      "low-poly",
+      "cc0"
+    ]
+  },
+  {
+    "id": "mairas-shopping-rules",
+    "type": "logic",
+    "kind": "rule",
+    "file": "../projects/mairas-dream/rules.js",
+    "title": "Maira\u2019s Dream \u00b7 shopping and escape rules",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "description": "Renderer-independent integer-cent budget, three affordable errands, basket, returns, price swapping and atomic checkout. Paid-inventory exit prerequisite, suspicion, extinguisher charge and timed fire escape. createRun(seed) exposes explicit actions and state. attach wraps run with update and dispose.",
+    "exports": [
+      {
+        "name": "attach",
+        "does": "Create a reusable shopping run.",
+        "signature": "attach(object,opts) \u2192 {update,dispose,\u2026}"
+      },
+      {
+        "name": "createRun",
+        "does": "Create shopping and escape state.",
+        "signature": "createRun(seed?) \u2192 Run"
+      },
+      {
+        "name": "catalog",
+        "does": "Priced item records.",
+        "signature": "Item[]"
+      },
+      {
+        "name": "objectives",
+        "does": "Three affordable errands.",
+        "signature": "Objective[]"
+      }
+    ],
+    "tags": [
+      "mairas-dream",
+      "shopping",
+      "inventory",
+      "cc0"
+    ]
+  }
+]

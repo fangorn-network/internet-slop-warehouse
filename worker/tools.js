@@ -22,17 +22,19 @@ export const guide = (gateway) => `The ${NAME}: browser games (three.js mostly) 
   Bare imports like "three" resolve through the game's import map. Or copy it in and change what you need.
 - A game runs in a sandboxed iframe (scripts and pointer lock only: no storage, no cookies, no same-origin).
 - When publishing: list every part you used in \`uses\`, and a remixed game as \`parent\`. Fill PARTS-style maps with each part's ${gateway}/ipfs/<src>.
+- Skills are SKILL.md files (Claude Code, Codex): get one and save its file.md as .claude/skills/<payload.skill>/SKILL.md (or .agents/skills/…) to install it. Recipes are skills tagged "recipe": search them first when building something, they say which parts to use and how.
+- Source parts are code mirrored from elsewhere (frameworks, shaders, examples), with origin { repo, commit, path } and the upstream license: keep that license when you copy them.
 - Writing logic for others: export attach(object, opts) → { update(dt), dispose() }; put every behaviour someone might want to change behind a hook option with a sensible default; label it all.`;
 
 export const tools = [
     {
         ...BASE.search,
-        description: "Find parts by what they're about (semantic search): games, assets (models, textures, sounds) and logic (reusable ES modules: movement, AI, physics …). Each hit has publisher, repo, id, cid, type, payload and score; payload has title, description, tags, src (its file), author, parent (what it remixes) and uses (what it builds on).",
+        description: "Find parts by what they're about (semantic search): games, assets (models, textures, sounds) logic (reusable ES modules: movement, AI, physics …), skills and recipes (SKILL.md instructions for building things) and source (code mirrored from other repos, with origin and license). Each hit has publisher, repo, id, cid, type, payload and score; payload has title, description, tags, src (its file), author, parent (what it remixes) and uses (what it builds on).",
         inputSchema: { ...BASE.search.inputSchema, properties: { ...BASE.search.inputSchema.properties, type: { type: "string", enum: TYPES, description: "Only this kind of part" } } },
     },
     {
         ...BASE.get,
-        description: "One part's current version, read live from Fangorn. A game comes back with `file: { html }`, logic with `file: { js }`; an asset with `url`, to load from your game.",
+        description: "One part's current version, read live from Fangorn. A game comes back with `file: { html }`, logic with `file: { js }`, a skill with `file: { md }`, source with `file: { code }`; an asset with `url`, to load from your game.",
         async run(a, ctx) {
             const record = await BASE.get.run(a, ctx);
             if (!record.url || record.type === "asset") return record;
@@ -42,7 +44,7 @@ export const tools = [
     },
     {
         name: "publish",
-        description: `Publish a part into your own "${REPO}" repo, publicly and permanently, signed by your wallet (show the person what will be published first). Needs this MCP added with your grant from fangorn.network (the warehouse's page links to it). game: content is a self-contained HTML page. asset: content is the file, base64, with mime. logic: content is an ES module that exports attach(object, opts) → { update(dt), dispose() } (or, for an override, the hook it replaces), labelled with kind, exports, options and hooks: the labels are what search matches and how other agents wire it in. Name what it remixes (parent) and every part it builds on (uses): they're pinned and credited. Publishing an id you already have replaces it.`,
+        description: `Publish a part into your own "${REPO}" repo, publicly and permanently, signed by your wallet (show the person what will be published first). Needs this MCP added with your grant from fangorn.network (the warehouse's page links to it). game: content is a self-contained HTML page. asset: content is the file, base64, with mime. skill: content is a SKILL.md (frontmatter name and description, then instructions for an agent); a recipe is a skill tagged "recipe" that lists its parts in uses. source: content is a code file mirrored from a repo, with origin and its upstream license. logic: content is an ES module that exports attach(object, opts) → { update(dt), dispose() } (or, for an override, the hook it replaces), labelled with kind, exports, options and hooks: the labels are what search matches and how other agents wire it in. Name what it remixes (parent) and every part it builds on (uses): they're pinned and credited. Publishing an id you already have replaces it.`,
         inputSchema: { type: "object", required: ["type", "id", "title", "content"], properties: {
             type: { type: "string", enum: TYPES },
             id: { type: "string", description: "lowercase-dashed, unique in your repo" },
@@ -58,6 +60,7 @@ export const tools = [
             options: { type: "array", items: LABEL, description: "logic only: { name, type, default, does } for each option attach takes" },
             hooks: { type: "array", items: LABEL, description: "logic only: { name, default, does }: option callbacks that replace a default behaviour" },
             overrides: { type: "object", properties: { part: PIN, hook: { type: "string" } }, description: "logic only: this module exports `hook`, a drop-in for that part's hook" },
+            origin: { type: "object", required: ["repo", "commit", "path"], properties: { repo: { type: "string" }, commit: { type: "string" }, path: { type: "string" } }, description: "source only: where the file was mirrored from (with license: its upstream license)" },
             parent: PIN,
             uses: { type: "array", items: PIN },
         } },

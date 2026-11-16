@@ -1,0 +1,7 @@
+// SPDX-License-Identifier: CC0-1.0
+// Entirely synthesized: no recordings or third-party samples.
+export function attach(object,{volume=.22,onStep=()=>{}}={}){
+ let ctx,gain,wind,paused=true;const sources=new Set();
+ function start(){if(!ctx){ctx=new AudioContext();gain=ctx.createGain();gain.gain.value=volume;gain.connect(ctx.destination);const buffer=ctx.createBuffer(1,ctx.sampleRate*4,ctx.sampleRate),data=buffer.getChannelData(0);let v=0;for(let i=0;i<data.length;i++){v=(v+(Math.random()*2-1)*.04)/1.02;data[i]=v;}wind=ctx.createBufferSource();wind.buffer=buffer;wind.loop=true;const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=380;wind.connect(filter).connect(gain);wind.start();}paused=false;void ctx.resume();}
+ return{start,pause(){paused=true;void ctx?.suspend();},setVolume(v){volume=Math.max(0,Math.min(1,v));if(gain)gain.gain.value=volume;},step(event){onStep(event);if(!ctx||paused)return;const buffer=ctx.createBuffer(1,ctx.sampleRate*.22,ctx.sampleRate),d=buffer.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/d.length*6)*.45;const s=ctx.createBufferSource(),f=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=buffer;f.type='lowpass';f.frequency.value=1200;g.gain.value=.55;s.connect(f).connect(g).connect(gain);sources.add(s);s.onended=()=>{s.disconnect();f.disconnect();g.disconnect();sources.delete(s);};s.start();},update(){},dispose(){sources.forEach(s=>s.stop());wind?.stop();void ctx?.close();}};
+}

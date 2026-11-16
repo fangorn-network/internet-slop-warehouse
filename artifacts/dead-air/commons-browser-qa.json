@@ -1,0 +1,36 @@
+{
+  "opaqueSandbox": true,
+  "peacefulDefault": true,
+  "noBot": true,
+  "models": [
+    "shelter",
+    "wall",
+    "workbench",
+    "hearth",
+    "stash",
+    "lantern",
+    "bedroll",
+    "planter",
+    "bench",
+    "cafe-table",
+    "supply-cache"
+  ],
+  "architecture": {
+    "decorated": 190,
+    "profiles": {
+      "home": 151,
+      "shop": 14,
+      "cafe": 8,
+      "building": 13,
+      "civic": 3,
+      "workshop": 1
+    }
+  },
+  "mobileMovement": true,
+  "pinch": true,
+  "blueprintPlacement": true,
+  "exactMapSaveRestore": true,
+  "holsteredRestore": true,
+  "addressSearch": true,
+  "errors": []
+}

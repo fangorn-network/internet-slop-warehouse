@@ -1,0 +1,14 @@
+{
+  "townSearch": true,
+  "provider": "Photon",
+  "query": "Rhinelander, Wisconsin",
+  "matches": [
+    "Rhinelander, Wisconsin, United States",
+    "Rhinelander-Oneida County Airport, Rhinelander, Wisconsin, United States",
+    "Rhinelander High School, Rhinelander, Wisconsin, United States",
+    "Rhinelander Dam, Rhinelander, Wisconsin, United States",
+    "Rhinelander Flowage, Town of Pine Lake, Wisconsin, United States"
+  ],
+  "cors": true,
+  "cache": true
+}

@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Warehouse Survival Scenario v1",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "rows",
+    "start",
+    "locations",
+    "doors",
+    "enemies",
+    "objectives"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "const": 1
+    },
+    "seed": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "cellSize": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 128,
+      "items": {
+        "type": "string",
+        "pattern": "^[#.D]+$",
+        "minLength": 3,
+        "maxLength": 128
+      }
+    },
+    "start": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "capacity": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "daySeconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "nightSeconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "radioWait": {
+      "type": "number",
+      "minimum": 0
+    },
+    "initial": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "ward": {
+      "type": "object",
+      "required": [
+        "cell",
+        "radius",
+        "initialFuel"
+      ],
+      "properties": {
+        "cell": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "radius": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "initialFuel": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "doors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "cell"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cell": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "locked": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "title",
+          "cell"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "cache",
+              "bench",
+              "stash",
+              "ward",
+              "radio",
+              "exit"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "cell": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "loot": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "cost": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "enemies": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "cell",
+          "patrol"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cell": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "patrol": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        }
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "fact"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "fact": {
+            "type": "string"
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

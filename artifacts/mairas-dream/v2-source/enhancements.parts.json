@@ -1,0 +1,234 @@
+[
+  {
+    "id": "qt-thrift-cashier",
+    "file": "../projects/mairas-dream/assets/characters/cashier.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Quaternius \u00b7 cashier animated civilian",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "tags": [
+      "character",
+      "human",
+      "rigged",
+      "animated",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "CC0 cashier from Quaternius Ultimate Modular Women, acquired from agentkaerf/FreeModels mirror of the official pack. https://quaternius.com/packs/ultimatemodularwomen.html. Embedded glTF repacked to GLB; retained idle/walk/run/interact/hit/wave clips. Geometry, rig and original materials preserved."
+  },
+  {
+    "id": "mairas-store-display-lods",
+    "file": "../projects/mairas-dream/assets/display-lods.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Maira\u2019s store \u00b7 index-only display LODs",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "lod",
+      "optimization",
+      "polyhaven",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Precomputed index-only display LODs for six CC0 Poly Haven models. Original positions, UVs and normals are reused; full originals retained for close inspection. JSON keys asset/mesh/primitive with replacement indices, source checksums and measured reductions. Generated offline with meshoptimizer, 16% target indices, 0.035 error, locked borders.",
+    "uses": [
+      "ph-ceramic-vase-03",
+      "ph-desk-lamp-arm-01",
+      "ph-pot-enamel-01",
+      "ph-vintage-electric-kettle",
+      "ph-boombox",
+      "ph-mounted-fluorescent-lights"
+    ]
+  },
+  {
+    "id": "mairas-stock-layout",
+    "file": "../projects/mairas-dream/stock.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Dense thrift-store stock \u00b7 1,152 individual items",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "inventory",
+      "shopping",
+      "thrift-store",
+      "layout",
+      "cc0"
+    ],
+    "description": "Twelve shelves, six clothing fixtures and a shoe wall with 1,152 stable individual merchandise IDs, physical placements, prices, names, categories and visual variants. Measured shelf-board heights for the selected Poly Haven fixtures. Each item can be independently collected/returned.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{transformItem}) \u2192 {catalog,shelves,racks,update,dispose}",
+        "does": "Create a fresh merchandise catalog, optionally transform each item."
+      },
+      {
+        "name": "makeStock",
+        "signature": "makeStock() \u2192 Item[]",
+        "does": "Generate all unique item records."
+      },
+      {
+        "name": "catalog",
+        "signature": "Item[]",
+        "does": "Default complete item catalog."
+      },
+      {
+        "name": "shelves",
+        "signature": "Fixture[]",
+        "does": "Shelf positions and categories."
+      },
+      {
+        "name": "racks",
+        "signature": "Fixture[]",
+        "does": "Clothing fixture positions."
+      },
+      {
+        "name": "specials",
+        "signature": "Item[]",
+        "does": "Nine named errand purchases."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "transformItem",
+        "signature": "(item) \u2192 item",
+        "default": "identity",
+        "does": "Override placement, price or visual metadata for a new catalog."
+      }
+    ]
+  },
+  {
+    "id": "mairas-shopping-rules",
+    "file": "../artifacts/mairas-dream/mairas-shopping-rules.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Maira\u2019s Dream \u00b7 escalating shopping and stealth rules",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "shopping",
+      "stealth",
+      "levels",
+      "inventory",
+      "cats",
+      "cc0"
+    ],
+    "description": "Integer-cent basket/returns/checkout, concealment, tag switching with witnessed detection, three errands, progressive budgets and escalating cats. Visits 1\u20132 are affordable; visit 3 requires an unobserved tag change or theft. Pure renderer-independent state with full stable stock bundled; createRun(seed,level).",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{seed,level}) \u2192 Run",
+        "does": "Create a level-specific shopping run with update and dispose."
+      },
+      {
+        "name": "createRun",
+        "signature": "createRun(seed?,level=1) \u2192 Run",
+        "does": "Actions and state for a complete visit."
+      },
+      {
+        "name": "levelConfig",
+        "signature": "levelConfig(level) \u2192 Config",
+        "does": "Budget, cats, speed, fire and manager difficulty."
+      },
+      {
+        "name": "catalog",
+        "signature": "Item[]",
+        "does": "Individually identified stock."
+      },
+      {
+        "name": "objectives",
+        "signature": "Objective[]",
+        "does": "Three errand definitions."
+      }
+    ],
+    "uses": [
+      "mairas-stock-layout"
+    ]
+  },
+  {
+    "id": "mairas-shop-controls",
+    "file": "../projects/mairas-dream/input.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "Shop controls \u00b7 quick pickup and separate inspection",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "first-person",
+      "input",
+      "touch",
+      "shopping",
+      "cc0"
+    ],
+    "description": "WASD/arrows, drag and optional pointer-lock mouse look, sprint, crouch, tool/tag holds, immediate use and separate inspection. Pointer capture, multi-touch protection, clear on blur and disposal. Derived from the warehouse FPS input contract.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(canvas,{onUse,onInspect,onMenu}) \u2192 Controls",
+        "does": "Input state and callbacks for desktop/touch first-person shopping."
+      }
+    ],
+    "uses": [
+      "fps-controls"
+    ],
+    "hooks": [
+      {
+        "name": "onUse",
+        "signature": "() \u2192 void",
+        "does": "Quick pickup/use."
+      },
+      {
+        "name": "onInspect",
+        "signature": "() \u2192 void",
+        "does": "Open or close inspection."
+      },
+      {
+        "name": "onMenu",
+        "signature": "() \u2192 void",
+        "does": "Pause or close current view."
+      }
+    ]
+  },
+  {
+    "id": "mairas-store-sound",
+    "file": "../projects/mairas-dream/sound.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Thrift-store audio \u00b7 footsteps, Foley and NPC murmurs",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "audio",
+      "footsteps",
+      "foley",
+      "npc",
+      "shopping",
+      "cc0"
+    ],
+    "description": "User-gesture Web Audio with decoded Kenney clips, varied concrete footsteps, material impacts, cashier/shopper/manager formant murmurs, hum, doors, checkout, cats, fire and tool hiss. Explicit mute/dispose and diagnostics. No hosted voice service.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{bankURL}) \u2192 Sound",
+        "does": "Create reusable store sound methods with update/dispose."
+      },
+      {
+        "name": "createSound",
+        "signature": "createSound({bankURL}?) \u2192 Sound",
+        "does": "Create an audio engine; call start from a user gesture."
+      }
+    ],
+    "options": [
+      {
+        "name": "bankURL",
+        "type": "URL",
+        "does": "JSON bank of Ogg data URLs; defaults to pinned kenney-thrift-foley or local source bank."
+      }
+    ],
+    "uses": [
+      "kenney-thrift-foley"
+    ]
+  }
+]

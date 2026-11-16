@@ -1,0 +1,44 @@
+[
+  {
+    "id": "survival-starter-archive",
+    "file": "survival/survival-starter.zip",
+    "type": "asset",
+    "mime": "application/zip",
+    "title": "Low-token survival starter",
+    "description": "A compact portable authoring kit: pinned runtime/model URLs, game template, editable scenario and recipes, JSON Schema, reference and one-command generator. Agents can generate a new game without reading or rewriting engine source. No npm install or new game backend; run node new-game.mjs my-town \"My Town\". Original code/data CC0.",
+    "tags": [
+      "framework",
+      "starter",
+      "cheap",
+      "low-token",
+      "template",
+      "survival",
+      "authoring",
+      "zip"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "no-road-home",
+      "seeded-random",
+      "grid-navigation",
+      "perception-brain",
+      "recipe-book",
+      "objective-journal",
+      "save-codec",
+      "survival-kit",
+      "survival-town-view",
+      "no-road-home-scenario",
+      "survival-recipe-pack",
+      "survival-scenario-schema",
+      "health",
+      "resource-inventory",
+      "expedition-shell",
+      "ambient-motes",
+      "touch-controls",
+      "garden-caretaker",
+      "ph-wooden-crate-01",
+      "ph-vintage-oil-lamp"
+    ]
+  }
+]

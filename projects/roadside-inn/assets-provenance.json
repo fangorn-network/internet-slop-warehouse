@@ -1,0 +1,126 @@
+[
+  {
+    "id": "rb-sophia-formal",
+    "source": "https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/sophia_formal.glb",
+    "originalSha256": "329af2fbc680355ac09488a4eedae15650ad0a6b48e71aef304129aed2e170a3",
+    "preparedSha256": "496372e230e4a72096fdbffa986dd6319d84939199938bcb5dbb7bae5f0ab683",
+    "license": "MIT",
+    "changes": [
+      "Original outfit retained; unused clothing and morphs removed",
+      "Idle/Walk/Wave/Talk clips retained",
+      "Textures resized to at most 1024px",
+      "MIT notices preserved"
+    ]
+  },
+  {
+    "id": "rb-marcus-formal",
+    "source": "https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/marcus_formal.glb",
+    "originalSha256": "0c8f874406273ca34df4c246ffc609ebf35b4d424911316ecf0154f7f07135d5",
+    "preparedSha256": "c67ffba7b57c1c6228a395007591779001f95b70dbc5b391a18ff09c96c926da",
+    "license": "MIT",
+    "changes": [
+      "Original outfit retained; unused clothing and morphs removed",
+      "Idle/Walk/Wave/Talk clips retained",
+      "Textures resized to at most 1024px",
+      "MIT notices preserved"
+    ]
+  },
+  {
+    "id": "rb-emma-casual",
+    "source": "https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/emma_casual.glb",
+    "originalSha256": "dc825893bdb47fa25fe3017ab0c923018b57003a7d734a5206366fb95036769a",
+    "preparedSha256": "1fc8f361587e2646ef26849fc766676c1f599bd1a3841e932bc8bc2bdb50b15b",
+    "license": "MIT",
+    "changes": [
+      "Original outfit retained; unused clothing and morphs removed",
+      "Idle/Walk/Wave/Talk clips retained",
+      "Textures resized to at most 1024px",
+      "MIT notices preserved"
+    ]
+  },
+  {
+    "id": "rb-andre-casual",
+    "source": "https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/andre_casual.glb",
+    "originalSha256": "65c2dd49191505efe01546ff73dd98a0eada760059628612f1aa5e07785b2953",
+    "preparedSha256": "eb207594630d633b455a5c7e309ce8f002014c783d14023c9247b970936dc684",
+    "license": "MIT",
+    "changes": [
+      "Original outfit retained; unused clothing and morphs removed",
+      "Idle/Walk/Wave/Talk clips retained",
+      "Textures resized to at most 1024px",
+      "MIT notices preserved"
+    ]
+  },
+  {
+    "id": "g3-shower-cabin",
+    "source": "https://grab3d.com/models/furniture/shower-cabin/",
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "shower-cabin.glb",
+      "bytes": 956764,
+      "url": "https://grab3d.com/dl/shower-cabin/shower-cabin.glb"
+    },
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/shower-cabin/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/shower-cabin/manifest.json"
+    },
+    "preparedSha256": "444b714d75282cb8cb754858a891c5d411d41a543c755a77af69482d5a8b1959",
+    "license": "CC0-1.0",
+    "changes": [
+      "Textures resized to at most 1024px WebP"
+    ]
+  },
+  {
+    "id": "g3-treadmill",
+    "source": "https://grab3d.com/models/sports/treadmill/",
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "treadmill.glb",
+      "bytes": 910456,
+      "url": "https://grab3d.com/dl/treadmill/treadmill.glb"
+    },
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/treadmill/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/treadmill/manifest.json"
+    },
+    "preparedSha256": "9aa230f0a3ced9cc49d2f92c956d2161288e8ce3a551903db07b1571610239bd",
+    "license": "CC0-1.0",
+    "changes": [
+      "Textures resized to at most 1024px WebP"
+    ]
+  },
+  {
+    "id": "g3-exercise-bike",
+    "source": "https://grab3d.com/models/sports/exercise-bike/",
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "exercise-bike.glb",
+      "bytes": 1393164,
+      "url": "https://grab3d.com/dl/exercise-bike/exercise-bike.glb"
+    },
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/exercise-bike/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/exercise-bike/manifest.json"
+    },
+    "preparedSha256": "6d69846658b23f5b59569928e86ac890157da029ca64ce74fdec6aef3e284429",
+    "license": "CC0-1.0",
+    "changes": [
+      "Textures resized to at most 1024px WebP"
+    ]
+  }
+]

@@ -1,0 +1,231 @@
+[
+  {
+    "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+    "repo": "internet-slop-warehouse",
+    "id": "seeded-random",
+    "cid": "bafyreiadpsxlegek52iaopp77g2rrpqlkynsiz6crv25b3domplhxwasgy",
+    "type": "logic",
+    "payload": {
+      "src": "bafkreiduxybs62ydmy2thka6k67p2kf756nc45cx6qwewwz2nrx435isyi",
+      "kind": "rule",
+      "tags": [
+        "random",
+        "seed",
+        "loot",
+        "weighted",
+        "deterministic",
+        "procedural"
+      ],
+      "title": "Serializable seeded randomness",
+      "author": "the internet slop warehouse",
+      "exports": [
+        {
+          "does": "Repeatable random numbers, integer rolls and weighted choices with a portable 32-bit state. Use for loot, encounter tables and generated content. Runs locally with no service calls; not cryptographic.",
+          "name": "attach",
+          "signature": "attach(object, opts) → { next(), int(min,max), pick(entries), state, update(), dispose() }"
+        }
+      ],
+      "license": "CC0-1.0",
+      "options": [
+        {
+          "does": "seed for a new sequence",
+          "name": "seed",
+          "type": "string | integer",
+          "default": 1
+        },
+        {
+          "does": "restore the exact next roll",
+          "name": "state",
+          "type": "uint32 | null",
+          "default": null
+        }
+      ],
+      "description": "Repeatable random numbers, integer rolls and weighted choices with a portable 32-bit state. Use for loot, encounter tables and generated content. Runs locally with no service calls; not cryptographic."
+    },
+    "score": 0.6583691723251004
+  },
+  {
+    "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+    "repo": "internet-slop-warehouse",
+    "id": "clip-animator",
+    "cid": "bafyreicdrtppcg2ju7kzhetd53kp7zwbm6mymi6p6jq4b6r2ebfjnaxosm",
+    "type": "logic",
+    "payload": {
+      "src": "bafkreiahogjc53z7qaa7x4j7nnus5rxahr6ojuaxb2m7oukkb3fxc3zj2y",
+      "kind": "effect",
+      "tags": [
+        "animation",
+        "gltf",
+        "skinned",
+        "crossfade",
+        "character"
+      ],
+      "title": "Clip animator",
+      "author": "the internet slop warehouse",
+      "exports": [
+        {
+          "does": "crossfades to the clip for state() each update",
+          "name": "attach",
+          "signature": "attach(model, opts) → { update(dt), dispose(), mixer }"
+        }
+      ],
+      "license": "CC0-1.0",
+      "options": [
+        {
+          "does": "the model's clips (gltf.animations)",
+          "name": "animations",
+          "type": "AnimationClip[]",
+          "default": "[]"
+        },
+        {
+          "does": "which state to show now, e.g. () => controller.state",
+          "name": "state",
+          "type": "() → string",
+          "default": "() => \"idle\""
+        },
+        {
+          "does": "which clip plays for each state",
+          "name": "clips",
+          "type": "{ state: clipName }",
+          "default": "{ idle: Idle, walk: Walking, run: Running, jump: Jump }"
+        },
+        {
+          "does": "crossfade seconds",
+          "name": "fade",
+          "type": "number",
+          "default": 0.2
+        }
+      ],
+      "description": "Plays a rigged model's animation clips by state, crossfading between them: wire it to a controller's state so the character idles, walks, runs and jumps. Clip names default to the expressive robot's."
+    },
+    "score": 0.6270221570395433
+  },
+  {
+    "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+    "repo": "internet-slop-warehouse",
+    "id": "trystero-027",
+    "cid": "bafyreiaiw5l5xueaisa7gkya62433z3x4cnkgvawls6zu2kssfjqu57ywu",
+    "type": "logic",
+    "payload": {
+      "src": "bafkreigp466rbog37iwgqxm6ofdqgi3l5vy3e6xfemilw42ffr5y2lw7ye",
+      "kind": "rule",
+      "tags": [
+        "building",
+        "crafting",
+        "exploration",
+        "co-op",
+        "reusable"
+      ],
+      "uses": [
+        {
+          "id": "trystero-027-license",
+          "cid": "bafyreihfm35nxkslonist6ulrsvrmwy6dl74sjkisao5fh4egk3kt63amm",
+          "repo": "internet-slop-warehouse",
+          "type": "asset",
+          "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+        }
+      ],
+      "title": "Trystero 0.27 browser transport (MIT)",
+      "author": "Trystero contributors; warehouse packaging",
+      "exports": [
+        {
+          "does": "Pinned self-contained Trystero 0.27.0 Nostr/WebRTC transport. Optional public signaling, no API key. MIT third-party code; see bundled license notices.",
+          "name": "attach",
+          "signature": "attach(object, opts) → { update(dt), dispose(), ... }"
+        },
+        {
+          "does": "Join an encrypted peer room.",
+          "name": "joinRoom",
+          "signature": "joinRoom(options)"
+        },
+        {
+          "does": "Host-signed administration and shared-state writes.",
+          "name": "roles",
+          "signature": "roles(options)"
+        },
+        {
+          "does": "Default public Nostr relays.",
+          "name": "defaultRelayUrls",
+          "signature": "defaultRelayUrls: string[]"
+        }
+      ],
+      "license": "MIT",
+      "description": "Pinned self-contained Trystero 0.27.0 Nostr/WebRTC transport. Optional public signaling, no API key. MIT third-party code; see bundled license notices."
+    },
+    "score": 0.5894002151669249
+  },
+  {
+    "id": "fps-controls",
+    "cid": "bafyreiai4uelijkn7clp3fc4bhywxgnli5bxzqkc5nzxv55hmh2urchfa4",
+    "type": "logic",
+    "payload": {
+      "src": "bafkreifdkkwxdfthnenma3vyoypfvyr6zj5igr3ltzlycmg2wx2h3gtieu",
+      "kind": "controller",
+      "tags": [
+        "3d",
+        "remix",
+        "cc0",
+        "exploration"
+      ],
+      "title": "First-person touch and desktop controls",
+      "author": "the internet slop warehouse",
+      "exports": [
+        {
+          "does": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal.",
+          "name": "attach",
+          "signature": "attach(object,opts) → instance"
+        }
+      ],
+      "license": "CC0-1.0",
+      "description": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal."
+    },
+    "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+    "repo": "internet-slop-warehouse"
+  },
+  {
+    "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+    "repo": "internet-slop-warehouse",
+    "id": "p2p-homestead",
+    "cid": "bafyreifd2m37f5hg47rtwjbjxynaqcrrz7aqsqhyfubynm3mx63fg47ihq",
+    "type": "logic",
+    "payload": {
+      "src": "bafkreibtdnzdbxdty6idjaa76p6lcmu3odshluigtgh3hcwgq4kmxox5sa",
+      "kind": "rule",
+      "tags": [
+        "building",
+        "crafting",
+        "exploration",
+        "co-op",
+        "reusable"
+      ],
+      "uses": [
+        {
+          "id": "homestead-kit",
+          "cid": "bafyreibjt4nbkqia7ru2s7beqarvcfxlfm3t6h54ix2chd2ubuotm2yemi",
+          "repo": "internet-slop-warehouse",
+          "type": "logic",
+          "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+        },
+        {
+          "id": "trystero-027",
+          "cid": "bafyreiaiw5l5xueaisa7gkya62433z3x4cnkgvawls6zu2kssfjqu57ywu",
+          "repo": "internet-slop-warehouse",
+          "type": "logic",
+          "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936"
+        }
+      ],
+      "title": "Serverless homestead co-op",
+      "author": "the internet slop warehouse",
+      "exports": [
+        {
+          "does": "Optional four-player Trystero rooms. Host validates intents and broadcasts signed snapshots; guests cannot write canonical state. Ephemeral identity works without browser storage. Host must stay online; no host migration or TURN service.",
+          "name": "attach",
+          "signature": "attach(object, opts) → { update(dt), dispose(), ... }"
+        }
+      ],
+      "license": "CC0-1.0",
+      "description": "Optional four-player Trystero rooms. Host validates intents and broadcasts signed snapshots; guests cannot write canonical state. Ephemeral identity works without browser storage. Host must stay online; no host migration or TURN service."
+    },
+    "score": 0.4626680031824699
+  }
+]

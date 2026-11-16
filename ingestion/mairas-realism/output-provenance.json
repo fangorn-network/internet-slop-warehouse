@@ -1,0 +1,256 @@
+[
+  {
+    "id": "ph-tea-set-01",
+    "file": "haven/ph-tea-set-01.glb",
+    "bytes": 2276156,
+    "sha256": "bf7c644dd27e34d53966e227633a9817f5cb48be884b03a05c2931d2784d60ca",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-covered-car",
+    "file": "haven/ph-covered-car.glb",
+    "bytes": 2345388,
+    "sha256": "7c8c1745669c043febe4d17482208df8655adcf25b1e3e0b44ac86f238eb57fc",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-cross-pein-hammer",
+    "file": "haven/ph-cross-pein-hammer.glb",
+    "bytes": 1507684,
+    "sha256": "1c28a46eb14636573622bf92c5750c27e2e85f0dc4f9a8868cd07aaf13906748",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-cashregister-01",
+    "file": "haven/ph-cashregister-01.glb",
+    "bytes": 1037140,
+    "sha256": "289ddea4439d810c493ed8b53b3737a9a12482ceb101061d487c1d71ed36fca9",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-rubber-boots",
+    "file": "haven/ph-rubber-boots.glb",
+    "bytes": 2010056,
+    "sha256": "e08cd5fe5583c3b39e18b4b40b18dfa2f44e02681f6533d23a3304a3a8437e1b",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-sofa-02",
+    "file": "haven/ph-sofa-02.glb",
+    "bytes": 425580,
+    "sha256": "2275ff550c70690f4ca73c9a7120e3ac3d8de16642260c731d7be378829a533d",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-worn-metal-rack",
+    "file": "haven/ph-worn-metal-rack.glb",
+    "bytes": 2008100,
+    "sha256": "7359f5e4c66921458243c1574c72a1fe0c98955a9ad9b91d3000df88662ffb91",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-cotton-color",
+    "file": "haven/ph-store-cotton-color.jpg",
+    "bytes": 787531,
+    "sha256": "9a5b4327d1593be63049d66ce0cd4af9158307501a5803c7b12e0bbaa8029a53",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-cotton-normal",
+    "file": "haven/ph-store-cotton-normal.jpg",
+    "bytes": 903085,
+    "sha256": "caa5a948c768c7173b1d8647aa2618d39b4ec5ba4575820e02fb500dac54596d",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-cotton-roughness",
+    "file": "haven/ph-store-cotton-roughness.jpg",
+    "bytes": 438194,
+    "sha256": "e48d14e87a5493bc4ef9bea61e85b4397ec41f93d1c3fd1ac17494475781610e",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-denim-color",
+    "file": "haven/ph-store-denim-color.jpg",
+    "bytes": 821758,
+    "sha256": "9da7f6672e71a87135d5b4b6bdf4471ee9d250f88ae78ce51f36cd0a6ed5d78d",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-denim-normal",
+    "file": "haven/ph-store-denim-normal.jpg",
+    "bytes": 1240070,
+    "sha256": "f94bbaa53003762c96624cabebb1a3fd334780c8c96548e9c14990f1e6920df2",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-denim-roughness",
+    "file": "haven/ph-store-denim-roughness.jpg",
+    "bytes": 803567,
+    "sha256": "4309d3acc80fb097652e1b2f5d6bd63f16351e215c3ce55490776ae0bd8380cb",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-asphalt-color",
+    "file": "haven/ph-store-asphalt-color.jpg",
+    "bytes": 739513,
+    "sha256": "99b6f6bdfbd09279f3f550ac9593336df541aa2319537566eeb3e737d8512010",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-asphalt-normal",
+    "file": "haven/ph-store-asphalt-normal.jpg",
+    "bytes": 1237059,
+    "sha256": "b745fd20cfb775ae907786ff0ffe200cedf73f3a6ef4e60c637b85b08e0a4f9a",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-asphalt-roughness",
+    "file": "haven/ph-store-asphalt-roughness.jpg",
+    "bytes": 344964,
+    "sha256": "147891957807bb03cc565c9daa8a16a4af7713449a0f475c638f78f833ad0646",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-floor-color",
+    "file": "haven/ph-store-floor-color.jpg",
+    "bytes": 356257,
+    "sha256": "ac159ca6072e30dd9d5c65e2d6eae7bb55a7dc9f06e6d141e9119390563511c2",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-floor-normal",
+    "file": "haven/ph-store-floor-normal.jpg",
+    "bytes": 121299,
+    "sha256": "efaff964d5688dd52ea3b876d5dac63ffee76d8d7270e30c11c81095246d5fdd",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-store-floor-roughness",
+    "file": "haven/ph-store-floor-roughness.jpg",
+    "bytes": 114013,
+    "sha256": "9c1996177892f220bcfdbc44675d0cd404482cfa80b1c577c7bcc100637ef8b6",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "ph-thrift-mug",
+    "file": "haven/ph-thrift-mug.glb",
+    "bytes": 585188,
+    "sha256": "dd03724bf393669c116ccc0afff4b74a5e0c9465bf7c6425d078afcc7047d333",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ]
+  },
+  {
+    "id": "ph-thrift-neighbor-mug",
+    "file": "haven/ph-thrift-neighbor-mug.glb",
+    "bytes": 647260,
+    "sha256": "5220655f7054b4c2ff8609df1162b6abb4a15cc5835eb4322cb3f49753aa2b27",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ]
+  },
+  {
+    "id": "ph-thrift-plate",
+    "file": "haven/ph-thrift-plate.glb",
+    "bytes": 557112,
+    "sha256": "6a0fc5dc563847419f39077e1c0f3851569deae7fbe8ad2563331f6497af3a5e",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ]
+  },
+  {
+    "id": "ph-thrift-saucer",
+    "file": "haven/ph-thrift-saucer.glb",
+    "bytes": 550736,
+    "sha256": "6003a7edd153f4370c98929186ae765dc2ff5d92799b0cd63afba694c5c08eb0",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ]
+  },
+  {
+    "id": "qt-hanging-shirt",
+    "file": "haven/qt-hanging-shirt.glb",
+    "bytes": 53840,
+    "sha256": "c7bff151acc6c49e890e265a7b397e5fc6c50c58342d199f89a9f337b50cb1c5",
+    "license": "CC0-1.0",
+    "uses": [
+      "qt-thrift-casual"
+    ]
+  },
+  {
+    "id": "qt-hanging-trousers",
+    "file": "haven/qt-hanging-trousers.glb",
+    "bytes": 66036,
+    "sha256": "8c5db5f1869f818e4f8b70fb19065504d14aa5c1b0811297bb042477e66f4a45",
+    "license": "CC0-1.0",
+    "uses": [
+      "qt-thrift-casual"
+    ]
+  },
+  {
+    "id": "qt-hanging-blouse",
+    "file": "haven/qt-hanging-blouse.glb",
+    "bytes": 35856,
+    "sha256": "da977c4508f6dc3e39d6e2b18965cf9904c06d219feb5430ee2cd2c7c170e27a",
+    "license": "CC0-1.0",
+    "uses": [
+      "qt-thrift-cashier"
+    ]
+  },
+  {
+    "id": "qt-animated-cat",
+    "file": "haven/qt-animated-cat.glb",
+    "bytes": 275180,
+    "sha256": "a6d6de5c4707bdf0cf46c57371dd373d9fc1afdf3c6ea168404bdb523db59926",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "kenney-sedan",
+    "file": "haven/kenney-sedan.glb",
+    "bytes": 184548,
+    "sha256": "00049bc36f86a7ddf2ee392bd439dd6fcf2c0f326a9c75eda96ccc2661270d4a",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "kenney-suv",
+    "file": "haven/kenney-suv.glb",
+    "bytes": 219892,
+    "sha256": "b991b85867a1e1df9cae6e84a8332b2b3c62d73dae1c39a7ae3f0ee9c2741e16",
+    "license": "CC0-1.0",
+    "uses": []
+  },
+  {
+    "id": "kenney-van",
+    "file": "haven/kenney-van.glb",
+    "bytes": 187996,
+    "sha256": "fd9bdb64a0063f5be0b9b1e8326690755e915f7d54ea0438079c350522931b75",
+    "license": "CC0-1.0",
+    "uses": []
+  }
+]

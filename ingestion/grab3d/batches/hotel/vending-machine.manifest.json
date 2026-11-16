@@ -1,0 +1,47 @@
+{
+ "slug": "vending-machine",
+ "triangles": 17700,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "vending-machine.glb",
+   "bytes": 2466652
+  },
+  "blend": {
+   "name": "vending-machine.blend",
+   "bytes": 1863006
+  },
+  "fbx": {
+   "name": "vending-machine.fbx",
+   "bytes": 3804700
+  },
+  "obj": {
+   "name": "vending-machine-obj.zip",
+   "bytes": 2428585
+  },
+  "usdz": {
+   "name": "vending-machine.usdz",
+   "bytes": 3712292
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.907 x 0.846 x 1.850",
+  "triangles": 17700,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "glass-front drinks vending machine 0.90 x 0.81 x 1.85 m (on levelling feet)",
+  "notes": "brand-free: no logos or text on cabinet, door or goods. Red painted steel cabinet, graphite door with laminated glass window in rubber seal, five shelves with dividers and blank price labels holding 0.5 l PET bottles and 0.25/0.33/0.5 l cans in neutral colours; illuminated selection panel (display, 12 keys, 2 function keys), card reader, coin slot with return button, coin return cup, lock, delivery bin with swing flap, rear vents. Glass, display, keys and LED strip keep their own (emissive/transmissive) materials; goods and shelves use a separate texture set",
+  "set": "Urban Street Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

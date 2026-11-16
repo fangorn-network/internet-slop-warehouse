@@ -1,0 +1,57 @@
+{
+  "id": "mercy-moving",
+  "title": "Mercy, Moving \u2014 exploration study",
+  "type": "game",
+  "file": "artifacts/mercy-moving/mercy-moving.html",
+  "description": "Exploration study 003: 13 enterable ground-floor spaces, independent shared doors, claimable homes, simple interiors, sheltered rain, original civilian figures and optional host-authoritative co-op. No creatures, cave or necklace yet.",
+  "tags": [
+    "3d",
+    "horror",
+    "exploration",
+    "p2p",
+    "prototype",
+    "walking-town"
+  ],
+  "license": "Mixed; see projects/mercy-moving/LICENSES.md",
+  "uses": [
+    {
+      "id": "seeded-random",
+      "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936"
+    },
+    {
+      "id": "fps-controls",
+      "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936"
+    },
+    {
+      "id": "p2p-homestead",
+      "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936"
+    },
+    {
+      "id": "trystero-027",
+      "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936"
+    }
+  ],
+  "publicationStatus": "published",
+  "previousPublishedReceipt": {
+    "id": "mercy-moving",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreicy7onjjkpwhtmelzlymgld363rhu7bo5xafyjs2wkzt7zzywzhia",
+    "src": "bafybeihs7nnyafyvv2edtqoyv3hvffzvz6cgr4xkyci6pqscam4iako6sm",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihs7nnyafyvv2edtqoyv3hvffzvz6cgr4xkyci6pqscam4iako6sm",
+    "txHash": "0x6db468fd6e0cf1b3a168169989bc3dbb727eb5be082e6f09108a90401e3b3316"
+  },
+  "receipt": {
+    "id": "mercy-moving",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidtr3eh6rfq2t5wrfj4ug32fuv62g7tj6ijvpjonclg2mhl4d57gy",
+    "src": "bafybeiddricbpfcnz3ijfbpqiemcg3lqygyb2kzi5hvt74bj67rrr5ugbi",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiddricbpfcnz3ijfbpqiemcg3lqygyb2kzi5hvt74bj67rrr5ugbi",
+    "txHash": "0x0af524c4b0d3f2a775ad4313069b8b184762f93f30f5e15d479df80f24007075"
+  },
+  "parent": {
+    "id": "mercy-moving",
+    "cid": "bafyreicy7onjjkpwhtmelzlymgld363rhu7bo5xafyjs2wkzt7zzywzhia"
+  }
+}

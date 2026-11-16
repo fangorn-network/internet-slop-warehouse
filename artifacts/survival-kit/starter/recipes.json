@@ -1,0 +1,47 @@
+[
+  {
+    "id": "lockpick",
+    "title": "Lockpick",
+    "cost": {
+      "scrap": 2,
+      "wire": 1
+    },
+    "gain": {
+      "lockpick": 1
+    }
+  },
+  {
+    "id": "medicine",
+    "title": "Field dressing",
+    "cost": {
+      "cloth": 2,
+      "alcohol": 1
+    },
+    "gain": {
+      "medicine": 1
+    }
+  },
+  {
+    "id": "decoy",
+    "title": "Noise decoy",
+    "cost": {
+      "scrap": 1,
+      "wire": 1
+    },
+    "gain": {
+      "decoy": 1
+    },
+    "station": "workbench"
+  },
+  {
+    "id": "barricade",
+    "title": "Door brace",
+    "cost": {
+      "scrap": 2,
+      "cloth": 1
+    },
+    "gain": {
+      "barricade": 1
+    }
+  }
+]

@@ -1,0 +1,632 @@
+[
+  {
+    "id": "ph-tea-set-01",
+    "file": "haven/ph-tea-set-01.glb",
+    "type": "asset",
+    "title": "Tea Set 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "James Ray Cock, Rico Cilliers, Jurita Burger",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "props",
+      "dishes",
+      "antique",
+      "tea",
+      "cup",
+      "english",
+      "ornate",
+      "vintage",
+      "floral",
+      "decorative",
+      "ceramic",
+      "food",
+      "coffee",
+      "victorian"
+    ],
+    "description": "Tea Set 01 from Poly Haven, by James Ray Cock, Rico Cilliers, Jurita Burger. Self-contained GLB with 1K textures. Upstream polygon count: 40296; 10 meshes. Source: https://polyhaven.com/a/tea_set_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-covered-car",
+    "file": "haven/ph-covered-car.glb",
+    "type": "asset",
+    "title": "Covered Car",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "MP",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "props",
+      "industrial",
+      "collection: hidden_alley",
+      "garage",
+      "stored",
+      "vehicle",
+      "car",
+      "workshop",
+      "mechanic",
+      "automotive",
+      "repair shop",
+      "junkyard",
+      "scrapyard"
+    ],
+    "description": "Covered Car from Poly Haven, by MP. Self-contained GLB with 1K textures. Upstream polygon count: 12592; 5 meshes. Source: https://polyhaven.com/a/covered_car. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-cross-pein-hammer",
+    "file": "haven/ph-cross-pein-hammer.glb",
+    "type": "asset",
+    "title": "Cross Pein Hammer",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Tics",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "collection: project_lighthouse",
+      "props",
+      "tools",
+      "old",
+      "vintage",
+      "antique",
+      "wooden",
+      "hammer",
+      "blacksmith",
+      "rustic",
+      "aged",
+      "worn"
+    ],
+    "description": "Cross Pein Hammer from Poly Haven, by Tics. Self-contained GLB with 1K textures. Upstream polygon count: 2124; 1 meshes. Source: https://polyhaven.com/a/cross_pein_hammer. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-cashregister-01",
+    "file": "haven/ph-cashregister-01.glb",
+    "type": "asset",
+    "title": "Cash Register 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Joe Seabuhr",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "appliances",
+      "props",
+      "commercial",
+      "store",
+      "vintage",
+      "cash",
+      "transaction",
+      "register",
+      "money",
+      "sales",
+      "convenience store",
+      "cashier",
+      "retail",
+      "business"
+    ],
+    "description": "Cash Register 01 from Poly Haven, by Joe Seabuhr. Self-contained GLB with 1K textures. Upstream polygon count: 9927; 2 meshes. Source: https://polyhaven.com/a/CashRegister_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-rubber-boots",
+    "file": "haven/ph-rubber-boots.glb",
+    "type": "asset",
+    "title": "Rubber Boots",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "L",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "collection: project_lighthouse",
+      "props",
+      "clothing",
+      "shoes",
+      "outdoor",
+      "waterproof",
+      "wellies",
+      "rubber",
+      "workwear",
+      "utility",
+      "garden",
+      "greenhouse",
+      "gardening",
+      "landscaping"
+    ],
+    "description": "Rubber Boots from Poly Haven, by L. Self-contained GLB with 1K textures. Upstream polygon count: 35004; 4 meshes. Source: https://polyhaven.com/a/rubber_boots. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-sofa-02",
+    "file": "haven/ph-sofa-02.glb",
+    "type": "asset",
+    "title": "Sofa 02",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Kirill Sannikov",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "furniture",
+      "seating",
+      "wood",
+      "chair",
+      "prop",
+      "couch",
+      "leather",
+      "fabric"
+    ],
+    "description": "Sofa 02 from Poly Haven, by Kirill Sannikov. Self-contained GLB with 1K textures. Upstream polygon count: 2728; 2 meshes. Source: https://polyhaven.com/a/sofa_02. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-worn-metal-rack",
+    "file": "haven/ph-worn-metal-rack.glb",
+    "type": "asset",
+    "title": "Worn Metal Rack",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Luca B",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "collection: project_lighthouse",
+      "furniture",
+      "shelves",
+      "industrial",
+      "storage",
+      "metal",
+      "rusted",
+      "old",
+      "worn",
+      "workshop",
+      "garage",
+      "shed"
+    ],
+    "description": "Worn Metal Rack from Poly Haven, by Luca B. Self-contained GLB with 1K textures. Upstream polygon count: 6372; 1 meshes. Source: https://polyhaven.com/a/worn_metal_rack. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-store-cotton-color",
+    "file": "haven/ph-store-cotton-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · cotton color",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "cotton",
+      "color"
+    ],
+    "description": "cotton color, original 1K col_03 map from https://polyhaven.com/a/fabric_pattern_05. sRGB base color. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-cotton-normal",
+    "file": "haven/ph-store-cotton-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · cotton normal",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "cotton",
+      "normal"
+    ],
+    "description": "cotton normal, original 1K nor_gl map from https://polyhaven.com/a/fabric_pattern_05. OpenGL tangent-space, linear. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-cotton-roughness",
+    "file": "haven/ph-store-cotton-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · cotton roughness",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "cotton",
+      "roughness"
+    ],
+    "description": "cotton roughness, original 1K Rough map from https://polyhaven.com/a/fabric_pattern_05. Linear roughness. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-denim-color",
+    "file": "haven/ph-store-denim-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · denim color",
+    "author": "Greg Zaal, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "denim",
+      "color"
+    ],
+    "description": "denim color, original 1K Diffuse map from https://polyhaven.com/a/denim_fabric_06. sRGB base color. CC0; by Greg Zaal, Rico Cilliers."
+  },
+  {
+    "id": "ph-store-denim-normal",
+    "file": "haven/ph-store-denim-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · denim normal",
+    "author": "Greg Zaal, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "denim",
+      "normal"
+    ],
+    "description": "denim normal, original 1K nor_gl map from https://polyhaven.com/a/denim_fabric_06. OpenGL tangent-space, linear. CC0; by Greg Zaal, Rico Cilliers."
+  },
+  {
+    "id": "ph-store-denim-roughness",
+    "file": "haven/ph-store-denim-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · denim roughness",
+    "author": "Greg Zaal, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "denim",
+      "roughness"
+    ],
+    "description": "denim roughness, original 1K Rough map from https://polyhaven.com/a/denim_fabric_06. Linear roughness. CC0; by Greg Zaal, Rico Cilliers."
+  },
+  {
+    "id": "ph-store-asphalt-color",
+    "file": "haven/ph-store-asphalt-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · asphalt color",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "asphalt",
+      "color"
+    ],
+    "description": "asphalt color, original 1K Diffuse map from https://polyhaven.com/a/asphalt_01. sRGB base color. CC0; by Dario Barresi, Charlotte Baglioni."
+  },
+  {
+    "id": "ph-store-asphalt-normal",
+    "file": "haven/ph-store-asphalt-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · asphalt normal",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "asphalt",
+      "normal"
+    ],
+    "description": "asphalt normal, original 1K nor_gl map from https://polyhaven.com/a/asphalt_01. OpenGL tangent-space, linear. CC0; by Dario Barresi, Charlotte Baglioni."
+  },
+  {
+    "id": "ph-store-asphalt-roughness",
+    "file": "haven/ph-store-asphalt-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · asphalt roughness",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "asphalt",
+      "roughness"
+    ],
+    "description": "asphalt roughness, original 1K Rough map from https://polyhaven.com/a/asphalt_01. Linear roughness. CC0; by Dario Barresi, Charlotte Baglioni."
+  },
+  {
+    "id": "ph-store-floor-color",
+    "file": "haven/ph-store-floor-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · floor color",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "floor",
+      "color"
+    ],
+    "description": "floor color, original 1K Diffuse map from https://polyhaven.com/a/floor_tiles_06. sRGB base color. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-floor-normal",
+    "file": "haven/ph-store-floor-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · floor normal",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "floor",
+      "normal"
+    ],
+    "description": "floor normal, original 1K nor_gl map from https://polyhaven.com/a/floor_tiles_06. OpenGL tangent-space, linear. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-floor-roughness",
+    "file": "haven/ph-store-floor-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · floor roughness",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "floor",
+      "roughness"
+    ],
+    "description": "floor roughness, original 1K Rough map from https://polyhaven.com/a/floor_tiles_06. Linear roughness. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-thrift-mug",
+    "title": "Porcelain tea cup",
+    "author": "James Ray Cock, Rico Cilliers; extracted by the internet slop wa",
+    "description": "Ground-centered individual cup extracted from tea_set_01. Original PBR geometry/maps preserved; normalized for reuse.",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "file": "haven/ph-thrift-mug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "ph-thrift-neighbor-mug",
+    "title": "World’s Okayest Neighbor · porcelain cup",
+    "author": "James Ray Cock, Rico Cilliers; decal by the internet slop wareho",
+    "description": "Real tea_set_01 cup with an original readable WORLD’S OKAYEST NEIGHBOR decal. Separate ground-centered model; original PBR source geometry preserved.",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "file": "haven/ph-thrift-neighbor-mug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "ph-thrift-plate",
+    "title": "Porcelain dinner plate",
+    "author": "James Ray Cock, Rico Cilliers; extracted by the internet slop wa",
+    "description": "Individual circular dinner plate extracted from tea_set_01 with original PBR resources.",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "file": "haven/ph-thrift-plate.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "ph-thrift-saucer",
+    "title": "Porcelain saucer",
+    "author": "James Ray Cock, Rico Cilliers; extracted by the internet slop wa",
+    "description": "Individual circular saucer extracted from tea_set_01 with original PBR resources.",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "file": "haven/ph-thrift-saucer.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "qt-hanging-shirt",
+    "title": "Authored hanging shirt",
+    "author": "Quaternius; baked by the internet slop warehouse",
+    "description": "Clothing-only upper-body geometry baked from the neutral pose of Quaternius Casual_2. Skin/face/shoes removed; static, ground-centered with fabric UVs.",
+    "uses": [
+      "qt-thrift-casual"
+    ],
+    "file": "haven/qt-hanging-shirt.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "qt-hanging-trousers",
+    "title": "Authored hanging trousers",
+    "author": "Quaternius; baked by the internet slop warehouse",
+    "description": "Clothing-only lower-body geometry from Quaternius Casual_2, neutral pose baked, static ground origin, fabric UVs.",
+    "uses": [
+      "qt-thrift-casual"
+    ],
+    "file": "haven/qt-hanging-trousers.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "qt-hanging-blouse",
+    "title": "Authored hanging blouse",
+    "author": "Quaternius; baked by the internet slop warehouse",
+    "description": "White upper-garment geometry from Quaternius Casual women character, neutral pose baked, static ground origin and fabric UVs.",
+    "uses": [
+      "qt-thrift-cashier"
+    ],
+    "file": "haven/qt-hanging-blouse.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "thrift-store",
+      "realism",
+      "cc0",
+      "derived"
+    ]
+  },
+  {
+    "id": "qt-animated-cat",
+    "title": "Quaternius · rigged walking cat",
+    "author": "Quaternius",
+    "description": "Original Cat from the creator’s Animal Pack Vol.2 (CC0), https://opengameart.org/content/animated-animales-low-poly . FBX converted to meter-scale GLB with idle and walking clips, original rig/materials preserved. Source archive and license evidence recorded.",
+    "file": "haven/qt-animated-cat.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "cat",
+      "animal",
+      "rigged",
+      "animated",
+      "cc0"
+    ]
+  },
+  {
+    "id": "kenney-sedan",
+    "title": "Kenney Car Kit · sedan",
+    "author": "Kenney",
+    "description": "Authored sedan from the CC0 Kenney Car Kit, https://kenney.nl/assets/car-kit . Acquired from Papyszoo/CC0-Public-Domain-Models mirror. Self-contained GLB, original geometry/textures/materials preserved.",
+    "file": "haven/kenney-sedan.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "vehicle",
+      "car",
+      "sedan",
+      "model",
+      "cc0"
+    ]
+  },
+  {
+    "id": "kenney-suv",
+    "title": "Kenney Car Kit · suv",
+    "author": "Kenney",
+    "description": "Authored suv from the CC0 Kenney Car Kit, https://kenney.nl/assets/car-kit . Acquired from Papyszoo/CC0-Public-Domain-Models mirror. Self-contained GLB, original geometry/textures/materials preserved.",
+    "file": "haven/kenney-suv.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "vehicle",
+      "car",
+      "suv",
+      "model",
+      "cc0"
+    ]
+  },
+  {
+    "id": "kenney-van",
+    "title": "Kenney Car Kit · van",
+    "author": "Kenney",
+    "description": "Authored van from the CC0 Kenney Car Kit, https://kenney.nl/assets/car-kit . Acquired from Papyszoo/CC0-Public-Domain-Models mirror. Self-contained GLB, original geometry/textures/materials preserved.",
+    "file": "haven/kenney-van.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "vehicle",
+      "car",
+      "van",
+      "model",
+      "cc0"
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "catalogCount": 81,
+  "games": {
+    "dead-letter-lake": {
+      "loaded": true,
+      "started": true,
+      "fullscreen": true,
+      "closed": true,
+      "pinned": "bafyreid3elioxg4dezeisjabwhj35jxjz67fosgrbq6djt6eurnu7mbbma",
+      "errors": []
+    },
+    "lunar-lost-property": {
+      "loaded": true,
+      "started": true,
+      "fullscreen": true,
+      "closed": true,
+      "pinned": "bafyreicikumkuwntbdob27l62sy7yigem6em63wxsngl65kyuxupsyrb7m",
+      "errors": []
+    },
+    "the-quiet-engine": {
+      "loaded": true,
+      "started": true,
+      "fullscreen": true,
+      "closed": true,
+      "pinned": "bafyreieregfeuslikp532uhhie5y4z267tvfni63t6ksioicyueplvf5dq",
+      "errors": []
+    }
+  }
+}

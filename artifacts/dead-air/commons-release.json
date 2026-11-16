@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-15T01:02:59.106Z",
+  "warehouse": "https://internet-slop-warehouse.quickbeam.workers.dev",
+  "game": {
+    "id": "relay-skirmish-game",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifvcgbaq2md2qa5vwk4skaquig4cz4veshbtnudk7acys4ilqngbi",
+    "src": "bafkreifwfqdpomk2r7s3tpsa6iae73dro4pc3qbhctffvuwuuxldw633qi",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreifwfqdpomk2r7s3tpsa6iae73dro4pc3qbhctffvuwuuxldw633qi",
+    "txHash": "0xa050cf75a8c08db5cd0afa6267791464577a7159a742662300fcd5e6f9a79d51"
+  },
+  "sourceKit": {
+    "id": "dead-air-remix-kit",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreies25annldg6ado3kxxxwrrjl2db5plj2dxsevppdekie45ykeftm",
+    "src": "bafybeicwxlli6f6rbkalsdj37j2otbazamgyfu7lrch55xpvpv4has2gbi",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeicwxlli6f6rbkalsdj37j2otbazamgyfu7lrch55xpvpv4has2gbi",
+    "txHash": "0xc4e34ddd660cc13d4345438ee23fd10e9d224cce3e2e5927b99ee05d9e0bc58b"
+  },
+  "newParts": 8,
+  "models": 11,
+  "unitTests": 59,
+  "assetsPublishedBeforeGameIntegration": true,
+  "liveVerified": true,
+  "catalogRefresh": {
+    "puts": [
+      "dead-air-remix-kit",
+      "relay-skirmish-game",
+      "inhabited-town-view"
+    ],
+    "deletes": [],
+    "reason": "Cloudflare indexer subrequest limit during catch-up"
+  }
+}

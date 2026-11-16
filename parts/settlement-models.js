@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: CC0-1.0
+// Original meter-scale modular camp and streetscape geometry. Y up, origin at ground.
+import * as T from 'three';
+export const kinds=['shelter','wall','workbench','hearth','stash','lantern','bedroll','planter','bench','cafe-table','supply-cache'];
+export function makePiece(kind){const g=new T.Group();g.name=kind;const wood=new T.MeshStandardMaterial({color:'#92704b',roughness:.88}),dark=new T.MeshStandardMaterial({color:'#424b43',roughness:.8}),cloth=new T.MeshStandardMaterial({color:'#698879',roughness:1,side:T.DoubleSide}),stone=new T.MeshStandardMaterial({color:'#8c9286',roughness:1}),warm=new T.MeshStandardMaterial({color:'#f4ca7c',emissive:'#ed9a3d',emissiveIntensity:1.3});
+ const box=(w,h,d,x,y,z,m=wood)=>{const o=new T.Mesh(new T.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;g.add(o);return o;};
+ if(kind==='shelter'){box(5,.12,5,0,.06,0);for(const x of[-2.3,2.3])for(const z of[-2.3,2.3])box(.17,2.8,.17,x,1.4,z);box(5,1.4,.13,0,.8,-2.35);for(const x of[-2.4,2.4])box(.13,1.4,4.8,x,.8,0);const roof=box(5.6,.18,5.5,0,2.95,0,cloth);roof.rotation.x=.08;box(5.4,.2,.2,0,2.75,2.4);}
+ else if(kind==='wall'){box(3,2.4,.18,0,1.2,0);for(const x of[-1.4,1.4])box(.18,2.7,.32,x,1.35,0,dark);}
+ else if(kind==='workbench'){box(2,.18,1.1,0,1,0);for(const x of[-.8,.8])for(const z of[-.4,.4])box(.13,1,.13,x,.5,z,dark);box(.5,.18,.35,.4,1.17,0,stone);box(.7,.07,.12,-.4,1.13,.15,dark);}
+ else if(kind==='hearth'){for(let i=0;i<10;i++){const a=i*Math.PI/5;box(.35,.3,.35,Math.cos(a)*.7,.15,Math.sin(a)*.7,stone);}for(const a of[0,1.8]){const o=box(1.1,.18,.18,0,.2,0);o.rotation.y=a;}const flame=new T.Mesh(new T.ConeGeometry(.3,.7,6),warm);flame.position.y=.55;g.add(flame);}
+ else if(kind==='stash'||kind==='supply-cache'){box(1.4,.9,.9,0,.45,0);box(1.5,.12,1,0,.96,0,dark);for(const x of[-.5,.5])box(.09,.95,.95,x,.5,0,dark);box(.16,.2,.08,0,.78,.5,warm);}
+ else if(kind==='lantern'){box(.12,2.5,.12,0,1.25,0);box(.45,.1,.45,0,2.55,0,dark);box(.25,.45,.25,0,2.25,0,warm);box(.45,.1,.45,0,1.98,0,dark);}
+ else if(kind==='bedroll'){box(.85,.15,1.9,0,.1,0,cloth);box(.7,.18,.35,0,.22,-.7,dark);}
+ else if(kind==='planter'){box(1.6,.6,.8,0,.3,0);box(1.4,.08,.6,0,.62,0,dark);for(const x of[-.5,0,.5]){box(.05,.6,.05,x,.9,0,cloth);box(.35,.08,.2,x,.8,0,cloth);}}
+ else if(kind==='bench'){for(const z of[-.22,0,.22])box(1.9,.08,.18,0,.55,z);for(const x of[-.7,.7])box(.12,.55,.6,x,.275,0,dark);box(1.9,.5,.1,0,.9,-.3);}
+ else if(kind==='cafe-table'){box(1,.1,1,0,.8,0,dark);box(.12,.8,.12,0,.4,0);for(const x of[-.95,.95]){box(.5,.1,.5,x,.48,0,cloth);box(.5,.55,.08,x,.8,-.25,cloth);for(const z of[-.2,.2])box(.07,.48,.07,x,.24,z,dark);}}
+ else throw Error('Unknown settlement model');return g;}
+export function attach(parent,{kind='shelter'}={}){const root=makePiece(kind);parent.add(root);return{root,update(){},dispose(){disposeModel(root);}};}
+export function disposeModel(root){root.removeFromParent();const geometries=new Set(),materials=new Set();root.traverse(o=>{if(o.geometry)geometries.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:[o.material])if(m)materials.add(m);});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());}

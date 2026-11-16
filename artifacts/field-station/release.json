@@ -1,0 +1,15 @@
+{
+  "url": "https://internet-slop-warehouse.quickbeam.workers.dev/?part=0x7b16387c5a8c514880e48bcacd52782fcf9da936%2Fstillwater-field-station",
+  "gameCID": "bafyreiay5o77yfpehvnf6mdnayh24eiyic4nx3z3wz7sd4kw54lsytihey",
+  "pinnedDependencies": 25,
+  "sourceMatches": true,
+  "logicMatches": [
+    "world-prop-kit",
+    "trail-walker",
+    "signal-trail",
+    "woodland-sound",
+    "trail-playground"
+  ],
+  "liveIndex": true,
+  "checkedAt": "2026-11-15T04:09:27.239Z"
+}

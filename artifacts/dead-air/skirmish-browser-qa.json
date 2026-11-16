@@ -1,0 +1,9 @@
+{
+  "opaqueSandbox": true,
+  "mobileMovement": true,
+  "fire": true,
+  "crafting": true,
+  "map": true,
+  "addressSearch": true,
+  "errors": []
+}

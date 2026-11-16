@@ -1,0 +1,452 @@
+[
+  {
+    "id": "ph-hotel-parquet-color",
+    "source": "https://polyhaven.com/a/herringbone_parquet",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden, Sergej Majboroda",
+    "download": {
+      "size": 829046,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/herringbone_parquet/herringbone_parquet_diff_1k.jpg",
+      "md5": "dae9d3dd6d8a2c2e387da22fd8228265"
+    },
+    "bytes": 829046,
+    "sha256": "d6c66492a6c4cfd4e8ed18c9cdd4e0303f3de4e04613d2adca8bc2b8f2dd2350",
+    "acquiredAt": "2026-11-16T03:39:58.858Z"
+  },
+  {
+    "id": "ph-hotel-parquet-normal",
+    "source": "https://polyhaven.com/a/herringbone_parquet",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden, Sergej Majboroda",
+    "download": {
+      "size": 373438,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/herringbone_parquet/herringbone_parquet_nor_gl_1k.jpg",
+      "md5": "c0a64eb61ea44add715c6fe29b958adf"
+    },
+    "bytes": 373438,
+    "sha256": "af6a822100fd6369bb75e43bb764f4a71ca41f521538ac796e92e681e3ad38f5",
+    "acquiredAt": "2026-11-16T03:39:58.903Z"
+  },
+  {
+    "id": "ph-hotel-parquet-roughness",
+    "source": "https://polyhaven.com/a/herringbone_parquet",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden, Sergej Majboroda",
+    "download": {
+      "size": 515202,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/herringbone_parquet/herringbone_parquet_rough_1k.jpg",
+      "md5": "180a5e058fb9529fdd07245f8a0a7702"
+    },
+    "bytes": 515202,
+    "sha256": "6058f5a1d27cef64f40057370188fec65c34998868d202a944f346ad9866ed62",
+    "acquiredAt": "2026-11-16T03:39:58.988Z"
+  },
+  {
+    "id": "ph-hotel-carpet-color",
+    "source": "https://polyhaven.com/a/poly_wool_herringbone",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_diff_1k.jpg",
+      "md5": "5c0981092ba0129d5951720ea23d50c2",
+      "size": 942966
+    },
+    "bytes": 942966,
+    "sha256": "fd889a46f617efd331e522e36b8ad2548e16e1cb018c001872f17537d7666af5",
+    "acquiredAt": "2026-11-16T03:39:59.111Z"
+  },
+  {
+    "id": "ph-hotel-carpet-normal",
+    "source": "https://polyhaven.com/a/poly_wool_herringbone",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_nor_gl_1k.jpg",
+      "md5": "a6371d03b033a1c20e1c2758136ac757",
+      "size": 1045151
+    },
+    "bytes": 1045151,
+    "sha256": "314ac7c1b7c101a48106e05199bfdb24e33671e58a6ccb334249b441d8e8ac98",
+    "acquiredAt": "2026-11-16T03:39:59.152Z"
+  },
+  {
+    "id": "ph-hotel-carpet-roughness",
+    "source": "https://polyhaven.com/a/poly_wool_herringbone",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_rough_1k.jpg",
+      "md5": "9f85f667517ee9c7f3cc85214058a7d8",
+      "size": 857426
+    },
+    "bytes": 857426,
+    "sha256": "028b4fb92c322a31b5374171f62f43af2cfd6a012748be175fd44dbf1109903c",
+    "acquiredAt": "2026-11-16T03:39:59.227Z"
+  },
+  {
+    "id": "ph-hotel-stone-facade-color",
+    "source": "https://polyhaven.com/a/white_sandstone_bricks_03",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 572227,
+      "md5": "66a5b590dd1a7786219ac3de31958577",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_sandstone_bricks_03/white_sandstone_bricks_03_diff_1k.jpg"
+    },
+    "bytes": 572227,
+    "sha256": "c0a4a186abd95a96f8cfc6ff13cecbea513e1712f482220abc71b48832d6dd52",
+    "acquiredAt": "2026-11-16T03:39:59.398Z"
+  },
+  {
+    "id": "ph-hotel-stone-facade-normal",
+    "source": "https://polyhaven.com/a/white_sandstone_bricks_03",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 610903,
+      "md5": "630b80240908aeda36ba1a6f269bd284",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_sandstone_bricks_03/white_sandstone_bricks_03_nor_gl_1k.jpg"
+    },
+    "bytes": 610903,
+    "sha256": "12a7d032cda08b25b68408a7ad185c4a8b4cce1bef8aaa429c0a03b419831922",
+    "acquiredAt": "2026-11-16T03:39:59.488Z"
+  },
+  {
+    "id": "ph-hotel-stone-facade-roughness",
+    "source": "https://polyhaven.com/a/white_sandstone_bricks_03",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 252020,
+      "md5": "f9f133042671e024d640f7ceb539691f",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_sandstone_bricks_03/white_sandstone_bricks_03_rough_1k.jpg"
+    },
+    "bytes": 252020,
+    "sha256": "5e5f8aa2db376abbc0431ec824de4e41762d47118ba66b2adf595299ebc88768",
+    "acquiredAt": "2026-11-16T03:39:59.536Z"
+  },
+  {
+    "id": "ph-hotel-lawn-color",
+    "source": "https://polyhaven.com/a/sparse_grass",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Amal Kumar",
+    "download": {
+      "size": 955945,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sparse_grass/sparse_grass_diff_1k.jpg",
+      "md5": "5d0aba796e1b5882555161c16b10ee9d"
+    },
+    "bytes": 955945,
+    "sha256": "ae94f2b34597b9108eefd88217f55eccaec6d6b382e858a478ee92df90e66617",
+    "acquiredAt": "2026-11-16T03:39:59.699Z"
+  },
+  {
+    "id": "ph-hotel-lawn-normal",
+    "source": "https://polyhaven.com/a/sparse_grass",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Amal Kumar",
+    "download": {
+      "size": 1440314,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/sparse_grass/sparse_grass_nor_gl_1k.jpg",
+      "md5": "3307e6ce47413c6b4e85885d4b8ae932"
+    },
+    "bytes": 1440314,
+    "sha256": "1c840a24807346ddaaf94a5057aee4078fcec3a4cd84bfe45da7d3b480ef460b",
+    "acquiredAt": "2026-11-16T03:39:59.766Z"
+  },
+  {
+    "id": "ph-hotel-wall-plaster-normal",
+    "source": "https://polyhaven.com/a/beige_wall_002",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dimitrios Savva, Rico Cilliers",
+    "download": {
+      "size": 71919,
+      "md5": "9bc4777b2f38e2ef06e394f1fca2f749",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/beige_wall_002/beige_wall_002_nor_gl_1k.jpg"
+    },
+    "bytes": 71919,
+    "sha256": "d8203ab93b36673ae1f8490e75fb2891965e3b99340dc9141bfcf83c490175c0",
+    "acquiredAt": "2026-11-16T03:40:00.336Z"
+  },
+  {
+    "id": "ph-hotel-wall-plaster-roughness",
+    "source": "https://polyhaven.com/a/beige_wall_002",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dimitrios Savva, Rico Cilliers",
+    "download": {
+      "size": 30841,
+      "md5": "036f812703b1710f4d799a5265055fff",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/beige_wall_002/beige_wall_002_rough_1k.jpg"
+    },
+    "bytes": 30841,
+    "sha256": "d8ab0a230bc5aa89cc2c3b35765d974fe200661a8e8455e3678322ea743dc813",
+    "acquiredAt": "2026-11-16T03:40:00.458Z"
+  },
+  {
+    "id": "ph-hotel-walnut-color",
+    "source": "https://polyhaven.com/a/american_walnut_veneer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/american_walnut_veneer/american_walnut_veneer_diff_1k.jpg",
+      "md5": "748b39ed2ba9dce314104055f18837f0",
+      "size": 579182
+    },
+    "bytes": 579182,
+    "sha256": "10d983003bb686db4af3d35d91197fdb6144dcd15d3dcea2ef315600f51b1af5",
+    "acquiredAt": "2026-11-16T03:40:00.824Z"
+  },
+  {
+    "id": "ph-hotel-walnut-normal",
+    "source": "https://polyhaven.com/a/american_walnut_veneer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/american_walnut_veneer/american_walnut_veneer_nor_gl_1k.jpg",
+      "md5": "4bd673f87d8aef1fcce85625d748fa0e",
+      "size": 414945
+    },
+    "bytes": 414945,
+    "sha256": "f54890d8dd352c8668d643adaa0ad66bd5a3b62995198b7dfb518fa59efebca2",
+    "acquiredAt": "2026-11-16T03:40:00.949Z"
+  },
+  {
+    "id": "ph-hotel-walnut-roughness",
+    "source": "https://polyhaven.com/a/american_walnut_veneer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/american_walnut_veneer/american_walnut_veneer_rough_1k.jpg",
+      "md5": "d9fa24afc4790122e9ba3c535af8b615",
+      "size": 691712
+    },
+    "bytes": 691712,
+    "sha256": "a13cd23228a4cb1bf0e342b4602d636123699cde61a2ff16bec1ce45a33ac62e",
+    "acquiredAt": "2026-11-16T03:40:01.100Z"
+  },
+  {
+    "id": "ph-hotel-bath-tile-color",
+    "source": "https://polyhaven.com/a/long_white_tiles",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden, Sergej Majboroda",
+    "download": {
+      "size": 619644,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/long_white_tiles/long_white_tiles_diff_1k.jpg",
+      "md5": "49f7e4c3a0afd9a8ca3df5ac75747353"
+    },
+    "bytes": 619644,
+    "sha256": "0aa70e14117e9b1fbf726868675f6afa8fd62a2691f7ba3964f47796df06cd9c",
+    "acquiredAt": "2026-11-16T03:40:01.340Z"
+  },
+  {
+    "id": "ph-hotel-bath-tile-normal",
+    "source": "https://polyhaven.com/a/long_white_tiles",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden, Sergej Majboroda",
+    "download": {
+      "size": 651009,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/long_white_tiles/long_white_tiles_nor_gl_1k.jpg",
+      "md5": "7837ef3d13258d6ee2bf9ee928d48152"
+    },
+    "bytes": 651009,
+    "sha256": "a488ee3a2dbb81f334e191b51a43567f4ee6bb8adce5fd3ed85d5a6958fddfc1",
+    "acquiredAt": "2026-11-16T03:40:01.478Z"
+  },
+  {
+    "id": "ph-hotel-bath-tile-roughness",
+    "source": "https://polyhaven.com/a/long_white_tiles",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden, Sergej Majboroda",
+    "download": {
+      "size": 491268,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/long_white_tiles/long_white_tiles_rough_1k.jpg",
+      "md5": "d271d3837f7b6e9db9c3a565ff57c290"
+    },
+    "bytes": 491268,
+    "sha256": "2ff3b8a463a80570dca0afbd2e4167db195f1c8d0d919010fa231097a00fdfd3",
+    "acquiredAt": "2026-11-16T03:40:01.600Z"
+  },
+  {
+    "id": "ph-hotel-pool-tile-color",
+    "source": "https://polyhaven.com/a/square_tiled_wall",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Charlotte Baglioni",
+    "download": {
+      "size": 612989,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/square_tiled_wall/square_tiled_wall_diff_1k.jpg",
+      "md5": "1d196c2efa8dea656e4381765932b39f"
+    },
+    "bytes": 612989,
+    "sha256": "bfa0ca33f19bd896bd116a675839f459dcfcb1e53a79cb57d6da1073f2c3acd5",
+    "acquiredAt": "2026-11-16T03:40:01.852Z"
+  },
+  {
+    "id": "ph-hotel-pool-tile-normal",
+    "source": "https://polyhaven.com/a/square_tiled_wall",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Charlotte Baglioni",
+    "download": {
+      "size": 945490,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/square_tiled_wall/square_tiled_wall_nor_gl_1k.jpg",
+      "md5": "1adf3e8eb04b8eca67a3e9334abce28d"
+    },
+    "bytes": 945490,
+    "sha256": "42826d27fdc53379324412ad2b71925e65d013f7df250d202fe296665a74e769",
+    "acquiredAt": "2026-11-16T03:40:02.017Z"
+  },
+  {
+    "id": "ph-hotel-gym-rubber-color",
+    "source": "https://polyhaven.com/a/rubber_tiles",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Amal Kumar",
+    "download": {
+      "size": 351085,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rubber_tiles/rubber_tiles_diff_1k.jpg",
+      "md5": "2a2cc9b5e06639c7fb6cc26c263c00ff"
+    },
+    "bytes": 351085,
+    "sha256": "07c66caf17f14b1eae8a60bfd11a3b00a88af0101d51aab370609a2f13bb8c04",
+    "acquiredAt": "2026-11-16T03:40:02.267Z"
+  },
+  {
+    "id": "ph-hotel-gym-rubber-normal",
+    "source": "https://polyhaven.com/a/rubber_tiles",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Amal Kumar",
+    "download": {
+      "size": 477716,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rubber_tiles/rubber_tiles_nor_gl_1k.jpg",
+      "md5": "4ed5fac176252df9dde7d0fbf8a9b76d"
+    },
+    "bytes": 477716,
+    "sha256": "9d030b6b52c039af437e5bd58590bf0b8abfbead85c02567211a341d292e5aa5",
+    "acquiredAt": "2026-11-16T03:40:02.391Z"
+  },
+  {
+    "id": "ph-hotel-gym-rubber-roughness",
+    "source": "https://polyhaven.com/a/rubber_tiles",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Amal Kumar",
+    "download": {
+      "size": 590975,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rubber_tiles/rubber_tiles_rough_1k.jpg",
+      "md5": "d6b5978530f81121c2e9812c4732d8b0"
+    },
+    "bytes": 590975,
+    "sha256": "a5b1f7f48bcb1d7d4d6ac87e19a0566a58b097e29292704649c46da60dc207a4",
+    "acquiredAt": "2026-11-16T03:40:03.110Z"
+  },
+  {
+    "id": "ph-hotel-concrete-color",
+    "source": "https://polyhaven.com/a/brushed_concrete",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dario Barresi, Dimitrios Savva",
+    "download": {
+      "size": 847278,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_diff_1k.jpg",
+      "md5": "731d450cd11906e926adeb2d5caa29f9"
+    },
+    "bytes": 847278,
+    "sha256": "4054ed6eb65cd063356ffb4a88706b7d7b78c5435051c48bf0ee64290f04bc8c",
+    "acquiredAt": "2026-11-16T03:40:03.371Z"
+  },
+  {
+    "id": "ph-hotel-concrete-normal",
+    "source": "https://polyhaven.com/a/brushed_concrete",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dario Barresi, Dimitrios Savva",
+    "download": {
+      "size": 849228,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_nor_gl_1k.jpg",
+      "md5": "fc8c03e505d0f2acb932dde6deae557a"
+    },
+    "bytes": 849228,
+    "sha256": "f4953a881f34627cefcc22f780d392314635e31bb41f75cf3888a5af55c21820",
+    "acquiredAt": "2026-11-16T03:40:03.502Z"
+  },
+  {
+    "id": "ph-hotel-concrete-roughness",
+    "source": "https://polyhaven.com/a/brushed_concrete",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dario Barresi, Dimitrios Savva",
+    "download": {
+      "size": 701983,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_rough_1k.jpg",
+      "md5": "e72fc05f68ea0a997a215d9701b16b2e"
+    },
+    "bytes": 701983,
+    "sha256": "24da5e4c3d17b7db1b4764b3cd1fd5c5680c27ef2c86e0d6a312f74d2d0599bd",
+    "acquiredAt": "2026-11-16T03:40:03.630Z"
+  },
+  {
+    "id": "ph-hotel-farm-sky",
+    "source": "https://polyhaven.com/a/farm_field_puresky",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dimitrios Savva, Jarod Guest",
+    "download": {
+      "size": 5033248,
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/farm_field_puresky_2k.hdr",
+      "md5": "bf9103944928c6ae1596e523ce658558"
+    },
+    "bytes": 5033248,
+    "sha256": "51c732607a26aec353a418c4e2a2772257234a055be99b3716aff34a189c88d2",
+    "acquiredAt": "2026-11-16T03:40:04.041Z"
+  },
+  {
+    "id": "ph-hotel-dusk-sky",
+    "source": "https://polyhaven.com/a/industrial_sunset_02_puresky",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jarod Guest, Sergej Majboroda",
+    "download": {
+      "size": 4132592,
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/industrial_sunset_02_puresky_2k.hdr",
+      "md5": "b54af864f1868a59cdc391744532776c"
+    },
+    "bytes": 4132592,
+    "sha256": "439d7e99b34bd3727896d9a06247d4bd80d8276f208f4fdefce919ce74b602c3",
+    "acquiredAt": "2026-11-16T03:40:04.351Z"
+  },
+  {
+    "id": "ph-hotel-room-hdri",
+    "source": "https://polyhaven.com/a/hotel_room",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Greg Zaal",
+    "download": {
+      "size": 1572830,
+      "md5": "48b3c2fb3896ead69f570d4e60316ff5",
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/hotel_room_1k.hdr"
+    },
+    "bytes": 1572830,
+    "sha256": "a9cbe87f526df3a70041edcdbef86c95dda1cde961c5c69b1c84633d2f703fa7",
+    "acquiredAt": "2026-11-16T03:40:05.247Z"
+  }
+]

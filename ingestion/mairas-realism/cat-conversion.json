@@ -1,0 +1,17 @@
+{
+  "clips": [
+    {
+      "name": "CatArmature|Idle",
+      "duration": 1.6666666269302368
+    },
+    {
+      "name": "CatArmature|Walking",
+      "duration": 1.6666666269302368
+    }
+  ],
+  "materials": [
+    "Grey",
+    "White",
+    "Pink"
+  ]
+}

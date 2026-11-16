@@ -1,0 +1,3 @@
+import{it,expect}from'vitest';import{screenToWorld,zoomView}from'./map-gestures.js';
+it('keeps the map point under the pinch/wheel anchor and clamps zoom',()=>{const rect={left:20,top:50,width:400,height:400},view={x:50,z:-20,zoom:1},point={x:90,y:320},anchor=screenToWorld(point,rect,view,2000),next=zoomView(view,3,point,rect,2000,1,8);expect(next.zoom).toBe(3);expect(screenToWorld(point,rect,next,2000)).toEqual(anchor);expect(zoomView(next,100,point,rect,2000,1,8).zoom).toBe(8);});
+it('supports world-camera zoom without introducing map panning',()=>{const view={x:0,z:0,zoom:1},next=zoomView(view,.5,{x:30,y:40},{left:0,top:0,width:400,height:800},1000,.4,2,false);expect(next).toEqual({x:0,z:0,zoom:.5});});

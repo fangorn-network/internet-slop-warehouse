@@ -1,0 +1,22 @@
+{
+  "indexed": 23,
+  "Dead Air Atlas": {
+    "realSandbox": true,
+    "defaultBayfield": true,
+    "liveAddressSearch": true,
+    "addressSpawn": true,
+    "mobileFullscreen": true,
+    "pinch": true,
+    "cleanHUD": true
+  },
+  "Relay Skirmish": {
+    "realSandbox": true,
+    "defaultBayfield": true,
+    "liveAddressSearch": true,
+    "addressSpawn": true,
+    "mobileFullscreen": true,
+    "crafting": true
+  },
+  "sourceKitBytes": 7638873,
+  "errors": []
+}

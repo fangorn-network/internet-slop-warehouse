@@ -1,0 +1,15 @@
+{
+  "realWebRTC": true,
+  "publicSignaling": true,
+  "gameUI": true,
+  "touchMovement": true,
+  "sharedDoor": true,
+  "sharedClaim": true,
+  "keyboardClaim": true,
+  "touchReleaseAndReclaim": true,
+  "claimContention": true,
+  "hostClaimPreserved": true,
+  "hostDeparture": true,
+  "continueSoloClaimPreserved": true,
+  "errors": []
+}

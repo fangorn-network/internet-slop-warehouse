@@ -1,0 +1,47 @@
+[
+  {
+    "id": "health",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifgxtfxaqvwnfokyk2ip3jgbzu7nbt7lx2kxs7u5w7wecbuchq4nu",
+    "src": "bafkreihl5y6shppfg3mztvkxd2yc7krdeeaaxqtbjaowyyhigp2uw3kimq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreihl5y6shppfg3mztvkxd2yc7krdeeaaxqtbjaowyyhigp2uw3kimq",
+    "txHash": "0x2699d3725dc62e82578bc4d6d704781c525d6f2b15749b17c06cddc25e65e8ec"
+  },
+  {
+    "id": "resource-inventory",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreigmjmlhjsk3r2n72hnodi6eol5gpikgawua6y7llqkl7taqdu7qm4",
+    "src": "bafkreicsekbq77yzxukvxjgzb2wynucqfm2khyr7h7m5f5dhn2ybzezopq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreicsekbq77yzxukvxjgzb2wynucqfm2khyr7h7m5f5dhn2ybzezopq",
+    "txHash": "0x2699d3725dc62e82578bc4d6d704781c525d6f2b15749b17c06cddc25e65e8ec"
+  },
+  {
+    "id": "proximity-interaction",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibaimlbqzihywezh4y5autgjhls3wuapqduyh7x7vrue5sj5fr734",
+    "src": "bafkreidpsbbv4melntnd2utbunkzcigm2ilaqwgmtp5p7kycz3koh7on6e",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidpsbbv4melntnd2utbunkzcigm2ilaqwgmtp5p7kycz3koh7on6e",
+    "txHash": "0x2699d3725dc62e82578bc4d6d704781c525d6f2b15749b17c06cddc25e65e8ec"
+  },
+  {
+    "id": "phase-cycle",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreif4dvfd5ofypsnsrnpm3qu3bxkidketagblmv6gxmgshbkj5pxkry",
+    "src": "bafkreia4x4uf5viw37p7pe4bclseusmab6blqfvga7piz77yhil6ovc6cm",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreia4x4uf5viw37p7pe4bclseusmab6blqfvga7piz77yhil6ovc6cm",
+    "txHash": "0x2699d3725dc62e82578bc4d6d704781c525d6f2b15749b17c06cddc25e65e8ec"
+  },
+  {
+    "id": "after-the-siren",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifmbv2czpqrv6ibim54ve6ezifibbjgc2gsef4ckyvz3ec4hbfag4",
+    "src": "bafkreiejgbdj3um5rfj2frhqdinh2tkk6drele72fmdt5ivr54j2f5xiia",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreiejgbdj3um5rfj2frhqdinh2tkk6drele72fmdt5ivr54j2f5xiia",
+    "txHash": "0x1af19f4cae0296c1971d4fe02fbf47b215d4d369d9cc582d80e81f3e2177b4d7"
+  }
+]

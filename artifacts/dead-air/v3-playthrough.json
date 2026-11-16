@@ -1,0 +1,143 @@
+{
+  "desktop": {
+    "loaded": true,
+    "movement": true,
+    "atlas": true,
+    "radio": true,
+    "light": true,
+    "desk": true,
+    "before": {
+      "mode": "playing",
+      "version": "0.3.0",
+      "cameraZoom": 1,
+      "atlasView": {
+        "x": 0,
+        "z": 0,
+        "zoom": 1
+      },
+      "panel": null,
+      "runLock": false,
+      "stickRun": false,
+      "placeName": "Bayfield waterfront, Wisconsin",
+      "district": "e3837145",
+      "position": {
+        "x": -0.08950743676046713,
+        "z": -11.99402055910583,
+        "heading": 0,
+        "hp": 100,
+        "charge": 99.88532799999996,
+        "light": true,
+        "tuned": 0,
+        "cooldown": 0
+      },
+      "state": {
+        "version": 1,
+        "caseId": "dead-air-atlas.v1",
+        "district": "e3837145",
+        "age": 0.7167000000000007,
+        "players": {
+          "solo": {
+            "x": -0.08950743676046713,
+            "z": -11.99402055910583,
+            "heading": 0,
+            "hp": 100,
+            "charge": 99.88532799999996,
+            "light": true,
+            "tuned": 0,
+            "cooldown": 0
+          }
+        },
+        "inventory": {
+          "cells": 6,
+          "evidence": 0
+        },
+        "score": {
+          "value": 0,
+          "entries": []
+        },
+        "clues": [],
+        "relays": [],
+        "completed": [],
+        "won": false,
+        "travel": null,
+        "quietUntil": 0
+      },
+      "routeLength": 0,
+      "connected": false,
+      "selfId": "solo",
+      "triangles": 113452,
+      "drawCalls": 243
+    }
+  },
+  "playthrough": {
+    "actualUI": true,
+    "streetRoutes": true,
+    "completed": {
+      "version": 1,
+      "caseId": "dead-air-atlas.v1",
+      "district": "e3837145",
+      "age": 97.9999999999987,
+      "players": {
+        "solo": {
+          "x": -21.50490889544585,
+          "z": -32.06470560139621,
+          "heading": -0.025866810377936277,
+          "hp": 100,
+          "charge": 99.93599999999998,
+          "light": true,
+          "tuned": 2,
+          "cooldown": 0
+        }
+      },
+      "inventory": {
+        "cells": 6,
+        "evidence": 3
+      },
+      "score": {
+        "value": 250,
+        "entries": [
+          "e3837145:relation/tile-14-4058-5775-building-3567861200-0-7",
+          "e3837145:node/tile-14-4058-5775-poi-87289707171-543",
+          "e3837145:node/tile-14-4058-5774-poi-115383453661-121",
+          "relay:field-relay"
+        ]
+      },
+      "clues": [
+        {
+          "id": "e3837145:relation/tile-14-4058-5775-building-3567861200-0-7",
+          "name": "United States Post Office",
+          "title": "The hour with no entry",
+          "text": "The register skips from 02:16 to 03:18. In the margin, someone wrote: “We did not lose an hour. We stored it overhead.”",
+          "frequency": 91.3,
+          "district": "46.8108,-90.8182"
+        },
+        {
+          "id": "e3837145:node/tile-14-4058-5775-poi-87289707171-543",
+          "name": "3.14 and More",
+          "title": "A voice behind the dial",
+          "text": "A receipt records a sale made tomorrow. Under the static: three people speaking with one breath. “The tanks remember pressure. The town remembers us.”",
+          "frequency": 97.7,
+          "district": "46.8108,-90.8182"
+        },
+        {
+          "id": "e3837145:node/tile-14-4058-5774-poi-115383453661-121",
+          "name": "Bayfield Elementary School",
+          "title": "The photograph of rain",
+          "text": "The pavement in the photograph is dry. Only the reflection shows a crowd. On the back: “Send the missing hour back through the water.”",
+          "frequency": 104.5,
+          "district": "46.8108,-90.8182"
+        }
+      ],
+      "relays": [
+        "field-relay"
+      ],
+      "completed": [
+        "traces",
+        "relay"
+      ],
+      "won": true,
+      "travel": null,
+      "quietUntil": 0
+    }
+  }
+}

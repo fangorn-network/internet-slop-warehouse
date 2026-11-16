@@ -1,0 +1,565 @@
+[
+  {
+    "id": "ph-fern-02",
+    "file": "haven/ph-fern-02.glb",
+    "type": "asset",
+    "title": "Fern 02",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Rob Tuytel, Rico Cilliers",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "plants",
+      "nature",
+      "collection: smugglers_cove",
+      "collection: pine_forest",
+      "plant",
+      "fern",
+      "foliage",
+      "jungle",
+      "shrub",
+      "bush",
+      "leaf",
+      "leaves",
+      "green",
+      "forest",
+      "outdoor"
+    ],
+    "description": "Fern 02 from Poly Haven, by Rob Tuytel, Rico Cilliers. Self-contained GLB with 1K textures. Upstream polygon count: 6232; 4 meshes. Source: https://polyhaven.com/a/fern_02. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-tree-stump-01",
+    "file": "haven/ph-tree-stump-01.glb",
+    "type": "asset",
+    "title": "Tree Stump 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Rob Tuytel",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "nature",
+      "plants",
+      "ground cover",
+      "trees",
+      "collection: pine_forest",
+      "tree",
+      "trunk",
+      "stump",
+      "dead tree",
+      "bark",
+      "forest",
+      "natural",
+      "woodland",
+      "foliage",
+      "environment",
+      "forest floor",
+      "leaf",
+      "dead",
+      "roots",
+      "decayed",
+      "log",
+      "dry",
+      "mossy",
+      "debris",
+      "moss",
+      "rough texture"
+    ],
+    "description": "Tree Stump 01 from Poly Haven, by Rob Tuytel. Self-contained GLB with 1K textures. Upstream polygon count: 41046; 1 meshes. Source: https://polyhaven.com/a/tree_stump_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-portable-generator",
+    "file": "haven/ph-portable-generator.glb",
+    "type": "asset",
+    "title": "Portable Generator",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "James Ray Cock",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "industrial",
+      "appliances",
+      "collection: project_lighthouse",
+      "gasoline",
+      "backup power",
+      "construction equipment",
+      "power generator",
+      "petrol",
+      "garage",
+      "power",
+      "engine"
+    ],
+    "description": "Portable Generator from Poly Haven, by James Ray Cock. Self-contained GLB with 1K textures. Upstream polygon count: 26419; 4 meshes. Source: https://polyhaven.com/a/portable_generator. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-vintage-radio-transceiver",
+    "file": "haven/ph-vintage-radio-transceiver.glb",
+    "type": "asset",
+    "title": "Vintage Radio Transceiver",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Mateusz Sadek",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "appliances",
+      "electronics",
+      "collection: project_lighthouse",
+      "military",
+      "army",
+      "communications",
+      "frequency dial",
+      "field radio",
+      "radio",
+      "ww2",
+      "telegraph",
+      "handset",
+      "microphone"
+    ],
+    "description": "Vintage Radio Transceiver from Poly Haven, by Mateusz Sadek. Self-contained GLB with 1K textures. Upstream polygon count: 42350; 14 meshes. Source: https://polyhaven.com/a/vintage_radio_transceiver. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-dead-tree-trunk",
+    "file": "haven/ph-dead-tree-trunk.glb",
+    "type": "asset",
+    "title": "Dead Tree Trunk",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Rob Tuytel",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "nature",
+      "plants",
+      "ground cover",
+      "collection: pine_forest",
+      "collection: verdant_trail",
+      "log",
+      "dead tree",
+      "tree",
+      "trunk",
+      "bark",
+      "natural",
+      "foliage",
+      "forest",
+      "plant",
+      "dead",
+      "dry",
+      "woodland",
+      "decayed",
+      "rough texture",
+      "forest floor"
+    ],
+    "description": "Dead Tree Trunk from Poly Haven, by Rob Tuytel. Self-contained GLB with 1K textures. Upstream polygon count: 101802; 1 meshes. Source: https://polyhaven.com/a/dead_tree_trunk. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-misty-pines",
+    "file": "haven/ph-misty-pines.hdr",
+    "title": "Misty Pines forest environment",
+    "type": "asset",
+    "mime": "image/vnd.radiance",
+    "author": "Greg Zaal",
+    "license": "CC0-1.0",
+    "tags": [
+      "forest",
+      "pbr",
+      "hdri",
+      "realistic",
+      "polyhaven"
+    ],
+    "description": "Misty Pines forest environment, 1K. Source https://polyhaven.com/a/misty_pines, by Greg Zaal. CC0. Equirectangular Radiance HDR, load with RGBELoader for image-based lighting."
+  },
+  {
+    "id": "ph-forest-floor-normal",
+    "file": "haven/ph-forest-floor-normal.jpg",
+    "title": "Forest floor OpenGL normal map",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "forest",
+      "pbr",
+      "texture",
+      "realistic",
+      "polyhaven"
+    ],
+    "description": "Forest floor OpenGL normal map, 1K. Source https://polyhaven.com/a/forrest_ground_01, by Rob Tuytel. CC0. OpenGL +Y tangent-space, linear data."
+  },
+  {
+    "id": "ph-forest-floor-roughness",
+    "file": "haven/ph-forest-floor-roughness.jpg",
+    "title": "Forest floor roughness map",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "forest",
+      "pbr",
+      "texture",
+      "realistic",
+      "polyhaven"
+    ],
+    "description": "Forest floor roughness map, 1K. Source https://polyhaven.com/a/forrest_ground_01, by Rob Tuytel. CC0. Linear roughness data."
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "world-prop-kit",
+    "file": "world-prop-kit.js",
+    "type": "logic",
+    "title": "Grounded PBR props and instanced scatter",
+    "description": "Load pinned static GLBs, normalize ground-centered pivots and meter heights without changing source geometry or PBR maps. Clone placements and instanced scatter; register procedural prototypes. Shared resource cleanup and explicit circle collision output. Animated/skinned instancing excluded.",
+    "kind": "effect",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene,opts) → {load,place,scatter,register,colliders,root,update,dispose}",
+        "does": "Manage reusable model prototypes and efficient world placement."
+      },
+      {
+        "name": "fitModel",
+        "signature": "fitModel(source,height) → THREE.Group",
+        "does": "Wrap a static model at ground origin and scale to the desired meter height."
+      }
+    ],
+    "options": [
+      {
+        "name": "parts",
+        "type": "Record<string,URL>",
+        "does": "Pinned warehouse asset URLs."
+      },
+      {
+        "name": "heightAt",
+        "type": "function",
+        "does": "Terrain elevation for placements without explicit y."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onProgress",
+        "signature": "(id) → void",
+        "does": "Report a loaded prototype for progress UI."
+      }
+    ],
+    "uses": []
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "trail-walker",
+    "file": "trail-walker.js",
+    "type": "logic",
+    "title": "Terrain walker with sliding disk collisions",
+    "description": "Camera-relative movement from an injected fps-controls handle, terrain following, step bob, optional sprint, circular obstacle sliding and bounded substeps to avoid tunneling. Static horizontal disk collision; no general rigidbody physics.",
+    "kind": "controller",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(camera,opts) → {update,dispose,distance}",
+        "does": "Move a camera through a sampled 3D world."
+      },
+      {
+        "name": "moveDisk",
+        "signature": "moveDisk(position,dx,dz,opts) → position",
+        "does": "Advance with circle collisions, bounds and axis sliding."
+      }
+    ],
+    "options": [
+      {
+        "name": "controls",
+        "type": "object",
+        "does": "Inject a published fps-controls instance."
+      },
+      {
+        "name": "colliders",
+        "type": "Circle[]",
+        "does": "Static x,z,radius obstacles."
+      },
+      {
+        "name": "bounds",
+        "type": "number",
+        "does": "Half width of playable square."
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "does": "Walking meters per second."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "heightAt",
+        "signature": "(x,z) → number",
+        "does": "Sample terrain height."
+      },
+      {
+        "name": "canMove",
+        "signature": "() → boolean",
+        "does": "Pause movement while in menus."
+      },
+      {
+        "name": "onStep",
+        "signature": "(event) → void",
+        "does": "Emit traveled-distance footsteps."
+      }
+    ],
+    "uses": [
+      "fps-controls"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "signal-trail",
+    "file": "signal-trail.js",
+    "type": "logic",
+    "title": "Exploration supplies, generator and radio signal rules",
+    "description": "Renderer-free proximity-checked collection, fuel/fuse power prerequisites, survey-log requirement, carrier-frequency tuning, signal meter, explicit transmission, reset and victory events. No timer, combat or persistence. Optional openPlay mode removes prerequisites and victory, with reversible generator and ungated radio experimentation.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(actor,opts) → {state,focus,signal,use,tune,reset,update,dispose}",
+        "does": "Compose a small restoration expedition from site records."
+      }
+    ],
+    "options": [
+      {
+        "name": "sites",
+        "type": "Site[]",
+        "does": "World positions, item identities and prompt text."
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "does": "Maximum interaction distance."
+      },
+      {
+        "name": "frequency",
+        "type": "number",
+        "does": "Correct carrier in MHz."
+      },
+      {
+        "name": "openPlay",
+        "type": "boolean",
+        "default": false,
+        "does": "Use reversible toys without collection requirements or an ending."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onEvent",
+        "signature": "({ok,message,state}) → void",
+        "does": "Observe accepted and rejected actions for UI/audio."
+      }
+    ],
+    "uses": []
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "woodland-sound",
+    "file": "woodland-sound.js",
+    "type": "logic",
+    "title": "Forest ambience and spatial machinery sound",
+    "description": "Sample-free Web Audio wind, intermittent bird chirps, footsteps, confirmation chime and HRTF generator hum. Lazy user-gesture creation, volume control, pause/resume and disposal. Includes distinct bell tones and a tunable radio carrier.",
+    "kind": "effect",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {start,pause,setVolume,step,chime,bell,tune,update,dispose}",
+        "does": "Create a generated woodland soundscape with listener-relative machine audio."
+      }
+    ],
+    "options": [
+      {
+        "name": "source",
+        "type": "{x,z}",
+        "does": "World location of machinery."
+      },
+      {
+        "name": "volume",
+        "type": "number",
+        "does": "Master volume 0–1."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onStart",
+        "signature": "() → void",
+        "does": "Observe creation of the sound engine."
+      }
+    ],
+    "uses": []
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "stillwater-world",
+    "type": "asset",
+    "file": "field-station/world.json",
+    "mime": "application/json",
+    "title": "Stillwater: trails, caches and station layout",
+    "description": "Editable seeded woodland expedition layout: 96m playable region, terrain spawn, three supply trails, five sites and radio carrier frequency. Companion world data for signal-trail and Stillwater Field Station."
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "stillwater-world-guide",
+    "type": "asset",
+    "file": "field-station/QUICKSTART.md",
+    "mime": "text/markdown",
+    "title": "Stillwater: immersive world composition guide",
+    "description": "Reusable asset and logic inventory, controls, PBR/world conventions, source provenance and remix instructions for a small exploration playground. Optional generator, radio and stone/bell toys; no required objective.",
+    "uses": [
+      "world-prop-kit",
+      "trail-walker",
+      "signal-trail",
+      "woodland-sound",
+      "stillwater-world",
+      "trail-playground",
+      "field-pine-spray"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "playground",
+      "remix",
+      "cc0"
+    ],
+    "id": "field-pine-spray",
+    "file": "field-station/pine-spray.png",
+    "type": "asset",
+    "mime": "image/png",
+    "title": "Green pine branch spray · original CC0",
+    "description": "Original transparent 512px RGBA pine-needle branch card with no snow. sRGB, alpha-test at 0.45, double-sided. Seeded procedural synthesis with scripts/make-field-pine.mjs; no photographic inputs. Pair with northwoods-trees at snow:0."
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "playground",
+      "remix",
+      "cc0"
+    ],
+    "id": "trail-playground",
+    "file": "trail-playground.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Stones and resonant targets · small 3D play toy",
+    "description": "Renderer-free ballistic throws with bounded substeps, configurable gravity and launch speed, sampled-ground bounces, spherical target hits and bounded projectile lifetime/count. Hook target hits to sounds, scores and physical feedback. No victory state or mandatory objective.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {stones,hits,throwStone,reset,update,dispose}",
+        "does": "Simulate a bounded stone-toss toy with target events."
+      }
+    ],
+    "options": [
+      {
+        "name": "targets",
+        "type": "Target[]",
+        "does": "World x/y/z positions, radius and caller-defined metadata."
+      },
+      {
+        "name": "maxStones",
+        "type": "number",
+        "default": 16,
+        "does": "Maximum concurrent stones."
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": 13,
+        "does": "Launch meters per second."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "heightAt",
+        "signature": "(x,z) → number",
+        "does": "Sample collision ground."
+      },
+      {
+        "name": "onHit",
+        "signature": "({target,stone,hits}) → void",
+        "does": "Trigger sound and animation for a target hit."
+      },
+      {
+        "name": "onThrow",
+        "signature": "(stone) → void",
+        "does": "Observe new projectiles."
+      }
+    ]
+  }
+]

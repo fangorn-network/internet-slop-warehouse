@@ -1,0 +1,132 @@
+[
+  {
+    "id": "rb-sophia-formal",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/rb-sophia-formal.glb",
+    "title": "Rocketbox \u00b7 sophia formal",
+    "mime": "model/gltf-binary",
+    "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
+    "license": "MIT",
+    "tags": [
+      "hotel",
+      "human",
+      "character",
+      "textured",
+      "rigged",
+      "animated",
+      "rocketbox"
+    ],
+    "description": "Textured, skinned human from Microsoft Rocketbox, converted by Avatar Studio (https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/sophia_formal.glb). Original outfit, authored normals, skin/hair/clothing maps retained. Idle, Walk, Wave and Talk mocap. Unused clothing and facial morphs removed; textures capped at 1K WebP for mobile. MIT notices embedded in GLB extras; see projects/roadside-inn/licenses/."
+  },
+  {
+    "id": "rb-marcus-formal",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/rb-marcus-formal.glb",
+    "title": "Rocketbox \u00b7 marcus formal",
+    "mime": "model/gltf-binary",
+    "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
+    "license": "MIT",
+    "tags": [
+      "hotel",
+      "human",
+      "character",
+      "textured",
+      "rigged",
+      "animated",
+      "rocketbox"
+    ],
+    "description": "Textured, skinned human from Microsoft Rocketbox, converted by Avatar Studio (https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/marcus_formal.glb). Original outfit, authored normals, skin/hair/clothing maps retained. Idle, Walk, Wave and Talk mocap. Unused clothing and facial morphs removed; textures capped at 1K WebP for mobile. MIT notices embedded in GLB extras; see projects/roadside-inn/licenses/."
+  },
+  {
+    "id": "rb-emma-casual",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/rb-emma-casual.glb",
+    "title": "Rocketbox \u00b7 emma casual",
+    "mime": "model/gltf-binary",
+    "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
+    "license": "MIT",
+    "tags": [
+      "hotel",
+      "human",
+      "character",
+      "textured",
+      "rigged",
+      "animated",
+      "rocketbox"
+    ],
+    "description": "Textured, skinned human from Microsoft Rocketbox, converted by Avatar Studio (https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/emma_casual.glb). Original outfit, authored normals, skin/hair/clothing maps retained. Idle, Walk, Wave and Talk mocap. Unused clothing and facial morphs removed; textures capped at 1K WebP for mobile. MIT notices embedded in GLB extras; see projects/roadside-inn/licenses/."
+  },
+  {
+    "id": "rb-andre-casual",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/rb-andre-casual.glb",
+    "title": "Rocketbox \u00b7 andre casual",
+    "mime": "model/gltf-binary",
+    "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
+    "license": "MIT",
+    "tags": [
+      "hotel",
+      "human",
+      "character",
+      "textured",
+      "rigged",
+      "animated",
+      "rocketbox"
+    ],
+    "description": "Textured, skinned human from Microsoft Rocketbox, converted by Avatar Studio (https://raw.githubusercontent.com/memoriesrohit/avatar-studio/main/models/andre_casual.glb). Original outfit, authored normals, skin/hair/clothing maps retained. Idle, Walk, Wave and Talk mocap. Unused clothing and facial morphs removed; textures capped at 1K WebP for mobile. MIT notices embedded in GLB extras; see projects/roadside-inn/licenses/."
+  },
+  {
+    "id": "g3-shower-cabin",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/g3-shower-cabin.glb",
+    "title": "Shower Cabin \u00b7 textured GLB",
+    "mime": "model/gltf-binary",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "model",
+      "textured",
+      "pbr",
+      "shower-cabin",
+      "grab3d"
+    ],
+    "description": "Corner shower enclosure with a white tray, pale blue tiled walls, a glass side panel and a hinged glass door, brass rain shower and shelf. Imported GLB with authored geometry and PBR color/normal/metallic/roughness maps; textures reduced to 1K. Source https://grab3d.com/models/furniture/shower-cabin/ CC0-1.0. Procedural source by Grab3D; no generative AI geometry or textures."
+  },
+  {
+    "id": "g3-treadmill",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/g3-treadmill.glb",
+    "title": "Treadmill \u00b7 textured GLB",
+    "mime": "model/gltf-binary",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "model",
+      "textured",
+      "pbr",
+      "treadmill",
+      "grab3d"
+    ],
+    "description": "Home treadmill with a dark ribbed belt, sky-blue motor hood, steel side handles and a tilted console: a clean prop for gyms and fitness scenes. Imported GLB with authored geometry and PBR color/normal/metallic/roughness maps; textures reduced to 1K. Source https://grab3d.com/models/sports/treadmill/ CC0-1.0. Procedural source by Grab3D; no generative AI geometry or textures."
+  },
+  {
+    "id": "g3-exercise-bike",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/g3-exercise-bike.glb",
+    "title": "Exercise Bike \u00b7 textured GLB",
+    "mime": "model/gltf-binary",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "model",
+      "textured",
+      "pbr",
+      "exercise-bike",
+      "grab3d"
+    ],
+    "description": "Upright exercise bike with a white flywheel cover, coral saddle and a simple console. The cranks with pedals are a separate object that can rotate. Imported GLB with authored geometry and PBR color/normal/metallic/roughness maps; textures reduced to 1K. Source https://grab3d.com/models/sports/exercise-bike/ CC0-1.0. Procedural source by Grab3D; no generative AI geometry or textures."
+  }
+]

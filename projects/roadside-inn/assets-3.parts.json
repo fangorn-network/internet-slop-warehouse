@@ -1,0 +1,379 @@
+[
+  {
+    "id": "ph-hotel-wall-plaster-normal",
+    "file": "haven/ph-hotel-wall-plaster-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel wall-plaster normal",
+    "author": "Dimitrios Savva, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "wall-plaster",
+      "normal"
+    ],
+    "description": "Hotel wall-plaster normal. OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/beige_wall_002, by Dimitrios Savva, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-wall-plaster-roughness",
+    "file": "haven/ph-hotel-wall-plaster-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel wall-plaster roughness",
+    "author": "Dimitrios Savva, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "wall-plaster",
+      "roughness"
+    ],
+    "description": "Hotel wall-plaster roughness. Linear roughness. Source https://polyhaven.com/a/beige_wall_002, by Dimitrios Savva, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-walnut-color",
+    "file": "haven/ph-hotel-walnut-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel walnut color",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "walnut",
+      "color"
+    ],
+    "description": "Hotel walnut color. sRGB base color. Source https://polyhaven.com/a/american_walnut_veneer, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-walnut-normal",
+    "file": "haven/ph-hotel-walnut-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel walnut normal",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "walnut",
+      "normal"
+    ],
+    "description": "Hotel walnut normal. OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/american_walnut_veneer, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-walnut-roughness",
+    "file": "haven/ph-hotel-walnut-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel walnut roughness",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "walnut",
+      "roughness"
+    ],
+    "description": "Hotel walnut roughness. Linear roughness. Source https://polyhaven.com/a/american_walnut_veneer, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-bath-tile-color",
+    "file": "haven/ph-hotel-bath-tile-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel bath-tile color",
+    "author": "Jenelle van Heerden, Sergej Majboroda",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "bath-tile",
+      "color"
+    ],
+    "description": "Hotel bath-tile color. sRGB base color. Source https://polyhaven.com/a/long_white_tiles, by Jenelle van Heerden, Sergej Majboroda. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-bath-tile-normal",
+    "file": "haven/ph-hotel-bath-tile-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel bath-tile normal",
+    "author": "Jenelle van Heerden, Sergej Majboroda",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "bath-tile",
+      "normal"
+    ],
+    "description": "Hotel bath-tile normal. OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/long_white_tiles, by Jenelle van Heerden, Sergej Majboroda. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-bath-tile-roughness",
+    "file": "haven/ph-hotel-bath-tile-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel bath-tile roughness",
+    "author": "Jenelle van Heerden, Sergej Majboroda",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "bath-tile",
+      "roughness"
+    ],
+    "description": "Hotel bath-tile roughness. Linear roughness. Source https://polyhaven.com/a/long_white_tiles, by Jenelle van Heerden, Sergej Majboroda. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-pool-tile-color",
+    "file": "haven/ph-hotel-pool-tile-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel pool-tile color",
+    "author": "Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "pool-tile",
+      "color"
+    ],
+    "description": "Hotel pool-tile color. sRGB base color. Source https://polyhaven.com/a/square_tiled_wall, by Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-pool-tile-normal",
+    "file": "haven/ph-hotel-pool-tile-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel pool-tile normal",
+    "author": "Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "pool-tile",
+      "normal"
+    ],
+    "description": "Hotel pool-tile normal. OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/square_tiled_wall, by Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-gym-rubber-color",
+    "file": "haven/ph-hotel-gym-rubber-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel gym-rubber color",
+    "author": "Amal Kumar",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "gym-rubber",
+      "color"
+    ],
+    "description": "Hotel gym-rubber color. sRGB base color. Source https://polyhaven.com/a/rubber_tiles, by Amal Kumar. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-gym-rubber-normal",
+    "file": "haven/ph-hotel-gym-rubber-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel gym-rubber normal",
+    "author": "Amal Kumar",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "gym-rubber",
+      "normal"
+    ],
+    "description": "Hotel gym-rubber normal. OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/rubber_tiles, by Amal Kumar. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-gym-rubber-roughness",
+    "file": "haven/ph-hotel-gym-rubber-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel gym-rubber roughness",
+    "author": "Amal Kumar",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "gym-rubber",
+      "roughness"
+    ],
+    "description": "Hotel gym-rubber roughness. Linear roughness. Source https://polyhaven.com/a/rubber_tiles, by Amal Kumar. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-concrete-color",
+    "file": "haven/ph-hotel-concrete-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel concrete color",
+    "author": "Dario Barresi, Dimitrios Savva",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "concrete",
+      "color"
+    ],
+    "description": "Hotel concrete color. sRGB base color. Source https://polyhaven.com/a/brushed_concrete, by Dario Barresi, Dimitrios Savva. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-concrete-normal",
+    "file": "haven/ph-hotel-concrete-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel concrete normal",
+    "author": "Dario Barresi, Dimitrios Savva",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "concrete",
+      "normal"
+    ],
+    "description": "Hotel concrete normal. OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/brushed_concrete, by Dario Barresi, Dimitrios Savva. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-concrete-roughness",
+    "file": "haven/ph-hotel-concrete-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel concrete roughness",
+    "author": "Dario Barresi, Dimitrios Savva",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "texture",
+      "pbr",
+      "concrete",
+      "roughness"
+    ],
+    "description": "Hotel concrete roughness. Linear roughness. Source https://polyhaven.com/a/brushed_concrete, by Dario Barresi, Dimitrios Savva. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-room-hdri",
+    "file": "haven/ph-hotel-room-hdri.hdr",
+    "type": "asset",
+    "mime": "image/vnd.radiance",
+    "title": "Hotel room interior HDRI",
+    "author": "Greg Zaal",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "realistic",
+      "hdri",
+      "sky",
+      "hotel-room",
+      "hdri"
+    ],
+    "description": "Hotel room interior HDRI. Equirectangular Radiance HDR (1K) of a real hotel room; use as an indoor environment map for reflections. Source https://polyhaven.com/a/hotel_room, by Greg Zaal. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-ceiling-color",
+    "file": "acg/acg-hotel-ceiling-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG OfficeCeiling001 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "ceiling",
+      "color"
+    ],
+    "description": "OfficeCeiling001 color map, 1K, from https://ambientcg.com/a/OfficeCeiling001. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-ceiling-normal",
+    "file": "acg/acg-hotel-ceiling-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG OfficeCeiling001 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "ceiling",
+      "normal"
+    ],
+    "description": "OfficeCeiling001 normal map, 1K, from https://ambientcg.com/a/OfficeCeiling001. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-ceiling-roughness",
+    "file": "acg/acg-hotel-ceiling-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG OfficeCeiling001 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "ceiling",
+      "roughness"
+    ],
+    "description": "OfficeCeiling001 roughness map, 1K, from https://ambientcg.com/a/OfficeCeiling001. Linear roughness. CC0-1.0."
+  }
+]

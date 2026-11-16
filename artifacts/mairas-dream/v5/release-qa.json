@@ -1,0 +1,79 @@
+{
+  "sandbox": "allow-scripts allow-pointer-lock (opaque origin)",
+  "remotePinnedAssets": true,
+  "recordedFoley": true,
+  "pickup": true,
+  "inspection": true,
+  "visibleCat": {
+    "bounds": {
+      "min": [
+        -3.5514261019845037,
+        -0.025538627557029483,
+        20.3079947630448
+      ],
+      "max": [
+        -3.072020141555929,
+        0.5296353136756035,
+        21.013359565818064
+      ]
+    },
+    "screen": [
+      1.355028877843177,
+      0.13642933430832807,
+      0.9813506476711772
+    ],
+    "position": [
+      -3.3133390025336285,
+      0,
+      20.64593600450423
+    ]
+  },
+  "stagedIgnition": true,
+  "stats": {
+    "items": 1675,
+    "shelves": 22,
+    "cats": 1,
+    "fires": 2,
+    "parking": [
+      {
+        "x": -3.3661033684490826,
+        "z": 20.73973932168726,
+        "mode": "igniting"
+      }
+    ],
+    "guidance": {
+      "id": "car",
+      "distance": 31.395740156906637,
+      "destination": {
+        "x": 2.25,
+        "y": 0,
+        "z": 46.25
+      }
+    },
+    "drawCalls": 157,
+    "triangles": 312977,
+    "audio": {
+      "steps": 0,
+      "pickups": 3,
+      "voices": 2,
+      "bumps": 0,
+      "door": 2,
+      "ready": true
+    },
+    "eye": 1.66,
+    "manager": {
+      "x": 3.2499998895261744,
+      "z": 0.09478231337775453,
+      "seen": false,
+      "alert": false,
+      "path": 3,
+      "repath": 1.5499999999999996
+    },
+    "lods": {
+      "reduced": 103,
+      "total": 182
+    }
+  },
+  "errors": [],
+  "failed": []
+}

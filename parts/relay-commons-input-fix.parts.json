@@ -1,0 +1,79 @@
+[
+  {
+    "id": "fps-controls",
+    "file": "fps-controls.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "First-person touch and desktop controls",
+    "description": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal.",
+    "uses": [],
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "tags": [
+      "3d",
+      "remix",
+      "cc0",
+      "exploration"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → instance",
+        "does": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal."
+      }
+    ]
+  },
+  {
+    "id": "relay-skirmish-game",
+    "file": "relay-skirmish.html",
+    "type": "game",
+    "title": "Relay Commons",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "description": "A calm first-person exploration and base-building RPG prototype in real mapped streets. Bayfield waterfront default, town/address starts, category-based shops, homes, civic entrances and inhabited street details. Discover places, gather shared wood/stone/cloth, build shelter/hearth/workbench/storage/lighting with placement preview and safe street/footprint exclusion. Shared camp, exploration XP, journal routes, pinch/pan atlas, portable exact-map saves and up to four P2P explorers. Holstered weapons; optional 160m ranged sparring, no attacking bots or timed score race. Uses only warehouse parts, original code/art CC0, OSM data ODbL. Inferred facades, no interiors or elevation; host must stay active.",
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "crafting",
+      "co-op",
+      "p2p",
+      "3d",
+      "mobile",
+      "osm",
+      "bayfield",
+      "prototype"
+    ],
+    "uses": [
+      "relay-skirmish",
+      "fps-controls",
+      "pulse-carbine",
+      "osm-town-view",
+      "town-life",
+      "water-tower",
+      "map-gestures",
+      "osm-district",
+      "osm-vector-district",
+      "street-navigation",
+      "resource-inventory",
+      "health",
+      "ability-clock",
+      "p2p-case-session",
+      "trystero-027",
+      "bayfield-osm",
+      "brick-texture",
+      "snow-texture",
+      "relay-homestead",
+      "settlement-rules",
+      "settlement-view",
+      "settlement-models",
+      "settlement-model-library",
+      "semantic-architecture",
+      "garden-caretaker",
+      "save-codec",
+      "inhabited-town-view",
+      "northwoods-trees",
+      "winter-audio"
+    ]
+  }
+]

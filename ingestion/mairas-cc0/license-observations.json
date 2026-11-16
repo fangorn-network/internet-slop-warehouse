@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-15",
+  "sources": [
+    {
+      "url": "https://kenney.nl/assets/impact-sounds",
+      "pack": "Impact Sounds",
+      "licenseObserved": "Creative Commons CC0",
+      "method": "Creator page inspected using web tool; direct local download returned HTTP 403, so recorded clips acquired from documented mirror.",
+      "evidenceSha256": {}
+    },
+    {
+      "url": "https://quaternius.com/packs/ultimatemodularcharacters.html",
+      "pack": "Ultimate Modular Men (2022)",
+      "licenseObserved": "CC0",
+      "evidenceFiles": [
+        "maira-quaternius-page.html",
+        "maira-character-license.txt"
+      ],
+      "evidenceSha256": {
+        "maira-quaternius-page.html": "803529ae0669a3220436be17de5d842876d8cf5e959b1d6f664186dea4854a31",
+        "maira-character-license.txt": "e8dbf915a2b82229913e301a0787696611241bdefec4832bc084f54161db1efe"
+      }
+    },
+    {
+      "url": "https://quaternius.com/packs/ultimatemodularwomen.html",
+      "pack": "Ultimate Modular Women (2022)",
+      "licenseObserved": "CC0",
+      "evidenceFiles": [
+        "maira-women-page.html",
+        "maira-women-license.txt"
+      ],
+      "evidenceSha256": {
+        "maira-women-page.html": "9cc51f31cfe8386609706834acb6c854845a4f89e0122730136b2ae28f614483",
+        "maira-women-license.txt": "e8dbf915a2b82229913e301a0787696611241bdefec4832bc084f54161db1efe"
+      }
+    }
+  ]
+}

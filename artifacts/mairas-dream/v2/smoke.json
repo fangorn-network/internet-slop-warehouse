@@ -1,0 +1,96 @@
+{
+  "report": {
+    "initial": {
+      "items": 1300,
+      "shelves": 14,
+      "cats": 1,
+      "fires": 0,
+      "parking": [
+        {
+          "x": -1.15,
+          "z": 16.8,
+          "mode": "idle"
+        }
+      ],
+      "guidance": {
+        "id": "hanger",
+        "distance": 13.605906626401126,
+        "destination": {
+          "x": -11.25,
+          "y": 0,
+          "z": 3.25
+        }
+      },
+      "drawCalls": 344,
+      "triangles": 2382481,
+      "audio": {
+        "steps": 0,
+        "pickups": 0,
+        "voices": 0,
+        "bumps": 0,
+        "door": 1,
+        "ready": true
+      },
+      "eye": 1.66,
+      "manager": {
+        "x": 2.7046540158069945,
+        "z": -4.406490837190339,
+        "seen": false,
+        "alert": false,
+        "path": 13,
+        "repath": 0.5166999999999993
+      },
+      "lods": {
+        "reduced": 20,
+        "total": 160
+      }
+    },
+    "finalStats": {
+      "items": 1300,
+      "shelves": 14,
+      "cats": 1,
+      "fires": 0,
+      "parking": [
+        {
+          "x": -1.15,
+          "z": 16.8,
+          "mode": "idle"
+        }
+      ],
+      "guidance": {
+        "id": "hanger",
+        "distance": 20.17990659557864,
+        "destination": {
+          "x": -11.25,
+          "y": 0,
+          "z": 3.25
+        }
+      },
+      "drawCalls": 184,
+      "triangles": 1484035,
+      "audio": {
+        "steps": 0,
+        "pickups": 0,
+        "voices": 0,
+        "bumps": 0,
+        "door": 1,
+        "ready": true
+      },
+      "eye": 1.66,
+      "manager": {
+        "x": 3.1350030444976236,
+        "z": -4.256657277537927,
+        "seen": false,
+        "alert": false,
+        "path": 11,
+        "repath": 2
+      },
+      "lods": {
+        "reduced": 20,
+        "total": 160
+      }
+    }
+  },
+  "errors": [],
+  "failed": []
+}

@@ -1,0 +1,8 @@
+{
+  "file": "survival/survival-starter.zip",
+  "sha256": "63afecdfc41ce5b706844c35ba3a6a71194f1d322e8aef552dde6a7bd0ca2a7d",
+  "bytes": 13648,
+  "parent": "bafyreifigmycndx5asqeplk66nefqeoovy26djcwx7ywhmh5hf6f4uvfci",
+  "source": "scripts/package-survival-starter.mjs",
+  "license": "CC0-1.0"
+}

@@ -1,0 +1,356 @@
+[
+  {
+    "id": "hotel-headboard",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-headboard.glb",
+    "title": "Hotel headboard · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "headboard"
+    ],
+    "description": "Wall-mounted walnut headboard panel, 3.6 m, channel-tufted navy upholstery, two steel reading sconces with warm LED. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-nightstand",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-nightstand.glb",
+    "title": "Hotel nightstand · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "nightstand"
+    ],
+    "description": "Walnut nightstand with drawer, steel pull and open shelf; 0.52 x 0.42 x 0.56 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-table-lamp",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-table-lamp.glb",
+    "title": "Hotel table lamp · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "table",
+      "lamp"
+    ],
+    "description": "Bedside table lamp: ceramic body, steel stem, open linen drum shade (material \"lampshade\" for emissive glow). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-credenza-tv",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-credenza-tv.glb",
+    "title": "Hotel credenza tv · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "credenza",
+      "tv"
+    ],
+    "description": "2.4 m walnut credenza with drawers and walnut wall panel, wall-mounted 55-inch TV (mesh \"tv_screen\", material \"screen\" for live content). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-desk",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-desk.glb",
+    "title": "Hotel desk · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "desk"
+    ],
+    "description": "Walnut work desk with drawer pedestal and steel sled leg; 1.3 x 0.6 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-closet",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-closet.glb",
+    "title": "Hotel closet · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "closet"
+    ],
+    "description": "Open hotel closet: walnut frame and shelf, chrome rail, wooden hangers, slatted luggage bench, ironing board. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-microfridge",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-microfridge.glb",
+    "title": "Hotel microfridge · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "microfridge"
+    ],
+    "description": "Walnut surround with black mini fridge (hinge pivot node \"fridge_door\") and stainless microwave. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-ptac",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-ptac.glb",
+    "title": "Hotel ptac · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "ptac"
+    ],
+    "description": "Packaged terminal air conditioner (PTAC) with louvered top, front grille and control buttons. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-vanity",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-vanity.glb",
+    "title": "Hotel vanity · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "vanity"
+    ],
+    "description": "Floating quartz vanity with undermount basin, chrome single-lever faucet, backlit mirror, amenity bottles, rolled towel. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-toilet",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-toilet.glb",
+    "title": "Hotel toilet · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "toilet"
+    ],
+    "description": "Close-coupled white ceramic toilet with seat and chrome lever. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-tub-shower",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-tub-shower.glb",
+    "title": "Hotel tub shower · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "tub",
+      "shower"
+    ],
+    "description": "Alcove bathtub with chrome shower set, grab bars, curved rod and folded curtain. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-front-desk",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-front-desk.glb",
+    "title": "Hotel front desk · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "front",
+      "desk"
+    ],
+    "description": "Lobby front desk, 4.6 m: white raised-panel front, quartz top, LED cove and kick lights, walnut work surface, three monitors, brass desk bell. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-snack-vending",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-snack-vending.glb",
+    "title": "Hotel snack vending · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "snack",
+      "vending"
+    ],
+    "description": "Glass-front snack vending machine: lit product bay, spiral coils with packages, keypad, display, coin slot, delivery bin. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-drum-pendant",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-drum-pendant.glb",
+    "title": "Hotel drum pendant · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "drum",
+      "pendant"
+    ],
+    "description": "Large drum pendant light: dark fabric drum, glowing diffuser, cable and canopy (1 m drop). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-luggage-cart",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-luggage-cart.glb",
+    "title": "Hotel luggage cart · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "luggage",
+      "cart"
+    ],
+    "description": "Brass bellhop luggage cart with carpeted deck, hanging rail and casters. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-lobby-sofa",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-lobby-sofa.glb",
+    "title": "Hotel lobby sofa · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "sofa"
+    ],
+    "description": "Modern track-arm lobby sofa in beige tweed with walnut block feet; 2.3 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-accent-chair-green",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-accent-chair-green.glb",
+    "title": "Hotel accent chair green · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "accent",
+      "chair",
+      "green"
+    ],
+    "description": "Upholstered green accent chair with tapered walnut legs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-accent-chair-mustard",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-accent-chair-mustard.glb",
+    "title": "Hotel accent chair mustard · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "accent",
+      "chair",
+      "mustard"
+    ],
+    "description": "Upholstered mustard accent chair with tapered walnut legs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+  }
+]

@@ -1,0 +1,29 @@
+// CC0 adapter; the injected Trystero transport retains its MIT license.
+export function attach(session,{transport,isHost=false,code='',onStatus=()=>{},onChange=()=>{},relayConfig}={}){
+ let room,channel,action,selfId='solo',hostId='',connected=false,dead=false,timer=0,pending=false,lastInput='',lastSent=0;const inputs={},seen=new Map();
+ let password='';
+ const ready=(async()=>{
+  const pieces=code.trim().split('/');if(!isHost&&(pieces.length!==2||!pieces[0].includes('~')||pieces[1].length<8))throw Error('Paste the complete host room code.');
+  const random=()=>Array.from(crypto.getRandomValues(new Uint8Array(12)),n=>n.toString(16).padStart(2,'0')).join('');
+  password=isHost?random():pieces[1];
+  room=transport.joinRoom({appId:'slop-warehouse.mercy-moving.v2',identity:'none',password,maxUsers:4,use:[transport.roles(isHost?{selfAsAdmin:true}:{})],...(relayConfig?{relayConfig}:{})},isHost?'mercy-'+random():pieces[0]);
+  const self=await room.getSelf();if(dead){await room.leave();return;}selfId=self.userId;hostId=isHost?selfId:self.roomId.split('~').at(-1);
+  if(isHost){session.renamePlayer('solo',selfId);connected=true;}
+  channel=room.makeState('mercy',isHost?session.snapshot():null,{validate:s=>{if(s===null)return true;try{return session.validateSnapshot(s);}catch{return false;}}});
+  channel.onChange(s=>{if(!isHost&&s){const wasConnected=connected;session.load(s);connected=!!s.players[selfId];if(connected&&!wasConnected)onStatus('CONNECTED / MERCY');onChange();}},{replay:true});
+  action=room.makeAction('intent',{kind:'request'});
+  action.onRequest((c,{userId})=>{
+   if(!isHost||!session.state.players[userId])return{ok:false,text:'Not connected to host.'};
+   const now=performance.now(),key=userId+(c?.type==='input'?':move':':action'),last=seen.get(key)??-Infinity;if(now-last<45)return{ok:false,text:'Too many actions.'};seen.set(key,now);
+   if(c?.type==='input'){inputs[userId]={x:c.x,z:c.z,at:now};return{ok:true};}
+   const result=session.command(userId,c);void publish();return result;
+  });
+  room.onUserJoin(({userId})=>{if(isHost){session.addPlayer(userId);void publish();}else if(userId===hostId)onStatus('Host found. Syncing town…');});
+  room.onUserLeave(({userId})=>{if(isHost){session.removePlayer(userId);delete inputs[userId];void publish();}else if(userId===hostId){connected=false;onStatus('Host left. Leave room to continue this town solo.');}});
+  room.onError(e=>onStatus('Connection: '+(e.message??e.code??String(e))));
+  if(isHost)await publish();onStatus(isHost?'Hosting · share the whole code below':'Finding host via public relays…');
+  return{code:self.roomId+'/'+password};
+ })();
+ async function publish(){if(dead||!isHost||!channel||pending)return;pending=true;try{await channel.set(session.snapshot());}catch(e){onStatus('Sync delayed: '+e.message);}finally{pending=false;}}
+ return{ready,get id(){return selfId;},get connected(){return connected;},get isHost(){return isHost;},command(c){return isHost?Promise.resolve(session.command(selfId,c)):connected?action.request(c,{target:hostId,timeoutMs:4000}):Promise.resolve({ok:false,text:'Waiting for host. You can leave and play solo.'});},update(dt,input={}){if(!channel||dead)return;if(isHost){inputs[selfId]=input;const now=performance.now();session.update(dt,Object.fromEntries(Object.entries(inputs).map(([id,i])=>[id,i.at&&now-i.at>500?{}:i])));timer+=dt;if(timer>=.2){timer=0;void publish();}}else if(connected){lastSent+=dt;const encoded=JSON.stringify([input.x??0,input.z??0]);if(lastSent>.1&&(encoded!==lastInput||lastSent>.3)){lastSent=0;lastInput=encoded;action.request({type:'input',x:input.x??0,z:input.z??0},{target:hostId,timeoutMs:2000}).catch(()=>{});}}},async dispose(){dead=true;connected=false;await room?.leave();}};
+}

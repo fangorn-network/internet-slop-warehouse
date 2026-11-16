@@ -6,6 +6,11 @@
 //          player's sandboxed iframe should ever run it.
 //   logic  content: an ES module's source (it may `import * as THREE from "three"`). Stored as { js }.
 //   asset  bytes: the file itself (a .glb, .png, .wav …), stored as is; `mime` says what it is.
+//   skill  content: an Agent Skills SKILL.md (frontmatter `name` and `description`, then instructions), the format
+//          Claude Code and Codex load from a skills folder. Stored as { md }. A recipe is a skill tagged
+//          "recipe" whose `uses` pins the parts it builds with.
+//   source content: a code file mirrored from elsewhere, any language, no attach() contract (a framework, a
+//          shader, an example). Needs `origin: { repo, commit, path }` and its upstream `license`. Stored as { code }.
 //
 // Logic is labelled, so search finds it by behaviour and an agent can wire it without reading it. Every label is
 // payload, and the indexer embeds every payload leaf as `path: value` (src/embed.js), so the labels ARE the
@@ -22,7 +27,8 @@
 // attach(enemy, { onSee: fleeOnSee }) in place of patrol's default chase.
 
 export const REPO = "internet-slop-warehouse";
-export const TYPES = ["game", "asset", "logic"];
+export const TYPES = ["game", "asset", "logic", "skill", "source"];
+export const STORED = { game: "html", logic: "js", skill: "md", source: "code" };
 export const KINDS = ["controller", "ai", "rule", "camera", "effect"];
 const ID = /^[a-z0-9][a-z0-9-]{0,63}$/;
 
@@ -49,6 +55,25 @@ function labels(js, { kind, exports = [], options = [], hooks = [], overrides })
     return { kind, exports, ...(options.length && { options }), ...(hooks.length && { hooks }) };
 }
 
+/** A SKILL.md's frontmatter, checked → { name, description }. */
+export function skillOf(md) {
+    const head = /^---\r?\n([\s\S]*?)\r?\n---/.exec(md)?.[1];
+    if (!head) throw new Error("a skill is a SKILL.md: it starts with --- frontmatter ---");
+    const field = (k) => new RegExp(`^${k}:\\s*(.+)$`, "m").exec(head)?.[1].trim().replace(/^["']|["']$/g, "");
+    const name = field("name"), description = field("description");
+    if (!/^[a-z0-9][a-z0-9-]{0,63}$/.test(name ?? "")) throw new Error("a skill's frontmatter needs name: lowercase-dashed");
+    if (!description) throw new Error("a skill's frontmatter needs a description: it's how an agent knows when to use it");
+    return { name, description };
+}
+
+/** A source part's origin, checked. */
+function originOf({ origin, license }) {
+    const { repo, commit, path } = origin ?? {};
+    if (!repo || !commit || !path) throw new Error("source needs origin: { repo, commit, path }, where it was mirrored from");
+    if (!license) throw new Error("source needs its upstream license");
+    return { origin: { repo: String(repo), commit: String(commit), path: String(path) } };
+}
+
 /**
  * Check a part, put its file in storage and pin what it builds on → the record to commit, { id, type, payload }.
  * Nothing goes on chain: commit it (with others) with uploadBatch, or use publishPart. `owner`: whose repo it's
@@ -63,7 +88,7 @@ export async function preparePart(fangorn, part, { owner } = {}) {
     const address = owner ?? fangorn.getAddress();
 
     // Pin what it builds on: each must exist now, and the record keeps the version it saw.
-    const read = (publisher, pid) => fangorn.engine.readRecord(publisher, REPO, pid).catch(() => null);
+    const read = (publisher, pid) => readOrNull(fangorn, publisher, pid);
     const pin = async ({ publisher = address, id: pid }) => {
         const rec = await read(publisher, pid);
         if (!rec) throw new Error(`no part ${publisher}/${pid}`);
@@ -78,7 +103,9 @@ export async function preparePart(fangorn, part, { owner } = {}) {
             logic.overrides = { part: await pin(part.overrides.part), hook: part.overrides.hook };
         }
     }
-    const file = type === "asset" ? bytes : new TextEncoder().encode(JSON.stringify(type === "game" ? { html: content } : { js: content }));
+    if (type === "skill") logic = { skill: skillOf(content).name };
+    if (type === "source") logic = originOf(part);
+    const file = type === "asset" ? bytes : new TextEncoder().encode(JSON.stringify({ [STORED[type]]: content }));
     return { id, type, payload: {
         title, description, tags: tags.map(String).filter(Boolean),
         src: await fangorn.getStorage().putFile(file, type === "asset" ? id : `${id}.json`),
@@ -90,6 +117,13 @@ export async function preparePart(fangorn, part, { owner } = {}) {
         ...(uses.length && { uses: await Promise.all(uses.map(pin)) }),
     } };
 }
+
+/** A record, or null when it (or the publisher's repo) doesn't exist. Any other failure (storage, the platform's
+ *  subrequest limit on old records in long repos: see the SDK's NEW_ISSUE.md) throws, instead of reading as "no part". */
+export const readOrNull = (fangorn, publisher, id) => fangorn.engine.readRecord(publisher, REPO, id).catch((e) => {
+    if (/has no on-chain commits/.test(e?.message)) return null;
+    throw e;
+});
 
 /** Commit prepared records to the repo and read them back → { recordCids, txHash }. */
 export async function commitParts(fangorn, records) {
@@ -105,7 +139,7 @@ export async function commitParts(fangorn, records) {
 /** One part, prepared and committed → { publisher, repo, id, type, cid, src, txHash }. `overwrite`: false refuses an id that's taken. */
 export async function publishPart(fangorn, part, { overwrite = false } = {}) {
     const address = fangorn.getAddress();
-    if (!overwrite && await fangorn.engine.readRecord(address, REPO, part.id ?? "").catch(() => null)) throw new Error(`${part.id} is taken: pick another id (a new version of a part is a new id with it as parent)`);
+    if (!overwrite && await readOrNull(fangorn, address, part.id ?? "")) throw new Error(`${part.id} is taken: pick another id (a new version of a part is a new id with it as parent)`);
     const record = await preparePart(fangorn, part);
     const { recordCids, txHash } = await commitParts(fangorn, [record]);
     return { publisher: address.toLowerCase(), repo: REPO, id: record.id, type: record.type, cid: recordCids[record.id], src: record.payload.src, txHash };

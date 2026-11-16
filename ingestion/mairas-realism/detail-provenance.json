@@ -1,0 +1,32 @@
+[
+  {
+    "id": "basemesh-mug",
+    "sha256": "c69806fae42a61993ace39339347957fdb96d8fc78b179d5c9a3cd7ca7a5b248",
+    "bytes": 29464,
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "cc0-ceramic-mug",
+    "sha256": "5b97a190e57f16d65eb97523acabd844394652185edad343b001625e40f2b02d",
+    "bytes": 29588,
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "cc0-ceramic-neighbor-mug",
+    "sha256": "c655b7eaf59af289293c2147da5040c24c28dfbd5774c9fd55839ececa70b6d1",
+    "bytes": 80652,
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "ph-thrift-book",
+    "sha256": "91b8456a9f0e5c30747457b1a3dd9fd2d009687600e6d63dd388d38f1544df94",
+    "bytes": 2792352,
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "ph-thrift-book-alt",
+    "sha256": "df0892aeaf67699d9e37ceff4f4272cb5901b0b73bcdece97c481e8684615643",
+    "bytes": 3292796,
+    "license": "CC0-1.0"
+  }
+]

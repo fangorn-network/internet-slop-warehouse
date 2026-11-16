@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: CC0-1.0
+import * as T from 'three';
+export function attach(scene,{layout,trees,snowTexture,needleTexture,barkTexture,treeFactory=trees?.makeTree,snowfall=650,onReady=()=>{}}={}){
+ if(!layout||!treeFactory)throw Error('Provide layout and treeFactory (or trees module)');
+ const root=new T.Group();root.name='Northern Wisconsin • midwinter';scene.add(root);const old={background:scene.background,fog:scene.fog};scene.background=new T.Color('#b6c7d2');scene.fog=new T.FogExp2('#b6c7d2',.012);
+ const hemi=new T.HemisphereLight('#d9e9ff','#697078',2.3);root.add(hemi);
+ const sun=new T.DirectionalLight('#ffe9ce',3.2);sun.position.set(-70,38,-95);sun.castShadow=true;sun.shadow.mapSize.set(1536,1536);sun.shadow.camera.left=-55;sun.shadow.camera.right=55;sun.shadow.camera.top=55;sun.shadow.camera.bottom=-55;sun.shadow.camera.far=220;sun.shadow.normalBias=.06;sun.shadow.bias=-.0001;sun.shadow.radius=3;sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;root.add(sun,sun.target);
+ const groundGeo=new T.PlaneGeometry(layout.size,layout.size,200,200);groundGeo.rotateX(-Math.PI/2);const p=groundGeo.attributes.position;const colors=[];
+ for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),distance=Math.abs(x-layout.trailX(z)),path=Math.exp(-distance*distance/.85);p.setY(i,layout.heightAt(x,z)-path*.11);const c=new T.Color().setRGB(.84-path*.12,.89-path*.12,.94-path*.11);colors.push(c.r,c.g,c.b);}
+ groundGeo.setAttribute('color',new T.Float32BufferAttribute(colors,3));groundGeo.computeVertexNormals();
+ const groundMat=new T.MeshStandardMaterial({color:'#eef4fa',vertexColors:true,roughness:.96});let texture;
+ const ready=snowTexture?new Promise(resolve=>{texture=new T.TextureLoader().load(snowTexture,t=>{t.colorSpace=T.SRGBColorSpace;t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(layout.size/7,layout.size/7);t.anisotropy=8;groundMat.map=t;groundMat.bumpMap=t;groundMat.bumpScale=.075;groundMat.needsUpdate=true;resolve(true);},undefined,()=>resolve(false));}):Promise.resolve(false);
+ const ground=new T.Mesh(groundGeo,groundMat);ground.receiveShadow=true;root.add(ground);
+ const dummy=new T.Object3D(),batches=[];
+ for(const species of ['pine','maple'])for(let variant=0;variant<4;variant++){
+  const list=layout.trees.filter(t=>t.species===species&&t.variant===variant);if(!list.length)continue;
+  for(const detail of [1,.4]){
+   const model=treeFactory({species,seed:50+variant*31,snow:.84,needleTexture,barkTexture,detail});
+   const meshes=model.children.map(child=>{const mesh=new T.InstancedMesh(child.geometry,child.material,list.length);mesh.castShadow=detail===1;mesh.receiveShadow=true;mesh.frustumCulled=false;mesh.count=0;root.add(mesh);return mesh;});
+   batches.push({list,detail,meshes});
+  }
+ }
+ let batchX=Infinity,batchZ=Infinity;
+ function updateBatches(x,z){if(Math.hypot(x-batchX,z-batchZ)<3)return;batchX=x;batchZ=z;
+  for(const {list,detail,meshes} of batches){let count=0;for(const t of list){const distance=Math.hypot(t.x-x,t.z-z);if(distance>150||(detail===1?distance>36:distance<=36))continue;dummy.position.set(t.x,t.y,t.z);dummy.rotation.set(0,t.rotation,0);dummy.scale.setScalar(t.scale);dummy.updateMatrix();for(const mesh of meshes)mesh.setMatrixAt(count,dummy.matrix);count++;}for(const mesh of meshes){mesh.count=count;mesh.instanceMatrix.needsUpdate=true;}}
+ }
+ updateBatches(layout.spawn[0],layout.spawn[2]);
+ // Scattered glacial stones and fallen deadwood, buried into the snowpack.
+ let state=layout.seed>>>0;const random=()=>((state=Math.imul(state,1664525)+1013904223>>>0)/4294967296);
+ const rockGeo=new T.IcosahedronGeometry(1,2),rockMat=new T.MeshStandardMaterial({color:'#737c82',roughness:1});
+ const snowMat=new T.MeshStandardMaterial({color:'#e0e9f1',roughness:1});
+ for(let i=0;i<65;i++){const x=(random()-.5)*layout.size,z=(random()-.5)*layout.size;if(Math.abs(x-layout.trailX(z))<3.5)continue;const s=.3+random()*1.1;const rock=new T.Mesh(rockGeo,rockMat);rock.position.set(x,layout.heightAt(x,z)-.2,z);rock.scale.set(s,s*.65,s*.8);rock.rotation.y=random()*6;rock.castShadow=rock.receiveShadow=true;root.add(rock);const cap=new T.Mesh(rockGeo,snowMat);cap.position.copy(rock.position).y+=s*.27;cap.scale.set(s*.95,s*.47,s*.77);root.add(cap);}
+ const landmark=new T.Mesh(rockGeo,rockMat);landmark.position.set(25,layout.heightAt(25,-65)+1,-65);landmark.scale.set(4.5,3.4,3.8);landmark.castShadow=true;root.add(landmark);const cap=new T.Mesh(rockGeo,snowMat);cap.position.copy(landmark.position).y+=1.5;cap.scale.set(4.3,2.1,3.7);root.add(cap);
+ // One single draw call, viewer-centered snowfall with depth fade.
+ const flakes=new Float32Array(snowfall*3);for(let i=0;i<flakes.length;i+=3){flakes[i]=(random()-.5)*75;flakes[i+1]=random()*27;flakes[i+2]=(random()-.5)*75;}
+ const snowGeo=new T.BufferGeometry();snowGeo.setAttribute('position',new T.BufferAttribute(flakes,3));const snowM=new T.PointsMaterial({color:'#ffffff',size:.055,transparent:true,opacity:.65,depthWrite:false});const snow=new T.Points(snowGeo,snowM);snow.frustumCulled=false;root.add(snow);
+ const marksGeo=new T.PlaneGeometry(.14,.32);marksGeo.rotateX(-Math.PI/2);const marksMat=new T.MeshBasicMaterial({color:'#8097aa',transparent:true,opacity:.22,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2});const marks=new T.InstancedMesh(marksGeo,marksMat,600);marks.count=0;root.add(marks);let cursor=0,shadowX=Infinity,shadowZ=Infinity;
+ const api={root,ready,layout,footprint(x,z,yaw,side=1){dummy.position.set(x+Math.cos(yaw)*side*.13,layout.heightAt(x,z)+.025,z-Math.sin(yaw)*side*.13);dummy.rotation.set(0,yaw,0);dummy.scale.setScalar(1);dummy.updateMatrix();marks.setMatrixAt(cursor%600,dummy.matrix);cursor++;marks.count=Math.min(cursor,600);marks.instanceMatrix.needsUpdate=true;},update(dt,viewer){if(viewer){const x=viewer.x,z=viewer.z;updateBatches(x,z);snow.position.set(x,layout.heightAt(x,z),z);sun.position.set(x-70,layout.heightAt(x,z)+38,z-95);sun.target.position.set(x,0,z);sun.target.updateMatrixWorld();if(Math.hypot(x-shadowX,z-shadowZ)>2){sun.shadow.needsUpdate=true;shadowX=x;shadowZ=z;}}for(let i=0;i<flakes.length;i+=3){flakes[i]+=.18*dt;flakes[i+1]-=.65*dt;if(flakes[i+1]<0)flakes[i+1]+=27;}snowGeo.attributes.position.needsUpdate=true;},dispose(){root.removeFromParent();const gs=new Set(),ms=new Set();root.traverse(o=>{if(o.geometry)gs.add(o.geometry);if(o.material)ms.add(o.material);if(o.isInstancedMesh)o.dispose();});gs.forEach(g=>g.dispose());ms.forEach(m=>m.dispose());texture?.dispose();sun.dispose();scene.background=old.background;scene.fog=old.fog;}};
+ onReady(api);return api;
+}

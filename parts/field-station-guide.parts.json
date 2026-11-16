@@ -1,0 +1,29 @@
+[
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "stillwater-world-guide",
+    "type": "asset",
+    "file": "field-station/QUICKSTART.md",
+    "mime": "text/markdown",
+    "title": "Stillwater: immersive world composition guide",
+    "description": "Reusable asset and logic inventory, controls, PBR/world conventions, source provenance and remix instructions for a small exploration playground. Optional generator, radio and stone/bell toys; no required objective.",
+    "uses": [
+      "world-prop-kit",
+      "trail-walker",
+      "signal-trail",
+      "woodland-sound",
+      "stillwater-world",
+      "trail-playground",
+      "field-pine-spray"
+    ]
+  }
+]

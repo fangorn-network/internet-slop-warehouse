@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Bust swarm</title>
+<meta name="description" content="A horde of classical marble busts flocks after you across a snowfield. Jump on their heads. Three lives.">
+<style>
+  html,body{margin:0;touch-action:none;-webkit-user-select:none;user-select:none;height:100%;overflow:hidden;background:#cfe0ee;font:14px system-ui,sans-serif}
+  #hud{position:fixed;top:10px;left:12px;color:#234;text-shadow:0 1px 2px #fff8;font-weight:700;pointer-events:none}
+  #msg{position:fixed;inset:0;display:grid;place-items:center;color:#fff;text-shadow:0 2px 4px #000a;font-size:22px;text-align:center;cursor:pointer;background:#0005}
+  #msg small{display:block;font-size:14px;opacity:.85;margin-top:8px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"></div><div id="msg">loading…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+
+const PARTS = {/*PARTS*/};
+const logic = async (id) => import("data:text/javascript;charset=utf-8," + encodeURIComponent((await (await fetch(PARTS[id])).json()).js));
+logic("touch-controls").then((t) => t.attach()); // a joystick and jump button on phones
+const glb = (id) => new GLTFLoader().loadAsync(PARTS[id]);
+
+const [controller, followCam, animator, sky, spawner, wobble, boids, robotG, bustG, snowTex, brickTex] = await Promise.all([
+    logic("platformer-controller"), logic("follow-camera"), logic("clip-animator"), logic("hdri-sky"), logic("spawner"), logic("wobble"), logic("boids"),
+    glb("robot"), glb("marble-bust"),
+    new THREE.TextureLoader().loadAsync(PARTS["snow-texture"]), new THREE.TextureLoader().loadAsync(PARTS["brick-texture"]),
+]);
+const audio = new AudioContext();
+const sounds = Object.fromEntries(await Promise.all(["jump-sound", "hit-sound", "coin-sound"].map(async (id) => [id, await audio.decodeAudioData(await (await fetch(PARTS[id])).arrayBuffer())])));
+const play = (id, rate = 1) => { const s = audio.createBufferSource(); s.buffer = sounds[id]; s.playbackRate.value = rate; s.connect(audio.destination); s.start(); };
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true; renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(55, 1, 0.1, 300);
+const sun = new THREE.DirectionalLight(0xffffff, 2); sun.position.set(8, 16, 10); sun.castShadow = true;
+Object.assign(sun.shadow.camera, { left: -18, right: 18, top: 18, bottom: -18 }); sun.shadow.mapSize.set(2048, 2048); scene.add(sun);
+const world = [sky.attach(scene, { url: PARTS["day-sky"], intensity: 1, spin: 0.01 })];
+
+// A snowfield ringed by low brick walls (the busts glide through them; you don't).
+const R = 14, solids = [];
+for (const t of [snowTex, brickTex]) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; }
+snowTex.repeat.set(8, 8);
+const ground = new THREE.Mesh(new THREE.BoxGeometry(2 * R, 2, 2 * R), new THREE.MeshStandardMaterial({ map: snowTex, roughness: 0.9 }));
+ground.position.y = -1; ground.receiveShadow = true; scene.add(ground); solids.push(ground);
+for (const [x, z, w, d] of [[0, -R, 2 * R, 0.6], [0, R, 2 * R, 0.6], [-R, 0, 0.6, 2 * R], [R, 0, 0.6, 2 * R]]) {
+    const tex = brickTex.clone(); tex.repeat.set(Math.max(w, d) / 2, 0.5); tex.needsUpdate = true;
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(w, 1, d), new THREE.MeshStandardMaterial({ map: tex }));
+    wall.position.set(x, 0.5, z); wall.castShadow = wall.receiveShadow = true; scene.add(wall); solids.push(wall);
+}
+
+const player = SkeletonUtils.clone(robotG.scene); player.scale.setScalar(0.35);
+player.traverse((o) => { if (o.isMesh) o.castShadow = true; }); scene.add(player);
+const BUST = 2.6, HEAD = 0.51 * BUST; // a bust's height in the world
+
+let over = true, start = 0, lives = 3, stomps = 0, safeUntil = 0, ctl, horde, busts;
+const systems = [], wobbles = new Map();
+function begin() {
+    for (const s of systems.splice(0)) s.dispose();
+    wobbles.clear(); player.position.set(0, 0, 0); lives = 3; stomps = 0; safeUntil = 0;
+    ctl = controller.attach(player, { solids, camera, onJump: () => play("jump-sound"), onFall: () => hurt() });
+    horde = boids.attach([], { target: player, speed: 2.2, seek: 1.4, sight: 2.4, separation: 3, height: 0, bounds: R - 1 });
+    busts = spawner.attach(scene, { every: 2.2, max: 14, first: 0.5,
+        where: () => { const a = Math.random() * Math.PI * 2; return new THREE.Vector3(Math.cos(a) * (R - 2), 0, Math.sin(a) * (R - 2)); },
+        make: () => { const b = bustG.scene.clone(); b.scale.setScalar(BUST); b.traverse((o) => { if (o.isMesh) o.castShadow = true; }); return b; },
+        onSpawn: (b) => { horde.add(b); const w = wobble.attach(b, { amount: 0.4 }); w.poke(-1); wobbles.set(b, w); } });
+    systems.push(ctl, horde, busts, animator.attach(player, { animations: robotG.animations, state: () => ctl.state }),
+        followCam.attach(camera, { target: player, offset: [0, 8, 9] }));
+    over = false; start = performance.now(); $msg.style.display = "none";
+}
+function hurt() {
+    if (performance.now() < safeUntil) return;
+    play("hit-sound"); lives--; safeUntil = performance.now() + 1500;
+    if (lives <= 0) {
+        over = true; const t = ((performance.now() - start) / 1000).toFixed(0);
+        $msg.innerHTML = `Overwhelmed by antiquity.<small>${stomps} busts stomped in ${t}s · click to try again</small>`; $msg.style.display = "";
+    } else { player.position.set(0, 0, 0); ctl.velocity.set(0, 6, 0); }
+}
+const $msg = document.getElementById("msg"), $hud = document.getElementById("hud");
+$msg.innerHTML = "Bust swarm<small>WASD / arrows · Shift to run · Space to jump<br>land on a bust's head to stomp it · don't let them touch you<br><br>click to start</small>";
+$msg.onclick = () => { audio.resume(); begin(); };
+
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+camera.position.set(0, 10, 14); camera.lookAt(0, 0, 0);
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+    const dt = clock.getDelta();
+    for (const w of world) w.update(dt);
+    if (!over) {
+        for (const s of systems) s.update(dt);
+        for (const w of wobbles.values()) w.update(dt);
+        const p = player.position;
+        for (const b of [...horde.flock]) {
+            if (Math.hypot(b.position.x - p.x, b.position.z - p.z) > 0.8) continue;
+            if (ctl.velocity.y < 0 && p.y > HEAD * 0.55) { // landed on it: stomp, bounce
+                stomps++; play("coin-sound", 0.8 + Math.random() * 0.4); ctl.velocity.y = 9;
+                horde.remove(b); wobbles.get(b).poke(2.5);
+                setTimeout(() => { busts.remove(b); wobbles.delete(b); }, 250);
+            } else if (p.y < HEAD * 0.5) hurt();
+        }
+        player.visible = performance.now() > safeUntil || Math.floor(performance.now() / 100) % 2 === 0;
+        $hud.textContent = `${"♥".repeat(Math.max(lives, 0))} · stomped ${stomps} · ${((performance.now() - start) / 1000).toFixed(0)}s`;
+    }
+    renderer.render(scene, camera);
+});
+</script></body></html>

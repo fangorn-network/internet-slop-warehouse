@@ -1,0 +1,1417 @@
+[
+  {
+    "id": "relay-skirmish-game",
+    "file": "relay-skirmish.html",
+    "type": "game",
+    "title": "Relay Commons",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "description": "A calm first-person exploration and base-building RPG prototype in real mapped streets. Bayfield waterfront default, town/address starts, category-based shops, homes, civic entrances and inhabited street details. Discover places, gather shared wood/stone/cloth, build shelter/hearth/workbench/storage/lighting with placement preview and safe street/footprint exclusion. Shared camp, exploration XP, journal routes, pinch/pan atlas, portable exact-map saves and up to four P2P explorers. Holstered weapons; optional 160m ranged sparring, no attacking bots or timed score race. Uses only warehouse parts, original code/art CC0, OSM data ODbL. Inferred facades, no interiors or elevation; host must stay active.",
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "crafting",
+      "co-op",
+      "p2p",
+      "3d",
+      "mobile",
+      "osm",
+      "bayfield",
+      "prototype"
+    ],
+    "uses": [
+      "relay-skirmish",
+      "fps-controls",
+      "pulse-carbine",
+      "osm-town-view",
+      "town-life",
+      "water-tower",
+      "map-gestures",
+      "osm-district",
+      "osm-vector-district",
+      "street-navigation",
+      "resource-inventory",
+      "health",
+      "ability-clock",
+      "p2p-case-session",
+      "trystero-027",
+      "bayfield-osm",
+      "brick-texture",
+      "snow-texture",
+      "relay-homestead",
+      "settlement-rules",
+      "settlement-view",
+      "settlement-models",
+      "settlement-model-library",
+      "semantic-architecture",
+      "garden-caretaker",
+      "save-codec",
+      "inhabited-town-view",
+      "northwoods-trees",
+      "winter-audio"
+    ]
+  },
+  {
+    "id": "bayfield-osm",
+    "file": "dead-air/bayfield-osm.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Bayfield waterfront OSM district",
+    "license": "ODbL-1.0",
+    "author": "OpenStreetMap contributors; OpenFreeMap / OpenMapTiles",
+    "description": "Frozen 900m district around Bayfield waterfront, Wisconsin (46.8108,-90.8182). Real buildings, streets, addresses and shoreline from OpenFreeMap vector data. © OpenStreetMap contributors, © OpenMapTiles; OpenFreeMap. No imagery or elevation. Map data is ODbL, not CC0.",
+    "tags": [
+      "bayfield",
+      "wisconsin",
+      "osm",
+      "waterfront",
+      "odbl"
+    ]
+  },
+  {
+    "id": "relay-skirmish",
+    "file": "relay-skirmish.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Relay Skirmish authoritative rules",
+    "description": "Renderer-free PvP and practice combat, ray obstruction, armor, respawns, personal inventories, salvage regeneration, atomic crafting for cells/repair/armor/cover, contested relay and score victory.",
+    "uses": [
+      "osm-district",
+      "health",
+      "resource-inventory",
+      "ability-clock",
+      "street-navigation"
+    ],
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "tags": [
+      "3d",
+      "remix",
+      "cc0",
+      "exploration"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → instance",
+        "does": "Renderer-free PvP and practice combat, ray obstruction, armor, respawns, personal inventories, salvage regeneration, atomic crafting for cells/repair/armor/cover, contested relay and score victory."
+      }
+    ]
+  },
+  {
+    "id": "pulse-carbine",
+    "file": "pulse-carbine.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Original pulse carbine generator",
+    "description": "CC0 stylized fictional energy blaster, Three.js geometry generator. Editable reusable first-person prop.",
+    "uses": [],
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "tags": [
+      "3d",
+      "remix",
+      "cc0",
+      "exploration"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → instance",
+        "does": "CC0 stylized fictional energy blaster, Three.js geometry generator. Editable reusable first-person prop."
+      }
+    ]
+  },
+  {
+    "id": "fps-controls",
+    "file": "fps-controls.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "First-person touch and desktop controls",
+    "description": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal.",
+    "uses": [],
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "tags": [
+      "3d",
+      "remix",
+      "cc0",
+      "exploration"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → instance",
+        "does": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal."
+      }
+    ]
+  },
+  {
+    "id": "town-life",
+    "file": "town-life.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Street labels and ambient town life",
+    "description": "Distance-culled real street names, mapped addresses and building labels; deterministic cosmetic walkers and cars follow mapped roads. Three.js renderer with complete disposal. Inferred ambient activity, not live real-world data.",
+    "uses": [],
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "tags": [
+      "3d",
+      "remix",
+      "cc0",
+      "exploration"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → instance",
+        "does": "Distance-culled real street names, mapped addresses and building labels; deterministic cosmetic walkers and cars follow mapped roads. Three.js renderer with complete disposal. Inferred ambient activity, not live real-world data."
+      }
+    ]
+  },
+  {
+    "id": "map-gestures",
+    "file": "map-gestures.js",
+    "type": "logic",
+    "kind": "controller",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "title": "Pinch, pan and anchored map zoom",
+    "description": "Framework-free pointer gestures for atlas canvases and 3D camera zoom. Anchored two-finger zoom, one-finger drag, wheel zoom, zoom bounds, pointer capture, tap-vs-drag suppression and complete disposal. No accidental marker activation after pinching. World-camera mode disables panning.",
+    "tags": [
+      "touch",
+      "mobile",
+      "pinch",
+      "zoom",
+      "map",
+      "pan",
+      "controller"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(element,opts) → {view,setView(),zoomBy(),update(),dispose()}",
+        "does": "Attach mouse/touch controls with replaceable callbacks."
+      },
+      {
+        "name": "screenToWorld",
+        "signature": "screenToWorld(point,rect,view,span) → {x,z}",
+        "does": "Map client coordinates to world coordinates."
+      },
+      {
+        "name": "zoomView",
+        "signature": "zoomView(view,factor,point,rect,span,min,max,pan) → view",
+        "does": "Compute clamped zoom that preserves its anchor."
+      }
+    ],
+    "options": [
+      {
+        "name": "view",
+        "type": "object",
+        "does": "Mutable x,z,zoom state."
+      },
+      {
+        "name": "span",
+        "type": "number",
+        "default": 1900,
+        "does": "World units across the short canvas side at zoom 1."
+      },
+      {
+        "name": "pan",
+        "type": "boolean",
+        "default": true,
+        "does": "Disable for camera-only pinch zoom."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onChange",
+        "does": "Observe transformed view."
+      },
+      {
+        "name": "onTap",
+        "does": "Select a marker only after an actual tap."
+      },
+      {
+        "name": "onGesture",
+        "does": "Stop conflicting movement when a gesture begins."
+      }
+    ]
+  },
+  {
+    "id": "map-vector-licenses",
+    "file": "vendor/MAP-VECTOR-LICENSES.txt",
+    "type": "asset",
+    "title": "Vector map decoder notices",
+    "description": "Full BSD-3-Clause/ISC copyright notices for @mapbox/vector-tile 3.0.0, @mapbox/point-geometry 1.1.0 and pbf 5.1.2, bundled into osm-vector-district. Preserve on redistribution.",
+    "license": "BSD-3-Clause AND ISC",
+    "mime": "text/plain",
+    "author": "Mapbox and Vladimir Agafonkin",
+    "tags": [
+      "license",
+      "vector-tile",
+      "osm",
+      "notices"
+    ]
+  },
+  {
+    "id": "osm-vector-district",
+    "file": "osm-vector-district.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "OSM vector district: OpenFreeMap fallback and decoder",
+    "description": "Browser/Node/Worker-ready bundled vector-tile adapter. Fetches a bounded OSM district from the OpenFreeMap TileJSON and up to nine z14 vector tiles, at most four parallel requests, then converts footprints/courtyard holes, road/water geometry and semantic POIs into Overpass-compatible JSON. Actual map data stays ODbL, with OpenFreeMap/OpenMapTiles/OSM attribution. Original adapter CC0, bundled maintained decoders BSD-3-Clause/ISC; no API token, imagery, map renderer or bare import required. Water-tower coverage is limited to retained local POIs rather than an 8km Overpass query.",
+    "license": "CC0-1.0 AND BSD-3-Clause AND ISC",
+    "author": "the internet slop warehouse; Mapbox and Vladimir Agafonkin",
+    "tags": [
+      "osm",
+      "vector-tile",
+      "decoder",
+      "coordinates",
+      "map",
+      "openfreemap",
+      "remix"
+    ],
+    "uses": [
+      "map-vector-licenses"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach({lat,lon},opts) → {ready,update(),dispose()}",
+        "does": "Fetch an attributed bounded raw district with completion/error callbacks."
+      },
+      {
+        "name": "fetchVectorDistrict",
+        "signature": "fetchVectorDistrict(lat,lon,opts) → Promise<Overpass-compatible JSON>",
+        "does": "Fetch and decode a bounded vector district."
+      },
+      {
+        "name": "decodeTile",
+        "signature": "decodeTile(bytes,x,y,z) → elements[]",
+        "does": "Decode roads, buildings, water and labels from one vector tile."
+      }
+    ],
+    "options": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": 900,
+        "does": "District half-width in meters, capped by nine-tile budget."
+      },
+      {
+        "name": "fetcher",
+        "type": "function",
+        "default": "fetch",
+        "does": "Inject HTTP transport for caches, tests or cancellation."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "signature": "(raw) → void",
+        "does": "Receive attributed OSM-compatible data."
+      },
+      {
+        "name": "onError",
+        "signature": "(error) → void",
+        "does": "Observe errors; ready still rejects."
+      }
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "score-ledger",
+    "file": "score-ledger.js",
+    "type": "logic",
+    "title": "Idempotent score ledger",
+    "description": "Engine-independent point rewards deduplicated by stable event IDs. Retries and co-op discoveries award once. Serializable claimed IDs and safe integer totals. Use for score, experience, achievements and shared quest rewards.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {value,entries,award(id,points),snapshot(),update(),dispose()}",
+        "does": "Track deduplicated nonnegative rewards."
+      }
+    ],
+    "options": [
+      {
+        "name": "initial",
+        "type": "integer",
+        "does": "Starting nonnegative score.",
+        "default": 0
+      },
+      {
+        "name": "entries",
+        "type": "string[]",
+        "does": "Already rewarded IDs.",
+        "default": []
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onChange",
+        "signature": "(score,event,object) → void",
+        "does": "Observe successful rewards."
+      }
+    ],
+    "uses": [],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "rule"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "ability-clock",
+    "file": "ability-clock.js",
+    "type": "logic",
+    "title": "Ability costs and cooldowns",
+    "description": "Engine-independent activation gate for attacks, scanner pulses, skills, healing and items. Rejects unavailable abilities, atomically pays resource-inventory costs, starts cooldowns and invokes replaceable effects. Serializable remaining timers; finite nonnegative costs.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {activate(id,payload),remaining,update(dt),dispose()}",
+        "does": "Gate and charge ability use."
+      }
+    ],
+    "options": [
+      {
+        "name": "abilities",
+        "type": "Record<string,Ability>",
+        "does": "Each ability: cooldown, optional cost and canUse callback.",
+        "default": {}
+      },
+      {
+        "name": "inventory",
+        "type": "Inventory",
+        "does": "Optional atomic resource-inventory instance."
+      },
+      {
+        "name": "initial",
+        "type": "Record<string,number>",
+        "does": "Restore cooldown timers.",
+        "default": {}
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onActivate",
+        "signature": "(id,payload,object) → void",
+        "does": "Apply damage, heal, reveal evidence or any custom ability effect."
+      },
+      {
+        "name": "onReject",
+        "signature": "(id,reason) → void",
+        "does": "Observe unavailable/resources rejection."
+      }
+    ],
+    "uses": [
+      "resource-inventory"
+    ],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "rule"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "osm-district",
+    "file": "osm-district.js",
+    "type": "logic",
+    "title": "OSM district: coordinates, footprints and semantic tags",
+    "description": "Original CC0 adapter for Overpass JSON: local meter projection, closed ways, stitched multipolygon rings and holes, roads, water, building heights/levels, POI-to-building tags, hospital/shop/civic/home classifications and mapped water towers. Stable fingerprint, approach points and three fictional mystery sites on real geometry. Code is CC0; input and output OSM map data retain ODbL attribution/share-alike. No imagery or photogrammetry.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(raw,opts) → {district,update(),dispose()}",
+        "does": "Convert raw map input."
+      },
+      {
+        "name": "parse",
+        "signature": "parse(raw,opts) → District",
+        "does": "Build renderer-free normalized map manifest."
+      },
+      {
+        "name": "project",
+        "signature": "project(lat,lon,origin) → {x,z}",
+        "does": "Geographic coordinates to local meters."
+      },
+      {
+        "name": "unproject",
+        "signature": "unproject(x,z,origin) → {lat,lon}",
+        "does": "Local meters to coordinates."
+      },
+      {
+        "name": "inside",
+        "signature": "inside(point,ring) → boolean",
+        "does": "Point-in-polygon."
+      },
+      {
+        "name": "nearestRoad",
+        "signature": "nearestRoad(point,roads) → {x,z,distance}",
+        "does": "Project onto nearest street segment."
+      },
+      {
+        "name": "classify",
+        "signature": "classify(tags) → string",
+        "does": "Interpret building and POI tags."
+      },
+      {
+        "name": "validateDistrict",
+        "signature": "validateDistrict(district) → boolean",
+        "does": "Validate a network manifest before importing."
+      },
+      {
+        "name": "ATTRIBUTION",
+        "signature": "string",
+        "does": "Required OSM map attribution."
+      },
+      {
+        "name": "mergeTowers",
+        "signature": "mergeTowers(district,known) → District",
+        "does": "Reproject confirmed mapped water towers into a new source district, preserve endpoint IDs, remove local fictional fallback when a real relay is known and refresh its fingerprint."
+      }
+    ],
+    "options": [
+      {
+        "name": "lat",
+        "type": "number",
+        "does": "Projection origin, defaults to snapshot metadata."
+      },
+      {
+        "name": "lon",
+        "type": "number",
+        "does": "Projection origin, defaults to snapshot metadata."
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "does": "District half width, meters.",
+        "default": 900
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "signature": "(district) → void",
+        "does": "Receive normalized world data."
+      }
+    ],
+    "uses": [],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "rule"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "street-navigation",
+    "file": "street-navigation.js",
+    "type": "logic",
+    "title": "Street graph routes",
+    "description": "Renderer-independent walking graph for OSM and generalized vector roads. Spatially bucketed segment intersections, nearby T-junction snapping, query endpoints projected onto edges and A* street routes. Avoids nearest-vertex shortcuts across buildings. Useful for touch tap-to-walk, NPC patrols and guidance; not real-world navigation advice.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(district,opts) → {route(start,end),nodeCount,update(),dispose()}",
+        "does": "Build graph and route between x/z positions."
+      }
+    ],
+    "options": [],
+    "hooks": [
+      {
+        "name": "include",
+        "signature": "(road) → boolean",
+        "does": "Filter walkable roads; default excludes water and motorways."
+      },
+      {
+        "name": "onRoute",
+        "signature": "(points) → void",
+        "does": "Observe computed route."
+      }
+    ],
+    "uses": [
+      "osm-district"
+    ],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "rule"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "water-tower",
+    "file": "water-tower.js",
+    "type": "logic",
+    "title": "Municipal water tower generator",
+    "description": "Original CC0 municipal water tower with tank, dome, tapered base, legs, ring bracing and central pipe. Meter units, root at ground, separate metal meshes. Parameterized 14–80m height, radius, paint and leg count. An approximation rather than a surveyed replica.",
+    "kind": "effect",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(parent,opts) → {root,update(),dispose()}",
+        "does": "Attach and own a tower."
+      },
+      {
+        "name": "makeTower",
+        "signature": "makeTower(opts) → THREE.Group",
+        "does": "Build stand-alone geometry for instancing or GLB export."
+      }
+    ],
+    "options": [
+      {
+        "name": "height",
+        "type": "number",
+        "does": "Tower height in meters.",
+        "default": 34
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "does": "Tank radius.",
+        "default": 7.5
+      },
+      {
+        "name": "color",
+        "type": "color",
+        "does": "Tank and support paint.",
+        "default": "#a3b5b7"
+      },
+      {
+        "name": "legs",
+        "type": "integer",
+        "does": "Support leg count.",
+        "default": 4
+      }
+    ],
+    "hooks": [],
+    "uses": [],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "effect"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "osm-town-view",
+    "file": "osm-town-view.js",
+    "type": "logic",
+    "title": "OSM town renderer: semantic 3D streets",
+    "description": "Three.js environment from normalized OSM geometry: extruded footprints and courtyard holes, mapped or inferred heights, home roofs, shared brick maps, deterministic lit windows, semantic building palettes, road ribbons, water, streetlights, water towers, procedural infill vegetation, clue markers and colored player avatars with light cones. Façades and vegetation are inferred; no street imagery. Original code CC0, underlying maps ODbL.",
+    "kind": "effect",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene,opts) → {root,update(dt,state,viewer,camera),dispose()}",
+        "does": "Render district geometry and shared actors."
+      }
+    ],
+    "options": [
+      {
+        "name": "district",
+        "type": "District",
+        "does": "Required normalized OSM manifest."
+      },
+      {
+        "name": "brickTexture",
+        "type": "THREE.Texture",
+        "does": "Caller-owned optional shared albedo."
+      },
+      {
+        "name": "radioModel",
+        "type": "THREE.Group",
+        "does": "Optional caller-owned prop, cloned at clue sites."
+      },
+      {
+        "name": "groundColor",
+        "type": "color",
+        "does": "Ground tint.",
+        "default": "#586650"
+      },
+      {
+        "name": "groundTexture",
+        "type": "THREE.Texture",
+        "does": "Caller-owned optional terrain albedo/bump."
+      },
+      {
+        "name": "treeFactory",
+        "type": "function",
+        "does": "Optional injected branching tree generator."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "classifyBuilding",
+        "signature": "(building) → kind",
+        "does": "Override semantic visual categories."
+      },
+      {
+        "name": "decorate",
+        "signature": "(building,mesh,helpers) → void",
+        "does": "Add custom semantic decorations."
+      },
+      {
+        "name": "towerFactory",
+        "signature": "(opts) → THREE.Group",
+        "does": "Inject a water-tower model generator."
+      }
+    ],
+    "uses": [
+      "osm-district",
+      "water-tower"
+    ],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "effect"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "dead-air-case",
+    "file": "dead-air-case.js",
+    "type": "logic",
+    "title": "Dead Air: shared mystery rules",
+    "description": "Renderer-free complete co-op mystery on an OSM district. Shared inventory, deduplicated rewards, per-player clarity/HP/light/cooldowns, radio tuning, three fictional recordings, objectives, water-tower repair, party travel requests and geographic district transitions. Commands validate proximity and costs; snapshots validate before loading. Compose existing health, inventory and journal with generic score and ability systems.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(district,opts) → {state,district,fingerprint,snapshot(),validateSnapshot(),validateWorld(),load(),reset(),addPlayer(),removePlayer(),nearest(),command(),update(),exportWorld(),importWorld(),applyDistrict(),cancelTravel(),dispose()}",
+        "does": "Create host-authoritative rules independent of rendering/transport."
+      }
+    ],
+    "options": [
+      {
+        "name": "modules",
+        "type": "Record<string,module>",
+        "does": "Inject pinned health, inventory, journal, score, ability and OSM modules."
+      },
+      {
+        "name": "startAtRelay",
+        "type": "boolean",
+        "default": false,
+        "does": "Choose a safe starting point beside a local mapped water tower, with a survey-relay/town fallback."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onEvent",
+        "signature": "({type,text}) → void",
+        "does": "Observe action, clue, recall, district and hint events."
+      }
+    ],
+    "uses": [
+      "health",
+      "resource-inventory",
+      "objective-journal",
+      "score-ledger",
+      "ability-clock",
+      "osm-district"
+    ],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "rule"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "p2p-case-session",
+    "file": "p2p-case-session.js",
+    "type": "logic",
+    "title": "P2P shared atlas and authoritative case session",
+    "description": "Transport-injected four-player co-op adapter. Host roles own both world manifest and game snapshots; guests submit bounded movement and action intentions. Transfers exact atlas geometry in validated 24,000-character peer-request chunks, within the transport signed-state budget; replicates once per district, small state snapshots at 5Hz, handles world/state arrival order, stale inputs and host departure. Includes invitation secret and no browser storage. Original adapter CC0; inject existing MIT Trystero transport. No host migration or guaranteed public relay connectivity.",
+    "kind": "rule",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(session,opts) → {ready,id,isHost,connected,command(c),update(dt,input),sync(),dispose()}",
+        "does": "Connect a compatible authoritative session to a room."
+      }
+    ],
+    "options": [
+      {
+        "name": "transport",
+        "type": "module",
+        "does": "Trystero-compatible joinRoom and roles."
+      },
+      {
+        "name": "isHost",
+        "type": "boolean",
+        "does": "Own authoritative state.",
+        "default": false
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "does": "Complete host room invitation.",
+        "default": ""
+      },
+      {
+        "name": "appId",
+        "type": "string",
+        "does": "Separate protocol namespace.",
+        "default": "slop-warehouse.dead-air.v1"
+      },
+      {
+        "name": "relayConfig",
+        "type": "object",
+        "does": "Optional transport relay configuration."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onStatus",
+        "signature": "(text) → void",
+        "does": "Connection and host-departure feedback."
+      },
+      {
+        "name": "onChange",
+        "signature": "() → void",
+        "does": "World or game snapshot updated."
+      }
+    ],
+    "uses": [
+      "trystero-027"
+    ],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "rule"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "municipal-water-tower",
+    "file": "dead-air/water-tower.glb",
+    "type": "asset",
+    "title": "Municipal water tower · CC0 GLB",
+    "mime": "model/gltf-binary",
+    "tags": [
+      "water-tower",
+      "municipal",
+      "landmark",
+      "gltf",
+      "original",
+      "cc0"
+    ],
+    "description": "Original CC0 stand-alone 34m water tower with legs, tank, dome and braces. Root at ground, Y up, meters. Approximate generic geometry, not a replica. Editable generator: water-tower.",
+    "uses": [
+      "water-tower"
+    ]
+  },
+  {
+    "id": "rhinelander-osm",
+    "file": "dead-air/rhinelander-osm.json",
+    "type": "asset",
+    "title": "Rhinelander OSM district · ODbL map snapshot",
+    "mime": "application/json",
+    "license": "ODbL-1.0",
+    "author": "OpenStreetMap contributors",
+    "tags": [
+      "osm",
+      "geodata",
+      "rhinelander",
+      "wisconsin",
+      "map",
+      "odbl",
+      "water-tower"
+    ],
+    "description": "Attributed OpenStreetMap/Overpass district around 45.6387,-89.4121: 900m half extent, building geometry/tags, streets, water and water towers within 8km. Raw data snapshot for reproducible procedural games. © OpenStreetMap contributors, https://www.openstreetmap.org/copyright. ODbL-1.0, not CC0. Fictional game content is supplied separately."
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "dead-air-atlas",
+    "file": "dead-air-atlas.html",
+    "type": "game",
+    "title": "Dead Air Atlas",
+    "tags": [
+      "mystery",
+      "osm",
+      "p2p",
+      "co-op",
+      "3d",
+      "open-world",
+      "mobile",
+      "water-tower",
+      "investigation",
+      "procedural",
+      "location-search",
+      "sprint",
+      "v0.3",
+      "pinch-zoom",
+      "address-search",
+      "bayfield"
+    ],
+    "description": "An original supernatural co-op mystery in real mapped streets. Search by town or location name to generate a bounded OSM district; recover three impossible recordings by matching radio channels and holding a light, then reconnect a water tower to restore fast travel. Shared notebook, inventory, HP/clarity, points, cooldowns, saves, a clean mobile HUD, contextual actions, Tools tray, pinch zoom in the 3D scene and pannable/zoomable atlas with marker routing. Up to four peers share the host atlas; the party moves between districts together through towers or district edges. Version 0.3 defaults to Bayfield waterfront, Wisconsin; search addresses to start on nearby walkable streets. Street names, mapped addresses, semantic facades and cosmetic town activity enrich exploration. Original code/art CC0; OSM map data ODbL; Trystero/Three.js MIT. Procedural façades, not imagery. Live queries use a cached map service and an OpenFreeMap vector fallback; vector maps retain additional attribution and may omit water-tower POIs.",
+    "uses": [
+      "osm-district",
+      "street-navigation",
+      "water-tower",
+      "osm-town-view",
+      "dead-air-case",
+      "p2p-case-session",
+      "health",
+      "resource-inventory",
+      "objective-journal",
+      "score-ledger",
+      "ability-clock",
+      "save-codec",
+      "winter-audio",
+      "trystero-027",
+      "rhinelander-osm",
+      "brick-texture",
+      "ph-boombox",
+      "northwoods-trees",
+      "snow-texture",
+      "winter-pine-spray",
+      "winter-pine-bark",
+      "osm-vector-district",
+      "map-gestures",
+      "town-life",
+      "bayfield-osm"
+    ]
+  },
+  {
+    "id": "rhinelander-vector-osm",
+    "file": "dead-air/rhinelander-vector-osm.json",
+    "type": "asset",
+    "title": "Rhinelander vector district · OpenFreeMap/OSM",
+    "description": "Frozen OpenFreeMap/OpenMapTiles OSM vector conversion around 45.64,-89.41, 900m half-width: 356 building fragments/footprints, street geometry, water and POIs. Reproducible fixture for fallback routing and rendering. © OpenMapTiles, © OpenStreetMap contributors, OpenFreeMap attribution retained. ODbL-1.0, not CC0. Tile-clipped geometry and local POIs differ from full Overpass data; water towers may be omitted.",
+    "license": "ODbL-1.0",
+    "author": "OpenStreetMap contributors; OpenFreeMap / OpenMapTiles",
+    "mime": "application/json",
+    "tags": [
+      "osm",
+      "vector",
+      "geodata",
+      "rhinelander",
+      "odbl",
+      "fixture"
+    ]
+  },
+  {
+    "id": "dead-air-remix-kit",
+    "file": "dead-air/dead-air-remix-kit.zip",
+    "type": "asset",
+    "title": "Dead Air Atlas: editable game and systems source kit",
+    "description": "Portable complete source starter: playable town-name-based co-op mystery with mobile sprint controls, eight original reusable CC0 logic modules plus a bundled vector decoder with BSD/ISC notices, tower GLB/generator, existing shared game systems, pinned catalog props/textures, attributed OSM snapshot, map-service source, rebuild scripts and detailed composition guide. Original code/art CC0, maps ODbL, transport MIT. Run node prepare.mjs, serve the folder and edit with your agent. Includes full license separation. The archive is mixed-license, not wholly CC0. Includes Relay Skirmish FPS/crafting variant, Bayfield waterfront default, address starts and mobile pinch/pan. Also includes Relay Commons calm exploration/base-building RPG, 11-model CC0 library, category architecture, exact-map expedition saves, rules, source and tests.",
+    "license": "CC0-1.0 AND ODbL-1.0 AND MIT AND BSD-3-Clause AND ISC",
+    "mime": "application/zip",
+    "author": "the internet slop warehouse; OSM contributors and credited asset authors",
+    "tags": [
+      "starter",
+      "source",
+      "game-systems",
+      "p2p",
+      "osm",
+      "mystery",
+      "remix",
+      "mixed-license"
+    ],
+    "uses": [
+      "map-gestures",
+      "map-vector-licenses",
+      "osm-vector-district",
+      "score-ledger",
+      "ability-clock",
+      "osm-district",
+      "street-navigation",
+      "water-tower",
+      "osm-town-view",
+      "dead-air-case",
+      "p2p-case-session",
+      "municipal-water-tower",
+      "rhinelander-osm",
+      "dead-air-atlas",
+      "rhinelander-vector-osm",
+      "town-life",
+      "bayfield-osm",
+      "relay-skirmish-game",
+      "relay-skirmish",
+      "fps-controls",
+      "pulse-carbine",
+      "pulse-carbine-glb",
+      "settlement-models",
+      "settlement-rules",
+      "relay-homestead",
+      "semantic-architecture",
+      "settlement-view",
+      "settlement-model-library",
+      "relay-commons-guide",
+      "inhabited-town-view"
+    ]
+  },
+  {
+    "id": "pulse-carbine-glb",
+    "file": "dead-air/pulse-carbine.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Salvage pulse carbine · original CC0 GLB",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "description": "Editable fictional energy blaster prop. Y up, meters, generated by pulse-carbine; original geometry, no textures required.",
+    "uses": [
+      "pulse-carbine"
+    ],
+    "tags": [
+      "cc0",
+      "gltf",
+      "prop",
+      "fps",
+      "remix"
+    ]
+  },
+  {
+    "id": "settlement-models",
+    "file": "settlement-models.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Modular camp and street furniture generators",
+    "description": "Eleven original meter-scale Three.js models: open shelter, timber wall, workbench, hearth, chest, lantern, bedroll, planter, bench, cafe table and supply cache. Exported as named GLB library; Y up and ground origin. No external textures.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Eleven original meter-scale Three.js models: open shelter, timber wall, workbench, hearth, chest, lantern, bedroll, planter, bench, cafe table and supply cache. Exported as named GLB library; Y up and ground origin. No external textures."
+      },
+      {
+        "name": "makePiece",
+        "signature": "makePiece(kind) → THREE.Group",
+        "does": "Generate original editable geometry for one model."
+      },
+      {
+        "name": "kinds",
+        "signature": "string[]",
+        "does": "Names of available prototypes."
+      }
+    ],
+    "options": [
+      {
+        "name": "kind",
+        "type": "string",
+        "default": "shelter",
+        "does": "Choose the model to instantiate."
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "id": "settlement-rules",
+    "file": "settlement-rules.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "OSM exploration and shared settlement rules",
+    "description": "Renderer-free map-based discoveries, shared XP/rank, fictional supply drops, shared atomic wood/stone/cloth, eight camp blueprints, dry-land street/footprint/water exclusions, quarter-turn placement, reclaim refunds and camp milestones. Bounded validated snapshots and configurable permission hook.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [
+      "osm-district",
+      "resource-inventory"
+    ],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Renderer-free map-based discoveries, shared XP/rank, fictional supply drops, shared atomic wood/stone/cloth, eight camp blueprints, dry-land street/footprint/water exclusions, quarter-turn placement, reclaim refunds and camp milestones. Bounded validated snapshots and configurable permission hook."
+      },
+      {
+        "name": "blueprints",
+        "signature": "Record<string,Blueprint>",
+        "does": "Editable costs, placement radii and collision roles."
+      }
+    ],
+    "options": [
+      {
+        "name": "modules",
+        "type": "object",
+        "does": "Inject OSM district and resource inventory."
+      },
+      {
+        "name": "maxStructures",
+        "type": "integer",
+        "default": 64,
+        "does": "Bound shared construction."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "canBuild",
+        "signature": "(placement,blueprint) → boolean",
+        "does": "Override placement permissions."
+      },
+      {
+        "name": "onEvent",
+        "signature": "(event) → void",
+        "does": "Observe discoveries and construction."
+      }
+    ]
+  },
+  {
+    "id": "relay-homestead",
+    "file": "relay-homestead.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Relay exploration RPG composition",
+    "description": "Calm expedition layer over the published ranged combat engine. No hostile bot, timer or score race. Shared camp, discoveries, gear, rest and return-to-hearth. Holstered weapons and combat off by default; optional expedition-wide ranged sparring. Compatible with exact-world P2P host-authoritative transport.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [
+      "relay-skirmish",
+      "settlement-rules",
+      "osm-district",
+      "resource-inventory",
+      "health",
+      "ability-clock"
+    ],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Calm expedition layer over the published ranged combat engine. No hostile bot, timer or score race. Shared camp, discoveries, gear, rest and return-to-hearth. Holstered weapons and combat off by default; optional expedition-wide ranged sparring. Compatible with exact-world P2P host-authoritative transport."
+      }
+    ],
+    "options": [
+      {
+        "name": "combatEnabled",
+        "type": "boolean",
+        "default": false,
+        "does": "Enable optional ranged sparring for this expedition."
+      },
+      {
+        "name": "modules",
+        "type": "object",
+        "does": "Inject the named catalog dependencies."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onEvent",
+        "signature": "(event) → void",
+        "does": "Observe exploration and combat outcomes."
+      }
+    ]
+  },
+  {
+    "id": "semantic-architecture",
+    "file": "semantic-architecture.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Semantic architecture and inhabited street edges",
+    "description": "Procedural OSM-tag-based facades: shops/cafes, homes/apartments, civic/school/church, medical and workshop entrances. Named signage, porches, balconies, shop windows, seating, planters and loading areas. Street-facing placement uses nearest actual road segment. Batches facade geometry. Fictional designs, no imagery or building interiors.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [
+      "settlement-models",
+      "settlement-model-library"
+    ],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Procedural OSM-tag-based facades: shops/cafes, homes/apartments, civic/school/church, medical and workshop entrances. Named signage, porches, balconies, shop windows, seating, planters and loading areas. Street-facing placement uses nearest actual road segment. Batches facade geometry. Fictional designs, no imagery or building interiors."
+      },
+      {
+        "name": "profile",
+        "signature": "profile(building) → string",
+        "does": "Classify mapped tags into visual facade profiles."
+      },
+      {
+        "name": "frontage",
+        "signature": "frontage(building,roads) → frame",
+        "does": "Find a street-facing footprint edge."
+      },
+      {
+        "name": "classifyBuilding",
+        "signature": "(building) → kind",
+        "does": "Renderer classification hook including explicitly inferred sparse-data fallback."
+      },
+      {
+        "name": "styleBuilding",
+        "signature": "(building,mesh) → void",
+        "does": "Category material hook: painted homes/civic/medical, masonry shops, industrial finishes."
+      }
+    ],
+    "options": [
+      {
+        "name": "district",
+        "type": "District",
+        "does": "Normalized mapped geometry."
+      },
+      {
+        "name": "models",
+        "type": "object",
+        "does": "Named prototypes loaded from settlement-model-library."
+      },
+      {
+        "name": "maxDecorated",
+        "type": "integer",
+        "default": 150,
+        "does": "Bound facade detail near the district spawn."
+      },
+      {
+        "name": "labelDistance",
+        "type": "number",
+        "default": 85,
+        "does": "Cull detailed building signage."
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "id": "settlement-view",
+    "file": "settlement-view.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Shared camp, supply drops and placement preview",
+    "description": "Render settlement-rules using published GLB prototypes; supply drops, placed structures, an injected camp guide and green/red quarter-turn placement ghost. Caller owns prototypes. Dispose releases only adapter-owned resources.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [
+      "settlement-rules",
+      "settlement-model-library"
+    ],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Render settlement-rules using published GLB prototypes; supply drops, placed structures, an injected camp guide and green/red quarter-turn placement ghost. Caller owns prototypes. Dispose releases only adapter-owned resources."
+      }
+    ],
+    "options": [
+      {
+        "name": "session",
+        "type": "RelayHomestead",
+        "does": "Compatible composed exploration session."
+      },
+      {
+        "name": "models",
+        "type": "object",
+        "does": "Required named prototypes from the warehouse GLB library."
+      },
+      {
+        "name": "selected",
+        "type": "function",
+        "does": "Current blueprint or null."
+      },
+      {
+        "name": "rotation",
+        "type": "function",
+        "does": "Placement quarter-turn index."
+      },
+      {
+        "name": "actor",
+        "type": "function",
+        "does": "Current player identifier."
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "id": "settlement-model-library",
+    "file": "relay-commons/settlement-models.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "title": "Camp and streetscape · 11 original CC0 GLB models",
+    "description": "Named prototype library for camp building and inhabited streets: shelter, wall, workbench, hearth, chest, lantern, bedroll, planter, bench, cafe-table and supply-cache. Load scene.children by name; each prototype is at ground origin in meters, Y up. Children overlap intentionally as an asset library; instantiate individually. Editable generator settlement-models.",
+    "uses": [
+      "settlement-models"
+    ],
+    "tags": [
+      "cc0",
+      "gltf",
+      "base-building",
+      "street-furniture",
+      "rpg",
+      "modular"
+    ]
+  },
+  {
+    "id": "relay-commons-guide",
+    "file": "relay-commons/QUICKSTART.md",
+    "type": "asset",
+    "mime": "text/markdown",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "title": "Relay Commons: exploration and settlement remix guide",
+    "description": "Composition, model conventions, licenses, shared supplies, placement, optional ranged combat and save/network limitations. Original CC0.",
+    "uses": [
+      "settlement-rules",
+      "relay-homestead",
+      "semantic-architecture",
+      "settlement-view"
+    ],
+    "tags": [
+      "documentation",
+      "base-building",
+      "rpg",
+      "remix"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "inhabited-town-view",
+    "file": "inhabited-town-view.js",
+    "type": "logic",
+    "title": "Inhabited streets: OSM scene renderer",
+    "description": "Three.js environment from normalized OSM geometry: extruded footprints and courtyard holes, mapped or inferred heights, home roofs, shared brick maps, deterministic lit windows, semantic building palettes, road ribbons, water, streetlights, water towers, procedural infill vegetation, clue markers and colored player avatars with light cones. Façades and vegetation are inferred; no street imagery. Original code CC0, underlying maps ODbL. Fork with non-casting ground/road layers to avoid overlapping surface shadow artifacts, plus anisotropic road texture sampling. Inject semantic-architecture classification and finish hooks.",
+    "kind": "effect",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene,opts) → {root,update(dt,state,viewer,camera),dispose()}",
+        "does": "Render district geometry and shared actors."
+      }
+    ],
+    "options": [
+      {
+        "name": "district",
+        "type": "District",
+        "does": "Required normalized OSM manifest."
+      },
+      {
+        "name": "brickTexture",
+        "type": "THREE.Texture",
+        "does": "Caller-owned optional shared albedo."
+      },
+      {
+        "name": "radioModel",
+        "type": "THREE.Group",
+        "does": "Optional caller-owned prop, cloned at clue sites."
+      },
+      {
+        "name": "groundColor",
+        "type": "color",
+        "does": "Ground tint.",
+        "default": "#586650"
+      },
+      {
+        "name": "groundTexture",
+        "type": "THREE.Texture",
+        "does": "Caller-owned optional terrain albedo/bump."
+      },
+      {
+        "name": "treeFactory",
+        "type": "function",
+        "does": "Optional injected branching tree generator."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "classifyBuilding",
+        "signature": "(building) → kind",
+        "does": "Override semantic visual categories."
+      },
+      {
+        "name": "decorate",
+        "signature": "(building,mesh,helpers) → void",
+        "does": "Add custom semantic decorations."
+      },
+      {
+        "name": "towerFactory",
+        "signature": "(opts) → THREE.Group",
+        "does": "Inject a water-tower model generator."
+      }
+    ],
+    "uses": [
+      "osm-town-view",
+      "osm-district",
+      "water-tower",
+      "semantic-architecture"
+    ],
+    "tags": [
+      "game-systems",
+      "dead-air",
+      "remix",
+      "cc0",
+      "effect"
+    ],
+    "parent": {
+      "id": "osm-town-view"
+    }
+  }
+]

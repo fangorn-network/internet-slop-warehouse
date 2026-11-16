@@ -1,0 +1,92 @@
+{
+  "report": {
+    "hanger": {
+      "route": 28,
+      "focus": true
+    },
+    "mug": {
+      "route": 46,
+      "focus": true
+    },
+    "book": {
+      "route": 54,
+      "focus": true
+    },
+    "shirt": {
+      "route": 21,
+      "focus": true
+    },
+    "trousers": {
+      "route": 29,
+      "focus": true
+    },
+    "lamp": {
+      "route": 32,
+      "focus": true
+    },
+    "plate": {
+      "route": 41,
+      "focus": true
+    },
+    "radio": {
+      "route": 34,
+      "focus": true
+    },
+    "hammer": {
+      "route": 52,
+      "focus": true
+    },
+    "assortedModelPickupReturn": true,
+    "checkout": true,
+    "stats": {
+      "items": 1675,
+      "shelves": 22,
+      "cats": 1,
+      "fires": 0,
+      "parking": [
+        {
+          "x": -1.15,
+          "z": 16.8,
+          "mode": "idle"
+        }
+      ],
+      "guidance": {
+        "id": "checkout",
+        "distance": 1.2000000000000002,
+        "destination": {
+          "x": -6.75,
+          "y": 0,
+          "z": 8.75
+        }
+      },
+      "drawCalls": 192,
+      "triangles": 500917,
+      "audio": {
+        "steps": 0,
+        "pickups": 4,
+        "voices": 2,
+        "bumps": 0,
+        "door": 1,
+        "ready": true
+      },
+      "eye": 1.66,
+      "manager": {
+        "x": 3.249999997895438,
+        "z": 1.3548646506765327,
+        "seen": false,
+        "alert": false,
+        "path": 12,
+        "repath": 1.0666999999999818
+      },
+      "lods": {
+        "reduced": 103,
+        "total": 182
+      }
+    },
+    "fixtures": {
+      "shelves": 22,
+      "racks": 12
+    }
+  },
+  "errors": []
+}

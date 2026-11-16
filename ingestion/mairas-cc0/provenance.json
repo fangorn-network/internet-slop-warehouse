@@ -1,0 +1,104 @@
+[
+  {
+    "id": "qt-thrift-casual",
+    "source": "https://raw.githubusercontent.com/agentkaerf/FreeModels/main/Ultimate%20Modular%20Men-%20Feb%202022/Individual%20Characters/glTF/Casual_2.gltf",
+    "official": "https://quaternius.com/packs/ultimatemodularcharacters.html",
+    "license": "CC0-1.0",
+    "inputSha256": "55c654d09a2a5ff6e3bd6158d4a1b462f181cd6f1e12a0f5e9d959f9c3abc438",
+    "outputSha256": "ef4501fe26891c3a65037ef001bc4db85717f5b6c5060384d6b783a696ea50e3",
+    "clips": [
+      "HitRecieve",
+      "Idle",
+      "Idle_Neutral",
+      "Interact",
+      "Run",
+      "Walk",
+      "Wave"
+    ],
+    "bytes": 1402228
+  },
+  {
+    "id": "qt-thrift-cashier",
+    "source": "https://raw.githubusercontent.com/agentkaerf/FreeModels/main/Ultimate%20Modular%20Women%20-%20April%202022/Individual%20Characters/glTF/Casual.gltf",
+    "official": "https://quaternius.com/packs/ultimatemodularwomen.html",
+    "license": "CC0-1.0",
+    "inputSha256": "b0fe6e92219cd71808844a20a1a8b960fd1cf640a6546dc6362b5add6604e87c",
+    "outputSha256": "18e1a199a9c77f4ffa3afedefa739e5216b2ec23503ac0d3a6aa19b718eb87b2",
+    "clips": [
+      "HitRecieve",
+      "Idle",
+      "Idle_Neutral",
+      "Interact",
+      "Run",
+      "Walk",
+      "Wave"
+    ],
+    "bytes": 1458660
+  },
+  {
+    "id": "qt-thrift-manager",
+    "source": "https://raw.githubusercontent.com/agentkaerf/FreeModels/main/Ultimate%20Modular%20Men-%20Feb%202022/Individual%20Characters/glTF/Suit.gltf",
+    "official": "https://quaternius.com/packs/ultimatemodularcharacters.html",
+    "license": "CC0-1.0",
+    "inputSha256": "6c89fbb31b96c1a63ad94e3dee0942bd7b34bc789a5d39fd6a6a1738a9214fb3",
+    "outputSha256": "5601be7e76ed85bb20acdaa845c367db3c8604a21c874366b98b922bf76b0099",
+    "clips": [
+      "HitRecieve",
+      "Idle",
+      "Idle_Neutral",
+      "Interact",
+      "Run",
+      "Walk",
+      "Wave"
+    ],
+    "bytes": 1593440
+  },
+  {
+    "id": "footstep_concrete_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_concrete_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "d7267e183067757c92c169de2a379abea592cfca6b39bb2e8feea15221ad79fe",
+    "bytes": 5808
+  },
+  {
+    "id": "footstep_concrete_001",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_concrete_001.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "507a75eb19b897087855a3be3cf11a12d7fa37d143ad535eeebe0b8031c7325d",
+    "bytes": 6308
+  },
+  {
+    "id": "footstep_concrete_002",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_concrete_002.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "b21fa546d74941196b25da8a20b7010abd8c05c4fcf93545d1f344e66a664e13",
+    "bytes": 6255
+  },
+  {
+    "id": "impactGlass_light_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/impactGlass_light_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "d750cf88097d0c3e69920e6e14496e1444e1a9da01aa4cca8f5ec8cb44c57b4f",
+    "bytes": 6526
+  },
+  {
+    "id": "impactMetal_light_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/impactMetal_light_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "33b5e6e37c6e9d54e07bf5a89b12c76e879f40c1ea83cdd82714df1d6f9fec6d",
+    "bytes": 7651
+  },
+  {
+    "id": "impactSoft_medium_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/impactSoft_medium_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "7d3ba0bb5e60a11b5d3e558c141303dcf494256675fbf753c0d252d2cf0481e3",
+    "bytes": 5351
+  }
+]

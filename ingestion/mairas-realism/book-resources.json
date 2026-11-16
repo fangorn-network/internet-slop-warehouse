@@ -1,0 +1,37 @@
+[
+  {
+    "key": "source",
+    "file": "projects/mairas-dream/assets/workshop/book-set.fbx",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/decorative_book_set_01/decorative_book_set_01_1k.fbx",
+    "sha256": "db588942f2bce2035223367c3b3b518953ebba89726259fb473ebdc9836a62d5",
+    "bytes": 16098076
+  },
+  {
+    "key": "book_hardcover_01_cover02",
+    "file": "projects/mairas-dream/assets/workshop/book_hardcover_01_cover02.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/decorative_book_set_01/book_hardcover_01_cover02_1k.jpg",
+    "sha256": "da0f8253c6ea0b4a523341fb251f0713d3469571bffb97124e7abc4bbe7e7c99",
+    "bytes": 106041
+  },
+  {
+    "key": "book_hardcover_01_cover07",
+    "file": "projects/mairas-dream/assets/workshop/book_hardcover_01_cover07.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/decorative_book_set_01/book_hardcover_01_cover07_1k.jpg",
+    "sha256": "2ed3c8d9ec95368d940b7d4c2bbaa9d307affa6085229b38c90a23b9ce321d1d",
+    "bytes": 165316
+  },
+  {
+    "key": "book_hardcover_01_nor_gl",
+    "file": "projects/mairas-dream/assets/workshop/book_hardcover_01_nor_gl.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/decorative_book_set_01/book_hardcover_01_nor_gl_1k.jpg",
+    "sha256": "a4bc9f126c5481b6c02a50270e8140503b0155d9e7399e3d5ac032de9911b068",
+    "bytes": 79155
+  },
+  {
+    "key": "book_hardcover_01_roughness",
+    "file": "projects/mairas-dream/assets/workshop/book_hardcover_01_roughness.jpg",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/decorative_book_set_01/book_hardcover_01_roughness_1k.jpg",
+    "sha256": "9d447ed803c4ee12ab685803b5bf0d7a9d3fbfc4abf0e41964b7b42262277838",
+    "bytes": 96532
+  }
+]

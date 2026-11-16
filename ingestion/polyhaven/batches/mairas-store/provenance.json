@@ -1,0 +1,805 @@
+[
+  {
+    "id": "ph-mounted-fluorescent-lights",
+    "upstreamId": "mounted_fluorescent_lights",
+    "creator": "Ulan Cabanilla",
+    "source": "https://polyhaven.com/a/mounted_fluorescent_lights",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:20.217Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/mounted_fluorescent_lights/mounted_fluorescent_lights_1k.gltf",
+        "bytes": 21071,
+        "sha256": "7a56f167fe7074f4e4d4f314f72c5aa8b01c191394ee5ecb0b3461a240441b4a",
+        "upstreamMd5": "88af3c716ac36b280c60579f4b015119"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/mounted_fluorescent_lights/mounted_fluorescent_lights.bin",
+        "bytes": 551720,
+        "sha256": "587851c1b4e09e4cf3438f3d8bb084d4591f6be3a7bb1b4324b84af97b3c5f03",
+        "upstreamMd5": "8b7c24b1af686525c973f0c9d72440d6"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mounted_fluorescent_lights/mounted_fluorescent_lights_nor_gl_1k.jpg",
+        "bytes": 267596,
+        "sha256": "3a4504ed0f70061994b37c9ef512e7a2a7e0b7680a977add1643226ae56ea60d",
+        "upstreamMd5": "a8dab38ecb28d219153f5825047f1850"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mounted_fluorescent_lights/mounted_fluorescent_lights_diff_1k.jpg",
+        "bytes": 299833,
+        "sha256": "8e56f625c04198792d8e9e5551137cbbd399072c26fe27827b37734afd584ea1",
+        "upstreamMd5": "339f4535ee201a3da7a67f63af51a106"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mounted_fluorescent_lights/mounted_fluorescent_lights_arm_1k.jpg",
+        "bytes": 652812,
+        "sha256": "6bb051b47c5e684f7d981595e7a88c3f41989621dc4b8c9460dba989e6421438",
+        "upstreamMd5": "323b680f62a64d9cabba46c9ef99f49d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mounted_fluorescent_lights/mounted_fluorescent_lights_emission_1k.jpg",
+        "bytes": 71330,
+        "sha256": "185aaca71b4c9d908be69440b807769ce9b2a6472d3a8396755394029196ea59",
+        "upstreamMd5": "ebf1ba7f8fd5ced02d4e372dc12c013e"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-mounted-fluorescent-lights.glb",
+      "bytes": 1855776,
+      "sha256": "967bf6055c6f2dee4e420a167f3dc227b4c6ede70ddda8ec4b9b9ce0e46d236d",
+      "meshes": 7,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Mounted Fluorescent Lights",
+      "categories": [
+        "collection: project_lighthouse",
+        "lighting",
+        "industrial"
+      ],
+      "tags": [
+        "workshop",
+        "fluorescent_tube",
+        "utility_lighting",
+        "garage_light",
+        "workshop_light",
+        "shed",
+        "garage"
+      ],
+      "description": "Free 4K model of mounted fluorescent multiple strip lights: grey metal housings, end caps and chain hooks, clean geometry with subtle wear and screws.",
+      "authors": {
+        "Ulan Cabanilla": "All"
+      },
+      "donated": true,
+      "social_post_pending": false,
+      "polycount": 17820,
+      "dimensions": [
+        912.1809005737305,
+        645.4365849494934,
+        35.35318718786584
+      ],
+      "date_published": 1776330248,
+      "category_id": "01734508-0214-5462-9117-fe1f8f5e0822",
+      "category": "Lighting/Ceiling/Strip & Fluorescent",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "metal",
+          "glass"
+        ]
+      },
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "img_version": "37632b4e",
+      "files_hash": "0f8286f500f15e7c1476596bec518a25695012c5",
+      "texel_density": 15534.980319249573,
+      "download_count": 3589,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/mounted_fluorescent_lights.png?width=256&height=256&format=webp&v=37632b4e"
+    }
+  },
+  {
+    "id": "ph-wooden-bookshelf-worn",
+    "upstreamId": "wooden_bookshelf_worn",
+    "creator": "Ulan Cabanilla",
+    "source": "https://polyhaven.com/a/wooden_bookshelf_worn",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:20.641Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_1k.gltf",
+        "bytes": 2849,
+        "sha256": "a1c5b3f1e71ae0b5eb73047e8097bceaa5f17e5d2d0d7ae1b8053d5ec0878fc6",
+        "upstreamMd5": "f8bb25dfb3c646e5c4f420d800276928"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/wooden_bookshelf_worn/wooden_bookshelf_worn.bin",
+        "bytes": 267964,
+        "sha256": "170758113b50132380ab46943f6eab18f2714460dead065aae37241a94abf0f9",
+        "upstreamMd5": "3842de1943f58cdafb3a25d384b2400f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_nor_gl_1k.jpg",
+        "bytes": 993276,
+        "sha256": "90ffb1b3f7bb638d5a7e1a2b244a260d623e314a6010a6b8c23c57203e510ac9",
+        "upstreamMd5": "0e6f33c00eec432dd17178a4e5feb4f2"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_diff_1k.jpg",
+        "bytes": 799126,
+        "sha256": "970f60178decadd0d8fb1e5872f718350a49b027fd69469210c41ead350cba56",
+        "upstreamMd5": "8f92c92e6473010e7df9b11f32d1234a"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_bookshelf_worn/wooden_bookshelf_worn_arm_1k.jpg",
+        "bytes": 713979,
+        "sha256": "41b3aca38fb55cb300d971016a597c80425da3744a6d33d82fe78f9dbe609eaa",
+        "upstreamMd5": "7252efe4bd18f6dfdc014a9f4ccdf065"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-wooden-bookshelf-worn.glb",
+      "bytes": 2776164,
+      "sha256": "b4a0da584b581300234de06e6d8c066bd7766e6571d0763677fbab960eadf776",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "type": 2,
+      "date_published": 1684108800,
+      "name": "Wooden Bookshelf Worn",
+      "authors": {
+        "Ulan Cabanilla": "All"
+      },
+      "info": null,
+      "categories": [
+        "furniture",
+        "shelves",
+        "collection: the_shed"
+      ],
+      "tags": [
+        "old",
+        "wooden",
+        "wood",
+        "worn",
+        "garage",
+        "shed",
+        "rustic",
+        "antique",
+        "distressed",
+        "aged",
+        "weathered",
+        "bookcase",
+        "shelves",
+        "carpentry",
+        "vintage",
+        "storage"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 10106,
+      "texel_density": 761.2948053157476,
+      "dimensions": [
+        1373.95179271698,
+        581.3020169734955,
+        2063.442051410675
+      ],
+      "files_hash": "7db4a47cb5d2cf4dccb714c4ada6008321217fcb",
+      "description": "Free 4K model of a worn wooden bookshelf with multiple shelves, distressed weathered grain, layered plywood edges, visible nail holes and rustic vintage finish.",
+      "sponsors": [
+        "11167855",
+        "26820710"
+      ],
+      "category_id": "306ba141-9b10-54f2-8d06-09031cea8318",
+      "category": "Furniture/Storage Furniture/Shelving & Bookcases",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood",
+          "metal"
+        ]
+      },
+      "img_version": "47d9afff",
+      "download_count": 10856,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/wooden_bookshelf_worn.png?width=256&height=256&format=webp&v=47d9afff"
+    }
+  },
+  {
+    "id": "ph-desk-lamp-arm-01",
+    "upstreamId": "desk_lamp_arm_01",
+    "creator": "Yann Kervran, Kuutti Siitonen",
+    "source": "https://polyhaven.com/a/desk_lamp_arm_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:21.027Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/desk_lamp_arm_01/desk_lamp_arm_01_1k.gltf",
+        "bytes": 4453,
+        "sha256": "2ac8389afc1519449a9cfdf7efd9fa36780a2177bb47ab58f7a7dda7d247dc8c",
+        "upstreamMd5": "29b204485d30e66ee3f183ef45bf4bb3"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/desk_lamp_arm_01/desk_lamp_arm_01.bin",
+        "bytes": 736804,
+        "sha256": "07f34e32abecbaa63d28b9d12d6a0eb82b775a0f50c92327655909d72ff8489b",
+        "upstreamMd5": "29ffa5bb6bee35b066e46073124fee1a"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/desk_lamp_arm_01/desk_lamp_arm_01_nor_gl_1k.jpg",
+        "bytes": 651826,
+        "sha256": "feefedc3835ecef3634e97a24977451671f8f57747a023f48cd14c84bc73513a",
+        "upstreamMd5": "5aabbfe920ea6726d5299be7d6224551"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/desk_lamp_arm_01/desk_lamp_arm_01_diff_1k.jpg",
+        "bytes": 702522,
+        "sha256": "159eb178aba3271bd555cbe07ca36431d8af9a006f0b8e9d8c67030cbdc9e4d3",
+        "upstreamMd5": "a5c1bf5465da39ca6ca9039dd4e3fd66"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/desk_lamp_arm_01/desk_lamp_arm_01_arm_1k.jpg",
+        "bytes": 780379,
+        "sha256": "206404c79fb7dcf8e2c4558c13544342f87d2190526231a1750c3c9adc256fbc",
+        "upstreamMd5": "0b887af80f561216baa3da94d001d51a"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-desk-lamp-arm-01.glb",
+      "bytes": 2874264,
+      "sha256": "a53eeb902e0b5cdbb8cffa5cec038ce55d39c2c6ff8d789c15522ce4d8deb4d3",
+      "meshes": 1,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1661904000,
+      "sponsors": [
+        "78546118"
+      ],
+      "name": "Desk Lamp Arm 01",
+      "type": 2,
+      "authors": {
+        "Yann Kervran": "Rigging",
+        "Kuutti Siitonen": "Modeling & texturing"
+      },
+      "categories": [
+        "lighting",
+        "rigged",
+        "collection: the_shed"
+      ],
+      "tags": [
+        "industrial",
+        "lamp",
+        "mounted",
+        "fixed",
+        "desk",
+        "table",
+        "light",
+        "arm"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 25710,
+      "texel_density": 12269.918886366604,
+      "dimensions": [
+        617.3093914985657,
+        408.02252292633057,
+        879.0190517902374
+      ],
+      "files_hash": "e15dd68e575e78092f99c7179cd031525428bbc1",
+      "description": "Free 8K model of an industrial, rigged desk lamp arm - clamp-mounted, articulated with springs, vintage workshop style.",
+      "category_id": "afb5f7d4-b1db-5b32-8850-edd6ccf20b24",
+      "category": "Lighting/Floor & Desk/Desk Lamps",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "metal"
+        ],
+        "rigged": true
+      },
+      "img_version": "59bbc8e7",
+      "download_count": 21917,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/desk_lamp_arm_01.png?width=256&height=256&format=webp&v=59bbc8e7"
+    }
+  },
+  {
+    "id": "ph-pot-enamel-01",
+    "upstreamId": "pot_enamel_01",
+    "creator": "Kuutti Siitonen",
+    "source": "https://polyhaven.com/a/pot_enamel_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:23.560Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/pot_enamel_01/pot_enamel_01_1k.gltf",
+        "bytes": 4018,
+        "sha256": "ca60a8399463429cf23e04784334cbe344886e5c8747860ad9ad44c044e03dde",
+        "upstreamMd5": "84ddd8d2e210d11788dbcb1670b0e530"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/pot_enamel_01/pot_enamel_01.bin",
+        "bytes": 270448,
+        "sha256": "134771c9f71269f791ad9e52910f25542e94b5e83adff1c9acc620c93d486d13",
+        "upstreamMd5": "d8845287663697c274192b8ba35cb7a1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pot_enamel_01/pot_enamel_01_nor_gl_1k.jpg",
+        "bytes": 434214,
+        "sha256": "e489edcf2014fa96c3dfca2c966a5b3bb8c0d02e88c9adeea96465d44662f56e",
+        "upstreamMd5": "8fc58dc6caa2036f83fed505acd66534"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pot_enamel_01/pot_enamel_01_diff_1k.jpg",
+        "bytes": 538938,
+        "sha256": "b8b15e6cbdeebc49034f06418f5daf097fd954a4df1e63f1efbc85c96dec2c7d",
+        "upstreamMd5": "e530e70fc13aef9c595162b293b049a0"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pot_enamel_01/pot_enamel_01_arm_1k.jpg",
+        "bytes": 497109,
+        "sha256": "e8ab66b9a9f3e136d78dc393d30a9436b53570a4aaea26d5ae46913752bf15fe",
+        "upstreamMd5": "be7b3e6c51ac6cbead2496bd0db41d00"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-pot-enamel-01.glb",
+      "bytes": 1743200,
+      "sha256": "42d931ccf58e5de1ff3055c9773de5f8f9ccd9b4cf09f3849a98fa819b7d1e36",
+      "meshes": 2,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1662681600,
+      "name": "Pot Enamel 01",
+      "categories": [
+        "props",
+        "decorative",
+        "dishes"
+      ],
+      "type": 2,
+      "authors": {
+        "Kuutti Siitonen": "All"
+      },
+      "tags": [
+        "pot",
+        "container",
+        "cooking",
+        "cookware",
+        "kitchen",
+        "enamel",
+        "crockery",
+        "cuisine"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "sponsors": [
+        "77433244"
+      ],
+      "polycount": 11416,
+      "texel_density": 14474.246184477663,
+      "dimensions": [
+        262.93012499809265,
+        180.4744154214859,
+        178.26278507709503
+      ],
+      "files_hash": "2332da616c0701d4556f6e272426f8459611c7f3",
+      "description": "Free 8K enamel pot model, dark brown with worn scuffs, lid and rounded handles, decorated with bold red-orange flame-like pattern around the base.",
+      "category_id": "e6058a1a-0864-52d4-a70b-596d5f08ce64",
+      "category": "Food & Kitchen/Cookware/Pots & Pans",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "metal"
+        ]
+      },
+      "img_version": "159e0103",
+      "download_count": 5216,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/pot_enamel_01.png?width=256&height=256&format=webp&v=159e0103"
+    }
+  },
+  {
+    "id": "ph-vintage-electric-kettle",
+    "upstreamId": "vintage_electric_kettle",
+    "creator": "SV Garip",
+    "source": "https://polyhaven.com/a/vintage_electric_kettle",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:24.006Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_electric_kettle/vintage_electric_kettle_1k.gltf",
+        "bytes": 4801,
+        "sha256": "c03d2ef0e9f46eb06a1ccef6ff78d7baf83e76808e31d7016505e3ee0a416859",
+        "upstreamMd5": "2b916b831d913ba1785a8b08ab2f0f61"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/vintage_electric_kettle/vintage_electric_kettle.bin",
+        "bytes": 416612,
+        "sha256": "6be39ebc1893feaef3aa05bec6d2bf069af65fec0c1500422aaedf14357dab59",
+        "upstreamMd5": "3e817b9bd20bad65c016e5464ee03bc3"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_electric_kettle/vintage_electric_kettle_nor_gl_1k.jpg",
+        "bytes": 624432,
+        "sha256": "7723e22b77b73c6cc20d2593849d56cc64ee5c8e54bacf3bf8b2f4dd4f2ffaf0",
+        "upstreamMd5": "a8d86ddd33e47a4781105f66582e4b7c"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_electric_kettle/vintage_electric_kettle_diff_1k.jpg",
+        "bytes": 584337,
+        "sha256": "eee3052a610f24055f7b25749cfaf64016a5621afcff931fe513ab62c0a829f3",
+        "upstreamMd5": "758b520b36cd419442d06fa5ea2b4924"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_electric_kettle/vintage_electric_kettle_arm_1k.jpg",
+        "bytes": 756927,
+        "sha256": "ff683e24348d6319edf7bd5a14659a846d3008ae614bf966d4db23fc156b5e0c",
+        "upstreamMd5": "3b2f4b53442fa5d3fac05da5c529aeb8"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_electric_kettle/vintage_electric_kettle_diff_1k.jpg",
+        "bytes": 584337,
+        "sha256": "eee3052a610f24055f7b25749cfaf64016a5621afcff931fe513ab62c0a829f3",
+        "upstreamMd5": "758b520b36cd419442d06fa5ea2b4924"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-vintage-electric-kettle.glb",
+      "bytes": 2969656,
+      "sha256": "e24b8fc881623183eb1fb6814e2e73d17bd389d7b6029088d86baf92c7b8b748",
+      "meshes": 1,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Vintage Electric Kettle",
+      "categories": [
+        "collection: project_lighthouse",
+        "decorative",
+        "appliances"
+      ],
+      "tags": [
+        "old",
+        "vintage",
+        "antique",
+        "electric",
+        "gooseneck spout",
+        "metal",
+        "rusted",
+        "dirty",
+        "traditional"
+      ],
+      "description": "Free 4K vintage electric kettle with worn metal body, gooseneck spout, wood handle, and front thermometer gauge, detailed patina, dents, and brass fittings.",
+      "authors": {
+        "SV Garip": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 14838,
+      "files_hash": "6de2f0161fe1e0f8eb1138daf0985ee865511290",
+      "texel_density": 7291.063696812514,
+      "dimensions": [
+        320.89072465896606,
+        248.55303764343262,
+        304.7400116920471
+      ],
+      "date_published": 1781913600,
+      "category_id": "e157d952-f5d4-52d6-a421-68e7872445a0",
+      "category": "Electronics & Appliances/Home Appliances/Kettles",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "rusted"
+        ],
+        "material": [
+          "metal",
+          "wood",
+          "brass"
+        ]
+      },
+      "img_version": "612e4db1",
+      "download_count": 799,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/vintage_electric_kettle.png?width=256&height=256&format=webp&v=612e4db1"
+    }
+  },
+  {
+    "id": "ph-korean-fire-extinguisher-01",
+    "upstreamId": "korean_fire_extinguisher_01",
+    "creator": "UM JOORIN",
+    "source": "https://polyhaven.com/a/korean_fire_extinguisher_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:24.709Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_1k.gltf",
+        "bytes": 7450,
+        "sha256": "565f9e41909165c2bead24b722746e29ba55e8eb5e541f61fe0d1ef7e66d2ecf",
+        "upstreamMd5": "842e3c682b1bd286ba90af70848a0fbf"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/korean_fire_extinguisher_01/korean_fire_extinguisher_01.bin",
+        "bytes": 279480,
+        "sha256": "a460dd65b63477bb641196d77393258af0c8a6e2a64728156cb45d92658c86bd",
+        "upstreamMd5": "e4b0452f70679815817e0b6f87ba5e52"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_body_nor_gl_1k.jpg",
+        "bytes": 95607,
+        "sha256": "b6ba7a7cafa04557c93dc63b44260b635863f0a95f8ba1445b75758dac3443d3",
+        "upstreamMd5": "684dc2f34e0673fd5ecdb71a87366031"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_body_diff_1k.jpg",
+        "bytes": 127270,
+        "sha256": "2d874513cfb6d7485b67e936ee32e7af14992da6a5eedf980dbdfc32a2119987",
+        "upstreamMd5": "5e893385064d90ba8bef74a9625409ef"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_body_arm_1k.jpg",
+        "bytes": 209865,
+        "sha256": "2c8fa0a85d5acc5f4e784ecefd8bfd16e1aafd112e553bfcece0c81c9b129eea",
+        "upstreamMd5": "e4367435179d89d78d4c8f14fe6f2ee9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_glass_nor_gl_1k.jpg",
+        "bytes": 36344,
+        "sha256": "3b299c54cb9b6f72d4f79e6ecd2f8cfcc618292c87881de1d17892b5ca668896",
+        "upstreamMd5": "1da8b9a645f7e0940ea9505879d8f489"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_glass_diff_1k.jpg",
+        "bytes": 150097,
+        "sha256": "ca7e49959126aa51e2d4ab440aeb9f7ff17a8a6d025b116f6327f2343ee041af",
+        "upstreamMd5": "15c48dd9f2a9b11647f5212179bc0d30"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_glass_arm_1k.jpg",
+        "bytes": 61925,
+        "sha256": "412712fddc3654d801949889f78c9ee92d8855624a1fe1057be29a38e766bda0",
+        "upstreamMd5": "377ae0f369cfa52b2589f36f6d4a3be4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_paper_nor_gl_1k.jpg",
+        "bytes": 267306,
+        "sha256": "caaa26dd438e827e994c69605091d58ecc6a152813ece776cc561e0b24a8433a",
+        "upstreamMd5": "a168897334529d98a67df80a486076ed"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_paper_diff_1k.jpg",
+        "bytes": 161849,
+        "sha256": "2d56948aa72a9bad6133db3e6b17fa0df1a56cdf25db4b7e21e6ceb21999a038",
+        "upstreamMd5": "bfe0fd9be862d04df812e7d3fb6d2c29"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/korean_fire_extinguisher_01/korean_fire_extinguisher_01_paper_arm_1k.jpg",
+        "bytes": 221117,
+        "sha256": "542b45184bb0ea66cdd2f180792148c45d45862a12f1ac341f798e53029015b9",
+        "upstreamMd5": "4d30630a842d22459188b53848538fd1"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-korean-fire-extinguisher-01.glb",
+      "bytes": 1615648,
+      "sha256": "12f1644556ff55328cd25fbb01da0853739b03a43625e46cd4a8290086d7876f",
+      "meshes": 1,
+      "materials": 3,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1623767615,
+      "name": "Korean Fire Extinguisher 01",
+      "categories": [
+        "industrial",
+        "props"
+      ],
+      "type": 2,
+      "authors": {
+        "UM JOORIN": "All"
+      },
+      "tags": [
+        "fire",
+        "saftey",
+        "fireman",
+        "extinguisher",
+        "emergency",
+        "equipment",
+        "red",
+        "firefighting",
+        "asian",
+        "utility",
+        "infrastructure"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 9913,
+      "texel_density": 17244.779394877245,
+      "dimensions": [
+        279.957577586174,
+        367.44324862957,
+        659.2507164176169
+      ],
+      "files_hash": "bf286ac62105374e5c583367e80ce77dcbe6881c",
+      "description": "Free 8K model of a red Korean fire extinguisher with weathered paint, pressure gauge, hose and yellow strap, mounted on a scuffed base.",
+      "category_id": "63c978b5-4c95-544b-864b-64dbd89ba09a",
+      "category": "Industrial & Infrastructure/Traffic & Safety/Hydrants & Fire Safety",
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "metal",
+          "rubber"
+        ]
+      },
+      "img_version": "40852446",
+      "download_count": 13723,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/korean_fire_extinguisher_01.png?width=256&height=256&format=webp&v=40852446"
+    }
+  },
+  {
+    "id": "ph-painted-wooden-cabinet-02",
+    "upstreamId": "painted_wooden_cabinet_02",
+    "creator": "Kirill Sannikov",
+    "source": "https://polyhaven.com/a/painted_wooden_cabinet_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T17:33:25.181Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/painted_wooden_cabinet_02/painted_wooden_cabinet_02_1k.gltf",
+        "bytes": 6085,
+        "sha256": "a4b697adf7a24a081b8452f5a7d482765e2139cf2a6687a4cbb2a7b8bea24325",
+        "upstreamMd5": "ab85664b46355d3fc455c115a2290d3e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/painted_wooden_cabinet_02/painted_wooden_cabinet_02.bin",
+        "bytes": 39332,
+        "sha256": "7acab853993b90cafc9c7550a7035397dfeb4bbda7f0dba8759d40a971c755ca",
+        "upstreamMd5": "00b400f46d4a95cc51abfb1361b30184"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_cabinet_02/painted_wooden_cabinet_02_nor_gl_1k.jpg",
+        "bytes": 526407,
+        "sha256": "46e8df6be06eca30a05d0e90f12e8799e6e11c73ab7c910cc3541b0833ee0103",
+        "upstreamMd5": "0af50294d21a0686a4bdfd4ef82da5c1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_cabinet_02/painted_wooden_cabinet_02_diff_1k.jpg",
+        "bytes": 560790,
+        "sha256": "ddb2cace49bb05b8e03e6c205223a69f95e5eef84ec66e97e5d0e49d2a1af09e",
+        "upstreamMd5": "2f41fe301044d30f852ca526334b77a4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/painted_wooden_cabinet_02/painted_wooden_cabinet_02_arm_1k.jpg",
+        "bytes": 463616,
+        "sha256": "0cf309449d4b0c1ecb0a3adbc17837b6f77f36cb45c1f0ceb6013b07fac44214",
+        "upstreamMd5": "e4e6a5138eb5b78e591cec0dc39f3e6d"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-painted-wooden-cabinet-02.glb",
+      "bytes": 1593860,
+      "sha256": "63da7ee7260badc02d689e830b491654db56635b54428a098ad11828a3d21473",
+      "meshes": 3,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "name": "Painted Wooden Cabinet 02",
+      "categories": [
+        "furniture",
+        "shelves"
+      ],
+      "type": 2,
+      "tags": [
+        "storage",
+        "cabinet",
+        "wood",
+        "vintage",
+        "rustic",
+        "worn",
+        "carpentry",
+        "aged",
+        "bookcase"
+      ],
+      "authors": {
+        "Kirill Sannikov": "All"
+      },
+      "info": null,
+      "date_published": 1710720000,
+      "polycount": 966,
+      "dimensions": [
+        996.9334602355957,
+        729.429692029953,
+        2568.572537857108
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "texel_density": 769.8343893811391,
+      "files_hash": "2f601a35a11252f78512bd915689567fd8782150",
+      "description": "Free 4K model of a painted wooden cabinet: rustic, vintage bookcase with worn blue paint, aged wood, shelves, drawer and lower cupboard.",
+      "category_id": "14debc4f-6ceb-597a-a824-8de173aa95a9",
+      "category": "Furniture/Storage Furniture/Cabinets & Cupboards",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "28d0e953",
+      "download_count": 4840,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/painted_wooden_cabinet_02.png?width=256&height=256&format=webp&v=28d0e953"
+    }
+  }
+]

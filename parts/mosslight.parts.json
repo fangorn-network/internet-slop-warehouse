@@ -1,0 +1,224 @@
+[
+  {
+    "id": "trystero-027-license",
+    "file": "vendor/TRYSTERO-LICENSES.txt",
+    "type": "asset",
+    "mime": "text/plain",
+    "title": "Trystero transport license notices",
+    "description": "MIT license notices and source versions for the pinned Trystero 0.27 browser bundle.",
+    "tags": [
+      "license",
+      "trystero"
+    ],
+    "author": "Trystero contributors",
+    "license": "MIT"
+  },
+  {
+    "id": "homestead-kit",
+    "file": "homestead-kit.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Homestead simulation kit",
+    "description": "Host-authoritative island harvesting, atomic recipes, construction, reclaiming, four actors and validated portable snapshots. Configure world and recipes as JSON. No rendering, enemies, backend or AI calls.",
+    "tags": [
+      "building",
+      "crafting",
+      "exploration",
+      "co-op",
+      "reusable"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "resource-inventory",
+      "recipe-book"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "does": "Host-authoritative island harvesting, atomic recipes, construction, reclaiming, four actors and validated portable snapshots. Configure world and recipes as JSON. No rendering, enemies, backend or AI calls."
+      }
+    ]
+  },
+  {
+    "id": "homestead-view",
+    "file": "homestead-view.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Homestead island view",
+    "description": "Three.js adapter for homestead-kit: warm low-poly islands, trees, minerals, blueprint preview, construction, multiplayer gardeners and minimap.",
+    "tags": [
+      "building",
+      "crafting",
+      "exploration",
+      "co-op",
+      "reusable"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "homestead-kit",
+      "garden-caretaker"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "does": "Three.js adapter for homestead-kit: warm low-poly islands, trees, minerals, blueprint preview, construction, multiplayer gardeners and minimap."
+      }
+    ]
+  },
+  {
+    "id": "trystero-027",
+    "file": "vendor/trystero-0.27.0.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Trystero 0.27 browser transport (MIT)",
+    "description": "Pinned self-contained Trystero 0.27.0 Nostr/WebRTC transport. Optional public signaling, no API key. MIT third-party code; see bundled license notices.",
+    "tags": [
+      "building",
+      "crafting",
+      "exploration",
+      "co-op",
+      "reusable"
+    ],
+    "author": "Trystero contributors; warehouse packaging",
+    "license": "MIT",
+    "uses": [
+      "trystero-027-license"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "does": "Pinned self-contained Trystero 0.27.0 Nostr/WebRTC transport. Optional public signaling, no API key. MIT third-party code; see bundled license notices."
+      },
+      {
+        "name": "joinRoom",
+        "signature": "joinRoom(options)",
+        "does": "Join an encrypted peer room."
+      },
+      {
+        "name": "roles",
+        "signature": "roles(options)",
+        "does": "Host-signed administration and shared-state writes."
+      },
+      {
+        "name": "defaultRelayUrls",
+        "signature": "defaultRelayUrls: string[]",
+        "does": "Default public Nostr relays."
+      }
+    ]
+  },
+  {
+    "id": "p2p-homestead",
+    "file": "p2p-homestead.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Serverless homestead co-op",
+    "description": "Optional four-player Trystero rooms. Host validates intents and broadcasts signed snapshots; guests cannot write canonical state. Ephemeral identity works without browser storage. Host must stay online; no host migration or TURN service.",
+    "tags": [
+      "building",
+      "crafting",
+      "exploration",
+      "co-op",
+      "reusable"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "homestead-kit",
+      "trystero-027"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "does": "Optional four-player Trystero rooms. Host validates intents and broadcasts signed snapshots; guests cannot write canonical state. Ephemeral identity works without browser storage. Host must stay online; no host migration or TURN service."
+      }
+    ]
+  },
+  {
+    "id": "mosslight-scenario",
+    "file": "homestead/mosslight.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Mosslight three-island scenario",
+    "description": "CC0 editable game data for Mosslight Commons and homestead-kit.",
+    "tags": [
+      "building",
+      "crafting",
+      "scenario"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "homestead-recipes",
+    "file": "homestead/recipes.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Homestead tool and smelting recipes",
+    "description": "CC0 editable game data for Mosslight Commons and homestead-kit.",
+    "tags": [
+      "building",
+      "crafting",
+      "scenario"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "mosslight-commons",
+    "file": "mosslight-commons.html",
+    "type": "game",
+    "title": "Mosslight Commons",
+    "description": "A peaceful 3D exploration, crafting and building game. Gather timber, upgrade tools, build bridges across three islands, smelt copper, make a camp and restore the mosslight. Optional four-player P2P co-op, shared supplies and portable save codes. Host stays online; public signaling connectivity varies. Original game code CC0; Trystero transport MIT.",
+    "tags": [
+      "3d",
+      "building",
+      "crafting",
+      "exploration",
+      "cozy",
+      "co-op",
+      "p2p",
+      "survival-starter"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "homestead-kit",
+      "homestead-view",
+      "p2p-homestead",
+      "trystero-027",
+      "mosslight-scenario",
+      "homestead-recipes",
+      "resource-inventory",
+      "recipe-book",
+      "save-codec",
+      "expedition-shell",
+      "ambient-motes",
+      "touch-controls",
+      "garden-caretaker",
+      "homestead-quickstart"
+    ]
+  },
+  {
+    "id": "homestead-quickstart",
+    "file": "HOMESTEAD-QUICKSTART.md",
+    "type": "asset",
+    "mime": "text/markdown",
+    "title": "Homestead kit: low-token remix guide",
+    "description": "Short wiring guide for making games by editing world and recipe JSON. Includes ownership, multiplayer limits, preview commands and CC0/MIT license boundaries.",
+    "tags": [
+      "documentation",
+      "starter",
+      "building",
+      "crafting",
+      "low-token"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  }
+]

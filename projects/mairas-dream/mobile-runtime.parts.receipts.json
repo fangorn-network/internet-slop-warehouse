@@ -1,0 +1,20 @@
+[
+  {
+    "id": "mairas-store-display-lods",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreigf3ehw3uvzp7j22atadh6s726ebtmtvqx75mrpm2agaovy2bd4j4",
+    "src": "bafybeiglgyvtsb2pn3zi2gmc3jv4chaamwgnzrsltrmr3cf7rkj4khedqu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiglgyvtsb2pn3zi2gmc3jv4chaamwgnzrsltrmr3cf7rkj4khedqu",
+    "txHash": "0x4efc65d24d756d8878d485775312df6a390b03131f81012d487566a3457f32cd"
+  },
+  {
+    "id": "mairas-stock-layout",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreif2fdicj437r26gwyuzuwskafhgb4p3hmy2vptmassm3gjjzfcvoy",
+    "src": "bafkreiagi3htqnoscxqy6ifmr56ymnsreziwskstec57ozmbe2bqsedrzq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreiagi3htqnoscxqy6ifmr56ymnsreziwskstec57ozmbe2bqsedrzq",
+    "txHash": "0x4efc65d24d756d8878d485775312df6a390b03131f81012d487566a3457f32cd"
+  }
+]

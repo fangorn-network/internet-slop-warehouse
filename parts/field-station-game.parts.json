@@ -1,0 +1,49 @@
+[
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0",
+      "sandbox",
+      "playground",
+      "toys"
+    ],
+    "id": "stillwater-field-station",
+    "file": "stillwater-field-station.html",
+    "type": "game",
+    "title": "Stillwater Field Station",
+    "description": "A small immersive woodland playground: walk textured trails, explore scanned Poly Haven props, toggle a detailed generator and shelter lights, turn a working radio dial, and toss ballistic stones at three ringing bells. Optional cache finds; no required quest, timer or ending. Instanced forest/ferns, terrain collisions, HDR image-based lighting, PBR ground and optional spatial sound. WASD/right-drag/E/Space or touch. New assets and systems were published first for reuse in future 3D worlds.",
+    "uses": [
+      "ph-fern-02",
+      "ph-tree-stump-01",
+      "ph-portable-generator",
+      "ph-vintage-radio-transceiver",
+      "ph-dead-tree-trunk",
+      "ph-misty-pines",
+      "ph-forest-floor-normal",
+      "ph-forest-floor-roughness",
+      "world-prop-kit",
+      "trail-walker",
+      "signal-trail",
+      "woodland-sound",
+      "stillwater-world",
+      "stillwater-world-guide",
+      "fps-controls",
+      "northwoods-trees",
+      "winter-pine-bark",
+      "forest-ground-texture",
+      "mossy-rocks",
+      "planks-texture",
+      "ph-woodentable-01",
+      "ph-wooden-crate-01",
+      "ph-vintage-oil-lamp",
+      "field-pine-spray",
+      "trail-playground"
+    ]
+  }
+]

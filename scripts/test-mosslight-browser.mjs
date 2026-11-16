@@ -1,0 +1,25 @@
+// Real WebGL smoke and interaction checks. Serve a local `publish-batch --local` build.
+import { createServer } from 'node:http';
+import { readFile,writeFile,mkdir } from 'node:fs/promises';
+import { resolve,relative } from 'node:path';
+import assert from 'node:assert/strict';
+const { chromium }=await import(process.env.PLAYWRIGHT_MODULE??'playwright-core');
+const root=resolve(process.argv[2]??'/tmp/survival-kit'),vendor=resolve('node_modules/three'),out=resolve('artifacts/mosslight');await mkdir(out,{recursive:true});
+const server=createServer(async(req,res)=>{try{const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);let file;
+ if(path.startsWith('/vendor/three/')){file=resolve(vendor,path.slice('/vendor/three/'.length));if(relative(vendor,file).startsWith('..'))throw Error('Bad vendor path');}
+ else{file=resolve(root,'.'+path);if(relative(root,file).startsWith('..'))throw Error('Bad path');}
+ let data=await readFile(file);if(file.endsWith('.html')){data=data.toString().replaceAll('https://cdn.jsdelivr.net/npm/three@0.170.0/','/vendor/three/');res.setHeader('Content-Type','text/html');}else res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.json')?'application/json':file.endsWith('.glb')?'model/gltf-binary':'application/octet-stream');res.end(data);
+}catch{res.statusCode=404;res.end();}});await new Promise(r=>server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${server.address().port}`;
+let browser;
+try{
+ browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const errors=[];const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')console.log('CONSOLE',m.text().slice(0,200));});
+ await page.goto(base+'/mosslight-commons.html');await page.locator('.exp-start:not([disabled])').waitFor({timeout:90000});await page.screenshot({path:out+'/title.png'});await page.locator('.exp-start').click();await page.waitForTimeout(600);await page.screenshot({path:out+'/islands.png'});await page.evaluate(()=>{for(const type of [window.WebGLRenderingContext,window.WebGL2RenderingContext])if(type)for(const n of ['drawElements','drawArrays','drawElementsInstanced','drawArraysInstanced'])if(type.prototype[n])type.prototype[n]=()=>{};document.querySelector('canvas').width=1;document.querySelector('canvas').height=1;});
+ await page.keyboard.press('i');await page.getByRole('button',{name:/^Workbench/}).click();await page.locator('.close-camp').click();await page.keyboard.press('Space');await page.waitForFunction(()=>worldDebug.snapshot.structures.some(b=>b.kind==='workbench'),null,{polling:100,timeout:15000});await page.keyboard.press('i');await page.locator('.camp-panel').waitFor({state:'visible'});
+ await page.locator('.export-save').click();const save=await page.locator('#camp-save').inputValue();assert(save.startsWith('SW1.'));await page.locator('#camp-save').fill('broken');await page.locator('.load-save').click();assert.match(await page.locator('.camp-status').textContent(),/Could not restore/);await page.locator('#camp-save').fill(save);await page.locator('.load-save').click();assert.match(await page.locator('.camp-status').textContent(),/restored/);
+ await page.locator('.host-room').click();await page.waitForFunction(()=>document.querySelector('#room-code').value.includes('/'),null,{timeout:30000});const code=await page.locator('#room-code').inputValue();console.log('HOST_READY',code.split('/')[0]);
+ const guest=await browser.newPage({viewport:{width:1000,height:800}});guest.on('pageerror',e=>errors.push('guest: '+e.message));await guest.goto(base+'/mosslight-commons.html');await guest.locator('.exp-start:not([disabled])').waitFor({timeout:90000});await guest.locator('.exp-start').click();await guest.keyboard.press('i');await guest.locator('#room-code').fill(code);await guest.locator('.join-room').click();await page.bringToFront();await page.locator('.close-camp').click();if(await page.locator('.exp-start').isVisible())await page.locator('.exp-start').click();
+ try{await guest.waitForFunction(()=>window.worldDebug.snapshot.room?.connected,null,{timeout:35000});console.log('PUBLIC_P2P_CONNECTED');}catch{console.log('PUBLIC_P2P_STATUS',await guest.locator('.room-status').textContent());}
+ await guest.screenshot({path:out+'/coop.png'});console.log(JSON.stringify({errors,host:await page.evaluate(()=>worldDebug.snapshot.room),guest:await guest.evaluate(()=>worldDebug.snapshot.room)}));assert.deepEqual(errors,[]);
+ const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});await mobile.goto(base+'/mosslight-commons.html');await mobile.locator('.exp-start:not([disabled])').waitFor({timeout:90000});await mobile.locator('.exp-start').click();await mobile.waitForTimeout(300);await mobile.screenshot({path:out+'/mobile.png'});assert(await mobile.getByText('GATHER',{exact:true}).isVisible());
+}finally{await browser?.close();server.close();}

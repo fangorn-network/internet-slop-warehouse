@@ -1,0 +1,101 @@
+[
+  {
+    "id": "hotel-shelving-unit",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreif5sgjaigkgdusbngt5qwv3foc6ngs5b7wh6fm5mjzp7o2anfaj3e",
+    "src": "bafybeibvh3pp5c3t5e4ej7chj75grbjc6sme43yfzx7xnd2kqg5g522roq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeibvh3pp5c3t5e4ej7chj75grbjc6sme43yfzx7xnd2kqg5g522roq",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "hotel-floor-lamp",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreib5xg7v7vc5ahjxf4igwaex6hmnb6rkksq2ltjb5hmg4kni7loy5i",
+    "src": "bafybeiebnxtoruvhwb23qvmvi2m2za2ijmijr4sy6fe47hiw2wcrm2jdxe",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiebnxtoruvhwb23qvmvi2m2za2ijmijr4sy6fe47hiw2wcrm2jdxe",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "hotel-snake-plant",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifpulflim3l6zvypztau3a33evg26753t5ykdiuacldtrkhq6lcfe",
+    "src": "bafkreigp5g7ai4wjxpaofbewhemkoot55lufjlqi6c2mea3igmsehbo3km",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreigp5g7ai4wjxpaofbewhemkoot55lufjlqi6c2mea3igmsehbo3km",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "hotel-centerpiece",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibz5ipbucgcu36eodujyy3ehk24dxn7x67ogg6xyxwndgheo2kac4",
+    "src": "bafybeif4gf4uopwgltgroooibl5u3tzv6ftkhnxhlpdhvgjuljppcvzz2i",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeif4gf4uopwgltgroooibl5u3tzv6ftkhnxhlpdhvgjuljppcvzz2i",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "hotel-lattice-pendant",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreigg4uollroloxva2quimwdk5qasmvjr3yids4zeqyrux6loeusnoy",
+    "src": "bafkreiddtlimtdksnjiyr2tebzxmm2jtrrmrmmprjowaf2hcmuq4mf3jlq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreiddtlimtdksnjiyr2tebzxmm2jtrrmrmmprjowaf2hcmuq4mf3jlq",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "acg-hotel-brushed-steel-color",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreigxm327efhmfx4cu2mqt4sneva4bbpzni5ijbak736djgiuilqjxm",
+    "src": "bafybeifl37vsz3m6t44mj63rewenf6msoda6jmoisdh3iuyhi4ovhwkghu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeifl37vsz3m6t44mj63rewenf6msoda6jmoisdh3iuyhi4ovhwkghu",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "acg-hotel-brushed-steel-normal",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreieayveqrbjax3mhvy44ullxjuconujmrokngx2hbsh6kq56kpe62u",
+    "src": "bafybeiabacaxl6vx66jbtotnltep3li7w6fxad72vnulazvb67emzlmgme",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiabacaxl6vx66jbtotnltep3li7w6fxad72vnulazvb67emzlmgme",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "acg-hotel-brushed-steel-roughness",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreick4sciygjczsagutqqehpo4w4dfwhfzu3llvxzcg6s363qssgpvy",
+    "src": "bafybeidqp7cncn5arrsblahy2ahtsr62l3gxdvfgq55r2q4rdvhk3xqkdq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeidqp7cncn5arrsblahy2ahtsr62l3gxdvfgq55r2q4rdvhk3xqkdq",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "acg-hotel-terrazzo-color",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifd2z2keeqlnnkaefgbc5ugetceerlobuwqo6uwcjqdhgpflk7icq",
+    "src": "bafybeihs6o43r33jm526a5convo6rkwb3utlqdkq5qevho5fy6jgo2l6hu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihs6o43r33jm526a5convo6rkwb3utlqdkq5qevho5fy6jgo2l6hu",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "acg-hotel-terrazzo-normal",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreif73wazx7fvhqf4ieexklow6xvvmmwsrc42uxredrdld7tvymruta",
+    "src": "bafybeiflluzsk74jpvctbqfxwwgqzkzol4we4x2gs6fh275apob3q5kzqe",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiflluzsk74jpvctbqfxwwgqzkzol4we4x2gs6fh275apob3q5kzqe",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  },
+  {
+    "id": "acg-hotel-terrazzo-roughness",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiakoso6frwxugavdmbckbdau7l553pb7eacpxpltsjgoyftdb4tuy",
+    "src": "bafybeih5xerllojdddjshbwgdxalt4bmzjz36ndk3sildfnxownzvwemtq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeih5xerllojdddjshbwgdxalt4bmzjz36ndk3sildfnxownzvwemtq",
+    "txHash": "0xf988c1ee0cc3d204c10bbbe748defa9581ca4f86f2ac5480b78ea4db5a746ab7"
+  }
+]

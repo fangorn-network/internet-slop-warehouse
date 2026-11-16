@@ -1,0 +1,42 @@
+[
+  {
+    "id": "no-road-home",
+    "file": "no-road-home.html",
+    "type": "game",
+    "title": "No Road Home",
+    "description": "A 3D survival starter built from a small scenario file. Scavenge four buildings, craft useful tools, manage pack space, distract noise-aware visitors, repair the emergency radio and reach the south road. Doors and loot persist; portable save codes restore the run. WASD moves, Shift runs, C creeps, E interacts, Space swings, I opens crafting/save, F heals, Q throws a decoy, B braces a door. The simulation runs locally without model calls or a game server.",
+    "tags": [
+      "3d",
+      "survival",
+      "framework",
+      "starter",
+      "stealth",
+      "crafting",
+      "persistent",
+      "cheap",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "seeded-random",
+      "grid-navigation",
+      "perception-brain",
+      "recipe-book",
+      "objective-journal",
+      "save-codec",
+      "survival-kit",
+      "survival-town-view",
+      "no-road-home-scenario",
+      "survival-recipe-pack",
+      "health",
+      "resource-inventory",
+      "expedition-shell",
+      "ambient-motes",
+      "touch-controls",
+      "garden-caretaker",
+      "ph-wooden-crate-01",
+      "ph-vintage-oil-lamp"
+    ]
+  }
+]

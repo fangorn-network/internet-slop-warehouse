@@ -1,0 +1,20 @@
+[
+  {
+    "id": "world-prop-kit",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreicgxtjodly6bsfjzkpi32r7lhit32jhrq7cjzmbrlsmbxgjqy5osq",
+    "src": "bafkreihcc35ohbt4r57izaudw2wk2shp3acqkrakcdlfmhsiq5vddi5pma",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreihcc35ohbt4r57izaudw2wk2shp3acqkrakcdlfmhsiq5vddi5pma",
+    "txHash": "0x193a10ad98508df94f68fdebb7e0d05dad87239efa37927be809bd5648787c1c"
+  },
+  {
+    "id": "stillwater-world-guide",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreigqnqxu32lxs4po5euy7z2my6uiea7mmjevoqd7qmrwswfdvm3hqy",
+    "src": "bafkreihyvvhb2fvjzlmu7j5rvgqgyutsfuxxndszz4qjfubdk6r4db62sm",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreihyvvhb2fvjzlmu7j5rvgqgyutsfuxxndszz4qjfubdk6r4db62sm",
+    "txHash": "0x6b957cb97449dad1d7eb8161109c96c1e39ba1cb5361c20fe8cea1a89fed98dc"
+  }
+]

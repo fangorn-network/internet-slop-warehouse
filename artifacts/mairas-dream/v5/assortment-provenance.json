@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ph-thrift-teapot",
+    "bytes": 773092,
+    "sha256": "04100c3c909e8ea73d89bfe8d843344eec59724e7ec99ab784e7f3c5165afa21",
+    "sourcePart": "ph-tea-set-01"
+  },
+  {
+    "id": "ph-thrift-sugar-bowl",
+    "bytes": 671540,
+    "sha256": "37f87d20c48ec6ec0ecefa1854aeaf34b805c9f2029ec472622374281c15347e",
+    "sourcePart": "ph-tea-set-01"
+  },
+  {
+    "id": "ph-thrift-tea-mug",
+    "bytes": 585292,
+    "sha256": "bc40f74f5924f364a7383b8655736b65f5451efe60f0d03c88c71f21534b27be",
+    "sourcePart": "ph-tea-set-01"
+  },
+  {
+    "id": "ph-thrift-square-plate",
+    "bytes": 557176,
+    "sha256": "251ed7e37ce33e4be8fd75054fa1ccb23f5804509e990e73e8bc57b53498ae8c",
+    "sourcePart": "ph-tea-set-01"
+  }
+]

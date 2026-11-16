@@ -1,0 +1,18 @@
+{
+  "published": true,
+  "indexed": true,
+  "artifactAccessible": true,
+  "exactArtifactMatch": true,
+  "explorationStudy": 3,
+  "atlasEmbedded": true,
+  "url": "https://internet-slop-warehouse.quickbeam.workers.dev/?part=0x7b16387c5a8c514880e48bcacd52782fcf9da936/mercy-moving",
+  "receipt": {
+    "id": "mercy-moving",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidtr3eh6rfq2t5wrfj4ug32fuv62g7tj6ijvpjonclg2mhl4d57gy",
+    "src": "bafybeiddricbpfcnz3ijfbpqiemcg3lqygyb2kzi5hvt74bj67rrr5ugbi",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiddricbpfcnz3ijfbpqiemcg3lqygyb2kzi5hvt74bj67rrr5ugbi",
+    "txHash": "0x0af524c4b0d3f2a775ad4313069b8b184762f93f30f5e15d479df80f24007075"
+  }
+}

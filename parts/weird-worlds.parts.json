@@ -1,0 +1,1071 @@
+[
+  {
+    "id": "ph-boombox",
+    "file": "haven/ph-boombox.glb",
+    "type": "asset",
+    "title": "Boombox",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Thomas Paul Mouilleron",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "appliances",
+      "electronics",
+      "collection: hidden_alley",
+      "loudspeaker",
+      "radio",
+      "cd player",
+      "stereo",
+      "80's",
+      "sound system",
+      "portable"
+    ],
+    "description": "Boombox from Poly Haven, by Thomas Paul Mouilleron. Self-contained GLB with 1K textures. Upstream polygon count: 10168; 1 meshes. Source: https://polyhaven.com/a/boombox. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-vintage-suitcase",
+    "file": "haven/ph-vintage-suitcase.glb",
+    "type": "asset",
+    "title": "Vintage Suitcase",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Maximilian Schuster",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "props",
+      "vintage",
+      "old",
+      "hand made",
+      "stickers",
+      "travel",
+      "garbage",
+      "suitcase",
+      "trunk",
+      "rustic",
+      "luggage",
+      "worn",
+      "aged"
+    ],
+    "description": "Vintage Suitcase from Poly Haven, by Maximilian Schuster. Self-contained GLB with 1K textures. Upstream polygon count: 16474; 8 meshes. Source: https://polyhaven.com/a/vintage_suitcase. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-watering-can-metal-01",
+    "file": "haven/ph-watering-can-metal-01.glb",
+    "type": "asset",
+    "title": "Watering Can Metal 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Charles Nderitu",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "containers",
+      "tools",
+      "props",
+      "collection: the_shed",
+      "metal",
+      "garage",
+      "garden",
+      "gardening",
+      "landscaping",
+      "outdoor",
+      "shed",
+      "irrigation",
+      "farm",
+      "farmhouse"
+    ],
+    "description": "Watering Can Metal 01 from Poly Haven, by Charles Nderitu. Self-contained GLB with 1K textures. Upstream polygon count: 11837; 1 meshes. Source: https://polyhaven.com/a/watering_can_metal_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-plastic-monobloc-chair-01",
+    "file": "haven/ph-plastic-monobloc-chair-01.glb",
+    "type": "asset",
+    "title": "Plastic Monobloc Chair 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Kuutti Siitonen",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "furniture",
+      "seating",
+      "collection: the_shed",
+      "plastic",
+      "dirty",
+      "old",
+      "monobloc",
+      "outdoor",
+      "cheap",
+      "shed"
+    ],
+    "description": "Plastic Monobloc Chair 01 from Poly Haven, by Kuutti Siitonen. Self-contained GLB with 1K textures. Upstream polygon count: 3356; 1 meshes. Source: https://polyhaven.com/a/plastic_monobloc_chair_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-ceramic-vase-03",
+    "file": "haven/ph-ceramic-vase-03.glb",
+    "type": "asset",
+    "title": "Ceramic Vase 03",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "James Ray Cock",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "containers",
+      "decorative",
+      "vases",
+      "clay",
+      "pot",
+      "exterior",
+      "decor",
+      "painted",
+      "vase",
+      "tall",
+      "modern",
+      "fancy"
+    ],
+    "description": "Ceramic Vase 03 from Poly Haven, by James Ray Cock. Self-contained GLB with 1K textures. Upstream polygon count: 2784; 1 meshes. Source: https://polyhaven.com/a/ceramic_vase_03. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-vintage-oil-lamp",
+    "file": "haven/ph-vintage-oil-lamp.glb",
+    "type": "asset",
+    "title": "Vintage Oil Lamp",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Monsta3D",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "lighting",
+      "decorative",
+      "lamp",
+      "oil",
+      "antique",
+      "victorian",
+      "manor",
+      "historic"
+    ],
+    "description": "Vintage Oil Lamp from Poly Haven, by Monsta3D. Self-contained GLB with 1K textures. Upstream polygon count: 7208; 3 meshes. Source: https://polyhaven.com/a/vintage_oil_lamp. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-metal-tool-chest",
+    "file": "haven/ph-metal-tool-chest.glb",
+    "type": "asset",
+    "title": "Metal Tool Chest",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Yann Kervran, John Hutcheson",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "props",
+      "tools",
+      "industrial",
+      "containers",
+      "rigged",
+      "collection: the_shed",
+      "old",
+      "metal",
+      "garage",
+      "workshop",
+      "storage",
+      "shed",
+      "worn",
+      "mechanics toolbox",
+      "rusted",
+      "steel",
+      "red"
+    ],
+    "description": "Metal Tool Chest from Poly Haven, by Yann Kervran, John Hutcheson. Self-contained GLB with 1K textures. Upstream polygon count: 14576; 7 meshes. Source: https://polyhaven.com/a/metal_tool_chest. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-antique-katana-01",
+    "file": "haven/ph-antique-katana-01.glb",
+    "type": "asset",
+    "title": "Antique Katana 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Tal Swicegood",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "props",
+      "antique",
+      "ninja",
+      "katana",
+      "sword",
+      "sharp",
+      "blade",
+      "japanese",
+      "weapon"
+    ],
+    "description": "Antique Katana 01 from Poly Haven, by Tal Swicegood. Self-contained GLB with 1K textures. Upstream polygon count: 6670; 1 meshes. Source: https://polyhaven.com/a/antique_katana_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "courier-skiff",
+    "file": "originals/courier-skiff.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Electric courier skiff",
+    "description": "An original teal electric skiff with cream deck, canopy, two engine pods, antenna and glowing headlight. Approximately 2.7 wide by 4.1 long; forward is +Z. Feet at y=0. A compact player vehicle for flooded worlds.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "vehicle",
+      "boat",
+      "skiff",
+      "courier",
+      "sci-fi"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "magnetic-salvage-tug",
+    "file": "originals/magnetic-salvage-tug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Magnetic salvage tug",
+    "description": "An original amber hover tug with light bar eyes, ring thrusters and a front magnetic fork. Forward is +Z; roughly 2.8 wide and 3.6 long. Texture-free materials. A player or friendly industrial NPC.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "vehicle",
+      "drone",
+      "forklift",
+      "magnet",
+      "industrial"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "resonator-crystal",
+    "file": "originals/resonator-crystal.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Resonator crystal",
+    "description": "An original octahedral crystal suspended above a brass pedestal, circled by a thin ring. About 2.2 units tall. Named Crystal mesh can be recolored for matching puzzles; no external textures.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "crystal",
+      "puzzle",
+      "resonator",
+      "artifact",
+      "sculpture"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "signal-buoy",
+    "file": "originals/signal-buoy.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Marsh signal buoy",
+    "description": "An original teal-and-brass buoy with a luminous beacon and ring guard. About 2.4 units tall, base centered at the origin. Ideal for checkpoints, navigation markers and delivery destinations.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "buoy",
+      "beacon",
+      "checkpoint",
+      "light",
+      "water"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "garden-caretaker",
+    "file": "originals/garden-caretaker.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Porcelain garden caretaker",
+    "description": "An original small porcelain-and-brass caretaker robot with a single spherical wheel, teal collar, visor and two emissive eyes. About 1.85 units tall, forward +Z. Texture-free; suitable for small exploration and puzzle worlds.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "robot",
+      "character",
+      "caretaker",
+      "garden",
+      "player"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "inertial-drive",
+    "file": "inertial-drive.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "Inertial planar drive",
+    "description": "Momentum movement for skiffs, hovercraft, forklifts and small exploration characters. Exponential acceleration and braking, optional boost, turning toward velocity, radius-expanded box obstacles and bounded travel. Input is injected; the module owns no DOM listeners.",
+    "tags": [
+      "vehicle",
+      "movement",
+      "inertia",
+      "hovercraft",
+      "boat",
+      "controller",
+      "collision"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(dt), dispose(), stop(), velocity }",
+        "does": "Momentum movement for skiffs, hovercraft, forklifts and small exploration characters. Exponential acceleration and braking, optional boost, turning toward velocity, radius-expanded box obstacles and bounded travel. Input is injected; the module owns no DOM listeners."
+      }
+    ],
+    "options": [
+      {
+        "name": "speed",
+        "type": "number",
+        "default": 7,
+        "does": "cruising speed in world units per second"
+      },
+      {
+        "name": "acceleration",
+        "type": "number",
+        "default": 7,
+        "does": "rate of acceleration toward desired velocity"
+      },
+      {
+        "name": "drag",
+        "type": "number",
+        "default": 3,
+        "does": "braking decay when input is neutral"
+      },
+      {
+        "name": "boost",
+        "type": "number",
+        "default": 1.6,
+        "does": "speed multiplier for boosted input"
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "default": 0.55,
+        "does": "horizontal collision radius"
+      },
+      {
+        "name": "bounds",
+        "type": "[minX,maxX,minZ,maxZ]",
+        "default": [
+          -40,
+          40,
+          -40,
+          40
+        ],
+        "does": "navigation bounds"
+      },
+      {
+        "name": "obstacles",
+        "type": "Box3[]",
+        "default": [],
+        "does": "static obstacle boxes"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "input",
+        "signature": "(object) → { x, z, boost? }",
+        "default": "return zero input",
+        "does": "supply normalized or unnormalized desired movement"
+      },
+      {
+        "name": "onImpact",
+        "signature": "(object, velocity) → void",
+        "default": "nothing",
+        "does": "react to obstacle or boundary contact"
+      },
+      {
+        "name": "onMove",
+        "signature": "(object, velocity) → void",
+        "default": "nothing",
+        "does": "react after movement each frame"
+      }
+    ]
+  },
+  {
+    "id": "checkpoint-course",
+    "file": "checkpoint-course.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Swept checkpoint course",
+    "description": "Ordered checkpoints with lap tracking and single completion. Tests the swept movement segment in the X/Z plane so a fast vehicle cannot skip across a gate between frames. Resettable for retries.",
+    "tags": [
+      "checkpoint",
+      "race",
+      "delivery",
+      "lap",
+      "course",
+      "gate"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(), dispose(), reset(), index, lap, complete, target }",
+        "does": "Ordered checkpoints with lap tracking and single completion. Tests the swept movement segment in the X/Z plane so a fast vehicle cannot skip across a gate between frames. Resettable for retries."
+      }
+    ],
+    "options": [
+      {
+        "name": "points",
+        "type": "(Vector3 | Object3D)[]",
+        "default": "required",
+        "does": "ordered checkpoints"
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "default": 2,
+        "does": "gate capture radius"
+      },
+      {
+        "name": "laps",
+        "type": "integer",
+        "default": 1,
+        "does": "laps required"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onCheckpoint",
+        "signature": "(index, lap, object) → void",
+        "default": "nothing",
+        "does": "react to a passed checkpoint"
+      },
+      {
+        "name": "onLap",
+        "signature": "(lap, object) → void",
+        "default": "nothing",
+        "does": "react after a full route"
+      },
+      {
+        "name": "onComplete",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react once to the final lap"
+      }
+    ]
+  },
+  {
+    "id": "spring-tether",
+    "file": "spring-tether.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Magnetic spring tether",
+    "description": "Sub-stepped damped spring carrying for 3D props. Pulls toward an injected world point, preserves lag and momentum, breaks at a configurable distance and settles without snapping. Null targets release and rearm the tether.",
+    "tags": [
+      "physics",
+      "spring",
+      "magnet",
+      "carrying",
+      "hauling",
+      "grab",
+      "tether"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(dt), dispose(), release(), velocity, active }",
+        "does": "Sub-stepped damped spring carrying for 3D props. Pulls toward an injected world point, preserves lag and momentum, breaks at a configurable distance and settles without snapping. Null targets release and rearm the tether."
+      }
+    ],
+    "options": [
+      {
+        "name": "stiffness",
+        "type": "number",
+        "default": 32,
+        "does": "spring strength"
+      },
+      {
+        "name": "damping",
+        "type": "number",
+        "default": 10,
+        "does": "velocity damping"
+      },
+      {
+        "name": "maxDistance",
+        "type": "number",
+        "default": 15,
+        "does": "distance beyond which contact breaks"
+      },
+      {
+        "name": "tolerance",
+        "type": "number",
+        "default": 0.12,
+        "does": "position and speed threshold for settled state"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "target",
+        "signature": "(object) → Vector3 | null",
+        "default": "return null",
+        "does": "supply the world-space carry point"
+      },
+      {
+        "name": "onBreak",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react once to a broken connection"
+      },
+      {
+        "name": "onSettle",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react upon settling near target"
+      }
+    ]
+  },
+  {
+    "id": "trigger-zones",
+    "file": "trigger-zones.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Filtered trigger zones",
+    "description": "Horizontal circular occupancy zones with actor filters, enter/leave edges and aggregate completion. Suitable for pressure plates, colored resonators, delivery areas and multiplayer-ready local rule evaluation. No engine or DOM dependency.",
+    "tags": [
+      "trigger",
+      "pressure-plate",
+      "puzzle",
+      "occupancy",
+      "delivery",
+      "zone"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(), dispose(), occupied, complete }",
+        "does": "Horizontal circular occupancy zones with actor filters, enter/leave edges and aggregate completion. Suitable for pressure plates, colored resonators, delivery areas and multiplayer-ready local rule evaluation. No engine or DOM dependency."
+      }
+    ],
+    "options": [
+      {
+        "name": "zones",
+        "type": "{ position:{x,z}, radius:number, ... }[]",
+        "default": "required",
+        "does": "circular trigger areas"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "actors",
+        "signature": "(object) → actor[]",
+        "default": "return []",
+        "does": "return the current candidates, each with a position"
+      },
+      {
+        "name": "accept",
+        "signature": "(actor, zone, index) → boolean",
+        "default": "return true",
+        "does": "filter occupants by color, team, held state or identity"
+      },
+      {
+        "name": "onEnter",
+        "signature": "(actor, zone, index) → void",
+        "default": "nothing",
+        "does": "react when an actor enters"
+      },
+      {
+        "name": "onLeave",
+        "signature": "(actor, zone, index) → void",
+        "default": "nothing",
+        "does": "react when an actor leaves"
+      },
+      {
+        "name": "onChange",
+        "signature": "(occupied:boolean[], object) → void",
+        "default": "nothing",
+        "does": "react to any occupancy change"
+      },
+      {
+        "name": "onComplete",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react when all zones become occupied"
+      }
+    ]
+  },
+  {
+    "id": "ambient-motes",
+    "file": "ambient-motes.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Ambient particle field",
+    "description": "Seeded single-draw-call drifting particles for fireflies, dust, spores and stars. Bounded gentle movement, additive blending, configurable density and palette. Releases GPU resources on disposal.",
+    "tags": [
+      "particles",
+      "fireflies",
+      "stars",
+      "dust",
+      "atmosphere",
+      "world"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(parent, opts) → { update(dt), dispose(), points }",
+        "does": "Seeded single-draw-call drifting particles for fireflies, dust, spores and stars. Bounded gentle movement, additive blending, configurable density and palette. Releases GPU resources on disposal."
+      }
+    ],
+    "options": [
+      {
+        "name": "count",
+        "type": "integer",
+        "default": 180,
+        "does": "particle count, capped at 20000"
+      },
+      {
+        "name": "area",
+        "type": "[width,depth]",
+        "default": [
+          60,
+          60
+        ],
+        "does": "horizontal field extent"
+      },
+      {
+        "name": "height",
+        "type": "[min,max]",
+        "default": [
+          0.5,
+          8
+        ],
+        "does": "vertical range"
+      },
+      {
+        "name": "color",
+        "type": "color",
+        "default": 12908707,
+        "does": "particle color"
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": 0.1,
+        "does": "world-space point size"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": 0.3,
+        "does": "drift speed"
+      },
+      {
+        "name": "seed",
+        "type": "integer",
+        "default": 42,
+        "does": "reproducible layout"
+      },
+      {
+        "name": "opacity",
+        "type": "number",
+        "default": 0.8,
+        "does": "particle opacity"
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "id": "world-lantern-marsh",
+    "file": "world-lantern-marsh.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "World: Lantern Marsh",
+    "description": "An open flooded forest world with shader-rippled PBR water, a pale moon, seeded trees, islands, atmospheric lighting and eight courier route landmarks. Returns spawn, bounds and obstacles for attaching your own game. Entire environment generated from code; no external assets required.",
+    "tags": [
+      "world",
+      "environment",
+      "marsh",
+      "water",
+      "forest",
+      "lake",
+      "starter",
+      "courier"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), root, water, route, spawn, bounds, obstacles }",
+        "does": "An open flooded forest world with shader-rippled PBR water, a pale moon, seeded trees, islands, atmospheric lighting and eight courier route landmarks. Returns spawn, bounds and obstacles for attaching your own game. Entire environment generated from code; no external assets required."
+      }
+    ],
+    "options": [
+      {
+        "name": "seed",
+        "type": "integer",
+        "default": 13,
+        "does": "repeatable grove layout"
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "default": 46,
+        "does": "forest ring radius"
+      },
+      {
+        "name": "waterColor",
+        "type": "color",
+        "default": 1856850,
+        "does": "water tint"
+      },
+      {
+        "name": "fogColor",
+        "type": "color",
+        "default": 8826016,
+        "does": "sky and fog tint"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "signature": "(world) → void",
+        "default": "nothing",
+        "does": "receive scene landmarks immediately"
+      }
+    ]
+  },
+  {
+    "id": "world-lunar-yard",
+    "file": "world-lunar-yard.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "World: Lunar Salvage Yard",
+    "description": "A circular industrial platform under an impossible ringed planet. Includes a gridded floor, gantry, depot pad, perimeter bollards, cargo blocks, obstacle boxes and warm/cool lighting. Reuse as a delivery yard, exploration hub or arena.",
+    "tags": [
+      "world",
+      "moon",
+      "lunar",
+      "salvage",
+      "warehouse",
+      "industrial",
+      "platform",
+      "starter"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), root, spawn, depot, bounds, obstacles }",
+        "does": "A circular industrial platform under an impossible ringed planet. Includes a gridded floor, gantry, depot pad, perimeter bollards, cargo blocks, obstacle boxes and warm/cool lighting. Reuse as a delivery yard, exploration hub or arena."
+      }
+    ],
+    "options": [
+      {
+        "name": "radius",
+        "type": "number",
+        "default": 34,
+        "does": "platform radius"
+      },
+      {
+        "name": "accent",
+        "type": "color",
+        "default": 15115883,
+        "does": "gantry and perimeter metal accent color"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "signature": "(world) → void",
+        "default": "nothing",
+        "does": "receive world landmarks immediately"
+      }
+    ]
+  },
+  {
+    "id": "world-resonance-garden",
+    "file": "world-resonance-garden.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "World: Resonance Garden",
+    "description": "A circular architectural garden: moss, stone paths, colonnades, three colored resonator pedestals and a central kinetic armillary sculpture. setPower(0..1) wakes the sculpture and its lights. Includes spawn, bounds and matching trigger zones.",
+    "tags": [
+      "world",
+      "garden",
+      "sculpture",
+      "puzzle",
+      "shrine",
+      "ruins",
+      "starter",
+      "resonance"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), setPower(value), root, zones, spawn, bounds, obstacles }",
+        "does": "A circular architectural garden: moss, stone paths, colonnades, three colored resonator pedestals and a central kinetic armillary sculpture. setPower(0..1) wakes the sculpture and its lights. Includes spawn, bounds and matching trigger zones."
+      }
+    ],
+    "options": [
+      {
+        "name": "accent",
+        "type": "color",
+        "default": 14207371,
+        "does": "sculpture metal color"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "signature": "(world) → void",
+        "default": "nothing",
+        "does": "receive world landmarks immediately"
+      }
+    ]
+  },
+  {
+    "id": "expedition-shell",
+    "file": "expedition-shell.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "3D expedition shell",
+    "description": "Reusable small-game shell with WebGL rendering, room-based image lighting, model caching and fitting, following camera, zoom, keyboard input, touch integration, accessible start/pause/restart screens, read-only diagnostics and synthesized sound. Games supply the world and rules through build(context).",
+    "tags": [
+      "3d",
+      "game-shell",
+      "camera",
+      "input",
+      "loading",
+      "menu",
+      "restart",
+      "starter",
+      "engine"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(root, opts) → { ready, update(dt), dispose(), scene, camera }",
+        "does": "Reusable small-game shell with WebGL rendering, room-based image lighting, model caching and fitting, following camera, zoom, keyboard input, touch integration, accessible start/pause/restart screens, read-only diagnostics and synthesized sound. Games supply the world and rules through build(context)."
+      }
+    ],
+    "options": [
+      {
+        "name": "title",
+        "type": "string",
+        "default": "Expedition",
+        "does": "game title"
+      },
+      {
+        "name": "eyebrow",
+        "type": "string",
+        "default": "WAREHOUSE FIELD TRIP",
+        "does": "small title label"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "default": "",
+        "does": "intro and objective copy"
+      },
+      {
+        "name": "controls",
+        "type": "string",
+        "default": "WASD / arrows to move",
+        "does": "control help"
+      },
+      {
+        "name": "accent",
+        "type": "string",
+        "default": "#b8e5cc",
+        "does": "UI accent"
+      },
+      {
+        "name": "parts",
+        "type": "Record<string,url>",
+        "default": {},
+        "does": "pinned warehouse file URLs"
+      },
+      {
+        "name": "assets",
+        "type": "string[]",
+        "default": [],
+        "does": "model IDs to preload"
+      },
+      {
+        "name": "cameraOffset",
+        "type": "[x,y,z]",
+        "default": [
+          0,
+          12,
+          18
+        ],
+        "does": "camera follow offset, scaled by wheel zoom"
+      },
+      {
+        "name": "touch",
+        "type": "module|null",
+        "default": null,
+        "does": "optional existing touch-controls module"
+      },
+      {
+        "name": "autoRender",
+        "type": "boolean",
+        "default": true,
+        "does": "own the animation loop; set false for caller-driven update(dt)"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "build",
+        "signature": "async (context) → { reset?, update?, ambient?, snapshot?, dispose? }",
+        "default": "empty game",
+        "does": "construct your game. Context exposes scene, camera, model(id, extent, fit), input(), consume(code), hud(), message(), tone(), finish() and follow()."
+      },
+      {
+        "name": "onError",
+        "signature": "(error) → void",
+        "default": "console.error",
+        "does": "report a loading or WebGL failure"
+      }
+    ]
+  },
+  {
+    "id": "dead-letter-lake",
+    "file": "dead-letter-lake.html",
+    "type": "game",
+    "title": "Dead Letter Lake",
+    "description": "An electric skiff delivery run through a luminous flooded grove. Pass eight numbered lantern gates before the 120-second last post. Momentum, boost, water ripples, fireflies and a post office nobody visits. WASD/arrows steer, Shift boosts, wheel zooms, Escape pauses. Includes touch controls and retry. A reusable marsh world as well as a complete small game.",
+    "uses": [
+      "expedition-shell",
+      "world-lantern-marsh",
+      "inertial-drive",
+      "checkpoint-course",
+      "ambient-motes",
+      "touch-controls",
+      "courier-skiff",
+      "signal-buoy",
+      "ph-vintage-oil-lamp"
+    ],
+    "tags": [
+      "3d",
+      "world",
+      "courier",
+      "boat",
+      "race",
+      "marsh",
+      "atmospheric",
+      "cozy",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "lunar-lost-property",
+    "file": "lunar-lost-property.html",
+    "type": "game",
+    "title": "Lunar Lost Property",
+    "description": "A magnetic salvage tug returns six improbable household objects to a depot under a ringed planet: a boombox, suitcase, watering can, plastic chair, vase and ceremonial sword. A damped spring makes the tow feel weighty. No enemies or countdown. WASD/arrows move, Shift boosts, E attaches/releases, wheel zooms. Includes touch, restart and a six-delivery victory.",
+    "uses": [
+      "expedition-shell",
+      "world-lunar-yard",
+      "inertial-drive",
+      "spring-tether",
+      "ambient-motes",
+      "touch-controls",
+      "magnetic-salvage-tug",
+      "ph-boombox",
+      "ph-vintage-suitcase",
+      "ph-watering-can-metal-01",
+      "ph-plastic-monobloc-chair-01",
+      "ph-ceramic-vase-03",
+      "ph-antique-katana-01",
+      "ph-metal-tool-chest",
+      "ph-vintage-oil-lamp"
+    ],
+    "tags": [
+      "3d",
+      "world",
+      "physics",
+      "magnet",
+      "delivery",
+      "moon",
+      "weird",
+      "cozy",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "the-quiet-engine",
+    "file": "the-quiet-engine.html",
+    "type": "game",
+    "title": "The Quiet Engine",
+    "description": "Guide a porcelain caretaker through a circular sculpture garden. Carry three colored crystals to their matching resonator pedestals, then linger as the kinetic engine wakes. A gentle 3D carrying puzzle with spring motion, filtered trigger zones, harmonic tones and an explorable garden. WASD/arrows move, E picks up/sets down, Shift hurries, wheel zooms. No timer; includes touch and restart.",
+    "uses": [
+      "expedition-shell",
+      "world-resonance-garden",
+      "inertial-drive",
+      "spring-tether",
+      "trigger-zones",
+      "ambient-motes",
+      "touch-controls",
+      "garden-caretaker",
+      "resonator-crystal",
+      "ph-ceramic-vase-03",
+      "ph-watering-can-metal-01"
+    ],
+    "tags": [
+      "3d",
+      "world",
+      "puzzle",
+      "garden",
+      "sculpture",
+      "resonance",
+      "cozy",
+      "exploration",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  }
+]

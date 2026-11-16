@@ -1,0 +1,930 @@
+[
+  {
+    "id": "ph-boombox",
+    "upstreamId": "boombox",
+    "creator": "Thomas Paul Mouilleron",
+    "source": "https://polyhaven.com/a/boombox",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:40.893Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/boombox/boombox_1k.gltf",
+        "bytes": 4656,
+        "sha256": "8f5851b81d0d0b16fadf9ca89133b59ee48718ed8d9f8244b87e4d293755d2d3",
+        "upstreamMd5": "5ee2b292c7bce0849e3a4ee7cc971460"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/boombox/boombox.bin",
+        "bytes": 328752,
+        "sha256": "2579a18ff22b3c3466cd557ce3e4bbe517091bb7158172bdf9371ca993f9c49f",
+        "upstreamMd5": "ba9bafe30c57ad41db783ab5b7e352cf"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/boombox/boombox_nor_gl_1k.jpg",
+        "bytes": 491377,
+        "sha256": "684211254308ea8c8235852dc93b5c22dc80f62f2acfa83f71cf083076ab00cd",
+        "upstreamMd5": "e1f5256415729fe490c773df9025e648"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/boombox/boombox_diff_1k.jpg",
+        "bytes": 471435,
+        "sha256": "8ad03125524ecc218810f2b100dc047958184b3e98c6c2d89854fd7ec88be981",
+        "upstreamMd5": "9f1c66463f38afd0c6bbd2df200133c4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/boombox/boombox_arm_1k.jpg",
+        "bytes": 415692,
+        "sha256": "8fa0c9a71c2606a9acea192763adc733298267243a3abae75c75a2477f42cbf6",
+        "upstreamMd5": "6ac0afa41b5df4c5c4e1672c3f561c15"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/boombox/boombox_speakers_diff_1k.jpg",
+        "bytes": 638537,
+        "sha256": "4240a5bbbed85dab19e10c753aa6022a9d5e8d3d1c3ff05620b8e62459dcd1b3",
+        "upstreamMd5": "8864d80c9109df1e1868e3624afadcd4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/boombox/boombox_speakers_arm_1k.jpg",
+        "bytes": 717847,
+        "sha256": "00d7de33b77f5c8f7386679dfcc9daad3f5ca124ced0021f641ecb6739364443",
+        "upstreamMd5": "538e3be9297c7ce6dd99cebfdffab747"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-boombox.glb",
+      "bytes": 3066608,
+      "sha256": "433424aa14726c4d5e162920559000a05af0c23034795cbd037b923fb5c89175",
+      "meshes": 1,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Boombox",
+      "type": 2,
+      "authors": {
+        "Thomas Paul Mouilleron": "All"
+      },
+      "info": null,
+      "date_published": 1695340800,
+      "sponsors": [
+        "26820710"
+      ],
+      "categories": [
+        "appliances",
+        "electronics",
+        "collection: hidden_alley"
+      ],
+      "tags": [
+        "loudspeaker",
+        "radio",
+        "cd player",
+        "stereo",
+        "80's",
+        "sound system",
+        "portable"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 10168,
+      "texel_density": 4960.093973730346,
+      "dimensions": [
+        723.7796187400818,
+        186.46465986967087,
+        470.10064125061035
+      ],
+      "files_hash": "480c7f057f485ec818a8f1c7c790248ef993b734",
+      "description": "Free 4K model of a vintage 80s portable boombox with dual speakers, cassette deck, tuner knobs, telescoping antenna and worn stickers, gritty urban wear.",
+      "category_id": "b35ed6a9-9da0-5515-9373-e5bc17cca6b5",
+      "category": "Electronics & Appliances/Audio & Video/Radios & Portable Audio",
+      "collections": [
+        "hidden_alley"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "plastic",
+          "metal"
+        ]
+      },
+      "img_version": "130c7cbf",
+      "download_count": 31102,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/boombox.png?width=256&height=256&format=webp&v=130c7cbf"
+    }
+  },
+  {
+    "id": "ph-vintage-suitcase",
+    "upstreamId": "vintage_suitcase",
+    "creator": "Maximilian Schuster",
+    "source": "https://polyhaven.com/a/vintage_suitcase",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:44.583Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_suitcase/vintage_suitcase_1k.gltf",
+        "bytes": 15481,
+        "sha256": "5d040fdb26c5d97d5d60518ef4875cc72effcabe0a5f68f50e8970013e57a589",
+        "upstreamMd5": "08c32e1963eb74610fb291520c8345b4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/vintage_suitcase/vintage_suitcase.bin",
+        "bytes": 467856,
+        "sha256": "8a29ec4465a213c8d81b2d472358eae295da3221b54bebeae699f0d2cb7a32eb",
+        "upstreamMd5": "0a7a8d06b2c579beabbd36916866a7a9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_01_nor_gl_1k.jpg",
+        "bytes": 726302,
+        "sha256": "77ea4998ae6c0d51b3ed72831216b814d8852c51c24d8bc99da83fe29b6535a5",
+        "upstreamMd5": "7927cc4e0cbaa387a8f1478e47bdcae3"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_01_diff_1k.jpg",
+        "bytes": 457761,
+        "sha256": "f226a5adb38e8e50b88f05eafbc1b3716797d325b2820aca3685618eef5e5f39",
+        "upstreamMd5": "8b9025506413eb45ba15518ebaa06f35"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_01_arm_1k.jpg",
+        "bytes": 704919,
+        "sha256": "cde01b9b4bee1e23060add6a4d166a48f69d3470a5b5cde35acd1e6738351796",
+        "upstreamMd5": "4db295f083c12d9d98d43c9bc8c76312"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_02_nor_gl_1k.jpg",
+        "bytes": 727012,
+        "sha256": "e79c275b94a2383bad5037d186e8c7807e78cac18f7f439cfe51b16fbe3d8ee6",
+        "upstreamMd5": "309c88cf867f62b285353d4f087c1c97"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_02_diff_1k.jpg",
+        "bytes": 491501,
+        "sha256": "d8d82b8d08c9400f6f2a9f9736175ba0555ed6c5132cdd97a273d19be3f9db76",
+        "upstreamMd5": "3793b2ab0206acf8272271468b23c7cd"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_suitcase/vintage_suitcase_02_arm_1k.jpg",
+        "bytes": 703902,
+        "sha256": "01a6da086159d09b1bce5b98a5a485b905926d1dd531c3484ee44ba77b3d9b2d",
+        "upstreamMd5": "bb480c03d08335160e00c1ec215134f2"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-vintage-suitcase.glb",
+      "bytes": 4288572,
+      "sha256": "bce4d36bfa17bb968654b50ea688c65419ce83a3b00d2a887e2f748082a41f60",
+      "meshes": 8,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Vintage Suitcase",
+      "categories": [
+        "decorative",
+        "props"
+      ],
+      "type": 2,
+      "tags": [
+        "vintage",
+        "old",
+        "hand made",
+        "stickers",
+        "travel",
+        "garbage",
+        "suitcase",
+        "trunk",
+        "rustic",
+        "luggage",
+        "worn",
+        "aged"
+      ],
+      "authors": {
+        "Maximilian Schuster": "All"
+      },
+      "info": null,
+      "date_published": 1705881600,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 16474,
+      "texel_density": 4542.008996519132,
+      "dimensions": [
+        1608.1829071044922,
+        239.17551338672638,
+        567.9050989929237
+      ],
+      "files_hash": "990b81368d2e3271bc560aa3b47dbf44e80e8d32",
+      "description": "Free 8K vintage suitcase model with worn green leather, stitched edges, rusted clasps and weathered travel stickers, showing rustic, hand-made aged character.",
+      "category_id": "11f0d2e2-263e-5698-99b4-219eb209f3b3",
+      "category": "Apparel & Personal Items/Bags & Luggage",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "leather",
+          "metal"
+        ]
+      },
+      "img_version": "98a717b3",
+      "download_count": 11762,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/vintage_suitcase.png?width=256&height=256&format=webp&v=98a717b3"
+    }
+  },
+  {
+    "id": "ph-watering-can-metal-01",
+    "upstreamId": "watering_can_metal_01",
+    "creator": "Charles Nderitu",
+    "source": "https://polyhaven.com/a/watering_can_metal_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:44.979Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/watering_can_metal_01/watering_can_metal_01_1k.gltf",
+        "bytes": 3183,
+        "sha256": "aaf3cdf52d64d1081fc7a9113a1ee91a0f8c9bcf569b5ac9927c713b65bbbd2e",
+        "upstreamMd5": "38a69c7bdf66a2a9e3348b4c766c8d64"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/watering_can_metal_01/watering_can_metal_01.bin",
+        "bytes": 318736,
+        "sha256": "8d8db62f70b3a0a8887dbc31f6507bd2dfb93b2878527cc06362dca766493a32",
+        "upstreamMd5": "26a41806730e420dc894a685d9a80fe3"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/watering_can_metal_01/watering_can_metal_01_nor_gl_1k.jpg",
+        "bytes": 725001,
+        "sha256": "13aaedd908aba518ab28d3401881529c9d2ee656459a110f5619b9aad2e86be7",
+        "upstreamMd5": "a94eebe05e42b53dd3b8f75a9a341598"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/watering_can_metal_01/watering_can_metal_01_diff_1k.jpg",
+        "bytes": 619613,
+        "sha256": "e684096ed02bf20dbe46875185aeef02bbc50d31730badfe5853a36ccc5ee2fe",
+        "upstreamMd5": "ea49aa546a86f15b6401b1a1bdc8cac2"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/watering_can_metal_01/watering_can_metal_01_arm_1k.jpg",
+        "bytes": 944654,
+        "sha256": "966f78fca72dd7ae358c3199f6f7734830a7b09c782673e3e4bdfd0ce2d16689",
+        "upstreamMd5": "ccc868c2394c1d085f1f76997626ccac"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-watering-can-metal-01.glb",
+      "bytes": 2610016,
+      "sha256": "0f0d6de529e87ce73fc750f309002ffc504d96ee4950de7abe584079ece89505",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1674000000,
+      "name": "Watering Can Metal 01",
+      "type": 2,
+      "authors": {
+        "Charles Nderitu": "All"
+      },
+      "info": null,
+      "categories": [
+        "containers",
+        "tools",
+        "props",
+        "collection: the_shed"
+      ],
+      "tags": [
+        "metal",
+        "garage",
+        "garden",
+        "gardening",
+        "landscaping",
+        "outdoor",
+        "shed",
+        "irrigation",
+        "farm",
+        "farmhouse"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 11837,
+      "texel_density": 12158.246073366234,
+      "dimensions": [
+        191.01857393980026,
+        452.33607292175293,
+        196.81852799840271
+      ],
+      "sponsors": [
+        "3267566",
+        "26820710"
+      ],
+      "files_hash": "2418aec52e5fa408b1cbc23701f8ce1eac860bc6",
+      "description": "Free 8K metal watering can with a weathered, scratched patina, subtle dents, embossed bands and a long perforated spout - rustic shed/farmhouse character.",
+      "category_id": "89c2f708-dc8b-552c-a8a9-9ab8af094c3f",
+      "category": "Tools & Equipment/Garden Tools/Watering & Irrigation",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "metal"
+        ]
+      },
+      "img_version": "31fc99be",
+      "download_count": 12440,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/watering_can_metal_01.png?width=256&height=256&format=webp&v=31fc99be"
+    }
+  },
+  {
+    "id": "ph-plastic-monobloc-chair-01",
+    "upstreamId": "plastic_monobloc_chair_01",
+    "creator": "Kuutti Siitonen",
+    "source": "https://polyhaven.com/a/plastic_monobloc_chair_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:45.432Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/plastic_monobloc_chair_01/plastic_monobloc_chair_01_1k.gltf",
+        "bytes": 2892,
+        "sha256": "899bf148139ab8d1718c25ec06112a652631f9476b5aaeeacb9eb1da9b7f1d3a",
+        "upstreamMd5": "b0ac94e52b406e1815af47d9d84eadb4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/plastic_monobloc_chair_01/plastic_monobloc_chair_01.bin",
+        "bytes": 124808,
+        "sha256": "db5c778488d01d7e7d3409e2cda53ee8f6dd523a327c080000d549dd0f83b375",
+        "upstreamMd5": "cff97136a9c4bb57c62937cbb7d33a79"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_monobloc_chair_01/plastic_monobloc_chair_01_nor_gl_1k.jpg",
+        "bytes": 630024,
+        "sha256": "9ffa876b37d72ae1c0aed84d4dc1f62c956c844b3efec1f786f9080c10f63c9e",
+        "upstreamMd5": "387f81f09c0754416298398277fb2a6d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_monobloc_chair_01/plastic_monobloc_chair_01_diff_1k.jpg",
+        "bytes": 560823,
+        "sha256": "fdd1255a02bf684cfcff2eae75c0e3eea0db1fb5ecbfbd8c4f9beab8fd83ff6c",
+        "upstreamMd5": "c36dfe0f38d6ca1632ba426c598e6764"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/plastic_monobloc_chair_01/plastic_monobloc_chair_01_arm_1k.jpg",
+        "bytes": 634320,
+        "sha256": "78a67659a19a9df9efc0ef71789de0c949a727db62ade4c4c8887cd2c803c1a2",
+        "upstreamMd5": "ce9271797fd8893a6c84f639f952d0b9"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-plastic-monobloc-chair-01.glb",
+      "bytes": 1951816,
+      "sha256": "35e5fa9ecd4937c9691800e24c521bee9ba5470268872f0faf2d1256751bd457",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1668384000,
+      "name": "Plastic Monobloc Chair 01",
+      "type": 2,
+      "authors": {
+        "Kuutti Siitonen": "All"
+      },
+      "info": null,
+      "sponsors": [
+        "26820710"
+      ],
+      "categories": [
+        "furniture",
+        "seating",
+        "collection: the_shed"
+      ],
+      "tags": [
+        "plastic",
+        "dirty",
+        "old",
+        "monobloc",
+        "outdoor",
+        "cheap",
+        "shed"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 3356,
+      "texel_density": 2690.4013569013064,
+      "dimensions": [
+        641.8611407279968,
+        627.5919079780579,
+        879.8411972820759
+      ],
+      "files_hash": "fc7be38d51f2483fd3194fdbc6321cf5873742ae",
+      "description": "Free 4K model: weathered white plastic monobloc chair with scuffs, dirt and faded finish, classic cheap outdoor stacking design showing age and wear.",
+      "category_id": "11261ec6-df2b-5150-9904-684d2558070d",
+      "category": "Furniture/Seating/Chairs",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "plastic"
+        ]
+      },
+      "img_version": "cb7077d8",
+      "download_count": 33771,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/plastic_monobloc_chair_01.png?width=256&height=256&format=webp&v=cb7077d8"
+    }
+  },
+  {
+    "id": "ph-ceramic-vase-03",
+    "upstreamId": "ceramic_vase_03",
+    "creator": "James Ray Cock",
+    "source": "https://polyhaven.com/a/ceramic_vase_03",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:45.730Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/ceramic_vase_03/ceramic_vase_03_1k.gltf",
+        "bytes": 2690,
+        "sha256": "72ea418ae3a761a651ea6bc4ce6daced649a2bd6c1c570227ba73af9e25d07f4",
+        "upstreamMd5": "5c5ad889be3b7464bc87d29f0d85cd73"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/ceramic_vase_03/ceramic_vase_03.bin",
+        "bytes": 299232,
+        "sha256": "19ced3c9a4231e0e0f0d2693661e40db15590ad99b3c84feecaa19067311fa6b",
+        "upstreamMd5": "4ad56bfebd58d98eb20f13a5e4fb6476"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_03/ceramic_vase_03_nor_gl_1k.jpg",
+        "bytes": 181966,
+        "sha256": "bf5afd92bcf977af46f2f279d8fc025ce1dd5f69f4205dc6ac2a97df1759d426",
+        "upstreamMd5": "e8ea6ff7afcb3b2dd57bc5a9b7d61d6d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_03/ceramic_vase_03_diff_1k.jpg",
+        "bytes": 127057,
+        "sha256": "a939cd965fa2a3b5240e2c2a3cecdd404ae66542abb967d1ebcbdfa9657a0212",
+        "upstreamMd5": "f5688bd3b1835b5dd94f701704d5dc5d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/ceramic_vase_03/ceramic_vase_03_rough_1k.jpg",
+        "bytes": 154214,
+        "sha256": "5db8b7b46da1c0354aec3ace7c3c0234c35211614d4cc82b5d1dd6257d11ada3",
+        "upstreamMd5": "f7b93888bf3bb21f280f38635f2fb401"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-ceramic-vase-03.glb",
+      "bytes": 764180,
+      "sha256": "91adeb467c6af46a03812673a924f9c40ee36929ce51e03ce7e6c35d57aeb4de",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Ceramic Vase 03",
+      "categories": [
+        "containers",
+        "decorative",
+        "vases"
+      ],
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "tags": [
+        "clay",
+        "pot",
+        "exterior",
+        "decor",
+        "painted",
+        "vase",
+        "tall",
+        "modern",
+        "fancy"
+      ],
+      "date_published": 1623767605,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 2784,
+      "texel_density": 11997.232819630633,
+      "dimensions": [
+        112.45502531528473,
+        112.45502158999443,
+        414.438920259272
+      ],
+      "files_hash": "df64b230fb44e0aceff07e3dc0aa97b7ebcb1143",
+      "description": "Free 8K model - tall modern painted ceramic vase: rectangular clay pot with subtle exterior texture and fancy decorative style.",
+      "category_id": "bda68bac-fe45-5d4f-aab6-ea0162d45774",
+      "category": "Decor & Art/Vases & Vessels/Ceramic Vases",
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "ceramic"
+        ]
+      },
+      "img_version": "d977a505",
+      "download_count": 7751,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/ceramic_vase_03.png?width=256&height=256&format=webp&v=d977a505"
+    }
+  },
+  {
+    "id": "ph-vintage-oil-lamp",
+    "upstreamId": "vintage_oil_lamp",
+    "creator": "Monsta3D",
+    "source": "https://polyhaven.com/a/vintage_oil_lamp",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:46.202Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_oil_lamp/vintage_oil_lamp_1k.gltf",
+        "bytes": 7786,
+        "sha256": "ae570b98ea30b0337f62d8e7f551c03a05de00b238f3fac8f1ca5a1f1dbd1add",
+        "upstreamMd5": "95aefcb2ccfad1f5e10dd69522ec09ed"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/vintage_oil_lamp/vintage_oil_lamp.bin",
+        "bytes": 186096,
+        "sha256": "4064065c8e288beaa58639c139c801db337bfc6183e73378a9177157f0587167",
+        "upstreamMd5": "b43f17a0f09d6c14d45eb1099eb1077f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_nor_gl_1k.jpg",
+        "bytes": 42123,
+        "sha256": "2752589c8f6c7724bf2aa5d097010bd9257fff8ca0f85add13ec2ac702909df0",
+        "upstreamMd5": "40b084dae82420f972a3399e04cea91f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_diff_1k.jpg",
+        "bytes": 39058,
+        "sha256": "dbe33017c012a00c74419bb8f05b16a2eeee5e06e2ceab49a80462d25c7a7c0a",
+        "upstreamMd5": "3f2ed8af86381524fb7c02a023950309"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_glass_arm_1k.jpg",
+        "bytes": 282607,
+        "sha256": "0ef2b0eb2087895851be979afc5ccb2c11076f71bc667f9e586b7f8038efc158",
+        "upstreamMd5": "35280190a34ca941710131a51e4c8d2a"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_nor_gl_1k.jpg",
+        "bytes": 227296,
+        "sha256": "54db7efff64c4117782e25851544a0eb4881e5e28a13a06917a16d15ce26b1db",
+        "upstreamMd5": "09ac342783f48e29152415890215c3b7"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_diff_1k.jpg",
+        "bytes": 536650,
+        "sha256": "a96cc1383fb056618eca80a0cf4ae192286c8752f8e83cb52f9fec02ca94a471",
+        "upstreamMd5": "fd73c81fc05f116ca4f908badb5b8974"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_arm_1k.jpg",
+        "bytes": 655961,
+        "sha256": "004b7b6238632e4fc9e2ad7e76529caa292cfd96f5a42d6564531207f25c3e92",
+        "upstreamMd5": "5a385b1f8bea13f7d8ce47a1f6583db1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_flame_diff_1k.jpg",
+        "bytes": 92425,
+        "sha256": "827c6a4fa9274141636cee9415f416a32937f2f257901bbe8488b22b862509f1",
+        "upstreamMd5": "b37858e7969def84f786a54f8e952904"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_oil_lamp/vintage_oil_lamp_flame_diff_1k.jpg",
+        "bytes": 92425,
+        "sha256": "827c6a4fa9274141636cee9415f416a32937f2f257901bbe8488b22b862509f1",
+        "upstreamMd5": "b37858e7969def84f786a54f8e952904"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-vintage-oil-lamp.glb",
+      "bytes": 2159576,
+      "sha256": "eeb36d711e79190a04a1501cc9535e243883f8ed99c5f95dd91e81277139add8",
+      "meshes": 3,
+      "materials": 3,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Vintage Oil Lamp",
+      "categories": [
+        "lighting",
+        "decorative"
+      ],
+      "type": 2,
+      "tags": [
+        "lamp",
+        "oil",
+        "antique",
+        "victorian",
+        "manor",
+        "historic"
+      ],
+      "authors": {
+        "Monsta3D": "All"
+      },
+      "info": null,
+      "date_published": 1685318400,
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 7208,
+      "texel_density": 14281.103682416018,
+      "dimensions": [
+        219.9999988079071,
+        219.9999913573265,
+        801.6371909276536
+      ],
+      "sponsors": [
+        "77433244",
+        "3237733"
+      ],
+      "files_hash": "b086de19794124868b2979b794d8a659e6451f1c",
+      "description": "Free 4K model, ornate Victorian oil lamp with brass base, floral porcelain globe, tall glass chimney and lit wick - detailed antique decorative charm.",
+      "category_id": "68f93037-d68a-5cb0-b10f-920243f9adbe",
+      "category": "Lighting/Portable/Oil Lamps",
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "brass",
+          "ceramic",
+          "glass"
+        ]
+      },
+      "img_version": "8bc88754",
+      "download_count": 6171,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/vintage_oil_lamp.png?width=256&height=256&format=webp&v=8bc88754"
+    }
+  },
+  {
+    "id": "ph-metal-tool-chest",
+    "upstreamId": "metal_tool_chest",
+    "creator": "Yann Kervran, John Hutcheson",
+    "source": "https://polyhaven.com/a/metal_tool_chest",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:46.577Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_tool_chest/metal_tool_chest_1k.gltf",
+        "bytes": 12256,
+        "sha256": "2f66fbb723cd52382f73daec184b68d9b36842a488ecaf120e5c3a6354e9dea4",
+        "upstreamMd5": "21cb18a2e84ed49f23a98578c543e5ad"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/metal_tool_chest/metal_tool_chest.bin",
+        "bytes": 434496,
+        "sha256": "c2bde4e96af4aad171e57e00ff78f0aa9e3b603286a2c74cd6d7c2a20c487342",
+        "upstreamMd5": "b62c394a4f6764df8993a8965564b390"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_tool_chest/metal_tool_chest_nor_gl_1k.jpg",
+        "bytes": 604781,
+        "sha256": "bc5a4009a544a9504849b951afd984d6ac7c5adb0d43c5a08c0a834f8e811a01",
+        "upstreamMd5": "1d53f8a77b5789f6b4e5d72a004bb5bd"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_tool_chest/metal_tool_chest_diff_1k.jpg",
+        "bytes": 552016,
+        "sha256": "da37ba2a8d064637c7206cb091597275986e788ce379bee58a96c949cce06511",
+        "upstreamMd5": "4deaf0af07e8cadbfbd4975b49f597df"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_tool_chest/metal_tool_chest_arm_1k.jpg",
+        "bytes": 755794,
+        "sha256": "d5552ee63ac9bc53527ee1bf19bcbd31d8424bcc15fe9861f79bba917e857828",
+        "upstreamMd5": "981d128104104cdb6ab86c648e1d7f46"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-metal-tool-chest.glb",
+      "bytes": 2354472,
+      "sha256": "2a03b5062fbab2e30a04dff1e71f79c54101d2b9fb2d3bde32dab94de7959b34",
+      "meshes": 7,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "type": 2,
+      "date_published": 1682899200,
+      "sponsors": [
+        "26820710"
+      ],
+      "name": "Metal Tool Chest",
+      "info": null,
+      "authors": {
+        "Yann Kervran": "Rigging",
+        "John Hutcheson": "Modeling & Texturing"
+      },
+      "categories": [
+        "props",
+        "tools",
+        "industrial",
+        "containers",
+        "rigged",
+        "collection: the_shed"
+      ],
+      "tags": [
+        "old",
+        "metal",
+        "garage",
+        "workshop",
+        "storage",
+        "shed",
+        "worn",
+        "mechanics toolbox",
+        "rusted",
+        "steel",
+        "red"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 14576,
+      "texel_density": 4517.763390735566,
+      "dimensions": [
+        685.3884160518646,
+        407.15324878692627,
+        651.8355906009674
+      ],
+      "files_hash": "8fdd3f7409ad7cfd5a4fc3091933d1e1d3785b0e",
+      "description": "Free 8K model of a worn red steel tool chest - rusted scratches, metal handles and lock; rigged lid and drawers, ideal for garage, workshop or industrial scenes.",
+      "category_id": "c7d5a298-97b0-5709-918e-e87832bf31a4",
+      "category": "Tools & Equipment/Workshop Equipment/Tool Chests",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "rusted"
+        ],
+        "material": [
+          "steel",
+          "metal"
+        ],
+        "rigged": true
+      },
+      "img_version": "7d6d7a76",
+      "download_count": 16851,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/metal_tool_chest.png?width=256&height=256&format=webp&v=7d6d7a76"
+    }
+  },
+  {
+    "id": "ph-antique-katana-01",
+    "upstreamId": "antique_katana_01",
+    "creator": "Tal Swicegood",
+    "source": "https://polyhaven.com/a/antique_katana_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-14T04:13:46.834Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/antique_katana_01/antique_katana_01_1k.gltf",
+        "bytes": 2718,
+        "sha256": "e54b4d289b86c8f61b13bd5ea64da0d8ef9a5f6a8225726ea0777832a49ef881",
+        "upstreamMd5": "3779c62d53191221da2bbce887c43dba"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/antique_katana_01/antique_katana_01.bin",
+        "bytes": 221940,
+        "sha256": "8ad394f302068d4d639bc611335e396f97e2cc551beb42c7ab004b79d19b8a6c",
+        "upstreamMd5": "84be308e20afc9d68d95257dc798e232"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/antique_katana_01/antique_katana_01_nor_gl_1k.jpg",
+        "bytes": 95776,
+        "sha256": "154aa175d29b93030b3a0c5e810195d5ef0c00f055b1c28a3769b72c5b1ad521",
+        "upstreamMd5": "cc8ac7611bc3f7eac734788015d83468"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/antique_katana_01/antique_katana_01_diff_1k.jpg",
+        "bytes": 173883,
+        "sha256": "f6d7662ee955b27376f6f34954d289da477618d20ba8d1d6316656272463717a",
+        "upstreamMd5": "376b3d6c78e79d9b45df612478010bdf"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/antique_katana_01/antique_katana_01_arm_1k.jpg",
+        "bytes": 152738,
+        "sha256": "41cae90b51960c1f576a78cc84477192ef13e743ca0a2df6e72f8c29d958cb48",
+        "upstreamMd5": "c2115003bfb806aaeb8f0a6e745dabc6"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-antique-katana-01.glb",
+      "bytes": 646068,
+      "sha256": "441d6a24c30706ba431bc2ca7bb4ab9aa90dd8522c63ce97a6505ce343d600f0",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1623767595,
+      "sponsors": [
+        "44302755"
+      ],
+      "name": "Antique Katana 01",
+      "categories": [
+        "props"
+      ],
+      "type": 2,
+      "tags": [
+        "antique",
+        "ninja",
+        "katana",
+        "sword",
+        "sharp",
+        "blade",
+        "japanese",
+        "weapon"
+      ],
+      "authors": {
+        "Tal Swicegood": "All"
+      },
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 6670,
+      "texel_density": 19878.338448553855,
+      "dimensions": [
+        93.37274730205536,
+        93.37274730205536,
+        1002.9437839984894
+      ],
+      "files_hash": "0dfd31f5d7a964c579c45d90e450d8942d7a5599",
+      "description": "Free 8K model of an antique Japanese katana with a dark, worn blade, ornate tsuba, brown tsuka wrap and aged brass fittings.",
+      "category_id": "15152ddf-1d85-5bef-9b3a-fc5090dccf19",
+      "category": "Weapons/Bladed/Swords & Sabres",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "metal",
+          "brass",
+          "leather"
+        ]
+      },
+      "img_version": "85a4d2f2",
+      "download_count": 24810,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/antique_katana_01.png?width=256&height=256&format=webp&v=85a4d2f2"
+    }
+  }
+]

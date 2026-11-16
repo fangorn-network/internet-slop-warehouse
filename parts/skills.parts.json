@@ -1,0 +1,82 @@
+[
+  {
+    "file": "skills/warehouse-game/SKILL.md",
+    "type": "skill",
+    "id": "warehouse-game-skill",
+    "title": "Build a game from the warehouse",
+    "description": "Agent skill (SKILL.md for Claude Code and Codex): find recipes, games, assets and logic before writing code; wire parts through the PARTS map and attach(); a quality checklist for goal, feedback, feel, restart, lighting, scale and performance; playtest and publish with every part pinned.",
+    "tags": [
+      "skill",
+      "agent",
+      "workflow",
+      "game-design",
+      "game-feel",
+      "three.js",
+      "publishing"
+    ],
+    "uses": [
+      "platformer-controller",
+      "follow-camera",
+      "touch-controls",
+      "hdri-sky",
+      "coin-rush"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "skills/photoreal-scene/SKILL.md",
+    "type": "skill",
+    "id": "photoreal-scene-recipe",
+    "title": "Recipe: photoreal three.js scene",
+    "description": "Recipe skill for realistic web scenes: AgX/ACES tone mapping and sRGB output, HDRI image-based lighting with one shadow-casting sun, correct texture color spaces and tiling for PBR maps, real-world scale and contact shadows, optional GTAO and bloom post-processing, and how to diagnose flat, plastic or floating results.",
+    "tags": [
+      "skill",
+      "recipe",
+      "photoreal",
+      "realistic",
+      "pbr",
+      "hdri",
+      "lighting",
+      "tone-mapping",
+      "three.js"
+    ],
+    "uses": [
+      "hdri-sky",
+      "day-sky",
+      "ph-hotel-farm-sky",
+      "ph-hotel-room-hdri",
+      "ph-wooden-crate-01",
+      "ph-store-floor-color",
+      "ph-store-floor-normal",
+      "ph-store-floor-roughness"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "skills/gaussian-splats/SKILL.md",
+    "type": "skill",
+    "id": "gaussian-splats-skill",
+    "title": "Gaussian splats in a three.js game",
+    "description": "Agent skill for 3D Gaussian splatting in web games: render .spz/.ply/.splat/.ksplat/.sog scans with Spark (MIT) beside normal meshes, align scale and up-axis, collide with invisible proxy meshes, light mixed-in GLBs to match, hide capture edges, splat budgets for desktop and phones, where splats come from (capture apps, Postshot, Brush, generative world models) and their licensing.",
+    "tags": [
+      "skill",
+      "gaussian-splat",
+      "splat",
+      "3dgs",
+      "radiance-field",
+      "photoreal",
+      "spark",
+      "scan",
+      "three.js"
+    ],
+    "uses": [
+      "platformer-controller",
+      "fps-controls",
+      "hdri-sky"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  }
+]

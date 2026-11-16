@@ -1,0 +1,237 @@
+{
+  "desktop": {
+    "crafting": true,
+    "saveBytes": 2589,
+    "saveRestore": true,
+    "rejectedBadSave": true,
+    "fullExtraction": true,
+    "finish": {
+      "mode": "won",
+      "elapsed": 70.59999999999813,
+      "world": "no-road-home",
+      "position": [
+        0.02478571975190491,
+        0,
+        19.85931890780965
+      ],
+      "health": 65,
+      "inventory": {
+        "scrap": 4,
+        "wire": 4,
+        "cloth": 3,
+        "medicine": 0,
+        "lockpick": 0,
+        "fuel": 1,
+        "food": 1,
+        "fuse": 0
+      },
+      "age": 69.94999999999817,
+      "objectives": [
+        "fuse",
+        "radio",
+        "rescue",
+        "escape"
+      ],
+      "escaped": true,
+      "radioPowered": true,
+      "rescueReady": true,
+      "doors": [
+        {
+          "id": "market-door",
+          "open": true,
+          "locked": false,
+          "hp": 60,
+          "position": {
+            "x": -14,
+            "y": 0,
+            "z": -4
+          },
+          "cell": [
+            6,
+            9
+          ]
+        },
+        {
+          "id": "workshop-door",
+          "open": true,
+          "locked": false,
+          "hp": 60,
+          "position": {
+            "x": -14,
+            "y": 0,
+            "z": 4
+          },
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "id": "clinic-door",
+          "open": false,
+          "locked": false,
+          "hp": 60,
+          "position": {
+            "x": 14,
+            "y": 0,
+            "z": 4
+          },
+          "cell": [
+            20,
+            13
+          ]
+        },
+        {
+          "id": "fuse-door",
+          "open": true,
+          "locked": false,
+          "hp": 60,
+          "position": {
+            "x": 14,
+            "y": 0,
+            "z": -4
+          },
+          "cell": [
+            20,
+            9
+          ]
+        }
+      ],
+      "looted": [
+        "workshop",
+        "market",
+        "fuse"
+      ],
+      "enemies": [
+        {
+          "id": "visitor-a",
+          "hp": 60,
+          "mode": "patrol",
+          "position": {
+            "x": 0.7259688960514702,
+            "y": 0,
+            "z": 1.2797323220276534e-7
+          }
+        },
+        {
+          "id": "visitor-b",
+          "hp": 60,
+          "mode": "patrol",
+          "position": {
+            "x": -18.74702575754217,
+            "y": 0,
+            "z": -6.246567573216633e-22
+          }
+        },
+        {
+          "id": "visitor-c",
+          "hp": 60,
+          "mode": "patrol",
+          "position": {
+            "x": 4.8471340097105955,
+            "y": 0,
+            "z": 0.0000030913038060377624
+          }
+        },
+        {
+          "id": "visitor-d",
+          "hp": 60,
+          "mode": "patrol",
+          "position": {
+            "x": 1.2984793270354191,
+            "y": 0,
+            "z": 4.000000001607655
+          }
+        }
+      ],
+      "locations": [
+        {
+          "id": "market",
+          "type": "cache",
+          "position": {
+            "x": -14,
+            "y": 0,
+            "z": -12
+          }
+        },
+        {
+          "id": "workshop",
+          "type": "cache",
+          "position": {
+            "x": -14,
+            "y": 0,
+            "z": 12
+          }
+        },
+        {
+          "id": "clinic",
+          "type": "cache",
+          "position": {
+            "x": 14,
+            "y": 0,
+            "z": 12
+          }
+        },
+        {
+          "id": "fuse",
+          "type": "cache",
+          "position": {
+            "x": 14,
+            "y": 0,
+            "z": -12
+          }
+        },
+        {
+          "id": "bench",
+          "type": "bench",
+          "position": {
+            "x": -16,
+            "y": 0,
+            "z": 12
+          }
+        },
+        {
+          "id": "stash",
+          "type": "stash",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 16
+          }
+        },
+        {
+          "id": "ward",
+          "type": "ward",
+          "position": {
+            "x": -2,
+            "y": 0,
+            "z": 16
+          }
+        },
+        {
+          "id": "radio",
+          "type": "radio",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": -16
+          }
+        },
+        {
+          "id": "exit",
+          "type": "exit",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 20
+          }
+        }
+      ],
+      "packOpen": false
+    },
+    "errors": []
+  },
+  "mobile": {
+    "touch": true
+  }
+}

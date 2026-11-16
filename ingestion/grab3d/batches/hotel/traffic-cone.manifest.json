@@ -1,0 +1,45 @@
+{
+ "slug": "traffic-cone",
+ "triangles": 5968,
+ "texture_px": 512,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "traffic-cone.glb",
+   "bytes": 186656
+  },
+  "blend": {
+   "name": "traffic-cone.blend",
+   "bytes": 243225
+  },
+  "fbx": {
+   "name": "traffic-cone.fbx",
+   "bytes": 336988
+  },
+  "obj": {
+   "name": "traffic-cone-obj.zip",
+   "bytes": 78868
+  },
+  "usdz": {
+   "name": "traffic-cone.usdz",
+   "bytes": 323987
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.380 x 0.380 x 0.702",
+  "triangles": 5968,
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "28 in / 70 cm road cone, 38 cm base",
+  "notes": "hollow body, two retro-reflective bands"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

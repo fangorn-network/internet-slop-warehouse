@@ -1,0 +1,129 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Feed the cat</title>
+<meta name="description" content="Night in the moss garden. A concrete cat sits in the clearing and it is hungry. Bring it apples. It grows. It watches you.">
+<style>
+  html,body{margin:0;touch-action:none;-webkit-user-select:none;user-select:none;height:100%;overflow:hidden;background:#05060c;font:14px system-ui,sans-serif}
+  #hud{position:fixed;top:10px;left:12px;color:#ffe9b0;text-shadow:0 1px 3px #000;font-weight:600;pointer-events:none}
+  #msg{position:fixed;inset:0;display:grid;place-items:center;color:#ffe9b0;text-shadow:0 2px 6px #000;font-size:22px;text-align:center;cursor:pointer;background:#0008}
+  #msg small{display:block;font-size:14px;opacity:.85;margin-top:8px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"></div><div id="msg">loading…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+
+// A remix of the moss garden: same ground, trees, barrels and lanterns, at night, with a cat.
+const PARTS = {/*PARTS*/};
+const logic = async (id) => import("data:text/javascript;charset=utf-8," + encodeURIComponent((await (await fetch(PARTS[id])).json()).js));
+logic("touch-controls").then((t) => t.attach()); // a joystick and jump button on phones
+const glb = (id) => new GLTFLoader().loadAsync(PARTS[id]);
+
+const [controller, followCam, animator, trees, sky, spawner, wobble, boids, robotG, catG, barrelG, lanternG, appleG, groundTex] = await Promise.all([
+    logic("platformer-controller"), logic("follow-camera"), logic("clip-animator"), logic("low-poly-trees"), logic("hdri-sky"),
+    logic("spawner"), logic("wobble"), logic("boids"),
+    glb("robot"), glb("cat-statue"), glb("barrel"), glb("lantern"), glb("apple"),
+    new THREE.TextureLoader().loadAsync(PARTS["forest-ground-texture"]),
+]);
+const audio = new AudioContext();
+const sounds = Object.fromEntries(await Promise.all(["coin-sound", "jump-sound"].map(async (id) => [id, await audio.decodeAudioData(await (await fetch(PARTS[id])).arrayBuffer())])));
+const play = (id, rate = 1) => { const s = audio.createBufferSource(); s.buffer = sounds[id]; s.playbackRate.value = rate; s.connect(audio.destination); s.start(); };
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true; renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(55, 1, 0.1, 300);
+scene.fog = new THREE.FogExp2(0x05060c, 0.035);
+const moon = new THREE.DirectionalLight(0x8899ff, 0.6); moon.position.set(-10, 20, 5); moon.castShadow = true;
+Object.assign(moon.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30 }); scene.add(moon);
+const skyH = sky.attach(scene, { url: PARTS["night-sky"], intensity: 0.5 });
+const world = [skyH];
+
+const R = 30, solids = [];
+groundTex.wrapS = groundTex.wrapT = THREE.RepeatWrapping; groundTex.repeat.set(20, 20); groundTex.colorSpace = THREE.SRGBColorSpace;
+const ground = new THREE.Mesh(new THREE.BoxGeometry(2 * R, 2, 2 * R), new THREE.MeshStandardMaterial({ map: groundTex, roughness: 1 }));
+ground.position.y = -1; ground.receiveShadow = true; scene.add(ground); solids.push(ground);
+const place = (src, [x, y, z], s = 1, ry = 0) => {
+    const m = src.clone(); m.position.set(x, y, z); m.scale.setScalar(s); m.rotation.y = ry;
+    m.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; }); scene.add(m); return m;
+};
+for (const [x, z] of [[8, 8], [-8, 8], [8, -8], [-8, -8], [0, 12], [12, 0], [-12, 0], [0, -12]]) {
+    solids.push(place(barrelG.scene, [x, 0, z], 1.4, x));
+    place(lanternG.scene, [x, 1.23, z], 2);
+    const l = new THREE.PointLight(0xffaa55, 8, 9); l.position.set(x, 1.6, z); scene.add(l);
+}
+world.push(trees.attach(scene, { count: 90, area: [2 * R - 4, 2 * R - 4], clear: 15, seed: 11 }));
+
+// The cat: concrete, in the clearing, lit from below like a campfire story.
+const cat = place(catG.scene, [0, 0, 0], 10);
+const catLight = new THREE.PointLight(0xff7744, 20, 14); catLight.position.set(0, 0.5, 2.5); scene.add(catLight);
+const catWob = wobble.attach(cat, { amount: 0.25, damping: 5 });
+world.push(catWob);
+
+// Fireflies: a flock of tiny glowing dots that drifts after you.
+const flies = Array.from({ length: 40 }, () => {
+    const f = new THREE.Mesh(new THREE.SphereGeometry(0.05, 6, 4), new THREE.MeshBasicMaterial({ color: 0xccff66 }));
+    f.position.set((Math.random() - 0.5) * 20, 1 + Math.random() * 2, (Math.random() - 0.5) * 20); scene.add(f); return f;
+});
+const player = SkeletonUtils.clone(robotG.scene); player.scale.setScalar(0.35);
+player.traverse((o) => { if (o.isMesh) o.castShadow = true; }); scene.add(player);
+const fireflies = boids.attach(flies, { target: player, speed: 2, seek: 0.25, sight: 1.5, bounds: 20,
+    steer: (f) => new THREE.Vector3(0, (1.6 - f.position.y) * 0.8, 0) }); // hover at head height
+world.push(fireflies);
+
+const GOAL = 15, CARRY = 3;
+let over = true, start = 0, fed = 0, carried = [];
+const systems = [];
+let apples;
+function begin() {
+    for (const s of systems.splice(0)) s.dispose();
+    for (const a of carried) a.removeFromParent();
+    carried = []; fed = 0; catWob.resize(10);
+    player.position.set(0, 0, 6);
+    const ctl = controller.attach(player, { solids, camera, onJump: () => play("jump-sound") });
+    apples = spawner.attach(scene, { every: 1.5, max: 8, area: [2 * R - 8, 2 * R - 8], y: 0.6, first: 1.5,
+        where: () => { let p; do p = new THREE.Vector3((Math.random() - 0.5) * (2 * R - 8), 0.6, (Math.random() - 0.5) * (2 * R - 8)); while (p.length() < 6); return p; },
+        make: () => { const a = appleG.scene.clone(); a.scale.setScalar(5); return a; } });
+    systems.push(ctl, apples, animator.attach(player, { animations: robotG.animations, state: () => ctl.state }), followCam.attach(camera, { target: player, offset: [0, 5, 9] }));
+    over = false; start = performance.now(); $msg.style.display = "none";
+}
+const $msg = document.getElementById("msg"), $hud = document.getElementById("hud");
+$msg.innerHTML = `Feed the cat<small>WASD / arrows · Shift to run · Space to jump<br>apples appear in the dark; carry up to ${CARRY} at a time to the cat<br>it needs ${GOAL}<br><br>click to start</small>`;
+$msg.onclick = () => { audio.resume(); begin(); };
+
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+camera.position.set(0, 5, 15); camera.lookAt(0, 1, 0);
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+    const dt = clock.getDelta(), t = clock.elapsedTime;
+    for (const w of world) w.update(dt);
+    cat.rotation.y = Math.atan2(player.position.x, player.position.z); // it watches you
+    catLight.intensity = 18 + Math.sin(t * 9) * 3 + Math.sin(t * 23) * 2;
+    if (!over) {
+        for (const s of systems) s.update(dt);
+        // Pick up apples you walk into; they bob over your head.
+        for (const a of apples.alive) if (carried.length < CARRY && a.position.distanceTo(player.position) < 1.2) {
+            apples.alive.delete(a); carried.push(a); play("coin-sound", 1.5);
+        }
+        carried.forEach((a, i) => a.position.set(player.position.x + Math.sin(t * 3 + i * 2) * 0.5, player.position.y + 2 + i * 0.35, player.position.z + Math.cos(t * 3 + i * 2) * 0.5));
+        // Feed it: each apple makes it bigger.
+        const catR = 1.5 + cat.scale.x * 0.12;
+        if (carried.length && Math.hypot(player.position.x, player.position.z) < catR + 0.6) {
+            for (const a of carried) { a.removeFromParent(); fed++; }
+            play("coin-sound", 0.5 + fed * 0.03); carried = [];
+            catWob.resize(10 + fed * 1.4); catWob.poke(1.5);
+            if (fed >= GOAL) {
+                over = true; skyH.update(0);
+                $msg.innerHTML = `The cat has eaten ${fed} apples in ${((performance.now() - start) / 1000).toFixed(0)}s.<small>it is satisfied, for now · click to feed it again</small>`; $msg.style.display = "";
+            }
+        }
+        $hud.textContent = `fed ${fed}/${GOAL} · carrying ${carried.length}/${CARRY}`;
+    }
+    renderer.render(scene, camera);
+});
+</script></body></html>

@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-15T00:27:25.527Z",
+  "warehouse": "https://internet-slop-warehouse.quickbeam.workers.dev",
+  "cloudflareVersion": "1eb88c7b-61e3-4495-989b-083b5fb662a5",
+  "defaultLocation": "Bayfield waterfront, Wisconsin",
+  "parts": 23,
+  "games": [
+    {
+      "id": "dead-air-atlas",
+      "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+      "network": "baseSepolia",
+      "cid": "bafyreidcmxdno6mxia4ihsih3lvzxo7mx6e6pbkfwl765fzqrt654w7peu",
+      "src": "bafkreieeleijrr2wvq6tiw4ny562hu2ls3ycgn3kd3kpfdhsktt5ha4xra",
+      "url": "https://ipfs-test.fangorn.network/ipfs/bafkreieeleijrr2wvq6tiw4ny562hu2ls3ycgn3kd3kpfdhsktt5ha4xra",
+      "txHash": "0x12d60830f39cab854afb21e45a6fd42453ec75876faa641864d226db8a2a29ba"
+    },
+    {
+      "id": "relay-skirmish-game",
+      "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+      "network": "baseSepolia",
+      "cid": "bafyreicibodrihlx52xhuosqywpmbwbncmehi53pxo3wdqco55gqh3q2m4",
+      "src": "bafkreihu6lx2fwyunljyeiw636jwfyexqee54pmwokdvxt4pmbdw2bnojq",
+      "url": "https://ipfs-test.fangorn.network/ipfs/bafkreihu6lx2fwyunljyeiw636jwfyexqee54pmwokdvxt4pmbdw2bnojq",
+      "txHash": "0xa1d613f732b98047d99fa7f27206cd391600550e4976189fd218ae0401c9ad7a"
+    }
+  ],
+  "sourceKit": {
+    "id": "dead-air-remix-kit",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidtfv53fevu42mv5aobeoydzzbais6vkc73366opukcnm6aacwqju",
+    "src": "bafybeiduxxhkq6rm4ddkpf4up32p3n6rqas3fl4ymctrarg2uaxmsher6e",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiduxxhkq6rm4ddkpf4up32p3n6rqas3fl4ymctrarg2uaxmsher6e",
+    "txHash": "0xd72ca3c79e0588fbd4808ae363d787d0ef40c8bd0c116802aa6b43535b7625fa"
+  },
+  "unitTests": 52
+}

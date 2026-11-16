@@ -1,0 +1,29 @@
+{
+  "catalog": true,
+  "count": 15,
+  "pinned": true,
+  "mapLicenses": true,
+  "sourceZipBytes": 5189174,
+  "opaqueSandbox": true,
+  "allowFormsAbsent": true,
+  "realButtonSearch": true,
+  "realEnterSearch": true,
+  "namedSelection": true,
+  "loaded": {
+    "place": "Rhinelander, Wisconsin, United States",
+    "spawn": {
+      "id": "node/2719405164",
+      "x": -660.4114155128427,
+      "z": -577.1051440002441,
+      "lat": 45.6451842,
+      "lon": -89.4184852,
+      "name": "Water tower 5164",
+      "height": 34,
+      "mapped": true,
+      "type": "tower",
+      "distance": 22.014379928776783
+    },
+    "version": "0.2.0"
+  },
+  "errors": []
+}

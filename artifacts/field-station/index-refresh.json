@@ -1,0 +1,26 @@
+{
+  "from": "bafyreig7kcelepk5sziwwa2hnobevd4tl44tgwpapoxml2gjxbt7ped4me",
+  "to": "bafyreih6a7a2753rtrkyjg6oack3hwvtfvbaby6e7vhtwofjxvpkcyqnui",
+  "puts": [
+    "stillwater-field-station",
+    "stillwater-world-guide",
+    "field-pine-spray",
+    "signal-trail",
+    "stillwater-world",
+    "trail-playground",
+    "woodland-sound",
+    "world-prop-kit",
+    "ph-dead-tree-trunk",
+    "ph-fern-02",
+    "ph-forest-floor-normal",
+    "ph-forest-floor-roughness",
+    "ph-misty-pines",
+    "ph-portable-generator",
+    "ph-tree-stump-01",
+    "ph-vintage-radio-transceiver",
+    "trail-walker"
+  ],
+  "deletes": [],
+  "checked": "58968996",
+  "output": "/tmp/field-station-index-refresh.sql"
+}

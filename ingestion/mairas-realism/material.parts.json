@@ -1,0 +1,218 @@
+[
+  {
+    "id": "ph-store-cotton-color",
+    "file": "haven/ph-store-cotton-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · cotton color",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "cotton",
+      "color"
+    ],
+    "description": "cotton color, original 1K col_03 map from https://polyhaven.com/a/fabric_pattern_05. sRGB base color. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-cotton-normal",
+    "file": "haven/ph-store-cotton-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · cotton normal",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "cotton",
+      "normal"
+    ],
+    "description": "cotton normal, original 1K nor_gl map from https://polyhaven.com/a/fabric_pattern_05. OpenGL tangent-space, linear. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-cotton-roughness",
+    "file": "haven/ph-store-cotton-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · cotton roughness",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "cotton",
+      "roughness"
+    ],
+    "description": "cotton roughness, original 1K Rough map from https://polyhaven.com/a/fabric_pattern_05. Linear roughness. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-denim-color",
+    "file": "haven/ph-store-denim-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · denim color",
+    "author": "Greg Zaal, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "denim",
+      "color"
+    ],
+    "description": "denim color, original 1K Diffuse map from https://polyhaven.com/a/denim_fabric_06. sRGB base color. CC0; by Greg Zaal, Rico Cilliers."
+  },
+  {
+    "id": "ph-store-denim-normal",
+    "file": "haven/ph-store-denim-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · denim normal",
+    "author": "Greg Zaal, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "denim",
+      "normal"
+    ],
+    "description": "denim normal, original 1K nor_gl map from https://polyhaven.com/a/denim_fabric_06. OpenGL tangent-space, linear. CC0; by Greg Zaal, Rico Cilliers."
+  },
+  {
+    "id": "ph-store-denim-roughness",
+    "file": "haven/ph-store-denim-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · denim roughness",
+    "author": "Greg Zaal, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "denim",
+      "roughness"
+    ],
+    "description": "denim roughness, original 1K Rough map from https://polyhaven.com/a/denim_fabric_06. Linear roughness. CC0; by Greg Zaal, Rico Cilliers."
+  },
+  {
+    "id": "ph-store-asphalt-color",
+    "file": "haven/ph-store-asphalt-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · asphalt color",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "asphalt",
+      "color"
+    ],
+    "description": "asphalt color, original 1K Diffuse map from https://polyhaven.com/a/asphalt_01. sRGB base color. CC0; by Dario Barresi, Charlotte Baglioni."
+  },
+  {
+    "id": "ph-store-asphalt-normal",
+    "file": "haven/ph-store-asphalt-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · asphalt normal",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "asphalt",
+      "normal"
+    ],
+    "description": "asphalt normal, original 1K nor_gl map from https://polyhaven.com/a/asphalt_01. OpenGL tangent-space, linear. CC0; by Dario Barresi, Charlotte Baglioni."
+  },
+  {
+    "id": "ph-store-asphalt-roughness",
+    "file": "haven/ph-store-asphalt-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · asphalt roughness",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "asphalt",
+      "roughness"
+    ],
+    "description": "asphalt roughness, original 1K Rough map from https://polyhaven.com/a/asphalt_01. Linear roughness. CC0; by Dario Barresi, Charlotte Baglioni."
+  },
+  {
+    "id": "ph-store-floor-color",
+    "file": "haven/ph-store-floor-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · floor color",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "floor",
+      "color"
+    ],
+    "description": "floor color, original 1K Diffuse map from https://polyhaven.com/a/floor_tiles_06. sRGB base color. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-floor-normal",
+    "file": "haven/ph-store-floor-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · floor normal",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "floor",
+      "normal"
+    ],
+    "description": "floor normal, original 1K nor_gl map from https://polyhaven.com/a/floor_tiles_06. OpenGL tangent-space, linear. CC0; by Rob Tuytel."
+  },
+  {
+    "id": "ph-store-floor-roughness",
+    "file": "haven/ph-store-floor-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Poly Haven · floor roughness",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "pbr",
+      "texture",
+      "realism",
+      "floor",
+      "roughness"
+    ],
+    "description": "floor roughness, original 1K Rough map from https://polyhaven.com/a/floor_tiles_06. Linear roughness. CC0; by Rob Tuytel."
+  }
+]

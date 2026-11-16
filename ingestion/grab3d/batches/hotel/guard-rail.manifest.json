@@ -1,0 +1,47 @@
+{
+ "slug": "guard-rail",
+ "triangles": 3672,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "guard-rail.glb",
+   "bytes": 966596
+  },
+  "blend": {
+   "name": "guard-rail.blend",
+   "bytes": 932261
+  },
+  "fbx": {
+   "name": "guard-rail.fbx",
+   "bytes": 1753244
+  },
+  "obj": {
+   "name": "guard-rail-obj.zip",
+   "bytes": 1480120
+  },
+  "usdz": {
+   "name": "guard-rail.usdz",
+   "bytes": 1745304
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "4.000 x 0.300 x 0.754",
+  "triangles": 3672,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "4.0 m tileable steel guard rail: A-profile (double-wave W-beam) rail 310 x 83 x 3 mm, top edge 0.75 m, sigma posts 100 x 50 x 4 mm every 2.0 m (x = -1.0 / +1.0 m), 150 mm spacer blocks, M16 button-head bolts",
+  "notes": "Tileable along X: seam edges at x = -2.0 and +2.0 m where the rail sits in its base position, so tiles join without offset (4 m element, post spacing 2 m continues). Rail splice with 320 mm overlap on the post at x = +1.0 m, upstream rail on the traffic side (traffic along +X on the -Y side), 8 splice bolts. Traffic side = -Y, posts end at ground level (z = 0). Hot-dip galvanized, light road grime.",
+  "set": "Urban Street Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

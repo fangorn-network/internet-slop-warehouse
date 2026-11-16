@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 const record = (id, type, payload) => ({ id, type, publisher: '0x1234567890abcdef', payload: { title: id, description: 'Browse fixture', tags: [], ...payload } });
-const records = [record('Forest', 'game', { tags: ['survival', 'exploration'] }), record('Arcade', 'game', { tags: ['arcade'] }), record('Unknown', 'game', {}), record('Robot', 'asset', { mime: 'model/gltf-binary' }), record('Grass', 'asset', { mime: 'image/png' }), record('Guide', 'asset', { mime: 'text/markdown' }), record('Move', 'logic', { kind: 'controller' })];
+const records = [record('Forest', 'game', { tags: ['survival', 'exploration'] }), record('Arcade', 'game', { tags: ['arcade'] }), record('Unknown', 'game', {}), record('Robot', 'asset', { mime: 'model/gltf-binary' }), record('Grass', 'asset', { mime: 'image/png' }), record('Guide', 'asset', { mime: 'text/markdown' }), record('Move', 'logic', { kind: 'controller' }), record('Splats', 'skill', { tags: ['skill'], skill: 'splats' }), record('Photoreal', 'skill', { tags: ['recipe'], skill: 'photoreal' }), record('Lerp', 'source', { origin: { repo: 'r', commit: 'c', path: 'p.js' } })];
 const server = createServer(async (req, res) => {
     const path = new URL(req.url, 'http://localhost').pathname;
     if (path === '/view.json') { res.setHeader('Content-Type', 'application/json'); return res.end(JSON.stringify({ root: 'fixture', records })); }
@@ -37,7 +37,15 @@ try {
     await page.locator('[data-kind=logic]').click();
     await page.getByRole('button', { name: 'Controls & movement 1', exact: true }).click();
     assert.equal(await page.locator('.card h2').textContent(), 'Move');
+    await page.locator('[data-kind=skill]').click();
+    assert.equal(await page.locator('.card').count(), 2);
+    await page.getByRole('button', { name: 'Recipes 1', exact: true }).click();
+    assert.equal(await page.locator('.card h2').textContent(), 'Photoreal');
+    await page.locator('[data-kind=source]').click();
+    assert.equal(await page.locator('.card h2').textContent(), 'Lerp');
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: 'artifacts/player/catalog-mobile-kinds.png' });
+    assert.equal(await page.evaluate(() => [...document.querySelectorAll('.kinds button')].every(b => b.scrollWidth <= b.clientWidth)), true, 'kind tabs fit on a phone');
     await page.locator('[data-kind=game]').click();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     // Semantic results must still respect the selected category.
@@ -49,5 +57,5 @@ try {
     assert.equal(await page.locator('.card').count(), 1);
     assert.equal(await page.locator('.card h2').textContent(), 'Forest');
     assert.deepEqual(errors, []);
-    console.log('Catalog passed: categories, counts, search, semantic intersection, clear, type switching, keyboard focus, and mobile layout.');
+    console.log('Catalog passed: categories, counts, search, semantic intersection, clear, type switching (skills, recipes, source), keyboard focus, and mobile layout.');
 } finally { await browser?.close(); await new Promise(resolve => server.close(resolve)); }

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "mairas-stock-layout",
+    "file": "../projects/mairas-dream/stock.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Dense thrift-store stock · 1,300 individual items",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "inventory",
+      "shopping",
+      "thrift-store",
+      "layout",
+      "cc0"
+    ],
+    "description": "Fourteen shelves, six clothing fixtures and shoe wall, 1,300 stable independently collectable/returnable items, exact goal placements, categories, variants and integer-cent prices.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{transformItem}) → {catalog,shelves,racks,update,dispose}",
+        "does": "Create a fresh merchandise catalog, optionally transform each item."
+      },
+      {
+        "name": "makeStock",
+        "signature": "makeStock() → Item[]",
+        "does": "Generate all unique item records."
+      },
+      {
+        "name": "catalog",
+        "signature": "Item[]",
+        "does": "Default complete item catalog."
+      },
+      {
+        "name": "shelves",
+        "signature": "Fixture[]",
+        "does": "Shelf positions and categories."
+      },
+      {
+        "name": "racks",
+        "signature": "Fixture[]",
+        "does": "Clothing fixture positions."
+      },
+      {
+        "name": "specials",
+        "signature": "Item[]",
+        "does": "Nine named errand purchases."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "transformItem",
+        "signature": "(item) → item",
+        "default": "identity",
+        "does": "Override placement, price or visual metadata for a new catalog."
+      }
+    ]
+  }
+]

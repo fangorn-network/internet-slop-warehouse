@@ -1,0 +1,9 @@
+{
+  "opaqueSandbox": true,
+  "allowFormsAbsent": true,
+  "buttonSearch": true,
+  "enterSearch": true,
+  "namedSelection": true,
+  "defaultTower": true,
+  "errors": []
+}

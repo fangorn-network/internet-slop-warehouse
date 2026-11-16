@@ -1,0 +1,17 @@
+{
+  "publicRelays": true,
+  "realWebRTC": true,
+  "opaqueSandbox": true,
+  "inviteSecret": true,
+  "guestMovement": true,
+  "guestScanner": true,
+  "sharedEvidence": true,
+  "sharedScore": true,
+  "lateJoin": true,
+  "exactMap": true,
+  "hostOnlyWorld": true,
+  "hostOnlyState": true,
+  "districtTransition": true,
+  "hostLeave": true,
+  "errors": []
+}

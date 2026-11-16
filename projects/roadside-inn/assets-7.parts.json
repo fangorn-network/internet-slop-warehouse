@@ -1,0 +1,209 @@
+[
+  {
+    "id": "hotel-shelving-unit",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-shelving-unit.glb",
+    "title": "Hotel shelving unit · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "decor",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "shelving",
+      "unit"
+    ],
+    "description": "Lobby decor shelving unit, 1.8 x 2.0 m: walnut frame, colored niches, vases, books, small plants, brass bowl. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center."
+  },
+  {
+    "id": "hotel-floor-lamp",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-floor-lamp.glb",
+    "title": "Hotel floor lamp · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "decor",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "floor",
+      "lamp"
+    ],
+    "description": "Floor lamp: charcoal base, brass pole, linen drum shade (material \"lampshade\"). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center."
+  },
+  {
+    "id": "hotel-snake-plant",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-snake-plant.glb",
+    "title": "Hotel snake plant · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "decor",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "snake",
+      "plant"
+    ],
+    "description": "Snake plant (sansevieria) with tapered, twisted blades in a matte black planter. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center."
+  },
+  {
+    "id": "hotel-centerpiece",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-centerpiece.glb",
+    "title": "Hotel centerpiece · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "decor",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "centerpiece"
+    ],
+    "description": "Lobby centerpiece: round walnut pedestal table with a glass vase and a full flower arrangement. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center."
+  },
+  {
+    "id": "hotel-lattice-pendant",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-lattice-pendant.glb",
+    "title": "Hotel lattice pendant · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "decor",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lattice",
+      "pendant"
+    ],
+    "description": "Gold lattice sphere pendant light (geodesic struts) with a warm glowing core. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center."
+  },
+  {
+    "id": "acg-hotel-brushed-steel-color",
+    "file": "acg/acg-hotel-brushed-steel-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Metal009 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "brushed-steel",
+      "color"
+    ],
+    "description": "Metal009 color map, 1K, from https://ambientcg.com/a/Metal009. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-brushed-steel-normal",
+    "file": "acg/acg-hotel-brushed-steel-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Metal009 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "brushed-steel",
+      "normal"
+    ],
+    "description": "Metal009 normal map, 1K, from https://ambientcg.com/a/Metal009. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-brushed-steel-roughness",
+    "file": "acg/acg-hotel-brushed-steel-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Metal009 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "brushed-steel",
+      "roughness"
+    ],
+    "description": "Metal009 roughness map, 1K, from https://ambientcg.com/a/Metal009. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-terrazzo-color",
+    "file": "acg/acg-hotel-terrazzo-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Terrazzo005 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "terrazzo",
+      "color"
+    ],
+    "description": "Terrazzo005 color map, 1K, from https://ambientcg.com/a/Terrazzo005. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-terrazzo-normal",
+    "file": "acg/acg-hotel-terrazzo-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Terrazzo005 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "terrazzo",
+      "normal"
+    ],
+    "description": "Terrazzo005 normal map, 1K, from https://ambientcg.com/a/Terrazzo005. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-terrazzo-roughness",
+    "file": "acg/acg-hotel-terrazzo-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Terrazzo005 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "terrazzo",
+      "roughness"
+    ],
+    "description": "Terrazzo005 roughness map, 1K, from https://ambientcg.com/a/Terrazzo005. Linear roughness. CC0-1.0."
+  }
+]

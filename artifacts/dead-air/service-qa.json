@@ -1,0 +1,18 @@
+{
+  "origin": "https://internet-slop-warehouse.quickbeam.workers.dev",
+  "mobileCSS": true,
+  "boundedInput": true,
+  "cors": true,
+  "liveCoordinates": true,
+  "snappedOrigin": [
+    45.64,
+    -89.41
+  ],
+  "elements": 1751,
+  "provider": "OpenFreeMap",
+  "cached": true,
+  "attribution": "OpenFreeMap · © OpenMapTiles · © OpenStreetMap contributors",
+  "license": "ODbL-1.0",
+  "bundledFallback": true,
+  "workerVersion": "d6c66f01-8db2-4d4c-bc80-62712121fb06"
+}

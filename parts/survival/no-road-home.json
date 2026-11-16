@@ -1,0 +1,302 @@
+{
+  "id": "no-road-home",
+  "version": 1,
+  "title": "No Road Home",
+  "seed": 731,
+  "description": "Scavenge a sealed town, repair its radio and get out. Running, prying and fighting make noise. Doors, supplies and the ward remember what you do.",
+  "cellSize": 2,
+  "rows": [
+    "###########################",
+    "#.........................#",
+    "#.#########.....#########.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.####D####.....####D####.#",
+    "#.........................#",
+    "#.........................#",
+    "#.........................#",
+    "#.####D####.....####D####.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#.......#.....#.......#.#",
+    "#.#########.....#########.#",
+    "#.........................#",
+    "###########################"
+  ],
+  "start": [
+    13,
+    19
+  ],
+  "daySeconds": 90,
+  "nightSeconds": 60,
+  "radioWait": 35,
+  "initial": {
+    "scrap": 2,
+    "wire": 1,
+    "cloth": 1,
+    "medicine": 1
+  },
+  "capacity": 24,
+  "doors": [
+    {
+      "id": "market-door",
+      "cell": [
+        6,
+        9
+      ],
+      "locked": false
+    },
+    {
+      "id": "workshop-door",
+      "cell": [
+        6,
+        13
+      ],
+      "locked": false
+    },
+    {
+      "id": "clinic-door",
+      "cell": [
+        20,
+        13
+      ],
+      "locked": false
+    },
+    {
+      "id": "fuse-door",
+      "cell": [
+        20,
+        9
+      ],
+      "locked": true
+    }
+  ],
+  "locations": [
+    {
+      "id": "market",
+      "type": "cache",
+      "title": "General store",
+      "cell": [
+        6,
+        5
+      ],
+      "loot": {
+        "scrap": 4,
+        "fuel": 2,
+        "food": 1
+      }
+    },
+    {
+      "id": "workshop",
+      "type": "cache",
+      "title": "Workshop locker",
+      "cell": [
+        6,
+        17
+      ],
+      "loot": {
+        "scrap": 4,
+        "wire": 2,
+        "cloth": 2
+      }
+    },
+    {
+      "id": "clinic",
+      "type": "cache",
+      "title": "Clinic cabinet",
+      "cell": [
+        20,
+        17
+      ],
+      "loot": {
+        "medicine": 1,
+        "alcohol": 2,
+        "cloth": 2,
+        "food": 2
+      }
+    },
+    {
+      "id": "fuse",
+      "type": "cache",
+      "title": "Substation fuse",
+      "cell": [
+        20,
+        5
+      ],
+      "loot": {
+        "fuse": 1,
+        "wire": 2
+      }
+    },
+    {
+      "id": "bench",
+      "type": "bench",
+      "title": "Workbench",
+      "cell": [
+        5,
+        17
+      ]
+    },
+    {
+      "id": "stash",
+      "type": "stash",
+      "title": "Shelter stash",
+      "cell": [
+        13,
+        19
+      ]
+    },
+    {
+      "id": "ward",
+      "type": "ward",
+      "title": "Ward lantern",
+      "cell": [
+        12,
+        19
+      ]
+    },
+    {
+      "id": "radio",
+      "type": "radio",
+      "title": "Emergency radio",
+      "cell": [
+        13,
+        3
+      ],
+      "cost": {
+        "scrap": 7,
+        "fuel": 1,
+        "fuse": 1
+      }
+    },
+    {
+      "id": "exit",
+      "type": "exit",
+      "title": "South road",
+      "cell": [
+        13,
+        21
+      ]
+    }
+  ],
+  "ward": {
+    "cell": [
+      13,
+      19
+    ],
+    "radius": 6,
+    "initialFuel": 60
+  },
+  "enemies": [
+    {
+      "id": "visitor-a",
+      "cell": [
+        13,
+        7
+      ],
+      "patrol": [
+        [
+          13,
+          5
+        ],
+        [
+          13,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "visitor-b",
+      "cell": [
+        7,
+        11
+      ],
+      "patrol": [
+        [
+          3,
+          11
+        ],
+        [
+          12,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "visitor-c",
+      "cell": [
+        22,
+        11
+      ],
+      "patrol": [
+        [
+          15,
+          11
+        ],
+        [
+          24,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "visitor-d",
+      "cell": [
+        13,
+        15
+      ],
+      "patrol": [
+        [
+          13,
+          13
+        ],
+        [
+          13,
+          17
+        ]
+      ]
+    }
+  ],
+  "objectives": [
+    {
+      "id": "fuse",
+      "title": "Find the substation fuse",
+      "fact": "foundFuse",
+      "target": "fuse"
+    },
+    {
+      "id": "radio",
+      "title": "Repair the emergency radio",
+      "requires": [
+        "fuse"
+      ],
+      "fact": "radioPowered",
+      "target": "radio"
+    },
+    {
+      "id": "rescue",
+      "title": "Survive until the road opens",
+      "requires": [
+        "radio"
+      ],
+      "fact": "rescueReady",
+      "target": "exit"
+    },
+    {
+      "id": "escape",
+      "title": "Leave by the south road",
+      "requires": [
+        "rescue"
+      ],
+      "fact": "escaped",
+      "target": "exit"
+    }
+  ]
+}

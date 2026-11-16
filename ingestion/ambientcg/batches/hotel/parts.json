@@ -1,0 +1,164 @@
+[
+  {
+    "id": "acg-hotel-ceiling-color",
+    "file": "acg/acg-hotel-ceiling-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG OfficeCeiling001 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "ceiling",
+      "color"
+    ],
+    "description": "OfficeCeiling001 color map, 1K, from https://ambientcg.com/a/OfficeCeiling001. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-ceiling-normal",
+    "file": "acg/acg-hotel-ceiling-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG OfficeCeiling001 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "ceiling",
+      "normal"
+    ],
+    "description": "OfficeCeiling001 normal map, 1K, from https://ambientcg.com/a/OfficeCeiling001. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-ceiling-roughness",
+    "file": "acg/acg-hotel-ceiling-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG OfficeCeiling001 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "ceiling",
+      "roughness"
+    ],
+    "description": "OfficeCeiling001 roughness map, 1K, from https://ambientcg.com/a/OfficeCeiling001. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-brushed-steel-color",
+    "file": "acg/acg-hotel-brushed-steel-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Metal009 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "brushed-steel",
+      "color"
+    ],
+    "description": "Metal009 color map, 1K, from https://ambientcg.com/a/Metal009. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-brushed-steel-normal",
+    "file": "acg/acg-hotel-brushed-steel-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Metal009 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "brushed-steel",
+      "normal"
+    ],
+    "description": "Metal009 normal map, 1K, from https://ambientcg.com/a/Metal009. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-brushed-steel-roughness",
+    "file": "acg/acg-hotel-brushed-steel-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Metal009 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "brushed-steel",
+      "roughness"
+    ],
+    "description": "Metal009 roughness map, 1K, from https://ambientcg.com/a/Metal009. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-terrazzo-color",
+    "file": "acg/acg-hotel-terrazzo-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Terrazzo005 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "terrazzo",
+      "color"
+    ],
+    "description": "Terrazzo005 color map, 1K, from https://ambientcg.com/a/Terrazzo005. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-terrazzo-normal",
+    "file": "acg/acg-hotel-terrazzo-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Terrazzo005 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "terrazzo",
+      "normal"
+    ],
+    "description": "Terrazzo005 normal map, 1K, from https://ambientcg.com/a/Terrazzo005. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-terrazzo-roughness",
+    "file": "acg/acg-hotel-terrazzo-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Terrazzo005 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "terrazzo",
+      "roughness"
+    ],
+    "description": "Terrazzo005 roughness map, 1K, from https://ambientcg.com/a/Terrazzo005. Linear roughness. CC0-1.0."
+  }
+]

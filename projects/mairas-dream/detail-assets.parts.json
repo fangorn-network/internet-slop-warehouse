@@ -1,0 +1,98 @@
+[
+  {
+    "id": "basemesh-mug",
+    "title": "The Base Mesh · handled coffee mug",
+    "author": "The Base Mesh",
+    "description": "Original hollow handled mug. Source: https://www.thebasemesh.com/ (CC0 library), acquired from Papyszoo/CC0-Public-Domain-Models/packs/the-base-mesh/models/mug/mug.glb. Original mesh preserved.",
+    "uses": [],
+    "file": "haven/basemesh-mug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "cc0",
+      "thrift-store",
+      "realism"
+    ]
+  },
+  {
+    "id": "cc0-ceramic-mug",
+    "title": "Ceramic coffee mug",
+    "author": "The Base Mesh; the internet slop warehouse",
+    "description": "Ground-centered 15cm handled mug derived from The Base Mesh CC0 model, glazed ivory material and smooth normals.",
+    "uses": [
+      "basemesh-mug"
+    ],
+    "file": "haven/cc0-ceramic-mug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "cc0",
+      "thrift-store",
+      "realism"
+    ]
+  },
+  {
+    "id": "cc0-ceramic-neighbor-mug",
+    "title": "World’s Okayest Neighbor · handled mug",
+    "author": "The Base Mesh; the internet slop warehouse",
+    "description": "Handled ceramic coffee mug with original WORLD’S OKAYEST NEIGHBOR surface lettering. Separate decal geometry, hollow body, ground-centered, 15cm high.",
+    "uses": [
+      "basemesh-mug"
+    ],
+    "file": "haven/cc0-ceramic-neighbor-mug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "cc0",
+      "thrift-store",
+      "realism"
+    ]
+  },
+  {
+    "id": "ph-thrift-book",
+    "title": "Poly Haven · individual hardcover book",
+    "author": "Poly Haven contributors",
+    "description": "Individual hardcover mesh extracted from Decorative Book Set 01 FBX with original 1K cover02, OpenGL normal and roughness resources, embedded GLB, normalized 27cm height. Source https://polyhaven.com/a/decorative_book_set_01 . Upstream files MD5 verified; local SHA256/provenance recorded.",
+    "uses": [],
+    "file": "haven/ph-thrift-book.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "cc0",
+      "thrift-store",
+      "realism"
+    ]
+  },
+  {
+    "id": "ph-thrift-book-alt",
+    "title": "Poly Haven · alternate hardcover book",
+    "author": "Poly Haven contributors",
+    "description": "Same CC0 authored hardcover geometry, original cover07 with original normal/roughness PBR maps. Self-contained GLB from https://polyhaven.com/a/decorative_book_set_01 .",
+    "uses": [
+      "ph-thrift-book"
+    ],
+    "file": "haven/ph-thrift-book-alt.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "cc0",
+      "thrift-store",
+      "realism"
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "mercy-moving",
+    "title": "Mercy, Moving",
+    "type": "game",
+    "file": "../artifacts/mercy-moving/mercy-moving.html",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0 AND MIT",
+    "description": "Exploration study 003: 13 enterable ground-floor spaces, independent shared doors, claimable homes, simple interiors, sheltered rain, original civilian figures and optional host-authoritative co-op. No creatures, cave or necklace yet. First/third-person and touch controls. Up to four visitors; host must remain online. Claims are session-only. Original code and geometry CC0; bundled transport and libraries retain their notices.",
+    "tags": [
+      "3d",
+      "horror",
+      "ps2-inspired",
+      "exploration",
+      "p2p",
+      "walking-town",
+      "prototype",
+      "interiors",
+      "shared-homes"
+    ],
+    "uses": [
+      "seeded-random",
+      "fps-controls",
+      "p2p-homestead",
+      "trystero-027"
+    ],
+    "parent": {
+      "id": "mercy-moving"
+    }
+  }
+]

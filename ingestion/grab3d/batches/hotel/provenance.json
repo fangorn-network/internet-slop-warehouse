@@ -1,0 +1,796 @@
+[
+  {
+    "id": "g3-1990s-sedan",
+    "upstream": "1990s-sedan",
+    "source": "https://grab3d.com/models/vehicles/1990s-sedan/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/1990s-sedan/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/1990s-sedan/manifest.json",
+    "manifestSha256": "045ae0733a6907d9f1241fbb4e7b8c716f3f515d6271bc041d89bbc7044b08dd",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/1990s-sedan/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/1990s-sedan/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "1990s-sedan.glb",
+      "bytes": 1229228,
+      "url": "https://grab3d.com/dl/1990s-sedan/1990s-sedan.glb"
+    },
+    "sha256": "91e8486ffbe598da286439b9dabefbd6663a1fc33f7cc9c247b316534b5ef4b5",
+    "bytes": 1229228,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:04.732Z",
+    "specs": {
+      "triangles": 19368,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.896,
+        4.674,
+        1.5
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-1990s-sedan.glb",
+      "bytes": 846868,
+      "sha256": "d0cb3b05bf12da8caa4d8234178266c636b011e8cabadf1f06ac774583579276"
+    }
+  },
+  {
+    "id": "g3-1990s-suv",
+    "upstream": "1990s-suv",
+    "source": "https://grab3d.com/models/vehicles/1990s-suv/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/1990s-suv/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/1990s-suv/manifest.json",
+    "manifestSha256": "3ab7de16ba147f2d10d2441b47a46eb4fd2d275650b39a3b0dfd7fdef6f456d6",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/1990s-suv/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/1990s-suv/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "1990s-suv.glb",
+      "bytes": 1444272,
+      "url": "https://grab3d.com/dl/1990s-suv/1990s-suv.glb"
+    },
+    "sha256": "6de5880316e6d27e40f3294428b16a31251af6d59af2d20d7884cbb23414da99",
+    "bytes": 1444272,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:08.755Z",
+    "specs": {
+      "triangles": 19885,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.947,
+        4.69,
+        1.908
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-1990s-suv.glb",
+      "bytes": 958660,
+      "sha256": "584e755000801c23426bd5c97dbfbfcf82d27e42ae3900637d9e08bdd42256a1"
+    }
+  },
+  {
+    "id": "g3-1990s-pickup-truck",
+    "upstream": "1990s-pickup-truck",
+    "source": "https://grab3d.com/models/vehicles/1990s-pickup-truck/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/1990s-pickup-truck/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/1990s-pickup-truck/manifest.json",
+    "manifestSha256": "353af7b8386d5ed671473d0979d817234c406a736658a04cb273f4b36c2e8c1a",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/1990s-pickup-truck/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/1990s-pickup-truck/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "1990s-pickup-truck.glb",
+      "bytes": 1356868,
+      "url": "https://grab3d.com/dl/1990s-pickup-truck/1990s-pickup-truck.glb"
+    },
+    "sha256": "6717acf895b3f47657eb92962c452ebe8ad08f066d7849c32cc6a506ed68ee79",
+    "bytes": 1356868,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:12.818Z",
+    "specs": {
+      "triangles": 18384,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        2.027,
+        5.32,
+        1.9
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-1990s-pickup-truck.glb",
+      "bytes": 889088,
+      "sha256": "58deb853284e6f644db1c56304c687444a2908acdd279bc1a3769d3084e33b9c"
+    }
+  },
+  {
+    "id": "g3-1990s-minivan",
+    "upstream": "1990s-minivan",
+    "source": "https://grab3d.com/models/vehicles/1990s-minivan/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/1990s-minivan/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/1990s-minivan/manifest.json",
+    "manifestSha256": "34482e81aeba3549d7199c1c5c566bf2eff12d8bf95f94e6d5a07513779b3aba",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/1990s-minivan/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/1990s-minivan/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "1990s-minivan.glb",
+      "bytes": 1183792,
+      "url": "https://grab3d.com/dl/1990s-minivan/1990s-minivan.glb"
+    },
+    "sha256": "09acfcffc9d5c5d7ab353a0fc4026c85dac4ebdcf7dd3286b6b8318ebdcad22d",
+    "bytes": 1183792,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:16.833Z",
+    "specs": {
+      "triangles": 17494,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.987,
+        4.574,
+        1.88
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-1990s-minivan.glb",
+      "bytes": 787752,
+      "sha256": "98e01267676d9d1818aca1feef06cad446d067cd4e97ba09d7df491da3567bd2"
+    }
+  },
+  {
+    "id": "g3-1990s-station-wagon",
+    "upstream": "1990s-station-wagon",
+    "source": "https://grab3d.com/models/vehicles/1990s-station-wagon/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/1990s-station-wagon/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/1990s-station-wagon/manifest.json",
+    "manifestSha256": "35e3f0b879a75ee0d757c9662f3fce062df70b5ddf112bc34ea37c74da936928",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/1990s-station-wagon/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/1990s-station-wagon/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "1990s-station-wagon.glb",
+      "bytes": 1359952,
+      "url": "https://grab3d.com/dl/1990s-station-wagon/1990s-station-wagon.glb"
+    },
+    "sha256": "533527d691309a568a020c9996baa8d8ea1cc668154b0af34142ef3773b12f00",
+    "bytes": 1359952,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:20.830Z",
+    "specs": {
+      "triangles": 19859,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.916,
+        4.804,
+        1.623
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-1990s-station-wagon.glb",
+      "bytes": 915756,
+      "sha256": "6119ffba2d2e30e041fefbe83d209e44d9b78675a1d66de99d2a6f42be75de5b"
+    }
+  },
+  {
+    "id": "g3-1990s-hatchback",
+    "upstream": "1990s-hatchback",
+    "source": "https://grab3d.com/models/vehicles/1990s-hatchback/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/1990s-hatchback/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/1990s-hatchback/manifest.json",
+    "manifestSha256": "c5aa0a169a32eec6c3c1eb41a1ab74a7402b96796b36ad70589b1822702b445e",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/1990s-hatchback/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/1990s-hatchback/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "1990s-hatchback.glb",
+      "bytes": 1161284,
+      "url": "https://grab3d.com/dl/1990s-hatchback/1990s-hatchback.glb"
+    },
+    "sha256": "5cd53b004909ae00192ebdb3d7a297022a63caecc55fa234dc42b1173596177b",
+    "bytes": 1161284,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:24.823Z",
+    "specs": {
+      "triangles": 18484,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.856,
+        4.064,
+        1.534
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-1990s-hatchback.glb",
+      "bytes": 792516,
+      "sha256": "156c3810d94b84481ed97fafed97baf90ebef39195c9a82f5641a154c750cf7a"
+    }
+  },
+  {
+    "id": "g3-semi-truck",
+    "upstream": "semi-truck",
+    "source": "https://grab3d.com/models/vehicles/semi-truck/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/semi-truck/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/semi-truck/manifest.json",
+    "manifestSha256": "ee88b6a49ece900598c30ecf6bf83f28df8a90947d7e971ffbfed731914068e3",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/semi-truck/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/semi-truck/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "semi-truck.glb",
+      "bytes": 3171648,
+      "url": "https://grab3d.com/dl/semi-truck/semi-truck.glb"
+    },
+    "sha256": "dd44db382a807c0b86c3e822c6d36bddd9c1e3ead62627e52ee978efc755edc0",
+    "bytes": 3171648,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:28.936Z",
+    "specs": {
+      "triangles": 49550,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        2.92,
+        18.158,
+        4
+      ],
+      "movingParts": [
+        "semi-truck_trailer"
+      ]
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-semi-truck.glb",
+      "bytes": 2200276,
+      "sha256": "0958d42cdb07fb2b943321260266d78378cf82f55e2b173c3a7251f83e404397"
+    }
+  },
+  {
+    "id": "g3-dumpster",
+    "upstream": "dumpster",
+    "source": "https://grab3d.com/models/city/dumpster/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/dumpster/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/dumpster/manifest.json",
+    "manifestSha256": "7eeec818ffeb572abf4a9245b01411f999543c45c220dbb1edd7c06a74a938a5",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/dumpster/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/dumpster/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "dumpster.glb",
+      "bytes": 1551936,
+      "url": "https://grab3d.com/dl/dumpster/dumpster.glb"
+    },
+    "sha256": "04198333c204c8fce8b710a5c015a0d415fa638fec8f7d38c688f5e4b680bed9",
+    "bytes": 1551936,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:33.347Z",
+    "specs": {
+      "triangles": 15508,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.376,
+        1.059,
+        1.33
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 512px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-dumpster.glb",
+      "bytes": 694460,
+      "sha256": "ad6a4f689faf0dbdd1cb845a5a53bf28b82321663885fc18a0852c4b6cb414fc"
+    }
+  },
+  {
+    "id": "g3-utility-pole",
+    "upstream": "utility-pole",
+    "source": "https://grab3d.com/models/city/utility-pole/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/utility-pole/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/utility-pole/manifest.json",
+    "manifestSha256": "d2f421921d16d0bd2a2bf1b530d13db927621005ef2baeec87507fb1cef6b5fc",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/utility-pole/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/utility-pole/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "utility-pole.glb",
+      "bytes": 2596956,
+      "url": "https://grab3d.com/dl/utility-pole/utility-pole.glb"
+    },
+    "sha256": "7ef72651bd248692db760104c151867ba38261266c05f0cfb1eb375a4a43547f",
+    "bytes": 2596956,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:37.508Z",
+    "specs": {
+      "triangles": 15727,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        2.44,
+        0.904,
+        10
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-utility-pole.glb",
+      "bytes": 1295772,
+      "sha256": "c2138dff2a69f9a519f561a1739a7a523f1c2c6330af2b7aef9d4ebc903c7221"
+    }
+  },
+  {
+    "id": "g3-street-light",
+    "upstream": "street-light",
+    "source": "https://grab3d.com/models/city/street-light/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/street-light/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/street-light/manifest.json",
+    "manifestSha256": "26e2d29cb957a04ba48f2c8cf4443edf97dfe16c90d9ad7d6ded79f0f5bf59b7",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/street-light/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/street-light/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "street-light.glb",
+      "bytes": 702900,
+      "url": "https://grab3d.com/dl/street-light/street-light.glb"
+    },
+    "sha256": "68cc8b7e67065bc365724c4535ad6a7eb6a2a3d911ef279978a8adda5b82f0ef",
+    "bytes": 702900,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:41.310Z",
+    "specs": {
+      "triangles": 5280,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.4,
+        2.214,
+        8.158
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-street-light.glb",
+      "bytes": 444496,
+      "sha256": "906ebadef715bbcbd8383a7545172430eebfaaad774eaf4b83adc740ca2c7429"
+    }
+  },
+  {
+    "id": "g3-vending-machine",
+    "upstream": "vending-machine",
+    "source": "https://grab3d.com/models/city/vending-machine/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/vending-machine/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/vending-machine/manifest.json",
+    "manifestSha256": "dc36657e421e15d44d27b8319b8b42912028e349be52b91e7ce2b6e6a660016c",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/vending-machine/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/vending-machine/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "vending-machine.glb",
+      "bytes": 2466652,
+      "url": "https://grab3d.com/dl/vending-machine/vending-machine.glb"
+    },
+    "sha256": "a06d8a71f5c2e22133e532d29f4979368a94b3f58181b776d3b852e5da2109b7",
+    "bytes": 2466652,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:45.544Z",
+    "specs": {
+      "triangles": 17700,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.907,
+        0.846,
+        1.85
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 1024px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-vending-machine.glb",
+      "bytes": 1415220,
+      "sha256": "592155b5e1471ba99e497b607d1f2b9d30870ff436e9632956e5b504473359f0"
+    }
+  },
+  {
+    "id": "g3-fire-hydrant",
+    "upstream": "fire-hydrant",
+    "source": "https://grab3d.com/models/city/fire-hydrant/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/fire-hydrant/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/fire-hydrant/manifest.json",
+    "manifestSha256": "41ee0e9d4dc865bd94b8a0d92e2921dbc3d22e061198730d6c12a2ed8c8545a4",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/fire-hydrant/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/fire-hydrant/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "fire-hydrant.glb",
+      "bytes": 1634340,
+      "url": "https://grab3d.com/dl/fire-hydrant/fire-hydrant.glb"
+    },
+    "sha256": "f7dd7e1b477d690f0c9fb49c4286d1fdec3218c2c8c144d4d684912dbf66fa49",
+    "bytes": 1634340,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:49.484Z",
+    "specs": {
+      "triangles": 14604,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.426,
+        0.385,
+        0.744
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 512px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-fire-hydrant.glb",
+      "bytes": 764400,
+      "sha256": "a494a619c66aa23db1d5ed6b463cb5147986f5de83a52399a3f883c0e1b79ed1"
+    }
+  },
+  {
+    "id": "g3-traffic-cone",
+    "upstream": "traffic-cone",
+    "source": "https://grab3d.com/models/city/traffic-cone/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/traffic-cone/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/traffic-cone/manifest.json",
+    "manifestSha256": "f2c3a541cd55cc57c7ad9fd5cc3c230234a25b520ce8f7681fb959a215f5f071",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/traffic-cone/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/traffic-cone/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "traffic-cone.glb",
+      "bytes": 186656,
+      "url": "https://grab3d.com/dl/traffic-cone/traffic-cone.glb"
+    },
+    "sha256": "b7f5012c3a4568a57b7cdaeda83dd93c815570903512fe74644271aed4e59e09",
+    "bytes": 186656,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:52.990Z",
+    "specs": {
+      "triangles": 5968,
+      "trianglesLight": null,
+      "texturePx": 512,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor"
+      ],
+      "dimensionsMeters": [
+        0.38,
+        0.38,
+        0.702
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 512px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-traffic-cone.glb",
+      "bytes": 186392,
+      "sha256": "75e17e46ce01be9db6c024e676c63970a3a64957b5b18d19f59c08c32b4fd36e"
+    }
+  },
+  {
+    "id": "g3-bollard",
+    "upstream": "bollard",
+    "source": "https://grab3d.com/models/city/bollard/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/bollard/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/bollard/manifest.json",
+    "manifestSha256": "8ae3cff9e55446956f887e98b0c1ea2a516a83d1ea7f385edf278c4877800823",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/bollard/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/bollard/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "bollard.glb",
+      "bytes": 183212,
+      "url": "https://grab3d.com/dl/bollard/bollard.glb"
+    },
+    "sha256": "69e9f116ed4880e9f1c2373c21c62b52941b70c6a98c9403e6bab36ada1f4b82",
+    "bytes": 183212,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:07:56.543Z",
+    "specs": {
+      "triangles": 1180,
+      "trianglesLight": null,
+      "texturePx": 1024,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.2,
+        0.2,
+        1.002
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 512px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-bollard.glb",
+      "bytes": 84264,
+      "sha256": "4e080356ea94fd30e73273d53284f4fa35c0c179e19ad803c2a82088868773ed"
+    }
+  },
+  {
+    "id": "g3-guard-rail",
+    "upstream": "guard-rail",
+    "source": "https://grab3d.com/models/city/guard-rail/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/guard-rail/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/guard-rail/manifest.json",
+    "manifestSha256": "e8a36e5bf85bbe116d5e1d8897f7fcaf8a48279d166685544f3c0adfb29ce1d9",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/guard-rail/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/guard-rail/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "guard-rail.glb",
+      "bytes": 966596,
+      "url": "https://grab3d.com/dl/guard-rail/guard-rail.glb"
+    },
+    "sha256": "77ea831f124dabe160ec6b15fb535dde1d9cbeb36cf5d2bee3eb485635e1d0cd",
+    "bytes": 966596,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-16T02:08:00.557Z",
+    "specs": {
+      "triangles": 3672,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        4,
+        0.3,
+        0.754
+      ],
+      "movingParts": []
+    },
+    "transformation": "Textures downscaled to at most 512px with Blender 4.0.2 (projects/roadside-inn/blender/shrink_textures.py), re-exported as GLB with JPEG q88. Geometry, materials and node names unchanged. Upstream download sha256 is in \"sha256\".",
+    "output": {
+      "file": "grab3d/g3-guard-rail.glb",
+      "bytes": 224616,
+      "sha256": "873bb515f45496f76dab6f134f3d5b9ea2d246ce7a75bd1e340a7a4b43537d86"
+    }
+  }
+]

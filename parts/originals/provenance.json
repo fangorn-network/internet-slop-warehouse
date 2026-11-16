@@ -1,0 +1,52 @@
+[
+  {
+    "id": "courier-skiff",
+    "creator": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "source": "parts/make-world-assets.js",
+    "process": "Original procedural geometry, original material palette; GLTFExporter 0.170.0; no external art inputs.",
+    "sha256": "d3bba743235b41fe94fd64b725c2879f4435f625b05ee3732457fd2d0cd2d7aa",
+    "bytes": 87356,
+    "triangles": 2888
+  },
+  {
+    "id": "magnetic-salvage-tug",
+    "creator": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "source": "parts/make-world-assets.js",
+    "process": "Original procedural geometry, original material palette; GLTFExporter 0.170.0; no external art inputs.",
+    "sha256": "17caf1b9b6159725c9ca7969c50c1483dd53dfedd3afdca1161e32d7ed047283",
+    "bytes": 45272,
+    "triangles": 1312
+  },
+  {
+    "id": "resonator-crystal",
+    "creator": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "source": "parts/make-world-assets.js",
+    "process": "Original procedural geometry, original material palette; GLTFExporter 0.170.0; no external art inputs.",
+    "sha256": "e19a468a44fa0c545aee27082ca8e5fae7f00df57f3988d1238653d328bd8b0c",
+    "bytes": 23672,
+    "triangles": 712
+  },
+  {
+    "id": "signal-buoy",
+    "creator": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "source": "parts/make-world-assets.js",
+    "process": "Original procedural geometry, original material palette; GLTFExporter 0.170.0; no external art inputs.",
+    "sha256": "d3db3b6d158a588d09d45429f0e6d5a974394db7e11b5fd6bfaf204f23f42997",
+    "bytes": 35688,
+    "triangles": 1072
+  },
+  {
+    "id": "garden-caretaker",
+    "creator": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "source": "parts/make-world-assets.js",
+    "process": "Original procedural geometry, original material palette; GLTFExporter 0.170.0; no external art inputs.",
+    "sha256": "93a09cf020bbf84cee2a70ca2d32d724177aa36cf0a77377f05c52bda3245a4a",
+    "bytes": 102624,
+    "triangles": 3636
+  }
+]

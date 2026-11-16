@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-15T20:42:45.931Z",
+  "expected": 46,
+  "records": 221,
+  "matching": 46,
+  "stale": [],
+  "game": {
+    "id": "mairas-dream",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifcpxestiraln6xbhdzyzzo23wrejpzekbrqczdsnli5wfyf6636a",
+    "src": "bafybeihrr46z7akvhdrag3nmhdm3n3wgzyygmizljhdtbnobi4lwex6hmu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihrr46z7akvhdrag3nmhdm3n3wgzyygmizljhdtbnobi4lwex6hmu",
+    "txHash": "0x26a7ab25fd9db53b14f9684b8ae84906d894474487d70b2d4b198ca5f459e1fa"
+  },
+  "pendingEmbeddings": 0,
+  "embeddingVerification": "Remote D1 read-only query after publication"
+}

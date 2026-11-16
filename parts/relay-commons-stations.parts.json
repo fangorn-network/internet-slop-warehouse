@@ -1,0 +1,77 @@
+[
+  {
+    "id": "relay-homestead",
+    "file": "relay-homestead.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Relay exploration RPG composition",
+    "description": "Calm expedition layer over the published ranged combat engine. No hostile bot, timer or score race. Shared camp, discoveries, gear, rest and return-to-hearth. Holstered weapons and combat off by default; optional expedition-wide ranged sparring. Compatible with exact-world P2P host-authoritative transport.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [
+      "relay-skirmish",
+      "settlement-rules",
+      "osm-district",
+      "resource-inventory",
+      "health",
+      "ability-clock"
+    ],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Calm expedition layer over the published ranged combat engine. No hostile bot, timer or score race. Shared camp, discoveries, gear, rest and return-to-hearth. Holstered weapons and combat off by default; optional expedition-wide ranged sparring. Compatible with exact-world P2P host-authoritative transport."
+      }
+    ],
+    "options": [
+      {
+        "name": "combatEnabled",
+        "type": "boolean",
+        "default": false,
+        "does": "Enable optional ranged sparring for this expedition."
+      },
+      {
+        "name": "modules",
+        "type": "object",
+        "does": "Inject the named catalog dependencies."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onEvent",
+        "signature": "(event) → void",
+        "does": "Observe exploration and combat outcomes."
+      }
+    ]
+  },
+  {
+    "id": "relay-commons-guide",
+    "file": "relay-commons/QUICKSTART.md",
+    "type": "asset",
+    "mime": "text/markdown",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "title": "Relay Commons: exploration and settlement remix guide",
+    "description": "Composition, model conventions, licenses, shared supplies, placement, optional ranged combat and save/network limitations. Original CC0.",
+    "uses": [
+      "settlement-rules",
+      "relay-homestead",
+      "semantic-architecture",
+      "settlement-view"
+    ],
+    "tags": [
+      "documentation",
+      "base-building",
+      "rpg",
+      "remix"
+    ]
+  }
+]

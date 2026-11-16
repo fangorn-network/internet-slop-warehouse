@@ -1,0 +1,108 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Moss garden</title>
+<meta name="description" content="A walkable forest clearing: photo-scanned mossy rocks, barrels, lanterns and a council of marble busts under a cloudy sky. Find the twelve apples.">
+<style>
+  html,body{margin:0;touch-action:none;-webkit-user-select:none;user-select:none;height:100%;overflow:hidden;background:#9cc3e6;font:14px system-ui,sans-serif}
+  #hud{position:fixed;top:10px;left:12px;color:#fff;text-shadow:0 1px 2px #000a;font-weight:600;pointer-events:none}
+  #msg{position:fixed;inset:0;display:grid;place-items:center;color:#fff;text-shadow:0 2px 4px #000a;font-size:22px;text-align:center;cursor:pointer;background:#0005}
+  #msg small{display:block;font-size:14px;opacity:.85;margin-top:8px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"></div><div id="msg">loading…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+
+const PARTS = {/*PARTS*/};
+const logic = async (id) => import("data:text/javascript;charset=utf-8," + encodeURIComponent((await (await fetch(PARTS[id])).json()).js));
+logic("touch-controls").then((t) => t.attach()); // a joystick and jump button on phones
+const glb = (id) => new GLTFLoader().loadAsync(PARTS[id]);
+
+const [controller, followCam, animator, collect, trees, sky, robotG, rocksG, barrelG, lanternG, bustG, appleG, groundTex] = await Promise.all([
+    logic("platformer-controller"), logic("follow-camera"), logic("clip-animator"), logic("collect"), logic("low-poly-trees"), logic("hdri-sky"),
+    glb("robot"), glb("mossy-rocks"), glb("barrel"), glb("lantern"), glb("marble-bust"), glb("apple"),
+    new THREE.TextureLoader().loadAsync(PARTS["forest-ground-texture"]),
+]);
+const audio = new AudioContext();
+const coin = await audio.decodeAudioData(await (await fetch(PARTS["coin-sound"])).arrayBuffer());
+const play = () => { const s = audio.createBufferSource(); s.buffer = coin; s.connect(audio.destination); s.start(); };
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true; renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(55, 1, 0.1, 300);
+scene.fog = new THREE.Fog(0xb8d0e0, 25, 70);
+const sun = new THREE.DirectionalLight(0xfff2dd, 2.2); sun.position.set(10, 18, 6); sun.castShadow = true;
+Object.assign(sun.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30 }); sun.shadow.mapSize.set(2048, 2048);
+scene.add(sun);
+const world = [sky.attach(scene, { url: PARTS["day-sky"], intensity: 0.9 })];
+
+// The ground: one big slab of forest floor.
+const R = 30, solids = [];
+groundTex.wrapS = groundTex.wrapT = THREE.RepeatWrapping; groundTex.repeat.set(20, 20); groundTex.colorSpace = THREE.SRGBColorSpace;
+const ground = new THREE.Mesh(new THREE.BoxGeometry(2 * R, 2, 2 * R), new THREE.MeshStandardMaterial({ map: groundTex, roughness: 1 }));
+ground.position.y = -1; ground.receiveShadow = true; scene.add(ground); solids.push(ground);
+
+const place = (src, [x, y, z], s = 1, ry = 0, solid = true) => {
+    const m = src.clone(); m.position.set(x, y, z); m.scale.setScalar(s); m.rotation.y = ry;
+    m.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; }); scene.add(m); if (solid) solids.push(m); return m;
+};
+// Mossy boulders, one by one, ringing the clearing.
+rocksG.scene.children.forEach((rock, i) => {
+    const a = (i / 6) * Math.PI * 2 + 0.4, r = 13 + (i % 2) * 4;
+    const m = place(rock, [Math.cos(a) * r, 0, Math.sin(a) * r], 1.3, a);
+    m.position.y -= new THREE.Box3().setFromObject(m).min.y; // sit it on the ground
+});
+// A council of marble busts in a ring, all facing the middle.
+for (let i = 0; i < 7; i++) {
+    const a = (i / 7) * Math.PI * 2;
+    place(bustG.scene, [Math.cos(a) * 6, 0, Math.sin(a) * 6], 2.4, -a - Math.PI / 2);
+}
+// Barrels, and lanterns glowing on top of some.
+for (const [x, z, lit] of [[3, 9, 1], [4.2, 9.4, 0], [-9, 3, 1], [-9.5, 4.3, 0], [9, -4, 1], [-3, -10, 1]]) {
+    place(barrelG.scene, [x, 0, z], 1.4, x);
+    if (!lit) continue;
+    place(lanternG.scene, [x, 1.23, z], 2, 0, false);
+    const l = new THREE.PointLight(0xffaa55, 6, 6); l.position.set(x, 1.6, z); scene.add(l);
+}
+world.push(trees.attach(scene, { count: 80, area: [2 * R - 4, 2 * R - 4], clear: 18, seed: 11 }));
+
+// Twelve apples hidden around the garden.
+const apples = [[0, 0.6, 0], [4.2, 1.6, 9.4], [-9.5, 1.6, 4.3], [15, 0.6, 3], [-14, 0.6, -8], [5, 0.6, -15], [-4, 0.6, 16], [10.5, 0.6, -4],
+    [22, 0.6, 20], [-22, 0.6, 18], [20, 0.6, -21], [-20, 0.6, -22]].map((p) => place(appleG.scene, p, 5, 0, false));
+
+const player = SkeletonUtils.clone(robotG.scene); player.scale.setScalar(0.35);
+player.traverse((o) => { if (o.isMesh) o.castShadow = true; }); scene.add(player);
+
+let over = true, start = 0, got = 0;
+const systems = [];
+function begin() {
+    for (const s of systems.splice(0)) s.dispose();
+    for (const a of apples) scene.add(a);
+    player.position.set(0, 0, 3); got = 0;
+    const ctl = controller.attach(player, { solids, camera });
+    systems.push(ctl, animator.attach(player, { animations: robotG.animations, state: () => ctl.state }), followCam.attach(camera, { target: player }),
+        collect.attach(player, { items: apples, radius: 1, onCollect: (a) => { a.removeFromParent(); got++; play(); }, onAll: () => {
+            over = true; $msg.innerHTML = `All twelve apples in ${((performance.now() - start) / 1000).toFixed(0)}s.<small>the busts approve · click to wander again</small>`; $msg.style.display = "";
+        } }));
+    over = false; start = performance.now(); $msg.style.display = "none";
+}
+const $msg = document.getElementById("msg"), $hud = document.getElementById("hud");
+$msg.innerHTML = "Moss garden<small>WASD / arrows · Shift to run · Space to jump<br>twelve apples are hidden around the garden<br><br>click to start</small>";
+$msg.onclick = () => { audio.resume(); begin(); };
+
+const fit = () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+addEventListener("resize", fit); fit();
+camera.position.set(0, 6, 14); camera.lookAt(0, 0, 0);
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+    const dt = clock.getDelta();
+    for (const w of world) w.update(dt);
+    if (!over) { for (const s of systems) s.update(dt); $hud.textContent = `apples ${got}/12`; }
+    renderer.render(scene, camera);
+});
+</script></body></html>

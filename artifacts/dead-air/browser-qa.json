@@ -1,0 +1,153 @@
+{
+  "desktop": {
+    "loaded": true,
+    "movement": true,
+    "atlas": true,
+    "radio": true,
+    "light": true,
+    "desk": true,
+    "before": {
+      "mode": "playing",
+      "version": "0.2.0",
+      "runLock": false,
+      "stickRun": false,
+      "placeName": "Rhinelander, Wisconsin",
+      "district": "eb989b1b",
+      "position": {
+        "x": -518.1328425801427,
+        "z": -728.4780799997893,
+        "heading": 0,
+        "hp": 100,
+        "charge": 99.94667199999998,
+        "light": true,
+        "tuned": 0,
+        "cooldown": 0
+      },
+      "state": {
+        "version": 1,
+        "caseId": "dead-air-atlas.v1",
+        "district": "eb989b1b",
+        "age": 0.33330000000000015,
+        "players": {
+          "solo": {
+            "x": -518.1328425801427,
+            "z": -728.4780799997893,
+            "heading": 0,
+            "hp": 100,
+            "charge": 99.94667199999998,
+            "light": true,
+            "tuned": 0,
+            "cooldown": 0
+          }
+        },
+        "inventory": {
+          "cells": 6,
+          "evidence": 0
+        },
+        "score": {
+          "value": 0,
+          "entries": []
+        },
+        "clues": [],
+        "relays": [],
+        "completed": [],
+        "won": false,
+        "travel": null,
+        "quietUntil": 0
+      },
+      "routeLength": 0,
+      "connected": false,
+      "selfId": "solo",
+      "triangles": 250825,
+      "drawCalls": 31
+    }
+  },
+  "playthrough": {
+    "actualUI": true,
+    "streetRoutes": true,
+    "completed": {
+      "version": 1,
+      "caseId": "dead-air-atlas.v1",
+      "district": "eb989b1b",
+      "age": 262.39999999999117,
+      "players": {
+        "solo": {
+          "x": -525.1692161801872,
+          "z": -731.0115117444042,
+          "heading": 1.2251983165146862,
+          "hp": 100,
+          "charge": 99.93599999999998,
+          "light": true,
+          "tuned": 2,
+          "cooldown": 0
+        }
+      },
+      "inventory": {
+        "cells": 6,
+        "evidence": 3
+      },
+      "score": {
+        "value": 250,
+        "entries": [
+          "eb989b1b:way/360193538",
+          "eb989b1b:node/9753278620",
+          "eb989b1b:way/283722633",
+          "relay:node/2719405164"
+        ]
+      },
+      "clues": [
+        {
+          "id": "eb989b1b:way/360193538",
+          "name": "Rhinelander District Library",
+          "title": "The hour with no entry",
+          "text": "The register skips from 02:16 to 03:18. In the margin, someone wrote: “We did not lose an hour. We stored it overhead.”",
+          "frequency": 91.3,
+          "district": "45.6387,-89.4121"
+        },
+        {
+          "id": "eb989b1b:node/9753278620",
+          "name": "Shear Bliss by Amber",
+          "title": "A voice behind the dial",
+          "text": "A receipt records a sale made tomorrow. Under the static: three people speaking with one breath. “The tanks remember pressure. The town remembers us.”",
+          "frequency": 97.7,
+          "district": "45.6387,-89.4121"
+        },
+        {
+          "id": "eb989b1b:way/283722633",
+          "name": "school",
+          "title": "The photograph of rain",
+          "text": "The pavement in the photograph is dry. Only the reflection shows a crowd. On the back: “Send the missing hour back through the water.”",
+          "frequency": 104.5,
+          "district": "45.6387,-89.4121"
+        }
+      ],
+      "relays": [
+        "node/2719405164"
+      ],
+      "completed": [
+        "traces",
+        "relay"
+      ],
+      "won": true,
+      "travel": null,
+      "quietUntil": 0
+    }
+  },
+  "mobile": {
+    "joystickMovement": true,
+    "outerStickRun": true,
+    "runLock": true,
+    "oneTapRoute": true,
+    "stopRoute": true,
+    "landscape": true,
+    "townSearchUI": true,
+    "defaultMappedRelay": true,
+    "radioTouch": true,
+    "atlas": true,
+    "targets44px": true,
+    "hudNoOverlap": true,
+    "saveClipboardFallback": true,
+    "saveRestore": true
+  },
+  "errors": []
+}

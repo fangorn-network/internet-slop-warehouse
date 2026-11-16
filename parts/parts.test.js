@@ -43,3 +43,30 @@ test("platformer-controller, collect, patrol and flee-on-see", () => {
     const c2 = ctl.attach(p2, { solids: [ground], onFall: (o, spawn) => { fell++; o.position.copy(spawn).setY(-1e9); } });
     for (let i = 0; i < 200 && !fell; i++) c2.update(1 / 60); assert.equal(fell, 1, "onFall fires below y=-20");
 });
+
+test("boids, spawner, wobble and low-poly-trees", async () => {
+    const boids = await import("./boids.js"), spawner = await import("./spawner.js"), wobble = await import("./wobble.js"), trees = await import("./low-poly-trees.js");
+    // A flock seeks the target and touches it once per arrival.
+    const target = new THREE.Object3D(); target.position.set(8, 0, 0);
+    const flock = Array.from({ length: 5 }, (_, i) => { const o = new THREE.Object3D(); o.position.set(-5, 0, i); return o; });
+    let touches = 0;
+    const b = boids.attach(flock, { target, seek: 3, height: 0, onTouch: () => touches++ });
+    for (let i = 0; i < 600; i++) b.update(1 / 60);
+    assert(flock.some((o) => o.position.distanceTo(target.position) < 2), "the flock reached the target");
+    assert(touches > 0 && flock.every((o) => o.position.y === 0));
+    // The spawner caps what's alive, and remove() frees a slot.
+    const parent = new THREE.Object3D(), s = spawner.attach(parent, { every: 1, max: 3 });
+    for (let i = 0; i < 10; i++) s.update(1);
+    assert.equal(s.alive.size, 3); assert.equal(parent.children.length, 3);
+    s.remove([...s.alive][0]); s.update(1); assert.equal(s.alive.size, 3);
+    // A poked wobble squashes, then settles back to its (resized) scale.
+    const blob = new THREE.Object3D(); let settled = 0;
+    const w = wobble.attach(blob, { onSettle: () => settled++ });
+    w.poke(); w.update(0.02); assert(blob.scale.y < 1, "squashed");
+    w.resize(2); for (let i = 0; i < 400; i++) w.update(1 / 60);
+    assert.equal(settled, 1); assert(Math.abs(blob.scale.y - 2) < 0.01);
+    // The same seed grows the same grove, keeping the clearing clear.
+    const g = (seed) => trees.attach(new THREE.Object3D(), { count: 20, seed, clear: 5 }).trees.map((t) => t.position.toArray().join());
+    assert.deepEqual(g(3), g(3)); assert.notDeepEqual(g(3), g(4));
+    assert(trees.attach(new THREE.Object3D(), { count: 20, clear: 5 }).trees.every((t) => Math.hypot(t.position.x, t.position.z) >= 5));
+});

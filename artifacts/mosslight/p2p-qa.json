@@ -1,0 +1,11 @@
+{
+  "publicRelay": true,
+  "realWebRTC": true,
+  "opaqueSandbox": true,
+  "guestBuilding": true,
+  "hostChargesCost": true,
+  "guestCannotForgeWorld": true,
+  "guestMovement": true,
+  "hostLeaveDetected": true,
+  "errors": []
+}

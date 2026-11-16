@@ -1,0 +1,10 @@
+{
+  "stock": 56,
+  "desktop": true,
+  "mobile": true,
+  "tabs": true,
+  "agentDock": true,
+  "searchEmptyState": true,
+  "horizontalOverflow": false,
+  "errors": []
+}

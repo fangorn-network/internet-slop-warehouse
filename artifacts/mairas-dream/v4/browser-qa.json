@@ -1,0 +1,59 @@
+{
+  "report": {
+    "collapsedList": {
+      "height": 44,
+      "visibleList": false
+    },
+    "listSelection": true,
+    "twoFingerMovement": true,
+    "landscape": true,
+    "displayPickup": true,
+    "stats": {
+      "items": 1643,
+      "shelves": 14,
+      "cats": 1,
+      "fires": 0,
+      "parking": [
+        {
+          "x": -1.15,
+          "z": 16.8,
+          "mode": "idle"
+        }
+      ],
+      "guidance": {
+        "id": "mug",
+        "distance": 13.655083302565385,
+        "destination": {
+          "x": 8.75,
+          "y": 0,
+          "z": -2.75
+        }
+      },
+      "drawCalls": 204,
+      "triangles": 1901999,
+      "audio": {
+        "steps": 6,
+        "pickups": 1,
+        "voices": 0,
+        "bumps": 0,
+        "door": 1,
+        "ready": true
+      },
+      "eye": 1.66,
+      "manager": {
+        "x": 3.2499999999996887,
+        "z": 4.2701086076153505,
+        "seen": false,
+        "alert": false,
+        "path": 6,
+        "repath": 0.0166000000000046
+      },
+      "lods": {
+        "reduced": 72,
+        "total": 152
+      }
+    },
+    "desktopList": true
+  },
+  "errors": []
+}

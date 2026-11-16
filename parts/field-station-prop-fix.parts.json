@@ -1,0 +1,77 @@
+[
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "world-prop-kit",
+    "file": "world-prop-kit.js",
+    "type": "logic",
+    "title": "Grounded PBR props and instanced scatter",
+    "description": "Load pinned static GLBs, normalize ground-centered pivots and meter heights without changing source geometry or PBR maps. Clone placements and instanced scatter; register procedural prototypes. Shared resource cleanup and explicit circle collision output. Animated/skinned instancing excluded.",
+    "kind": "effect",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene,opts) → {load,place,scatter,register,colliders,root,update,dispose}",
+        "does": "Manage reusable model prototypes and efficient world placement."
+      },
+      {
+        "name": "fitModel",
+        "signature": "fitModel(source,height) → THREE.Group",
+        "does": "Wrap a static model at ground origin and scale to the desired meter height."
+      }
+    ],
+    "options": [
+      {
+        "name": "parts",
+        "type": "Record<string,URL>",
+        "does": "Pinned warehouse asset URLs."
+      },
+      {
+        "name": "heightAt",
+        "type": "function",
+        "does": "Terrain elevation for placements without explicit y."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onProgress",
+        "signature": "(id) → void",
+        "does": "Report a loaded prototype for progress UI."
+      }
+    ],
+    "uses": []
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "3d",
+      "immersive",
+      "forest",
+      "field-station",
+      "remix",
+      "cc0"
+    ],
+    "id": "stillwater-world-guide",
+    "type": "asset",
+    "file": "field-station/QUICKSTART.md",
+    "mime": "text/markdown",
+    "title": "Stillwater: immersive world composition guide",
+    "description": "Reusable asset and logic inventory, controls, complete solution, PBR/world conventions, performance strategy, source provenance and remix instructions. Solo first scene; static circles, no networking or persistence.",
+    "uses": [
+      "world-prop-kit",
+      "trail-walker",
+      "signal-trail",
+      "woodland-sound",
+      "stillwater-world"
+    ]
+  }
+]

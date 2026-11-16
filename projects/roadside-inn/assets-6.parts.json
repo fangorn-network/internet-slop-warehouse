@@ -1,0 +1,229 @@
+[
+  {
+    "id": "hotel-coffee-station",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-station.glb",
+    "title": "Hotel coffee station · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "coffee",
+      "station"
+    ],
+    "description": "Lobby coffee station, 3.2 m: charcoal base, quartz top, three airpot dispensers, cup stacks, condiment caddy, covered muffin tray. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-breakfast-bar",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-breakfast-bar.glb",
+    "title": "Hotel breakfast bar · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "breakfast",
+      "bar"
+    ],
+    "description": "Hot breakfast bar, 3.4 m: two chafing dishes (eggs, sausage), flip waffle maker (indicator material \"waffle_light\"), batter cups, cereal dispensers, juice machine, plates. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-ice-machine",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-ice-machine.glb",
+    "title": "Hotel ice machine · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "ice",
+      "machine"
+    ],
+    "description": "Stainless hotel ice machine with dispensing bay, push pad, vents and badge. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-ice-bucket",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-ice-bucket.glb",
+    "title": "Hotel ice bucket · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "ice",
+      "bucket"
+    ],
+    "description": "Stainless guest-room ice bucket with plastic liner. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-elevator-car",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-elevator-car.glb",
+    "title": "Hotel elevator car · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "elevator",
+      "car"
+    ],
+    "description": "Elevator car interior 2.3 x 3.3 m (door side +Z): brushed steel walls, walnut rear panel, handrails, ceiling light, button panel. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-treadmill",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-treadmill.glb",
+    "title": "Hotel treadmill · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "treadmill"
+    ],
+    "description": "Commercial treadmill with uprights, handles and angled console (runs toward +Z). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-exercise-bike",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-exercise-bike.glb",
+    "title": "Hotel exercise bike · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "exercise",
+      "bike"
+    ],
+    "description": "Upright exercise bike with flywheel, saddle, handlebar and console. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-dumbbell-rack",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-dumbbell-rack.glb",
+    "title": "Hotel dumbbell rack · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "dumbbell",
+      "rack"
+    ],
+    "description": "Two-tier dumbbell rack with twelve hex dumbbells. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-pool-chaise",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-pool-chaise.glb",
+    "title": "Hotel pool chaise · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "pool",
+      "chaise"
+    ],
+    "description": "Pool chaise lounge: white aluminum frame, navy sling, wheels (head toward -Z). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-pool-rail",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-pool-rail.glb",
+    "title": "Hotel pool rail · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "pool",
+      "rail"
+    ],
+    "description": "Stainless pool handrail pair curving down into the water (water side +Z). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-housekeeping-cart",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-housekeeping-cart.glb",
+    "title": "Hotel housekeeping cart · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "housekeeping",
+      "cart"
+    ],
+    "description": "Housekeeping cart, long axis X: three shelves, folded towels, supply bottles, blue linen bag. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  },
+  {
+    "id": "hotel-room-door",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-room-door.glb",
+    "title": "Hotel room door · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "room",
+      "door"
+    ],
+    "description": "Guest room door in its frame (corridor side +Z): walnut leaf on hinge pivot node \"door_leaf\", key-card lock with LED (material \"lock_led\"), lever handle, peephole, closer. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+  }
+]

@@ -1,0 +1,1988 @@
+[
+  {
+    "id": "ph-modern-arm-chair-01",
+    "upstreamId": "modern_arm_chair_01",
+    "creator": "Vibrant Nordic",
+    "source": "https://polyhaven.com/a/modern_arm_chair_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:40.446Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_arm_chair_01/modern_arm_chair_01_1k.gltf",
+        "bytes": 5121,
+        "sha256": "d31be520add2603447b43acedbdacf9516866f7c89e9ea9230c9edbac9cc6e6a",
+        "upstreamMd5": "a5ce303bc2962fe98b733fcdfa5a842b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modern_arm_chair_01/modern_arm_chair_01.bin",
+        "bytes": 240728,
+        "sha256": "8755f2f498c0bb165660379d1b045465751c16bbeaf553c8dd76bb14c16d1ff6",
+        "upstreamMd5": "5a8f2ea1c79ea484140e484b2a621670"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_legs_nor_gl_1k.jpg",
+        "bytes": 560864,
+        "sha256": "af328e8530884907cf0d38a675338bb4e2b03c56ed2d21eb5abf505bb67c11de",
+        "upstreamMd5": "7cece7eccf75588af5b5df9b095d2c97"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_legs_diff_1k.jpg",
+        "bytes": 460937,
+        "sha256": "6291421a8db6cd9bbbc8c141aa087465d698427249f813d24c6e5ccdbf0bf536",
+        "upstreamMd5": "778f1897e07ff81b2bc338f3d463ad1f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_legs_arm_1k.jpg",
+        "bytes": 577931,
+        "sha256": "c76b65200a52cf649a865baf7f879dc34277b923edaac7ec8164eaf7c51c935d",
+        "upstreamMd5": "9c69cb001df175bddf6d1c2436567fb7"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_pillow_nor_gl_1k.jpg",
+        "bytes": 302377,
+        "sha256": "2717b9d22e1d3533e3c7436a0230b00b1d25bf396246679825c8db08edaba0a8",
+        "upstreamMd5": "6804f34108fcc755f0c84dd3c638270c"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_pillow_diff_1k.jpg",
+        "bytes": 228851,
+        "sha256": "f1935436b460ad5c03ac7ff9d1e1b4aaedcdc9a503d79c257beb8cdac2e9e1f7",
+        "upstreamMd5": "2e4f64c633c3cb1656ad3eabdb3f0607"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_arm_chair_01/modern_arm_chair_01_pillow_arm_1k.jpg",
+        "bytes": 321223,
+        "sha256": "fec333290ddfd70e78428251874d30d5410d6d0a956dd84922b0d3f3596e4b7a",
+        "upstreamMd5": "772495ddbf26ca3de4b31298f10113b9"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-modern-arm-chair-01.glb",
+      "bytes": 2696208,
+      "sha256": "48d734dc771d461a8b0b15227ba79d2b97a95d6d86b9e9a14c5d6bb02010555f",
+      "meshes": 1,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1667174400,
+      "name": "Modern Arm Chair 01",
+      "categories": [
+        "furniture",
+        "seating",
+        "office"
+      ],
+      "type": 2,
+      "tags": [
+        "wood",
+        "leather",
+        "fancy",
+        "modern",
+        "chair",
+        "contemporary",
+        "wooden",
+        "lounge"
+      ],
+      "info": null,
+      "authors": {
+        "Vibrant Nordic": "All"
+      },
+      "sponsors": [
+        "3267566"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 8916,
+      "texel_density": 2929.070490134976,
+      "dimensions": [
+        820.3444182872772,
+        986.5616858005524,
+        1022.8520567470696
+      ],
+      "files_hash": "6893f36e58dddba95bd0ae1f1ef38537c1852a0b",
+      "description": "Free 8K model, modern wooden armchair with warm oak frame and plush black leather cushions - contemporary lounge styling with clean lines and wear detailing.",
+      "category_id": "11261ec6-df2b-5150-9904-684d2558070d",
+      "category": "Furniture/Seating/Chairs",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood",
+          "leather"
+        ]
+      },
+      "img_version": "f0268ac6",
+      "download_count": 53386,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/modern_arm_chair_01.png?width=256&height=256&format=webp&v=f0268ac6"
+    }
+  },
+  {
+    "id": "ph-mid-century-lounge-chair",
+    "upstreamId": "mid_century_lounge_chair",
+    "creator": "Kuutti Siitonen",
+    "source": "https://polyhaven.com/a/mid_century_lounge_chair",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:40.824Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/mid_century_lounge_chair/mid_century_lounge_chair_1k.gltf",
+        "bytes": 2884,
+        "sha256": "47c5769ee4dfa350e2506a6a76d8ef58a1e1060344acda35c503ddff46645d26",
+        "upstreamMd5": "474bed17d25e794f39e60d1748dafcc6"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/mid_century_lounge_chair/mid_century_lounge_chair.bin",
+        "bytes": 171384,
+        "sha256": "26346cdc548ad74b1b6db5734c8c231c3c740656b012de2cc3bbc2b3b975200c",
+        "upstreamMd5": "bded2f717792aefe222dca07633b94ce"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mid_century_lounge_chair/mid_century_lounge_chair_nor_gl_1k.jpg",
+        "bytes": 648960,
+        "sha256": "4bb4b325e4478f5d9063e4e061cf34bc6ccc3067abda608c1548c4a367f50397",
+        "upstreamMd5": "2caa258ba4e50a6be6533ac9ff96587e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mid_century_lounge_chair/mid_century_lounge_chair_diff_1k.jpg",
+        "bytes": 627298,
+        "sha256": "ae1f80e964426b49f70b402403c444a655bdaa363d8d43fee5b57fcb3b492c54",
+        "upstreamMd5": "7ab2bc1b5ac85a7664a82eedf6c85dde"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/mid_century_lounge_chair/mid_century_lounge_chair_arm_1k.jpg",
+        "bytes": 636493,
+        "sha256": "9fa5fa4af5306576a3a27886767feec5431f41d94df9119f2ccced8f0b024f1a",
+        "upstreamMd5": "a0a839c4ae18eb06a5ececc72c0e066f"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-mid-century-lounge-chair.glb",
+      "bytes": 2085976,
+      "sha256": "ec1eaba39b3c91d5b854df92d9cba5ad782cb33ba1aeb16408142c3f3461f749",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Mid Century Lounge Chair",
+      "categories": [
+        "furniture",
+        "seating"
+      ],
+      "tags": [
+        "wooden",
+        "leather",
+        "couch",
+        "lounge",
+        "architecture",
+        "modern",
+        "interior design",
+        "home decor",
+        "living room",
+        "comfort",
+        "stylish",
+        "recliner",
+        "retro",
+        "classy"
+      ],
+      "authors": {
+        "Kuutti Siitonen": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 6148,
+      "texel_density": 2813.9145197356147,
+      "dimensions": [
+        1008.6143612861633,
+        1190.310776233673,
+        1169.0847246776136
+      ],
+      "date_published": 1750809600,
+      "files_hash": "0f50a344eb54625e4b4a22bf049ecc1c6fe8347c",
+      "description": "Free 8K mid-century lounge chair: wooden shell, worn brown leather cushions, swivel recliner base - stylish, comfy retro seating for modern interiors.",
+      "sponsors": [
+        "3267566"
+      ],
+      "category_id": "11261ec6-df2b-5150-9904-684d2558070d",
+      "category": "Furniture/Seating/Chairs",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "leather",
+          "wood",
+          "metal"
+        ]
+      },
+      "img_version": "4b58f3c4",
+      "download_count": 22746,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/mid_century_lounge_chair.png?width=256&height=256&format=webp&v=4b58f3c4"
+    }
+  },
+  {
+    "id": "ph-sofa-03",
+    "upstreamId": "sofa_03",
+    "creator": "Fran Calvente",
+    "source": "https://polyhaven.com/a/sofa_03",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:41.183Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_03/sofa_03_1k.gltf",
+        "bytes": 4465,
+        "sha256": "123f491bef4e9bda153bda770a5d12810bfc9b87ce56aa5973aed041ea17fd92",
+        "upstreamMd5": "27f31e0500c2dd83a21fd3339ade7821"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/sofa_03/sofa_03.bin",
+        "bytes": 228984,
+        "sha256": "e524350933d3d2a84c28f13bc042888a4768adeef88d630111015caede1c2e98",
+        "upstreamMd5": "aeebfb9aed3b40300b0fb73f0e27830e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_nor_gl_1k.jpg",
+        "bytes": 112563,
+        "sha256": "b961f9e9f38233bd58cdc5275614d3a1b37d5304f5ab86fd19d110657d386025",
+        "upstreamMd5": "dec3ec9d5d1ad2abf260e58b67e5cd0e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_diff_1k.jpg",
+        "bytes": 151815,
+        "sha256": "c0bc221e4cacc3de75aff7744dab1600d008bcf70b5c67fb10ad6847b695a84e",
+        "upstreamMd5": "1f33a1431d98e1560a04b661e786b45b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_rough_1k.jpg",
+        "bytes": 170206,
+        "sha256": "b03b45c92365cddf787db158d7499915d6ba0d67ec51947453f6598f51361e47",
+        "upstreamMd5": "c3fe733eb2cef0424d5530e067518d60"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_03/sofa_03_diff_1k.jpg",
+        "bytes": 151815,
+        "sha256": "c0bc221e4cacc3de75aff7744dab1600d008bcf70b5c67fb10ad6847b695a84e",
+        "upstreamMd5": "1f33a1431d98e1560a04b661e786b45b"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-sofa-03.glb",
+      "bytes": 818172,
+      "sha256": "282b3aa21416bba114c1adef0cdb90d45b4dc6afdf41cec900599c9db946790d",
+      "meshes": 1,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "tags": [
+        "vintage",
+        "chair",
+        "couch",
+        "seat",
+        "fancy",
+        "mansion",
+        "manor",
+        "victorian",
+        "antique",
+        "leather"
+      ],
+      "name": "Sofa 03",
+      "categories": [
+        "furniture",
+        "seating"
+      ],
+      "authors": {
+        "Fran Calvente": "All"
+      },
+      "date_published": 1632441600,
+      "sponsors": [
+        "9716107"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 8004,
+      "texel_density": 2473.260796497094,
+      "dimensions": [
+        2731.17733001709,
+        925.0842034816742,
+        1118.2640366605483
+      ],
+      "files_hash": "6304a0e5c6e96371ba5b427ce5baa763f1405e2c",
+      "description": "Free 8K model of a vintage Victorian leather sofa with carved wooden frame, scrolled arms, patterned fringe cushions and rich antique brown finish.",
+      "category_id": "a995f351-c031-54f6-b317-dc5928df17a3",
+      "category": "Furniture/Seating/Sofas & Couches",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "leather",
+          "wood",
+          "fabric"
+        ]
+      },
+      "img_version": "8e75f00a",
+      "download_count": 58338,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/sofa_03.png?width=256&height=256&format=webp&v=8e75f00a"
+    }
+  },
+  {
+    "id": "ph-ottoman-01",
+    "upstreamId": "Ottoman_01",
+    "creator": "Caspian Fortune",
+    "source": "https://polyhaven.com/a/Ottoman_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:41.511Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Ottoman_01/Ottoman_01_1k.gltf",
+        "bytes": 2656,
+        "sha256": "cb515553924d7ca85b94807aba7d7d5110fafa0fedf7132573b105ac8b900584",
+        "upstreamMd5": "48acca9b9feae8092e95e291b9e8107b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/Ottoman_01/Ottoman_01.bin",
+        "bytes": 115200,
+        "sha256": "ca62a1ee87a30c69142ff15f1bca216842448f57d5b3d64de1d627014b347117",
+        "upstreamMd5": "7acac7b0744e80e7988c531677d6d57b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Ottoman_01/Ottoman_01_nor_gl_1k.jpg",
+        "bytes": 236930,
+        "sha256": "3220215de4173c81c4128619a0000ce5368a3d125409f5e7d64e1269e258d923",
+        "upstreamMd5": "1e9fd1ac43f716b9e6e97a656517a275"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Ottoman_01/Ottoman_01_diff_1k.jpg",
+        "bytes": 141622,
+        "sha256": "03f05a4a2e54ea1e6829a7d1b43dcfad5d2873078bd72534dc46e692c01f97a5",
+        "upstreamMd5": "20121319f4f9346481bce2abfcb1d2b0"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Ottoman_01/Ottoman_01_arm_1k.jpg",
+        "bytes": 155704,
+        "sha256": "e894458d15a90e22e4290198929c8fb76e872526fe1f0bdf6d395a91d438bc7c",
+        "upstreamMd5": "79da86b6af7c611f753821fc35bafa54"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-ottoman-01.glb",
+      "bytes": 651156,
+      "sha256": "88046e8f511324a54bce229ee918e2296564c234ff39da5cd561b13f4065ae3b",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1585605600,
+      "name": "Ottoman 01",
+      "categories": [
+        "furniture",
+        "seating"
+      ],
+      "type": 2,
+      "tags": [
+        "furniture",
+        "leather",
+        "chair",
+        "fabric",
+        "ottoman",
+        "upholstery",
+        "interior design",
+        "living room",
+        "lounge"
+      ],
+      "authors": {
+        "Caspian Fortune": "All"
+      },
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 4240,
+      "texel_density": 2191.152903771073,
+      "dimensions": [
+        884.5577836036682,
+        621.1484670639038,
+        624.3239195573551
+      ],
+      "files_hash": "bc9b99f10b19594d926dbd9ed049cb7c7ccd6e77",
+      "description": "Free 4K model: dark brown leather ottoman with stacked, cushioned tiers, visible stitching, subtle creases and short black feet.",
+      "category_id": "4b33da37-997a-5075-afd0-a89da2c4d237",
+      "category": "Furniture/Seating/Ottomans & Footstools",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "leather"
+        ]
+      },
+      "img_version": "9aff473b",
+      "download_count": 35066,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/Ottoman_01.png?width=256&height=256&format=webp&v=9aff473b"
+    }
+  },
+  {
+    "id": "ph-modern-coffee-table-01",
+    "upstreamId": "modern_coffee_table_01",
+    "creator": "Amin",
+    "source": "https://polyhaven.com/a/modern_coffee_table_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:41.864Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_coffee_table_01/modern_coffee_table_01_1k.gltf",
+        "bytes": 2771,
+        "sha256": "a35d811da4c174d0c888f23353dda21501763dbf5505c66f57fef4b3f613e50c",
+        "upstreamMd5": "f1c079ab5bc307630258cf3b40910511"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modern_coffee_table_01/modern_coffee_table_01.bin",
+        "bytes": 154864,
+        "sha256": "b8fe0d49041b879a5d5962685a39e3daf009679f7b6a88ced1347e6dc6c0851e",
+        "upstreamMd5": "6e8f65bff935af308eab9eff062f6daa"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_coffee_table_01/modern_coffee_table_01_nor_gl_1k.jpg",
+        "bytes": 359134,
+        "sha256": "43e0d317d0f8418b130c0058c645225ee83b808b1dc0e5e7236bead3bdd77139",
+        "upstreamMd5": "d263e6131abc518760d6771390bc5066"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_coffee_table_01/modern_coffee_table_01_diff_1k.jpg",
+        "bytes": 410569,
+        "sha256": "069b89dd3ef03ddcbb7b2e6a124b1903aa7848394509121aa19f87bd0ef0218c",
+        "upstreamMd5": "356014e027b59c21b3c99ac112e645f9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_coffee_table_01/modern_coffee_table_01_rough_1k.jpg",
+        "bytes": 403959,
+        "sha256": "8013b48b0ebb845907f840afcae9cbc915a5205ac82ed99cbba31771febacb0f",
+        "upstreamMd5": "6ccbc448fa0e2bed32eac52511e84e2c"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-modern-coffee-table-01.glb",
+      "bytes": 1330284,
+      "sha256": "3afe8a9cc9d80281265fee265e3704e1ebe555b56ddd6fef041ec62d7548250f",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "type": 2,
+      "tags": [
+        "table",
+        "contemporary",
+        "modern",
+        "rectangular",
+        "stone",
+        "wood",
+        "deco",
+        "clean"
+      ],
+      "name": "Modern Coffee Table 01",
+      "categories": [
+        "furniture",
+        "table"
+      ],
+      "authors": {
+        "Amin": "All"
+      },
+      "date_published": 1640736000,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 4504,
+      "texel_density": 3111.8370322482415,
+      "dimensions": [
+        1201.8300294876099,
+        600.0000834465027,
+        389.99998569488525
+      ],
+      "files_hash": "31772c0aab6f930a18de82606146c0a97f08b7d0",
+      "description": "Free 8K model of a contemporary rectangular coffee table with textured stone top, warm wooden frame and angular wood inlays.",
+      "category_id": "14a9e15a-6ae7-5665-8142-d5fbda6b6a75",
+      "category": "Furniture/Tables/Coffee Tables",
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "stone",
+          "wood"
+        ]
+      },
+      "img_version": "29e2a5b6",
+      "download_count": 18045,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/modern_coffee_table_01.png?width=256&height=256&format=webp&v=29e2a5b6"
+    }
+  },
+  {
+    "id": "ph-side-table-01",
+    "upstreamId": "side_table_01",
+    "creator": "James Ray Cock",
+    "source": "https://polyhaven.com/a/side_table_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:42.197Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/side_table_01/side_table_01_1k.gltf",
+        "bytes": 2700,
+        "sha256": "a441125a4f660a23a31601aedd9aa379c6febf2b35171c08814187b5ec5a3309",
+        "upstreamMd5": "4f72b88ca0cb4329d09d87788df495f3"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/side_table_01/side_table_01.bin",
+        "bytes": 117784,
+        "sha256": "b1f2a0519fc61cded1fdeac8169ac5b077836052671cd39a35cb56576c9aa11e",
+        "upstreamMd5": "344e55dbf8dc39b1bca0ca66b956a8dc"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/side_table_01/side_table_01_nor_gl_1k.jpg",
+        "bytes": 71744,
+        "sha256": "14850c49ae1e06cf8701eac4fed2163c2ad075978d2878fcaa079dffe1fd1195",
+        "upstreamMd5": "9252911489f1024faad8bb1443d31d9e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/side_table_01/side_table_01_diff_1k.jpg",
+        "bytes": 183315,
+        "sha256": "e0d9f2f91bede592868f9b89d141f5e8542524b8356f1b68f0f5c6bb6447731d",
+        "upstreamMd5": "858d3b2c5f7f4c733a5c6a32183b11de"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/side_table_01/side_table_01_arm_1k.jpg",
+        "bytes": 129725,
+        "sha256": "ebaef894800faa2e09df7001c1536055c97648428410a9de76bb191aec00c014",
+        "upstreamMd5": "79435258a51369b735349763689f1cba"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-side-table-01.glb",
+      "bytes": 504300,
+      "sha256": "397ed7c2df3d003750a0074300b1949f15bdb87466568a937d34f78e56565dca",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1623767596,
+      "sponsors": [
+        "20953239"
+      ],
+      "name": "Side Table 01",
+      "categories": [
+        "furniture",
+        "table"
+      ],
+      "type": 2,
+      "tags": [
+        "table",
+        "wood",
+        "minimalist",
+        "modern",
+        "decor",
+        "living room",
+        "bedroom",
+        "shelf",
+        "contemporary",
+        "interior",
+        "home",
+        "wooden"
+      ],
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 2756,
+      "texel_density": 4411.670684276883,
+      "dimensions": [
+        550.0000715255737,
+        450.00001788139343,
+        550.6622816901654
+      ],
+      "files_hash": "c48d34c9a62887ad0c1175877ac69ffdd97e52b6",
+      "description": "Free 8K model of a minimalist wooden side table with two shelves, clean lines and warm oak finish - perfect for modern living room or bedroom interiors.",
+      "category_id": "7d0d2d4a-62ed-5630-b9aa-a300ea86c609",
+      "category": "Furniture/Tables/Side & End Tables",
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "9269bde4",
+      "download_count": 21686,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/side_table_01.png?width=256&height=256&format=webp&v=9269bde4"
+    }
+  },
+  {
+    "id": "ph-modern-ceiling-lamp-01",
+    "upstreamId": "modern_ceiling_lamp_01",
+    "creator": "James Ray Cock",
+    "source": "https://polyhaven.com/a/modern_ceiling_lamp_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:42.519Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/modern_ceiling_lamp_01/modern_ceiling_lamp_01_1k.gltf",
+        "bytes": 6177,
+        "sha256": "f88b5d0a81fa813457a77474e7e4e812f97ad5fac2109ba03ddb183274be3f8c",
+        "upstreamMd5": "b85c212ffcc2cb9c74b9e68f314fec3b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/modern_ceiling_lamp_01/modern_ceiling_lamp_01.bin",
+        "bytes": 146828,
+        "sha256": "ae5140a64e12e639554158901a5e92340bb37c706096ff255804e3220fb96367",
+        "upstreamMd5": "48b86e7e6db78e6d3dfd85b765c3ab68"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_ceiling_lamp_01/modern_ceiling_lamp_01_nor_gl_1k.jpg",
+        "bytes": 79333,
+        "sha256": "dd75bd21a901581325f5c363bd89b45430b8531cb27dead314cd087196a33c27",
+        "upstreamMd5": "f3ebd90aa565968ce1faf25a03b1f912"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_ceiling_lamp_01/modern_ceiling_lamp_01_diff_1k.jpg",
+        "bytes": 79705,
+        "sha256": "c08bfbf7576a86a4a09d386ae9f0a92965fc652bf82f3a8dba1c796b1aa9e535",
+        "upstreamMd5": "7197acc141761c4c417023b9fb58db95"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/modern_ceiling_lamp_01/modern_ceiling_lamp_01_arm_1k.jpg",
+        "bytes": 124022,
+        "sha256": "f4c6a8e7c86b1deaaf0f74099539ff635063b63f594b0fadfc3ec8fac805df4e",
+        "upstreamMd5": "6667aa4091a273a041715dccd3b83bc8"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-modern-ceiling-lamp-01.glb",
+      "bytes": 433620,
+      "sha256": "1b70a7376a7fc5235a550056b684a5ca7833d57231a0ad67d9d1f20572a353c1",
+      "meshes": 1,
+      "materials": 3,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Modern Ceiling Lamp 01",
+      "categories": [
+        "lighting"
+      ],
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "date_published": 1623767623,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 5602,
+      "texel_density": 7075.021821808576,
+      "dimensions": [
+        431.6493272781372,
+        431.6607564687729,
+        951.5514969825745
+      ],
+      "files_hash": "d324ea2a3c480145e3cf8beca5ec9c408b257dbb",
+      "tags": [
+        "lighting",
+        "light",
+        "modern",
+        "glass",
+        "round",
+        "hanging",
+        "hanging lamp",
+        "ceiling lamp",
+        "decorative lighting",
+        "modern decor",
+        "interior design"
+      ],
+      "description": "Free 8K model of a modern hanging ceiling lamp - frosted glass globe with brushed metal fittings, clean round minimalist design perfect for modern interiors.",
+      "sponsors": [
+        "7899208",
+        "84390067"
+      ],
+      "category_id": "7dd2cb93-3ec2-5d14-853c-45c93d9ce1a3",
+      "category": "Lighting/Ceiling/Pendant Lights",
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "glass",
+          "metal"
+        ]
+      },
+      "img_version": "6450c4b1",
+      "download_count": 30182,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/modern_ceiling_lamp_01.png?width=256&height=256&format=webp&v=6450c4b1"
+    }
+  },
+  {
+    "id": "ph-potted-plant-01",
+    "upstreamId": "potted_plant_01",
+    "creator": "Rico Cilliers",
+    "source": "https://polyhaven.com/a/potted_plant_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:43.184Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_01/potted_plant_01_1k.gltf",
+        "bytes": 7969,
+        "sha256": "23b30294407684b02f14800d6685bd8938da5d2111e17753ac8dd3c37d8c88a0",
+        "upstreamMd5": "199e9e3d68f5447142db4066d60ae3f0"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/potted_plant_01/potted_plant_01.bin",
+        "bytes": 5345188,
+        "sha256": "a8dd1f7ce75f50dc25bbedc20809da02ee4193815c155b883a329925fa5548f7",
+        "upstreamMd5": "18377bd8d99b20a8d5fc5cf03cbf94b2"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_nor_gl_1k.jpg",
+        "bytes": 200349,
+        "sha256": "ec02e51751e0822d229d48bea1373b06e2675c3725ff04fd1f87ac516719e620",
+        "upstreamMd5": "7388c8cba421175fd70969df077988a1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_diff_1k.jpg",
+        "bytes": 204900,
+        "sha256": "51c9d80e8abe585bd3dbcebe7cba1d3ed1a22b137c7cb66baf0e462c08dca312",
+        "upstreamMd5": "67114dcd68232a6da88c627e144e65c4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_pot_rough_1k.jpg",
+        "bytes": 173192,
+        "sha256": "1256199fe3a88a0534bcd4c8bf141cfa9a28b68fce3f286193d0713796fd8561",
+        "upstreamMd5": "8f2e400f94843a9239229bfe99d16688"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_nor_gl_1k.jpg",
+        "bytes": 177105,
+        "sha256": "2faa756e0ee2b8341c752b283b93599157bf56f4083a9f61b825cdfa0c7138ff",
+        "upstreamMd5": "0a7ea996bb2a4e9e19a5299a5b654406"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_diff_1k.jpg",
+        "bytes": 124730,
+        "sha256": "b73891a0a606e139d0fcdd9e6fe503cd1210be3fc9c55fbd033941288231ccaa",
+        "upstreamMd5": "8cbaaa24c18c61be4201c473773dbffc"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_01/potted_plant_01_leaves_rough_1k.jpg",
+        "bytes": 91706,
+        "sha256": "765e3bd1bfdad39dd0d1cd755eafd1f9f1d46cbbb6013988cbfd1197de27a1f9",
+        "upstreamMd5": "6251bfd59ced0360c16d9c286adbb131"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-potted-plant-01.glb",
+      "bytes": 6322092,
+      "sha256": "ab7da2a2300b3cca884b609b0b602a2f10920ff2d1a0823097785993b3f4d054",
+      "meshes": 4,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1626872095,
+      "name": "Potted Plant 01",
+      "categories": [
+        "decorative",
+        "plants",
+        "potted plants",
+        "nature"
+      ],
+      "type": 2,
+      "authors": {
+        "Rico Cilliers": "All"
+      },
+      "tags": [
+        "potplant",
+        "plant",
+        "terracotta",
+        "pot",
+        "vase",
+        "medium",
+        "leaf",
+        "green"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 96030,
+      "texel_density": 15606.764063682307,
+      "dimensions": [
+        588.9185070991516,
+        636.6117596626282,
+        1350.7787585258484
+      ],
+      "files_hash": "9fa70d49cb125b1b74e3aeddef22253ba2db060b",
+      "description": "Free 8K model of a medium potted plant with lush scalloped green leaves in a weathered terracotta pedestal pot, detailed trunk and gravel-filled soil.",
+      "category_id": "3dde8a0d-8ee9-5e81-85c4-3251ec4a5d88",
+      "category": "Nature/Plants/Potted Plants",
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "ceramic"
+        ]
+      },
+      "img_version": "217a8182",
+      "download_count": 64135,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/potted_plant_01.png?width=256&height=256&format=webp&v=217a8182"
+    }
+  },
+  {
+    "id": "ph-potted-plant-04",
+    "upstreamId": "potted_plant_04",
+    "creator": "James Ray Cock",
+    "source": "https://polyhaven.com/a/potted_plant_04",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:43.535Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_04/potted_plant_04_1k.gltf",
+        "bytes": 7081,
+        "sha256": "b3a3bc3e97da75844999c4da07b7104b6c023f729a7c045979929b9504184339",
+        "upstreamMd5": "077d481764145f6e5e256593aab427bb"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/potted_plant_04/potted_plant_04.bin",
+        "bytes": 241800,
+        "sha256": "158c1d27503d4845eb3573f00c01ae3f4f77f1d6ca8754c67bf1762745946f7f",
+        "upstreamMd5": "03774ca8e28e2aa30fb26cb68d5e0093"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_04/potted_plant_04_nor_gl_1k.jpg",
+        "bytes": 817786,
+        "sha256": "66e4627f6691a2d8104a6c53a39b41daddbd5bad8103e73f372c39166a3dcb07",
+        "upstreamMd5": "1c0b87906fd92c7b7ce5508110976474"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_04/potted_plant_04_diff_1k.jpg",
+        "bytes": 577545,
+        "sha256": "8693a971557fbafb12a24a2e23c1a04ab6b04ecdc4d26808c5ad3516a4971f24",
+        "upstreamMd5": "4a72fb3667fd3686ca4014f6676f59c4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_04/potted_plant_04_arm_1k.jpg",
+        "bytes": 478413,
+        "sha256": "7f3288345570ef700c851ea382ed267490ffc8c901ccc31f2ec5507e4d098e48",
+        "upstreamMd5": "ed0030c6085bba45b6f63f3043b0b237"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-potted-plant-04.glb",
+      "bytes": 2119832,
+      "sha256": "104cd8408f19e69855bc2d2302326b381d657874ed684a4cf1bfdbf5d98b86ee",
+      "meshes": 4,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1623767629,
+      "name": "Potted Plant 04",
+      "categories": [
+        "decorative",
+        "plants",
+        "potted plants",
+        "succulent",
+        "nature"
+      ],
+      "type": 2,
+      "tags": [
+        "cactus",
+        "aloe",
+        "succulent",
+        "potplant",
+        "small",
+        "pot",
+        "plant",
+        "decor"
+      ],
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "sponsors": [
+        "78546118"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 6097,
+      "texel_density": 13467.404038911603,
+      "dimensions": [
+        170.27407884597778,
+        185.9453096985817,
+        267.5964875961654
+      ],
+      "files_hash": "c71ad499bc2ad1a95b689fc8895447eff788408b",
+      "description": "Free 8K potted succulent model - small zebra haworthia in a weathered ceramic pot. Realistic textures and natural detail; ideal for interior decor scenes.",
+      "category_id": "3dde8a0d-8ee9-5e81-85c4-3251ec4a5d88",
+      "category": "Nature/Plants/Potted Plants",
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "ceramic"
+        ]
+      },
+      "img_version": "0458b049",
+      "download_count": 88469,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/potted_plant_04.png?width=256&height=256&format=webp&v=0458b049"
+    }
+  },
+  {
+    "id": "ph-throw-pillows-01",
+    "upstreamId": "throw_pillows_01",
+    "creator": "Serhii Khromov",
+    "source": "https://polyhaven.com/a/throw_pillows_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:43.882Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/throw_pillows_01/throw_pillows_01_1k.gltf",
+        "bytes": 4548,
+        "sha256": "dd3f985a4446c82035028392ae905b9d996b8be10316a4572a870561a57f76fa",
+        "upstreamMd5": "ffffc13de5ce464056e24217dc565d19"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/throw_pillows_01/throw_pillows_01.bin",
+        "bytes": 146012,
+        "sha256": "cac134c38612894a301d265a0b2ad4ddbe57d15d7473d57592c397d445366476",
+        "upstreamMd5": "dd26dd164ecfa138e0bb51d94a4197ed"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/throw_pillows_01/throw_pillows_01_nor_gl_1k.jpg",
+        "bytes": 404720,
+        "sha256": "074da9df1286aecf0d107bdd0839f0ec382fa99b16313626c7f6690d2765b4d7",
+        "upstreamMd5": "0a57d294ef66db004709f76a961a5f7b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/throw_pillows_01/throw_pillows_01_diff_1k.jpg",
+        "bytes": 299887,
+        "sha256": "1d52fb47f06b88b5079f20a99309ae1e94547e778a5f89614d70f842c0696412",
+        "upstreamMd5": "8e140f48bf4a9c48ccca4ecc941bba19"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/throw_pillows_01/throw_pillows_01_rough_1k.jpg",
+        "bytes": 339241,
+        "sha256": "05518d80893cd4b0a1390ccf1330e94ecae7f386b60e2b55761a1e9856e29f9b",
+        "upstreamMd5": "47b3576090f2b98a9d18bd9bbd5265ab"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-throw-pillows-01.glb",
+      "bytes": 1192668,
+      "sha256": "69d40a8d6d475014ea0c8efb2246799e87a1b4f944e1ed3c17a9e3ede8ffede7",
+      "meshes": 2,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1630022400,
+      "name": "Throw Pillows 01",
+      "categories": [
+        "decorative"
+      ],
+      "type": 2,
+      "tags": [
+        "decorative",
+        "pillow",
+        "throw",
+        "pattern",
+        "african",
+        "red",
+        "triangle",
+        "orange"
+      ],
+      "authors": {
+        "Serhii Khromov": "All"
+      },
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 6362,
+      "texel_density": 3393.691567163853,
+      "dimensions": [
+        1021.5678811073303,
+        627.4925470352173,
+        450.1592831220478
+      ],
+      "files_hash": "8a475b95a0956bd700394e0f5ed32822071e2f54",
+      "description": "Free 4K model of two decorative throw pillows with bold African-inspired zigzag chevrons in red, orange and ochre on a textured woven fabric.",
+      "category_id": "2d8a6ed6-8345-5c6f-8391-5fb3944ee86f",
+      "category": "Decor & Art/Ornaments/Cushions & Pillows",
+      "attributes": {
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "fabric"
+        ]
+      },
+      "img_version": "d1a30215",
+      "download_count": 23371,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/throw_pillows_01.png?width=256&height=256&format=webp&v=d1a30215"
+    }
+  },
+  {
+    "id": "ph-bar-chair-round-01",
+    "upstreamId": "bar_chair_round_01",
+    "creator": "Dairon Sanchez",
+    "source": "https://polyhaven.com/a/bar_chair_round_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:44.336Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/bar_chair_round_01/bar_chair_round_01_1k.gltf",
+        "bytes": 2833,
+        "sha256": "6a8f92123245268cbb69fc96f305ee710b32a7a06761b143d3049eaabfcbdd32",
+        "upstreamMd5": "86fccd0ffcf70b942d1b2ff70445c2b9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/bar_chair_round_01/bar_chair_round_01.bin",
+        "bytes": 1017152,
+        "sha256": "2bda85d89beb91097998b25293f10e72686b972aecffd2c14d1b5412cc1da276",
+        "upstreamMd5": "3b9777a403670ddbde5cda533a5359ae"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/bar_chair_round_01/bar_chair_round_01_nor_gl_1k.jpg",
+        "bytes": 442193,
+        "sha256": "91e4310863002228003d100be83e0524832e532d05f27ef8ed62675b116f0bd1",
+        "upstreamMd5": "6c93ccdb5df8cf731f52be5a4e0317bb"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/bar_chair_round_01/bar_chair_round_01_diff_1k.jpg",
+        "bytes": 599006,
+        "sha256": "1b3912fe1102b4082d7421aeb2e2717d3ebe914d261700f8710c0fdb7d7463bb",
+        "upstreamMd5": "f2f927c0536c4570fddb3825da824f36"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/bar_chair_round_01/bar_chair_round_01_arm_1k.jpg",
+        "bytes": 751149,
+        "sha256": "9f34b279bdd1527ec19fc3a3bb0ce374f0c0ba2dc05dfbd58f561bc317bd36c7",
+        "upstreamMd5": "48228bfd8b20bf805fd78b1198d5a67f"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-bar-chair-round-01.glb",
+      "bytes": 2811300,
+      "sha256": "7326cce65f60491fcda91d06e23618ab1d792976643fbbb82d25d58788cb36c0",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "type": 2,
+      "tags": [
+        "bar",
+        "pub",
+        "stool",
+        "tall",
+        "wooden",
+        "classical",
+        "old",
+        "vintage",
+        "cigar"
+      ],
+      "name": "Bar Chair Round 01",
+      "categories": [
+        "seating",
+        "furniture"
+      ],
+      "authors": {
+        "Dairon Sanchez": "All"
+      },
+      "date_published": 1639094400,
+      "sponsors": [
+        "11167855"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 14373,
+      "texel_density": 2318.1009345497273,
+      "dimensions": [
+        483.1501990556717,
+        485.99570989608765,
+        750.5484623070515
+      ],
+      "files_hash": "3a4411b06fb8509e297c299acac13b2e6d5d71b0",
+      "description": "Free 4K model, vintage wooden bar stool with round seat, carved beaded trim, hexagonal legs, circular footrest and worn finish.",
+      "category_id": "302a40f3-e544-5721-b63b-ca3574e9975a",
+      "category": "Furniture/Seating/Stools & Bar Seating",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "4a7d5e93",
+      "download_count": 9548,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/bar_chair_round_01.png?width=256&height=256&format=webp&v=4a7d5e93"
+    }
+  },
+  {
+    "id": "ph-round-wooden-table-01",
+    "upstreamId": "round_wooden_table_01",
+    "creator": "Ulan Cabanilla",
+    "source": "https://polyhaven.com/a/round_wooden_table_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:44.674Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/round_wooden_table_01/round_wooden_table_01_1k.gltf",
+        "bytes": 4089,
+        "sha256": "dd09c1663b10d15a1fda12ba4f53743e8b8379b17254a78be22100d584738b48",
+        "upstreamMd5": "9a2ad4a55a88ee7493a842026d944abc"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/round_wooden_table_01/round_wooden_table_01.bin",
+        "bytes": 242688,
+        "sha256": "c2635368bc86239a73fafdd8bce20b4261155ce7241e95e809a753ed4693f157",
+        "upstreamMd5": "b907851fab9d7552cef8a12858acc869"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/round_wooden_table_01/round_wooden_table_01_nor_gl_1k.jpg",
+        "bytes": 50832,
+        "sha256": "5f80ed76e2eccaea8ab7c0cc9c85d29cc9b164aabfa2403304e1ec79dc47150c",
+        "upstreamMd5": "3d0f124a495db5eeca16db53c188729d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/round_wooden_table_01/round_wooden_table_01_diff_1k.jpg",
+        "bytes": 117911,
+        "sha256": "d83659d8d584bbadf160760b825f990c6264901e33051643d19fcd389b0d19ae",
+        "upstreamMd5": "4be9c5bc6b73f42541fb461c19169c56"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/round_wooden_table_01/round_wooden_table_01_arm_1k.jpg",
+        "bytes": 134854,
+        "sha256": "32b5056dc36e3081987c20cd03f15e73298266c1aff3e573b832e9dd0f8145b9",
+        "upstreamMd5": "2dc3f86e564b407141c6c216760d8bb6"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-round-wooden-table-01.glb",
+      "bytes": 548808,
+      "sha256": "800012b8131e9aa8659445d4b8dcb893675471fc08b3dfaa7f75c88c32f7efda",
+      "meshes": 2,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "type": 2,
+      "tags": [
+        "vintage",
+        "wooden",
+        "wood",
+        "polish",
+        "circle",
+        "dark",
+        "old"
+      ],
+      "name": "Round Wooden Table 01",
+      "categories": [
+        "furniture",
+        "table"
+      ],
+      "authors": {
+        "Ulan Cabanilla": "All"
+      },
+      "date_published": 1633046400,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 8640,
+      "texel_density": 3073.888077370229,
+      "dimensions": [
+        1399.3489742279053,
+        1399.3489146232605,
+        1005.0213932991028
+      ],
+      "files_hash": "68d8afc5c698ecb2b91c3773864c78f58fa75c5a",
+      "description": "Free 8K model of a vintage round wooden table with a turned pedestal, splayed legs, dark polished finish and subtle surface wear.",
+      "category_id": "dfe0e21f-ebb5-57e6-b76e-1b2c58bae1a3",
+      "category": "Furniture/Tables/Dining Tables",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "1841a84a",
+      "download_count": 46246,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/round_wooden_table_01.png?width=256&height=256&format=webp&v=1841a84a"
+    }
+  },
+  {
+    "id": "ph-street-lamp-01",
+    "upstreamId": "street_lamp_01",
+    "creator": "Josh Dean",
+    "source": "https://polyhaven.com/a/street_lamp_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:45.018Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/street_lamp_01/street_lamp_01_1k.gltf",
+        "bytes": 6419,
+        "sha256": "5d0358ede168b5e04547780b99d8e6d651cbe644e468e67cb505019047cbd5c8",
+        "upstreamMd5": "d29d1fc30bbdad99a58371754f144e65"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/street_lamp_01/street_lamp_01.bin",
+        "bytes": 748908,
+        "sha256": "c283db9b6d95835d9e8fc1692829acadcb21a0623b2daaa7231cec1440488401",
+        "upstreamMd5": "324bc6295e3962322514ddcfc7037b23"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_01/street_lamp_01_nor_gl_1k.jpg",
+        "bytes": 438623,
+        "sha256": "172af0fd7ed4999e9f520b9f56e1f357a6dba87adbd7b8aa87e0a0b95840c63d",
+        "upstreamMd5": "c27d8102c7e851a8f0f654bb959b9d67"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_01/street_lamp_01_diff_1k.jpg",
+        "bytes": 307889,
+        "sha256": "3e9d3471b33eb1f8075ed741c2b1932103598626d057ca12ef38005ea5fcb165",
+        "upstreamMd5": "82efb7531a25cda3ef8af2aff8ecccf7"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_01/street_lamp_01_arm_1k.jpg",
+        "bytes": 664324,
+        "sha256": "4b5487a6c7ee300c3cf5449629e01c35409e5c7ac1695edb9fe69d4821853c7c",
+        "upstreamMd5": "63d980174db10cf22a1b175743c465c9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/street_lamp_01/street_lamp_01_diff_1k.jpg",
+        "bytes": 307889,
+        "sha256": "3e9d3471b33eb1f8075ed741c2b1932103598626d057ca12ef38005ea5fcb165",
+        "upstreamMd5": "82efb7531a25cda3ef8af2aff8ecccf7"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-street-lamp-01.glb",
+      "bytes": 2471576,
+      "sha256": "72e98a03b083a384d843d0126565a2b35bf7fc964fb9822222b83b8c3b50b2db",
+      "meshes": 1,
+      "materials": 3,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Street Lamp 01",
+      "type": 2,
+      "authors": {
+        "Josh Dean": "All"
+      },
+      "info": null,
+      "date_published": 1697760000,
+      "categories": [
+        "lighting",
+        "industrial",
+        "collection: hidden_alley"
+      ],
+      "tags": [
+        "street",
+        "road",
+        "light",
+        "lamppost",
+        "outdoor",
+        "pole",
+        "sidewalk",
+        "night",
+        " urban",
+        "city"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 30610,
+      "texel_density": 3976.4525897344943,
+      "dimensions": [
+        704.3362259864807,
+        386.49316132068634,
+        3870.5554008483887
+      ],
+      "sponsors": [
+        "7934315"
+      ],
+      "files_hash": "002d697fa195d73f627e82804612208853212519",
+      "description": "Free 8K model: ornate cast-iron street lamp with glass panes, exposed bulb, weathered black finish and detailed base, finial and mounting hardware.",
+      "category_id": "ca8e62db-af7b-55a5-b668-48f0f26a1c16",
+      "category": "Lighting/Street & Outdoor/Street Lamps",
+      "collections": [
+        "hidden_alley"
+      ],
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "metal",
+          "glass"
+        ]
+      },
+      "img_version": "c103ab4f",
+      "download_count": 33154,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/street_lamp_01.png?width=256&height=256&format=webp&v=c103ab4f"
+    }
+  },
+  {
+    "id": "ph-metal-trash-can",
+    "upstreamId": "metal_trash_can",
+    "creator": "GurJas Studios",
+    "source": "https://polyhaven.com/a/metal_trash_can",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:45.640Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/metal_trash_can/metal_trash_can_1k.gltf",
+        "bytes": 15481,
+        "sha256": "ccdc55ecfe43db2174c9257891e92551882a874564bb9a7908cafc5268b46c0c",
+        "upstreamMd5": "c322802832a61ad7b17711dfbbc52e6b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/metal_trash_can/metal_trash_can.bin",
+        "bytes": 378288,
+        "sha256": "a9b9f526b655bef865933335f2cfc8c8f0bd1a35fda05b290a93e3061f2b6c8a",
+        "upstreamMd5": "fbde1679a66ea644223b97ebc8336a77"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_trash_can/metal_trash_can_nor_gl_1k.jpg",
+        "bytes": 842945,
+        "sha256": "b977f17aa9d4718ffc91a62868b7171b4479578b8cffd1d32001d92552af81a4",
+        "upstreamMd5": "fa6db04e021f6335ae2d9ad501120cae"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_trash_can/metal_trash_can_diff_1k.jpg",
+        "bytes": 551939,
+        "sha256": "920c895a31b1cd2c000123c0592c70c33d46562752987da98070e7e0eebb662f",
+        "upstreamMd5": "55d375d8d51b268b6ed8a4308155959c"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_trash_can/metal_trash_can_arm_1k.jpg",
+        "bytes": 731776,
+        "sha256": "b23dcdb2ed40c1c6cfbd2d2779c6f075025b7269bfbbed2a70c6bdb7167e47fb",
+        "upstreamMd5": "af676572c13fae2bb584538f03175efc"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_trash_can/metal_trash_can_rust_nor_gl_1k.jpg",
+        "bytes": 1085844,
+        "sha256": "a5497588e00e5e56db72e701457fc8a46d3a1fa7d9dd7bf9d79e02cada09e84b",
+        "upstreamMd5": "25187818d1236815d4a34fd743cadc29"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_trash_can/metal_trash_can_rust_diff_1k.jpg",
+        "bytes": 768161,
+        "sha256": "51c44248305b111d978f7e0cbfe4a71ab7f49549968ce37c54b635d74c2cfba1",
+        "upstreamMd5": "8b90447d250cb790ca537748a2b16691"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_trash_can/metal_trash_can_rust_arm_1k.jpg",
+        "bytes": 620549,
+        "sha256": "31a6269e98a3a8b2a2d6db8f58724e0151d5312b5137e6d59b5a2ba873989159",
+        "upstreamMd5": "ed9f635917cde411f235d4585c90b310"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-metal-trash-can.glb",
+      "bytes": 4988808,
+      "sha256": "25be1aec9c00e1c87cac8bc33b6e609698d9ae6b5d5d99811454b7f5f1448f1c",
+      "meshes": 8,
+      "materials": 3,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Metal Trash Can",
+      "type": 2,
+      "authors": {
+        "GurJas Studios": "All"
+      },
+      "info": null,
+      "date_published": 1695772800,
+      "categories": [
+        "industrial",
+        "containers",
+        "collection: hidden_alley"
+      ],
+      "tags": [
+        "bin",
+        "rubbish",
+        "garbage",
+        "disposal",
+        "litter",
+        "dumpster",
+        "outdoor trash can",
+        " urban",
+        "utility"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 13960,
+      "texel_density": 3549.006764417269,
+      "dimensions": [
+        1846.9352722167969,
+        556.2898814678192,
+        906.1697272554738
+      ],
+      "files_hash": "3ecbee3adbcc53b4af3c8f010e76e10c5b7558a2",
+      "description": "Free 8K model of a weathered metal trash can with removable lid, ribbed cylindrical body, dents, heavy rust, grime and realistic industrial wear.",
+      "category_id": "9fa7d8d0-1c7b-567d-a382-9dac692c8bbd",
+      "category": "Containers & Storage/Cans, Tins & Bottles/Trash Cans",
+      "collections": [
+        "hidden_alley"
+      ],
+      "attributes": {
+        "condition": [
+          "rusted"
+        ],
+        "material": [
+          "metal"
+        ]
+      },
+      "img_version": "8a394a6d",
+      "download_count": 27484,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/metal_trash_can.png?width=256&height=256&format=webp&v=8a394a6d"
+    }
+  },
+  {
+    "id": "ph-wetfloorsign-01",
+    "upstreamId": "WetFloorSign_01",
+    "creator": "Fran Calvente",
+    "source": "https://polyhaven.com/a/WetFloorSign_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:45.947Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/WetFloorSign_01/WetFloorSign_01_1k.gltf",
+        "bytes": 2688,
+        "sha256": "ba5b10d2de7bb60b77dc3e44a96446181a078e35597947a490a4b6de906059e4",
+        "upstreamMd5": "d69f7dfcdf087109e5b6269bbd4b2277"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/WetFloorSign_01/WetFloorSign_01.bin",
+        "bytes": 9496,
+        "sha256": "d23cdec8975ac452d64ae97b08f1eecd22e38f052bd5d588d352dbc0f0373af0",
+        "upstreamMd5": "2a027a15ce3f42cbc2e9392361fd180b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WetFloorSign_01/WetFloorSign_01_nor_gl_1k.jpg",
+        "bytes": 88138,
+        "sha256": "62269358f3b30569783c1872613d1d70d5eda36babe5b5f04fcfd5e92de1af62",
+        "upstreamMd5": "ee729a65845b94147710d554ffa46b5f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WetFloorSign_01/WetFloorSign_01_diff_1k.jpg",
+        "bytes": 39755,
+        "sha256": "01e18486a858defc0f44a73ec5037c4bee770bae88e7fed5beb6877df120fa90",
+        "upstreamMd5": "831604f9f4bacc1308c4cbe4e05e575d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/WetFloorSign_01/WetFloorSign_01_arm_1k.jpg",
+        "bytes": 126370,
+        "sha256": "6cd1d7c6648c36d2d66a7ddfc620ea78374ac770a5726f879b6914366e133e1a",
+        "upstreamMd5": "a77d2ff7c1ecf95da1830d8ec94efebb"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-wetfloorsign-01.glb",
+      "bytes": 265468,
+      "sha256": "da576816d969886493cf425d3cb7004f90842c2c299f4082aad2b6b9c1cefe2a",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1585605600,
+      "name": "Wet Floor Sign 01",
+      "categories": [
+        "props",
+        "industrial",
+        "office"
+      ],
+      "type": 2,
+      "authors": {
+        "Fran Calvente": "All"
+      },
+      "tags": [
+        "prop",
+        "plastic",
+        "sign",
+        "safety",
+        "caution",
+        "warning",
+        "yellow",
+        "hazard",
+        "slippery",
+        "slippery when wet",
+        "utility"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 228,
+      "texel_density": 3444.6741905680797,
+      "dimensions": [
+        300.0548481941223,
+        358.5093021392822,
+        629.5440040994436
+      ],
+      "files_hash": "79eb7de75bfe5924b67412f11e3e63c8abb82593",
+      "description": "Free 4K model of a yellow plastic A-frame wet floor sign with molded handle, bold \"CAUTION / WET FLOOR\" icon and worn scuffs and grime for realistic detail.",
+      "category_id": "3963d5ba-698d-5cd6-8072-77872c2388d8",
+      "category": "Industrial & Infrastructure/Traffic & Safety/Signs",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "plastic"
+        ]
+      },
+      "img_version": "5e5e6332",
+      "download_count": 32588,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/WetFloorSign_01.png?width=256&height=256&format=webp&v=5e5e6332"
+    }
+  },
+  {
+    "id": "ph-lifebuoy",
+    "upstreamId": "lifebuoy",
+    "creator": "Hank Kaamura",
+    "source": "https://polyhaven.com/a/lifebuoy",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:46.301Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/lifebuoy/lifebuoy_1k.gltf",
+        "bytes": 2724,
+        "sha256": "d9c76a8f2471249f314b3efcffe0d3956ba2d3f0b8ba528cc0f2b861561580f3",
+        "upstreamMd5": "295742069c8a9e56260b769322996e5b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/lifebuoy/lifebuoy.bin",
+        "bytes": 255280,
+        "sha256": "aa45c8d43ee11e12a4ab9f46bfb06d1baa6c687d61776ad9b06ea6b5664c0bc2",
+        "upstreamMd5": "4e38cfbae96b6bdfd4ca4ddad06888dd"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lifebuoy/lifebuoy_nor_gl_1k.jpg",
+        "bytes": 907524,
+        "sha256": "df02aca2cca3aa87daa0f1d4cd5fa2584d60ecea85672517fa334aea725dbf23",
+        "upstreamMd5": "f8a80ee65e4776d228114f37104fbd37"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lifebuoy/lifebuoy_diff_1k.jpg",
+        "bytes": 841106,
+        "sha256": "f0095beca9e97996692ffdab3d3ace3fae64a3c3adf5c8eff71172add4e4cb2e",
+        "upstreamMd5": "c956bce9e530911e95771507547e8a6f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lifebuoy/lifebuoy_arm_1k.jpg",
+        "bytes": 614864,
+        "sha256": "fe33182e45c2b1049195641a8081ab22e90e520b2c0dafa9cce568a53af7a207",
+        "upstreamMd5": "a00a461982827a2faaa0c6d940740d51"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-lifebuoy.glb",
+      "bytes": 2620520,
+      "sha256": "f5ad7afd6984e322041a61d8734decd932b8405b4b27150f7edd67d43e0f475d",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Lifebuoy",
+      "categories": [
+        "collection: project_lighthouse",
+        "wall decoration",
+        "industrial"
+      ],
+      "tags": [
+        "weathered",
+        "safety",
+        "lifering",
+        "marine",
+        "nautical",
+        "flotation device",
+        "life preserver"
+      ],
+      "description": "Free 8K weathered red lifebuoy with cracked paint, salt stains, faded stencils, and a loose pale rope; crisp scuffs and surface detail.",
+      "authors": {
+        "Hank Kaamura": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 10728,
+      "files_hash": "623799ae1de57723ec238ea1aac86b5b061fa92b",
+      "texel_density": 5765.084775129664,
+      "dimensions": [
+        783.1282019615173,
+        155.11851012706757,
+        841.1934077739716
+      ],
+      "date_published": 1782777600,
+      "category_id": "ad965163-eced-51a2-bfcb-c2e6b94f0d8c",
+      "category": "Vehicles & Transport/Watercraft/Buoys & Markers",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "plastic",
+          "fabric"
+        ]
+      },
+      "img_version": "b571383b",
+      "download_count": 810,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/lifebuoy.png?width=256&height=256&format=webp&v=b571383b"
+    }
+  },
+  {
+    "id": "ph-wall-clock",
+    "upstreamId": "wall_clock",
+    "creator": "PierreB3D",
+    "source": "https://polyhaven.com/a/wall_clock",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:46.704Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wall_clock/wall_clock_1k.gltf",
+        "bytes": 9008,
+        "sha256": "4e67385443e808bc709c054c1de5be1e83d4bf07eb0893884c301fec0bae8bc6",
+        "upstreamMd5": "86c50202813c717074d1bc72ddad9109"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/wall_clock/wall_clock.bin",
+        "bytes": 132412,
+        "sha256": "61d9fe03e871508230160de546ef505f3f4405b1e82c167536945a483a8bb639",
+        "upstreamMd5": "f1399287d9ad2fa2cfb303e95bbdbc45"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_nor_gl_1k.jpg",
+        "bytes": 236489,
+        "sha256": "6138946e055828e92d5e0d8d50c75e3d2da0ea789dd6512b30f85f0e18435d00",
+        "upstreamMd5": "d6404c2ffb48b17fbeed2cb9bf187a29"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_diff_1k.jpg",
+        "bytes": 366683,
+        "sha256": "012bfc3ceecd5e35679fe5764e33b6d1b8a631ad4fc9f5b267af25ad10468672",
+        "upstreamMd5": "32e8346296eebf4776e7e917f0080c7f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_arm_1k.jpg",
+        "bytes": 444044,
+        "sha256": "c78aabec7bb4af4fd6818be1099523e59bf12d88c872530b2260cdea08d81968",
+        "upstreamMd5": "6d962d1263bd5b34e16a69fa5473e8ac"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wall_clock/wall_clock_glass_arm_1k.jpg",
+        "bytes": 376244,
+        "sha256": "42804955958b3d0fdc1da8d4c4e8e909b04f659ae1b02911e148abe0741b8b84",
+        "upstreamMd5": "5e84b53fb7e087f4114de28d70787f5c"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-wall-clock.glb",
+      "bytes": 1561336,
+      "sha256": "c8c8634fb49d5fcb7392c1291e96b4473f9b586b0904247e0972e02ff3ed679d",
+      "meshes": 4,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Wall Clock",
+      "categories": [
+        "collection: project_lighthouse",
+        "decorative",
+        "appliances"
+      ],
+      "tags": [
+        "time",
+        "timepiece",
+        "watch",
+        "watchface",
+        "wall clock",
+        "analog",
+        "modern",
+        "office decor",
+        "home interior",
+        "admin",
+        "office",
+        "90s"
+      ],
+      "description": "Free 4K model of a modern wall clock with a worn metal bezel, clear glass, bold numerals, gray hour/minute hands, and a slim red second hand on a clean dial.",
+      "authors": {
+        "PierreB3D": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 3658,
+      "files_hash": "4057cadbc0e1620d16275c230bf031ced39378a1",
+      "texel_density": 8686.08984794609,
+      "dimensions": [
+        320.4909861087799,
+        47.2230945505423,
+        320.4909861087799
+      ],
+      "date_published": 1780963200,
+      "category_id": "86b8b047-c091-5db9-a416-a652c84c94f6",
+      "category": "Decor & Art/Wall Decor/Wall Clocks",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "metal",
+          "glass"
+        ]
+      },
+      "img_version": "65459aa0",
+      "download_count": 5815,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/wall_clock.png?width=256&height=256&format=webp&v=65459aa0"
+    }
+  },
+  {
+    "id": "ph-shrub-03",
+    "upstreamId": "shrub_03",
+    "creator": "Rico Cilliers",
+    "source": "https://polyhaven.com/a/shrub_03",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T23:58:47.085Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/shrub_03/shrub_03_1k.gltf",
+        "bytes": 7296,
+        "sha256": "b76d7c14bc027e834e82d3f984c32b5d060e62908aa90ff9420a637ca253a8ea",
+        "upstreamMd5": "2c1ef10ff17e23f81d29c851d1409c9a"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/shrub_03/shrub_03.bin",
+        "bytes": 238684,
+        "sha256": "bf4df21e6d2a2bc5f00b4c9142f776171fe7da00cf960001825748067af542b6",
+        "upstreamMd5": "c26c6ed23b0034664eab5a0e3ee00f6a"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_03/shrub_03_nor_gl_1k.jpg",
+        "bytes": 504734,
+        "sha256": "ff856bacfce859b8a7555dd9a3b92fbd36b2e775d486be71df485afb4235d6c9",
+        "upstreamMd5": "38956b2171644cfefda2ef542e055100"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_03/shrub_03_diff_1k.jpg",
+        "bytes": 481841,
+        "sha256": "3cadc7aba46d3aabbd7d6d2b1d04aa32e2a7da0bc87c2d38ef3cb1ee42cb03ec",
+        "upstreamMd5": "5da9190b7c2837a9e209a3fe774dba3c"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_03/shrub_03_arm_1k.jpg",
+        "bytes": 396238,
+        "sha256": "3e2b16812a623037138eedace958210c5f3443a827bbe69663045bba5612f815",
+        "upstreamMd5": "67faf4c5c213589b41a3bd18d378fa7d"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-shrub-03.glb",
+      "bytes": 1625884,
+      "sha256": "4e6bac2ce333022c2e8a37ebf4968ba86bc104a6c970964f78659a84bb02ff2a",
+      "meshes": 4,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "lods": true,
+      "name": "Shrub 03",
+      "categories": [
+        "nature",
+        "plants",
+        "ground cover",
+        "collection: verdant_trail"
+      ],
+      "type": 2,
+      "version_required": {
+        "blend": "4.0.1"
+      },
+      "tags": [
+        "meadow",
+        "field",
+        "shrub",
+        "botany",
+        "green",
+        "nature",
+        "plant",
+        "leaf",
+        "bush",
+        "foliage",
+        "small",
+        "ground cover",
+        "undergrowth",
+        "garden",
+        "flora",
+        "environment",
+        "vegetation"
+      ],
+      "authors": {
+        "Rico Cilliers": "All"
+      },
+      "info": null,
+      "date_published": 1707177600,
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 16955,
+      "texel_density": 28859.739259583006,
+      "dimensions": [
+        1366.9319450855255,
+        151.20302885770798,
+        402.78380597010255
+      ],
+      "files_hash": "54def63266ae691c3656edadb07e137996c6dde7",
+      "description": "Free 4K shrub with slender stems, paired oval leaves and vertical seed spikes - detailed green low‑growth foliage with a natural meadow character.",
+      "category_id": "f85fb5e2-abfd-5de4-9860-c9c3d04f12df",
+      "category": "Nature/Plants/Shrubs & Bushes",
+      "collections": [
+        "verdant_trail"
+      ],
+      "attributes": {
+        "lods": true,
+        "condition": [
+          "clean"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "357b0f84",
+      "download_count": 8708,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/shrub_03.png?width=256&height=256&format=webp&v=357b0f84"
+    }
+  }
+]

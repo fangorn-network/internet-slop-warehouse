@@ -1,0 +1,604 @@
+[
+  {
+    "id": "seeded-random",
+    "file": "seeded-random.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Serializable seeded randomness",
+    "description": "Repeatable random numbers, integer rolls and weighted choices with a portable 32-bit state. Use for loot, encounter tables and generated content. Runs locally with no service calls; not cryptographic.",
+    "tags": [
+      "random",
+      "seed",
+      "loot",
+      "weighted",
+      "deterministic",
+      "procedural"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { next(), int(min,max), pick(entries), state, update(), dispose() }",
+        "does": "Repeatable random numbers, integer rolls and weighted choices with a portable 32-bit state. Use for loot, encounter tables and generated content. Runs locally with no service calls; not cryptographic."
+      }
+    ],
+    "options": [
+      {
+        "name": "seed",
+        "type": "string | integer",
+        "default": 1,
+        "does": "seed for a new sequence"
+      },
+      {
+        "name": "state",
+        "type": "uint32 | null",
+        "default": null,
+        "does": "restore the exact next roll"
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "id": "grid-navigation",
+    "file": "grid-navigation.js",
+    "type": "logic",
+    "kind": "ai",
+    "title": "Bounded grid navigation",
+    "description": "Four-neighbor A* on an authored grid, dynamic door/obstacle blocking, world/cell conversion and supercover line of sight. Explicit search budget and bounded grid dimensions keep CPU work predictable.",
+    "tags": [
+      "navigation",
+      "pathfinding",
+      "grid",
+      "astar",
+      "doors",
+      "line-of-sight",
+      "ai"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { findPath(a,b), lineOfSight(a,b), walkable(x,z), cell(p), world(x,z), setBlocked(x,z,value), width, height, cellSize, update(), dispose() }",
+        "does": "Four-neighbor A* on an authored grid, dynamic door/obstacle blocking, world/cell conversion and supercover line of sight. Explicit search budget and bounded grid dimensions keep CPU work predictable."
+      }
+    ],
+    "options": [
+      {
+        "name": "rows",
+        "type": "string[]",
+        "default": "required",
+        "does": "rectangular grid, at most 256 by 256"
+      },
+      {
+        "name": "cellSize",
+        "type": "number",
+        "default": 1,
+        "does": "world units per cell"
+      },
+      {
+        "name": "origin",
+        "type": "[x,z]",
+        "default": [
+          0,
+          0
+        ],
+        "does": "lower corner of cell 0,0"
+      },
+      {
+        "name": "blocked",
+        "type": "string[]",
+        "default": [
+          "#"
+        ],
+        "does": "solid tile symbols"
+      },
+      {
+        "name": "maxVisited",
+        "type": "integer",
+        "default": 8192,
+        "does": "A* expansion budget per request"
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "id": "perception-brain",
+    "file": "perception-brain.js",
+    "type": "logic",
+    "kind": "ai",
+    "title": "Noise-aware visitor AI",
+    "description": "Deterministic patrol, noise investigation, sight-based pursuit and last-known-position search. Inject pathfinding and movement; serializes memory and attack cooldown. Enemies react to local stimuli without an LLM or hosted service.",
+    "tags": [
+      "enemy",
+      "stealth",
+      "hearing",
+      "noise",
+      "perception",
+      "patrol",
+      "chase",
+      "memory",
+      "ai"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(actor, opts) → { update(dt), dispose(), hear({position,radius}), snapshot(), updateTarget(), mode }",
+        "does": "Deterministic patrol, noise investigation, sight-based pursuit and last-known-position search. Inject pathfinding and movement; serializes memory and attack cooldown. Enemies react to local stimuli without an LLM or hosted service."
+      }
+    ],
+    "options": [
+      {
+        "name": "patrol",
+        "type": "{x,z}[]",
+        "default": [],
+        "does": "patrol loop"
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": 1.5,
+        "does": "patrol and investigation speed"
+      },
+      {
+        "name": "chaseSpeed",
+        "type": "number",
+        "default": 2.6,
+        "does": "pursuit speed"
+      },
+      {
+        "name": "sight",
+        "type": "number",
+        "default": 10,
+        "does": "vision range"
+      },
+      {
+        "name": "memory",
+        "type": "number",
+        "default": 5,
+        "does": "seconds to remember the last stimulus"
+      },
+      {
+        "name": "attackRange",
+        "type": "number",
+        "default": 1.4,
+        "does": "contact attack distance"
+      },
+      {
+        "name": "attackEvery",
+        "type": "number",
+        "default": 1,
+        "does": "seconds between attacks"
+      },
+      {
+        "name": "initial",
+        "type": "object | null",
+        "default": null,
+        "does": "restore brain snapshot"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "target",
+        "signature": "(actor) → actor | null",
+        "default": "return null",
+        "does": "return current target"
+      },
+      {
+        "name": "canSee",
+        "signature": "(actor,target) → boolean",
+        "default": "return true",
+        "does": "line of sight, cover, cloak or faction rule"
+      },
+      {
+        "name": "path",
+        "signature": "(from,to) → {x,z}[]",
+        "default": "straight to target",
+        "does": "supply a route"
+      },
+      {
+        "name": "move",
+        "signature": "(actor,position) → void",
+        "default": "assign position",
+        "does": "apply collision and move"
+      },
+      {
+        "name": "onAttack",
+        "signature": "(actor,target) → void",
+        "default": "nothing",
+        "does": "apply damage or a custom interaction"
+      },
+      {
+        "name": "onState",
+        "signature": "(mode,previous,actor) → void",
+        "default": "nothing",
+        "does": "update animation or awareness cues"
+      }
+    ]
+  },
+  {
+    "id": "recipe-book",
+    "file": "recipe-book.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Declarative recipe book",
+    "description": "A recipe layer over atomic resource-inventory. Checks ingredients, optional crafting stations and unlock rules, then applies the entire signed cost/output transaction at once. Failed crafts consume nothing.",
+    "tags": [
+      "crafting",
+      "recipes",
+      "economy",
+      "inventory",
+      "station",
+      "progression"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { list(), craft(id), update(), dispose() }",
+        "does": "A recipe layer over atomic resource-inventory. Checks ingredients, optional crafting stations and unlock rules, then applies the entire signed cost/output transaction at once. Failed crafts consume nothing."
+      }
+    ],
+    "options": [
+      {
+        "name": "recipes",
+        "type": "{id,title,cost,gain,station?}[]",
+        "default": [],
+        "does": "authored recipes"
+      },
+      {
+        "name": "inventory",
+        "type": "resource-inventory handle",
+        "default": "required",
+        "does": "resource bag to transact against"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "station",
+        "signature": "(object) → string | null",
+        "default": "return null",
+        "does": "current crafting station"
+      },
+      {
+        "name": "allowed",
+        "signature": "(recipe,object) → boolean",
+        "default": "return true",
+        "does": "recipe unlock rules"
+      },
+      {
+        "name": "onCraft",
+        "signature": "(recipe,object) → void",
+        "default": "nothing",
+        "does": "react to a committed craft"
+      },
+      {
+        "name": "onReject",
+        "signature": "(reason,id,object) → void",
+        "default": "nothing",
+        "does": "show a clear rejection"
+      }
+    ],
+    "uses": [
+      "resource-inventory"
+    ]
+  },
+  {
+    "id": "objective-journal",
+    "file": "objective-journal.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Objective dependency journal",
+    "description": "Persistent objective completion with prerequisite validation, cycle detection and cascading fact-based progress. Authors supply data instead of writing a new quest controller for every scenario.",
+    "tags": [
+      "quests",
+      "objectives",
+      "progression",
+      "journal",
+      "prerequisites",
+      "facts"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(facts), complete(id), completed, active, all, dispose() }",
+        "does": "Persistent objective completion with prerequisite validation, cycle detection and cascading fact-based progress. Authors supply data instead of writing a new quest controller for every scenario."
+      }
+    ],
+    "options": [
+      {
+        "name": "objectives",
+        "type": "{id,title?,requires?,fact?}[]",
+        "default": [],
+        "does": "objective graph"
+      },
+      {
+        "name": "completed",
+        "type": "string[]",
+        "default": [],
+        "does": "restore completed objectives"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onComplete",
+        "signature": "(objective,object) → void",
+        "default": "nothing",
+        "does": "react once to a completed objective"
+      },
+      {
+        "name": "onAll",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react when every objective is completed"
+      }
+    ]
+  },
+  {
+    "id": "save-codec",
+    "file": "save-codec.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Portable save codes",
+    "description": "Bounded versioned UTF-8 JSON save codes with accidental-corruption checksum, scenario identity, validation and migration hooks. No localStorage, downloads, account or backend required; works inside the warehouse sandbox. The checksum is not anti-cheat security.",
+    "tags": [
+      "save",
+      "load",
+      "persistence",
+      "portable",
+      "snapshot",
+      "migrations",
+      "sandbox"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { encode(state), decode(code), update(), dispose() }",
+        "does": "Bounded versioned UTF-8 JSON save codes with accidental-corruption checksum, scenario identity, validation and migration hooks. No localStorage, downloads, account or backend required; works inside the warehouse sandbox. The checksum is not anti-cheat security."
+      }
+    ],
+    "options": [
+      {
+        "name": "scenario",
+        "type": "string",
+        "default": "required",
+        "does": "scenario identity"
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "default": 1,
+        "does": "current save version"
+      },
+      {
+        "name": "maxBytes",
+        "type": "integer",
+        "default": 262144,
+        "does": "maximum decoded UTF-8 payload"
+      },
+      {
+        "name": "migrations",
+        "type": "Record<version,function>",
+        "default": {},
+        "does": "one version migration per step"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "validate",
+        "signature": "(state) → boolean",
+        "default": "return true",
+        "does": "validate game-specific state before encode and after migrations"
+      }
+    ]
+  },
+  {
+    "id": "survival-kit",
+    "file": "survival-kit.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Data-driven survival kit",
+    "description": "A compact engine-independent survival simulation assembled from warehouse parts. Authored maps, persistent searchable containers and doors, weighted loot, crafting, noise-aware navigating enemies, melee, stamina, ward fuel, door braces, decoys, a fact-based objective chain, extraction and validated save/restore. Change scenario data to build another town; no per-player model calls or new game server.",
+    "tags": [
+      "framework",
+      "survival",
+      "starter",
+      "cheap",
+      "data-driven",
+      "crafting",
+      "stealth",
+      "persistence",
+      "town"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scenario, opts) → { update(dt,input), state, snapshot(), validateSnapshot(s), load(s), reset(), interact(id?), nearest(), craft(id), recipes(), withdraw(key,count), brace(), heal(), decoy(), attack(), navigation, scenario, locations, dispose() }",
+        "does": "A compact engine-independent survival simulation assembled from warehouse parts. Authored maps, persistent searchable containers and doors, weighted loot, crafting, noise-aware navigating enemies, melee, stamina, ward fuel, door braces, decoys, a fact-based objective chain, extraction and validated save/restore. Change scenario data to build another town; no per-player model calls or new game server."
+      }
+    ],
+    "options": [
+      {
+        "name": "modules",
+        "type": "Record<string,module>",
+        "default": "required",
+        "does": "inject the pinned supporting modules listed in uses"
+      },
+      {
+        "name": "recipes",
+        "type": "recipe[]",
+        "default": [],
+        "does": "data-driven crafting rules"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onEvent",
+        "signature": "({type,text,...}) → void",
+        "default": "nothing",
+        "does": "connect simulation events to UI, sound or telemetry"
+      }
+    ],
+    "uses": [
+      "seeded-random",
+      "grid-navigation",
+      "perception-brain",
+      "recipe-book",
+      "objective-journal",
+      "health",
+      "resource-inventory"
+    ]
+  },
+  {
+    "id": "survival-town-view",
+    "file": "survival-town-view.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Survival town 3D adapter",
+    "description": "Reusable Three.js view for survival-kit scenarios: instanced walls, dynamic doors, actors, loot markers, ward lighting, day/night tint and minimap. Game rules remain in the headless simulation, so new towns share one renderer. Models are injected and optional.",
+    "tags": [
+      "framework",
+      "world",
+      "renderer",
+      "town",
+      "minimap",
+      "instancing",
+      "3d",
+      "survival"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene, opts) → { update(dt), drawMap(canvas), root, player, dispose() }",
+        "does": "Reusable Three.js view for survival-kit scenarios: instanced walls, dynamic doors, actors, loot markers, ward lighting, day/night tint and minimap. Game rules remain in the headless simulation, so new towns share one renderer. Models are injected and optional."
+      }
+    ],
+    "options": [
+      {
+        "name": "session",
+        "type": "survival-kit handle",
+        "default": "required",
+        "does": "simulation to render"
+      },
+      {
+        "name": "models",
+        "type": "{player?,cache?,lamp?}",
+        "default": {},
+        "does": "optional normalized model prototypes"
+      },
+      {
+        "name": "accent",
+        "type": "color",
+        "default": 14006140,
+        "does": "warm marker color"
+      }
+    ],
+    "hooks": [],
+    "uses": [
+      "survival-kit"
+    ]
+  },
+  {
+    "id": "no-road-home-scenario",
+    "file": "survival/no-road-home.json",
+    "title": "Scenario: No Road Home",
+    "description": "An editable four-building town: seeded loot, four noise-aware visitors, doors, shelter stash, crafting, ward fuel, radio repair and extraction. Uses survival-kit scenario v1. Fork this data file to make a new game cheaply.",
+    "tags": [
+      "scenario",
+      "json",
+      "survival",
+      "town",
+      "starter"
+    ],
+    "type": "asset",
+    "mime": "application/json",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "survival-recipe-pack",
+    "file": "survival/recipes.json",
+    "title": "Survival recipe pack",
+    "description": "Four editable resource recipes: lockpick, field dressing, noise decoy and door brace. Costs and gains are data, consumed atomically by recipe-book.",
+    "tags": [
+      "recipes",
+      "json",
+      "crafting",
+      "survival",
+      "data"
+    ],
+    "type": "asset",
+    "mime": "application/json",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "survival-scenario-schema",
+    "file": "survival/scenario.schema.json",
+    "title": "Survival scenario schema v1",
+    "description": "JSON Schema for the small authored-map survival format. Documents cells, timing, resources, doors, locations, patrols and objectives; the kit also validates cross-field constraints at runtime.",
+    "tags": [
+      "schema",
+      "json",
+      "authoring",
+      "survival",
+      "framework"
+    ],
+    "type": "asset",
+    "mime": "application/json",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "no-road-home",
+    "file": "no-road-home.html",
+    "type": "game",
+    "title": "No Road Home",
+    "description": "A 3D survival starter built from a small scenario file. Scavenge four buildings, craft useful tools, manage pack space, distract noise-aware visitors, repair the emergency radio and reach the south road. Doors and loot persist; portable save codes restore the run. WASD moves, Shift runs, C creeps, E interacts, Space swings, I opens crafting/save, F heals, Q throws a decoy, B braces a door. The simulation runs locally without model calls or a game server.",
+    "tags": [
+      "3d",
+      "survival",
+      "framework",
+      "starter",
+      "stealth",
+      "crafting",
+      "persistent",
+      "cheap",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "seeded-random",
+      "grid-navigation",
+      "perception-brain",
+      "recipe-book",
+      "objective-journal",
+      "save-codec",
+      "survival-kit",
+      "survival-town-view",
+      "no-road-home-scenario",
+      "survival-recipe-pack",
+      "health",
+      "resource-inventory",
+      "expedition-shell",
+      "ambient-motes",
+      "touch-controls",
+      "garden-caretaker",
+      "ph-wooden-crate-01",
+      "ph-vintage-oil-lamp"
+    ]
+  }
+]

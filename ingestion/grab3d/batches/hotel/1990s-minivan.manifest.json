@@ -1,0 +1,47 @@
+{
+ "slug": "1990s-minivan",
+ "triangles": 17494,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "1990s-minivan.glb",
+   "bytes": 1183792
+  },
+  "blend": {
+   "name": "1990s-minivan.blend",
+   "bytes": 1078627
+  },
+  "fbx": {
+   "name": "1990s-minivan.fbx",
+   "bytes": 2170908
+  },
+  "obj": {
+   "name": "1990s-minivan-obj.zip",
+   "bytes": 1145511
+  },
+  "usdz": {
+   "name": "1990s-minivan.usdz",
+   "bytes": 1822538
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "1.987 x 4.574 x 1.880",
+  "triangles": 17494,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-19",
+  "real_size": "1990s minivan (MPV, family van), approx. 4.6 x 1.9 x 1.9 m (L x W x H), wheel diameter 0.66 m",
+  "notes": "generic, brand-free rounded 1990s 'jelly bean' minivan: one-box shape, steeply raked windscreen flowing into the bonnet, body-colour bumpers with grey rub strips, wide grey side cladding, clear-glass headlights, tall slim tail lights; no moving doors; front faces -Y; 4 wheels are separate objects with origin on the hub (rotate around local X to roll); hollow cabin with transparent windows and three seat rows; blank number plates, no brand, no text",
+  "set": "Cozy Retro Cars Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

@@ -42,7 +42,7 @@
     <div class="inventory-heading"><h2 id="inventory-title">What's on the <span>shelves.</span></h2><span id="stock-count" role="status">Counting stock…</span></div>
     <div class="inventory-tools">
       <div class="kinds" role="group" aria-label="Show">
-        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button>
+        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
       </div>
       <label class="search-box"><span class="search-symbol" aria-hidden="true">⌕</span><input type="search" id="q" placeholder="Rummage through the warehouse…" aria-label="Search the warehouse"></label>
     </div>
@@ -148,9 +148,14 @@ function rank(q) {
     return games.map((r) => [r, score(r)]).filter(([, s]) => s).sort((a, b) => b[1] - a[1]).map(([r]) => r);
 }
 
+const LABELS = { game: ["Playable", "GAME CARTRIDGE", "Play game →"], logic: ["Mechanics", "BEHAVIOR MODULE", "View code →"],
+    skill: ["Know-how", "AGENT SKILL", "Read skill →"], source: ["Reference", "SOURCE MIRROR", "View code →"] };
+const TEXT = { logic: "js", skill: "md", source: "code" }; // what a text part's stored JSON holds its file under
 function stockGlyph(r) {
     // Catalog pictograms, not screenshots: each type gets a recognizable stock marker.
-    const shapes = r.type === "logic"
+    const shapes = r.type === "skill"
+        ? '<path d="M20 16h44l16 16v52H20Z" fill="currentColor" opacity=".15" stroke="currentColor" stroke-width="3"/><path d="M32 44h36M32 56h36M32 68h24" stroke="currentColor" stroke-width="5"/>'
+        : r.type === "logic" || r.type === "source"
         ? '<path d="M30 29 9 50l21 21M70 29l21 21-21 21M59 18 41 82" fill="none" stroke="currentColor" stroke-width="7"/>'
         : r.type === "asset"
         ? '<path d="m50 10 36 20v40L50 90 14 70V30Z" fill="currentColor" opacity=".15"/><path d="m50 10 36 20v40L50 90 14 70V30Zm0 40 36-20M50 50 14 30m36 20v40" fill="none" stroke="currentColor" stroke-width="3"/>'
@@ -160,8 +165,8 @@ function stockGlyph(r) {
 function render() {
     renderCategories();
     const hits = rank($("q").value);
-    for (const type of ["game", "asset", "logic"]) $("count-" + type).textContent = String(view.records.filter(r => r.type === type).length).padStart(2, "0");
-    const noun = kind === "logic" ? "logic parts" : kind + (hits.length === 1 ? "" : "s");
+    for (const type of ["game", "asset", "logic", "skill", "source"]) $("count-" + type).textContent = String(view.records.filter(r => r.type === type).length).padStart(2, "0");
+    const noun = kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
     $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} ${noun} ${$("q").value.trim() ? "found" : "in this bin"}`;
     $("grid").replaceChildren(...hits.map((r) => {
         const b = document.createElement("button");
@@ -172,14 +177,14 @@ function render() {
         const hash = [...r.id].reduce((n, c) => n + c.charCodeAt(0), 0);
         b.style.setProperty("--stock-color", palette[hash % palette.length]);
         b.querySelector(".stock-number").textContent = `STOCK / ${number}`;
-        b.querySelector(".stock-type").textContent = r.type === "game" ? "Playable" : r.type === "logic" ? "Mechanics" : "Raw material";
-        b.querySelector(".preview-label").textContent = r.type === "game" ? "GAME CARTRIDGE" : r.type === "logic" ? "BEHAVIOR MODULE" : r.payload.mime?.split("/")[1]?.toUpperCase() ?? "ASSET";
+        b.querySelector(".stock-type").textContent = LABELS[r.type]?.[0] ?? "Raw material";
+        b.querySelector(".preview-label").textContent = LABELS[r.type]?.[1] ?? r.payload.mime?.split("/")[1]?.toUpperCase() ?? "ASSET";
         b.querySelector(".preview-code").textContent = `SW—${number}`;
         b.querySelector("h2").textContent = r.payload.title;
         b.querySelector(".d").textContent = r.payload.description;
         b.querySelector(".tags").textContent = r.payload.tags.slice(0, 5).map(t => "#" + t).join(" ");
         b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (r.payload.uses?.length ? ` · uses ${r.payload.uses.length}` : "");
-        b.querySelector(".open-label").textContent = r.type === "game" ? "Play game →" : r.type === "logic" ? "View code →" : "View asset →";
+        b.querySelector(".open-label").textContent = LABELS[r.type]?.[2] ?? "View asset →";
         b.querySelector(".license-label").textContent = r.payload.license ?? "License unlisted";
         b.onclick = () => play(r);
         return b;
@@ -276,9 +281,9 @@ async function play(r) {
         $("restart").disabled = false;
     } else if (r.payload.mime?.startsWith("image/")) {
         const img = new Image(); img.src = url; img.alt = r.payload.title; $("view").replaceChildren(img);
-    } else if (r.type === "logic") {
+    } else if (TEXT[r.type]) {
         $("view").textContent = "loading…";
-        try { const { js } = await (await fetch(url)).json(); if (request !== playerRequest || !$("player").open) return; $("view").textContent = js; }
+        try { const text = (await (await fetch(url)).json())[TEXT[r.type]]; if (request !== playerRequest || !$("player").open) return; $("view").textContent = (r.payload.origin ? `// from ${r.payload.origin.repo} @ ${r.payload.origin.commit} : ${r.payload.origin.path}\n\n` : "") + text; }
         catch { if (request !== playerRequest || !$("player").open) return; $("view").textContent = "couldn't load this from storage"; }
     } else {
         const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = `${r.payload.mime ?? "file"} · open`;

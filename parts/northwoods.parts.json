@@ -1,0 +1,538 @@
+[
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "winter-pine-spray",
+    "file": "northwoods/pine-spray.png",
+    "title": "Winter pine: snowy needle spray atlas",
+    "description": "Original procedural RGBA pine sprig: fine needles and broken snow coverage. Alpha-test at 0.45, double-sided, sRGB. Use on crossed branch cards. Generated without photographs from scripts/make-northwoods-textures.mjs; CC0.",
+    "type": "asset",
+    "mime": "image/png",
+    "tags": [
+      "northwoods",
+      "winter",
+      "pine",
+      "texture",
+      "original",
+      "procedural",
+      "cc0"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "winter-pine-bark",
+    "file": "northwoods/pine-bark.png",
+    "title": "Winter pine: procedural bark texture",
+    "description": "Original 512px procedural brown-gray vertical bark furrows. sRGB albedo; optionally reuse as bump at low strength. No photographs. CC0 source generator included.",
+    "type": "asset",
+    "mime": "image/png",
+    "tags": [
+      "northwoods",
+      "winter",
+      "pine",
+      "texture",
+      "original",
+      "procedural",
+      "cc0"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "northwoods-layout",
+    "file": "northwoods-layout.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Northwoods: deterministic ecology WFC & terrain",
+    "description": "Renderer-independent weighted entropy wave function collapse with adjacency propagation and bounded deterministic restarts; pine, mixed, maple and glade patches. A continuous carved trail, analytic rolling terrain, stable tree transforms and glacial erratic landmark. Same seed and options generate identical data for peer-to-peer worlds. Throws on contradictory rules. Original code dedicated to CC0.",
+    "tags": [
+      "northwoods",
+      "winter",
+      "procedural",
+      "forest",
+      "remix",
+      "seeded",
+      "cc0"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) \u2192 { layout, update(dt), dispose() }",
+        "does": "Generate an immutable-by-convention layout for any renderer."
+      },
+      {
+        "name": "generate",
+        "signature": "generate(opts) \u2192 layout",
+        "does": "Seeded ecology grid, tree transforms, spawn, landmarks, heightAt and trailX."
+      },
+      {
+        "name": "collapse",
+        "signature": "collapse(opts) \u2192 {width,height,cells,attempt}",
+        "does": "Generic weighted tile constraint solver, with custom grammar and fixed cells."
+      },
+      {
+        "name": "rng",
+        "signature": "rng(seed) \u2192 random()",
+        "does": "Deterministic PRNG."
+      },
+      {
+        "name": "heightAt",
+        "signature": "heightAt(x,z,seed) \u2192 number",
+        "does": "Continuous terrain sample."
+      },
+      {
+        "name": "trailX",
+        "signature": "trailX(z,seed) \u2192 number",
+        "does": "Continuous trail centerline."
+      },
+      {
+        "name": "DEFAULT_TILES",
+        "signature": "Array<Tile>",
+        "does": "Editable four-biome symmetric adjacency grammar."
+      }
+    ],
+    "options": [
+      {
+        "name": "seed",
+        "type": "uint32",
+        "default": 1848,
+        "does": "Layout identity; transmit once to peers."
+      },
+      {
+        "name": "size",
+        "type": "number",
+        "default": 320,
+        "does": "Square world size in meters."
+      },
+      {
+        "name": "cellSize",
+        "type": "number",
+        "default": 16,
+        "does": "WFC ecology cell width."
+      },
+      {
+        "name": "density",
+        "type": "number",
+        "default": 1,
+        "does": "Tree count multiplier, 0\u20135."
+      },
+      {
+        "name": "tiles",
+        "type": "Tile[]",
+        "default": "DEFAULT_TILES",
+        "does": "Each tile has id, positive weight and neighbors; use known biome IDs with generate, any IDs with collapse."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "place",
+        "signature": "(tree, {random,grid}) \u2192 false | void",
+        "does": "Reject or modify tree placements."
+      },
+      {
+        "name": "terrain",
+        "signature": "(x,z,seed) \u2192 number",
+        "does": "Replace terrain height; default heightAt."
+      },
+      {
+        "name": "path",
+        "signature": "(z,seed) \u2192 number",
+        "does": "Replace continuous trail centerline; default trailX."
+      },
+      {
+        "name": "onReady",
+        "signature": "(layout) \u2192 void",
+        "does": "Receive generated layout."
+      }
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "northwoods-trees",
+    "file": "northwoods-trees.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Northwoods: branching winter tree generator",
+    "description": "Original geometry generator for snow-laden red-pine-inspired conifers and scraggly leafless sugar-maple-inspired hardwoods. Radial branch whorls, secondary needle sprays, recursive hardwood forks and snow pillows. Separate vertex-colored bark, needle and snow meshes support instancing, recoloring and GLB export. Botanical approximations, no external textures.",
+    "tags": [
+      "northwoods",
+      "winter",
+      "procedural",
+      "forest",
+      "remix",
+      "seeded",
+      "cc0"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(parent, opts) \u2192 {root,update(dt),dispose()}",
+        "does": "Create, attach and own a tree."
+      },
+      {
+        "name": "makeTree",
+        "signature": "makeTree(opts) \u2192 THREE.Group",
+        "does": "Generate a stand-alone tree in meters, rooted at origin."
+      }
+    ],
+    "options": [
+      {
+        "name": "species",
+        "type": "string",
+        "default": "pine",
+        "does": "pine or maple."
+      },
+      {
+        "name": "seed",
+        "type": "uint32",
+        "default": 1,
+        "does": "Branch variation."
+      },
+      {
+        "name": "snow",
+        "type": "number",
+        "default": 0.8,
+        "does": "Snow coverage probability, 0\u20131."
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "17 pine / 14 maple",
+        "does": "Tree height in meters."
+      },
+      {
+        "name": "needleTexture",
+        "type": "THREE.Texture",
+        "does": "Optional alpha-tested pine atlas (baked snow coverage)."
+      },
+      {
+        "name": "barkTexture",
+        "type": "THREE.Texture",
+        "does": "Optional bark albedo/bump map; caller-owned."
+      },
+      {
+        "name": "detail",
+        "type": "number",
+        "default": 1,
+        "does": "1 for full branches; less than 1 uses fewer pine whorls and shallower maple forks for distant instances."
+      }
+    ],
+    "hooks": []
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "northwoods-world",
+    "file": "northwoods-world.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Northwoods: instanced snowy forest renderer",
+    "description": "Three.js forest world with distance-selected instanced branch detail and batched tree variants, rolling vertex-colored snow terrain, optional scanned snow map, footsteps, glacial rocks, snowfall, fog, hemisphere lighting and camera-following sun shadows. Accepts pure layout data and a replaceable tree factory. No network side effects beyond the optional supplied texture URL.",
+    "tags": [
+      "northwoods",
+      "winter",
+      "procedural",
+      "forest",
+      "remix",
+      "seeded",
+      "cc0"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene, opts) \u2192 {root,ready,layout,footprint(x,z,yaw,side),update(dt,viewer),dispose()}",
+        "does": "Build renderable winter environment; ready resolves after optional texture attempt."
+      }
+    ],
+    "options": [
+      {
+        "name": "layout",
+        "type": "Layout",
+        "default": "required",
+        "does": "Output of northwoods-layout.generate()."
+      },
+      {
+        "name": "trees",
+        "type": "module",
+        "default": "required unless treeFactory supplied",
+        "does": "northwoods-trees module."
+      },
+      {
+        "name": "snowTexture",
+        "type": "URL",
+        "default": "none",
+        "does": "Optional repeatable snow albedo; a procedural fallback renders immediately."
+      },
+      {
+        "name": "snowfall",
+        "type": "integer",
+        "default": 650,
+        "does": "Viewer-centered snow particle count."
+      },
+      {
+        "name": "needleTexture",
+        "type": "THREE.Texture",
+        "does": "Shared original pine spray atlas, caller-owned."
+      },
+      {
+        "name": "barkTexture",
+        "type": "THREE.Texture",
+        "does": "Shared bark map, caller-owned."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "treeFactory",
+        "signature": "(opts) \u2192 THREE.Group",
+        "does": "Replace tree meshes; default trees.makeTree."
+      },
+      {
+        "name": "onReady",
+        "signature": "(world) \u2192 void",
+        "does": "Receive world API."
+      }
+    ],
+    "uses": [
+      "northwoods-layout",
+      "northwoods-trees"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "snow-walker",
+    "file": "snow-walker.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "Snow walker: terrain-following first-person controller",
+    "description": "First-person WASD/arrows walking, Shift hurry, collision sliding against tree circles and bounds, terrain following, gentle step bob, footsteps, mouse drag and optional pointer lock, touch input methods, focus-loss key cleanup and disposal. Works in opaque sandboxed game iframes without pointer lock permission.",
+    "tags": [
+      "northwoods",
+      "winter",
+      "procedural",
+      "forest",
+      "remix",
+      "seeded",
+      "cc0"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(camera, opts) \u2192 {update(dt),dispose(),lock(),look(dx,dy),setLook(yaw,pitch),setTouch(x,z),clear(),yaw,distance}",
+        "does": "Attach camera movement and input lifecycle."
+      }
+    ],
+    "options": [
+      {
+        "name": "element",
+        "type": "HTMLElement",
+        "default": "document.body",
+        "does": "Mouse input surface."
+      },
+      {
+        "name": "bounds",
+        "type": "number",
+        "default": 150,
+        "does": "Half width of playable square."
+      },
+      {
+        "name": "obstacles",
+        "type": "Circle[]",
+        "default": [],
+        "does": "x,z,radius collision data."
+      },
+      {
+        "name": "speed",
+        "type": "number",
+        "default": 2.2,
+        "does": "Walking meters per second."
+      },
+      {
+        "name": "eyeHeight",
+        "type": "number",
+        "default": 1.7,
+        "does": "Camera height above terrain."
+      },
+      {
+        "name": "sensitivity",
+        "type": "number",
+        "default": 0.002,
+        "does": "Radians per pixel."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "heightAt",
+        "signature": "(x,z) \u2192 number",
+        "does": "Terrain height sampler."
+      },
+      {
+        "name": "onStep",
+        "signature": "({x,z,yaw,distance,side}) \u2192 void",
+        "does": "Footstep audio, decals or replicated events."
+      },
+      {
+        "name": "canMove",
+        "signature": "() \u2192 boolean",
+        "does": "Pause or disable controller."
+      }
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "winter-audio",
+    "file": "winter-audio.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Winter: synthesized wind & snow footsteps",
+    "description": "Sample-free Web Audio winter soundscape. Low-pass wind noise and short crunchy footfalls, user-gesture start, volume, suspend/resume and complete disposal. All sound generated locally; no recordings.",
+    "tags": [
+      "northwoods",
+      "winter",
+      "procedural",
+      "forest",
+      "remix",
+      "seeded",
+      "cc0"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) \u2192 {start(),pause(),setVolume(v),step(event),update(dt),dispose()}",
+        "does": "Create sound engine lazily, on first start."
+      }
+    ],
+    "options": [
+      {
+        "name": "volume",
+        "type": "number",
+        "default": 0.22,
+        "does": "Master volume, 0\u20131."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onStep",
+        "signature": "(event) \u2192 void",
+        "does": "Observe footfall events."
+      }
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "winter-pine",
+    "file": "northwoods/winter-pine.glb",
+    "type": "asset",
+    "title": "Snow-laden red pine",
+    "mime": "model/gltf-binary",
+    "tags": [
+      "northwoods",
+      "tree",
+      "winter",
+      "pine",
+      "gltf",
+      "original",
+      "snow"
+    ],
+    "description": "Original CC0 branching geometry, generated from northwoods-trees (seed 50). Root at origin, Y up, meters. Embedded original CC0 procedural textures and separate meshes for bark, snow and needles. Rebuild or change branch structure with scripts/make-northwoods-assets.mjs. Botanical approximation.",
+    "uses": [
+      "northwoods-trees",
+      "winter-pine-bark",
+      "winter-pine-spray"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "winter-maple",
+    "file": "northwoods/winter-maple.glb",
+    "type": "asset",
+    "title": "Bare winter sugar maple",
+    "mime": "model/gltf-binary",
+    "tags": [
+      "northwoods",
+      "tree",
+      "winter",
+      "maple",
+      "gltf",
+      "original",
+      "snow"
+    ],
+    "description": "Original CC0 branching geometry, generated from northwoods-trees (seed 50). Root at origin, Y up, meters. Embedded original CC0 procedural textures and separate meshes for bark, snow. Rebuild or change branch structure with scripts/make-northwoods-assets.mjs. Botanical approximation.",
+    "uses": [
+      "northwoods-trees",
+      "winter-pine-bark"
+    ]
+  },
+  {
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "id": "northwoods",
+    "file": "northwoods.html",
+    "type": "game",
+    "title": "Where the Pines Keep Winter",
+    "description": "An unhurried first-person winter walk through a procedurally grown northern Wisconsin inspired forest. Snow-laden pines, bare maples, rolling snow, glacial stones, falling flakes, footprints and synthesized wind and crunching footsteps. Weighted-entropy WFC ecology, deterministic seeds, instanced geometry and continuous trail. WASD/arrows, drag to look, Shift to hurry; touch controls. Five reusable CC0 logic modules and two stand-alone tree models published alongside. Solo demonstration; deterministic layout is ready for peer-to-peer remixes.",
+    "uses": [
+      "northwoods-layout",
+      "northwoods-trees",
+      "northwoods-world",
+      "snow-walker",
+      "winter-audio",
+      "snow-texture",
+      "winter-pine-spray",
+      "winter-pine-bark"
+    ],
+    "tags": [
+      "walking-sim",
+      "northwoods",
+      "wisconsin",
+      "winter",
+      "forest",
+      "snow",
+      "procedural",
+      "wfc",
+      "atmospheric",
+      "first-person",
+      "mobile"
+    ]
+  },
+  {
+    "id": "northwoods-remix-kit",
+    "file": "northwoods/northwoods-remix-kit.zip",
+    "type": "asset",
+    "title": "Northwoods: complete CC0 remix kit",
+    "description": "Portable source starter for Where the Pines Keep Winter. Includes five editable logic modules, snowy pine and bare maple GLBs, original needle and bark texture generators, scanned CC0 Poly Haven snow, rebuild scripts, a runnable walking demo and detailed WFC/P2P composition guide. Run node prepare.mjs and serve the folder. No install required for the demo; rebuilding GLBs requires three@0.170.0. Solo demo; transport not included.",
+    "mime": "application/zip",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse; snow texture by Poly Haven",
+    "tags": [
+      "northwoods",
+      "starter",
+      "cc0",
+      "source",
+      "kit",
+      "procedural",
+      "wfc",
+      "p2p",
+      "forest",
+      "winter"
+    ],
+    "uses": [
+      "winter-pine-spray",
+      "winter-pine-bark",
+      "northwoods-layout",
+      "northwoods-trees",
+      "northwoods-world",
+      "snow-walker",
+      "winter-audio",
+      "winter-pine",
+      "winter-maple",
+      "northwoods",
+      "snow-texture"
+    ]
+  }
+]

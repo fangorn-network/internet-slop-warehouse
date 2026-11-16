@@ -1,0 +1,45 @@
+{
+  "realUIRoutes": true,
+  "routeFrames": [
+    78,
+    67,
+    127
+  ],
+  "discoveries": 3,
+  "builds": [
+    "shelter",
+    "hearth",
+    "workbench",
+    "bedroll",
+    "lantern"
+  ],
+  "milestones": [
+    {
+      "title": "Discover three places",
+      "done": true
+    },
+    {
+      "title": "Build an open shelter",
+      "done": true
+    },
+    {
+      "title": "Establish a hearth",
+      "done": true
+    },
+    {
+      "title": "Build a workbench",
+      "done": true
+    },
+    {
+      "title": "Make camp comfortable",
+      "done": true
+    }
+  ],
+  "supplies": {
+    "wood": 6,
+    "stone": 6,
+    "cloth": 0
+  },
+  "rank": 2,
+  "errors": []
+}

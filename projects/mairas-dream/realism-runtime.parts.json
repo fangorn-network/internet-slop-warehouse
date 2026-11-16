@@ -1,0 +1,279 @@
+[
+  {
+    "id": "qt-thrift-cashier",
+    "file": "../projects/mairas-dream/assets/characters/cashier.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Quaternius · cashier animated civilian",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "tags": [
+      "character",
+      "human",
+      "rigged",
+      "animated",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "CC0 cashier from Quaternius Ultimate Modular Women, acquired from agentkaerf/FreeModels mirror of the official pack. https://quaternius.com/packs/ultimatemodularwomen.html. Embedded glTF repacked to GLB; retained idle/walk/run/interact/hit/wave clips. Geometry, rig and original materials preserved."
+  },
+  {
+    "id": "mairas-store-display-lods",
+    "file": "../projects/mairas-dream/assets/display-lods.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Maira’s store · index-only display LODs",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "lod",
+      "optimization",
+      "polyhaven",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Index-only display simplification for 26 CC0 model IDs; source hashes included. Original vertex attributes retained; full geometry used for inspection. Locked borders except permissive FBX book seams.",
+    "uses": [
+      "ph-ceramic-vase-03",
+      "ph-desk-lamp-arm-01",
+      "ph-pot-enamel-01",
+      "ph-vintage-electric-kettle",
+      "ph-boombox",
+      "ph-mounted-fluorescent-lights",
+      "ph-cross-pein-hammer",
+      "ph-cashregister-01",
+      "ph-rubber-boots",
+      "ph-sofa-02",
+      "ph-worn-metal-rack",
+      "ph-thrift-mug",
+      "ph-thrift-plate",
+      "ph-thrift-saucer",
+      "cc0-ceramic-mug",
+      "cc0-ceramic-neighbor-mug",
+      "ph-thrift-book",
+      "ph-thrift-book-alt",
+      "ph-shelf-01",
+      "ph-wooden-bookshelf-worn",
+      "ph-armchair-01",
+      "ph-painted-wooden-cabinet-02",
+      "ph-woodentable-01"
+    ]
+  },
+  {
+    "id": "mairas-stock-layout",
+    "file": "../projects/mairas-dream/stock.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Dense thrift-store stock · 1,300 individual items",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "inventory",
+      "shopping",
+      "thrift-store",
+      "layout",
+      "cc0"
+    ],
+    "description": "Fourteen shelves, six clothing fixtures and shoe wall, 1,300 stable independently collectable/returnable items, exact goal placements, categories, variants and integer-cent prices.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{transformItem}) → {catalog,shelves,racks,update,dispose}",
+        "does": "Create a fresh merchandise catalog, optionally transform each item."
+      },
+      {
+        "name": "makeStock",
+        "signature": "makeStock() → Item[]",
+        "does": "Generate all unique item records."
+      },
+      {
+        "name": "catalog",
+        "signature": "Item[]",
+        "does": "Default complete item catalog."
+      },
+      {
+        "name": "shelves",
+        "signature": "Fixture[]",
+        "does": "Shelf positions and categories."
+      },
+      {
+        "name": "racks",
+        "signature": "Fixture[]",
+        "does": "Clothing fixture positions."
+      },
+      {
+        "name": "specials",
+        "signature": "Item[]",
+        "does": "Nine named errand purchases."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "transformItem",
+        "signature": "(item) → item",
+        "default": "identity",
+        "does": "Override placement, price or visual metadata for a new catalog."
+      }
+    ]
+  },
+  {
+    "id": "mairas-shopping-rules",
+    "file": "../projects/mairas-dream/rules.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Maira’s Dream · escalating shopping and stealth rules",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "shopping",
+      "stealth",
+      "levels",
+      "inventory",
+      "cats",
+      "cc0"
+    ],
+    "description": "Integer-cent shopping, returns, tag switching, concealment, witnesses and campaign budgets. Escape damage requires local fire inputs; car health never drains from time alone.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{seed,level}) → Run",
+        "does": "Create a level-specific shopping run with update and dispose."
+      },
+      {
+        "name": "createRun",
+        "signature": "createRun(seed?,level=1) → Run",
+        "does": "Actions and state for a complete visit."
+      },
+      {
+        "name": "levelConfig",
+        "signature": "levelConfig(level) → Config",
+        "does": "Budget, cats, speed, fire and manager difficulty."
+      },
+      {
+        "name": "catalog",
+        "signature": "Item[]",
+        "does": "Individually identified stock."
+      },
+      {
+        "name": "objectives",
+        "signature": "Objective[]",
+        "does": "Three errand definitions."
+      }
+    ],
+    "uses": [
+      "mairas-stock-layout"
+    ]
+  },
+  {
+    "id": "mairas-shop-controls",
+    "file": "../projects/mairas-dream/input.js",
+    "type": "logic",
+    "kind": "controller",
+    "title": "Shop controls · quick pickup and separate inspection",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "first-person",
+      "input",
+      "touch",
+      "shopping",
+      "cc0"
+    ],
+    "description": "WASD/arrows, drag and optional pointer-lock mouse look, sprint, crouch, tool/tag holds, immediate use and separate inspection. Pointer capture, multi-touch protection, clear on blur and disposal. Derived from the warehouse FPS input contract.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(canvas,{onUse,onInspect,onMenu}) → Controls",
+        "does": "Input state and callbacks for desktop/touch first-person shopping."
+      }
+    ],
+    "uses": [
+      "fps-controls"
+    ],
+    "hooks": [
+      {
+        "name": "onUse",
+        "signature": "() → void",
+        "does": "Quick pickup/use."
+      },
+      {
+        "name": "onInspect",
+        "signature": "() → void",
+        "does": "Open or close inspection."
+      },
+      {
+        "name": "onMenu",
+        "signature": "() → void",
+        "does": "Pause or close current view."
+      }
+    ]
+  },
+  {
+    "id": "mairas-store-sound",
+    "file": "../projects/mairas-dream/sound.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Thrift-store audio · footsteps, Foley and NPC murmurs",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "audio",
+      "footsteps",
+      "foley",
+      "npc",
+      "shopping",
+      "cc0"
+    ],
+    "description": "User-gesture Web Audio with decoded Kenney clips, varied concrete footsteps, material impacts, cashier/shopper/manager formant murmurs, hum, doors, checkout, cats, fire and tool hiss. Explicit mute/dispose and diagnostics. No hosted voice service.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{bankURL}) → Sound",
+        "does": "Create reusable store sound methods with update/dispose."
+      },
+      {
+        "name": "createSound",
+        "signature": "createSound({bankURL}?) → Sound",
+        "does": "Create an audio engine; call start from a user gesture."
+      }
+    ],
+    "options": [
+      {
+        "name": "bankURL",
+        "type": "URL",
+        "does": "JSON bank of Ogg data URLs; defaults to pinned kenney-thrift-foley or local source bank."
+      }
+    ],
+    "uses": [
+      "kenney-thrift-foley"
+    ]
+  },
+  {
+    "id": "mairas-parking-director",
+    "file": "../projects/mairas-dream/parking.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Continuous cat parking-lot director",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "description": "Idle first cat, staged match reveal and local ignition events, staggered later cats and continuous meter-scale movement around an authored lot. No positional wrapping. Rendering independent.",
+    "tags": [
+      "cat",
+      "navigation",
+      "state-machine",
+      "thrift-store"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,options) → Director",
+        "does": "Create a parking director; update with seconds and player position."
+      },
+      {
+        "name": "createParkingDirector",
+        "signature": "createParkingDirector({count,speed,onIgnite,onReveal,onState}) → Director",
+        "does": "Create idle/reveal/ignition/walking states, start and update methods, observable cat positions."
+      }
+    ]
+  }
+]

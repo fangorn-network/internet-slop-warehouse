@@ -1,0 +1,53 @@
+[
+  {
+    "id": "ph-misty-pines",
+    "file": "haven/ph-misty-pines.hdr",
+    "title": "Misty Pines forest environment",
+    "type": "asset",
+    "mime": "image/vnd.radiance",
+    "author": "Greg Zaal",
+    "license": "CC0-1.0",
+    "tags": [
+      "forest",
+      "pbr",
+      "hdri",
+      "realistic",
+      "polyhaven"
+    ],
+    "description": "Misty Pines forest environment, 1K. Source https://polyhaven.com/a/misty_pines, by Greg Zaal. CC0. Equirectangular Radiance HDR, load with RGBELoader for image-based lighting."
+  },
+  {
+    "id": "ph-forest-floor-normal",
+    "file": "haven/ph-forest-floor-normal.jpg",
+    "title": "Forest floor OpenGL normal map",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "forest",
+      "pbr",
+      "texture",
+      "realistic",
+      "polyhaven"
+    ],
+    "description": "Forest floor OpenGL normal map, 1K. Source https://polyhaven.com/a/forrest_ground_01, by Rob Tuytel. CC0. OpenGL +Y tangent-space, linear data."
+  },
+  {
+    "id": "ph-forest-floor-roughness",
+    "file": "haven/ph-forest-floor-roughness.jpg",
+    "title": "Forest floor roughness map",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "forest",
+      "pbr",
+      "texture",
+      "realistic",
+      "polyhaven"
+    ],
+    "description": "Forest floor roughness map, 1K. Source https://polyhaven.com/a/forrest_ground_01, by Rob Tuytel. CC0. Linear roughness data."
+  }
+]

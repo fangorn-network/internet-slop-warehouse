@@ -1,0 +1,33 @@
+{
+  "catalog": true,
+  "count": 15,
+  "pinned": true,
+  "mapLicenses": true,
+  "sourceZipBytes": 5182275,
+  "desktop": {
+    "liveSandbox": true,
+    "nativeFullscreen": true,
+    "iframeFullViewport": true,
+    "movement": true
+  },
+  "travel": {
+    "earnedSave": true,
+    "viaTowerUI": true,
+    "destinationPreserved": true,
+    "arrivedBesideRelay": true,
+    "origin": {
+      "lat": 45.67,
+      "lon": -89.38
+    },
+    "id": "node/2875506149"
+  },
+  "mobile": {
+    "opaqueSandbox": true,
+    "fullWindowFallback": true,
+    "iframeFullViewport": true,
+    "joystick": true,
+    "liveCoordinateUI": true,
+    "vectorAttribution": true
+  },
+  "errors": []
+}

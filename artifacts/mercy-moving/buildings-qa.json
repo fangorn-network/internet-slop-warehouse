@@ -1,0 +1,98 @@
+{
+  "buildings": [
+    {
+      "id": "diner",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": false
+    },
+    {
+      "id": "motel-3",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "motel-4",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "motel-5",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "motel-6",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "motel-7",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "motel-8",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "chapel",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "post-office",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "house-1",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "house-2",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "house-3",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    },
+    {
+      "id": "house-4",
+      "closedDoorBlocks": true,
+      "entry": true,
+      "exit": true,
+      "claimAndRelease": true
+    }
+  ],
+  "doorCount": 13,
+  "errors": [],
+  "missing": []
+}

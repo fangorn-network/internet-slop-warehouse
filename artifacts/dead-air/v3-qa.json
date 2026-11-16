@@ -1,0 +1,14 @@
+{
+  "opaqueSandbox": true,
+  "cleanHUD": true,
+  "tools": true,
+  "worldPinch": true,
+  "atlasPinch": true,
+  "atlasPan": true,
+  "noAccidentalRoute": true,
+  "locate": true,
+  "fit": true,
+  "menuNotebook": true,
+  "landscape": true,
+  "errors": []
+}

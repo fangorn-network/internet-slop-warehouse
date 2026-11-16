@@ -1,0 +1,29 @@
+[
+  {
+    "id": "mairas-thrift-props",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiglykq5iybunua2vudxanwqc6d3gt6ofqm5yah73vgl3qh25irygu",
+    "src": "bafybeifsgzqcwo6hw52jrb7bfyrvg54qzgkaopasmtlka5o3q7ziey3sfe",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeifsgzqcwo6hw52jrb7bfyrvg54qzgkaopasmtlka5o3q7ziey3sfe",
+    "txHash": "0x408196e5dab5345a65aa1ee1ba6f9a9af91859f486ebb3295d4189d3edae6ed8"
+  },
+  {
+    "id": "mairas-thrift-models",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifkljc473gskd45tg2rppsksirvgaqv5dwxig2s675owsjyb4zqjy",
+    "src": "bafkreidyrbhow6ca4vr23wwsdyhlr73xa3qfs7xxt4qal3b4nmftiobgri",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidyrbhow6ca4vr23wwsdyhlr73xa3qfs7xxt4qal3b4nmftiobgri",
+    "txHash": "0x408196e5dab5345a65aa1ee1ba6f9a9af91859f486ebb3295d4189d3edae6ed8"
+  },
+  {
+    "id": "mairas-shopping-rules",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidhxcjfuygfpdviyudfeb34nzl3fe7hownxzmievx3vajh6aaisci",
+    "src": "bafkreig6uhqb3cfcuvowh3rz44mggk77z72wiyvsc6v76xarlzgkptvlnm",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreig6uhqb3cfcuvowh3rz44mggk77z72wiyvsc6v76xarlzgkptvlnm",
+    "txHash": "0x408196e5dab5345a65aa1ee1ba6f9a9af91859f486ebb3295d4189d3edae6ed8"
+  }
+]

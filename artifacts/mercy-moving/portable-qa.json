@@ -1,0 +1,57 @@
+{
+  "loaded": true,
+  "state": {
+    "mode": "playing",
+    "position": [
+      -1,
+      30
+    ],
+    "time": 0.25,
+    "players": 1,
+    "doors": [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "claims": {
+      "motel-3": null,
+      "motel-4": null,
+      "motel-5": null,
+      "motel-6": null,
+      "motel-7": null,
+      "motel-8": null,
+      "chapel": null,
+      "post-office": null,
+      "house-1": null,
+      "house-2": null,
+      "house-3": null,
+      "house-4": null
+    },
+    "interior": null,
+    "buildingCount": 13,
+    "third": true,
+    "fps": 0,
+    "drawCalls": 1,
+    "animations": [
+      "Idle",
+      "Walk"
+    ],
+    "actorCount": 2,
+    "initialSize": [
+      0.58,
+      1.78,
+      0.3
+    ]
+  },
+  "errors": []
+}

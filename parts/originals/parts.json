@@ -1,0 +1,102 @@
+[
+  {
+    "id": "courier-skiff",
+    "file": "originals/courier-skiff.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Electric courier skiff",
+    "description": "An original teal electric skiff with cream deck, canopy, two engine pods, antenna and glowing headlight. Approximately 2.7 wide by 4.1 long; forward is +Z. Feet at y=0. A compact player vehicle for flooded worlds.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "vehicle",
+      "boat",
+      "skiff",
+      "courier",
+      "sci-fi"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "magnetic-salvage-tug",
+    "file": "originals/magnetic-salvage-tug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Magnetic salvage tug",
+    "description": "An original amber hover tug with light bar eyes, ring thrusters and a front magnetic fork. Forward is +Z; roughly 2.8 wide and 3.6 long. Texture-free materials. A player or friendly industrial NPC.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "vehicle",
+      "drone",
+      "forklift",
+      "magnet",
+      "industrial"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "resonator-crystal",
+    "file": "originals/resonator-crystal.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Resonator crystal",
+    "description": "An original octahedral crystal suspended above a brass pedestal, circled by a thin ring. About 2.2 units tall. Named Crystal mesh can be recolored for matching puzzles; no external textures.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "crystal",
+      "puzzle",
+      "resonator",
+      "artifact",
+      "sculpture"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "signal-buoy",
+    "file": "originals/signal-buoy.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Marsh signal buoy",
+    "description": "An original teal-and-brass buoy with a luminous beacon and ring guard. About 2.4 units tall, base centered at the origin. Ideal for checkpoints, navigation markers and delivery destinations.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "buoy",
+      "beacon",
+      "checkpoint",
+      "light",
+      "water"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "id": "garden-caretaker",
+    "file": "originals/garden-caretaker.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Porcelain garden caretaker",
+    "description": "An original small porcelain-and-brass caretaker robot with a single spherical wheel, teal collar, visor and two emissive eyes. About 1.85 units tall, forward +Z. Texture-free; suitable for small exploration and puzzle worlds.",
+    "tags": [
+      "model",
+      "gltf",
+      "original",
+      "robot",
+      "character",
+      "caretaker",
+      "garden",
+      "player"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  }
+]

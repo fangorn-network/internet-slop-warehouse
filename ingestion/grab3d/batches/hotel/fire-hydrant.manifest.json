@@ -1,0 +1,47 @@
+{
+ "slug": "fire-hydrant",
+ "triangles": 14604,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "fire-hydrant.glb",
+   "bytes": 1634340
+  },
+  "blend": {
+   "name": "fire-hydrant.blend",
+   "bytes": 1524842
+  },
+  "fbx": {
+   "name": "fire-hydrant.fbx",
+   "bytes": 2744924
+  },
+  "obj": {
+   "name": "fire-hydrant-obj.zip",
+   "bytes": 1999820
+  },
+  "usdz": {
+   "name": "fire-hydrant.usdz",
+   "bytes": 2642907
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.426 x 0.385 x 0.744",
+  "triangles": 14604,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "0.74 m tall dry-barrel fire hydrant, 0.32 m base flange, 4.5 in pumper and two 2.5 in hose outlets",
+  "notes": "generic US-style hydrant, no maker marks; pentagon operating nut, capped outlets with chains, 8-bolt ground flange and 6-bolt bonnet flange; red paint with worn edges, grime and rust",
+  "set": "Urban Street Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

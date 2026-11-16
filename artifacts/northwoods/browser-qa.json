@@ -1,0 +1,55 @@
+{
+  "desktop": {
+    "before": {
+      "mode": "walking",
+      "seed": 1848,
+      "position": [
+        4.450192685196138,
+        0.9844764303621159,
+        99.84
+      ],
+      "distance": 0,
+      "treeCount": 1472,
+      "elapsed": 0.13330000000000108,
+      "found": false,
+      "drawCalls": 110,
+      "triangles": 1063750
+    },
+    "after": {
+      "mode": "walking",
+      "seed": 1848,
+      "position": [
+        4.465587844219671,
+        1.0109094959654001,
+        99.58372199337704
+      ],
+      "distance": 0.25673999999999925,
+      "treeCount": 1472,
+      "elapsed": 0.24999999999999814,
+      "found": false,
+      "drawCalls": 110,
+      "triangles": 1063750
+    },
+    "paused": true,
+    "regenerated": {
+      "mode": "ready",
+      "seed": 42,
+      "position": [
+        -0.261667147220461,
+        0.9886710856887344,
+        99.84
+      ],
+      "distance": 0,
+      "treeCount": 1446,
+      "elapsed": 0,
+      "found": false,
+      "drawCalls": 100,
+      "triangles": 1061950
+    },
+    "errors": []
+  },
+  "mobile": {
+    "touchMovement": true,
+    "errors": []
+  }
+}

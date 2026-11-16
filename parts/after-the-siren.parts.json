@@ -1,0 +1,303 @@
+[
+  {
+    "file": "health.js",
+    "type": "logic",
+    "id": "health",
+    "kind": "rule",
+    "title": "Health and damage",
+    "description": "Engine-independent health pools for players, enemies, destructible doors and structures. Damage passes through a custom modifier, respects a grace period, emits death once and supports explicit revival. Dead actors cannot heal. No DOM or three.js dependency.",
+    "tags": [
+      "health",
+      "damage",
+      "invulnerability",
+      "death",
+      "revive",
+      "survival",
+      "combat"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(dt), dispose(), damage(amount, source), heal(amount), revive(amount), value, max, dead, invulnerable }",
+        "does": "manages an actor health pool and timed damage immunity"
+      }
+    ],
+    "options": [
+      {
+        "name": "max",
+        "type": "number",
+        "default": 100,
+        "does": "maximum positive health"
+      },
+      {
+        "name": "initial",
+        "type": "number",
+        "default": "max",
+        "does": "starting health, clamped to maximum"
+      },
+      {
+        "name": "invulnerability",
+        "type": "number",
+        "default": 0.6,
+        "does": "seconds of immunity after accepted damage"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "modifyDamage",
+        "signature": "(amount, source, object) → number",
+        "default": "return amount unchanged",
+        "does": "replace damage with armor, resistance or shields"
+      },
+      {
+        "name": "onChange",
+        "signature": "(value, delta, source, object) → void",
+        "default": "nothing",
+        "does": "react to damage, healing or revival"
+      },
+      {
+        "name": "onDeath",
+        "signature": "(object, source) → void",
+        "default": "nothing",
+        "does": "react once to lethal damage"
+      },
+      {
+        "name": "onRevive",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react to explicit revival"
+      }
+    ]
+  },
+  {
+    "file": "resource-inventory.js",
+    "type": "logic",
+    "id": "resource-inventory",
+    "kind": "rule",
+    "title": "Atomic resource inventory",
+    "description": "A weighted, capacity-limited resource bag. Submit positive and negative integer deltas in one atomic trade: either every cost and gain succeeds or nothing changes. Suitable for crafting, fuel, repairs, ammunition and trading. No engine dependency.",
+    "tags": [
+      "inventory",
+      "resources",
+      "crafting",
+      "trade",
+      "capacity",
+      "survival",
+      "atomic"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(), dispose(), transact(delta), count(key), items, load, capacity }",
+        "does": "stores resource quantities; transact returns true only when the entire trade succeeds"
+      }
+    ],
+    "options": [
+      {
+        "name": "capacity",
+        "type": "number",
+        "default": 12,
+        "does": "maximum total weighted load"
+      },
+      {
+        "name": "initial",
+        "type": "Record<string, integer>",
+        "default": {},
+        "does": "starting nonnegative counts"
+      },
+      {
+        "name": "weights",
+        "type": "Record<string, number>",
+        "default": {},
+        "does": "nonnegative per-item weight; unspecified items weigh one"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onChange",
+        "signature": "(items, delta, object) → void",
+        "default": "nothing",
+        "does": "react after a successful trade; arguments are copies"
+      },
+      {
+        "name": "onReject",
+        "signature": "(reason, delta, object) → void",
+        "default": "nothing",
+        "does": "show resources or capacity rejection"
+      }
+    ]
+  },
+  {
+    "file": "proximity-interaction.js",
+    "type": "logic",
+    "id": "proximity-interaction",
+    "kind": "rule",
+    "title": "Proximity interaction",
+    "description": "Select the nearest eligible target, show a focus prompt, and explicitly activate it with a cooldown. Rechecks eligibility on activation, so removed targets cannot remain usable. Works with 2D position.x/y and 3D position.x/z; inject distance for line-of-sight or other spaces.",
+    "tags": [
+      "interaction",
+      "proximity",
+      "search",
+      "loot",
+      "use",
+      "focus",
+      "survival"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(dt), dispose(), interact(), focus }",
+        "does": "selects a nearby usable target and invokes a callback on explicit activation"
+      }
+    ],
+    "options": [
+      {
+        "name": "targets",
+        "type": "object[]",
+        "default": [],
+        "does": "live target array; safe to add or remove targets"
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "default": 2,
+        "does": "maximum interaction distance"
+      },
+      {
+        "name": "cooldown",
+        "type": "number",
+        "default": 0.2,
+        "does": "seconds between activations"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "distance",
+        "signature": "(actor, target) → number",
+        "default": "Euclidean x/z or x/y distance",
+        "does": "replace spatial distance with another metric"
+      },
+      {
+        "name": "canInteract",
+        "signature": "(target, actor) → boolean",
+        "default": "return true",
+        "does": "filter searched, locked, occluded or unusable targets"
+      },
+      {
+        "name": "onFocus",
+        "signature": "(target, previous, actor) → void",
+        "default": "nothing",
+        "does": "show or hide prompts when focus changes"
+      },
+      {
+        "name": "onInteract",
+        "signature": "(target, actor) → void",
+        "default": "nothing",
+        "does": "search, repair, talk, open a door or activate an object"
+      }
+    ]
+  },
+  {
+    "file": "phase-cycle.js",
+    "type": "logic",
+    "id": "phase-cycle",
+    "kind": "rule",
+    "title": "Phase cycle clock",
+    "description": "Deterministic configurable phase timer for days and nights, rounds, waves and turn stages. Preserves elapsed-time overshoot and emits every crossed boundary in order. Finite runs complete once; invalid durations are rejected. Pausing is simply not calling update.",
+    "tags": [
+      "time",
+      "day-night",
+      "phases",
+      "waves",
+      "rounds",
+      "survival",
+      "timer"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { update(dt), dispose(), state }",
+        "does": "advances a phase/cycle clock; state includes name, index, cycle, elapsed, remaining, progress and complete"
+      }
+    ],
+    "options": [
+      {
+        "name": "phases",
+        "type": "{ name:string, duration:number }[]",
+        "default": [
+          {
+            "name": "day",
+            "duration": 60
+          },
+          {
+            "name": "night",
+            "duration": 45
+          }
+        ],
+        "does": "ordered phases with positive durations in seconds"
+      },
+      {
+        "name": "cycles",
+        "type": "positive integer | Infinity",
+        "default": "Infinity",
+        "does": "number of full cycles before completion"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onPhase",
+        "signature": "(state, object) → void",
+        "default": "nothing",
+        "does": "react after entering each new phase; initial phase is available in state"
+      },
+      {
+        "name": "onCycle",
+        "signature": "(completedCycle, object) → void",
+        "default": "nothing",
+        "does": "react at the end of each full cycle"
+      },
+      {
+        "name": "onComplete",
+        "signature": "(object) → void",
+        "default": "nothing",
+        "does": "react once at the end of a finite run"
+      }
+    ]
+  },
+  {
+    "file": "after-the-siren.html",
+    "type": "game",
+    "id": "after-the-siren",
+    "title": "After the Siren",
+    "description": "A moody top-down survival study: scavenge a deserted town in daylight, repair the refuge door, fuel a slowing ward and fight night visitors with a crowbar. Survive three 80-second day/night cycles. WASD/arrows move, Shift sprints, E searches/repairs/refuels, mouse aims, click or Space swings, F heals, Escape pauses. Includes touch controls, pause on blur, retry and victory. Procedural canvas art and synthesized sound; no external art assets. A foundation for deeper survival mechanics.",
+    "tags": [
+      "survival",
+      "horror",
+      "2d",
+      "top-down",
+      "scavenge",
+      "day-night",
+      "melee",
+      "crafting",
+      "atmospheric",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "health",
+      "resource-inventory",
+      "proximity-interaction",
+      "phase-cycle",
+      "touch-controls"
+    ]
+  }
+]

@@ -1,0 +1,198 @@
+{
+  "dead-letter-lake": {
+    "timeout": true,
+    "playthrough": {
+      "snapshot": {
+        "mode": "won",
+        "elapsed": 26.50000000000024,
+        "world": "dead-letter-lake",
+        "position": [
+          -2.2487916127199545,
+          0.047228124507532145,
+          1.282619463738235
+        ],
+        "checkpoint": 8,
+        "targets": [
+          [
+            0,
+            0.8,
+            -14
+          ],
+          [
+            18,
+            0.8,
+            -25
+          ],
+          [
+            29,
+            0.8,
+            -4
+          ],
+          [
+            20,
+            0.8,
+            22
+          ],
+          [
+            -8,
+            0.8,
+            27
+          ],
+          [
+            -26,
+            0.8,
+            10
+          ],
+          [
+            -23,
+            0.8,
+            -17
+          ],
+          [
+            0,
+            0.8,
+            2
+          ]
+        ],
+        "complete": true,
+        "timeLeft": 93.49999999999976
+      },
+      "keyboardOnly": true,
+      "errors": []
+    }
+  },
+  "lunar-lost-property": {
+    "playthrough": {
+      "snapshot": {
+        "mode": "won",
+        "elapsed": 72.24999999999804,
+        "world": "lunar-lost-property",
+        "position": [
+          0.2660379897169968,
+          0.1493369161811374,
+          0.14511026364987833
+        ],
+        "held": null,
+        "delivered": 6,
+        "items": [
+          {
+            "position": [
+              2.4,
+              0.3,
+              0
+            ],
+            "delivered": true
+          },
+          {
+            "position": [
+              1.2000000000000002,
+              0.3,
+              2.0784609690826525
+            ],
+            "delivered": true
+          },
+          {
+            "position": [
+              -1.1999999999999995,
+              0.3,
+              2.078460969082653
+            ],
+            "delivered": true
+          },
+          {
+            "position": [
+              -2.4,
+              0.3,
+              2.9391523179536476e-16
+            ],
+            "delivered": true
+          },
+          {
+            "position": [
+              -1.200000000000001,
+              0.3,
+              -2.078460969082652
+            ],
+            "delivered": true
+          },
+          {
+            "position": [
+              1.2000000000000002,
+              0.3,
+              -2.0784609690826525
+            ],
+            "delivered": true
+          }
+        ],
+        "depot": [
+          0,
+          0,
+          0
+        ],
+        "complete": true
+      },
+      "keyboardOnly": true,
+      "errors": []
+    }
+  },
+  "the-quiet-engine": {
+    "playthrough": {
+      "snapshot": {
+        "mode": "playing",
+        "elapsed": 28.40000000000027,
+        "world": "the-quiet-engine",
+        "position": [
+          -14.102158010081636,
+          0.02,
+          8.683805922287444
+        ],
+        "held": null,
+        "occupied": [
+          true,
+          true,
+          true
+        ],
+        "complete": true,
+        "crystals": [
+          [
+            1.0409497792752501e-15,
+            0.15,
+            -17
+          ],
+          [
+            14.722431864335459,
+            0.15,
+            8.499999999999996
+          ],
+          [
+            -14.722431864335455,
+            0.15,
+            8.500000000000005
+          ]
+        ],
+        "zones": [
+          [
+            1.0409497792752501e-15,
+            0,
+            -17
+          ],
+          [
+            14.722431864335459,
+            0,
+            8.499999999999996
+          ],
+          [
+            -14.722431864335455,
+            0,
+            8.500000000000005
+          ]
+        ]
+      },
+      "keyboardOnly": true,
+      "errors": []
+    }
+  },
+  "mobile": {
+    "touch": true
+  }
+}

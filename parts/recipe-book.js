@@ -1,0 +1,8 @@
+// CC0. Declarative recipes over the warehouse's atomic resource-inventory interface.
+export function attach(object,{recipes=[],inventory,station=()=>null,allowed=()=>true,onCraft=()=>{},onReject=()=>{}}={}){
+ if(!inventory?.transact||!inventory?.count)throw Error('A resource inventory is required');
+ const book=new Map();for(const r of recipes){if(!r.id||book.has(r.id)||!r.cost||!r.gain||[...Object.values(r.cost),...Object.values(r.gain)].some(n=>!Number.isSafeInteger(n)||n<0)||!Object.values(r.gain).some(n=>n>0))throw new RangeError('Invalid recipe');book.set(r.id,JSON.parse(JSON.stringify(r)));}
+ let dead=false;
+ const explain=id=>{const r=book.get(id);if(dead||!r)return'unknown';if(r.station&&station(object)!==r.station)return'station';if(!allowed(r,object))return'locked';if(Object.entries(r.cost).some(([k,n])=>inventory.count(k)<n))return'resources';return null;};
+ return{list(){return[...book.values()].map(r=>({...JSON.parse(JSON.stringify(r)),reason:explain(r.id)}));},craft(id){const reason=explain(id);if(reason){onReject(reason,id,object);return false;}const r=book.get(id),delta=Object.create(null);for(const[k,n]of Object.entries(r.cost))delta[k]=(delta[k]??0)-n;for(const[k,n]of Object.entries(r.gain))delta[k]=(delta[k]??0)+n;if(!inventory.transact(delta)){onReject('capacity',id,object);return false;}onCraft(JSON.parse(JSON.stringify(r)),object);return true;},update(){},dispose(){dead=true;book.clear();}};
+}

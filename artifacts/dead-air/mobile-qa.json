@@ -1,0 +1,19 @@
+{
+  "mobile": {
+    "joystickMovement": true,
+    "outerStickRun": true,
+    "runLock": true,
+    "oneTapRoute": true,
+    "stopRoute": true,
+    "landscape": true,
+    "townSearchUI": true,
+    "defaultMappedRelay": true,
+    "radioTouch": true,
+    "atlas": true,
+    "targets44px": true,
+    "hudNoOverlap": true,
+    "saveClipboardFallback": true,
+    "saveRestore": true
+  },
+  "errors": []
+}

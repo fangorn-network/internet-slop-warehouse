@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ph-thrift-teapot",
+    "file": "haven/ph-thrift-teapot.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Poly Haven · individual teapot",
+    "author": "Poly Haven contributors; the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "tags": [
+      "model",
+      "gltf",
+      "pbr",
+      "ceramic",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Individual object extracted from Poly Haven Tea Set 01 by James Ray Cock, Rico Cilliers and Jurita Burger. Original geometry and embedded PBR resources retained. Teapot/sugar bowl include their original lids. Ground-centered normalization; source https://polyhaven.com/a/tea_set_01 . Extracted with asset-workshop.html / build-assortment.mjs."
+  },
+  {
+    "id": "ph-thrift-sugar-bowl",
+    "file": "haven/ph-thrift-sugar-bowl.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Poly Haven · individual sugar bowl",
+    "author": "Poly Haven contributors; the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "tags": [
+      "model",
+      "gltf",
+      "pbr",
+      "ceramic",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Individual object extracted from Poly Haven Tea Set 01 by James Ray Cock, Rico Cilliers and Jurita Burger. Original geometry and embedded PBR resources retained. Teapot/sugar bowl include their original lids. Ground-centered normalization; source https://polyhaven.com/a/tea_set_01 . Extracted with asset-workshop.html / build-assortment.mjs."
+  },
+  {
+    "id": "ph-thrift-tea-mug",
+    "file": "haven/ph-thrift-tea-mug.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Poly Haven · individual tea mug",
+    "author": "Poly Haven contributors; the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "tags": [
+      "model",
+      "gltf",
+      "pbr",
+      "ceramic",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Individual object extracted from Poly Haven Tea Set 01 by James Ray Cock, Rico Cilliers and Jurita Burger. Original geometry and embedded PBR resources retained. Teapot/sugar bowl include their original lids. Ground-centered normalization; source https://polyhaven.com/a/tea_set_01 . Extracted with asset-workshop.html / build-assortment.mjs."
+  },
+  {
+    "id": "ph-thrift-square-plate",
+    "file": "haven/ph-thrift-square-plate.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Poly Haven · individual square plate",
+    "author": "Poly Haven contributors; the internet slop warehouse",
+    "license": "CC0-1.0",
+    "uses": [
+      "ph-tea-set-01"
+    ],
+    "tags": [
+      "model",
+      "gltf",
+      "pbr",
+      "ceramic",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Individual object extracted from Poly Haven Tea Set 01 by James Ray Cock, Rico Cilliers and Jurita Burger. Original geometry and embedded PBR resources retained. Teapot/sugar bowl include their original lids. Ground-centered normalization; source https://polyhaven.com/a/tea_set_01 . Extracted with asset-workshop.html / build-assortment.mjs."
+  }
+]

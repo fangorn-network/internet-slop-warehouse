@@ -1,0 +1,73 @@
+[
+  {
+    "id": "qt-thrift-casual",
+    "file": "../projects/mairas-dream/assets/characters/casual.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Quaternius · casual animated civilian",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "tags": [
+      "character",
+      "human",
+      "rigged",
+      "animated",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "CC0 casual from Quaternius Ultimate Modular Men, acquired from agentkaerf/FreeModels mirror of the official pack. https://quaternius.com/packs/ultimatemodularcharacters.html. Embedded glTF repacked to GLB; retained idle/walk/run/interact/hit/wave clips. Geometry, rig and original materials preserved."
+  },
+  {
+    "id": "qt-thrift-cashier",
+    "file": "../projects/mairas-dream/assets/characters/cashier.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Quaternius · cashier animated civilian",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "tags": [
+      "character",
+      "human",
+      "rigged",
+      "animated",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "CC0 cashier from Quaternius Ultimate Modular Women, acquired from agentkaerf/FreeModels mirror of the official pack. https://quaternius.com/packs/ultimatemodularwomen.html. Embedded glTF repacked to GLB; retained idle/walk/run/interact/hit/wave clips. Geometry, rig and original materials preserved."
+  },
+  {
+    "id": "qt-thrift-manager",
+    "file": "../projects/mairas-dream/assets/characters/manager.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Quaternius · manager animated civilian",
+    "author": "Quaternius",
+    "license": "CC0-1.0",
+    "tags": [
+      "character",
+      "human",
+      "rigged",
+      "animated",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "CC0 manager from Quaternius Ultimate Modular Men, acquired from agentkaerf/FreeModels mirror of the official pack. https://quaternius.com/packs/ultimatemodularcharacters.html. Embedded glTF repacked to GLB; retained idle/walk/run/interact/hit/wave clips. Geometry, rig and original materials preserved."
+  },
+  {
+    "id": "kenney-thrift-foley",
+    "file": "../projects/mairas-dream/assets/foley.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Kenney · concrete footsteps and thrift-store Foley",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "tags": [
+      "sound",
+      "footsteps",
+      "foley",
+      "shopping",
+      "cc0"
+    ],
+    "description": "Six original Kenney CC0 Impact Sounds clips: three concrete footsteps, light glass, metal and soft impacts. JSON clips map contains embedded Ogg data URLs. Source https://kenney.nl/assets/impact-sounds; acquired from receptron/mulmocast-media mirror. Unmodified audio."
+  }
+]

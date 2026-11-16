@@ -1,0 +1,112 @@
+[
+  {
+    "id": "mairas-store-display-lods",
+    "file": "../projects/mairas-dream/assets/display-lods.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Maira’s store · index-only display LODs",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "lod",
+      "optimization",
+      "polyhaven",
+      "thrift-store",
+      "cc0"
+    ],
+    "description": "Index-only display LOD data for 37 CC0 source model IDs, including extracted teapot, lidded sugar bowl, tea mug and square plate. Original geometry retained for inspection; input checksums and measured reductions included.",
+    "uses": [
+      "ph-ceramic-vase-03",
+      "ph-desk-lamp-arm-01",
+      "ph-pot-enamel-01",
+      "ph-vintage-electric-kettle",
+      "ph-boombox",
+      "ph-mounted-fluorescent-lights",
+      "ph-cross-pein-hammer",
+      "ph-cashregister-01",
+      "ph-rubber-boots",
+      "ph-sofa-02",
+      "ph-worn-metal-rack",
+      "ph-thrift-mug",
+      "ph-thrift-plate",
+      "ph-thrift-saucer",
+      "cc0-ceramic-mug",
+      "cc0-ceramic-neighbor-mug",
+      "ph-thrift-book",
+      "ph-thrift-book-alt",
+      "ph-shelf-01",
+      "ph-wooden-bookshelf-worn",
+      "ph-armchair-01",
+      "ph-painted-wooden-cabinet-02",
+      "ph-woodentable-01",
+      "marble-bust",
+      "cat-statue",
+      "ph-vintage-oil-lamp",
+      "ph-thrift-teapot",
+      "ph-thrift-sugar-bowl",
+      "ph-thrift-tea-mug",
+      "ph-thrift-square-plate",
+      "ph-vintage-radio-transceiver",
+      "ph-watering-can-metal-01",
+      "horse-statue",
+      "lantern"
+    ]
+  },
+  {
+    "id": "mairas-stock-layout",
+    "file": "../projects/mairas-dream/stock.js",
+    "type": "logic",
+    "kind": "rule",
+    "title": "Sorted Donations · clustered fixture-specific thrift assortments",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "inventory",
+      "shopping",
+      "thrift-store",
+      "layout",
+      "cc0"
+    ],
+    "description": "Parallel back-to-back hardgoods banks, perimeter media and twelve clothing fixtures. 1675 independent finds: seeded fixture-specific pools, uneven occupancy/spacing, capped duplicate models, dish stacks, upright/flat book groups, individual aisle approaches and goal reservations.",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,{transformItem}) → {catalog,shelves,racks,update,dispose}",
+        "does": "Create a fresh merchandise catalog, optionally transform each item."
+      },
+      {
+        "name": "makeStock",
+        "signature": "makeStock() → Item[]",
+        "does": "Generate all unique item records."
+      },
+      {
+        "name": "catalog",
+        "signature": "Item[]",
+        "does": "Default complete item catalog."
+      },
+      {
+        "name": "shelves",
+        "signature": "Fixture[]",
+        "does": "Shelf positions and categories."
+      },
+      {
+        "name": "racks",
+        "signature": "Fixture[]",
+        "does": "Clothing fixture positions."
+      },
+      {
+        "name": "specials",
+        "signature": "Item[]",
+        "does": "Nine named errand purchases."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "transformItem",
+        "signature": "(item) → item",
+        "default": "identity",
+        "does": "Override placement, price or visual metadata for a new catalog."
+      }
+    ]
+  }
+]

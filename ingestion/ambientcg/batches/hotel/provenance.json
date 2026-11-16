@@ -1,0 +1,146 @@
+[
+  {
+    "id": "acg-hotel-ceiling-color",
+    "source": "https://ambientcg.com/a/OfficeCeiling001",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=OfficeCeiling001_1K-JPG.zip",
+      "size": 7212308
+    },
+    "archiveSha256": "925ef7003375852b80096a46a9a06db3eeee789c99680f789868acb47386d5bd",
+    "sha256": "1a34c9db312a12c49365875630136e421d77e729f275ef93529ad20c0b336208",
+    "bytes": 153738,
+    "acquiredAt": "2026-11-16T05:24:47.488Z"
+  },
+  {
+    "id": "acg-hotel-ceiling-normal",
+    "source": "https://ambientcg.com/a/OfficeCeiling001",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=OfficeCeiling001_1K-JPG.zip",
+      "size": 7212308
+    },
+    "archiveSha256": "925ef7003375852b80096a46a9a06db3eeee789c99680f789868acb47386d5bd",
+    "sha256": "d9d337c9bf76b844c8e5f7839cac1dcc2b2f6eccec4cc1efe36d43f9e239b70c",
+    "bytes": 1847149,
+    "acquiredAt": "2026-11-16T05:24:47.646Z"
+  },
+  {
+    "id": "acg-hotel-ceiling-roughness",
+    "source": "https://ambientcg.com/a/OfficeCeiling001",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=OfficeCeiling001_1K-JPG.zip",
+      "size": 7212308
+    },
+    "archiveSha256": "925ef7003375852b80096a46a9a06db3eeee789c99680f789868acb47386d5bd",
+    "sha256": "46cdb743986c567206d45e51d87371a998462c571b54d1ba3f3f52e5a2c7f97f",
+    "bytes": 303697,
+    "acquiredAt": "2026-11-16T05:24:47.662Z"
+  },
+  {
+    "id": "acg-hotel-brushed-steel-color",
+    "source": "https://ambientcg.com/a/Metal009",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Metal009_1K-JPG.zip",
+      "size": 4767000
+    },
+    "archiveSha256": "1b1970219b40fe707e7194b28702f1a65b0d227bbea56da69dfbc8d8b5cfcb5e",
+    "sha256": "e066e240ad0eaab6a73fb0f40fa7caa94365160770331babc91de2e8ce6a986f",
+    "bytes": 616678,
+    "acquiredAt": "2026-11-16T05:24:48.318Z"
+  },
+  {
+    "id": "acg-hotel-brushed-steel-normal",
+    "source": "https://ambientcg.com/a/Metal009",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Metal009_1K-JPG.zip",
+      "size": 4767000
+    },
+    "archiveSha256": "1b1970219b40fe707e7194b28702f1a65b0d227bbea56da69dfbc8d8b5cfcb5e",
+    "sha256": "45c7c88685e6b44da7e8d25e2cf6d8645d42209793ccc4354e68c16cdae15d62",
+    "bytes": 814572,
+    "acquiredAt": "2026-11-16T05:24:48.330Z"
+  },
+  {
+    "id": "acg-hotel-brushed-steel-roughness",
+    "source": "https://ambientcg.com/a/Metal009",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Metal009_1K-JPG.zip",
+      "size": 4767000
+    },
+    "archiveSha256": "1b1970219b40fe707e7194b28702f1a65b0d227bbea56da69dfbc8d8b5cfcb5e",
+    "sha256": "6d06dfe8c240d3b6f33030740110284245bd8aefb2e10e8eb0c563444d9c0c5b",
+    "bytes": 486233,
+    "acquiredAt": "2026-11-16T05:24:48.342Z"
+  },
+  {
+    "id": "acg-hotel-terrazzo-color",
+    "source": "https://ambientcg.com/a/Terrazzo005",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Terrazzo005_1K-JPG.zip",
+      "size": 6956162
+    },
+    "archiveSha256": "d8b28aa460137005f1942399985d70f459c898653fd0ed3a683192c28844ec5a",
+    "sha256": "32e2ebb8685ecb4438d06f4d9d865d227c8765ccd98860b266f90ae7159ebdfb",
+    "bytes": 1458455,
+    "acquiredAt": "2026-11-16T05:24:49.096Z"
+  },
+  {
+    "id": "acg-hotel-terrazzo-normal",
+    "source": "https://ambientcg.com/a/Terrazzo005",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Terrazzo005_1K-JPG.zip",
+      "size": 6956162
+    },
+    "archiveSha256": "d8b28aa460137005f1942399985d70f459c898653fd0ed3a683192c28844ec5a",
+    "sha256": "49997c1be4826584f4a169a9f1986656a682bd2f432354f7d58ad061b4f1a258",
+    "bytes": 1445685,
+    "acquiredAt": "2026-11-16T05:24:49.114Z"
+  },
+  {
+    "id": "acg-hotel-terrazzo-roughness",
+    "source": "https://ambientcg.com/a/Terrazzo005",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Terrazzo005_1K-JPG.zip",
+      "size": 6956162
+    },
+    "archiveSha256": "d8b28aa460137005f1942399985d70f459c898653fd0ed3a683192c28844ec5a",
+    "sha256": "196ce8dd1f9fdf558790f0612fe19e658c446d17c0f9d5305d9d08fb10526231",
+    "bytes": 514387,
+    "acquiredAt": "2026-11-16T05:24:49.128Z"
+  }
+]

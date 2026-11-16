@@ -1,0 +1,9 @@
+{
+  "url": "https://internet-slop-warehouse.quickbeam.workers.dev",
+  "mobileVersion": "3262ba7b-0bca-4b04-90c5-66d02846f717",
+  "finalWorkerVersion": "bcd08cb4-75ff-41a0-84af-44e5854f593f",
+  "mobileFirst": true,
+  "nativeAndFallbackTested": true,
+  "gameRelease": "0.2.0",
+  "townSearchEndpoint": "/world/places"
+}

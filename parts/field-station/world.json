@@ -1,0 +1,106 @@
+{
+  "name": "Stillwater Field Station",
+  "seed": 1978,
+  "bounds": 48,
+  "spawn": {
+    "x": 0,
+    "z": 18,
+    "yaw": 0
+  },
+  "frequency": 91.6,
+  "sites": [
+    {
+      "id": "generator",
+      "x": -3.8,
+      "z": 4,
+      "name": "Portable generator",
+      "label": "Toggle generator"
+    },
+    {
+      "id": "radio",
+      "x": 0,
+      "z": 0,
+      "name": "Station radio",
+      "label": "Use station radio"
+    },
+    {
+      "id": "fuel",
+      "x": -21,
+      "z": -11,
+      "name": "Creek supply cache",
+      "item": "fuel",
+      "label": "Take fuel canister",
+      "message": "A fuel canister, left by the creek. Another little find for the field bag."
+    },
+    {
+      "id": "fuse",
+      "x": 19,
+      "z": -15,
+      "name": "Maintenance cache",
+      "item": "fuse",
+      "label": "Take spare fuse",
+      "message": "A spare fuse from maintenance. Nothing urgent; just something the crew left behind."
+    },
+    {
+      "id": "log",
+      "x": -2,
+      "z": -32,
+      "name": "Survey overlook",
+      "item": "log",
+      "label": "Read survey log",
+      "message": "The survey log notes a clear carrier at 91.6 MHz. Try the station radio whenever you like."
+    }
+  ],
+  "paths": [
+    [
+      [
+        0,
+        22
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        0,
+        -6
+      ],
+      [
+        -10,
+        -7
+      ],
+      [
+        -21,
+        -11
+      ]
+    ],
+    [
+      [
+        0,
+        -6
+      ],
+      [
+        10,
+        -9
+      ],
+      [
+        19,
+        -15
+      ]
+    ],
+    [
+      [
+        0,
+        -6
+      ],
+      [
+        0,
+        -19
+      ],
+      [
+        -2,
+        -32
+      ]
+    ]
+  ]
+}

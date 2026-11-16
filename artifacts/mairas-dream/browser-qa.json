@@ -1,0 +1,21 @@
+{
+  "desktop": {
+    "receipt": true,
+    "automaticDoors": true,
+    "escape": true,
+    "extinguish": true,
+    "physicalWalkToCar": true,
+    "pause": true,
+    "win": true,
+    "render": {
+      "calls": 15,
+      "triangles": 4064
+    }
+  },
+  "mobile": {
+    "touchUI": true,
+    "movement": true,
+    "overflow": false
+  },
+  "errors": []
+}

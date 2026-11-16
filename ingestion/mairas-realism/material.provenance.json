@@ -1,0 +1,134 @@
+[
+  {
+    "id": "ph-store-cotton-color",
+    "source": "https://polyhaven.com/a/fabric_pattern_05",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 787531,
+      "md5": "7695e504902c8b3fc2d14195a385c9eb",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_05/fabric_pattern_05_col_03_1k.jpg"
+    },
+    "sha256": "9a5b4327d1593be63049d66ce0cd4af9158307501a5803c7b12e0bbaa8029a53"
+  },
+  {
+    "id": "ph-store-cotton-normal",
+    "source": "https://polyhaven.com/a/fabric_pattern_05",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 903085,
+      "md5": "9cf8fe9343eb29021eb0bf9faf174e0c",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_05/fabric_pattern_05_nor_gl_1k.jpg"
+    },
+    "sha256": "caa5a948c768c7173b1d8647aa2618d39b4ec5ba4575820e02fb500dac54596d"
+  },
+  {
+    "id": "ph-store-cotton-roughness",
+    "source": "https://polyhaven.com/a/fabric_pattern_05",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 438194,
+      "md5": "94f4531e69392685b4fe74fba3a2da48",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_05/fabric_pattern_05_rough_1k.jpg"
+    },
+    "sha256": "e48d14e87a5493bc4ef9bea61e85b4397ec41f93d1c3fd1ac17494475781610e"
+  },
+  {
+    "id": "ph-store-denim-color",
+    "source": "https://polyhaven.com/a/denim_fabric_06",
+    "license": "CC0-1.0",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/denim_fabric_06/denim_fabric_06_diff_1k.jpg",
+      "md5": "0441b69c4ebb2bcf1c0c1fb179c2c1cc",
+      "size": 821758
+    },
+    "sha256": "9da7f6672e71a87135d5b4b6bdf4471ee9d250f88ae78ce51f36cd0a6ed5d78d"
+  },
+  {
+    "id": "ph-store-denim-normal",
+    "source": "https://polyhaven.com/a/denim_fabric_06",
+    "license": "CC0-1.0",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/denim_fabric_06/denim_fabric_06_nor_gl_1k.jpg",
+      "md5": "93f7e9233d923c3b021de6367cc9c4f0",
+      "size": 1240070
+    },
+    "sha256": "f94bbaa53003762c96624cabebb1a3fd334780c8c96548e9c14990f1e6920df2"
+  },
+  {
+    "id": "ph-store-denim-roughness",
+    "source": "https://polyhaven.com/a/denim_fabric_06",
+    "license": "CC0-1.0",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/denim_fabric_06/denim_fabric_06_rough_1k.jpg",
+      "md5": "a7ddd6594207a323b20175f012916f9f",
+      "size": 803567
+    },
+    "sha256": "4309d3acc80fb097652e1b2f5d6bd63f16351e215c3ce55490776ae0bd8380cb"
+  },
+  {
+    "id": "ph-store-asphalt-color",
+    "source": "https://polyhaven.com/a/asphalt_01",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 739513,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_01/asphalt_01_diff_1k.jpg",
+      "md5": "43c88946c38109d77a24456686a376f9"
+    },
+    "sha256": "99b6f6bdfbd09279f3f550ac9593336df541aa2319537566eeb3e737d8512010"
+  },
+  {
+    "id": "ph-store-asphalt-normal",
+    "source": "https://polyhaven.com/a/asphalt_01",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 1237059,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_01/asphalt_01_nor_gl_1k.jpg",
+      "md5": "ff3e4a0fc157cfa014fbcac68e662c38"
+    },
+    "sha256": "b745fd20cfb775ae907786ff0ffe200cedf73f3a6ef4e60c637b85b08e0a4f9a"
+  },
+  {
+    "id": "ph-store-asphalt-roughness",
+    "source": "https://polyhaven.com/a/asphalt_01",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 344964,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_01/asphalt_01_rough_1k.jpg",
+      "md5": "92ffad35bc543f59ffd9860c53a98214"
+    },
+    "sha256": "147891957807bb03cc565c9daa8a16a4af7713449a0f475c638f78f833ad0646"
+  },
+  {
+    "id": "ph-store-floor-color",
+    "source": "https://polyhaven.com/a/floor_tiles_06",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 356257,
+      "md5": "a911ad8dc31e4f49a7cf782a114f7aa6",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_tiles_06/floor_tiles_06_diff_1k.jpg"
+    },
+    "sha256": "ac159ca6072e30dd9d5c65e2d6eae7bb55a7dc9f06e6d141e9119390563511c2"
+  },
+  {
+    "id": "ph-store-floor-normal",
+    "source": "https://polyhaven.com/a/floor_tiles_06",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 121299,
+      "md5": "6089f05b33713ae6758d8301739fbc94",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_tiles_06/floor_tiles_06_nor_gl_1k.jpg"
+    },
+    "sha256": "efaff964d5688dd52ea3b876d5dac63ffee76d8d7270e30c11c81095246d5fdd"
+  },
+  {
+    "id": "ph-store-floor-roughness",
+    "source": "https://polyhaven.com/a/floor_tiles_06",
+    "license": "CC0-1.0",
+    "download": {
+      "size": 114013,
+      "md5": "4142e0781a51f8a3214ed9d5c59da348",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/floor_tiles_06/floor_tiles_06_rough_1k.jpg"
+    },
+    "sha256": "9c1996177892f220bcfdbc44675d0cd404482cfa80b1c577c7bcc100637ef8b6"
+  }
+]

@@ -1,0 +1,76 @@
+[
+  {
+    "id": "semantic-architecture",
+    "file": "semantic-architecture.js",
+    "type": "logic",
+    "kind": "effect",
+    "title": "Semantic architecture and inhabited street edges",
+    "description": "Procedural OSM-tag-based facades: shops/cafes, homes/apartments, civic/school/church, medical and workshop entrances. Named signage, porches, balconies, shop windows, seating, planters and loading areas. Street-facing placement uses nearest actual road segment. Batches facade geometry. Fictional designs, no imagery or building interiors.",
+    "license": "CC0-1.0",
+    "author": "the internet slop warehouse",
+    "uses": [
+      "settlement-models",
+      "settlement-model-library"
+    ],
+    "tags": [
+      "rpg",
+      "exploration",
+      "base-building",
+      "co-op",
+      "cc0",
+      "remix"
+    ],
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
+        "does": "Procedural OSM-tag-based facades: shops/cafes, homes/apartments, civic/school/church, medical and workshop entrances. Named signage, porches, balconies, shop windows, seating, planters and loading areas. Street-facing placement uses nearest actual road segment. Batches facade geometry. Fictional designs, no imagery or building interiors."
+      },
+      {
+        "name": "profile",
+        "signature": "profile(building) → string",
+        "does": "Classify mapped tags into visual facade profiles."
+      },
+      {
+        "name": "frontage",
+        "signature": "frontage(building,roads) → frame",
+        "does": "Find a street-facing footprint edge."
+      },
+      {
+        "name": "classifyBuilding",
+        "signature": "(building) → kind",
+        "does": "Renderer classification hook including explicitly inferred sparse-data fallback."
+      },
+      {
+        "name": "styleBuilding",
+        "signature": "(building,mesh) → void",
+        "does": "Category material hook: painted homes/civic/medical, masonry shops, industrial finishes."
+      }
+    ],
+    "options": [
+      {
+        "name": "district",
+        "type": "District",
+        "does": "Normalized mapped geometry."
+      },
+      {
+        "name": "models",
+        "type": "object",
+        "does": "Named prototypes loaded from settlement-model-library."
+      },
+      {
+        "name": "maxDecorated",
+        "type": "integer",
+        "default": 150,
+        "does": "Bound facade detail near the district spawn."
+      },
+      {
+        "name": "labelDistance",
+        "type": "number",
+        "default": 85,
+        "does": "Cull detailed building signage."
+      }
+    ],
+    "hooks": []
+  }
+]

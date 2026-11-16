@@ -1,0 +1,797 @@
+[
+  {
+    "id": "ph-tea-set-01",
+    "upstreamId": "tea_set_01",
+    "creator": "James Ray Cock, Rico Cilliers, Jurita Burger",
+    "source": "https://polyhaven.com/a/tea_set_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.423Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/tea_set_01/tea_set_01_1k.gltf",
+        "bytes": 15836,
+        "sha256": "479b93c5e5f121994a5582b329132c70c2076b2990673f9169721541e5c389a2",
+        "upstreamMd5": "157b3a5ace1f2dfd4419789ff4180c59"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/tea_set_01/tea_set_01.bin",
+        "bytes": 941776,
+        "sha256": "5ddd90f031a71832842f9030c2f7f0aa07b2c96f3d3cc4aa5cfaa5dbb14aa7b0",
+        "upstreamMd5": "9f26672d452e5d155da484951b6277ae"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tea_set_01/tea_set_01_nor_gl_1k.jpg",
+        "bytes": 255598,
+        "sha256": "0b3d5998d1d60a46a9807ccdbc8245464de4ba479bbca3eda6257575dc25b342",
+        "upstreamMd5": "5618e35b021585a23b2e2f04faa92f9b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tea_set_01/tea_set_01_diff_1k.jpg",
+        "bytes": 509631,
+        "sha256": "110eb0aa11b6f532792e8b161cbe8e7a9a2b94694f217b4d9745fe32f3945ed8",
+        "upstreamMd5": "e6a77ef283da8541a67cddc2ff698830"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tea_set_01/tea_set_01_arm_1k.jpg",
+        "bytes": 559750,
+        "sha256": "160661eccada2ab02a78d4957ca804921d31633489433517f20f34f0db7ef502",
+        "upstreamMd5": "119115b0c556d85ec257f480b0dc58a6"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-tea-set-01.glb",
+      "bytes": 2276156,
+      "sha256": "bf7c644dd27e34d53966e227633a9817f5cb48be884b03a05c2931d2784d60ca",
+      "meshes": 10,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "tags": [
+        "antique",
+        "tea",
+        "cup",
+        "english",
+        "ornate",
+        "vintage",
+        "floral",
+        "decorative",
+        "ceramic",
+        "food",
+        "coffee",
+        "victorian"
+      ],
+      "name": "Tea Set 01",
+      "categories": [
+        "props",
+        "dishes"
+      ],
+      "date_published": 1636070400,
+      "sponsors": [
+        "66627515"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 40296,
+      "texel_density": 10027.140686194824,
+      "dimensions": [
+        918.4822738170624,
+        483.876571059227,
+        164.99304870376363
+      ],
+      "files_hash": "56e8ed17e683a9335871e8e8ad9a444ba44e6c1c",
+      "description": "Free 8K model of an antique Victorian English ceramic tea set with ornate floral decals, gold trim, teapot, cups, saucers, perfect as decorative props and dishes.",
+      "authors": {
+        "James Ray Cock": "texturing",
+        "Rico Cilliers": "modeling",
+        "Jurita Burger": "graphic design"
+      },
+      "category_id": "fa8c9a42-0ea9-51d5-8cb9-734e1d7b9212",
+      "category": "Food & Kitchen/Tableware/Tea & Coffee Sets",
+      "attributes": {
+        "material": [
+          "ceramic",
+          "metal"
+        ],
+        "condition": [
+          "clean"
+        ]
+      },
+      "img_version": "8e009379",
+      "download_count": 54782,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/tea_set_01.png?width=256&height=256&format=webp&v=8e009379"
+    }
+  },
+  {
+    "id": "ph-covered-car",
+    "upstreamId": "covered_car",
+    "creator": "MP",
+    "source": "https://polyhaven.com/a/covered_car",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.543Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/covered_car/covered_car_1k.gltf",
+        "bytes": 9687,
+        "sha256": "80b210b08673833a8085812b9ee71286213b2af92654886e5a1a368977265aa7",
+        "upstreamMd5": "c38cd2ddf3fe2abe7ed8df2fd6020b84"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/covered_car/covered_car.bin",
+        "bytes": 394464,
+        "sha256": "dcbd7bf82d415e30d02c3e7056013b44729de7b712868b5ab9bf29f2b3b8bc57",
+        "upstreamMd5": "38f16c2c092dff1191ac5383acaf2ca0"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/covered_car/covered_car_nor_gl_1k.jpg",
+        "bytes": 641340,
+        "sha256": "6769694abe28c53e5c35ad1cefdd462b56416e7d89a6bcf5a9d9f6c922b46d05",
+        "upstreamMd5": "afc43e8dd74213483a454cdb00f0f541"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/covered_car/covered_car_diff_1k.jpg",
+        "bytes": 558004,
+        "sha256": "c4616a5c7c1327e4bc127b600e59d9dcb2123f8926f1570a1ca4a068d97f4d34",
+        "upstreamMd5": "61c107225ca1cbd523d6d6e9c1775f22"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/covered_car/covered_car_arm_1k.jpg",
+        "bytes": 745781,
+        "sha256": "e77f73234311701dd8088ec572e61d4ec7838bd28e9ea13ffe5e28f79da8e085",
+        "upstreamMd5": "62f9a8c8719ce46ee5464462ec6ed6fc"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-covered-car.glb",
+      "bytes": 2345388,
+      "sha256": "7c8c1745669c043febe4d17482208df8655adcf25b1e3e0b44ac86f238eb57fc",
+      "meshes": 5,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Covered Car",
+      "type": 2,
+      "authors": {
+        "MP": "All"
+      },
+      "info": null,
+      "date_published": 1700611200,
+      "categories": [
+        "props",
+        "industrial",
+        "collection: hidden_alley"
+      ],
+      "tags": [
+        "garage",
+        "stored",
+        "vehicle",
+        "car",
+        "workshop",
+        "mechanic",
+        "automotive",
+        "repair shop",
+        "junkyard",
+        "scrapyard"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 12592,
+      "texel_density": 1301.910383709177,
+      "dimensions": [
+        1788.962960243225,
+        4380.25426864624,
+        1411.1130833625793
+      ],
+      "files_hash": "22592d3c2b16533339ed1bf4e4320e25e5a76cf2",
+      "description": "Free 8K model of a car under a worn, dusty fabric cover with natural folds and visible wheels- aged garage/industrial character.",
+      "sponsors": [
+        "121968951",
+        "128081732"
+      ],
+      "category_id": "ce832bb2-6034-5e17-aa05-541bbf248198",
+      "category": "Vehicles & Transport/Road Vehicles/Cars",
+      "collections": [
+        "hidden_alley"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "fabric",
+          "rubber",
+          "metal"
+        ]
+      },
+      "img_version": "2b0decc8",
+      "download_count": 36557,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/covered_car.png?width=256&height=256&format=webp&v=2b0decc8"
+    }
+  },
+  {
+    "id": "ph-cross-pein-hammer",
+    "upstreamId": "cross_pein_hammer",
+    "creator": "Tics",
+    "source": "https://polyhaven.com/a/cross_pein_hammer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.559Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/cross_pein_hammer/cross_pein_hammer_1k.gltf",
+        "bytes": 2819,
+        "sha256": "c198c0d9213a7ee9d6872f8c1edd7e2c0cad3814d173d31127ff2812c8895a6c",
+        "upstreamMd5": "40fb1bea51971e9bfed6dd5a1900e4d7"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/cross_pein_hammer/cross_pein_hammer.bin",
+        "bytes": 58568,
+        "sha256": "dbf5c3691425c75ae60cbba13455125daddc51b05ebe7dad93e4a05875394c9c",
+        "upstreamMd5": "0eac8ed75a04d4e522ec8364152ba212"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/cross_pein_hammer/cross_pein_hammer_nor_gl_1k.jpg",
+        "bytes": 467255,
+        "sha256": "cab11318330482b997c51be786b7ca9f627634478408aaa08ac745bed704b2cc",
+        "upstreamMd5": "1e14a6855fca3de58e666a1500cb4ade"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/cross_pein_hammer/cross_pein_hammer_diff_1k.jpg",
+        "bytes": 444806,
+        "sha256": "911025292459eacbcaa0a0b07265e96c6562152339fc0c727369dfe9ef45d9b1",
+        "upstreamMd5": "33ad385e7a34e15afdb79fd663e70305"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/cross_pein_hammer/cross_pein_hammer_arm_1k.jpg",
+        "bytes": 535251,
+        "sha256": "0c99266770bc95bb7df76db7fd65dde581ffcb3ad6434869dde4954f152257a7",
+        "upstreamMd5": "e23646279fb6c6da1d27e12f55b4d6e4"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-cross-pein-hammer.glb",
+      "bytes": 1507684,
+      "sha256": "1c28a46eb14636573622bf92c5750c27e2e85f0dc4f9a8868cd07aaf13906748",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Cross Pein Hammer",
+      "categories": [
+        "collection: project_lighthouse",
+        "props",
+        "tools"
+      ],
+      "tags": [
+        "old",
+        "vintage",
+        "antique",
+        "wooden",
+        "hammer",
+        "blacksmith",
+        "rustic",
+        "aged",
+        "worn"
+      ],
+      "description": "Free 8k model of a weathered cross-pein hammer - scuffed steel head and knotted wooden handle with realistic wear, dents, and grain.",
+      "authors": {
+        "Tics": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 2124,
+      "files_hash": "a92f2d9be69db49e6aacc1cef8c38d88f80a14a5",
+      "texel_density": 37817.783781533835,
+      "dimensions": [
+        99.07165542244911,
+        24.275743402540684,
+        300.2498894929886
+      ],
+      "date_published": 1774015324,
+      "social_post_pending": false,
+      "category_id": "f2f2acd5-3054-5459-9a57-69356a1a7250",
+      "category": "Tools & Equipment/Hand Tools/Hammers & Mallets",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "steel",
+          "wood"
+        ]
+      },
+      "img_version": "b7540c75",
+      "download_count": 2001,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/cross_pein_hammer.png?width=256&height=256&format=webp&v=b7540c75"
+    }
+  },
+  {
+    "id": "ph-cashregister-01",
+    "upstreamId": "CashRegister_01",
+    "creator": "Joe Seabuhr",
+    "source": "https://polyhaven.com/a/CashRegister_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.573Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/CashRegister_01/CashRegister_01_1k.gltf",
+        "bytes": 6300,
+        "sha256": "323992ca49ac5527e62029ec8e554d2bd74b618784209b5abdf2abf50b941559",
+        "upstreamMd5": "8fdef843898a54d6638f140b9737873b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/CashRegister_01/CashRegister_01.bin",
+        "bytes": 356396,
+        "sha256": "51cfd1329ae1700faaf4d1ce6116f73e795b6a31af7e86fbbb1047b57aa0fe3f",
+        "upstreamMd5": "49c3cfeaf3b53d89cadab7875ffbd28a"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CashRegister_01/CashRegister_01_nor_gl_1k.jpg",
+        "bytes": 146745,
+        "sha256": "80e75c35d47e2eb4910932866e66e921d38cd8fc88753eaca4b70f86252c8638",
+        "upstreamMd5": "c45f9c81b08964a27f62e20b142a4fd9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CashRegister_01/CashRegister_01_diff_1k.jpg",
+        "bytes": 133109,
+        "sha256": "0f048e68054f480d773a6d997a5a853610fde80ecb5bae1c3994ed434c02ce84",
+        "upstreamMd5": "bfa598c754195bfd8e639f169c58a379"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CashRegister_01/CashRegister_01_arm_1k.jpg",
+        "bytes": 207527,
+        "sha256": "b2d66b5fcb70ebba6803265936302889fe9d952dca904fb4a8dcd8d884af6d53",
+        "upstreamMd5": "8f3266ec573baa42e166bf8f21062539"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CashRegister_01/CashRegister_01_glass_nor_gl_1k.jpg",
+        "bytes": 17077,
+        "sha256": "312e24f0f5d025a82bfb2fbc989ac239099ff8b4c46d3cd0125f07da18bd228a",
+        "upstreamMd5": "6f835dd387298bbd5094706384e88a9e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CashRegister_01/CashRegister_01_glass_diff_1k.jpg",
+        "bytes": 99676,
+        "sha256": "25607764f4956a2c59657b0eb4384a1623040ff7fa55acf18d69b2d6facfc1ec",
+        "upstreamMd5": "1bf914670750e0a77cb21a84e0109807"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/CashRegister_01/CashRegister_01_glass_arm_1k.jpg",
+        "bytes": 72642,
+        "sha256": "bba4ed60cc9cf3df8862fc4ce6ed18d911013545b0928f3f8c20319819c14497",
+        "upstreamMd5": "daf5fe84e6ef58508d6527088248609c"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-cashregister-01.glb",
+      "bytes": 1037140,
+      "sha256": "289ddea4439d810c493ed8b53b3737a9a12482ceb101061d487c1d71ed36fca9",
+      "meshes": 2,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1585605600,
+      "name": "Cash Register 01",
+      "categories": [
+        "appliances",
+        "props"
+      ],
+      "type": 2,
+      "tags": [
+        "commercial",
+        "store",
+        "vintage",
+        "cash",
+        "transaction",
+        "register",
+        "money",
+        "sales",
+        "convenience store",
+        "cashier",
+        "retail",
+        "business"
+      ],
+      "authors": {
+        "Joe Seabuhr": "All"
+      },
+      "sponsors": [
+        "42579608",
+        "297038"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 9927,
+      "texel_density": 5156.575013122558,
+      "dimensions": [
+        600.4907041788101,
+        624.2051124572754,
+        621.3557496666908
+      ],
+      "files_hash": "a28caf40c20cabd1ee08e639d41982066d7340c6",
+      "description": "Free 8K vintage cash register model with worn cream finish, metal base and open coin drawer, featuring detailed keys, levers, decals, scratches & grime.",
+      "category_id": "136f0bfb-4dca-56bb-92b5-f3666e5bf8f5",
+      "category": "Electronics & Appliances/Devices & Instruments/Retail Machines",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "metal"
+        ]
+      },
+      "img_version": "ce53a8fc",
+      "download_count": 20992,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/CashRegister_01.png?width=256&height=256&format=webp&v=ce53a8fc"
+    }
+  },
+  {
+    "id": "ph-rubber-boots",
+    "upstreamId": "rubber_boots",
+    "creator": "L",
+    "source": "https://polyhaven.com/a/rubber_boots",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.591Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/rubber_boots/rubber_boots_1k.gltf",
+        "bytes": 6106,
+        "sha256": "28d05445827905a3ef77bdc2c9afd9d0dd0cf066b743a9ab7627dd32cb155222",
+        "upstreamMd5": "c88bb060db54940d4d83b62ff940773f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/rubber_boots/rubber_boots.bin",
+        "bytes": 653312,
+        "sha256": "2b0aa0fcf7ed8363bdb9a7f200c64620780ef3581f44b63cc55ef5f7bc6c6a9c",
+        "upstreamMd5": "7c6d47a128a1703b2875208b9a6c5422"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rubber_boots/rubber_boots_nor_gl_1k.jpg",
+        "bytes": 204450,
+        "sha256": "19b1adab8853b829e4e803f1c6920fe78767343e4bc49a63e59129ecaff47394",
+        "upstreamMd5": "bdc45b08754c7af00c28fec2011113e4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rubber_boots/rubber_boots_diff_1k.jpg",
+        "bytes": 122413,
+        "sha256": "23785002747feb5b8042025889cdc6d9b822e7f02ef56e41605bf22fdb9e2a68",
+        "upstreamMd5": "d6cb4bd5f80fce60395aab9d7c4a7b03"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rubber_boots/rubber_boots_arm_1k.jpg",
+        "bytes": 111952,
+        "sha256": "138bc0281bf63053b667009e3ddd68ae692e7d31d6eb9d12b145fcd586c8c090",
+        "upstreamMd5": "224ce695d3a8747a3b21f91babee87dd"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rubber_boots/rubber_boots_dirty_nor_gl_1k.jpg",
+        "bytes": 248492,
+        "sha256": "7ccf35399431feeb2257887e852e6bd340e958b9b7c1eb7b0ccc095faf63ffc2",
+        "upstreamMd5": "ab4afe5620a55ce7cbb7b791992a6cb2"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rubber_boots/rubber_boots_dirty_diff_1k.jpg",
+        "bytes": 291900,
+        "sha256": "4de29d2cfd4864cb97fcc7dd976ffc4dedb713896ffad7690086c7402c34ec85",
+        "upstreamMd5": "cc4184c4749d12ee5e56c6ddfd7a51db"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rubber_boots/rubber_boots_dirty_arm_1k.jpg",
+        "bytes": 373800,
+        "sha256": "a6996bfb9b003574aa244fee1f6f455c94453ad33716d601fe7b7cb3d9c8e09e",
+        "upstreamMd5": "edac8b0409217c3ac003e9e4d35dc296"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-rubber-boots.glb",
+      "bytes": 2010056,
+      "sha256": "e08cd5fe5583c3b39e18b4b40b18dfa2f44e02681f6533d23a3304a3a8437e1b",
+      "meshes": 4,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Rubber Boots",
+      "categories": [
+        "collection: project_lighthouse",
+        "props"
+      ],
+      "tags": [
+        "clothing",
+        "shoes",
+        "outdoor",
+        "waterproof",
+        "wellies",
+        "rubber",
+        "workwear",
+        "utility",
+        "garden",
+        "greenhouse",
+        "gardening",
+        "landscaping"
+      ],
+      "description": "Free 8K model: deep green rubber wellies, glossy shafts with black rims and toe guards, chunky tread soles, subtle seams, scuffs, mud splashes, embossed logo.",
+      "authors": {
+        "L": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 35004,
+      "files_hash": "42cc529377cae934a22cdfb5f3cbf4db14a2a6bc",
+      "texel_density": 8564.023843283223,
+      "dimensions": [
+        891.4438188076019,
+        269.26907896995544,
+        373.04434180259705
+      ],
+      "date_published": 1780963200,
+      "category_id": "623e6c25-48d9-5c61-b72e-fadf570b48f9",
+      "category": "Apparel & Personal Items/Clothing & Footwear/Footwear",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "rubber"
+        ]
+      },
+      "img_version": "f742b2ac",
+      "download_count": 902,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/rubber_boots.png?width=256&height=256&format=webp&v=f742b2ac"
+    }
+  },
+  {
+    "id": "ph-sofa-02",
+    "upstreamId": "sofa_02",
+    "creator": "Kirill Sannikov",
+    "source": "https://polyhaven.com/a/sofa_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.606Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/sofa_02/sofa_02_1k.gltf",
+        "bytes": 4183,
+        "sha256": "5df114209f9b956ccd4831eaeef469a81339ab371d0056eb6d5d29eee08eb431",
+        "upstreamMd5": "ec2590dc8433a523d0fe9e507766c16f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/sofa_02/sofa_02.bin",
+        "bytes": 74864,
+        "sha256": "cb337e03211be0309afa1ded2b6cbb2d402c0f794aaf8828fba559d27a42d3f5",
+        "upstreamMd5": "024d6f57a7c2ee7915430cd6e1c2651e"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_02/sofa_02_nor_gl_1k.jpg",
+        "bytes": 139858,
+        "sha256": "c97a359703a8ce1cee62cbd9dc4013b611d821afb7769810983b464ebc5d0cfe",
+        "upstreamMd5": "968528a369bced172d34275dba5aebf1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_02/sofa_02_diff_1k.jpg",
+        "bytes": 86514,
+        "sha256": "4ff65c782578b52eee89cb96cc4e258ce1b6848e1a7655019af1f7207c749840",
+        "upstreamMd5": "0452c7d8dd3ef414d5ed3055085028a1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/sofa_02/sofa_02_arm_1k.jpg",
+        "bytes": 121752,
+        "sha256": "f2813f32cd9ec42a9080590d0953ac9e272d9baa0b22fdb5910bf325157393c6",
+        "upstreamMd5": "78799d978a1117ba83dbffed9af0fa33"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-sofa-02.glb",
+      "bytes": 425580,
+      "sha256": "2275ff550c70690f4ca73c9a7120e3ac3d8de16642260c731d7be378829a533d",
+      "meshes": 2,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "tags": [
+        "wood",
+        "furniture",
+        "chair",
+        "prop",
+        "couch",
+        "leather",
+        "fabric"
+      ],
+      "date_published": 1593521418,
+      "name": "Sofa 02",
+      "categories": [
+        "furniture",
+        "seating"
+      ],
+      "authors": {
+        "Kirill Sannikov": "All"
+      },
+      "sponsors": [
+        "9716107"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 2728,
+      "texel_density": 1389.082945945206,
+      "dimensions": [
+        1807.1673512458801,
+        817.7513778209686,
+        709.4888985157013
+      ],
+      "files_hash": "d7e2bb41e7bca3c320b837961bd7f71a064b6fe9",
+      "description": "Free 4K model of a tufted leather sofa with carved wood frame - elegant vintage couch/prop with realistic leather and fabric cushions.",
+      "category_id": "a995f351-c031-54f6-b317-dc5928df17a3",
+      "category": "Furniture/Seating/Sofas & Couches",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "leather",
+          "wood",
+          "fabric"
+        ]
+      },
+      "img_version": "5c7e6c29",
+      "download_count": 86458,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/sofa_02.png?width=256&height=256&format=webp&v=5c7e6c29"
+    }
+  },
+  {
+    "id": "ph-worn-metal-rack",
+    "upstreamId": "worn_metal_rack",
+    "creator": "Luca B",
+    "source": "https://polyhaven.com/a/worn_metal_rack",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-15T20:11:32.616Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/worn_metal_rack/worn_metal_rack_1k.gltf",
+        "bytes": 2796,
+        "sha256": "e757448bd448460ecb6c7218e7857c8d071f271e3cdc2bd013ca63d824c0c308",
+        "upstreamMd5": "1e6ab13765080f11751b2843e2e4c321"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/worn_metal_rack/worn_metal_rack.bin",
+        "bytes": 269400,
+        "sha256": "b8cfa4138b7c0e0e69738c6f24dec7fecdc2f336f524312db48167816776fd13",
+        "upstreamMd5": "d7e62674d4846c5899323efd9c549f55"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/worn_metal_rack/worn_metal_rack_nor_gl_1k.jpg",
+        "bytes": 435767,
+        "sha256": "3222c47e6fac0d103afec06b8a53476828777f5282d6703266010ecf587ad49e",
+        "upstreamMd5": "6e9c6ca272eff7828cc0afd88960adb1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/worn_metal_rack/worn_metal_rack_diff_1k.jpg",
+        "bytes": 604202,
+        "sha256": "295c2d48ad55289fed76b7438513520cadd94516639ab8ffd8790ffe7c903dbb",
+        "upstreamMd5": "3f69d57964eb7e67899611de63ba6588"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/worn_metal_rack/worn_metal_rack_arm_1k.jpg",
+        "bytes": 696941,
+        "sha256": "b3523f947b3ebd960d508361bb323cec5a959d0b7043a8a7118ffab781925a65",
+        "upstreamMd5": "32a956dcffe9745b1d95970b0bf58e5a"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-worn-metal-rack.glb",
+      "bytes": 2008100,
+      "sha256": "7359f5e4c66921458243c1574c72a1fe0c98955a9ad9b91d3000df88662ffb91",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Worn Metal Rack",
+      "categories": [
+        "collection: project_lighthouse",
+        "furniture",
+        "shelves",
+        "industrial"
+      ],
+      "tags": [
+        "shelves",
+        "storage",
+        "metal",
+        "rusted",
+        "old",
+        "worn",
+        "workshop",
+        "garage",
+        "shed"
+      ],
+      "description": "Free 8K model: aged metal rack with green painted frame and four dusty shelves. Realistic rust, chips and dents, with faint labels for a gritty look.",
+      "authors": {
+        "Luca B": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 6372,
+      "files_hash": "352dfdcf30b7a585c2708b04970bb9e1524363e1",
+      "texel_density": 4095.9755742223538,
+      "dimensions": [
+        915.4166579246521,
+        600.0000238418579,
+        1899.9999766365256
+      ],
+      "date_published": 1781913600,
+      "category_id": "306ba141-9b10-54f2-8d06-09031cea8318",
+      "category": "Furniture/Storage Furniture/Shelving & Bookcases",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "rusted"
+        ],
+        "material": [
+          "metal"
+        ]
+      },
+      "img_version": "09ece685",
+      "download_count": 3471,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/worn_metal_rack.png?width=256&height=256&format=webp&v=09ece685"
+    }
+  }
+]

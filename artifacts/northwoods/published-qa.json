@@ -1,0 +1,41 @@
+{
+  "catalog": true,
+  "count": 11,
+  "pinned": true,
+  "zipBytes": 2222900,
+  "liveSandbox": true,
+  "fullscreen": true,
+  "movement": true,
+  "closed": true,
+  "before": {
+    "mode": "walking",
+    "seed": 1848,
+    "position": [
+      4.450192685196138,
+      0.9844764303621159,
+      99.84
+    ],
+    "distance": 0,
+    "treeCount": 1472,
+    "elapsed": 0.28330000000000105,
+    "found": false,
+    "drawCalls": 118,
+    "triangles": 1065190
+  },
+  "after": {
+    "mode": "walking",
+    "seed": 1848,
+    "position": [
+      4.463384766621616,
+      1.0134717986385733,
+      99.62039588121425
+    ],
+    "distance": 0.22000000000000824,
+    "treeCount": 1472,
+    "elapsed": 0.483300000000001,
+    "found": false,
+    "drawCalls": 118,
+    "triangles": 1065190
+  },
+  "errors": []
+}

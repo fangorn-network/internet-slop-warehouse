@@ -1,0 +1,22 @@
+[
+  {
+    "id": "hotel-king-bed",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-king-bed.glb",
+    "title": "Hotel king bed · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "bed",
+      "furniture",
+      "bedroom",
+      "realistic",
+      "blender",
+      "original",
+      "cc0"
+    ],
+    "description": "Original CC0 hotel king bed built by script in Blender 4.0 (projects/roadside-inn/blender/bed.py): upholstered box spring on walnut feet, beveled mattress, cloth-simulated duvet and navy bed scarf, turned-down sheet, four puffy pillows in two rows. 1.93 x 2.03 m, origin at floor center, head toward -Z, Y up. ~64k triangles; Poly Haven cotton/walnut maps (CC0)."
+  }
+]

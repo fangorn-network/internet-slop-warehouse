@@ -1,0 +1,61 @@
+[
+  {
+    "id": "mairas-dream",
+    "type": "game",
+    "file": "../artifacts/mairas-dream/mairas-dream.html",
+    "title": "Maira\u2019s Dream \u00b7 Second Chances",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0 AND MIT",
+    "description": "First playable thrift-store dream: three randomized errands, a $30 budget, nine tagged purchases, inspect/take/return, staffed cash checkout with receipt, risky tag switching and a sad gray clown manager. Motion-sensor sliding doors lead to four match-wielding black cats, fire patches, usable extinguishers and an escape to your car. First-person desktop/touch controls, pause and retry. Original low-poly art. Initial slice: customer figures do not yet queue; office ending is a result card.",
+    "tags": [
+      "mairas-dream",
+      "thrift-store",
+      "shopping",
+      "first-person",
+      "low-poly",
+      "cats",
+      "surreal",
+      "prototype",
+      "mobile"
+    ],
+    "uses": [
+      "fps-controls",
+      "proximity-interaction",
+      "mairas-thrift-models",
+      "mairas-shopping-rules"
+    ]
+  },
+  {
+    "id": "mairas-dream-plan",
+    "type": "asset",
+    "file": "../projects/mairas-dream/PLAN.md",
+    "mime": "text/markdown",
+    "title": "Maira\u2019s Dream \u00b7 design and asset plan",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "description": "Warehouse discovery inventory, first-slice shopping/escape design, original model inventory, layout, source conventions, validation and follow-up roadmap.",
+    "tags": [
+      "mairas-dream",
+      "design",
+      "remix",
+      "thrift-store"
+    ]
+  },
+  {
+    "id": "retail-fire-safety-notes",
+    "type": "asset",
+    "file": "../projects/mairas-dream/FIRE-SAFETY.md",
+    "mime": "text/markdown",
+    "title": "Retail game environments \u00b7 fire-safety design notes",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "description": "Primary-source OSHA research for fictional retail environments: accessible extinguisher distribution, clear egress and separate emergency exit. Explicitly distinguishes game design from local building-code compliance; researched 2026-11-15.",
+    "tags": [
+      "research",
+      "retail",
+      "fire-safety",
+      "game-design",
+      "mairas-dream"
+    ]
+  }
+]
