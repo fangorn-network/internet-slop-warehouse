@@ -34,8 +34,20 @@ test("every seed skill parses", () => {
 });
 
 test("a missing part is 'no part', any other read failure comes through as itself", async () => {
-    const reading = (err) => ({ ...fangorn, engine: { readRecord: async () => { throw new Error(err); } } });
+    const reading = (err) => ({ ...fangorn, engine: { resolveHeadCommit: async () => { throw new Error(err); } } });
     const part = { type: "skill", id: "uses-it", title: "U", content: md, uses: [{ publisher: "0xdef", id: "health" }] };
     await expect(preparePart(reading("publisher 0xdef has no on-chain commits in repo r"), part)).rejects.toThrow(/no part 0xdef\/health/);
     await expect(preparePart(reading("Too many subrequests."), part)).rejects.toThrow(/Too many subrequests/);
+});
+
+test("many credits to one publisher read its head once", async () => {
+    const heads = [], ids = Array.from({ length: 46 }, (_, i) => `p${i}`);
+    const engine = {
+        resolveHeadCommit: async (p) => (heads.push(p), "head"),
+        stateAt: async () => ({ state: new Map(ids.map((id) => [id, `cid-${id}`])) }),
+        decodeRecord: async (id, cid) => ({ id, cid, type: "logic" }),
+    };
+    const r = await preparePart({ ...fangorn, engine }, { type: "skill", id: "uses-all", title: "U", content: md, uses: ids.map((id) => ({ publisher: "0xDEF", id })) });
+    expect(heads).toEqual(["0xDEF"]);
+    expect(r.payload.uses.map((u) => u.cid)).toEqual(ids.map((id) => `cid-${id}`));
 });

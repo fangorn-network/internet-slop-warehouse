@@ -88,7 +88,20 @@ export async function preparePart(fangorn, part, { owner } = {}) {
     const address = owner ?? fangorn.getAddress();
 
     // Pin what it builds on: each must exist now, and the record keeps the version it saw.
-    const read = (publisher, pid) => readOrNull(fangorn, publisher, pid);
+    // One getHead and one MST read per publisher, however many parts it credits (46 credits once ran a Worker out of subrequests).
+    const repos = new Map();
+    const repoOf = (publisher) => {
+        const key = publisher.toLowerCase();
+        if (!repos.has(key)) repos.set(key, (async () => {
+            const head = await fangorn.engine.resolveHeadCommit(publisher, REPO).catch(noRepo);
+            return head && { head, state: (await fangorn.engine.stateAt(head)).state };
+        })());
+        return repos.get(key);
+    };
+    const read = async (publisher, pid) => {
+        const repo = await repoOf(publisher), cid = repo?.state.get(pid);
+        return cid ? fangorn.engine.decodeRecord(pid, cid, repo.head) : null;
+    };
     const pin = async ({ publisher = address, id: pid }) => {
         const rec = await read(publisher, pid);
         if (!rec) throw new Error(`no part ${publisher}/${pid}`);
@@ -114,16 +127,19 @@ export async function preparePart(fangorn, part, { owner } = {}) {
         ...(type === "asset" && mime && { mime }),
         ...logic,
         ...(parent && { parent: await pin(parent) }),
-        ...(uses.length && { uses: await Promise.all(uses.map(pin)) }),
+        ...(uses.length && { uses: await pinAll(uses, pin) }),
     } };
 }
 
 /** A record, or null when it (or the publisher's repo) doesn't exist. Any other failure (storage, the platform's
  *  subrequest limit on old records in long repos: see the SDK's NEW_ISSUE.md) throws, instead of reading as "no part". */
-export const readOrNull = (fangorn, publisher, id) => fangorn.engine.readRecord(publisher, REPO, id).catch((e) => {
+export const readOrNull = (fangorn, publisher, id) => fangorn.engine.readRecord(publisher, REPO, id).catch(noRepo);
+const noRepo = (e) => {
     if (/has no on-chain commits/.test(e?.message)) return null;
     throw e;
-});
+};
+// One at a time: concurrent reads that miss the cache each walk (and fetch) the same old CARs.
+const pinAll = async (pins, pin) => { const out = []; for (const p of pins) out.push(await pin(p)); return out; };
 
 /** Commit prepared records to the repo and read them back → { recordCids, txHash }. */
 export async function commitParts(fangorn, records) {
