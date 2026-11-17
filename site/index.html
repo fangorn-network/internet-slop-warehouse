@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The internet slop warehouse</title>
 <meta name="description" content="Browser games built from shared parts: remix a game, reuse its assets and logic, publish from your agent.">
-<!-- Where the view is, if this site doesn't serve one at ./view.json (the Worker does; so does a local indexer's "view" file):
-     the `view` record of this publisher's repo, on this network. -->
-<meta name="fangorn-view" content="baseSepolia:0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse-view">
+<!-- The westmarch Worker this page reads from (its API: westmarch worker/API.md). ?api=<url> overrides it, e.g. a local `wrangler dev`. -->
+<meta name="westmarch-api" content="https://internet-slop-warehouse.fangorn.network">
 <link rel="stylesheet" href="./warehouse.css">
 </head>
 <body>
@@ -72,16 +71,18 @@
   <p class="player-hint" id="share-status" role="status" hidden></p>
   <input id="share-link" aria-label="Link to this part" readonly hidden>
   <!-- The game is someone else's HTML: an opaque origin, scripts only. It can't reach this page, its storage or cookies. -->
-  <iframe id="frame" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen" allowfullscreen title="game"></iframe>
+  <iframe id="frame" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen; clipboard-write" allowfullscreen title="game"></iframe>
   <div id="view" hidden></div>
   <details class="credits" id="credits"><summary>Parts &amp; credits</summary><div class="lineage" id="lineage"></div></details>
  </div>
 </dialog>
 <script type="module">
 import { categoriesFor, categoryOptions } from "./catalog.js";
+import { westmarch, fileURL } from "./api.js";
 
-// The whole page: the indexer's view (every record, the stitch, the gateway), from ./view.json or found on chain,
-// ranked by meaning where the site has /search (the Worker) and by words otherwise, and played from storage.
+// The whole page: the Worker's view (every record and the gateway), ranked by its /search (by words until it answers),
+// and played from storage.
+const api = westmarch(new URLSearchParams(location.search).get("api") ?? document.querySelector('meta[name="westmarch-api"]').content);
 const $ = (id) => document.getElementById(id);
 let view = { records: [] };
 const short = (a) => `${a.slice(0, 6)}…${a.slice(-4)}`;
@@ -91,8 +92,11 @@ let semantic = { q: "", ids: null };
 let kind = "game";
 let category = "all";
 const by = (r) => r.payload.author ?? short(r.publisher);
-$("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${location.origin}/mcp`;
-$("connect").href = `https://fangorn.network/#/connect?${new URLSearchParams({ app: location.origin, name: "the internet slop warehouse", repos: "internet-slop-warehouse", mcp: `${location.origin}/mcp` })}`;
+$("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${api.base}/mcp`;
+api.manifest().then((m) => {
+    $("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${m.mcp}`;
+    if (m.connect) $("connect").href = m.connect; // the grant names the API's origin, not this page's
+}).catch(() => {});
 document.querySelector('a[href="#loading-dock"]').onclick = () => { $("loading-dock").open = true; };
 $("copy").onclick = async () => {
     try { await navigator.clipboard.writeText($("install").textContent); $("copy").textContent = "Copied ✓"; }
@@ -103,7 +107,7 @@ for (const b of document.querySelectorAll(".kinds button")) b.onclick = () => {
     kind = b.dataset.kind;
     category = "all";
     for (const o of document.querySelectorAll(".kinds button")) o.setAttribute("aria-pressed", o === b);
-    render();
+    $("q").oninput(); // render, and search again within this kind
 }; // the last /search answer, as record keys in rank order
 
 $("clear-filters").onclick = () => {
@@ -139,7 +143,7 @@ function rank(q) {
     const games = view.records.filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return games;
-    if (semantic.ids && semantic.q === q) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
+    if (semantic.ids && semantic.q === q && semantic.kind === kind) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
     // word hits over title (x3), tags (x2) and description, until (or where there's no) /search
     // at the start of a word, and only words of 3+ letters: "a" and "in" would match nearly every description
     const res = words.filter((w) => w.length > 2).map((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "i"));
@@ -240,7 +244,9 @@ $("share").onclick = async () => {
 function showFrame(html, focus = false) {
     // Replace the browsing context so restart/close always stop the old game, including its audio.
     const frame = $("frame").cloneNode(false);
-    frame.srcdoc = html;
+    // The sandboxed game can't see this page's address; hand it in, so games can make links back here (co-op invites: ?room=).
+    const here = `<script>window.WAREHOUSE_URL=${JSON.stringify(location.href).replaceAll("<", "\\u003c")}<\/script>`;
+    frame.srcdoc = /<head(\s[^>]*)?>/i.test(html) ? html.replace(/<head(\s[^>]*)?>/i, (m) => m + here) : here + html;
     if (focus) frame.addEventListener("load", () => { if ($("player").open && currentPart?.type === "game") frame.focus(); }, { once: true });
     $("frame").replaceWith(frame);
 }
@@ -253,7 +259,7 @@ async function play(r) {
     $("title").textContent = r.payload.title;
     $("by").textContent = `by ${by(r)}`;
     if (!$("player").open) $("player").showModal(); // open now: the source can take a moment to come from storage
-    const url = `${view.gateway}/ipfs/${r.payload.src}`, game = r.type === "game";
+    const url = fileURL(view.gateway, r), game = r.type === "game";
     document.body.classList.add("player-open");
     $("player").classList.toggle("playing", game);
     for (const id of ["restart", "expand", "fullscreen", "player-hint"]) $(id).hidden = !game;
@@ -366,52 +372,31 @@ function syncPlayerViewport() {
 syncPlayerViewport();
 window.addEventListener('resize', syncPlayerViewport);
 window.visualViewport?.addEventListener('resize', syncPlayerViewport);
-let searchable = true, typing;
+let typing;
 $("q").oninput = () => {
     render();
     clearTimeout(typing);
     const q = $("q").value;
-    if (searchable && q.trim()) typing = setTimeout(async () => {
+    if (q.trim()) typing = setTimeout(async () => {
         try {
-            const res = await fetch(`search?q=${encodeURIComponent(q)}&k=24`);
-            if (!res.ok || !res.headers.get("content-type")?.includes("json")) { searchable = false; return; }
-            // ponytail: the k nearest, however far; a score floor once there are enough games for it to matter
-            semantic = { q, ids: (await res.json()).map(key) };
+            // ponytail: the k nearest, however far; a score floor once there are enough parts for it to matter
+            const type = kind;
+            semantic = { q, kind: type, ids: (await api.search(q, { k: 24, type })).map(key) };
             if ($("q").value === q) render();
-        } catch { searchable = false; }
+        } catch {} // word ranking stands in
     }, 250);
 };
 
-let local = true; // ./view.json until it isn't there
-const [network, at] = document.querySelector('meta[name="fangorn-view"]').content.split(":");
-const [publisher, repo] = at.split("/");
-let head, fangorn;
-
-/** The latest view: ./view.json if this site serves one, else the record the indexer keeps on chain (re-read only when its head moves). */
-async function latest() {
-    if (local) {
-        const res = await fetch("view.json", { cache: "no-store" }).catch(() => null);
-        if (res?.ok && res.headers.get("content-type")?.includes("json")) return res.json();
-        local = false;
-    }
-    fangorn ??= await import("./fangorn.js");
-    const now = await fangorn.headOf({ network, publisher, repo });
-    if (now === head) return view;
-    const { file } = await fangorn.readPointed({ network, publisher, repo, id: "view" });
-    head = now;
-    return file;
-}
-
 async function load() {
     try {
-        const next = await latest();
+        const next = await api.view();
         if (next.root === view.root) return;
         view = next; render();
         $("status").textContent = `${view.records.length} parts in stock`;
         followPartURL();
     } catch (e) { $("status").textContent = `couldn't read the view: ${e.message}`; }
 }
-load(); setInterval(load, 10000); // a view.json fetch, or one contract read for the head
+load(); setInterval(load, 10000);
 </script>
 </body>
 </html>

@@ -7,14 +7,11 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "build": "rolldown site/src/fangorn.js --format esm --platform browser --minify --no-codeSplitting --file site/fangorn.js",
-    "deploy": "cd worker && wrangler deploy"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@fangorn-network/sdk": "^0.1.6",
     "@fangorn-network/westmarch": "^0.3.2",
-    "@mapbox/vector-tile": "^3.0.0",
-    "pbf": "^5.1.2",
     "viem": "^2.56.3"
   },
   "devDependencies": {

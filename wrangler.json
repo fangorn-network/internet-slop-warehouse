@@ -1,0 +1,7 @@
+{
+  "name": "internet-slop-warehouse",
+  "account_id": "2e0a41ed3fec719d427dfae6512efddf",
+  "compatibility_date": "2025-09-15",
+  "assets": { "directory": "./site" },
+  "workers_dev": true
+}

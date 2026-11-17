@@ -943,8 +943,8 @@ function readUtf8(buf, pos, end) {
 	}
 	return str;
 }
-// worker/osm-vector.js
-const UA = "InternetSlopWarehouse/0.1 (+https://internet-slop-warehouse.quickbeam.workers.dev)";
+// the vector adapter (original, CC0)
+const UA = "InternetSlopWarehouse/0.1 (+https://internet-slop-warehouse.fangorn.network)";
 const ll = (coordinate) => ({
 	lon: coordinate[0],
 	lat: coordinate[1]

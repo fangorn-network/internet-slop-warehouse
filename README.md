@@ -1,6 +1,6 @@
 # the internet slop warehouse
 
-Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of, and publishes its view back to Fangorn. The page finds that view on chain, so it can be hosted anywhere as plain files.
+Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of. It runs as a stock westmarch Worker at **https://internet-slop-warehouse.fangorn.network** (deployed from the `ops` repo), and the page ([site/](site/)) is plain files that read its API, served at **https://internet-slop-warehouse.quickbeam.workers.dev** by a static-assets Worker ([wrangler.json](wrangler.json), `npm run deploy`). It runs no code and can be hosted anywhere.
 
 Needs Node 22.13+ and `npm install` (westmarch comes from npm, `^0.3.1`).
 
@@ -15,37 +15,25 @@ NETWORK=baseSepolia node index.js app.baseSepolia.json               # follow, i
 python3 -m http.server -d site 8080                                  # or host site/ anywhere
 ```
 
-On the sandbox (`npm run sandbox` in westmarch), leave out `NETWORK` (`AS=bob` publishes as bob), and use `app.json`. The page reads `./view.json` whenever the site serves one, as the local indexer's `view` file and the Worker below both do. Only otherwise does it go to the chain, which the browser bundle can only reach on the public networks.
+On the sandbox (`npm run sandbox` in westmarch), leave out `NETWORK` (`AS=bob` publishes as bob), and use `app.json`. Point the page at another Worker (a local `wrangler dev`, say) with `?api=<url>`.
 
 - **A part** ([part.js](part.js)) is a `game` (its HTML, stored as `{ html }`), an `asset` (the file itself, with `mime`) or `logic` (an ES module, stored as `{ js }`, labelled with its exports, options and hooks so search finds it by behaviour). Its record pins the exact version of everything it remixes (`parent`) or builds on (`uses`).
 - **Know-how is a part too.** A `skill` is an Agent Skills `SKILL.md` (frontmatter `name`, `description`), stored as `{ md }`, that Claude Code or Codex installs from a skills folder; a recipe is a skill tagged `recipe` whose `uses` pins its parts. A `source` part is a code file mirrored from elsewhere (stored as `{ code }`) and must carry `origin: { repo, commit, path }` and its upstream license. Seed skills: [parts/skills/](parts/skills/), batch `parts/skills.parts.json`.
+- **Unpublishing** (`NETWORK=baseSepolia node unpublish.js <id>… [--yes]`) deletes parts from your repo in one commit and reads them back, so the indexer drops them. Earlier commits and the files stay readable by CID.
 - **Publishing is a push.** The file goes to storage, the record goes to your repo, and the script reads it back from the chain, so a silently reverted transaction can't go unnoticed.
 - **`mine.js`** lists a publisher's games from the chain: when each was published and changed (to the hour), what it remixes, and whether it was built on an earlier version.
-- **The view is published.** With `"publishView": "<repo>"` in an app.json, every new root puts the view (every record, the stitch, the gateway) in storage, and points the indexer's `view` record at it.
-- **The page** reads `./view.json`, or else the view named by its `<meta name="fangorn-view" content="network:publisher/repo">`. It checks every 10 s, ranks games in the tab, and plays them from storage in a sandboxed iframe. It shows what a game remixes and what remixed it. [site/fangorn.js](site/fangorn.js) is the SDK, bundled for reading (`npm run build`).
+- **The page** ([site/index.html](site/index.html)) reads the Worker's `/view.json` every 10 s, ranks parts with its `/search`, and plays them from storage in a sandboxed iframe. It shows what a game remixes and what remixed it. Its Worker is the `<meta name="westmarch-api">`.
 
-## On Cloudflare: [worker/](worker/)
+## The API: [site/api.js](site/api.js)
 
-westmarch's indexer Worker, with the warehouse's MCP tools ([worker/tools.js](worker/tools.js)) and the site as its assets:
+The warehouse has no Worker code of its own. The deployment is westmarch's generic Worker, configured in the `ops` repo's `apps.json` and deployed by its `Deploy apps` workflow; the API it serves is documented in westmarch's `worker/API.md` (`openapi.yaml`). [site/api.js](site/api.js) is a small client for it, with nothing warehouse-specific in it: `westmarch(base)` gives you `manifest()` (`/api.json`: name, gateway, types, `mcp`, `connect`), `view()`, `search(q, { k, type })` and `publish(token, { record, file, pin })`.
 
-- **Cron, every minute**: follows every `internet-slop-warehouse` repo into D1 and embeds new parts with Workers AI. Each new root's view goes to the `internet-slop-warehouse-view` repo.
-- **`GET /view.json`**, **`GET /search?q=`**, and everything else is [site/](site/).
-- **`POST /mcp`**: `claude mcp add --transport http internet-slop-warehouse https://<worker>/mcp`. `search` and `get` know what a part is (`get` returns a game's HTML or a module's source), and `publish` puts a part in the caller's own repo, on their signature, through the grant they gave the warehouse at fangorn.network.
-- **`INDEXER_KEY`** (a secret) signs the stitch blocks and view commits, uploads publishers' files, and pays the gas to relay their signed commits.
-
-```sh
-npm run deploy
-(cd worker && wrangler secret put INDEXER_KEY)                                                  # a funded Base Sepolia key
-# REQUIRED for a fresh D1 (or a changed repo list): the first catch-up folds the whole chain log, more
-# subrequests than a free-plan run allows. Do it locally once (stop it after the first "root" line), then seed:
-NETWORK=baseSepolia node index.js app.baseSepolia.json
-node node_modules/@fangorn-network/westmarch/worker/seed.js baseSepolia.db > worker/seed.sql
-(cd worker && wrangler d1 execute internet-slop-warehouse --remote --file seed.sql)
-```
+- **Agents**: `claude mcp add --transport http internet-slop-warehouse https://internet-slop-warehouse.fangorn.network/mcp` (`search`, `repos`, `get`, `publish`).
+- **Publishing from a browser or agent** goes through `/publish` on a fangorn.network grant, which a person gets from the manifest's `connect` link. The scripts here (`publish.js`, `publish-batch.js`, `seed.js`) still publish straight to the chain with your CLI key.
 
 ## Tests
 
-`npm test`: the parts' logic, the MCP tools against an in-memory chain, and publishing as a person.
+`npm test`: the parts' logic.
 
 ## Game player
 
@@ -86,70 +74,11 @@ node publish-batch.js parts/northwoods.parts.json --local /tmp/northwoods-previe
 npx vitest run parts/northwoods.test.js
 ```
 
-## Geographic co-op mystery and game systems
+## Geographic game systems
 
-[Dead Air Atlas](parts/dead-air-atlas.html) is an original playable investigation
-in real OSM streets, with town-name search, shared evidence,
-radio/light mechanics, water-tower starts/travel and integrated mobile running. Start with the
-[remix guide](parts/DEAD-AIR-QUICKSTART.md) and
-[game-system inventory](parts/GAME-SYSTEMS.md). Original code/art is CC0;
-OpenStreetMap map data remains attributed ODbL. The demo uses real WebRTC co-op.
+The OSM/Bayfield systems are published parts: `osm-district`, `osm-vector-district` (OpenFreeMap tiles, fetched from the browser), `street-navigation`, `water-tower`, `osm-town-view`, `town-life`, `dead-air-case`, `p2p-case-session`, `relay-skirmish`, `relay-homestead`, the settlement modules, the pulse carbine and the map snapshots. See the [game-system inventory](parts/GAME-SYSTEMS.md) and the [Relay Commons composition guide](parts/relay-commons/QUICKSTART.md). Original code/art is CC0; OpenStreetMap data stays ODbL. Rules: `npx vitest run parts/dead-air.test.js`.
 
-```sh
-node publish-batch.js parts/dead-air.parts.json --local /tmp/dead-air-preview
-npx vitest run parts/dead-air.test.js worker/osm.test.js
-```
-
-The mobile player now has an immersive iframe mode: fullscreen and its
-full-window fallback overlay controls over the game, follow the visible viewport
-and retain an exit control in portrait and landscape. The OSM service in
-`worker/osm.js` bounds, snaps, coalesces and caches map requests; it does not poll
-public Overpass during rendering. Browser/P2P receipts are in `artifacts/dead-air/`.
-
-### Bayfield exploration / Relay Skirmish release
-
-`parts/dead-air.parts.json` publishes Dead Air Atlas v0.3, the separate Relay
-Skirmish FPS/crafting prototype, Bayfield waterfront map snapshot and editable
-source kit. Both games support town or full-address search. Original rules,
-map gestures, town-life renderer, FPS controls and pulse-carbine geometry are
-CC0; map data retains ODbL and decoder/transport licenses are preserved.
-See [the composition guide](parts/DEAD-AIR-QUICKSTART.md).
-
-```sh
-node publish-batch.js parts/dead-air.parts.json --local /tmp/dead-air-preview
-python3 -m http.server 8080 --directory /tmp/dead-air-preview
-```
-
-Open `/dead-air-atlas.html` or `/relay-skirmish.html`. Reusable model:
-`parts/dead-air/pulse-carbine.glb`. Core validation: `npm test`; sandbox/mobile
-and real WebRTC scripts live in `scripts/test-dead-air-*` and
-`scripts/test-relay-skirmish-*`. Release validation is recorded under
-`artifacts/dead-air/`.
-
-### Relay Commons: calm exploration and shared base building
-
-The Relay Skirmish game entry now hosts **Relay Commons**, a peaceful-by-default
-first-person RPG prototype on the Bayfield atlas. Discover places, collect
-fictional supply drops, build a shared camp, rest/return at a hearth and craft
-field gear at a workbench. Ranged sparring is optional for a new expedition.
-
-All new reusable modules and the eleven-model original CC0 GLB library were
-published before game integration. `parts/relay-commons.parts.json` catalogs
-those parts; `parts/relay-commons-release.parts.json` adds the game. The existing
-`relay-skirmish` combat engine remains independently reusable. The source kit
-includes both exploration games and all dependencies, with map data kept ODbL.
-
-See [Relay Commons composition guide](parts/relay-commons/QUICKSTART.md).
-Mobile/sandbox, exploration-to-camp and real three-peer checks are in
-`scripts/test-relay-commons-{browser,playthrough,p2p}.mjs`; results are under
-`artifacts/dead-air/commons-*.json`.
-
-If a large publication batch leaves the Worker index behind its on-chain head
-and logs show “Too many subrequests,” prepare a bounded catch-up with
-`node scripts/refresh-warehouse-index.mjs`. Review its changed-record summary,
-then apply the emitted SQL with the configured remote D1 command. This preserves
-unrelated rows and vectors; it advances the saved stitch/checkpoint from verified
-Fangorn diffs so the regular cron can resume embedding and publishing the view.
+The games built on them, Dead Air Atlas and Relay Commons, and their source kit were unpublished on 2026-11-17 (`node unpublish.js`), because they depended on the old warehouse Worker's `/world/osm` and `/world/places`.
 
 ## Sharing warehouse parts
 

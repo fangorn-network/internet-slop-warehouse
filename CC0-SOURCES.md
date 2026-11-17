@@ -74,7 +74,7 @@ mystery composed from these and the previously published health, inventory,
 objectives, saves, Northwoods geometry/textures, Poly Haven brick/snow/boombox
 and synthesized wind parts. All dependencies are pinned in the batch manifest.
 
-The original vector conversion adapter (`worker/osm-vector.js`) is CC0. Its
+The original vector conversion adapter in `parts/osm-vector-district.js` is CC0. Its
 published browser-ready bundle includes @mapbox/vector-tile 3.0.0 (BSD-3-Clause),
 @mapbox/point-geometry 1.1.0 (ISC) and pbf 5.1.2 (ISC). Full notices are embedded
 and published separately as `map-vector-licenses`.

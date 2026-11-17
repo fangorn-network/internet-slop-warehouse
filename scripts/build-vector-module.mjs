@@ -1,3 +1,0 @@
-import{execFileSync}from'node:child_process';import{readFileSync,writeFileSync}from'node:fs';
-execFileSync('node_modules/.bin/rolldown',['worker/osm-vector.js','--format','esm','--platform','browser','--file','parts/osm-vector-district.js'],{stdio:'inherit'});
-const files=['node_modules/@mapbox/vector-tile/LICENSE.txt','node_modules/@mapbox/point-geometry/LICENSE','node_modules/pbf/LICENSE'];const notices=files.map(p=>p+'\n\n'+readFileSync(p,'utf8')).join('\n\n----------------\n\n');writeFileSync('parts/vendor/MAP-VECTOR-LICENSES.txt',notices);const code=readFileSync('parts/osm-vector-district.js','utf8');writeFileSync('parts/osm-vector-district.js','/* Original adapter: CC0-1.0. Bundled decoders: BSD-3-Clause and ISC.\n'+notices.replaceAll('*/','* /')+'\n*/\n'+code);

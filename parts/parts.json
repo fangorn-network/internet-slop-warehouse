@@ -15,7 +15,7 @@
       "player",
       "npc"
     ],
-    "author": "Tom\u00e1s Laulh\u00e9 (Quaternius), via three.js examples",
+    "author": "Tomás Laulhé (Quaternius), via three.js examples",
     "license": "CC0-1.0"
   },
   {
@@ -24,7 +24,7 @@
     "id": "grass-texture",
     "mime": "image/png",
     "title": "Grass texture",
-    "description": "A 64\u00d764 seamless mottled green grass tile for ground and platform tops. Use NearestFilter for a crisp pixel look and RepeatWrapping to tile it.",
+    "description": "A 64×64 seamless mottled green grass tile for ground and platform tops. Use NearestFilter for a crisp pixel look and RepeatWrapping to tile it.",
     "tags": [
       "texture",
       "grass",
@@ -41,7 +41,7 @@
     "id": "crate-texture",
     "mime": "image/png",
     "title": "Wooden crate texture",
-    "description": "A 64\u00d764 wooden crate face with planks and a dark frame, for boxes, crates and obstacles.",
+    "description": "A 64×64 wooden crate face with planks and a dark frame, for boxes, crates and obstacles.",
     "tags": [
       "texture",
       "crate",
@@ -124,7 +124,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), velocity, grounded, state }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), velocity, grounded, state }",
         "does": "moves object from the keyboard each update; state is idle, walk, run or jump, for an animator"
       }
     ],
@@ -211,12 +211,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), hooks, alert }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), hooks, alert }",
         "does": "moves object along its waypoints or by onSee each update; handle.hooks can be swapped at runtime"
       },
       {
         "name": "chase",
-        "signature": "chase(self, target) \u2192 Vector3",
+        "signature": "chase(self, target) → Vector3",
         "does": "the default onSee: a direction straight at the target"
       }
     ],
@@ -262,7 +262,7 @@
       {
         "name": "onSee",
         "default": "chase: straight at the target",
-        "does": "(self, target) \u2192 a direction to move, or null to keep patrolling; replace it to flee, freeze or circle"
+        "does": "(self, target) → a direction to move, or null to keep patrolling; replace it to flee, freeze or circle"
       },
       {
         "name": "onTouch",
@@ -297,7 +297,7 @@
     "exports": [
       {
         "name": "onSee",
-        "signature": "onSee(self, target) \u2192 Vector3",
+        "signature": "onSee(self, target) → Vector3",
         "does": "a direction straight away from the target"
       }
     ]
@@ -322,7 +322,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(collector, opts) \u2192 { update(dt), dispose(), left }",
+        "signature": "attach(collector, opts) → { update(dt), dispose(), left }",
         "does": "animates the items and collects them as the collector touches them; left is how many remain"
       }
     ],
@@ -383,7 +383,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(camera, opts) \u2192 { update(dt), dispose() }",
+        "signature": "attach(camera, opts) → { update(dt), dispose() }",
         "does": "moves the camera after the target each update"
       }
     ],
@@ -433,7 +433,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(model, opts) \u2192 { update(dt), dispose(), mixer }",
+        "signature": "attach(model, opts) → { update(dt), dispose(), mixer }",
         "does": "crossfades to the clip for state() each update"
       }
     ],
@@ -446,7 +446,7 @@
       },
       {
         "name": "state",
-        "type": "() \u2192 string",
+        "type": "() → string",
         "default": "() => \"idle\"",
         "does": "which state to show now, e.g. () => controller.state"
       },
@@ -560,7 +560,7 @@
     "id": "apple",
     "mime": "model/gltf-binary",
     "title": "Apple",
-    "description": "A photo-scanned red apple, about 0.1 units across (real metres): scale 3\u20135 for a game pickup. From Poly Haven: polyhaven.com/a/food_apple_01.",
+    "description": "A photo-scanned red apple, about 0.1 units across (real metres): scale 3–5 for a game pickup. From Poly Haven: polyhaven.com/a/food_apple_01.",
     "tags": [
       "model",
       "gltf",
@@ -620,7 +620,7 @@
     "id": "mossy-rocks",
     "mime": "model/gltf-binary",
     "title": "Mossy rock set",
-    "description": "Six moss-covered boulders laid out over about 8\u00d77 units, up to 1.8 tall, as separate meshes: scatter them one by one (gltf.scene.children). From Poly Haven: polyhaven.com/a/rock_moss_set_01.",
+    "description": "Six moss-covered boulders laid out over about 8×7 units, up to 1.8 tall, as separate meshes: scatter them one by one (gltf.scene.children). From Poly Haven: polyhaven.com/a/rock_moss_set_01.",
     "tags": [
       "model",
       "gltf",
@@ -705,7 +705,7 @@
     "id": "snow-texture",
     "mime": "image/jpeg",
     "title": "Snow texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: fresh, slightly trodden snow. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/snow_02.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: fresh, slightly trodden snow. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/snow_02.",
     "tags": [
       "texture",
       "tileable",
@@ -724,7 +724,7 @@
     "id": "brick-texture",
     "mime": "image/jpeg",
     "title": "Red brick texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: a red brick wall with mortar lines. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/red_brick.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: a red brick wall with mortar lines. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/red_brick.",
     "tags": [
       "texture",
       "tileable",
@@ -743,7 +743,7 @@
     "id": "rock-face-texture",
     "mime": "image/jpeg",
     "title": "Rock face texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: a grey cliff face. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/rock_face_03.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: a grey cliff face. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/rock_face_03.",
     "tags": [
       "texture",
       "tileable",
@@ -763,7 +763,7 @@
     "id": "sand-rocks-texture",
     "mime": "image/jpeg",
     "title": "Coastal sand texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: beach sand with scattered pebbles. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/coast_sand_rocks_02.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: beach sand with scattered pebbles. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/coast_sand_rocks_02.",
     "tags": [
       "texture",
       "tileable",
@@ -783,7 +783,7 @@
     "id": "metal-plate-texture",
     "mime": "image/jpeg",
     "title": "Metal plate texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: riveted steel floor plates. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/metal_plate.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: riveted steel floor plates. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/metal_plate.",
     "tags": [
       "texture",
       "tileable",
@@ -803,7 +803,7 @@
     "id": "planks-texture",
     "mime": "image/jpeg",
     "title": "Weathered planks texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: old brown wooden planks. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/weathered_brown_planks.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: old brown wooden planks. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/weathered_brown_planks.",
     "tags": [
       "texture",
       "tileable",
@@ -823,7 +823,7 @@
     "id": "forest-ground-texture",
     "mime": "image/jpeg",
     "title": "Forest floor texture",
-    "description": "A 1024\u00d71024 seamless photo-scanned diffuse texture: leaf litter, twigs and soil. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/forrest_ground_01.",
+    "description": "A 1024×1024 seamless photo-scanned diffuse texture: leaf litter, twigs and soil. Use RepeatWrapping and SRGBColorSpace. From Poly Haven: polyhaven.com/a/forrest_ground_01.",
     "tags": [
       "texture",
       "tileable",
@@ -843,7 +843,7 @@
     "id": "day-sky",
     "mime": "image/vnd.radiance",
     "title": "Partly cloudy sky",
-    "description": "A 1024\u00d7512 equirectangular HDRI (.hdr): a bright pure sky with soft clouds and sun, no ground. Load with RGBELoader (or the hdri-sky logic part) as scene.environment and background. From Poly Haven: polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky.",
+    "description": "A 1024×512 equirectangular HDRI (.hdr): a bright pure sky with soft clouds and sun, no ground. Load with RGBELoader (or the hdri-sky logic part) as scene.environment and background. From Poly Haven: polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky.",
     "tags": [
       "hdri",
       "sky",
@@ -863,7 +863,7 @@
     "id": "night-sky",
     "mime": "image/vnd.radiance",
     "title": "Moonless night",
-    "description": "A 1024\u00d7512 equirectangular HDRI (.hdr): a dark golf course at night under a starry sky, lit by distant lamps. Load with RGBELoader (or the hdri-sky logic part) as scene.environment and background. From Poly Haven: polyhaven.com/a/moonless_golf.",
+    "description": "A 1024×512 equirectangular HDRI (.hdr): a dark golf course at night under a starry sky, lit by distant lamps. Load with RGBELoader (or the hdri-sky logic part) as scene.environment and background. From Poly Haven: polyhaven.com/a/moonless_golf.",
     "tags": [
       "hdri",
       "sky",
@@ -898,17 +898,17 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(parent, opts) \u2192 { update(dt), dispose(), trees }",
+        "signature": "attach(parent, opts) → { update(dt), dispose(), trees }",
         "does": "adds the grove to parent and sways it each update"
       },
       {
         "name": "makeTree",
-        "signature": "makeTree(rand?, { leaves?, trunk? }) \u2192 Group",
+        "signature": "makeTree(rand?, { leaves?, trunk? }) → Group",
         "does": "one tree, feet at the origin"
       },
       {
         "name": "rng",
-        "signature": "rng(seed) \u2192 () \u2192 number",
+        "signature": "rng(seed) → () → number",
         "does": "a seeded random"
       }
     ],
@@ -960,12 +960,12 @@
       {
         "name": "place",
         "default": "uniform random in area",
-        "does": "(rand, i) \u2192 Vector3 where tree i goes"
+        "does": "(rand, i) → Vector3 where tree i goes"
       },
       {
         "name": "grow",
         "default": "makeTree",
-        "does": "(rand) \u2192 Object3D: grow anything instead (mushrooms, pillars \u2026)"
+        "does": "(rand) → Object3D: grow anything instead (mushrooms, pillars …)"
       }
     ]
   },
@@ -990,7 +990,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), poke(strength), resize(scale) }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), poke(strength), resize(scale) }",
         "does": "springs object's scale; poke kicks it, resize sets its resting scale"
       }
     ],
@@ -1045,7 +1045,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(members, opts) \u2192 { update(dt), dispose(), flock, add(m), remove(m) }",
+        "signature": "attach(members, opts) → { update(dt), dispose(), flock, add(m), remove(m) }",
         "does": "moves every member each update"
       }
     ],
@@ -1115,7 +1115,7 @@
       {
         "name": "steer",
         "default": "nothing",
-        "does": "(member, flock, target) \u2192 Vector3 force or null: add your own urge (flee a light, circle a point)"
+        "does": "(member, flock, target) → Vector3 force or null: add your own urge (flee a light, circle a point)"
       },
       {
         "name": "onTouch",
@@ -1144,7 +1144,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene, opts) \u2192 { update(dt), dispose(), texture }",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), texture }",
         "does": "loads the sky and sets scene.environment (and background)"
       }
     ],
@@ -1165,7 +1165,7 @@
         "name": "blur",
         "type": "number",
         "default": 0,
-        "does": "background blurriness 0\u20131"
+        "does": "background blurriness 0–1"
       },
       {
         "name": "intensity",
@@ -1208,7 +1208,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(parent, opts) \u2192 { update(dt), dispose(), alive, remove(o) }",
+        "signature": "attach(parent, opts) → { update(dt), dispose(), alive, remove(o) }",
         "does": "spawns on a timer; alive is the Set of what's out there"
       }
     ],
@@ -1254,12 +1254,12 @@
       {
         "name": "make",
         "default": "a normal-coloured box",
-        "does": "() \u2192 Object3D: what to spawn"
+        "does": "() → Object3D: what to spawn"
       },
       {
         "name": "where",
         "default": "uniform random in area",
-        "does": "() \u2192 Vector3 spawn point"
+        "does": "() → Vector3 spawn point"
       },
       {
         "name": "onSpawn",
@@ -1290,7 +1290,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(root = document.body, opts) \u2192 { update(), dispose(), shown }",
+        "signature": "attach(root = document.body, opts) → { update(), dispose(), shown }",
         "does": "adds the joystick and buttons to root on touch screens"
       }
     ],
@@ -1591,7 +1591,7 @@
     "title": "Shelf 01",
     "mime": "model/gltf-binary",
     "license": "CC0-1.0",
-    "author": "Gabriel Radi\u0107",
+    "author": "Gabriel Radić",
     "tags": [
       "model",
       "gltf",
@@ -1614,7 +1614,7 @@
       "aged",
       "simple"
     ],
-    "description": "Shelf 01 from Poly Haven, by Gabriel Radi\u0107. Self-contained GLB with 1K textures. Upstream polygon count: 182; 1 meshes. Source: https://polyhaven.com/a/Shelf_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+    "description": "Shelf 01 from Poly Haven, by Gabriel Radić. Self-contained GLB with 1K textures. Upstream polygon count: 182; 1 meshes. Source: https://polyhaven.com/a/Shelf_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
   },
   {
     "id": "ph-woodentable-01",
@@ -1688,7 +1688,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), damage(amount, source), heal(amount), revive(amount), value, max, dead, invulnerable }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), damage(amount, source), heal(amount), revive(amount), value, max, dead, invulnerable }",
         "does": "manages an actor health pool and timed damage immunity"
       }
     ],
@@ -1715,25 +1715,25 @@
     "hooks": [
       {
         "name": "modifyDamage",
-        "signature": "(amount, source, object) \u2192 number",
+        "signature": "(amount, source, object) → number",
         "default": "return amount unchanged",
         "does": "replace damage with armor, resistance or shields"
       },
       {
         "name": "onChange",
-        "signature": "(value, delta, source, object) \u2192 void",
+        "signature": "(value, delta, source, object) → void",
         "default": "nothing",
         "does": "react to damage, healing or revival"
       },
       {
         "name": "onDeath",
-        "signature": "(object, source) \u2192 void",
+        "signature": "(object, source) → void",
         "default": "nothing",
         "does": "react once to lethal damage"
       },
       {
         "name": "onRevive",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react to explicit revival"
       }
@@ -1760,7 +1760,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(), dispose(), transact(delta), count(key), items, load, capacity }",
+        "signature": "attach(object, opts) → { update(), dispose(), transact(delta), count(key), items, load, capacity }",
         "does": "stores resource quantities; transact returns true only when the entire trade succeeds"
       }
     ],
@@ -1787,13 +1787,13 @@
     "hooks": [
       {
         "name": "onChange",
-        "signature": "(items, delta, object) \u2192 void",
+        "signature": "(items, delta, object) → void",
         "default": "nothing",
         "does": "react after a successful trade; arguments are copies"
       },
       {
         "name": "onReject",
-        "signature": "(reason, delta, object) \u2192 void",
+        "signature": "(reason, delta, object) → void",
         "default": "nothing",
         "does": "show resources or capacity rejection"
       }
@@ -1820,7 +1820,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), interact(), focus }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), interact(), focus }",
         "does": "selects a nearby usable target and invokes a callback on explicit activation"
       }
     ],
@@ -1847,25 +1847,25 @@
     "hooks": [
       {
         "name": "distance",
-        "signature": "(actor, target) \u2192 number",
+        "signature": "(actor, target) → number",
         "default": "Euclidean x/z or x/y distance",
         "does": "replace spatial distance with another metric"
       },
       {
         "name": "canInteract",
-        "signature": "(target, actor) \u2192 boolean",
+        "signature": "(target, actor) → boolean",
         "default": "return true",
         "does": "filter searched, locked, occluded or unusable targets"
       },
       {
         "name": "onFocus",
-        "signature": "(target, previous, actor) \u2192 void",
+        "signature": "(target, previous, actor) → void",
         "default": "nothing",
         "does": "show or hide prompts when focus changes"
       },
       {
         "name": "onInteract",
-        "signature": "(target, actor) \u2192 void",
+        "signature": "(target, actor) → void",
         "default": "nothing",
         "does": "search, repair, talk, open a door or activate an object"
       }
@@ -1892,7 +1892,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), state }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), state }",
         "does": "advances a phase/cycle clock; state includes name, index, cycle, elapsed, remaining, progress and complete"
       }
     ],
@@ -1922,19 +1922,19 @@
     "hooks": [
       {
         "name": "onPhase",
-        "signature": "(state, object) \u2192 void",
+        "signature": "(state, object) → void",
         "default": "nothing",
         "does": "react after entering each new phase; initial phase is available in state"
       },
       {
         "name": "onCycle",
-        "signature": "(completedCycle, object) \u2192 void",
+        "signature": "(completedCycle, object) → void",
         "default": "nothing",
         "does": "react at the end of each full cycle"
       },
       {
         "name": "onComplete",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react once at the end of a finite run"
       }
@@ -2311,7 +2311,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), stop(), velocity }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), stop(), velocity }",
         "does": "Momentum movement for skiffs, hovercraft, forklifts and small exploration characters. Exponential acceleration and braking, optional boost, turning toward velocity, radius-expanded box obstacles and bounded travel. Input is injected; the module owns no DOM listeners."
       }
     ],
@@ -2367,19 +2367,19 @@
     "hooks": [
       {
         "name": "input",
-        "signature": "(object) \u2192 { x, z, boost? }",
+        "signature": "(object) → { x, z, boost? }",
         "default": "return zero input",
         "does": "supply normalized or unnormalized desired movement"
       },
       {
         "name": "onImpact",
-        "signature": "(object, velocity) \u2192 void",
+        "signature": "(object, velocity) → void",
         "default": "nothing",
         "does": "react to obstacle or boundary contact"
       },
       {
         "name": "onMove",
-        "signature": "(object, velocity) \u2192 void",
+        "signature": "(object, velocity) → void",
         "default": "nothing",
         "does": "react after movement each frame"
       }
@@ -2405,7 +2405,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(), dispose(), reset(), index, lap, complete, target }",
+        "signature": "attach(object, opts) → { update(), dispose(), reset(), index, lap, complete, target }",
         "does": "Ordered checkpoints with lap tracking and single completion. Tests the swept movement segment in the X/Z plane so a fast vehicle cannot skip across a gate between frames. Resettable for retries."
       }
     ],
@@ -2432,19 +2432,19 @@
     "hooks": [
       {
         "name": "onCheckpoint",
-        "signature": "(index, lap, object) \u2192 void",
+        "signature": "(index, lap, object) → void",
         "default": "nothing",
         "does": "react to a passed checkpoint"
       },
       {
         "name": "onLap",
-        "signature": "(lap, object) \u2192 void",
+        "signature": "(lap, object) → void",
         "default": "nothing",
         "does": "react after a full route"
       },
       {
         "name": "onComplete",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react once to the final lap"
       }
@@ -2471,7 +2471,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), release(), velocity, active }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), release(), velocity, active }",
         "does": "Sub-stepped damped spring carrying for 3D props. Pulls toward an injected world point, preserves lag and momentum, breaks at a configurable distance and settles without snapping. Null targets release and rearm the tether."
       }
     ],
@@ -2504,19 +2504,19 @@
     "hooks": [
       {
         "name": "target",
-        "signature": "(object) \u2192 Vector3 | null",
+        "signature": "(object) → Vector3 | null",
         "default": "return null",
         "does": "supply the world-space carry point"
       },
       {
         "name": "onBreak",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react once to a broken connection"
       },
       {
         "name": "onSettle",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react upon settling near target"
       }
@@ -2542,7 +2542,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(), dispose(), occupied, complete }",
+        "signature": "attach(object, opts) → { update(), dispose(), occupied, complete }",
         "does": "Horizontal circular occupancy zones with actor filters, enter/leave edges and aggregate completion. Suitable for pressure plates, colored resonators, delivery areas and multiplayer-ready local rule evaluation. No engine or DOM dependency."
       }
     ],
@@ -2557,37 +2557,37 @@
     "hooks": [
       {
         "name": "actors",
-        "signature": "(object) \u2192 actor[]",
+        "signature": "(object) → actor[]",
         "default": "return []",
         "does": "return the current candidates, each with a position"
       },
       {
         "name": "accept",
-        "signature": "(actor, zone, index) \u2192 boolean",
+        "signature": "(actor, zone, index) → boolean",
         "default": "return true",
         "does": "filter occupants by color, team, held state or identity"
       },
       {
         "name": "onEnter",
-        "signature": "(actor, zone, index) \u2192 void",
+        "signature": "(actor, zone, index) → void",
         "default": "nothing",
         "does": "react when an actor enters"
       },
       {
         "name": "onLeave",
-        "signature": "(actor, zone, index) \u2192 void",
+        "signature": "(actor, zone, index) → void",
         "default": "nothing",
         "does": "react when an actor leaves"
       },
       {
         "name": "onChange",
-        "signature": "(occupied:boolean[], object) \u2192 void",
+        "signature": "(occupied:boolean[], object) → void",
         "default": "nothing",
         "does": "react to any occupancy change"
       },
       {
         "name": "onComplete",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react when all zones become occupied"
       }
@@ -2613,7 +2613,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(parent, opts) \u2192 { update(dt), dispose(), points }",
+        "signature": "attach(parent, opts) → { update(dt), dispose(), points }",
         "does": "Seeded single-draw-call drifting particles for fireflies, dust, spores and stars. Bounded gentle movement, additive blending, configurable density and palette. Releases GPU resources on disposal."
       }
     ],
@@ -2697,7 +2697,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene, opts) \u2192 { update(dt), dispose(), root, water, route, spawn, bounds, obstacles }",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), root, water, route, spawn, bounds, obstacles }",
         "does": "An open flooded forest world with shader-rippled PBR water, a pale moon, seeded trees, islands, atmospheric lighting and eight courier route landmarks. Returns spawn, bounds and obstacles for attaching your own game. Entire environment generated from code; no external assets required."
       }
     ],
@@ -2730,7 +2730,7 @@
     "hooks": [
       {
         "name": "onReady",
-        "signature": "(world) \u2192 void",
+        "signature": "(world) → void",
         "default": "nothing",
         "does": "receive scene landmarks immediately"
       }
@@ -2758,7 +2758,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene, opts) \u2192 { update(dt), dispose(), root, spawn, depot, bounds, obstacles }",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), root, spawn, depot, bounds, obstacles }",
         "does": "A circular industrial platform under an impossible ringed planet. Includes a gridded floor, gantry, depot pad, perimeter bollards, cargo blocks, obstacle boxes and warm/cool lighting. Reuse as a delivery yard, exploration hub or arena."
       }
     ],
@@ -2779,7 +2779,7 @@
     "hooks": [
       {
         "name": "onReady",
-        "signature": "(world) \u2192 void",
+        "signature": "(world) → void",
         "default": "nothing",
         "does": "receive world landmarks immediately"
       }
@@ -2807,7 +2807,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene, opts) \u2192 { update(dt), dispose(), setPower(value), root, zones, spawn, bounds, obstacles }",
+        "signature": "attach(scene, opts) → { update(dt), dispose(), setPower(value), root, zones, spawn, bounds, obstacles }",
         "does": "A circular architectural garden: moss, stone paths, colonnades, three colored resonator pedestals and a central kinetic armillary sculpture. setPower(0..1) wakes the sculpture and its lights. Includes spawn, bounds and matching trigger zones."
       }
     ],
@@ -2822,7 +2822,7 @@
     "hooks": [
       {
         "name": "onReady",
-        "signature": "(world) \u2192 void",
+        "signature": "(world) → void",
         "default": "nothing",
         "does": "receive world landmarks immediately"
       }
@@ -2851,7 +2851,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(root, opts) \u2192 { ready, update(dt), dispose(), scene, camera }",
+        "signature": "attach(root, opts) → { ready, update(dt), dispose(), scene, camera }",
         "does": "Reusable small-game shell with WebGL rendering, room-based image lighting, model caching and fitting, following camera, zoom, keyboard input, touch integration, accessible start/pause/restart screens, read-only diagnostics and synthesized sound. Games supply the world and rules through build(context)."
       }
     ],
@@ -2924,13 +2924,13 @@
     "hooks": [
       {
         "name": "build",
-        "signature": "async (context) \u2192 { reset?, update?, ambient?, snapshot?, dispose? }",
+        "signature": "async (context) → { reset?, update?, ambient?, snapshot?, dispose? }",
         "default": "empty game",
         "does": "construct your game. Context exposes scene, camera, model(id, extent, fit), input(), consume(code), hud(), message(), tone(), finish() and follow()."
       },
       {
         "name": "onError",
-        "signature": "(error) \u2192 void",
+        "signature": "(error) → void",
         "default": "console.error",
         "does": "report a loading or WebGL failure"
       }
@@ -3057,7 +3057,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { next(), int(min,max), pick(entries), state, update(), dispose() }",
+        "signature": "attach(object, opts) → { next(), int(min,max), pick(entries), state, update(), dispose() }",
         "does": "Repeatable random numbers, integer rolls and weighted choices with a portable 32-bit state. Use for loot, encounter tables and generated content. Runs locally with no service calls; not cryptographic."
       }
     ],
@@ -3098,7 +3098,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { findPath(a,b), lineOfSight(a,b), walkable(x,z), cell(p), world(x,z), setBlocked(x,z,value), width, height, cellSize, update(), dispose() }",
+        "signature": "attach(object, opts) → { findPath(a,b), lineOfSight(a,b), walkable(x,z), cell(p), world(x,z), setBlocked(x,z,value), width, height, cellSize, update(), dispose() }",
         "does": "Four-neighbor A* on an authored grid, dynamic door/obstacle blocking, world/cell conversion and supercover line of sight. Explicit search budget and bounded grid dimensions keep CPU work predictable."
       }
     ],
@@ -3164,7 +3164,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(actor, opts) \u2192 { update(dt), dispose(), hear({position,radius}), snapshot(), updateTarget(), mode }",
+        "signature": "attach(actor, opts) → { update(dt), dispose(), hear({position,radius}), snapshot(), updateTarget(), mode }",
         "does": "Deterministic patrol, noise investigation, sight-based pursuit and last-known-position search. Inject pathfinding and movement; serializes memory and attack cooldown. Enemies react to local stimuli without an LLM or hosted service."
       }
     ],
@@ -3221,37 +3221,37 @@
     "hooks": [
       {
         "name": "target",
-        "signature": "(actor) \u2192 actor | null",
+        "signature": "(actor) → actor | null",
         "default": "return null",
         "does": "return current target"
       },
       {
         "name": "canSee",
-        "signature": "(actor,target) \u2192 boolean",
+        "signature": "(actor,target) → boolean",
         "default": "return true",
         "does": "line of sight, cover, cloak or faction rule"
       },
       {
         "name": "path",
-        "signature": "(from,to) \u2192 {x,z}[]",
+        "signature": "(from,to) → {x,z}[]",
         "default": "straight to target",
         "does": "supply a route"
       },
       {
         "name": "move",
-        "signature": "(actor,position) \u2192 void",
+        "signature": "(actor,position) → void",
         "default": "assign position",
         "does": "apply collision and move"
       },
       {
         "name": "onAttack",
-        "signature": "(actor,target) \u2192 void",
+        "signature": "(actor,target) → void",
         "default": "nothing",
         "does": "apply damage or a custom interaction"
       },
       {
         "name": "onState",
-        "signature": "(mode,previous,actor) \u2192 void",
+        "signature": "(mode,previous,actor) → void",
         "default": "nothing",
         "does": "update animation or awareness cues"
       }
@@ -3277,7 +3277,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { list(), craft(id), update(), dispose() }",
+        "signature": "attach(object, opts) → { list(), craft(id), update(), dispose() }",
         "does": "A recipe layer over atomic resource-inventory. Checks ingredients, optional crafting stations and unlock rules, then applies the entire signed cost/output transaction at once. Failed crafts consume nothing."
       }
     ],
@@ -3298,25 +3298,25 @@
     "hooks": [
       {
         "name": "station",
-        "signature": "(object) \u2192 string | null",
+        "signature": "(object) → string | null",
         "default": "return null",
         "does": "current crafting station"
       },
       {
         "name": "allowed",
-        "signature": "(recipe,object) \u2192 boolean",
+        "signature": "(recipe,object) → boolean",
         "default": "return true",
         "does": "recipe unlock rules"
       },
       {
         "name": "onCraft",
-        "signature": "(recipe,object) \u2192 void",
+        "signature": "(recipe,object) → void",
         "default": "nothing",
         "does": "react to a committed craft"
       },
       {
         "name": "onReject",
-        "signature": "(reason,id,object) \u2192 void",
+        "signature": "(reason,id,object) → void",
         "default": "nothing",
         "does": "show a clear rejection"
       }
@@ -3345,7 +3345,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(facts), complete(id), completed, active, all, dispose() }",
+        "signature": "attach(object, opts) → { update(facts), complete(id), completed, active, all, dispose() }",
         "does": "Persistent objective completion with prerequisite validation, cycle detection and cascading fact-based progress. Authors supply data instead of writing a new quest controller for every scenario."
       }
     ],
@@ -3366,13 +3366,13 @@
     "hooks": [
       {
         "name": "onComplete",
-        "signature": "(objective,object) \u2192 void",
+        "signature": "(objective,object) → void",
         "default": "nothing",
         "does": "react once to a completed objective"
       },
       {
         "name": "onAll",
-        "signature": "(object) \u2192 void",
+        "signature": "(object) → void",
         "default": "nothing",
         "does": "react when every objective is completed"
       }
@@ -3399,7 +3399,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { encode(state), decode(code), update(), dispose() }",
+        "signature": "attach(object, opts) → { encode(state), decode(code), update(), dispose() }",
         "does": "Bounded versioned UTF-8 JSON save codes with accidental-corruption checksum, scenario identity, validation and migration hooks. No localStorage, downloads, account or backend required; works inside the warehouse sandbox. The checksum is not anti-cheat security."
       }
     ],
@@ -3432,7 +3432,7 @@
     "hooks": [
       {
         "name": "validate",
-        "signature": "(state) \u2192 boolean",
+        "signature": "(state) → boolean",
         "default": "return true",
         "does": "validate game-specific state before encode and after migrations"
       }
@@ -3461,7 +3461,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scenario, opts) \u2192 { update(dt,input), state, snapshot(), validateSnapshot(s), load(s), reset(), interact(id?), nearest(), craft(id), recipes(), withdraw(key,count), brace(), heal(), decoy(), attack(), navigation, scenario, locations, dispose() }",
+        "signature": "attach(scenario, opts) → { update(dt,input), state, snapshot(), validateSnapshot(s), load(s), reset(), interact(id?), nearest(), craft(id), recipes(), withdraw(key,count), brace(), heal(), decoy(), attack(), navigation, scenario, locations, dispose() }",
         "does": "A compact engine-independent survival simulation assembled from warehouse parts. Authored maps, persistent searchable containers and doors, weighted loot, crafting, noise-aware navigating enemies, melee, stamina, ward fuel, door braces, decoys, a fact-based objective chain, extraction and validated save/restore. Change scenario data to build another town; no per-player model calls or new game server."
       }
     ],
@@ -3482,7 +3482,7 @@
     "hooks": [
       {
         "name": "onEvent",
-        "signature": "({type,text,...}) \u2192 void",
+        "signature": "({type,text,...}) → void",
         "default": "nothing",
         "does": "connect simulation events to UI, sound or telemetry"
       }
@@ -3519,7 +3519,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene, opts) \u2192 { update(dt), drawMap(canvas), root, player, dispose() }",
+        "signature": "attach(scene, opts) → { update(dt), drawMap(canvas), root, player, dispose() }",
         "does": "Reusable Three.js view for survival-kit scenarios: instanced walls, dynamic doors, actors, loot markers, ward lighting, day/night tint and minimap. Game rules remain in the headless simulation, so new towns share one renderer. Models are injected and optional."
       }
     ],
@@ -3718,7 +3718,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), ... }",
         "does": "Host-authoritative island harvesting, atomic recipes, construction, reclaiming, four actors and validated portable snapshots. Configure world and recipes as JSON. No rendering, enemies, backend or AI calls."
       }
     ]
@@ -3746,7 +3746,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), ... }",
         "does": "Three.js adapter for homestead-kit: warm low-poly islands, trees, minerals, blueprint preview, construction, multiplayer gardeners and minimap."
       }
     ]
@@ -3773,7 +3773,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), ... }",
         "does": "Pinned self-contained Trystero 0.27.0 Nostr/WebRTC transport. Optional public signaling, no API key. MIT third-party code; see bundled license notices."
       },
       {
@@ -3816,7 +3816,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { update(dt), dispose(), ... }",
+        "signature": "attach(object, opts) → { update(dt), dispose(), ... }",
         "does": "Optional four-player Trystero rooms. Host validates intents and broadcasts signed snapshots; guests cannot write canonical state. Ephemeral identity works without browser storage. Host must stay online; no host migration or TURN service."
       }
     ]
@@ -3962,32 +3962,32 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) \u2192 { layout, update(dt), dispose() }",
+        "signature": "attach(object, opts) → { layout, update(dt), dispose() }",
         "does": "Generate an immutable-by-convention layout for any renderer."
       },
       {
         "name": "generate",
-        "signature": "generate(opts) \u2192 layout",
+        "signature": "generate(opts) → layout",
         "does": "Seeded ecology grid, tree transforms, spawn, landmarks, heightAt and trailX."
       },
       {
         "name": "collapse",
-        "signature": "collapse(opts) \u2192 {width,height,cells,attempt}",
+        "signature": "collapse(opts) → {width,height,cells,attempt}",
         "does": "Generic weighted tile constraint solver, with custom grammar and fixed cells."
       },
       {
         "name": "rng",
-        "signature": "rng(seed) \u2192 random()",
+        "signature": "rng(seed) → random()",
         "does": "Deterministic PRNG."
       },
       {
         "name": "heightAt",
-        "signature": "heightAt(x,z,seed) \u2192 number",
+        "signature": "heightAt(x,z,seed) → number",
         "does": "Continuous terrain sample."
       },
       {
         "name": "trailX",
-        "signature": "trailX(z,seed) \u2192 number",
+        "signature": "trailX(z,seed) → number",
         "does": "Continuous trail centerline."
       },
       {
@@ -4019,7 +4019,7 @@
         "name": "density",
         "type": "number",
         "default": 1,
-        "does": "Tree count multiplier, 0\u20135."
+        "does": "Tree count multiplier, 0–5."
       },
       {
         "name": "tiles",
@@ -4031,22 +4031,22 @@
     "hooks": [
       {
         "name": "place",
-        "signature": "(tree, {random,grid}) \u2192 false | void",
+        "signature": "(tree, {random,grid}) → false | void",
         "does": "Reject or modify tree placements."
       },
       {
         "name": "terrain",
-        "signature": "(x,z,seed) \u2192 number",
+        "signature": "(x,z,seed) → number",
         "does": "Replace terrain height; default heightAt."
       },
       {
         "name": "path",
-        "signature": "(z,seed) \u2192 number",
+        "signature": "(z,seed) → number",
         "does": "Replace continuous trail centerline; default trailX."
       },
       {
         "name": "onReady",
-        "signature": "(layout) \u2192 void",
+        "signature": "(layout) → void",
         "does": "Receive generated layout."
       }
     ]
@@ -4072,12 +4072,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(parent, opts) \u2192 {root,update(dt),dispose()}",
+        "signature": "attach(parent, opts) → {root,update(dt),dispose()}",
         "does": "Create, attach and own a tree."
       },
       {
         "name": "makeTree",
-        "signature": "makeTree(opts) \u2192 THREE.Group",
+        "signature": "makeTree(opts) → THREE.Group",
         "does": "Generate a stand-alone tree in meters, rooted at origin."
       }
     ],
@@ -4098,7 +4098,7 @@
         "name": "snow",
         "type": "number",
         "default": 0.8,
-        "does": "Snow coverage probability, 0\u20131."
+        "does": "Snow coverage probability, 0–1."
       },
       {
         "name": "height",
@@ -4146,7 +4146,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene, opts) \u2192 {root,ready,layout,footprint(x,z,yaw,side),update(dt,viewer),dispose()}",
+        "signature": "attach(scene, opts) → {root,ready,layout,footprint(x,z,yaw,side),update(dt,viewer),dispose()}",
         "does": "Build renderable winter environment; ready resolves after optional texture attempt."
       }
     ],
@@ -4189,12 +4189,12 @@
     "hooks": [
       {
         "name": "treeFactory",
-        "signature": "(opts) \u2192 THREE.Group",
+        "signature": "(opts) → THREE.Group",
         "does": "Replace tree meshes; default trees.makeTree."
       },
       {
         "name": "onReady",
-        "signature": "(world) \u2192 void",
+        "signature": "(world) → void",
         "does": "Receive world API."
       }
     ],
@@ -4224,7 +4224,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(camera, opts) \u2192 {update(dt),dispose(),lock(),look(dx,dy),setLook(yaw,pitch),setTouch(x,z),clear(),yaw,distance}",
+        "signature": "attach(camera, opts) → {update(dt),dispose(),lock(),look(dx,dy),setLook(yaw,pitch),setTouch(x,z),clear(),yaw,distance}",
         "does": "Attach camera movement and input lifecycle."
       }
     ],
@@ -4269,17 +4269,17 @@
     "hooks": [
       {
         "name": "heightAt",
-        "signature": "(x,z) \u2192 number",
+        "signature": "(x,z) → number",
         "does": "Terrain height sampler."
       },
       {
         "name": "onStep",
-        "signature": "({x,z,yaw,distance,side}) \u2192 void",
+        "signature": "({x,z,yaw,distance,side}) → void",
         "does": "Footstep audio, decals or replicated events."
       },
       {
         "name": "canMove",
-        "signature": "() \u2192 boolean",
+        "signature": "() → boolean",
         "does": "Pause or disable controller."
       }
     ]
@@ -4305,7 +4305,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {start(),pause(),setVolume(v),step(event),update(dt),dispose()}",
+        "signature": "attach(object,opts) → {start(),pause(),setVolume(v),step(event),update(dt),dispose()}",
         "does": "Create sound engine lazily, on first start."
       }
     ],
@@ -4314,13 +4314,13 @@
         "name": "volume",
         "type": "number",
         "default": 0.22,
-        "does": "Master volume, 0\u20131."
+        "does": "Master volume, 0–1."
       }
     ],
     "hooks": [
       {
         "name": "onStep",
-        "signature": "(event) \u2192 void",
+        "signature": "(event) → void",
         "does": "Observe footfall events."
       }
     ]
@@ -4460,17 +4460,17 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(element,opts) \u2192 {view,setView(),zoomBy(),update(),dispose()}",
+        "signature": "attach(element,opts) → {view,setView(),zoomBy(),update(),dispose()}",
         "does": "Attach mouse/touch controls with replaceable callbacks."
       },
       {
         "name": "screenToWorld",
-        "signature": "screenToWorld(point,rect,view,span) \u2192 {x,z}",
+        "signature": "screenToWorld(point,rect,view,span) → {x,z}",
         "does": "Map client coordinates to world coordinates."
       },
       {
         "name": "zoomView",
-        "signature": "zoomView(view,factor,point,rect,span,min,max,pan) \u2192 view",
+        "signature": "zoomView(view,factor,point,rect,span,min,max,pan) → view",
         "does": "Compute clamped zoom that preserves its anchor."
       }
     ],
@@ -4548,17 +4548,17 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach({lat,lon},opts) \u2192 {ready,update(),dispose()}",
+        "signature": "attach({lat,lon},opts) → {ready,update(),dispose()}",
         "does": "Fetch an attributed bounded raw district with completion/error callbacks."
       },
       {
         "name": "fetchVectorDistrict",
-        "signature": "fetchVectorDistrict(lat,lon,opts) \u2192 Promise<Overpass-compatible JSON>",
+        "signature": "fetchVectorDistrict(lat,lon,opts) → Promise<Overpass-compatible JSON>",
         "does": "Fetch and decode a bounded vector district."
       },
       {
         "name": "decodeTile",
-        "signature": "decodeTile(bytes,x,y,z) \u2192 elements[]",
+        "signature": "decodeTile(bytes,x,y,z) → elements[]",
         "does": "Decode roads, buildings, water and labels from one vector tile."
       }
     ],
@@ -4579,12 +4579,12 @@
     "hooks": [
       {
         "name": "onReady",
-        "signature": "(raw) \u2192 void",
+        "signature": "(raw) → void",
         "does": "Receive attributed OSM-compatible data."
       },
       {
         "name": "onError",
-        "signature": "(error) \u2192 void",
+        "signature": "(error) → void",
         "does": "Observe errors; ready still rejects."
       }
     ]
@@ -4601,7 +4601,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {value,entries,award(id,points),snapshot(),update(),dispose()}",
+        "signature": "attach(object,opts) → {value,entries,award(id,points),snapshot(),update(),dispose()}",
         "does": "Track deduplicated nonnegative rewards."
       }
     ],
@@ -4622,7 +4622,7 @@
     "hooks": [
       {
         "name": "onChange",
-        "signature": "(score,event,object) \u2192 void",
+        "signature": "(score,event,object) → void",
         "does": "Observe successful rewards."
       }
     ],
@@ -4647,7 +4647,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {activate(id,payload),remaining,update(dt),dispose()}",
+        "signature": "attach(object,opts) → {activate(id,payload),remaining,update(dt),dispose()}",
         "does": "Gate and charge ability use."
       }
     ],
@@ -4673,12 +4673,12 @@
     "hooks": [
       {
         "name": "onActivate",
-        "signature": "(id,payload,object) \u2192 void",
+        "signature": "(id,payload,object) → void",
         "does": "Apply damage, heal, reveal evidence or any custom ability effect."
       },
       {
         "name": "onReject",
-        "signature": "(id,reason) \u2192 void",
+        "signature": "(id,reason) → void",
         "does": "Observe unavailable/resources rejection."
       }
     ],
@@ -4705,42 +4705,42 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(raw,opts) \u2192 {district,update(),dispose()}",
+        "signature": "attach(raw,opts) → {district,update(),dispose()}",
         "does": "Convert raw map input."
       },
       {
         "name": "parse",
-        "signature": "parse(raw,opts) \u2192 District",
+        "signature": "parse(raw,opts) → District",
         "does": "Build renderer-free normalized map manifest."
       },
       {
         "name": "project",
-        "signature": "project(lat,lon,origin) \u2192 {x,z}",
+        "signature": "project(lat,lon,origin) → {x,z}",
         "does": "Geographic coordinates to local meters."
       },
       {
         "name": "unproject",
-        "signature": "unproject(x,z,origin) \u2192 {lat,lon}",
+        "signature": "unproject(x,z,origin) → {lat,lon}",
         "does": "Local meters to coordinates."
       },
       {
         "name": "inside",
-        "signature": "inside(point,ring) \u2192 boolean",
+        "signature": "inside(point,ring) → boolean",
         "does": "Point-in-polygon."
       },
       {
         "name": "nearestRoad",
-        "signature": "nearestRoad(point,roads) \u2192 {x,z,distance}",
+        "signature": "nearestRoad(point,roads) → {x,z,distance}",
         "does": "Project onto nearest street segment."
       },
       {
         "name": "classify",
-        "signature": "classify(tags) \u2192 string",
+        "signature": "classify(tags) → string",
         "does": "Interpret building and POI tags."
       },
       {
         "name": "validateDistrict",
-        "signature": "validateDistrict(district) \u2192 boolean",
+        "signature": "validateDistrict(district) → boolean",
         "does": "Validate a network manifest before importing."
       },
       {
@@ -4750,7 +4750,7 @@
       },
       {
         "name": "mergeTowers",
-        "signature": "mergeTowers(district,known) \u2192 District",
+        "signature": "mergeTowers(district,known) → District",
         "does": "Reproject confirmed mapped water towers into a new source district, preserve endpoint IDs, remove local fictional fallback when a real relay is known and refresh its fingerprint."
       }
     ],
@@ -4775,7 +4775,7 @@
     "hooks": [
       {
         "name": "onReady",
-        "signature": "(district) \u2192 void",
+        "signature": "(district) → void",
         "does": "Receive normalized world data."
       }
     ],
@@ -4800,7 +4800,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(district,opts) \u2192 {route(start,end),nodeCount,update(),dispose()}",
+        "signature": "attach(district,opts) → {route(start,end),nodeCount,update(),dispose()}",
         "does": "Build graph and route between x/z positions."
       }
     ],
@@ -4808,12 +4808,12 @@
     "hooks": [
       {
         "name": "include",
-        "signature": "(road) \u2192 boolean",
+        "signature": "(road) → boolean",
         "does": "Filter walkable roads; default excludes water and motorways."
       },
       {
         "name": "onRoute",
-        "signature": "(points) \u2192 void",
+        "signature": "(points) → void",
         "does": "Observe computed route."
       }
     ],
@@ -4835,17 +4835,17 @@
     "file": "water-tower.js",
     "type": "logic",
     "title": "Municipal water tower generator",
-    "description": "Original CC0 municipal water tower with tank, dome, tapered base, legs, ring bracing and central pipe. Meter units, root at ground, separate metal meshes. Parameterized 14\u201380m height, radius, paint and leg count. An approximation rather than a surveyed replica.",
+    "description": "Original CC0 municipal water tower with tank, dome, tapered base, legs, ring bracing and central pipe. Meter units, root at ground, separate metal meshes. Parameterized 14–80m height, radius, paint and leg count. An approximation rather than a surveyed replica.",
     "kind": "effect",
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(parent,opts) \u2192 {root,update(),dispose()}",
+        "signature": "attach(parent,opts) → {root,update(),dispose()}",
         "does": "Attach and own a tower."
       },
       {
         "name": "makeTower",
-        "signature": "makeTower(opts) \u2192 THREE.Group",
+        "signature": "makeTower(opts) → THREE.Group",
         "does": "Build stand-alone geometry for instancing or GLB export."
       }
     ],
@@ -4892,12 +4892,12 @@
     "file": "osm-town-view.js",
     "type": "logic",
     "title": "OSM town renderer: semantic 3D streets",
-    "description": "Three.js environment from normalized OSM geometry: extruded footprints and courtyard holes, mapped or inferred heights, home roofs, shared brick maps, deterministic lit windows, semantic building palettes, road ribbons, water, streetlights, water towers, procedural infill vegetation, clue markers and colored player avatars with light cones. Fa\u00e7ades and vegetation are inferred; no street imagery. Original code CC0, underlying maps ODbL.",
+    "description": "Three.js environment from normalized OSM geometry: extruded footprints and courtyard holes, mapped or inferred heights, home roofs, shared brick maps, deterministic lit windows, semantic building palettes, road ribbons, water, streetlights, water towers, procedural infill vegetation, clue markers and colored player avatars with light cones. Façades and vegetation are inferred; no street imagery. Original code CC0, underlying maps ODbL.",
     "kind": "effect",
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene,opts) \u2192 {root,update(dt,state,viewer,camera),dispose()}",
+        "signature": "attach(scene,opts) → {root,update(dt,state,viewer,camera),dispose()}",
         "does": "Render district geometry and shared actors."
       }
     ],
@@ -4937,17 +4937,17 @@
     "hooks": [
       {
         "name": "classifyBuilding",
-        "signature": "(building) \u2192 kind",
+        "signature": "(building) → kind",
         "does": "Override semantic visual categories."
       },
       {
         "name": "decorate",
-        "signature": "(building,mesh,helpers) \u2192 void",
+        "signature": "(building,mesh,helpers) → void",
         "does": "Add custom semantic decorations."
       },
       {
         "name": "towerFactory",
-        "signature": "(opts) \u2192 THREE.Group",
+        "signature": "(opts) → THREE.Group",
         "does": "Inject a water-tower model generator."
       }
     ],
@@ -4975,7 +4975,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(district,opts) \u2192 {state,district,fingerprint,snapshot(),validateSnapshot(),validateWorld(),load(),reset(),addPlayer(),removePlayer(),nearest(),command(),update(),exportWorld(),importWorld(),applyDistrict(),cancelTravel(),dispose()}",
+        "signature": "attach(district,opts) → {state,district,fingerprint,snapshot(),validateSnapshot(),validateWorld(),load(),reset(),addPlayer(),removePlayer(),nearest(),command(),update(),exportWorld(),importWorld(),applyDistrict(),cancelTravel(),dispose()}",
         "does": "Create host-authoritative rules independent of rendering/transport."
       }
     ],
@@ -4995,7 +4995,7 @@
     "hooks": [
       {
         "name": "onEvent",
-        "signature": "({type,text}) \u2192 void",
+        "signature": "({type,text}) → void",
         "does": "Observe action, clue, recall, district and hint events."
       }
     ],
@@ -5027,7 +5027,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(session,opts) \u2192 {ready,id,isHost,connected,command(c),update(dt,input),sync(),dispose()}",
+        "signature": "attach(session,opts) → {ready,id,isHost,connected,command(c),update(dt,input),sync(),dispose()}",
         "does": "Connect a compatible authoritative session to a room."
       }
     ],
@@ -5064,12 +5064,12 @@
     "hooks": [
       {
         "name": "onStatus",
-        "signature": "(text) \u2192 void",
+        "signature": "(text) → void",
         "does": "Connection and host-departure feedback."
       },
       {
         "name": "onChange",
-        "signature": "() \u2192 void",
+        "signature": "() → void",
         "does": "World or game snapshot updated."
       }
     ],
@@ -5090,7 +5090,7 @@
     "id": "municipal-water-tower",
     "file": "dead-air/water-tower.glb",
     "type": "asset",
-    "title": "Municipal water tower \u00b7 CC0 GLB",
+    "title": "Municipal water tower · CC0 GLB",
     "mime": "model/gltf-binary",
     "tags": [
       "water-tower",
@@ -5109,7 +5109,7 @@
     "id": "rhinelander-osm",
     "file": "dead-air/rhinelander-osm.json",
     "type": "asset",
-    "title": "Rhinelander OSM district \u00b7 ODbL map snapshot",
+    "title": "Rhinelander OSM district · ODbL map snapshot",
     "mime": "application/json",
     "license": "ODbL-1.0",
     "author": "OpenStreetMap contributors",
@@ -5122,68 +5122,14 @@
       "odbl",
       "water-tower"
     ],
-    "description": "Attributed OpenStreetMap/Overpass district around 45.6387,-89.4121: 900m half extent, building geometry/tags, streets, water and water towers within 8km. Raw data snapshot for reproducible procedural games. \u00a9 OpenStreetMap contributors, https://www.openstreetmap.org/copyright. ODbL-1.0, not CC0. Fictional game content is supplied separately."
-  },
-  {
-    "author": "the internet slop warehouse",
-    "license": "CC0-1.0",
-    "id": "dead-air-atlas",
-    "file": "dead-air-atlas.html",
-    "type": "game",
-    "title": "Dead Air Atlas",
-    "tags": [
-      "mystery",
-      "osm",
-      "p2p",
-      "co-op",
-      "3d",
-      "open-world",
-      "mobile",
-      "water-tower",
-      "investigation",
-      "procedural",
-      "location-search",
-      "sprint",
-      "v0.3",
-      "pinch-zoom",
-      "address-search",
-      "bayfield"
-    ],
-    "description": "An original supernatural co-op mystery in real mapped streets. Search by town or location name to generate a bounded OSM district; recover three impossible recordings by matching radio channels and holding a light, then reconnect a water tower to restore fast travel. Shared notebook, inventory, HP/clarity, points, cooldowns, saves, a clean mobile HUD, contextual actions, Tools tray, pinch zoom in the 3D scene and pannable/zoomable atlas with marker routing. Up to four peers share the host atlas; the party moves between districts together through towers or district edges. Version 0.3 defaults to Bayfield waterfront, Wisconsin; search addresses to start on nearby walkable streets. Street names, mapped addresses, semantic facades and cosmetic town activity enrich exploration. Original code/art CC0; OSM map data ODbL; Trystero/Three.js MIT. Procedural fa\u00e7ades, not imagery. Live queries use a cached map service and an OpenFreeMap vector fallback; vector maps retain additional attribution and may omit water-tower POIs.",
-    "uses": [
-      "osm-district",
-      "street-navigation",
-      "water-tower",
-      "osm-town-view",
-      "dead-air-case",
-      "p2p-case-session",
-      "health",
-      "resource-inventory",
-      "objective-journal",
-      "score-ledger",
-      "ability-clock",
-      "save-codec",
-      "winter-audio",
-      "trystero-027",
-      "rhinelander-osm",
-      "brick-texture",
-      "ph-boombox",
-      "northwoods-trees",
-      "snow-texture",
-      "winter-pine-spray",
-      "winter-pine-bark",
-      "osm-vector-district",
-      "map-gestures",
-      "town-life",
-      "bayfield-osm"
-    ]
+    "description": "Attributed OpenStreetMap/Overpass district around 45.6387,-89.4121: 900m half extent, building geometry/tags, streets, water and water towers within 8km. Raw data snapshot for reproducible procedural games. © OpenStreetMap contributors, https://www.openstreetmap.org/copyright. ODbL-1.0, not CC0. Fictional game content is supplied separately."
   },
   {
     "id": "rhinelander-vector-osm",
     "file": "dead-air/rhinelander-vector-osm.json",
     "type": "asset",
-    "title": "Rhinelander vector district \u00b7 OpenFreeMap/OSM",
-    "description": "Frozen OpenFreeMap/OpenMapTiles OSM vector conversion around 45.64,-89.41, 900m half-width: 356 building fragments/footprints, street geometry, water and POIs. Reproducible fixture for fallback routing and rendering. \u00a9 OpenMapTiles, \u00a9 OpenStreetMap contributors, OpenFreeMap attribution retained. ODbL-1.0, not CC0. Tile-clipped geometry and local POIs differ from full Overpass data; water towers may be omitted.",
+    "title": "Rhinelander vector district · OpenFreeMap/OSM",
+    "description": "Frozen OpenFreeMap/OpenMapTiles OSM vector conversion around 45.64,-89.41, 900m half-width: 356 building fragments/footprints, street geometry, water and POIs. Reproducible fixture for fallback routing and rendering. © OpenMapTiles, © OpenStreetMap contributors, OpenFreeMap attribution retained. ODbL-1.0, not CC0. Tile-clipped geometry and local POIs differ from full Overpass data; water towers may be omitted.",
     "license": "ODbL-1.0",
     "author": "OpenStreetMap contributors; OpenFreeMap / OpenMapTiles",
     "mime": "application/json",
@@ -5197,111 +5143,6 @@
     ]
   },
   {
-    "id": "dead-air-remix-kit",
-    "file": "dead-air/dead-air-remix-kit.zip",
-    "type": "asset",
-    "title": "Dead Air Atlas: editable game and systems source kit",
-    "description": "Portable complete source starter: playable town-name-based co-op mystery with mobile sprint controls, eight original reusable CC0 logic modules plus a bundled vector decoder with BSD/ISC notices, tower GLB/generator, existing shared game systems, pinned catalog props/textures, attributed OSM snapshot, map-service source, rebuild scripts and detailed composition guide. Original code/art CC0, maps ODbL, transport MIT. Run node prepare.mjs, serve the folder and edit with your agent. Includes full license separation. The archive is mixed-license, not wholly CC0. Includes Relay Skirmish FPS/crafting variant, Bayfield waterfront default, address starts and mobile pinch/pan. Also includes Relay Commons calm exploration/base-building RPG, 11-model CC0 library, category architecture, exact-map expedition saves, rules, source and tests.",
-    "license": "CC0-1.0 AND ODbL-1.0 AND MIT AND BSD-3-Clause AND ISC",
-    "mime": "application/zip",
-    "author": "the internet slop warehouse; OSM contributors and credited asset authors",
-    "tags": [
-      "starter",
-      "source",
-      "game-systems",
-      "p2p",
-      "osm",
-      "mystery",
-      "remix",
-      "mixed-license"
-    ],
-    "uses": [
-      "map-gestures",
-      "map-vector-licenses",
-      "osm-vector-district",
-      "score-ledger",
-      "ability-clock",
-      "osm-district",
-      "street-navigation",
-      "water-tower",
-      "osm-town-view",
-      "dead-air-case",
-      "p2p-case-session",
-      "municipal-water-tower",
-      "rhinelander-osm",
-      "dead-air-atlas",
-      "rhinelander-vector-osm",
-      "town-life",
-      "bayfield-osm",
-      "relay-skirmish-game",
-      "relay-skirmish",
-      "fps-controls",
-      "pulse-carbine",
-      "pulse-carbine-glb",
-      "settlement-models",
-      "settlement-rules",
-      "relay-homestead",
-      "semantic-architecture",
-      "settlement-view",
-      "settlement-model-library",
-      "relay-commons-guide",
-      "inhabited-town-view"
-    ]
-  },
-  {
-    "id": "relay-skirmish-game",
-    "file": "relay-skirmish.html",
-    "type": "game",
-    "title": "Relay Commons",
-    "license": "CC0-1.0",
-    "author": "the internet slop warehouse",
-    "description": "A calm first-person exploration and base-building RPG prototype in real mapped streets. Bayfield waterfront default, town/address starts, category-based shops, homes, civic entrances and inhabited street details. Discover places, gather shared wood/stone/cloth, build shelter/hearth/workbench/storage/lighting with placement preview and safe street/footprint exclusion. Shared camp, exploration XP, journal routes, pinch/pan atlas, portable exact-map saves and up to four P2P explorers. Holstered weapons; optional 160m ranged sparring, no attacking bots or timed score race. Uses only warehouse parts, original code/art CC0, OSM data ODbL. Inferred facades, no interiors or elevation; host must stay active.",
-    "tags": [
-      "rpg",
-      "exploration",
-      "base-building",
-      "crafting",
-      "co-op",
-      "p2p",
-      "3d",
-      "mobile",
-      "osm",
-      "bayfield",
-      "prototype"
-    ],
-    "uses": [
-      "relay-skirmish",
-      "fps-controls",
-      "pulse-carbine",
-      "osm-town-view",
-      "town-life",
-      "water-tower",
-      "map-gestures",
-      "osm-district",
-      "osm-vector-district",
-      "street-navigation",
-      "resource-inventory",
-      "health",
-      "ability-clock",
-      "p2p-case-session",
-      "trystero-027",
-      "bayfield-osm",
-      "brick-texture",
-      "snow-texture",
-      "relay-homestead",
-      "settlement-rules",
-      "settlement-view",
-      "settlement-models",
-      "settlement-model-library",
-      "semantic-architecture",
-      "garden-caretaker",
-      "save-codec",
-      "inhabited-town-view",
-      "northwoods-trees",
-      "winter-audio"
-    ]
-  },
-  {
     "id": "bayfield-osm",
     "file": "dead-air/bayfield-osm.json",
     "type": "asset",
@@ -5309,7 +5150,7 @@
     "title": "Bayfield waterfront OSM district",
     "license": "ODbL-1.0",
     "author": "OpenStreetMap contributors; OpenFreeMap / OpenMapTiles",
-    "description": "Frozen 900m district around Bayfield waterfront, Wisconsin (46.8108,-90.8182). Real buildings, streets, addresses and shoreline from OpenFreeMap vector data. \u00a9 OpenStreetMap contributors, \u00a9 OpenMapTiles; OpenFreeMap. No imagery or elevation. Map data is ODbL, not CC0.",
+    "description": "Frozen 900m district around Bayfield waterfront, Wisconsin (46.8108,-90.8182). Real buildings, streets, addresses and shoreline from OpenFreeMap vector data. © OpenStreetMap contributors, © OpenMapTiles; OpenFreeMap. No imagery or elevation. Map data is ODbL, not CC0.",
     "tags": [
       "bayfield",
       "wisconsin",
@@ -5343,7 +5184,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 instance",
+        "signature": "attach(object,opts) → instance",
         "does": "Renderer-free PvP and practice combat, ray obstruction, armor, respawns, personal inventories, salvage regeneration, atomic crafting for cells/repair/armor/cover, contested relay and score victory."
       }
     ]
@@ -5367,7 +5208,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 instance",
+        "signature": "attach(object,opts) → instance",
         "does": "CC0 stylized fictional energy blaster, Three.js geometry generator. Editable reusable first-person prop."
       }
     ]
@@ -5391,7 +5232,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 instance",
+        "signature": "attach(object,opts) → instance",
         "does": "WASD, sprint, mouse drag, optional pointer lock and touch look; aim while holding fire. Bounded orientation, clear on blur, disposal."
       }
     ]
@@ -5415,7 +5256,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 instance",
+        "signature": "attach(object,opts) → instance",
         "does": "Distance-culled real street names, mapped addresses and building labels; deterministic cosmetic walkers and cars follow mapped roads. Three.js renderer with complete disposal. Inferred ambient activity, not live real-world data."
       }
     ]
@@ -5425,7 +5266,7 @@
     "file": "dead-air/pulse-carbine.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Salvage pulse carbine \u00b7 original CC0 GLB",
+    "title": "Salvage pulse carbine · original CC0 GLB",
     "license": "CC0-1.0",
     "author": "the internet slop warehouse",
     "description": "Editable fictional energy blaster prop. Y up, meters, generated by pulse-carbine; original geometry, no textures required.",
@@ -5461,12 +5302,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {update(dt),dispose(),\u2026}",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
         "does": "Eleven original meter-scale Three.js models: open shelter, timber wall, workbench, hearth, chest, lantern, bedroll, planter, bench, cafe table and supply cache. Exported as named GLB library; Y up and ground origin. No external textures."
       },
       {
         "name": "makePiece",
-        "signature": "makePiece(kind) \u2192 THREE.Group",
+        "signature": "makePiece(kind) → THREE.Group",
         "does": "Generate original editable geometry for one model."
       },
       {
@@ -5509,7 +5350,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {update(dt),dispose(),\u2026}",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
         "does": "Renderer-free map-based discoveries, shared XP/rank, fictional supply drops, shared atomic wood/stone/cloth, eight camp blueprints, dry-land street/footprint/water exclusions, quarter-turn placement, reclaim refunds and camp milestones. Bounded validated snapshots and configurable permission hook."
       },
       {
@@ -5534,12 +5375,12 @@
     "hooks": [
       {
         "name": "canBuild",
-        "signature": "(placement,blueprint) \u2192 boolean",
+        "signature": "(placement,blueprint) → boolean",
         "does": "Override placement permissions."
       },
       {
         "name": "onEvent",
-        "signature": "(event) \u2192 void",
+        "signature": "(event) → void",
         "does": "Observe discoveries and construction."
       }
     ]
@@ -5572,7 +5413,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {update(dt),dispose(),\u2026}",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
         "does": "Calm expedition layer over the published ranged combat engine. No hostile bot, timer or score race. Shared camp, discoveries, gear, rest and return-to-hearth. Holstered weapons and combat off by default; optional expedition-wide ranged sparring. Compatible with exact-world P2P host-authoritative transport."
       }
     ],
@@ -5592,7 +5433,7 @@
     "hooks": [
       {
         "name": "onEvent",
-        "signature": "(event) \u2192 void",
+        "signature": "(event) → void",
         "does": "Observe exploration and combat outcomes."
       }
     ]
@@ -5621,27 +5462,27 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {update(dt),dispose(),\u2026}",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
         "does": "Procedural OSM-tag-based facades: shops/cafes, homes/apartments, civic/school/church, medical and workshop entrances. Named signage, porches, balconies, shop windows, seating, planters and loading areas. Street-facing placement uses nearest actual road segment. Batches facade geometry. Fictional designs, no imagery or building interiors."
       },
       {
         "name": "profile",
-        "signature": "profile(building) \u2192 string",
+        "signature": "profile(building) → string",
         "does": "Classify mapped tags into visual facade profiles."
       },
       {
         "name": "frontage",
-        "signature": "frontage(building,roads) \u2192 frame",
+        "signature": "frontage(building,roads) → frame",
         "does": "Find a street-facing footprint edge."
       },
       {
         "name": "classifyBuilding",
-        "signature": "(building) \u2192 kind",
+        "signature": "(building) → kind",
         "does": "Renderer classification hook including explicitly inferred sparse-data fallback."
       },
       {
         "name": "styleBuilding",
-        "signature": "(building,mesh) \u2192 void",
+        "signature": "(building,mesh) → void",
         "does": "Category material hook: painted homes/civic/medical, masonry shops, industrial finishes."
       }
     ],
@@ -5695,7 +5536,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {update(dt),dispose(),\u2026}",
+        "signature": "attach(object,opts) → {update(dt),dispose(),…}",
         "does": "Render settlement-rules using published GLB prototypes; supply drops, placed structures, an injected camp guide and green/red quarter-turn placement ghost. Caller owns prototypes. Dispose releases only adapter-owned resources."
       }
     ],
@@ -5735,7 +5576,7 @@
     "mime": "model/gltf-binary",
     "license": "CC0-1.0",
     "author": "the internet slop warehouse",
-    "title": "Camp and streetscape \u00b7 11 original CC0 GLB models",
+    "title": "Camp and streetscape · 11 original CC0 GLB models",
     "description": "Named prototype library for camp building and inhabited streets: shelter, wall, workbench, hearth, chest, lantern, bedroll, planter, bench, cafe-table and supply-cache. Load scene.children by name; each prototype is at ground origin in meters, Y up. Children overlap intentionally as an asset library; instantiate individually. Editable generator settlement-models.",
     "uses": [
       "settlement-models"
@@ -5778,12 +5619,12 @@
     "file": "inhabited-town-view.js",
     "type": "logic",
     "title": "Inhabited streets: OSM scene renderer",
-    "description": "Three.js environment from normalized OSM geometry: extruded footprints and courtyard holes, mapped or inferred heights, home roofs, shared brick maps, deterministic lit windows, semantic building palettes, road ribbons, water, streetlights, water towers, procedural infill vegetation, clue markers and colored player avatars with light cones. Fa\u00e7ades and vegetation are inferred; no street imagery. Original code CC0, underlying maps ODbL. Fork with non-casting ground/road layers to avoid overlapping surface shadow artifacts, plus anisotropic road texture sampling. Inject semantic-architecture classification and finish hooks.",
+    "description": "Three.js environment from normalized OSM geometry: extruded footprints and courtyard holes, mapped or inferred heights, home roofs, shared brick maps, deterministic lit windows, semantic building palettes, road ribbons, water, streetlights, water towers, procedural infill vegetation, clue markers and colored player avatars with light cones. Façades and vegetation are inferred; no street imagery. Original code CC0, underlying maps ODbL. Fork with non-casting ground/road layers to avoid overlapping surface shadow artifacts, plus anisotropic road texture sampling. Inject semantic-architecture classification and finish hooks.",
     "kind": "effect",
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene,opts) \u2192 {root,update(dt,state,viewer,camera),dispose()}",
+        "signature": "attach(scene,opts) → {root,update(dt,state,viewer,camera),dispose()}",
         "does": "Render district geometry and shared actors."
       }
     ],
@@ -5823,17 +5664,17 @@
     "hooks": [
       {
         "name": "classifyBuilding",
-        "signature": "(building) \u2192 kind",
+        "signature": "(building) → kind",
         "does": "Override semantic visual categories."
       },
       {
         "name": "decorate",
-        "signature": "(building,mesh,helpers) \u2192 void",
+        "signature": "(building,mesh,helpers) → void",
         "does": "Add custom semantic decorations."
       },
       {
         "name": "towerFactory",
-        "signature": "(opts) \u2192 THREE.Group",
+        "signature": "(opts) → THREE.Group",
         "does": "Inject a water-tower model generator."
       }
     ],
@@ -6090,12 +5931,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(scene,opts) \u2192 {load,place,scatter,register,colliders,root,update,dispose}",
+        "signature": "attach(scene,opts) → {load,place,scatter,register,colliders,root,update,dispose}",
         "does": "Manage reusable model prototypes and efficient world placement."
       },
       {
         "name": "fitModel",
-        "signature": "fitModel(source,height) \u2192 THREE.Group",
+        "signature": "fitModel(source,height) → THREE.Group",
         "does": "Wrap a static model at ground origin and scale to the desired meter height."
       }
     ],
@@ -6114,7 +5955,7 @@
     "hooks": [
       {
         "name": "onProgress",
-        "signature": "(id) \u2192 void",
+        "signature": "(id) → void",
         "does": "Report a loaded prototype for progress UI."
       }
     ],
@@ -6140,12 +5981,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(camera,opts) \u2192 {update,dispose,distance}",
+        "signature": "attach(camera,opts) → {update,dispose,distance}",
         "does": "Move a camera through a sampled 3D world."
       },
       {
         "name": "moveDisk",
-        "signature": "moveDisk(position,dx,dz,opts) \u2192 position",
+        "signature": "moveDisk(position,dx,dz,opts) → position",
         "does": "Advance with circle collisions, bounds and axis sliding."
       }
     ],
@@ -6174,17 +6015,17 @@
     "hooks": [
       {
         "name": "heightAt",
-        "signature": "(x,z) \u2192 number",
+        "signature": "(x,z) → number",
         "does": "Sample terrain height."
       },
       {
         "name": "canMove",
-        "signature": "() \u2192 boolean",
+        "signature": "() → boolean",
         "does": "Pause movement while in menus."
       },
       {
         "name": "onStep",
-        "signature": "(event) \u2192 void",
+        "signature": "(event) → void",
         "does": "Emit traveled-distance footsteps."
       }
     ],
@@ -6212,7 +6053,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(actor,opts) \u2192 {state,focus,signal,use,tune,reset,update,dispose}",
+        "signature": "attach(actor,opts) → {state,focus,signal,use,tune,reset,update,dispose}",
         "does": "Compose a small restoration expedition from site records."
       }
     ],
@@ -6242,7 +6083,7 @@
     "hooks": [
       {
         "name": "onEvent",
-        "signature": "({ok,message,state}) \u2192 void",
+        "signature": "({ok,message,state}) → void",
         "does": "Observe accepted and rejected actions for UI/audio."
       }
     ],
@@ -6268,7 +6109,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {start,pause,setVolume,step,chime,bell,tune,update,dispose}",
+        "signature": "attach(object,opts) → {start,pause,setVolume,step,chime,bell,tune,update,dispose}",
         "does": "Create a generated woodland soundscape with listener-relative machine audio."
       }
     ],
@@ -6281,13 +6122,13 @@
       {
         "name": "volume",
         "type": "number",
-        "does": "Master volume 0\u20131."
+        "does": "Master volume 0–1."
       }
     ],
     "hooks": [
       {
         "name": "onStart",
-        "signature": "() \u2192 void",
+        "signature": "() → void",
         "does": "Observe creation of the sound engine."
       }
     ],
@@ -6400,7 +6241,7 @@
     "file": "field-station/pine-spray.png",
     "type": "asset",
     "mime": "image/png",
-    "title": "Green pine branch spray \u00b7 original CC0",
+    "title": "Green pine branch spray · original CC0",
     "description": "Original transparent 512px RGBA pine-needle branch card with no snow. sRGB, alpha-test at 0.45, double-sided. Seeded procedural synthesis with scripts/make-field-pine.mjs; no photographic inputs. Pair with northwoods-trees at snow:0."
   },
   {
@@ -6418,12 +6259,12 @@
     "file": "trail-playground.js",
     "type": "logic",
     "kind": "rule",
-    "title": "Stones and resonant targets \u00b7 small 3D play toy",
+    "title": "Stones and resonant targets · small 3D play toy",
     "description": "Renderer-free ballistic throws with bounded substeps, configurable gravity and launch speed, sampled-ground bounces, spherical target hits and bounded projectile lifetime/count. Hook target hits to sounds, scores and physical feedback. No victory state or mandatory objective.",
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,opts) \u2192 {stones,hits,throwStone,reset,update,dispose}",
+        "signature": "attach(object,opts) → {stones,hits,throwStone,reset,update,dispose}",
         "does": "Simulate a bounded stone-toss toy with target events."
       }
     ],
@@ -6449,17 +6290,17 @@
     "hooks": [
       {
         "name": "heightAt",
-        "signature": "(x,z) \u2192 number",
+        "signature": "(x,z) → number",
         "does": "Sample collision ground."
       },
       {
         "name": "onHit",
-        "signature": "({target,stone,hits}) \u2192 void",
+        "signature": "({target,stone,hits}) → void",
         "does": "Trigger sound and animation for a target hit."
       },
       {
         "name": "onThrow",
-        "signature": "(stone) \u2192 void",
+        "signature": "(stone) → void",
         "does": "Observe new projectiles."
       }
     ]
@@ -6468,7 +6309,7 @@
     "id": "mairas-thrift-props",
     "type": "asset",
     "file": "../projects/mairas-dream/assets/thrift-kit.glb",
-    "title": "Maira\u2019s Dream \u00b7 20 original thrift-store models",
+    "title": "Maira’s Dream · 20 original thrift-store models",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -6486,7 +6327,7 @@
     "type": "logic",
     "kind": "effect",
     "file": "../projects/mairas-dream/prop-kit.js",
-    "title": "Maira\u2019s Dream \u00b7 editable thrift-store model generators",
+    "title": "Maira’s Dream · editable thrift-store model generators",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "description": "Twenty original texture-free Three.js thrift-store model generators. makePiece(kind,variant) returns ground-origin meter-scale Group. attach adds one model with update and dispose.",
@@ -6494,12 +6335,12 @@
       {
         "name": "attach",
         "does": "Attach a generated model.",
-        "signature": "attach(object,opts) \u2192 {update,dispose,\u2026}"
+        "signature": "attach(object,opts) → {update,dispose,…}"
       },
       {
         "name": "makePiece",
         "does": "Generate a named prototype.",
-        "signature": "makePiece(kind,variant=0) \u2192 THREE.Group"
+        "signature": "makePiece(kind,variant=0) → THREE.Group"
       },
       {
         "name": "kinds",
@@ -6519,7 +6360,7 @@
     "file": "../projects/mairas-dream/rules.js",
     "type": "logic",
     "kind": "rule",
-    "title": "Maira\u2019s Dream \u00b7 escalating shopping and stealth rules",
+    "title": "Maira’s Dream · escalating shopping and stealth rules",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "tags": [
@@ -6534,17 +6375,17 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,{seed,level}) \u2192 Run",
+        "signature": "attach(object,{seed,level}) → Run",
         "does": "Create a level-specific shopping run with update and dispose."
       },
       {
         "name": "createRun",
-        "signature": "createRun(seed?,level=1) \u2192 Run",
+        "signature": "createRun(seed?,level=1) → Run",
         "does": "Actions and state for a complete visit."
       },
       {
         "name": "levelConfig",
-        "signature": "levelConfig(level) \u2192 Config",
+        "signature": "levelConfig(level) → Config",
         "does": "Budget, cats, speed, fire and manager difficulty."
       },
       {
@@ -6566,7 +6407,7 @@
     "id": "mairas-dream",
     "type": "game",
     "file": "../artifacts/mairas-dream/mairas-dream.html",
-    "title": "Maira\u2019s Dream \u00b7 Second Chances \u2014 Sorted Donations",
+    "title": "Maira’s Dream · Second Chances — Sorted Donations",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0 AND MIT",
     "description": "Retail floorplan rework: long parallel double-sided hardgoods banks, twelve aligned clothing fixtures, perimeter books, clear cross-aisles and checkout at the front. Fixture-specific donated assortments with clustered spacing, partially empty shelves, capped duplicate appliances, plate stacks, leaning books and grounded book piles. Distinct tea-set pieces, radios, watering cans and sculpture. Plants restricted to perimeter/furniture corners. Goal hints approach the correct side of rotated fixtures. Compact phone list, thumbstick/touch look, staffed checkout, manager, escalating visits and cat/fire escape retained. Stylized browser prototype; further asset variety remains needed.",
@@ -6671,7 +6512,7 @@
     "type": "asset",
     "file": "../projects/mairas-dream/PLAN.md",
     "mime": "text/markdown",
-    "title": "Maira\u2019s Dream \u00b7 design and asset plan",
+    "title": "Maira’s Dream · design and asset plan",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "description": "Warehouse discovery inventory, first-slice shopping/escape design, original model inventory, layout, source conventions, validation and follow-up roadmap.",
@@ -6687,7 +6528,7 @@
     "type": "asset",
     "file": "../projects/mairas-dream/FIRE-SAFETY.md",
     "mime": "text/markdown",
-    "title": "Retail game environments \u00b7 fire-safety design notes",
+    "title": "Retail game environments · fire-safety design notes",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "description": "Primary-source OSHA research for fictional retail environments: accessible extinguisher distribution, clear egress and separate emergency exit. Explicitly distinguishes game design from local building-code compliance; researched 2026-11-15.",
@@ -6902,7 +6743,7 @@
     "file": "../projects/mairas-dream/assets/characters/casual.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Quaternius \u00b7 casual animated civilian",
+    "title": "Quaternius · casual animated civilian",
     "author": "Quaternius",
     "license": "CC0-1.0",
     "tags": [
@@ -6920,7 +6761,7 @@
     "file": "../projects/mairas-dream/assets/characters/cashier.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Quaternius \u00b7 cashier animated civilian",
+    "title": "Quaternius · cashier animated civilian",
     "author": "Quaternius",
     "license": "CC0-1.0",
     "tags": [
@@ -6938,7 +6779,7 @@
     "file": "../projects/mairas-dream/assets/characters/manager.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Quaternius \u00b7 manager animated civilian",
+    "title": "Quaternius · manager animated civilian",
     "author": "Quaternius",
     "license": "CC0-1.0",
     "tags": [
@@ -6956,7 +6797,7 @@
     "file": "../projects/mairas-dream/assets/foley.json",
     "type": "asset",
     "mime": "application/json",
-    "title": "Kenney \u00b7 concrete footsteps and thrift-store Foley",
+    "title": "Kenney · concrete footsteps and thrift-store Foley",
     "author": "Kenney",
     "license": "CC0-1.0",
     "tags": [
@@ -6973,7 +6814,7 @@
     "file": "../projects/mairas-dream/assets/display-lods.json",
     "type": "asset",
     "mime": "application/json",
-    "title": "Maira\u2019s store \u00b7 index-only display LODs",
+    "title": "Maira’s store · index-only display LODs",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "tags": [
@@ -7026,7 +6867,7 @@
     "file": "../projects/mairas-dream/stock.js",
     "type": "logic",
     "kind": "rule",
-    "title": "Sorted Donations \u00b7 clustered fixture-specific thrift assortments",
+    "title": "Sorted Donations · clustered fixture-specific thrift assortments",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "tags": [
@@ -7040,12 +6881,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,{transformItem}) \u2192 {catalog,shelves,racks,update,dispose}",
+        "signature": "attach(object,{transformItem}) → {catalog,shelves,racks,update,dispose}",
         "does": "Create a fresh merchandise catalog, optionally transform each item."
       },
       {
         "name": "makeStock",
-        "signature": "makeStock() \u2192 Item[]",
+        "signature": "makeStock() → Item[]",
         "does": "Generate all unique item records."
       },
       {
@@ -7072,7 +6913,7 @@
     "hooks": [
       {
         "name": "transformItem",
-        "signature": "(item) \u2192 item",
+        "signature": "(item) → item",
         "default": "identity",
         "does": "Override placement, price or visual metadata for a new catalog."
       }
@@ -7083,7 +6924,7 @@
     "file": "../projects/mairas-dream/input.js",
     "type": "logic",
     "kind": "controller",
-    "title": "Shop controls \u00b7 quick pickup and separate inspection",
+    "title": "Shop controls · quick pickup and separate inspection",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "tags": [
@@ -7097,7 +6938,7 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(canvas,{onUse,onInspect,onMenu}) \u2192 Controls",
+        "signature": "attach(canvas,{onUse,onInspect,onMenu}) → Controls",
         "does": "Input state and callbacks for desktop/touch first-person shopping."
       }
     ],
@@ -7107,17 +6948,17 @@
     "hooks": [
       {
         "name": "onUse",
-        "signature": "() \u2192 void",
+        "signature": "() → void",
         "does": "Quick pickup/use."
       },
       {
         "name": "onInspect",
-        "signature": "() \u2192 void",
+        "signature": "() → void",
         "does": "Open or close inspection."
       },
       {
         "name": "onMenu",
-        "signature": "() \u2192 void",
+        "signature": "() → void",
         "does": "Pause or close current view."
       }
     ]
@@ -7127,7 +6968,7 @@
     "file": "../projects/mairas-dream/sound.js",
     "type": "logic",
     "kind": "effect",
-    "title": "Thrift-store audio \u00b7 footsteps, Foley and NPC murmurs",
+    "title": "Thrift-store audio · footsteps, Foley and NPC murmurs",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "tags": [
@@ -7142,12 +6983,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,{bankURL}) \u2192 Sound",
+        "signature": "attach(object,{bankURL}) → Sound",
         "does": "Create reusable store sound methods with update/dispose."
       },
       {
         "name": "createSound",
-        "signature": "createSound({bankURL}?) \u2192 Sound",
+        "signature": "createSound({bankURL}?) → Sound",
         "does": "Create an audio engine; call start from a user gesture."
       }
     ],
@@ -7167,7 +7008,7 @@
     "file": "../projects/mairas-dream/ASSETS.md",
     "type": "asset",
     "mime": "text/markdown",
-    "title": "Maira\u2019s Dream \u00b7 acquired CC0 asset library and provenance",
+    "title": "Maira’s Dream · acquired CC0 asset library and provenance",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "description": "Poly Haven props and fixtures, Quaternius animated characters, Kenney Foley and display LOD sourcing/transformations. Official license links, mirror provenance, source paths and original-inspection versus optimized-display geometry design.",
@@ -7385,7 +7226,7 @@
     "file": "haven/ph-store-cotton-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 cotton color",
+    "title": "Poly Haven · cotton color",
     "author": "Rob Tuytel",
     "license": "CC0-1.0",
     "tags": [
@@ -7403,7 +7244,7 @@
     "file": "haven/ph-store-cotton-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 cotton normal",
+    "title": "Poly Haven · cotton normal",
     "author": "Rob Tuytel",
     "license": "CC0-1.0",
     "tags": [
@@ -7421,7 +7262,7 @@
     "file": "haven/ph-store-cotton-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 cotton roughness",
+    "title": "Poly Haven · cotton roughness",
     "author": "Rob Tuytel",
     "license": "CC0-1.0",
     "tags": [
@@ -7439,7 +7280,7 @@
     "file": "haven/ph-store-denim-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 denim color",
+    "title": "Poly Haven · denim color",
     "author": "Greg Zaal, Rico Cilliers",
     "license": "CC0-1.0",
     "tags": [
@@ -7457,7 +7298,7 @@
     "file": "haven/ph-store-denim-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 denim normal",
+    "title": "Poly Haven · denim normal",
     "author": "Greg Zaal, Rico Cilliers",
     "license": "CC0-1.0",
     "tags": [
@@ -7475,7 +7316,7 @@
     "file": "haven/ph-store-denim-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 denim roughness",
+    "title": "Poly Haven · denim roughness",
     "author": "Greg Zaal, Rico Cilliers",
     "license": "CC0-1.0",
     "tags": [
@@ -7493,7 +7334,7 @@
     "file": "haven/ph-store-asphalt-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 asphalt color",
+    "title": "Poly Haven · asphalt color",
     "author": "Dario Barresi, Charlotte Baglioni",
     "license": "CC0-1.0",
     "tags": [
@@ -7511,7 +7352,7 @@
     "file": "haven/ph-store-asphalt-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 asphalt normal",
+    "title": "Poly Haven · asphalt normal",
     "author": "Dario Barresi, Charlotte Baglioni",
     "license": "CC0-1.0",
     "tags": [
@@ -7529,7 +7370,7 @@
     "file": "haven/ph-store-asphalt-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 asphalt roughness",
+    "title": "Poly Haven · asphalt roughness",
     "author": "Dario Barresi, Charlotte Baglioni",
     "license": "CC0-1.0",
     "tags": [
@@ -7547,7 +7388,7 @@
     "file": "haven/ph-store-floor-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 floor color",
+    "title": "Poly Haven · floor color",
     "author": "Rob Tuytel",
     "license": "CC0-1.0",
     "tags": [
@@ -7565,7 +7406,7 @@
     "file": "haven/ph-store-floor-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 floor normal",
+    "title": "Poly Haven · floor normal",
     "author": "Rob Tuytel",
     "license": "CC0-1.0",
     "tags": [
@@ -7583,7 +7424,7 @@
     "file": "haven/ph-store-floor-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "Poly Haven \u00b7 floor roughness",
+    "title": "Poly Haven · floor roughness",
     "author": "Rob Tuytel",
     "license": "CC0-1.0",
     "tags": [
@@ -7619,9 +7460,9 @@
   },
   {
     "id": "ph-thrift-neighbor-mug",
-    "title": "World\u2019s Okayest Neighbor \u00b7 porcelain cup",
+    "title": "World’s Okayest Neighbor · porcelain cup",
     "author": "James Ray Cock, Rico Cilliers; decal by the internet slop wareho",
-    "description": "Real tea_set_01 cup with an original readable WORLD\u2019S OKAYEST NEIGHBOR decal. Separate ground-centered model; original PBR source geometry preserved.",
+    "description": "Real tea_set_01 cup with an original readable WORLD’S OKAYEST NEIGHBOR decal. Separate ground-centered model; original PBR source geometry preserved.",
     "uses": [
       "ph-tea-set-01"
     ],
@@ -7745,9 +7586,9 @@
   },
   {
     "id": "qt-animated-cat",
-    "title": "Quaternius \u00b7 rigged walking cat",
+    "title": "Quaternius · rigged walking cat",
     "author": "Quaternius",
-    "description": "Original Cat from the creator\u2019s Animal Pack Vol.2 (CC0), https://opengameart.org/content/animated-animales-low-poly . FBX converted to meter-scale GLB with idle and walking clips, original rig/materials preserved. Source archive and license evidence recorded.",
+    "description": "Original Cat from the creator’s Animal Pack Vol.2 (CC0), https://opengameart.org/content/animated-animales-low-poly . FBX converted to meter-scale GLB with idle and walking clips, original rig/materials preserved. Source archive and license evidence recorded.",
     "file": "haven/qt-animated-cat.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
@@ -7762,7 +7603,7 @@
   },
   {
     "id": "kenney-sedan",
-    "title": "Kenney Car Kit \u00b7 sedan",
+    "title": "Kenney Car Kit · sedan",
     "author": "Kenney",
     "description": "Authored sedan from the CC0 Kenney Car Kit, https://kenney.nl/assets/car-kit . Acquired from Papyszoo/CC0-Public-Domain-Models mirror. Self-contained GLB, original geometry/textures/materials preserved.",
     "file": "haven/kenney-sedan.glb",
@@ -7779,7 +7620,7 @@
   },
   {
     "id": "kenney-suv",
-    "title": "Kenney Car Kit \u00b7 suv",
+    "title": "Kenney Car Kit · suv",
     "author": "Kenney",
     "description": "Authored suv from the CC0 Kenney Car Kit, https://kenney.nl/assets/car-kit . Acquired from Papyszoo/CC0-Public-Domain-Models mirror. Self-contained GLB, original geometry/textures/materials preserved.",
     "file": "haven/kenney-suv.glb",
@@ -7796,7 +7637,7 @@
   },
   {
     "id": "kenney-van",
-    "title": "Kenney Car Kit \u00b7 van",
+    "title": "Kenney Car Kit · van",
     "author": "Kenney",
     "description": "Authored van from the CC0 Kenney Car Kit, https://kenney.nl/assets/car-kit . Acquired from Papyszoo/CC0-Public-Domain-Models mirror. Self-contained GLB, original geometry/textures/materials preserved.",
     "file": "haven/kenney-van.glb",
@@ -7813,7 +7654,7 @@
   },
   {
     "id": "basemesh-mug",
-    "title": "The Base Mesh \u00b7 handled coffee mug",
+    "title": "The Base Mesh · handled coffee mug",
     "author": "The Base Mesh",
     "description": "Original hollow handled mug. Source: https://www.thebasemesh.com/ (CC0 library), acquired from Papyszoo/CC0-Public-Domain-Models/packs/the-base-mesh/models/mug/mug.glb. Original mesh preserved.",
     "uses": [],
@@ -7851,9 +7692,9 @@
   },
   {
     "id": "cc0-ceramic-neighbor-mug",
-    "title": "World\u2019s Okayest Neighbor \u00b7 handled mug",
+    "title": "World’s Okayest Neighbor · handled mug",
     "author": "The Base Mesh; the internet slop warehouse",
-    "description": "Handled ceramic coffee mug with original WORLD\u2019S OKAYEST NEIGHBOR surface lettering. Separate decal geometry, hollow body, ground-centered, 15cm high.",
+    "description": "Handled ceramic coffee mug with original WORLD’S OKAYEST NEIGHBOR surface lettering. Separate decal geometry, hollow body, ground-centered, 15cm high.",
     "uses": [
       "basemesh-mug"
     ],
@@ -7871,7 +7712,7 @@
   },
   {
     "id": "ph-thrift-book",
-    "title": "Poly Haven \u00b7 individual hardcover book",
+    "title": "Poly Haven · individual hardcover book",
     "author": "Poly Haven contributors",
     "description": "Individual hardcover mesh extracted from Decorative Book Set 01 FBX with original 1K cover02, OpenGL normal and roughness resources, embedded GLB, normalized 27cm height. Source https://polyhaven.com/a/decorative_book_set_01 . Upstream files MD5 verified; local SHA256/provenance recorded.",
     "uses": [],
@@ -7889,7 +7730,7 @@
   },
   {
     "id": "ph-thrift-book-alt",
-    "title": "Poly Haven \u00b7 alternate hardcover book",
+    "title": "Poly Haven · alternate hardcover book",
     "author": "Poly Haven contributors",
     "description": "Same CC0 authored hardcover geometry, original cover07 with original normal/roughness PBR maps. Self-contained GLB from https://polyhaven.com/a/decorative_book_set_01 .",
     "uses": [
@@ -7925,12 +7766,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object,options) \u2192 Director",
+        "signature": "attach(object,options) → Director",
         "does": "Create a parking director; update with seconds and player position."
       },
       {
         "name": "createParkingDirector",
-        "signature": "createParkingDirector({count,speed,onIgnite,onReveal,onState}) \u2192 Director",
+        "signature": "createParkingDirector({count,speed,onIgnite,onReveal,onState}) → Director",
         "does": "Create idle/reveal/ignition/walking states, start and update methods, observable cat positions."
       }
     ]
@@ -7940,7 +7781,7 @@
     "file": "haven/ph-thrift-teapot.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Poly Haven \u00b7 individual teapot",
+    "title": "Poly Haven · individual teapot",
     "author": "Poly Haven contributors; the internet slop warehouse",
     "license": "CC0-1.0",
     "uses": [
@@ -7961,7 +7802,7 @@
     "file": "haven/ph-thrift-sugar-bowl.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Poly Haven \u00b7 individual sugar bowl",
+    "title": "Poly Haven · individual sugar bowl",
     "author": "Poly Haven contributors; the internet slop warehouse",
     "license": "CC0-1.0",
     "uses": [
@@ -7982,7 +7823,7 @@
     "file": "haven/ph-thrift-tea-mug.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Poly Haven \u00b7 individual tea mug",
+    "title": "Poly Haven · individual tea mug",
     "author": "Poly Haven contributors; the internet slop warehouse",
     "license": "CC0-1.0",
     "uses": [
@@ -8003,7 +7844,7 @@
     "file": "haven/ph-thrift-square-plate.glb",
     "type": "asset",
     "mime": "model/gltf-binary",
-    "title": "Poly Haven \u00b7 individual square plate",
+    "title": "Poly Haven · individual square plate",
     "author": "Poly Haven contributors; the internet slop warehouse",
     "license": "CC0-1.0",
     "uses": [
@@ -9461,7 +9302,7 @@
     "file": "acg/acg-hotel-ceiling-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG OfficeCeiling001 \u00b7 color",
+    "title": "ambientCG OfficeCeiling001 · color",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -9479,7 +9320,7 @@
     "file": "acg/acg-hotel-ceiling-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG OfficeCeiling001 \u00b7 normal",
+    "title": "ambientCG OfficeCeiling001 · normal",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -9497,7 +9338,7 @@
     "file": "acg/acg-hotel-ceiling-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG OfficeCeiling001 \u00b7 roughness",
+    "title": "ambientCG OfficeCeiling001 · roughness",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -9514,7 +9355,7 @@
     "id": "hotel-king-bed",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-king-bed.glb",
-    "title": "Hotel king bed \u00b7 original Blender model",
+    "title": "Hotel king bed · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9534,7 +9375,7 @@
     "id": "hotel-headboard",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-headboard.glb",
-    "title": "Hotel headboard \u00b7 original Blender model",
+    "title": "Hotel headboard · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9553,7 +9394,7 @@
     "id": "hotel-nightstand",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-nightstand.glb",
-    "title": "Hotel nightstand \u00b7 original Blender model",
+    "title": "Hotel nightstand · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9572,7 +9413,7 @@
     "id": "hotel-table-lamp",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-table-lamp.glb",
-    "title": "Hotel table lamp \u00b7 original Blender model",
+    "title": "Hotel table lamp · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9592,7 +9433,7 @@
     "id": "hotel-credenza-tv",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-credenza-tv.glb",
-    "title": "Hotel credenza tv \u00b7 original Blender model",
+    "title": "Hotel credenza tv · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9612,7 +9453,7 @@
     "id": "hotel-desk",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-desk.glb",
-    "title": "Hotel desk \u00b7 original Blender model",
+    "title": "Hotel desk · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9631,7 +9472,7 @@
     "id": "hotel-closet",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-closet.glb",
-    "title": "Hotel closet \u00b7 original Blender model",
+    "title": "Hotel closet · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9650,7 +9491,7 @@
     "id": "hotel-microfridge",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-microfridge.glb",
-    "title": "Hotel microfridge \u00b7 original Blender model",
+    "title": "Hotel microfridge · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9669,7 +9510,7 @@
     "id": "hotel-ptac",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-ptac.glb",
-    "title": "Hotel ptac \u00b7 original Blender model",
+    "title": "Hotel ptac · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9688,7 +9529,7 @@
     "id": "hotel-vanity",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-vanity.glb",
-    "title": "Hotel vanity \u00b7 original Blender model",
+    "title": "Hotel vanity · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9707,7 +9548,7 @@
     "id": "hotel-toilet",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-toilet.glb",
-    "title": "Hotel toilet \u00b7 original Blender model",
+    "title": "Hotel toilet · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9726,7 +9567,7 @@
     "id": "hotel-tub-shower",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-tub-shower.glb",
-    "title": "Hotel tub shower \u00b7 original Blender model",
+    "title": "Hotel tub shower · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9746,7 +9587,7 @@
     "id": "hotel-front-desk",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-front-desk.glb",
-    "title": "Hotel front desk \u00b7 original Blender model",
+    "title": "Hotel front desk · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9766,7 +9607,7 @@
     "id": "hotel-snack-vending",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-snack-vending.glb",
-    "title": "Hotel snack vending \u00b7 original Blender model",
+    "title": "Hotel snack vending · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9786,7 +9627,7 @@
     "id": "hotel-drum-pendant",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-drum-pendant.glb",
-    "title": "Hotel drum pendant \u00b7 original Blender model",
+    "title": "Hotel drum pendant · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9806,7 +9647,7 @@
     "id": "hotel-luggage-cart",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-luggage-cart.glb",
-    "title": "Hotel luggage cart \u00b7 original Blender model",
+    "title": "Hotel luggage cart · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9826,7 +9667,7 @@
     "id": "hotel-lobby-sofa",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-lobby-sofa.glb",
-    "title": "Hotel lobby sofa \u00b7 original Blender model",
+    "title": "Hotel lobby sofa · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9846,7 +9687,7 @@
     "id": "hotel-accent-chair-green",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-accent-chair-green.glb",
-    "title": "Hotel accent chair green \u00b7 original Blender model",
+    "title": "Hotel accent chair green · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9867,7 +9708,7 @@
     "id": "hotel-accent-chair-mustard",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-accent-chair-mustard.glb",
-    "title": "Hotel accent chair mustard \u00b7 original Blender model",
+    "title": "Hotel accent chair mustard · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9888,7 +9729,7 @@
     "id": "hotel-coffee-station",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-coffee-station.glb",
-    "title": "Hotel coffee station \u00b7 original Blender model",
+    "title": "Hotel coffee station · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9907,7 +9748,7 @@
     "id": "hotel-breakfast-bar",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-breakfast-bar.glb",
-    "title": "Hotel breakfast bar \u00b7 original Blender model",
+    "title": "Hotel breakfast bar · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9926,7 +9767,7 @@
     "id": "hotel-ice-machine",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-ice-machine.glb",
-    "title": "Hotel ice machine \u00b7 original Blender model",
+    "title": "Hotel ice machine · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9945,7 +9786,7 @@
     "id": "hotel-ice-bucket",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-ice-bucket.glb",
-    "title": "Hotel ice bucket \u00b7 original Blender model",
+    "title": "Hotel ice bucket · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9964,7 +9805,7 @@
     "id": "hotel-elevator-car",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-elevator-car.glb",
-    "title": "Hotel elevator car \u00b7 original Blender model",
+    "title": "Hotel elevator car · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -9983,7 +9824,7 @@
     "id": "hotel-treadmill",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-treadmill.glb",
-    "title": "Hotel treadmill \u00b7 original Blender model",
+    "title": "Hotel treadmill · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10001,7 +9842,7 @@
     "id": "hotel-exercise-bike",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-exercise-bike.glb",
-    "title": "Hotel exercise bike \u00b7 original Blender model",
+    "title": "Hotel exercise bike · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10020,7 +9861,7 @@
     "id": "hotel-dumbbell-rack",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-dumbbell-rack.glb",
-    "title": "Hotel dumbbell rack \u00b7 original Blender model",
+    "title": "Hotel dumbbell rack · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10039,7 +9880,7 @@
     "id": "hotel-pool-chaise",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-pool-chaise.glb",
-    "title": "Hotel pool chaise \u00b7 original Blender model",
+    "title": "Hotel pool chaise · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10058,7 +9899,7 @@
     "id": "hotel-pool-rail",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-pool-rail.glb",
-    "title": "Hotel pool rail \u00b7 original Blender model",
+    "title": "Hotel pool rail · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10077,7 +9918,7 @@
     "id": "hotel-housekeeping-cart",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-housekeeping-cart.glb",
-    "title": "Hotel housekeeping cart \u00b7 original Blender model",
+    "title": "Hotel housekeeping cart · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10096,7 +9937,7 @@
     "id": "hotel-room-door",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-room-door.glb",
-    "title": "Hotel room door \u00b7 original Blender model",
+    "title": "Hotel room door · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10115,7 +9956,7 @@
     "id": "hotel-shelving-unit",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-shelving-unit.glb",
-    "title": "Hotel shelving unit \u00b7 original Blender model",
+    "title": "Hotel shelving unit · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10135,7 +9976,7 @@
     "id": "hotel-floor-lamp",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-floor-lamp.glb",
-    "title": "Hotel floor lamp \u00b7 original Blender model",
+    "title": "Hotel floor lamp · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10155,7 +9996,7 @@
     "id": "hotel-snake-plant",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-snake-plant.glb",
-    "title": "Hotel snake plant \u00b7 original Blender model",
+    "title": "Hotel snake plant · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10175,7 +10016,7 @@
     "id": "hotel-centerpiece",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-centerpiece.glb",
-    "title": "Hotel centerpiece \u00b7 original Blender model",
+    "title": "Hotel centerpiece · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10194,7 +10035,7 @@
     "id": "hotel-lattice-pendant",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-lattice-pendant.glb",
-    "title": "Hotel lattice pendant \u00b7 original Blender model",
+    "title": "Hotel lattice pendant · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -10215,7 +10056,7 @@
     "file": "acg/acg-hotel-brushed-steel-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG Metal009 \u00b7 color",
+    "title": "ambientCG Metal009 · color",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -10233,7 +10074,7 @@
     "file": "acg/acg-hotel-brushed-steel-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG Metal009 \u00b7 normal",
+    "title": "ambientCG Metal009 · normal",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -10251,7 +10092,7 @@
     "file": "acg/acg-hotel-brushed-steel-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG Metal009 \u00b7 roughness",
+    "title": "ambientCG Metal009 · roughness",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -10269,7 +10110,7 @@
     "file": "acg/acg-hotel-terrazzo-color.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG Terrazzo005 \u00b7 color",
+    "title": "ambientCG Terrazzo005 · color",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -10287,7 +10128,7 @@
     "file": "acg/acg-hotel-terrazzo-normal.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG Terrazzo005 \u00b7 normal",
+    "title": "ambientCG Terrazzo005 · normal",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -10305,7 +10146,7 @@
     "file": "acg/acg-hotel-terrazzo-roughness.jpg",
     "type": "asset",
     "mime": "image/jpeg",
-    "title": "ambientCG Terrazzo005 \u00b7 roughness",
+    "title": "ambientCG Terrazzo005 · roughness",
     "author": "ambientCG (Lennart Demes)",
     "license": "CC0-1.0",
     "tags": [
@@ -10402,7 +10243,7 @@
     "id": "rb-sophia-formal",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/rb-sophia-formal.glb",
-    "title": "Rocketbox \u00b7 sophia formal",
+    "title": "Rocketbox · sophia formal",
     "mime": "model/gltf-binary",
     "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
     "license": "MIT",
@@ -10421,7 +10262,7 @@
     "id": "rb-marcus-formal",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/rb-marcus-formal.glb",
-    "title": "Rocketbox \u00b7 marcus formal",
+    "title": "Rocketbox · marcus formal",
     "mime": "model/gltf-binary",
     "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
     "license": "MIT",
@@ -10440,7 +10281,7 @@
     "id": "rb-emma-casual",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/rb-emma-casual.glb",
-    "title": "Rocketbox \u00b7 emma casual",
+    "title": "Rocketbox · emma casual",
     "mime": "model/gltf-binary",
     "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
     "license": "MIT",
@@ -10459,7 +10300,7 @@
     "id": "rb-andre-casual",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/rb-andre-casual.glb",
-    "title": "Rocketbox \u00b7 andre casual",
+    "title": "Rocketbox · andre casual",
     "mime": "model/gltf-binary",
     "author": "Microsoft; glTF conversion by Rohit Biradar (Avatar Studio)",
     "license": "MIT",
@@ -10478,7 +10319,7 @@
     "id": "g3-shower-cabin",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/g3-shower-cabin.glb",
-    "title": "Shower Cabin \u00b7 textured GLB",
+    "title": "Shower Cabin · textured GLB",
     "mime": "model/gltf-binary",
     "author": "Grab3D",
     "license": "CC0-1.0",
@@ -10496,7 +10337,7 @@
     "id": "g3-treadmill",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/g3-treadmill.glb",
-    "title": "Treadmill \u00b7 textured GLB",
+    "title": "Treadmill · textured GLB",
     "mime": "model/gltf-binary",
     "author": "Grab3D",
     "license": "CC0-1.0",
@@ -10514,7 +10355,7 @@
     "id": "g3-exercise-bike",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/g3-exercise-bike.glb",
-    "title": "Exercise Bike \u00b7 textured GLB",
+    "title": "Exercise Bike · textured GLB",
     "mime": "model/gltf-binary",
     "author": "Grab3D",
     "license": "CC0-1.0",
