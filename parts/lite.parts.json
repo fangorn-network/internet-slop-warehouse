@@ -33,7 +33,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-01"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -72,7 +72,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-04"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -103,7 +103,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/hotel-king-bed"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -134,7 +134,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/hotel-snack-vending"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -172,7 +172,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-desk-lamp-arm-01"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -210,7 +210,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-bar-chair-round-01"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -245,7 +245,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-semi-truck"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -281,7 +281,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-suv"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -317,7 +317,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-station-wagon"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -353,7 +353,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-sedan"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -389,7 +389,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-hatchback"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -425,7 +425,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-pickup-truck"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -461,7 +461,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-minivan"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -496,7 +496,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-utility-pole"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -531,7 +531,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-dumpster"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -564,7 +564,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-fire-hydrant"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -598,7 +598,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-grocery-shelf"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -632,7 +632,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-end-cap-display"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -667,7 +667,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-coffee-machine"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -703,7 +703,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-soda-fountain"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -737,7 +737,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-upright-freezer"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -771,7 +771,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-freezer-chest"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }
@@ -806,7 +806,7 @@
       "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-vending-machine"
     ],
     "made": {
-      "method": "derived",
+      "method": "procedural",
       "ai": "none",
       "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
     }

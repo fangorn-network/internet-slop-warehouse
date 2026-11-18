@@ -10629,5 +10629,1032 @@
       "store simulator"
     ],
     "description": "End Cap Display. Promotional end cap shelf with a yellow canopy, a big red starburst sign and a low red platform carrying a pyramid of cookie boxes. stylized style, 16710 triangles, 4096px PBR textures, 1.278 x 1.057 x 1.578 m. Origin: procedural, no generative-AI geometry or textures. Source https://grab3d.com/models/furniture/end-cap-display/. CC0-1.0."
+  },
+  {
+    "id": "ph-potted-plant-01-lite",
+    "file": "lite/ph-potted-plant-01-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Potted Plant 01 (lite)",
+    "author": "Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature",
+      "potplant",
+      "plant",
+      "terracotta",
+      "pot",
+      "vase",
+      "medium",
+      "leaf",
+      "green",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Potted Plant 01 for phones and crowded scenes: 8,591 triangles instead of 176,226, textures at most 1024px, 1.33 MB instead of 6.32 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-01"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "ph-potted-plant-04-lite",
+    "file": "lite/ph-potted-plant-04-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Potted Plant 04 (lite)",
+    "author": "James Ray Cock",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "plants",
+      "potted plants",
+      "succulent",
+      "nature",
+      "cactus",
+      "aloe",
+      "potplant",
+      "small",
+      "pot",
+      "plant",
+      "decor",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Potted Plant 04 for phones and crowded scenes: 4,565 triangles instead of 8,929, textures at most 1024px, 0.73 MB instead of 2.12 MB. Simplified with meshoptimizer (error 0.008) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-04"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "hotel-king-bed-lite",
+    "file": "lite/hotel-king-bed-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Hotel king bed · original Blender model (lite)",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "bed",
+      "furniture",
+      "bedroom",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Hotel king bed · original Blender model for phones and crowded scenes: 17,214 triangles instead of 64,228, textures at most 1024px, 1.21 MB instead of 3.64 MB. Simplified with meshoptimizer (error 0.002) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/hotel-king-bed"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "hotel-snack-vending-lite",
+    "file": "lite/hotel-snack-vending-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Hotel snack vending · original Blender model (lite)",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "snack",
+      "vending",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Hotel snack vending · original Blender model for phones and crowded scenes: 6,074 triangles instead of 42,816, textures at most —px, 0.03 MB instead of 2.84 MB. Simplified with meshoptimizer (error 0.032) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/hotel-snack-vending"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "ph-desk-lamp-arm-01-lite",
+    "file": "lite/ph-desk-lamp-arm-01-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Desk Lamp Arm 01 (lite)",
+    "author": "Yann Kervran, Kuutti Siitonen",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "lighting",
+      "rigged",
+      "collection: the_shed",
+      "industrial",
+      "lamp",
+      "mounted",
+      "fixed",
+      "desk",
+      "table",
+      "light",
+      "arm",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Desk Lamp Arm 01 for phones and crowded scenes: 4,232 triangles instead of 24,102, textures at most 1024px, 0.8 MB instead of 2.87 MB. Simplified with meshoptimizer (error 0.008) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-desk-lamp-arm-01"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "ph-bar-chair-round-01-lite",
+    "file": "lite/ph-bar-chair-round-01-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Bar Chair Round 01 (lite)",
+    "author": "Dairon Sanchez",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "seating",
+      "furniture",
+      "bar",
+      "pub",
+      "stool",
+      "tall",
+      "wooden",
+      "classical",
+      "old",
+      "vintage",
+      "cigar",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Bar Chair Round 01 for phones and crowded scenes: 2,999 triangles instead of 14,373, textures at most 1024px, 0.82 MB instead of 2.81 MB. Simplified with meshoptimizer (error 0.008) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-bar-chair-round-01"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-semi-truck-lite",
+    "file": "lite/g3-semi-truck-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Semi Truck (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "semi truck",
+      "truck",
+      "lorry",
+      "vehicle",
+      "city builder",
+      "traffic",
+      "trailer",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Semi Truck (Grab3D) for phones and crowded scenes: 6,626 triangles instead of 49,550, textures at most 1024px, 0.98 MB instead of 2.2 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-semi-truck"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-suv-lite",
+    "file": "lite/g3-1990s-suv-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s SUV (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "suv",
+      "sport utility vehicle",
+      "4x4",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s SUV (Grab3D) for phones and crowded scenes: 3,398 triangles instead of 19,885, textures at most 1024px, 0.48 MB instead of 0.96 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-suv"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-station-wagon-lite",
+    "file": "lite/g3-1990s-station-wagon-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Station Wagon (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "station wagon",
+      "estate car",
+      "wagon",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Station Wagon (Grab3D) for phones and crowded scenes: 3,299 triangles instead of 19,859, textures at most 1024px, 0.45 MB instead of 0.92 MB. Simplified with meshoptimizer (error 0.064) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-station-wagon"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-sedan-lite",
+    "file": "lite/g3-1990s-sedan-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Sedan (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "sedan",
+      "saloon",
+      "family car",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Sedan (Grab3D) for phones and crowded scenes: 3,280 triangles instead of 19,368, textures at most 1024px, 0.41 MB instead of 0.85 MB. Simplified with meshoptimizer (error 0.064) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-sedan"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-hatchback-lite",
+    "file": "lite/g3-1990s-hatchback-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Hatchback (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "hatchback",
+      "compact car",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "vehicle",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Hatchback (Grab3D) for phones and crowded scenes: 3,170 triangles instead of 18,484, textures at most 1024px, 0.39 MB instead of 0.79 MB. Simplified with meshoptimizer (error 0.032) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-hatchback"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-pickup-truck-lite",
+    "file": "lite/g3-1990s-pickup-truck-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Pickup Truck (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "pickup truck",
+      "pickup",
+      "truck",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Pickup Truck (Grab3D) for phones and crowded scenes: 3,252 triangles instead of 18,384, textures at most 1024px, 0.47 MB instead of 0.89 MB. Simplified with meshoptimizer (error 0.064) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-pickup-truck"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-minivan-lite",
+    "file": "lite/g3-1990s-minivan-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Minivan (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "minivan",
+      "mpv",
+      "people carrier",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Minivan (Grab3D) for phones and crowded scenes: 3,334 triangles instead of 17,494, textures at most 1024px, 0.39 MB instead of 0.79 MB. Simplified with meshoptimizer (error 0.032) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-minivan"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-utility-pole-lite",
+    "file": "lite/g3-utility-pole-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Utility Pole (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "utility pole",
+      "telephone pole",
+      "power pole",
+      "pole",
+      "street",
+      "urban",
+      "city builder",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Utility Pole (Grab3D) for phones and crowded scenes: 4,756 triangles instead of 15,727, textures at most 1024px, 1.09 MB instead of 1.3 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-utility-pole"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-dumpster-lite",
+    "file": "lite/g3-dumpster-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Dumpster (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "dumpster",
+      "garbage container",
+      "trash",
+      "street",
+      "urban",
+      "city builder",
+      "alley",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Dumpster (Grab3D) for phones and crowded scenes: 3,194 triangles instead of 15,508, textures at most 512px, 0.33 MB instead of 0.69 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-dumpster"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-fire-hydrant-lite",
+    "file": "lite/g3-fire-hydrant-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Fire Hydrant (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "fire hydrant",
+      "hydrant",
+      "street",
+      "urban",
+      "city builder",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Fire Hydrant (Grab3D) for phones and crowded scenes: 4,628 triangles instead of 14,604, textures at most 512px, 0.45 MB instead of 0.76 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-fire-hydrant"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-grocery-shelf-lite",
+    "file": "lite/g3-grocery-shelf-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Grocery Shelf (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "grocery shelf",
+      "supermarket shelf",
+      "gondola shelf",
+      "shelving",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Grocery Shelf (Grab3D) for phones and crowded scenes: 13,314 triangles instead of 33,506, textures at most 1024px, 1.12 MB instead of 3.27 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-grocery-shelf"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-end-cap-display-lite",
+    "file": "lite/g3-end-cap-display-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "End Cap Display (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "end cap display",
+      "promotion display",
+      "end cap",
+      "sale",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of End Cap Display (Grab3D) for phones and crowded scenes: 10,676 triangles instead of 16,710, textures at most 1024px, 0.94 MB instead of 2.49 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-end-cap-display"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-coffee-machine-lite",
+    "file": "lite/g3-coffee-machine-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Coffee Machine (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "food",
+      "coffee machine",
+      "espresso machine",
+      "coffee",
+      "machine",
+      "kitchen",
+      "cooking game",
+      "appliance",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Coffee Machine (Grab3D) for phones and crowded scenes: 3,233 triangles instead of 16,552, textures at most 1024px, 0.44 MB instead of 1.26 MB. Simplified with meshoptimizer (error 0.004) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-coffee-machine"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-soda-fountain-lite",
+    "file": "lite/g3-soda-fountain-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Soda Fountain (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "food",
+      "soda fountain",
+      "drink dispenser",
+      "soft drinks",
+      "ice dispenser",
+      "fast food",
+      "restaurant",
+      "diner",
+      "cooking game",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Soda Fountain (Grab3D) for phones and crowded scenes: 3,284 triangles instead of 14,180, textures at most 1024px, 0.36 MB instead of 0.93 MB. Simplified with meshoptimizer (error 0.002) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-soda-fountain"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-upright-freezer-lite",
+    "file": "lite/g3-upright-freezer-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Upright Glass Door Freezer (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "upright freezer",
+      "glass door freezer",
+      "frozen food",
+      "freezer",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Upright Glass Door Freezer (Grab3D) for phones and crowded scenes: 10,011 triangles instead of 13,899, textures at most 1024px, 0.95 MB instead of 3.4 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-upright-freezer"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-freezer-chest-lite",
+    "file": "lite/g3-freezer-chest-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Freezer Chest (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "freezer chest",
+      "chest freezer",
+      "frozen food",
+      "freezer",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Freezer Chest (Grab3D) for phones and crowded scenes: 8,664 triangles instead of 13,588, textures at most 1024px, 0.91 MB instead of 4.11 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-freezer-chest"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-vending-machine-lite",
+    "file": "lite/g3-vending-machine-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Vending Machine (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "vending machine",
+      "soda machine",
+      "snack machine",
+      "machine",
+      "street",
+      "urban",
+      "city builder",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Vending Machine (Grab3D) for phones and crowded scenes: 6,678 triangles instead of 17,700, textures at most 1024px, 1.11 MB instead of 1.42 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-vending-machine"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "file": "zone-culling.js",
+    "type": "logic",
+    "id": "zone-culling",
+    "kind": "effect",
+    "title": "Zone culling",
+    "description": "Draw only what can be seen from where the camera stands: three.js frustum-culls but never occlusion-culls, so indoors it draws every room behind the walls. Give it the level's zone boxes and which zones each one sees (through doors, glass, windows); it buckets every top-level object into the smallest zone that wholly contains it and hides the zones you can't see. Walls and floors on zone borders stay drawn, groups across a border are split, and moving things, skinned characters and lights are never hidden. userData.zone names the zone of an InstancedMesh. Cut Heartland Inn's lobby from 1,180 to 823 draw calls. Also the skeleton of a multi-level game: zones plus what each sees.",
+    "tags": [
+      "culling",
+      "performance",
+      "mobile",
+      "indoor",
+      "multi-level",
+      "rooms",
+      "portals",
+      "zones",
+      "three.js"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(scene, { zones, sees, margin }) → { update(eye), refresh(obj), zoneAt(eye), stats() }",
+        "does": "buckets the scene by zone; update(camera.position) each frame shows only the zones seen from there"
+      }
+    ],
+    "options": [
+      {
+        "name": "zones",
+        "type": "[{ name | id, x0, x1, y0, y1, z0, z1 }]",
+        "default": "required",
+        "does": "zone boxes in world metres; overlapping is fine, the smallest wins"
+      },
+      {
+        "name": "sees",
+        "type": "{ [zone]: zone[] }",
+        "default": "required",
+        "does": "what each zone can see; 'outside' is no zone; a zone missing here sees everything"
+      },
+      {
+        "name": "margin",
+        "type": "number",
+        "default": 0.25,
+        "does": "how far inside a zone's box an object must sit to belong to it, metres"
+      }
+    ]
+  },
+  {
+    "file": "skills/lean-scenes/SKILL.md",
+    "type": "skill",
+    "id": "lean-scenes-skill",
+    "title": "Lean scenes: make a three.js game run on phones",
+    "description": "Agent skill: measure a game against a phone budget (300 draw calls, 500k triangles, 128 MB textures, 8 ms JS per frame), find what dominates, and cut it: asset weight classes, zones so rooms behind walls aren't drawn, instancing that still culls, shared materials, a light pool, pixel ratio and frame caps. Worked through Heartland Inn's real numbers.",
+    "tags": [
+      "skill",
+      "performance",
+      "mobile",
+      "optimization",
+      "architecture",
+      "culling",
+      "multi-level",
+      "three.js"
+    ],
+    "uses": [
+      "zone-culling"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
+    "file": "p2p-room.js",
+    "type": "logic",
+    "id": "p2p-room",
+    "kind": "rule",
+    "title": "P2P room (real-time co-op)",
+    "description": "Real-time co-op for browser games with no server: an encrypted WebRTC room over public relays (inject the trystero-027 part), joined by a share link. Encodes Escape from Slopov II's split ownership: each peer streams its own pose, the host streams the world, peers ask the host to change it. channel(name, { from: 'host' | 'any', validate, limitHz }) drops messages from the wrong sender, malformed ones and floods; approach() and approachAngle() ease received values framerate-independently; every(hz) paces sends from the frame loop; shareLink(WAREHOUSE_URL, code) makes a link that reopens the game in the room. Tested in vitest with an in-memory transport and in two real browsers over WebRTC. No host migration: when the host leaves, onHostLeft fires.",
+    "tags": [
+      "multiplayer",
+      "co-op",
+      "p2p",
+      "webrtc",
+      "networking",
+      "rooms",
+      "share-link",
+      "interpolation",
+      "trystero"
+    ],
+    "uses": [
+      "trystero-027"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code; extracted from Escape from Slopov II"
+    },
+    "exports": [
+      {
+        "name": "connect",
+        "signature": "connect(transport, { app, host, code, maxUsers, relayConfig }) → Promise<{ id, hostId, isHost, code, peers, channel(name, opts), onJoin(cb), onLeave(cb), onHostLeft(cb), leave() }>",
+        "does": "opens (host) or joins (code or share link) an encrypted room"
+      },
+      {
+        "name": "attach",
+        "signature": "attach(room, { mine, onPose, hz, channel, validate }) → { update(dt), dispose(), channel }",
+        "does": "the pose loop: update(dt) sends mine() every 1/hz seconds; onPose(data, userId) gets the others'"
+      },
+      {
+        "name": "approach",
+        "signature": "approach(from, to, dt, rate = 12) → number",
+        "does": "eases toward a received value, the same at any framerate"
+      },
+      {
+        "name": "approachAngle",
+        "signature": "approachAngle(from, to, dt, rate = 12) → radians",
+        "does": "the same for headings, the short way round"
+      },
+      {
+        "name": "every",
+        "signature": "every(hz) → (dt) → boolean",
+        "does": "true once per 1/hz seconds of frame time: pace sends from the loop"
+      },
+      {
+        "name": "shareLink",
+        "signature": "shareLink(pageURL, code) → string",
+        "does": "a link that reopens the game and joins the room (?room=)"
+      },
+      {
+        "name": "roomFrom",
+        "signature": "roomFrom(codeOrLink) → string",
+        "does": "the room code from a pasted code or share link"
+      },
+      {
+        "name": "q",
+        "signature": "q(n, places = 2) → number",
+        "does": "rounds a number for the wire"
+      }
+    ],
+    "options": [
+      {
+        "name": "app",
+        "type": "string",
+        "default": "required",
+        "does": "a stable id for your game, e.g. 'my-game.v1'"
+      },
+      {
+        "name": "host",
+        "type": "boolean",
+        "default": false,
+        "does": "open a new room instead of joining one"
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "default": "''",
+        "does": "the room code or share link to join"
+      },
+      {
+        "name": "maxUsers",
+        "type": "number",
+        "default": 4,
+        "does": "room size; every peer connects to every other"
+      },
+      {
+        "name": "mine",
+        "type": "() → array",
+        "default": "required (attach)",
+        "does": "your pose to send, e.g. [q(x), q(z), q(yaw), state]"
+      },
+      {
+        "name": "hz",
+        "type": "number",
+        "default": 12,
+        "does": "attach: poses per second"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onPose",
+        "default": "() => {}",
+        "does": "attach: called with (data, userId) for each other peer's pose"
+      }
+    ]
+  },
+  {
+    "file": "skills/p2p-multiplayer/SKILL.md",
+    "type": "skill",
+    "id": "p2p-multiplayer-skill",
+    "title": "P2P multiplayer: co-op with no server",
+    "description": "Agent skill: add peer-to-peer co-op to a browser game. Pick the pattern by game speed (host-authoritative snapshots with p2p-homestead, or split ownership with p2p-room), write down who owns what, send small arrays at fixed rates from the frame loop, validate every peer message, ease what you receive, seed the static world instead of sending it, share links inside the warehouse player, and test with a fake transport and two real browsers. Says the limits: no host migration, no TURN, peer-owned state can be faked.",
+    "tags": [
+      "skill",
+      "multiplayer",
+      "co-op",
+      "p2p",
+      "webrtc",
+      "architecture",
+      "networking"
+    ],
+    "uses": [
+      "p2p-room",
+      "p2p-homestead",
+      "trystero-027",
+      "mosslight-commons"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
   }
 ]

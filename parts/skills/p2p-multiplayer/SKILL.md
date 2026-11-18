@@ -39,17 +39,18 @@ const room = await P.connect(transport, { app: 'my-game.v1', host: !joinCode, co
 share(P.shareLink(window.WAREHOUSE_URL, room.code));        // a link, and a QR code for phones
 
 const finite = (d) => Array.isArray(d) && d.every(Number.isFinite);
-const pose = room.channel('pose', { validate: (d) => finite(d) && d.length === 4, limitHz: 20 });
+const poses = P.attach(room, { hz: 12, validate: (d) => finite(d) && d.length === 4,        // the pose loop
+  mine: () => [P.q(me.x), P.q(me.z), P.q(me.yaw), me.moving ? 1 : 0],
+  onPose: ([x, z, yaw, moving], id) => { const r = remote(id); r.tx = x; r.tz = z; r.tyaw = yaw; r.moving = moving; } });
 const world = room.channel('world', { from: 'host', validate: (d) => Array.isArray(d?.a) });
 const hit = room.channel('hit', { validate: (d) => Number.isInteger(d?.n) && actors.has(d.n), limitHz: 15 });
 
-const tick = P.every(12), worldTick = P.every(10);
+const worldTick = P.every(10);
 // in the frame loop:
-if (tick(dt)) pose.send([P.q(me.x), P.q(me.z), P.q(me.yaw), me.moving ? 1 : 0]);
+poses.update(dt);
 if (room.isHost && worldTick(dt)) world.send({ a: [...actors].map(([n, a]) => [n, P.q(a.x), P.q(a.z), P.q(a.yaw), a.state]) });
 for (const r of remotes.values()) { r.x = P.approach(r.x, r.tx, dt); r.z = P.approach(r.z, r.tz, dt); r.yaw = P.approachAngle(r.yaw, r.tyaw, dt); }
 
-pose.on(([x, z, yaw, moving], id) => { const r = remote(id); r.tx = x; r.tz = z; r.tyaw = yaw; r.moving = moving; });
 hit.on((d, id) => room.isHost && damage(actors.get(d.n), remotes.get(id)));
 room.onLeave((id) => dropRemote(id));
 room.onHostLeft(() => say('The host left. You can keep playing solo.'));

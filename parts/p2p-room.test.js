@@ -1,7 +1,7 @@
 // p2p-room over an in-memory transport shaped like trystero-027: joining by code, host-only channels, validation,
 // flood limits, leaving, and the smoothing helpers.
 import { test, expect, vi } from "vitest";
-import { connect, roomFrom, shareLink, approach, approachAngle, every, q } from "./p2p-room.js";
+import { connect, attach, roomFrom, shareLink, approach, approachAngle, every, q } from "./p2p-room.js";
 
 function fakeNet() { // rooms by id; each peer gets actions that deliver to the others
     const rooms = new Map();
@@ -92,4 +92,21 @@ test("smoothing is framerate-independent and takes the short way round", () => {
     expect(approachAngle(3.0, -3.0, 1, 100)).toBeCloseTo(-3.0 + 2 * Math.PI, 3); // across ±π, not through 0
     const tick = every(10);
     expect([tick(0.01), tick(0.05), tick(0.06), tick(0.01)]).toEqual([true, false, true, false]);
+});
+
+test("attach: the pose loop sends on schedule and stops when disposed", async () => {
+    const t = fakeNet();
+    const host = await connect(t, { app: "test.v1", host: true }), guest = await connect(t, { app: "test.v1", code: host.code });
+    const seen = [];
+    attach(host, { mine: () => [0, 0], onPose: (d, id) => seen.push([id, d]) });
+    let x = 0;
+    const loop = attach(guest, { mine: () => [q(x), 0], hz: 10 });
+    const now = vi.spyOn(performance, "now");
+    for (let i = 0; i < 30; i++) { x += 0.1; now.mockReturnValue(i * 1000 / 60); loop.update(1 / 60); } // half a second
+    await Promise.resolve();
+    expect(seen.length).toBe(5);
+    expect(seen[0]).toEqual([guest.id, [0.1, 0]]);
+    loop.dispose(); loop.update(1);
+    now.mockRestore();
+    expect(seen.length).toBe(5);
 });

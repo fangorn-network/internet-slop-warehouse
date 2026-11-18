@@ -73,3 +73,15 @@ export async function connect(transport, { app, host = false, code = "", maxUser
  * every(hz) → (dt) → boolean: true when it's time.
  */
 export const every = (hz) => { let t = 0; return (dt) => ((t -= dt) <= 0 ? ((t = 1 / hz), true) : false); };
+
+/**
+ * attach(room, { mine, onPose, hz, channel, validate }) → { update(dt), dispose(), channel }
+ * The pose loop: update(dt) from your frame loop sends mine() every 1/hz seconds; onPose(data, userId) gets
+ * everyone else's. Send small arrays of rounded numbers (q) and ease toward what arrives (approach).
+ */
+export function attach(room, { mine, onPose = () => {}, hz = 12, channel = "pose", validate = (d) => Array.isArray(d) } = {}) {
+    let live = true;
+    const ch = room.channel(channel, { validate, limitHz: hz * 2 }), tick = every(hz);
+    ch.on((d, id) => live && onPose(d, id));
+    return { update: (dt) => { if (live && tick(dt)) ch.send(mine()); }, dispose: () => { live = false; }, channel: ch };
+}
