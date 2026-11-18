@@ -14,6 +14,9 @@ export const FLOOR2 = 3.2, CEIL = 2.95;
 export function buildWorld(scene, lib, game, { outside = true, people = true, station = true } = {}) {
   const colliders = [], surfaces = [], interact = [], updaters = [], lightAnchors = [], zones = [];
   const add = (o, x = 0, y = 0, z = 0, ry = 0) => { o.position.set(x, y, z); o.rotation.y = ry; scene.add(o); return o; };
+  // A prop physics may move (projects/roadside-inn/physics.js): { carry } can be picked up, density sets its heft.
+  // Its stand-in box, if any, is marked too (unboxed()), so physics drops it; games without physics keep both.
+  const loose = (o, opts = {}) => (o.userData.loose = opts, o), unboxed = () => { colliders.at(-1).loose = true; };
   const solid = (x0, x1, y0, y1, z0, z1, on) => colliders.push({ x0: Math.min(x0, x1), x1: Math.max(x0, x1), y0, y1, z0: Math.min(z0, z1), z1: Math.max(z0, z1), on });
   const floorAt = (x0, x1, z0, z1, y, name) => surfaces.push({ x0, x1, z0, z1, y, name });
   const light = (x, y, z, color = '#ffd9a8', intensity = 9, distance = 9) => lightAnchors.push({ pos: new T.Vector3(x, y, z), color: new T.Color(color), intensity, distance });
@@ -442,19 +445,19 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // West seating: sectional, lounge chairs, coffee table, plants.
   const lime = sofa => { sofa.traverse(n => { if (n.isMesh && n.material.name === 'beige_fabric') { n.material = n.material.clone(); n.material.color.set('#8f9a34'); } }); return sofa; };
   add(lime(lib.model('hotel-lobby-sofa', { origin: true })), -9.7, 0, 5.3, Math.PI / 2);
-  add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 3.6, -Math.PI * 0.75);
-  add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 7.0, -Math.PI * 0.25);
-  add(lib.model('ph-modern-coffee-table-01', { height: 0.4 }), -8.0, 0, 5.3);
-  add(lib.model('ph-throw-pillows-01', { height: 0.3 }), -9.9, 0.45, 4.6, Math.PI / 2);
+  loose(add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 3.6, -Math.PI * 0.75), { density: 0.5 });
+  loose(add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 7.0, -Math.PI * 0.25), { density: 0.5 });
+  loose(add(lib.model('ph-modern-coffee-table-01', { height: 0.4 }), -8.0, 0, 5.3), { density: 0.6 });
+  loose(add(lib.model('ph-throw-pillows-01', { height: 0.3 }), -9.9, 0.45, 4.6, Math.PI / 2), { carry: true, shape: 'box', density: 0.1 });
   add(lib.model('ph-potted-plant-01', { height: 1.6 }), -11.4, 0, 8.4);
-  add(lib.model('ph-potted-plant-04', { height: 0.3 }), -8.0, 0.4, 5.1);
+  loose(add(lib.model('ph-potted-plant-04', { height: 0.3 }), -8.0, 0.4, 5.1), { carry: true, density: 0.6 });
   const rug = new T.Mesh(new T.CircleGeometry(2.3, 64), rugMaterial('leaves', [1, 1])); rug.rotation.x = -Math.PI / 2; rug.position.set(-8.2, 0.024, 5.3); scene.add(rug);
   solid(-10.2, -9.0, 0, 0.9, 3.9, 6.7); solid(-8.4, -7.6, 0, 0.5, 4.7, 5.9);
   light(-8, 2.6, 5, '#ffdcae', 9, 8);
   // Brochure rack and luggage cart near the entrance.
   const rack = F.box(0.6, 1.4, 0.3, F.mat('#3b3027'), 0, 0, 0); add(rack, -4.6, 0, 1.2, Math.PI / 2);
   for (let i = 0; i < 8; i++) F.box(0.1, 0.22, 0.02, F.mat(['#d23b2f', '#2f7bd2', '#3fa34d', '#f4b400'][i % 4]), (i % 2) * 0.24 - 0.12, 0.4 + Math.floor(i / 2) * 0.25, 0.16, rack);
-  add(lib.model('hotel-luggage-cart', { origin: true }), 0.4, 0, -6.5, 0.3); solid(-0.2, 1.0, 0, 2, -6.9, -6.1);
+  loose(add(lib.model('hotel-luggage-cart', { origin: true }), 0.4, 0, -6.5, 0.3), { density: 0.35 }); solid(-0.2, 1.0, 0, 2, -6.9, -6.1); unboxed();
 
   // Pantry (NE): coffee counter, vending, cooler, bar tables.
   add(lib.model('hotel-coffee-station', { origin: true }), 3.4, 0, -8.6); solid(1.8, 5, 0, 1, -8.95, -8.25);
@@ -463,7 +466,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   for (const [x, z] of [[2.2, -5.4], [3.9, -3.2]]) {
     add(lib.model('ph-round-wooden-table-01', { height: 1.0 }), x, 0, z);
     solid(x - 0.45, x + 0.45, 0, 1, z - 0.45, z + 0.45);
-    for (let k = 0; k < 3; k++) { const a = k * 2.1 + 0.4; add(lib.model('ph-bar-chair-round-01', { height: 0.75 }), x + Math.cos(a) * 0.9, 0, z + Math.sin(a) * 0.9, -a - Math.PI / 2); }
+    for (let k = 0; k < 3; k++) { const a = k * 2.1 + 0.4; loose(add(lib.model('ph-bar-chair-round-01', { height: 0.75 }), x + Math.cos(a) * 0.9, 0, z + Math.sin(a) * 0.9, -a - Math.PI / 2), { carry: true, density: 0.3 }); }
   }
   add(F.trashReceptacle(), 1.35, 0, -8.6);
   add(lib.model('ph-wall-clock', { height: 0.4 }), 0.75, 1.9, -8.86);
@@ -495,10 +498,10 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   const loungeTV = F.flatTV(1.9); add(loungeTV.group, 6.4, 1.75, 5, -Math.PI / 2);
   const tvCabinet = F.box(2.2, 0.55, 0.45, F.mat('#5b4a3c'), 0, 0, 0); add(tvCabinet, 6.2, 0, 5, -Math.PI / 2); solid(5.95, 6.5, 0, 0.6, 3.9, 6.1);
   add(lib.model('hotel-lobby-sofa', { origin: true }), 1.9, 0, 5, Math.PI / 2); solid(1.5, 2.5, 0, 0.9, 3.9, 6.1);
-  add(lib.model('hotel-accent-chair-green', { origin: true }), 3.6, 0, 7.4, Math.PI);
-  add(lib.model('hotel-accent-chair-green', { origin: true }), 3.6, 0, 2.6, 0);
-  add(lib.model('ph-ottoman-01', { height: 0.42 }), 3.6, 0, 5);
-  add(lib.model('ph-side-table-01', { height: 0.5 }), 2.0, 0, 7.1);
+  loose(add(lib.model('hotel-accent-chair-green', { origin: true }), 3.6, 0, 7.4, Math.PI), { density: 0.5 });
+  loose(add(lib.model('hotel-accent-chair-green', { origin: true }), 3.6, 0, 2.6, 0), { density: 0.5 });
+  loose(add(lib.model('ph-ottoman-01', { height: 0.42 }), 3.6, 0, 5), { carry: true, density: 0.3 });
+  loose(add(lib.model('ph-side-table-01', { height: 0.5 }), 2.0, 0, 7.1), { carry: true, density: 0.4 });
   add(lib.model('ph-potted-plant-01', { height: 1.6 }), 5.9, 0, 8.4);
   const rug2 = new T.Mesh(new T.PlaneGeometry(3.6, 4.6), rugMaterial('stripes', [1, 1])); rug2.rotation.x = -Math.PI / 2; rug2.position.set(3.6, 0.015, 5); scene.add(rug2);
   light(3.8, 2.2, 5, '#ffdcae', 9, 8);
@@ -535,19 +538,19 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     add(lib.model('hotel-shelving-unit', { origin: true, rotate: Math.PI / 2 }), -4.78, 0, -7.0); solid(-4.95, -4.55, 0, 2, -7.95, -6.05);
     add(lib.model('hotel-centerpiece', { origin: true }), -2, 0, 4.4); solid(-2.6, -1.4, 0, 1, 3.8, 5.0);
     for (const [x, z] of [[-10.35, 3.75], [-10.35, 6.85], [1.4, 3.45]]) { add(lib.model('hotel-floor-lamp', { origin: true }), x, 0, z); light(x, 1.5, z, '#ffcf8f', 3, 4); }
-    for (const [x, z] of [[-11.4, 0.4], [5.85, 1.6], [0.9, 8.4], [-4.6, -4.4], [-6.1, 8.4]]) { add(lib.model('hotel-snake-plant', { origin: true }), x, 0, z); solid(x - 0.2, x + 0.2, 0, 1, z - 0.2, z + 0.2); }
+    for (const [x, z] of [[-11.4, 0.4], [5.85, 1.6], [0.9, 8.4], [-4.6, -4.4], [-6.1, 8.4]]) { loose(add(lib.model('hotel-snake-plant', { origin: true }), x, 0, z), { carry: true, density: 0.5 }); solid(x - 0.2, x + 0.2, 0, 1, z - 0.2, z + 0.2); unboxed(); }
     // Breakfast communal table with stools.
     const table = new T.Group();
     F.box(2.4, 0.05, 0.9, F.skin.wood, 0, 1.0, 0, table);
     for (const x of [-1.0, 1.0]) F.box(0.08, 1.0, 0.7, F.mat('#2b2d30', { metalness: 0.6, roughness: 0.4 }), x, 0, 0, table);
     add(table, -2.2, 0, -5.6); solid(-3.4, -1.0, 0, 1.05, -6.05, -5.15);
-    for (const [dx, dz, ry] of [[-0.8, -0.75, 0], [0, -0.75, 0], [0.8, -0.75, 0], [-0.8, 0.75, Math.PI], [0, 0.75, Math.PI], [0.8, 0.75, Math.PI]]) add(lib.model('ph-bar-chair-round-01', { height: 0.75 }), -2.2 + dx, 0, -5.6 + dz, ry);
+    for (const [dx, dz, ry] of [[-0.8, -0.75, 0], [0, -0.75, 0], [0.8, -0.75, 0], [-0.8, 0.75, Math.PI], [0, 0.75, Math.PI], [0.8, 0.75, Math.PI]]) loose(add(lib.model('ph-bar-chair-round-01', { height: 0.75 }), -2.2 + dx, 0, -5.6 + dz, ry), { carry: true, density: 0.3 });
     // Second seating group by the west windows.
-    add(lib.model('hotel-accent-chair-mustard', { origin: true }), -10.9, 0, 1.4, Math.PI * 0.6);
-    add(lib.model('hotel-accent-chair-green', { origin: true }), -9.2, 0, 1.0, -Math.PI * 0.75);
-    add(lib.model('ph-side-table-01', { height: 0.5 }), -10.1, 0, 0.6);
+    loose(add(lib.model('hotel-accent-chair-mustard', { origin: true }), -10.9, 0, 1.4, Math.PI * 0.6), { density: 0.5 });
+    loose(add(lib.model('hotel-accent-chair-green', { origin: true }), -9.2, 0, 1.0, -Math.PI * 0.75), { density: 0.5 });
+    loose(add(lib.model('ph-side-table-01', { height: 0.5 }), -10.1, 0, 0.6), { carry: true, density: 0.4 });
     add(lib.model('hotel-table-lamp', { origin: true }), -10.1, 0.5, 0.6);
-    add(lib.model('ph-potted-plant-04', { height: 0.32 }), -2.2, 1.05, -5.6);
+    loose(add(lib.model('ph-potted-plant-04', { height: 0.32 }), -2.2, 1.05, -5.6), { carry: true, density: 0.6 });
     light(-10, 1.2, 1, '#ffcf8f', 3, 4);
   }
 
@@ -580,11 +583,11 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     // Blender rails reach toward -Z (three) into the water; rotate so they hang over each pool edge.
     for (const [x, z, ry] of [[-16.3, -6.2, Math.PI / 2], [-20.7, 2.4, -Math.PI / 2], [-13.1, 6.6, Math.PI / 2]]) add(lib.model('hotel-pool-rail', { origin: true, rotate: ry }), x, 0, z);
     for (let i = 0; i < 4; i++) { add(lib.model('hotel-pool-chaise', { origin: true, rotate: Math.PI / 2 }), -23.0, 0, -6 + i * 2.6); solid(-23.6, -22.4, 0, 0.6, -6.5 + i * 2.6, -5.5 + i * 2.6); }
-    for (const z of [6.5, 8]) add(lib.model('ph-modern-arm-chair-01', { height: 0.85 }), -20 + (z - 6.5) * 2, 0, z, Math.PI);
-    add(lib.model('ph-wetfloorsign-01', { height: 0.63 }), -15.4, 0, -4, 0.6);
+    for (const z of [6.5, 8]) loose(add(lib.model('ph-modern-arm-chair-01', { height: 0.85 }), -20 + (z - 6.5) * 2, 0, z, Math.PI), { density: 0.5 });
+    loose(add(lib.model('ph-wetfloorsign-01', { height: 0.63 }), -15.4, 0, -4, 0.6), { carry: true, density: 0.25 });
     add(lib.model('ph-lifebuoy', { height: 0.8 }), -18.5, 1.6, -8.8);
     add(lib.model('ph-wall-clock', { height: 0.4 }), -12.15, 3.2, -6, -Math.PI / 2);
-    add(lib.model('ph-potted-plant-04', { height: 0.35 }), -20, 0.45, 7.2);
+    loose(add(lib.model('ph-potted-plant-04', { height: 0.35 }), -20, 0.45, 7.2), { carry: true, density: 0.6 });
     const rules = F.sign('POOL RULES\nNo lifeguard on duty · Swim at your own risk\nPool hours 6 AM – 10 PM · No diving\nChildren must be supervised · No glass', { w: 1.3, h: 0.9, bg: '#f6f6f2', fg: '#1d3557', font: '600 32px system-ui, sans-serif' });
     rules.position.set(-13.6, 1.7, -8.865); scene.add(rules);
     for (const [txt, x, z] of [['3 FT', -18.5, 3.1], ['5 FT', -18.5, -7.1], ['NO DIVING', -16.4, -2]]) {
@@ -1158,7 +1161,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     { const corral = F.mat('#8a8279', { roughness: 0.95 });
       for (const [w, d, x, z] of [[5, 0.2, 24, -26.5], [0.2, 2.6, 21.6, -25.3], [0.2, 2.6, 26.4, -25.3]]) { F.box(w, 1.8, d, corral, x, 0, z, scene); solid(x - w / 2, x + w / 2, 0, 1.8, z - d / 2, z + d / 2); }
       add(lib.model('g3-dumpster', { rotate: Math.PI, height: 1.5 }), 23, 0, -25.3); add(lib.model('g3-dumpster', { rotate: Math.PI, height: 1.5 }), 25, 0, -25.3); solid(21.7, 26.3, 0, 1.5, -26.3, -24.6);
-      for (const [x, z] of [[28.5, -24], [29.4, -23.2], [-14, -12]]) add(lib.model('g3-traffic-cone'), x, 0, z, rnd() * 3); }
+      for (const [x, z] of [[28.5, -24], [29.4, -23.2], [-14, -12]]) loose(add(lib.model('g3-traffic-cone'), x, 0, z, rnd() * 3), { carry: true, density: 0.3 }); }
     // Landscaping islands along the facade.
     for (const [x0, x1] of [[-23, -7], [3, 29]]) {
       const bed = mbox(x1 - x0, 0.25, 1.4, F.mat('#5b4636', { roughness: 1 })); bed.position.set((x0 + x1) / 2, 0.02, 10.4); scene.add(bed);

@@ -20,7 +20,7 @@ const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome'
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 // Keep logic/control regressions independent of the headless GPU and audio device.
 // The repairs audit above exercises normal rendering; mobile captures one real frame at the end.
-if (mode === 'flow' || mode === 'mobile') {
+if (mode === 'flow' || mode === 'mobile' || mode === 'physics') {
   await page.context().route('**/main.js', async route => {
     let source = await readFile(resolve(root, 'projects/roadside-inn/main.js'), 'utf8');
     source = source.replace('await renderer.compileAsync(scene, camera);', 'globalThis.__renderAudit = () => renderer.render(scene, camera);');
@@ -37,7 +37,7 @@ page.on('pageerror', e => errors.push(String(e)));
 if (mode !== 'mobile') {
   await page.goto(`http://localhost:${port}/projects/roadside-inn/index.html${process.env.FULL ? '' : '?quality=low'}`);
   await page.waitForFunction(() => globalThis.__inn, null, { timeout: 180000 });
-  if (mode === 'flow') await page.evaluate(() => {
+  if (mode === 'flow' || mode === 'physics') await page.evaluate(() => {
     // Movement/interaction checks should not be limited by the software rasterizer.
     // Render explicitly before each capture; the visual audit uses the normal renderer.
     const render = __inn.renderer.render.bind(__inn.renderer);
@@ -56,7 +56,7 @@ const repairViews = {
   'repairs-gym': [14.5, 0, -3.5, 0, -0.1],
   'repairs-sign': [-8, 0, -2.4, 1.57, 0.2],
 };
-const views = mode === 'repairs' ? repairViews : ['flow', 'profile', 'mobile'].includes(mode) ? {} : (mode ? JSON.parse(mode) : null) ?? {
+const views = mode === 'repairs' ? repairViews : ['flow', 'profile', 'mobile', 'physics'].includes(mode) ? {} : (mode ? JSON.parse(mode) : null) ?? {
   arrival: [3.4, 0, 19.4, 0.48, 0.05],
   lobby: [-2, 0, 7, 0.3, -0.05],
   desk: [-6.5, 0, 0.5, 0.5, -0.05],
@@ -173,6 +173,31 @@ if (!mode || mode === 'flow') try {
   await page.evaluate(() => __inn.teleport(11.4, __inn.player.y, -7.6, Math.PI, 0));
   flow.stairsTop = await walk(Math.PI, () => __inn.player.z > 0);
 } catch (e) { flow.failed = e.message.split('\n')[0]; flow.state = await page.evaluate(() => ({ ...__inn.world.elevator, p: [__inn.player.x, __inn.player.y, __inn.player.z] })); errors.push("flow: " + flow.failed); console.log(JSON.stringify(flow)); await writeFile(`${out}/check-${mode || 'all'}-failure.json`, JSON.stringify({ flow, errors }, null, 2)); await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/flow-failure.png`, timeout: 120000 }).catch(() => errors.push("page unresponsive")); }
+// Physics (physics.js): walking into a lobby armchair shoves it; the pool's wet-floor sign can be picked up and thrown.
+if (mode === 'physics') try {
+  const prop = (name, x, z) => page.evaluate(([name, x, z]) => { const l = __inn.physics.loose.find(l => l.o.name === name && Math.hypot(l.o.position.x - x, l.o.position.z - z) < 0.6); globalThis.__prop = l; return l ? l.o.position.toArray().map(v => +v.toFixed(2)) : null; }, [name, x, z]);
+  const now = () => page.evaluate(() => __prop.o.position.toArray().map(v => +v.toFixed(2)));
+  flow.physics = await page.evaluate(() => ({ loose: __inn.physics.loose.length, pinned: __inn.physics.pinned.length }));
+  flow.chairFrom = await prop('hotel-accent-chair-green', 3.6, 2.6);
+  // Walk until the chair has been pushed, not for a fixed time: headless frame rates vary a lot (the flow walks the same way).
+  await face(3.6, 0, 1.2, 3.6, 2.6);
+  flow.chairWalk = await walk(Math.PI, () => Math.hypot(__prop.o.position.x - 3.6, __prop.o.position.z - 2.6) > 0.25);
+  flow.chairTo = await now();
+  flow.walker = await page.evaluate(() => { const c = __inn.physics.me.controller, hits = []; for (let i = 0; i < c.numComputedCollisions(); i++) { const h = c.computedCollision(i), t = h?.collider.translation(); if (h) hits.push({ n: [h.normal1.x, h.normal1.y, h.normal1.z].map(v => +v.toFixed(2)), at: [t.x, t.y, t.z].map(v => +v.toFixed(2)), type: h.collider.parent()?.bodyType() }); } return { p: [__inn.player.x, __inn.player.y, __inn.player.z].map(v => +v.toFixed(2)), hits: hits.slice(0, 4) }; });
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/physics-chair.png` });
+  assert.ok(Math.hypot(flow.chairTo[0] - flow.chairFrom[0], flow.chairTo[2] - flow.chairFrom[2]) > 0.15, 'walking into the armchair should shove it');
+  flow.signFrom = await prop('ph-wetfloorsign-01', -15.4, -4);
+  await face(-15.4, 0, -3.0, -15.4, -4); await page.evaluate(() => __inn.controls.setLook(__inn.controls.input.yaw, -0.7));
+  flow.pickPrompt = await press('Pick up'); await page.waitForTimeout(600);
+  flow.held = await page.evaluate(() => __inn.physics.held?.o.name ?? null);
+  assert.equal(flow.held, 'ph-wetfloorsign-01');
+  await page.evaluate(() => __inn.controls.setLook(__inn.controls.input.yaw, 0.2)); await page.waitForTimeout(500);   // let the view turn
+  flow.throwPrompt = await press('Throw'); await page.waitForTimeout(2000);
+  flow.signTo = await now();
+  await page.evaluate(() => { __inn.teleport(-15.4, 0, -2.2, 0, -0.35); }); await page.waitForTimeout(600);
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/physics-throw.png` });
+  assert.ok(Math.hypot(flow.signTo[0] - flow.signFrom[0], flow.signTo[2] - flow.signFrom[2]) > 1.5, 'a thrown sign should land well away');
+} catch (e) { flow.failed = e.message.split('\n')[0]; errors.push('physics: ' + flow.failed); }
 if (mode === 'mobile' || !mode) {
   const phone = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   phone.on('pageerror', e => errors.push('mobile: ' + e));

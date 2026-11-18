@@ -5,24 +5,24 @@
     "callPrompt": "ECall elevator",
     "panelPrompt": "EPress 2",
     "rodeTo": 3.2,
-    "failed": "page.evaluate: TypeError: Cannot read properties of null (reading 'state')",
+    "failed": "page.waitForFunction: Timeout 30000ms exceeded.",
     "state": {
       "y": 3.2,
       "target": 3.2,
-      "doors": 1,
-      "open": true,
-      "timer": 3.1502000000029797,
+      "doors": 0,
+      "open": false,
+      "timer": -0.02039999999851201,
       "moving": false,
       "floor": 1,
       "queue": null,
       "p": [
         7.9,
-        3.2,
-        -2.6
+        3.19994234885803,
+        -2.522500001266599
       ]
     }
   },
   "errors": [
-    "flow: page.evaluate: TypeError: Cannot read properties of null (reading 'state')"
+    "flow: page.waitForFunction: Timeout 30000ms exceeded."
   ]
 }

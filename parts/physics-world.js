@@ -7,30 +7,34 @@
 //   const crate = attach(mesh, { world, onContact: ({ speed }) => speed > 2 && play("hit") });
 //   crate.impulse([0, 5, 0]);
 //   every frame: world.update(dt)                            // steps, then moves every attached object
+//   const me = character(world, { position: [0, 0, 5] });    // a capsule that walks, climbs steps and pushes things
+//   me.walk(vx, vz); me.jump(4); world.update(dt); camera.position.copy(me.position)
 //
 // Units are metres, kilograms and seconds: size objects in metres (a GLB part's `measured.glb.size` says how big it
 // is). Attach top-level objects (children of the scene): positions are read and written in world space.
 // ponytail: no interpolation between steps (a 144 Hz screen sees 60 Hz motion); no joints yet: world.raw has them.
 import * as THREE from "three";
-import RAPIER from "@dimforge/rapier3d-compat";
 
-let ready;
+// Rapier loads when the first world is made, not with this module: if it can't load (offline, a blocked CDN), the
+// game's page still runs and only createWorld() rejects, so a game can fall back to walking without physics.
+let RAPIER, ready;
 const v3 = (v) => new THREE.Vector3(v.x, v.y, v.z);
 
 /** A physics world → { update(dt), raycast(origin, direction, far), dispose(), raw, rapier }. */
 export async function createWorld({ gravity = [0, -9.81, 0], step = 1 / 60, maxSteps = 5 } = {}) {
-    await (ready ??= RAPIER.init());
+    await (ready ??= import("@dimforge/rapier3d-compat").then(async (m) => { RAPIER = m.default; await RAPIER.init(); }).catch((e) => { ready = null; throw e; }));
     const raw = new RAPIER.World({ x: gravity[0], y: gravity[1], z: gravity[2] }), events = new RAPIER.EventQueue(true);
     raw.timestep = step;
-    const bodies = new Set(), byCollider = new Map();
+    const bodies = new Set(), byCollider = new Map(), characters = new Set();
     let carry = 0;
     return {
-        raw, rapier: RAPIER, bodies, byCollider,
+        raw, rapier: RAPIER, bodies, byCollider, characters,
         /** Steps at a fixed rate (at most maxSteps per call, so a stalled tab doesn't spiral), then syncs objects. */
         update(dt) {
             carry = Math.min(carry + dt, step * maxSteps);
-            for (const b of bodies) if (b.kinematic) b.push();
             for (; carry >= step; carry -= step) {
+                for (const b of bodies) if (b.kinematic) b.push();
+                for (const c of characters) c.step(step);
                 raw.step(events);
                 events.drainCollisionEvents((h1, h2, started) => {
                     if (!started) return;
@@ -49,7 +53,7 @@ export async function createWorld({ gravity = [0, -9.81, 0], step = 1 / 60, maxS
             const t = hit.timeOfImpact ?? hit.toi;   // renamed in Rapier 0.12
             return { object: byCollider.get(hit.collider.handle)?.object ?? null, point: origin.clone().addScaledVector(d, t), normal: v3(hit.normal), distance: t };
         },
-        dispose() { for (const b of [...bodies]) b.dispose(); raw.free(); events.free(); },
+        dispose() { for (const x of [...bodies, ...characters]) x.dispose(); raw.free(); events.free(); },
     };
 }
 
@@ -87,13 +91,15 @@ function collider(object, shape) {
 
 /**
  * Give an object a body → { update(), dispose(), body, impulse([x,y,z]), velocity([x,y,z]?) }.
- * body: dynamic (falls, collides), fixed (floors, walls), kinematic (you move the object; it pushes dynamic ones).
+ * body: dynamic (falls, collides), fixed (floors, walls), kinematic (you move the object; it pushes dynamic ones),
+ * platform (you move the object, a floor characters walk on and ride(): an elevator. Rapier's character controller
+ * barely walks on kinematic bodies, so a platform is a fixed body that jumps to the object each step).
  * shape: box (default), ball, hull (convex hull of its vertices: GLBs) or mesh (exact triangles: fixed bodies only).
  */
 export function attach(object, { world, body = "dynamic", shape = "box", mass, density = 1, friction = 0.6, restitution = 0.1, ccd = false, onContact } = {}) {
     if (!world) throw new Error("physics: attach needs { world } from createWorld()");
     if (shape === "mesh" && body === "dynamic") throw new Error("physics: a dynamic body can't be a mesh; use hull");
-    const R = RAPIER, desc = body === "fixed" ? R.RigidBodyDesc.fixed() : body === "kinematic" ? R.RigidBodyDesc.kinematicPositionBased() : R.RigidBodyDesc.dynamic();
+    const R = RAPIER, desc = body === "fixed" || body === "platform" ? R.RigidBodyDesc.fixed() : body === "kinematic" ? R.RigidBodyDesc.kinematicPositionBased() : R.RigidBodyDesc.dynamic();
     const p = object.getWorldPosition(new THREE.Vector3()), q = object.getWorldQuaternion(new THREE.Quaternion());
     const rb = world.raw.createRigidBody(desc.setTranslation(p.x, p.y, p.z).setRotation(q).setCcdEnabled(ccd));
     const cd = collider(object, shape).setFriction(friction).setRestitution(restitution);
@@ -101,14 +107,84 @@ export function attach(object, { world, body = "dynamic", shape = "box", mass, d
     if (onContact) cd.setActiveEvents(R.ActiveEvents.COLLISION_EVENTS);
     const col = world.raw.createCollider(cd, rb);
     const self = {
-        object, body: rb, collider: col, onContact, kinematic: body === "kinematic",
+        object, body: rb, collider: col, onContact, kinematic: body === "kinematic" || body === "platform",
         // dynamic: the body moves the object; kinematic: the object moves the body (push() runs before each step)
-        update() { if (body !== "dynamic") return; const t = rb.translation(), r = rb.rotation(); object.position.set(t.x, t.y, t.z); object.quaternion.set(r.x, r.y, r.z, r.w); },
-        push() { object.getWorldPosition(p); object.getWorldQuaternion(q); rb.setNextKinematicTranslation(p); rb.setNextKinematicRotation(q); },
+        update() { if (self.kinematic || body === "fixed" || body === "platform") return; const t = rb.translation(), r = rb.rotation(); object.position.set(t.x, t.y, t.z); object.quaternion.set(r.x, r.y, r.z, r.w); },
+        /** Hold a dynamic body: until release(), it follows the object wherever you put it, and still pushes things. */
+        grab() { if (body !== "dynamic") return; self.kinematic = true; rb.setBodyType(R.RigidBodyType.KinematicPositionBased, true); },
+        /** Let go, optionally throwing it at velocity [x, y, z]. */
+        release(v) { if (!self.kinematic || body !== "dynamic") return; self.kinematic = false; rb.setBodyType(R.RigidBodyType.Dynamic, true); if (v) self.velocity(v); },
+        push() {
+            object.getWorldPosition(p); object.getWorldQuaternion(q);
+            if (body === "platform") { rb.setTranslation(p, true); rb.setRotation(q, true); } else { rb.setNextKinematicTranslation(p); rb.setNextKinematicRotation(q); }
+        },
         impulse([x, y, z]) { rb.applyImpulse({ x, y, z }, true); },
         velocity(v) { if (v) rb.setLinvel({ x: v[0], y: v[1], z: v[2] }, true); const l = rb.linvel(); return [l.x, l.y, l.z]; },
         dispose() { world.bodies.delete(self); world.byCollider.delete(col.handle); world.raw.removeRigidBody(rb); },
     };
     world.bodies.add(self); world.byCollider.set(col.handle, self);
+    return self;
+}
+
+/**
+ * A walking character: a capsule with its feet at `position`, moved by Rapier's character controller inside the
+ * fixed steps → { walk(vx, vz), jump(speed), ride(dy), teleport([x, y, z]), position, grounded, body, dispose() }.
+ * It slides along walls, climbs steps up to `step` and slopes up to `slope` radians, and shoves dynamic bodies.
+ * walk() sets the horizontal velocity in m/s until changed; ride(dy) carries it with a moving floor (an elevator).
+ */
+// Interaction groups are (membership << 16) | filter. Carried things are only in group 2; the walker's queries skip group 2.
+const CARRIED = (0x0002 << 16) | 0xffff, WALKER = (0xffff << 16) | 0xfffd;
+
+export function character(world, { position = [0, 0, 0], radius = 0.3, height = 1.75, step = 0.4, slope = 0.8, snap = 0.3, gravity = -9.81, push = true, mass = 70 } = {}) {
+    // The controller keeps the capsule `GAP` off every surface; starting it touching the floor sinks it in, and a
+    // capsule inside the floor barely walks. So the capsule floats GAP above the feet it reports.
+    // Placed (spawned, teleported) a centimetre higher still, it drops and the controller settles it at exactly GAP;
+    // placed at exactly GAP, rounding sometimes puts it a hair inside, where it crawls.
+    const R = RAPIER, half = Math.max(0.01, height / 2 - radius), GAP = 0.02, up = height / 2 + GAP, DROP = 0.01;
+    const rb = world.raw.createRigidBody(R.RigidBodyDesc.kinematicPositionBased().setTranslation(position[0], position[1] + up + DROP, position[2]));
+    const col = world.raw.createCollider(R.ColliderDesc.capsule(half, radius), rb);
+    const ctl = world.raw.createCharacterController(GAP);
+    ctl.enableAutostep(step, radius, false); ctl.enableSnapToGround(snap);   // steps up kerbs and stairs, not onto loose chairs: those it shoves
+    ctl.setMaxSlopeClimbAngle(slope); ctl.setMinSlopeSlideAngle(slope + 0.1);
+    ctl.setApplyImpulsesToDynamicBodies(push); ctl.setCharacterMass(mass);
+    let vx = 0, vz = 0, vy = 0, lift = 0;
+    const at = { x: position[0], y: position[1] + up + DROP, z: position[2] };
+    const self = {
+        body: rb, collider: col, controller: ctl, grounded: false,
+        /** Walk through a collider (what it's carrying) until unignore(). Uses a collision group, not a callback:
+         *  Rapier can't call back into JavaScript mid-query. */
+        ignore(c) { c.setCollisionGroups(CARRIED); },
+        unignore(c) { c.setCollisionGroups(0xffffffff); },
+        /** Feet, in world space, as of the last step. */
+        position: new THREE.Vector3(...position),
+        walk(x, z) { vx = x; vz = z; },
+        jump(speed) { if (self.grounded) { vy = speed; self.grounded = false; } },
+        ride(dy) { lift += dy; },
+        teleport([x, y, z]) { at.x = x; at.y = y + up + DROP; at.z = z; vy = 0; lift = 0; rb.setTranslation(at, true); rb.setNextKinematicTranslation(at); self.position.set(x, y, z); },
+        step(dt) {
+            // Standing: no down force. Snap-to-ground holds it on slopes and stairs; pushing down sinks the capsule into
+            // the floor a little each step (Rapier allows it inside the offset), and -0.5 m/s also stops autostep.
+            vy = self.grounded && vy <= 0 ? 0 : vy + gravity * dt;
+            ctl.computeColliderMovement(col, { x: vx * dt, y: vy * dt, z: vz * dt }, R.QueryFilterFlags.EXCLUDE_SENSORS, WALKER);
+            const m = ctl.computedMovement();
+            self.grounded = ctl.computedGrounded();
+            if (self.grounded && vy < 0) vy = 0;
+            // A moving floor carries it rigidly, outside the query: the floor and the capsule move by the same amount in
+            // this step. (Asking the controller to climb with it leaves the capsule a hair inside the floor, stuck.)
+            at.x += m.x; at.y += m.y + lift; at.z += m.z; lift = 0;
+            // Standing a hair inside the offset (float32 rounding when it lands, rides or is placed), the controller
+            // treats the floor as an obstacle and crawls. Measure the real gap straight down and lift it out.
+            if (self.grounded) {
+                const probe = 0.05, bottom = at.y - half - radius;
+                const hit = world.raw.castRay(new R.Ray({ x: at.x, y: bottom + probe, z: at.z }, { x: 0, y: -1, z: 0 }), probe + GAP, true, R.QueryFilterFlags.EXCLUDE_SENSORS, WALKER, col);
+                const gap = hit ? (hit.timeOfImpact ?? hit.toi) - probe : Infinity;
+                if (gap < GAP * 0.999) at.y += GAP - gap;
+            }
+            rb.setNextKinematicTranslation(at);
+            self.position.set(at.x, at.y - up, at.z);
+        },
+        dispose() { world.characters.delete(self); world.raw.removeCharacterController(ctl); world.raw.removeRigidBody(rb); },
+    };
+    world.characters.add(self);
     return self;
 }

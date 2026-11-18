@@ -42,7 +42,16 @@ It starts at dusk.
 ```sh
 node projects/roadside-inn/check.mjs          # screenshots + flow
 node projects/roadside-inn/check.mjs flow     # flow only
+node projects/roadside-inn/check.mjs physics  # shove an armchair, pick up and throw the wet floor sign
 ```
+
+## Physics
+
+[physics.js](physics.js) runs the hotel on the warehouse's `physics-world` part (Rapier). The player is a capsule character: it slides along walls, climbs the stairs and kerbs, and rides the elevator floor (a `platform` body that follows the car). The world's boxes and floors become colliders. Doors and the elevator doors switch on and off with the same `on()` callbacks the old walker used.
+
+Props that `world.js` tags with `loose()` are dynamic: the lounge, breakfast and pool chairs, the luggage cart, plants, the ottoman and side tables, the pillows, the wet floor sign and the cones. Walking into them shoves them. Small ones get a "Pick up" prompt, and E or a click throws what you're carrying. A loose prop that starts inside a hand-placed box (the pillows on the bench, whose box covers the backrest) stays put as a fixed body instead of being fired out of it. It moves once its box is replaced by one shaped from the model. Room 212's furniture stays static: its clearance pass measures every prop.
+
+If Rapier can't load (offline, a blocked CDN), the game logs `physics off` and walks the old way, with boxes and floor heights. Late Checkout and Slopov II read `world.js` without physics and are unaffected; `loose()` only tags props.
 
 ## Assets and licenses
 

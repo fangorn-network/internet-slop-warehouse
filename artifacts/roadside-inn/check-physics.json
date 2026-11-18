@@ -1,0 +1,54 @@
+{
+  "flow": {
+    "physics": {
+      "loose": 33,
+      "pinned": 5
+    },
+    "chairFrom": [
+      3.6,
+      0,
+      2.6
+    ],
+    "chairWalk": {
+      "x": 3.6,
+      "y": 0,
+      "z": 2.34
+    },
+    "chairTo": [
+      3.59,
+      0.17,
+      2.93
+    ],
+    "walker": {
+      "p": [
+        3.6,
+        0,
+        2.34
+      ],
+      "hits": []
+    },
+    "signFrom": [
+      -15.4,
+      0,
+      -4
+    ],
+    "pickPrompt": "EPick up the wet floor sign",
+    "held": "ph-wetfloorsign-01",
+    "throwPrompt": "EThrow the wet floor sign",
+    "signTo": [
+      -15.72,
+      0,
+      -8.43
+    ]
+  },
+  "errors": [],
+  "shots": 0,
+  "stats": {
+    "colliders": 396,
+    "interact": 81,
+    "drawCalls": 355,
+    "textures": 163,
+    "programs": 57,
+    "triangles": 1577898
+  }
+}
