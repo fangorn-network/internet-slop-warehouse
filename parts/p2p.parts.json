@@ -1,0 +1,41 @@
+[
+  {
+    "file": "p2p-room.js",
+    "type": "logic",
+    "id": "p2p-room",
+    "kind": "rule",
+    "title": "P2P room (real-time co-op)",
+    "description": "Real-time co-op for browser games with no server: an encrypted WebRTC room over public relays (inject the trystero-027 part), joined by a share link. Encodes Escape from Slopov II's split ownership: each peer streams its own pose, the host streams the world, peers ask the host to change it. channel(name, { from: 'host' | 'any', validate, limitHz }) drops messages from the wrong sender, malformed ones and floods; approach() and approachAngle() ease received values framerate-independently; every(hz) paces sends from the frame loop; shareLink(WAREHOUSE_URL, code) makes a link that reopens the game in the room. Tested in vitest with an in-memory transport and in two real browsers over WebRTC. No host migration: when the host leaves, onHostLeft fires.",
+    "tags": ["multiplayer", "co-op", "p2p", "webrtc", "networking", "rooms", "share-link", "interpolation", "trystero"],
+    "uses": ["trystero-027"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": { "method": "hand", "ai": "code", "tool": "Claude Code; extracted from Escape from Slopov II" },
+    "exports": [
+      { "name": "connect", "signature": "connect(transport, { app, host, code, maxUsers, relayConfig }) → Promise<{ id, hostId, isHost, code, peers, channel(name, opts), onJoin(cb), onLeave(cb), onHostLeft(cb), leave() }>", "does": "opens (host) or joins (code or share link) an encrypted room" },
+      { "name": "approach", "signature": "approach(from, to, dt, rate = 12) → number", "does": "eases toward a received value, the same at any framerate" },
+      { "name": "approachAngle", "signature": "approachAngle(from, to, dt, rate = 12) → radians", "does": "the same for headings, the short way round" },
+      { "name": "every", "signature": "every(hz) → (dt) → boolean", "does": "true once per 1/hz seconds of frame time: pace sends from the loop" },
+      { "name": "shareLink", "signature": "shareLink(pageURL, code) → string", "does": "a link that reopens the game and joins the room (?room=)" },
+      { "name": "roomFrom", "signature": "roomFrom(codeOrLink) → string", "does": "the room code from a pasted code or share link" },
+      { "name": "q", "signature": "q(n, places = 2) → number", "does": "rounds a number for the wire" }
+    ],
+    "options": [
+      { "name": "app", "type": "string", "default": "required", "does": "a stable id for your game, e.g. 'my-game.v1'" },
+      { "name": "host", "type": "boolean", "default": false, "does": "open a new room instead of joining one" },
+      { "name": "code", "type": "string", "default": "''", "does": "the room code or share link to join" },
+      { "name": "maxUsers", "type": "number", "default": 4, "does": "room size; every peer connects to every other" }
+    ]
+  },
+  {
+    "file": "skills/p2p-multiplayer/SKILL.md",
+    "type": "skill",
+    "id": "p2p-multiplayer-skill",
+    "title": "P2P multiplayer: co-op with no server",
+    "description": "Agent skill: add peer-to-peer co-op to a browser game. Pick the pattern by game speed (host-authoritative snapshots with p2p-homestead, or split ownership with p2p-room), write down who owns what, send small arrays at fixed rates from the frame loop, validate every peer message, ease what you receive, seed the static world instead of sending it, share links inside the warehouse player, and test with a fake transport and two real browsers. Says the limits: no host migration, no TURN, peer-owned state can be faked.",
+    "tags": ["skill", "multiplayer", "co-op", "p2p", "webrtc", "architecture", "networking"],
+    "uses": ["p2p-room", "p2p-homestead", "trystero-027", "mosslight-commons"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  }
+]

@@ -1,6 +1,6 @@
 # the internet slop warehouse
 
-Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of. It runs as a stock westmarch Worker at **https://internet-slop-warehouse.fangorn.network** (deployed from the `ops` repo), and the page ([site/](site/)) is plain files that read its API, served at **https://internet-slop-warehouse.quickbeam.workers.dev** by a static-assets Worker ([wrangler.json](wrangler.json), `npm run deploy`). It runs no code and can be hosted anywhere.
+Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of. It runs as a stock westmarch Worker at **https://internet-slop-warehouse.fangorn.network** (deployed from the `ops` repo), and the page ([site/](site/)) is plain files that read its API, served at **https://internet-slop-warehouse.quickbeam.workers.dev** by a small Worker ([wrangler.json](wrangler.json), `npm run deploy`) that also keeps likes/dislikes. The page can be hosted anywhere; off that Worker, votes just don't show.
 
 Needs Node 22.13+ and `npm install` (westmarch comes from npm, `^0.3.1`).
 
@@ -110,10 +110,56 @@ Browser checks and screenshots: `artifacts/field-station/`.
 
 The inventory has category filters with counts alongside Games / Assets / Logic and search. Games are grouped by genre tags, assets by MIME format (with model and pack tag fallbacks), and logic by its published `kind`. A part may appear in multiple categories; uncategorized records remain in Other. Counts show the whole selected inventory type, independent of search. Switching inventory types resets the category; Clear filters resets both category and search.
 
-Category definitions live in `site/catalog.js`; no record migration is needed. Rankings and a leaderboard are follow-up work.
+Category definitions live in `site/catalog.js`; no record migration is needed.
+
+## Lean scenes: games that run on phones
+
+The [lean-scenes skill](parts/skills/lean-scenes/SKILL.md) is the warehouse's performance architecture: a phone budget (300 draw calls, 500k triangles, 128 MB textures, 8 ms JS per frame), asset weight classes, and zones so rooms behind walls aren't drawn ([zone-culling](parts/zone-culling.js), used by Heartland Inn). Batch: `parts/lean-scenes.parts.json`. Check any game against the budget, at the WebGL level:
+
+```sh
+PLAYWRIGHT_MODULE=…/playwright-core/index.mjs node scripts/scene-budget.mjs <url> --phone --click
+```
+
+Model cards show a weight class for phones: **Phone-ready** (≤5k triangles, ≤1K textures), **Medium** (≤20k, ≤2K) or **Heavy**, with the triangle count. It comes from `measured` when the record has it, and otherwise from the stored file's head, read when the card scrolls into view. A heavy card says when a `-lite` version is in stock.
+
+Lite models: `node ingestion/lite/lite.mjs ingestion/lite/hotel.json` simplifies the listed GLBs (gltf-transform + meshoptimizer, 1K textures) into `parts/lite/<id>-lite.glb`, with a report beside the list. Check each one against its original with `scripts/lite-compare.html?a=<original>&b=<lite>`. Batch: `parts/lite.parts.json` (23 models, each crediting its original).
+
+## P2P multiplayer
+
+The [p2p-multiplayer skill](parts/skills/p2p-multiplayer/SKILL.md) covers co-op with no server: pick a pattern by game speed, decide who owns what, set message rates, validate peers, smooth what you receive, and test. [p2p-room](parts/p2p-room.js) is Escape from Slopov II's real-time pattern as a part: rooms joined by share link, host-only and validated channels, flood limits and smoothing, over the `trystero-027` transport. Batch: `parts/p2p.parts.json`.
+
+```sh
+npx vitest run parts/p2p-room.test.js                                            # in-memory transport
+PLAYWRIGHT_MODULE=…/playwright-core/index.mjs node scripts/test-p2p-room.mjs     # two browsers, real WebRTC
+```
+
+## Likes, dislikes and the Top tab
+
+Any part can be liked (▲) or disliked (▼) from the player; pressing again takes it back. The **Top** tab ranks every voted part by net likes. Votes live in D1 (`slop-votes`), not on Fangorn: they're opinions about records, not records. [worker/votes.js](worker/votes.js) serves `GET /api/votes` (`{ tally: { "publisher/id": [up, down] }, mine }`) and `POST /api/votes` (`{ part, v: 1 | -1 | 0 }`), one vote per part per hashed IP. Set a `VOTE_SALT` secret so the hashes can't be reversed.
+
+```sh
+npx wrangler d1 execute slop-votes --remote --file worker/votes.sql   # once
+npx wrangler secret put VOTE_SALT                                      # once
+npm run deploy
+```
 
 Run the category browser checks with:
 
 ```sh
 PLAYWRIGHT_MODULE=/tmp/warehouse-validation/node_modules/playwright-core/index.mjs node scripts/test-catalog-browser.mjs
+```
+
+## Escape from Slopov II (co-op remix)
+
+[projects/slopov-ii/game.html](projects/slopov-ii/game.html) remixes **Escape from Slopov** by `0xa6bdff4d59d418de726153b53a5bed69dad760b6`, credited as its `parent` and by every part of theirs it loads (`uses`, as `0x…/id`).
+
+- **Co-op, up to four, peer to peer.** It uses the `trystero-027` transport. CO-OP → Host gives a share link (`?part=…&room=…`) and a QR code; opening the link joins on its own. The host runs the town (AI, spawns, deaths) and sends it to everyone ten times a second. Guests send their hits on it to the host and take the hits its AI lands on them. Loot is per player. Stashes stay in each player's save code, and Escape from Slopov codes still load. There's no host migration.
+- **The Heartland Inn Express sits at the town's south edge.** The hotel building is now a logic part, `heartland-hotel` (bundled from `projects/roadside-inn` by `package.mjs`; `buildWorld` takes `{ outside, people }`). Floor 1 is part of the raid: front-desk weapons, pantry, pool, gym, zombies and a faction squad. Floor 2 is scenery.
+- **Share links need the site update** in `site/index.html`, which hands the page's address to the sandboxed game (`window.WAREHOUSE_URL`) and allows `clipboard-write`. Pasting a room code works without it.
+
+```sh
+node projects/slopov-ii/package.mjs                                                   # bundle heartland-hotel, write release.parts.json
+node publish-batch.js projects/slopov-ii/release.parts.json --local /tmp/slopov-ii    # preview at /escape-from-slopov-ii.html
+PLAYWRIGHT_MODULE=projects/roadside-inn/.validation/node_modules/playwright-core/index.mjs node scripts/test-slopov-ii-p2p.mjs
+node publish-batch.js projects/slopov-ii/release.parts.json --network baseSepolia
 ```

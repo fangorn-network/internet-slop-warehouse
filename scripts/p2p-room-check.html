@@ -1,0 +1,14 @@
+<!doctype html>
+<!-- p2p-room over real WebRTC: ?host opens a room; ?room=<code> joins it. Driven by scripts/test-p2p-room.mjs. -->
+<meta charset="utf-8"><body><script type="module">
+import * as transport from "../parts/vendor/trystero-0.27.0.js";
+import { connect, roomFrom } from "../parts/p2p-room.js";
+const p = new URLSearchParams(location.search), log = (window.log = []);
+const room = await connect(transport, { app: "slop-warehouse.p2p-room-check.v1", host: p.has("host"), code: roomFrom(location.href.includes("room=") ? location.href : "") });
+const pose = room.channel("pose", { validate: (d) => Array.isArray(d) && d.length === 2 });
+const world = room.channel("world", { from: "host" });
+pose.on((d, from) => log.push(["pose", d, from === room.hostId ? "host" : "guest"]));
+world.on((d) => log.push(["world", d]));
+room.onJoin(() => { if (room.isHost) world.send({ tick: 1 }); pose.send([room.isHost ? 1 : 2, 0]); });
+window.room = { code: room.code, id: room.id, isHost: room.isHost };
+</script>
