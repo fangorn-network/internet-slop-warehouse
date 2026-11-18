@@ -96,12 +96,13 @@ function collider(object, shape) {
  * barely walks on kinematic bodies, so a platform is a fixed body that jumps to the object each step).
  * shape: box (default), ball, hull (convex hull of its vertices: GLBs) or mesh (exact triangles: fixed bodies only).
  */
-export function attach(object, { world, body = "dynamic", shape = "box", mass, density = 1, friction = 0.6, restitution = 0.1, ccd = false, onContact } = {}) {
+export function attach(object, { world, body = "dynamic", shape = "box", mass, density = 1, friction = 0.6, restitution = 0.1, damping = 0, ccd = false, onContact } = {}) {
     if (!world) throw new Error("physics: attach needs { world } from createWorld()");
     if (shape === "mesh" && body === "dynamic") throw new Error("physics: a dynamic body can't be a mesh; use hull");
     const R = RAPIER, desc = body === "fixed" || body === "platform" ? R.RigidBodyDesc.fixed() : body === "kinematic" ? R.RigidBodyDesc.kinematicPositionBased() : R.RigidBodyDesc.dynamic();
     const p = object.getWorldPosition(new THREE.Vector3()), q = object.getWorldQuaternion(new THREE.Quaternion());
-    const rb = world.raw.createRigidBody(desc.setTranslation(p.x, p.y, p.z).setRotation(q).setCcdEnabled(ccd));
+    // damping slows spinning: a hull resting on uneven legs (a chair) otherwise rocks forever and never sleeps.
+    const rb = world.raw.createRigidBody(desc.setTranslation(p.x, p.y, p.z).setRotation(q).setCcdEnabled(ccd).setAngularDamping(damping));
     const cd = collider(object, shape).setFriction(friction).setRestitution(restitution);
     if (mass !== undefined) cd.setMass(mass); else cd.setDensity(density);
     if (onContact) cd.setActiveEvents(R.ActiveEvents.COLLISION_EVENTS);

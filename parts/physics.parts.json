@@ -88,6 +88,12 @@
         "does": "how much it bounces (0–1)"
       },
       {
+        "name": "damping",
+        "type": "number",
+        "default": 0,
+        "does": "slows spinning; 0.5–2 lets a hull resting on uneven legs (a chair) settle and sleep instead of rocking"
+      },
+      {
         "name": "ccd",
         "type": "boolean",
         "default": false,

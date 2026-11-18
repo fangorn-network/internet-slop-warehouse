@@ -46,6 +46,20 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   const boxes = world.colliders.filter(c => !c.loose && !c.on), bounds = new T.Box3(), DEEP = 0.04;
   const buried = o => { bounds.setFromObject(o).expandByScalar(-DEEP); return boxes.some(c => bounds.max.x > c.x0 && bounds.min.x < c.x1 && bounds.max.y > c.y0 && bounds.min.y < c.y1 && bounds.max.z > c.z0 && bounds.min.z < c.z1); };
   const pinned = [];
+
+  // Carrying: E on a small loose prop picks it up; E again throws it the way you're looking. Each carriable prop gets
+  // its prompt when it's attached, so props streamed in after the first frame (Late Checkout) can be picked up too.
+  let held = null;
+  const SAY = { wetfloorsign: 'wet floor sign', 'bar chair round': 'bar stool' };   // part ids that don't read as words
+  const ahead = new T.Vector3(), name = o => { const n = (o.name || 'it').replace(/^(ph|hotel|g3)-/, '').replace(/-0?\d+$/, '').replace(/-/g, ' '); return SAY[n] ?? n; };
+  // The prompt aims at the prop's middle, not its origin on the floor, and follows it as it's knocked about.
+  const targets = [];
+  function offer(l) {
+    const mid = new T.Box3().setFromObject(l.o).getCenter(new T.Vector3()).sub(l.o.position).y, at = l.o.position.clone().setY(l.o.position.y + mid);
+    targets.push([l, at, mid]);
+    world.interact.push({ pos: at, r: 1.3, when: () => !held && loose.includes(l), label: () => `Pick up the ${name(l.o)}`, use: () => grab(l) });
+  }
+
   function attachLoose() {
     for (let i = pending.length - 1; i >= 0; i--) {
       const o = pending[i];
@@ -53,24 +67,16 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
       pending.splice(i, 1);
       const { shape = 'hull', density = 0.5, carry = false } = o.userData.loose;
       if (buried(o)) { pinned.push(o.name || 'a prop'); attach(o, { world: pw, body: 'fixed', shape }); continue; }
-      try { loose.push({ o, carry, b: attach(o, { world: pw, shape, density, friction: 0.7 }) }); }
-      catch (e) { console.warn('physics: left', o.name || 'a prop', 'static:', e.message); }
+      let l;
+      try { l = { o, carry, b: attach(o, { world: pw, shape, density, friction: 0.7, damping: 1 }) }; }   // damping: chairs on uneven legs settle
+      catch (e) { console.warn('physics: left', o.name || 'a prop', 'static:', e.message); continue; }
+      loose.push(l);
+      if (carry) offer(l);
     }
   }
   attachLoose();
 
-  // Carrying: E on a small loose prop picks it up; E again throws it the way you're looking.
-  let held = null;
-  const SAY = { wetfloorsign: 'wet floor sign', 'bar chair round': 'bar stool' };   // part ids that don't read as words
-  const ahead = new T.Vector3(), name = o => { const n = (o.name || 'it').replace(/^(ph|hotel|g3)-/, '').replace(/-0?\d+$/, '').replace(/-/g, ' '); return SAY[n] ?? n; };
-  // The prompt aims at the prop's middle, not its origin on the floor, and follows it as it's knocked about.
-  const targets = [];
-  for (const l of loose.filter(l => l.carry)) {
-    const mid = new T.Box3().setFromObject(l.o).getCenter(new T.Vector3()).sub(l.o.position).y, at = l.o.position.clone().setY(l.o.position.y + mid);
-    targets.push([l, at, mid]);
-    world.interact.push({ pos: at, r: 1.3, when: () => !held && l.b.body.isValid?.() !== false, label: () => `Pick up the ${name(l.o)}`, use: () => grab(l) });
-  }
-  world.interact.push({ pos: new T.Vector3(), r: 2, when: () => !!held, label: () => `Throw the ${name(held.o)}`, use: () => throwHeld() });   // pos follows the held prop
+  world.interact.push({ pos: new T.Vector3(), r: 2, when: () => !!held, label: () => held ? `Throw the ${name(held.o)}` : 'Throw', use: () => throwHeld() });   // pos follows the held prop
   const throwEntry = world.interact.at(-1);
   function grab(l) { held = l; l.b.grab(); me.ignore(l.b.collider); }
   let eye = null;   // the camera, from the last update: a throw goes where you're looking now, not last frame

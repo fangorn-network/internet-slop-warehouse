@@ -5,7 +5,7 @@ import { loadLibrary } from './assets.js';
 import { buildWorld, FLOOR2 } from './world.js';
 import { createSound } from './sound.js';
 import { quality } from './quality.js';
-import { createPhysics } from './physics.js';
+import { createPlayer, EYE } from './player.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('world');
@@ -91,11 +91,8 @@ const detailProps = [];
 scene.traverse(o => { if (o.userData.hotelProp) detailProps.push(o); });
 let detailClock = 0;
 const detailPosition = new T.Vector3();
-// Physics (Rapier, physics.js): the player walks as a capsule and loose props move. Without it (offline, an old
-// browser) the boxes-and-floors walker in movePlayer still works.
-let phys = null;
-try { phys = await createPhysics(scene, world, { spawn: world.spawn, radius: 0.28, height: 1.75, step: 0.45 }); }
-catch (e) { console.warn('physics off, walking the old way:', e.message); }
+// The player (player.js, shared with Late Checkout): physics when Rapier loads, the old walker when it doesn't.
+const walker = await createPlayer(scene, world, { sound }), phys = walker.physics;
 // Compile every shader now (both reflection maps share a size, so later swaps never recompile).
 await renderer.compileAsync(scene, camera);
 $('loading').hidden = true; $('start').hidden = false;
@@ -103,65 +100,9 @@ setGoal('Check in at the front desk.');
 renderPocket();
 
 // ---------- player ----------
-const player = { x: world.spawn.x, y: 0, z: world.spawn.z, vy: 0, pos: new T.Vector3(), stride: 0 };
-const RADIUS = 0.28, EYE = 1.62, STEP = 0.45;
-const synced = { x: player.x, y: player.y, z: player.z };   // where physics last put the player
+const player = walker.player, currentZone = walker.zone;
 const controls = attachInput(canvas, { onUse: use, onInspect: use, onMenu: closePanel });
 controls.setLook(world.spawn.yaw, 0);
-
-function collide(axis, delta) {
-  const lo = player.y + 0.3, hi = player.y + 1.75;
-  for (const c of world.colliders) {
-    if (c.on && !c.on()) continue;
-    if (c.y1 <= lo || c.y0 >= hi) continue;
-    if (player.x + RADIUS <= c.x0 || player.x - RADIUS >= c.x1 || player.z + RADIUS <= c.z0 || player.z - RADIUS >= c.z1) continue;
-    // Push back against the direction of travel; with no travel (a door closing on you, a teleport), take the shortest way out.
-    const minSide = axis === 'x' ? c.x0 - RADIUS - 1e-4 : c.z0 - RADIUS - 1e-4, maxSide = axis === 'x' ? c.x1 + RADIUS + 1e-4 : c.z1 + RADIUS + 1e-4;
-    const at = axis === 'x' ? player.x : player.z;
-    const next = delta > 0 ? minSide : delta < 0 ? maxSide : (at - minSide < maxSide - at ? minSide : maxSide);
-    if (axis === 'x') player.x = next; else player.z = next;
-  }
-}
-function groundHeight() {
-  let best = -Infinity;
-  for (const s of world.surfaces) {
-    if (player.x < s.x0 || player.x > s.x1 || player.z < s.z0 || player.z > s.z1) continue;
-    const h = typeof s.y === 'function' ? s.y(player.x, player.z) : s.y;
-    if (h <= player.y + STEP && h > best) best = h;
-  }
-  return best;
-}
-function movePlayer(dt) {
-  const input = controls.input;
-  const len = Math.hypot(input.x, input.z), speed = input.run ? 2.9 : 1.55;
-  const dx = len ? input.x / Math.max(1, len) * speed * dt : 0, dz = len ? input.z / Math.max(1, len) * speed * dt : 0;
-  let moved;
-  if (phys) {
-    // Anything that set player.x/y/z directly (the test hook, a scripted move) teleports the capsule.
-    if (player.x !== synced.x || player.y !== synced.y || player.z !== synced.z) phys.me.teleport([player.x, player.y, player.z]);
-    phys.me.walk(dt > 0 ? dx / dt : 0, dt > 0 ? dz / dt : 0);
-    phys.update(dt, camera, phys.me.position);
-    const p = phys.me.position;
-    moved = Math.hypot(p.x - player.x, p.z - player.z);
-    Object.assign(player, { x: p.x, y: p.y, z: p.z }); Object.assign(synced, { x: p.x, y: p.y, z: p.z });
-  } else {
-    player.x += dx; collide('x', dx);
-    player.z += dz; collide('z', dz);
-    const h = groundHeight();
-    if (h >= player.y - 0.02) { player.y = h; player.vy = 0; }
-    else { player.vy -= 9.8 * dt; player.y = Math.max(h, player.y + player.vy * dt); if (player.y === h) player.vy = 0; }
-    moved = Math.hypot(dx, dz);
-  }
-  player.stride += moved;
-  if (player.stride > (input.run ? 0.95 : 0.72)) { player.stride = 0; sound.step(currentZone()?.name === 'room' || currentZone()?.name === 'corridor'); }
-  player.pos.set(player.x, player.y + 1.0, player.z);
-  const bob = len ? Math.sin(performance.now() / (input.run ? 120 : 170)) * 0.018 : 0;
-  camera.position.set(player.x, player.y + EYE + bob, player.z);
-  camera.rotation.set(input.pitch, input.yaw, 0);
-}
-function currentZone() {
-  return world.zones.find(z => player.x >= z.x0 && player.x <= z.x1 && player.z >= z.z0 && player.z <= z.z1 && player.y >= z.y0 && player.y <= z.y1);
-}
 
 // ---------- interaction ----------
 let focus = null;
@@ -187,7 +128,7 @@ function pick() {
 function use() {
   if (!started || panelOpen) return;
   if (busy) return;
-  if (phys?.held) return phys.throw();   // carrying something: E or a click throws it, whatever else is in view
+  if (walker.use()) return;   // threw what you were carrying
   focus?.use();
 }
 
@@ -303,7 +244,7 @@ function frame(now = performance.now()) {
 
   const dt = Math.min(clock.getDelta(), 0.05);
   elapsed += dt;
-  if (started && !panelOpen) movePlayer(dt); else { camera.position.set(player.x, player.y + EYE, player.z); camera.rotation.set(controls.input.pitch, controls.input.yaw, 0); player.pos.set(player.x, player.y + 1, player.z); }
+  if (started && !panelOpen) walker.move(dt, controls, camera); else { camera.position.set(player.x, player.y + EYE, player.z); camera.rotation.set(controls.input.pitch, controls.input.yaw, 0); player.pos.set(player.x, player.y + 1, player.z); }
   for (const u of world.updaters) u(dt, elapsed, player);
   sun.position.set(player.x, 0, player.z).add(sunOffset); sun.target.position.set(player.x, 0, player.z);
   lightClock -= dt;

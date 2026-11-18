@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { createPerson } from './people.js';
 import { economy } from './quality.js';
+import { STATION_PARTS } from './station.js';
 
 const local = {
   'qt-thrift-casual': '../mairas-dream/assets/characters/casual.glb',
@@ -38,13 +39,14 @@ const MODELS = [
     'coffee-station', 'breakfast-bar', 'ice-machine', 'ice-bucket', 'elevator-car', 'dumbbell-rack', 'pool-chaise', 'pool-rail', 'housekeeping-cart', 'room-door',
     'shelving-unit', 'floor-lamp', 'snake-plant', 'centerpiece', 'lattice-pendant'].map(s => 'hotel-' + s),
   ...['1990s-sedan', '1990s-suv', '1990s-pickup-truck', '1990s-minivan', '1990s-station-wagon', '1990s-hatchback', 'semi-truck', 'dumpster', 'utility-pole', 'street-light', 'vending-machine', 'fire-hydrant', 'traffic-cone', 'bollard', 'guard-rail'].map(s => 'g3-' + s),
+  ...STATION_PARTS,   // the travel stop across the interstate (station.js)
 ];
 // Decorative props nothing inspects after placing them (no traverse, bounds or named parts), outside room 212 (whose
 // clearance pass measures every prop). With stream: true these load after the first frame, nearest first.
 export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-04', 'ph-mid-century-lounge-chair', 'ph-bar-chair-round-01', 'ph-round-wooden-table-01',
   'ph-lifebuoy', 'ph-wetfloorsign-01', 'ph-wall-clock', 'ph-throw-pillows-01', 'ph-ottoman-01', 'ph-modern-coffee-table-01', 'ph-side-table-01',
   'ph-korean-fire-extinguisher-01', 'municipal-water-tower', 'g3-treadmill', 'g3-exercise-bike', 'g3-dumpster',
-  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'snake-plant', 'centerpiece', 'floor-lamp', 'luggage-cart', 'shelving-unit', 'lattice-pendant', 'drum-pendant', 'coffee-station', 'housekeeping-cart'].map(s => 'hotel-' + s)]);
+  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'snake-plant', 'centerpiece', 'floor-lamp', 'luggage-cart', 'shelving-unit', 'lattice-pendant', 'drum-pendant', 'coffee-station', 'housekeeping-cart'].map(s => 'hotel-' + s), ...STATION_PARTS]);
 const PBR = ['color', 'normal', 'roughness'];
 const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR };
 const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling' }; // Maira's Dream; ambientCG

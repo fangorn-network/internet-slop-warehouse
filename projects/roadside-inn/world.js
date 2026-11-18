@@ -4,12 +4,14 @@
 import * as T from 'three';
 import { economy } from './quality.js';
 import * as F from './fixtures.js';
+import { buildStation } from './station.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { Reflector } from 'three/addons/objects/Reflector.js';
 
 export const FLOOR2 = 3.2, CEIL = 2.95;
 
-// opts.outside: the lot, roads, highway and scenery; opts.people: staff and guests; opts.station: the placeholder truck stop
+// opts.outside: the lot, roads, highway and scenery; opts.people: staff and guests; opts.station: the Route 66 Travel Stop
+// across the interstate (station.js), a store you can walk into
 // across the interstate (remixes that build their own turn it off). All default on (the hotel game).
 export function buildWorld(scene, lib, game, { outside = true, people = true, station = true } = {}) {
   const colliders = [], surfaces = [], interact = [], updaters = [], lightAnchors = [], zones = [];
@@ -450,7 +452,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   loose(add(lib.model('ph-modern-coffee-table-01', { height: 0.4 }), -8.0, 0, 5.3), { density: 0.6 });
   loose(add(lib.model('ph-throw-pillows-01', { height: 0.3 }), -9.9, 0.45, 4.6, Math.PI / 2), { carry: true, shape: 'box', density: 0.1 });
   add(lib.model('ph-potted-plant-01', { height: 1.6 }), -11.4, 0, 8.4);
-  loose(add(lib.model('ph-potted-plant-04', { height: 0.3 }), -8.0, 0.4, 5.1), { carry: true, density: 0.6 });
+  loose(add(lib.model('ph-potted-plant-04', { height: 0.3 }), -8.0, 0.4, 5.1), { carry: true, shape: 'box', density: 0.6 });
   const rug = new T.Mesh(new T.CircleGeometry(2.3, 64), rugMaterial('leaves', [1, 1])); rug.rotation.x = -Math.PI / 2; rug.position.set(-8.2, 0.024, 5.3); scene.add(rug);
   solid(-10.2, -9.0, 0, 0.9, 3.9, 6.7); solid(-8.4, -7.6, 0, 0.5, 4.7, 5.9);
   light(-8, 2.6, 5, '#ffdcae', 9, 8);
@@ -538,7 +540,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     add(lib.model('hotel-shelving-unit', { origin: true, rotate: Math.PI / 2 }), -4.78, 0, -7.0); solid(-4.95, -4.55, 0, 2, -7.95, -6.05);
     add(lib.model('hotel-centerpiece', { origin: true }), -2, 0, 4.4); solid(-2.6, -1.4, 0, 1, 3.8, 5.0);
     for (const [x, z] of [[-10.35, 3.75], [-10.35, 6.85], [1.4, 3.45]]) { add(lib.model('hotel-floor-lamp', { origin: true }), x, 0, z); light(x, 1.5, z, '#ffcf8f', 3, 4); }
-    for (const [x, z] of [[-11.4, 0.4], [5.85, 1.6], [0.9, 8.4], [-4.6, -4.4], [-6.1, 8.4]]) { loose(add(lib.model('hotel-snake-plant', { origin: true }), x, 0, z), { carry: true, density: 0.5 }); solid(x - 0.2, x + 0.2, 0, 1, z - 0.2, z + 0.2); unboxed(); }
+    for (const [x, z] of [[-11.4, 0.4], [5.85, 1.6], [0.9, 8.4], [-4.6, -4.4], [-6.1, 8.4]]) { loose(add(lib.model('hotel-snake-plant', { origin: true }), x, 0, z), { carry: true, shape: 'box', density: 0.5 }); solid(x - 0.2, x + 0.2, 0, 1, z - 0.2, z + 0.2); unboxed(); }
     // Breakfast communal table with stools.
     const table = new T.Group();
     F.box(2.4, 0.05, 0.9, F.skin.wood, 0, 1.0, 0, table);
@@ -550,7 +552,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     loose(add(lib.model('hotel-accent-chair-green', { origin: true }), -9.2, 0, 1.0, -Math.PI * 0.75), { density: 0.5 });
     loose(add(lib.model('ph-side-table-01', { height: 0.5 }), -10.1, 0, 0.6), { carry: true, density: 0.4 });
     add(lib.model('hotel-table-lamp', { origin: true }), -10.1, 0.5, 0.6);
-    loose(add(lib.model('ph-potted-plant-04', { height: 0.32 }), -2.2, 1.05, -5.6), { carry: true, density: 0.6 });
+    loose(add(lib.model('ph-potted-plant-04', { height: 0.32 }), -2.2, 1.05, -5.6), { carry: true, shape: 'box', density: 0.6 });
     light(-10, 1.2, 1, '#ffcf8f', 3, 4);
   }
 
@@ -583,11 +585,11 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     // Blender rails reach toward -Z (three) into the water; rotate so they hang over each pool edge.
     for (const [x, z, ry] of [[-16.3, -6.2, Math.PI / 2], [-20.7, 2.4, -Math.PI / 2], [-13.1, 6.6, Math.PI / 2]]) add(lib.model('hotel-pool-rail', { origin: true, rotate: ry }), x, 0, z);
     for (let i = 0; i < 4; i++) { add(lib.model('hotel-pool-chaise', { origin: true, rotate: Math.PI / 2 }), -23.0, 0, -6 + i * 2.6); solid(-23.6, -22.4, 0, 0.6, -6.5 + i * 2.6, -5.5 + i * 2.6); }
-    for (const z of [6.5, 8]) loose(add(lib.model('ph-modern-arm-chair-01', { height: 0.85 }), -20 + (z - 6.5) * 2, 0, z, Math.PI), { density: 0.5 });
+    for (const z of [6.5, 8]) loose(add(lib.model('ph-modern-arm-chair-01', { height: 0.85 }), -20 + (z - 6.5) * 2, 0, z, Math.PI), { shape: 'box', density: 0.5 });   // a hull on its uneven legs rocks and walks
     loose(add(lib.model('ph-wetfloorsign-01', { height: 0.63 }), -15.4, 0, -4, 0.6), { carry: true, density: 0.25 });
     add(lib.model('ph-lifebuoy', { height: 0.8 }), -18.5, 1.6, -8.8);
     add(lib.model('ph-wall-clock', { height: 0.4 }), -12.15, 3.2, -6, -Math.PI / 2);
-    loose(add(lib.model('ph-potted-plant-04', { height: 0.35 }), -20, 0.45, 7.2), { carry: true, density: 0.6 });
+    loose(add(lib.model('ph-potted-plant-04', { height: 0.35 }), -20, 0.45, 7.2), { carry: true, shape: 'box', density: 0.6 });
     const rules = F.sign('POOL RULES\nNo lifeguard on duty · Swim at your own risk\nPool hours 6 AM – 10 PM · No diving\nChildren must be supervised · No glass', { w: 1.3, h: 0.9, bg: '#f6f6f2', fg: '#1d3557', font: '600 32px system-ui, sans-serif' });
     rules.position.set(-13.6, 1.7, -8.865); scene.add(rules);
     for (const [txt, x, z] of [['3 FT', -18.5, 3.1], ['5 FT', -18.5, -7.1], ['NO DIVING', -16.4, -2]]) {
@@ -1222,16 +1224,8 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     game.traffic = traffic;
     // The pole sign by the frontage road.
     add(F.poleSign('HEARTLAND\nINN EXPRESS'), 34, 0, 45, 0);
-    // Gas station and billboard across the interstate.
-    if (station) {
-    const station = new T.Group();
-    const store = mbox(16, 4.5, 10, F.mat('#cbbfa8')); store.position.set(0, 2.25, -6); station.add(store);
-    const canopy2 = mbox(18, 1, 10, F.mat('#f2f2f2')); canopy2.position.set(0, 5.4, 8); station.add(canopy2);
-    const stripe = new T.Mesh(new T.PlaneGeometry(18, 0.5), F.glow('#e63946', 1.4)); stripe.position.set(0, 5.4, 13.02); station.add(stripe);
-    for (const x of [-6, 0, 6]) { const p = mbox(0.4, 4.9, 0.4, F.mat('#ddd')); p.position.set(x, 2.45, 8); station.add(p); const pump = mbox(0.8, 1.6, 0.5, F.mat('#c1121f')); pump.position.set(x, 0.8, 8); station.add(pump); }
-    const ss = F.sign('ROUTE 66 TRAVEL STOP\nFUEL · FOOD · FIREWORKS', { w: 9, h: 1.6, bg: '#1d3557', fg: '#ffd166', font: 'bold 64px system-ui', emissive: 1.1 }); ss.position.set(0, 3.4, -0.98); station.add(ss);
-    station.position.set(-70, 0, 112); station.rotation.y = Math.PI; scene.add(station);
-    }
+    // The Route 66 Travel Stop across the interstate (station.js) and the billboard.
+    if (station) buildStation(scene, lib, game, { colliders, interact, lightAnchors, zones });
     flat(-95, -45, 98, 130, lib.surface('asphalt', { repeat: [8, 5], color: '#6a6a6a' }), 0.007);
     for (const [x, z] of [[-60, 126], [-76, 126.5]]) add(vehicle('g3-semi-truck', Math.PI / 2), x, 0, z);
     const bb = new T.Group();

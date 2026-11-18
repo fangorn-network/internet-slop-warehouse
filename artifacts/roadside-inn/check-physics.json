@@ -6,24 +6,24 @@
     },
     "chairFrom": [
       3.6,
-      0,
+      0.01,
       2.6
     ],
     "chairWalk": {
       "x": 3.6,
       "y": 0,
-      "z": 2.34
+      "z": 2.39
     },
     "chairTo": [
-      3.59,
-      0.17,
-      2.93
+      3.6,
+      0.1,
+      3.01
     ],
     "walker": {
       "p": [
         3.6,
         0,
-        2.34
+        2.39
       ],
       "hits": []
     },
@@ -38,16 +38,16 @@
     "signTo": [
       -15.72,
       0,
-      -8.43
+      -8.42
     ]
   },
   "errors": [],
   "shots": 0,
   "stats": {
-    "colliders": 396,
-    "interact": 81,
+    "colliders": 421,
+    "interact": 89,
     "drawCalls": 355,
-    "textures": 163,
+    "textures": 176,
     "programs": 57,
     "triangles": 1577898
   }
