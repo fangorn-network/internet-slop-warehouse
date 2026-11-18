@@ -42,7 +42,8 @@ if (mode !== 'mobile') {
     // Render explicitly before each capture; the visual audit uses the normal renderer.
     const render = __inn.renderer.render.bind(__inn.renderer);
     __inn.renderer.render = () => {};
-    __inn.forceRender = () => render(__inn.scene, __inn.camera);
+    // Put the real render back while capturing: three renders nested passes (transmission) through it.
+    __inn.forceRender = () => { const off = __inn.renderer.render; __inn.renderer.render = render; try { render(__inn.scene, __inn.camera); } finally { __inn.renderer.render = off; } };
   });
   if (mode === 'flow' && process.env.INN_FLOW_NO_CAPTURES) { await page.evaluate(() => { __inn.forceRender = () => {}; }); page.screenshot = async () => {}; }
   await page.evaluate(() => __inn.begin());
