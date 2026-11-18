@@ -36,19 +36,20 @@ export function createSound(foley) {
     o.connect(f).connect(g).connect(master); o.start();
     return g;
   }
-  function tone(freq, time = 0.15, vol = 0.1, type = 'sine', bend = 1, delay = 0) {
+  // dest: where the voice goes (default the master gain); remixes pass a panner to place it in the world.
+  function tone(freq, time = 0.15, vol = 0.1, type = 'sine', bend = 1, delay = 0, dest = master) {
     if (!ctx) return;
     const t0 = ctx.currentTime + delay, o = ctx.createOscillator(), g = ctx.createGain();
     o.type = type; o.frequency.setValueAtTime(freq, t0); o.frequency.exponentialRampToValueAtTime(Math.max(20, freq * bend), t0 + time);
     g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + time);
-    o.connect(g).connect(master); o.start(t0); o.stop(t0 + time + 0.05);
+    o.connect(g).connect(dest); o.start(t0); o.stop(t0 + time + 0.05);
   }
-  function burst(time = 0.2, vol = 0.2, freq = 1200, type = 'bandpass', delay = 0) {
+  function burst(time = 0.2, vol = 0.2, freq = 1200, type = 'bandpass', delay = 0, dest = master) {
     if (!ctx) return;
     const t0 = ctx.currentTime + delay, src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
     src.buffer = noise(Math.max(0.1, time)); f.type = type; f.frequency.value = freq;
     g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + time);
-    src.connect(f).connect(g).connect(master); src.start(t0);
+    src.connect(f).connect(g).connect(dest); src.start(t0);
   }
   const fade = (g, v) => g && g.gain.setTargetAtTime(muted ? 0 : v, ctx.currentTime, 0.4);
 
@@ -56,9 +57,10 @@ export function createSound(foley) {
     start,
     toggleMute() { muted = !muted; if (master) master.gain.value = muted ? 0 : 0.7; return muted; },
     // where: {zone, indoor, highwayDistance, elevatorMoving}
-    update({ zone, indoor, highwayDistance }) {
+    // roadLevel: 0..1 scale on the interstate bed (a remix can silence the road).
+    update({ zone, indoor, highwayDistance, roadLevel = 1 }) {
       if (!ctx) return;
-      const road = Math.min(0.5, 30 / Math.max(highwayDistance, 10)) * (indoor ? 0.12 : 1);
+      const road = Math.min(0.5, 30 / Math.max(highwayDistance, 10)) * (indoor ? 0.12 : 1) * roadLevel;
       fade(beds.highway, road);
       fade(beds.hvac, indoor ? (zone === 'room' ? 0.06 : 0.035) : 0);
       fade(beds.pool, zone === 'pool' ? 0.05 : 0);
@@ -86,5 +88,7 @@ export function createSound(foley) {
     bell() { tone(2637, 1.5, 0.1); tone(3520, 1.2, 0.04); },
     vend() { tone(120, 0.6, 0.06, 'sawtooth'); burst(0.2, 0.6, 180, 'lowpass', 1.1); },
     hum(on) { fade(beds.motor, on ? 0.03 : 0); },
+    // For remixes that add their own effects: the same synth voices, routed through the master gain and mute.
+    synth: { tone: (...a) => ctx && tone(...a), burst: (...a) => ctx && burst(...a), noise: s => noise(s), get ctx() { return ctx; }, get out() { return master; } },
   };
 }

@@ -1,0 +1,43 @@
+{
+  "flow": {
+    "deskPrompt": "ECheck in",
+    "key": true,
+    "callPrompt": "ECall elevator",
+    "panelPrompt": "EPress 2",
+    "rodeTo": 3.2,
+    "outOfCar": {
+      "x": 7.9,
+      "y": 3.2,
+      "z": -0.12
+    },
+    "doorPrompt": "ETap key card",
+    "inRoom": {
+      "z": 3.61,
+      "where": "Room 212"
+    },
+    "bedPrompt": "ELie down",
+    "sleep": true,
+    "wafflePrompt": "EMake a waffle",
+    "waffle": true,
+    "landing": {
+      "x": 10.1,
+      "y": 1.6,
+      "z": -7.7
+    },
+    "stairsTop": {
+      "x": 11.4,
+      "y": 3.2,
+      "z": 0.15
+    }
+  },
+  "errors": [],
+  "shots": 0,
+  "stats": {
+    "colliders": 396,
+    "interact": 56,
+    "drawCalls": 626,
+    "textures": 237,
+    "programs": 62,
+    "triangles": 1832156
+  }
+}

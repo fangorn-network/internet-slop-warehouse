@@ -4,6 +4,7 @@ import * as T from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { createPerson } from './people.js';
+import { economy } from './quality.js';
 
 const local = {
   'qt-thrift-casual': '../mairas-dream/assets/characters/casual.glb',
@@ -19,7 +20,9 @@ const local = {
   'g3-exercise-bike': './assets/g3-exercise-bike.glb',
   'municipal-water-tower': '../../parts/dead-air/water-tower.glb',
 };
-export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? local[id] ?? (id.startsWith('hotel-') ? `./assets/${id}.glb` : null) ?? (id.startsWith('g3-') ? `../../parts/grab3d/${id}.glb` : id.startsWith('acg-') ? `../../parts/acg/${id}.jpg` : `../../parts/haven/${id}.${ext}`);
+// Local paths are relative to this module (not the page), so remixes in other folders load the same files.
+const here = p => typeof location === 'undefined' ? p : new URL(p, import.meta.url).href;
+export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here(local[id] ?? (id.startsWith('hotel-') ? `./assets/${id}.glb` : null) ?? (id.startsWith('g3-') ? `../../parts/grab3d/${id}.glb` : id.startsWith('acg-') ? `../../parts/acg/${id}.jpg` : `../../parts/haven/${id}.${ext}`));
 
 const MODELS = [
   'rb-sophia-formal', 'rb-marcus-formal', 'rb-emma-casual', 'rb-andre-casual',
@@ -36,6 +39,12 @@ const MODELS = [
     'shelving-unit', 'floor-lamp', 'snake-plant', 'centerpiece', 'lattice-pendant'].map(s => 'hotel-' + s),
   ...['1990s-sedan', '1990s-suv', '1990s-pickup-truck', '1990s-minivan', '1990s-station-wagon', '1990s-hatchback', 'semi-truck', 'dumpster', 'utility-pole', 'street-light', 'vending-machine', 'fire-hydrant', 'traffic-cone', 'bollard', 'guard-rail'].map(s => 'g3-' + s),
 ];
+// Decorative props nothing inspects after placing them (no traverse, bounds or named parts), outside room 212 (whose
+// clearance pass measures every prop). With stream: true these load after the first frame, nearest first.
+export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-04', 'ph-mid-century-lounge-chair', 'ph-bar-chair-round-01', 'ph-round-wooden-table-01',
+  'ph-lifebuoy', 'ph-wetfloorsign-01', 'ph-wall-clock', 'ph-throw-pillows-01', 'ph-ottoman-01', 'ph-modern-coffee-table-01', 'ph-side-table-01',
+  'ph-korean-fire-extinguisher-01', 'municipal-water-tower', 'g3-treadmill', 'g3-exercise-bike', 'g3-dumpster',
+  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'snake-plant', 'centerpiece', 'floor-lamp', 'luggage-cart', 'shelving-unit', 'lattice-pendant', 'drum-pendant', 'coffee-station', 'housekeeping-cart'].map(s => 'hotel-' + s)]);
 const PBR = ['color', 'normal', 'roughness'];
 const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR };
 const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling' }; // Maira's Dream; ambientCG
@@ -44,15 +53,21 @@ const SKIES = { dusk: 'ph-hotel-dusk-sky', day: 'ph-hotel-farm-sky', interior: '
 export const PART_IDS = [...MODELS, ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => `ph-hotel-${k}-${r}`)),
   ...Object.values(STORE).flatMap(id => ['color', 'normal', 'roughness'].map(r => `${id}-${r}`)), ...Object.values(SKIES), 'kenney-thrift-foley'];
 
-export async function loadLibrary(onProgress = () => {}) {
+// opts.skies: the three HDRs (the hotel game's sky and reflections); opts.people: the Rocketbox staff and guests.
+// Hosts that bring their own sky and no staff (the heartland-hotel part) skip both: ~4 models and 3 HDRs less to hold.
+// opts.stream: load LAZY props after the first frame instead of before it (see lib.stream below).
+// opts.extra: more model part ids a remix brings (loaded and budgeted like the hotel's own).
+export async function loadLibrary(onProgress = () => {}, { skies: withSkies = true, people: withPeople = true, stream = false, extra = [] } = {}) {
+  const models_ = [...MODELS.filter(id => (withPeople || !id.startsWith('rb-')) && !(stream && LAZY.has(id))), ...extra];
   const gltf = new GLTFLoader(), tex = new T.TextureLoader();
-  const total = MODELS.length + Object.keys(SKIES).length + Object.values(SURFACES).flat().length + Object.keys(STORE).length * 3;
+  const total = models_.length + (withSkies ? Object.keys(SKIES).length : 0) + Object.values(SURFACES).flat().length + Object.keys(STORE).length * 3;
   let done = 0;
   const tick = () => onProgress(++done / total);
 
   const models = new Map(), maps = {};
   const loadMap = async (key, role, id) => {
     const t = await tex.loadAsync(url(id, 'jpg'));
+    if (economy) shrink(t, 512);
     t.wrapS = t.wrapT = T.RepeatWrapping;
     t.colorSpace = role === 'color' ? T.SRGBColorSpace : T.NoColorSpace;
     t.anisotropy = 8;
@@ -61,14 +76,14 @@ export async function loadLibrary(onProgress = () => {}) {
   };
   // ponytail: 4 parallel downloads, fine for desktop; add priority loading if mobile startup drags.
   const jobs = [
-    ...MODELS.map(id => async () => { models.set(id, await gltf.loadAsync(url(id))); tick(); }),
+    ...models_.map(id => async () => { const m = await gltf.loadAsync(url(id)); budget(m.scene, id); models.set(id, m); tick(); }),
     ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => () => loadMap(k, r, `ph-hotel-${k}-${r}`))),
     ...Object.entries(STORE).flatMap(([k, id]) => ['color', 'normal', 'roughness'].map(r => () => loadMap(k, r, `${id}-${r}`))),
   ];
   let next = 0;
   await Promise.all([0, 1, 2, 3].map(async () => { while (next < jobs.length) await jobs[next++](); }));
   const skies = {};
-  for (const [k, id] of Object.entries(SKIES)) {
+  for (const [k, id] of withSkies ? Object.entries(SKIES) : []) {
     skies[k] = await new RGBELoader().loadAsync(url(id, 'hdr'));
     skies[k].mapping = T.EquirectangularReflectionMapping;
     skies[k].sunDirection = brightest(skies[k]);
@@ -76,9 +91,11 @@ export async function loadLibrary(onProgress = () => {}) {
   }
   // Reflection maps must share one size: a different size changes every material's shader, and swapping
   // sky ↔ interior on the doorstep would recompile them all at once (the "entering the hotel" freeze).
-  const envWidth = skies.interior.image.width;
-  for (const k of ['dusk', 'day']) skies[k].env = resample(skies[k], envWidth);
-  skies.interior.env = skies.interior;
+  if (withSkies) {
+    const envWidth = skies.interior.image.width;
+    for (const k of ['dusk', 'day']) skies[k].env = resample(skies[k], envWidth);
+    skies.interior.env = skies.interior;
+  }
 
   // A textured standard material; repeat is in tiles per meter-ish, set per surface.
   // grade: a CSS filter applied to the color map once (e.g. whitewash a warm wood: 'saturate(30%) brightness(1.35)').
@@ -99,9 +116,16 @@ export async function loadLibrary(onProgress = () => {}) {
 
   // Clone a model, scaled so its largest box dimension along `axis` equals `size`, origin at floor center.
   // origin: true keeps the model's own origin (Blender assets are authored floor-centered, with hinge pivots).
-  function model(id, { height, width, rotate = 0, origin = false } = {}) {
+  function model(id, opts = {}) {
+    const g = new T.Group(); g.name = id;
+    g.userData.hotelProp = true;
     const src = models.get(id);
-    if (!src) throw Error(`model not loaded: ${id}`);
+    if (src) fill(g, src, opts);
+    else if (stream && LAZY.has(id)) { g.userData.visibilityRadius = 0; (pending.get(id) ?? pending.set(id, []).get(id)).push([g, opts]); }
+    else throw Error(`model not loaded: ${id}`);
+    return g;
+  }
+  function fill(g, src, { height, width, rotate = 0, origin = false } = {}) {
     const inner = src.scene.clone(true);
     inner.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
     inner.rotation.y = rotate;
@@ -110,19 +134,70 @@ export async function loadLibrary(onProgress = () => {}) {
     inner.scale.multiplyScalar(s);
     const c = box.getCenter(new T.Vector3());
     if (!origin) inner.position.set(-c.x * s, -box.min.y * s, -c.z * s);
-    const g = new T.Group(); g.name = id;
     g.add(inner);
-    g.userData.hotelProp = true;
     g.userData.visibilityRadius = Math.max(size.x, size.y, size.z) * s / 2;
-    return g;
+    return inner;
   }
+
+  // Streaming. Placeholders wait in `pending`; step() loads the model nearest the eye (one at a time, so a phone never
+  // decodes several at once), compiles its shaders off to the side, then drops it into every placeholder in one frame.
+  // near: skip props farther than this (a phone never downloads the gym if you never walk past it).
+  const pending = new Map(), at = new T.Vector3();
+  let loading = false;
+  async function step(eye, { renderer, camera, scene, near = Infinity } = {}) {
+    if (loading || !pending.size) return;
+    let best = null, bestD = near * near;
+    for (const [id, list] of pending) for (const [g] of list) { g.getWorldPosition(at); const d = at.distanceToSquared(eye); if (d < bestD) { bestD = d; best = id; } }
+    if (!best) return;
+    loading = true;
+    try {
+      const m = await gltf.loadAsync(url(best)); budget(m.scene, best); models.set(best, m);
+      const list = pending.get(best); pending.delete(best);
+      const staging = new T.Group(), inners = list.map(([g, opts]) => [g, fill(new T.Group(), m, opts)]);
+      for (const [, inner] of inners) staging.add(inner.parent);
+      if (renderer) await renderer.compileAsync(staging, camera, scene);
+      for (const [g, inner] of inners) { const r = inner.parent.userData.visibilityRadius; g.add(inner); g.userData.visibilityRadius = r; }
+    } catch (e) { console.warn('stream: could not load', best, e); }
+    finally { loading = false; }
+  }
+  const streaming = { step, get pending() { return pending.size; }, get busy() { return loading; } };
 
   const people = [];
   const person = (id, options) => { const p = createPerson(models.get(id), options); people.push(p); return p; };
 
   let foley = null;
   try { foley = await (await fetch(url('kenney-thrift-foley'))).json(); } catch { /* footsteps are optional */ }
-  return { models, maps, skies, surface, model, person, people, foley };
+  return { models, maps, skies, surface, model, person, people, foley, stream: streaming };
+}
+
+// Texture budget. Every prop ships 1K PBR maps; held at full size the hotel needs ~1.4 GB of texture memory, past what a
+// phone tab survives. Textures are capped by the model's real size (a 0.6 m extinguisher does not need 1024 px), and
+// small props on phones drop their normal/roughness maps. Runs before anything renders, so no shader recompiles later.
+const PX_PER_M = economy ? 192 : 512, MIN_PX = economy ? 64 : 128, MAX_PX = economy ? 512 : 1024;
+const DETAIL = ['normalMap', 'roughnessMap', 'metalnessMap', 'aoMap'];
+export function budget(root, id = '') {
+  const size = new T.Box3().setFromObject(root).getSize(new T.Vector3());
+  const meters = Math.max(size.x, size.y, size.z) || 1;
+  const big = id.startsWith('rb-') ? 2 : 1;   // faces read up close
+  const cap = Math.min(MAX_PX, Math.max(MIN_PX, 2 ** Math.round(Math.log2(meters * PX_PER_M * big))));
+  const done = new Set();
+  root.traverse(n => {
+    if (!n.isMesh) return;
+    for (const m of [].concat(n.material)) {
+      if (economy && meters < 1.2) for (const k of DETAIL) if (m[k]) { m[k] = null; m.needsUpdate = true; }
+      for (const k in m) { const t = m[k]; if (t?.isTexture && !done.has(t.source)) { done.add(t.source); shrink(t, cap); } }
+    }
+  });
+}
+// Downscale a texture's image in place (to a canvas) when it is larger than `cap` pixels on its long side.
+function shrink(t, cap) {
+  const img = t.image, w = img?.width, h = img?.height;
+  if (!w || Math.max(w, h) <= cap || t.isDataTexture) return;
+  const k = cap / Math.max(w, h), c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  img.close?.();
+  t.image = c; t.needsUpdate = true;
 }
 
 // Direction of the brightest texel of an equirectangular HDR (the sun), in three.js world space.

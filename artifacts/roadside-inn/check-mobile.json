@@ -1,0 +1,16 @@
+{
+  "flow": {
+    "mobileProfile": {
+      "economy": true,
+      "fps": 30,
+      "pixelRatio": 1,
+      "lights": 4,
+      "shadows": false,
+      "ratio": 1
+    },
+    "mobileMoved": 1.15
+  },
+  "errors": [],
+  "shots": 0,
+  "stats": null
+}

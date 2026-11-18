@@ -6,7 +6,7 @@
     "title": "Heartland Inn Express · a night off I-44",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0 AND MIT",
-    "description": "Realistic first-person walk through an interstate chain hotel in rural Missouri at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.",
+    "description": "Realistic first-person walk through an interstate chain hotel in rural Missouri at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Textured rigged human staff and guests, textured shower enclosure and cardio equipment, functional desk lamp, corrected wall-mounted art and signage, clear elevator shaft. Automatic mobile battery profile. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.",
     "tags": [
       "hotel",
       "first-person",
@@ -32,11 +32,14 @@
       "g3-1990s-suv",
       "g3-bollard",
       "g3-dumpster",
+      "g3-exercise-bike",
       "g3-fire-hydrant",
       "g3-guard-rail",
       "g3-semi-truck",
+      "g3-shower-cabin",
       "g3-street-light",
       "g3-traffic-cone",
+      "g3-treadmill",
       "g3-utility-pole",
       "g3-vending-machine",
       "hotel-accent-chair-green",
@@ -50,7 +53,6 @@
       "hotel-drum-pendant",
       "hotel-dumbbell-rack",
       "hotel-elevator-car",
-      "hotel-exercise-bike",
       "hotel-floor-lamp",
       "hotel-front-desk",
       "hotel-headboard",
@@ -72,8 +74,6 @@
       "hotel-snake-plant",
       "hotel-table-lamp",
       "hotel-toilet",
-      "hotel-treadmill",
-      "hotel-tub-shower",
       "hotel-vanity",
       "kenney-thrift-foley",
       "municipal-water-tower",
@@ -129,7 +129,11 @@
       "ph-store-floor-roughness",
       "ph-throw-pillows-01",
       "ph-wall-clock",
-      "ph-wetfloorsign-01"
+      "ph-wetfloorsign-01",
+      "rb-andre-casual",
+      "rb-emma-casual",
+      "rb-marcus-formal",
+      "rb-sophia-formal"
     ]
   }
 ]

@@ -48,6 +48,7 @@ const game = {
   event(name) {
     if (name === 'room-open' && !game.has('room-found')) { bag.push('room-found'); setGoal('Make yourself at home. Explore the pool, the pantry and the lot — lie down on the bed when you’re done.'); }
     if (name === 'sleep') sleep();
+    if (name === 'fire-plan') openPanel(`<h2>Fire evacuation plan</h2><img alt="Floor 2 evacuation plan: exit by stair A" style="width:100%;border-radius:4px" src="${world.room.plan.image.toDataURL()}"><button id="closePanel">Close</button>`);
   },
   checkIn, vend,
 };
@@ -272,7 +273,7 @@ addEventListener('keydown', e => {
 
 // ---------- loop ----------
 const clock = new T.Clock();
-let lightClock = 0, elapsed = 0;
+let adapt = 0, lightClock = 0, elapsed = 0;
 let lastFrame = -Infinity;
 function frame(now = performance.now()) {
   requestAnimationFrame(frame);
@@ -289,7 +290,7 @@ function frame(now = performance.now()) {
   lightClock -= dt;
   if (lightClock <= 0) {
     lightClock = 0.2;
-    const ranked = world.lightAnchors.filter(a => a.intensity > 0).map(a => [a, a.pos.distanceToSquared(camera.position)]).sort((p, q) => p[1] - q[1]);
+    const ranked = world.lightAnchors.filter(a => a.intensity > 0 && (!world.lightVisible || world.lightVisible(a, camera.position))).map(a => [a, a.pos.distanceToSquared(camera.position)]).sort((p, q) => p[1] - q[1]);
     lamps.forEach((l, i) => { const a = ranked[i]?.[0]; l.intensity = a ? a.intensity : 0; if (a) { l.position.copy(a.pos); l.color.copy(a.color); l.distance = a.distance; } });
   }
   focus = started && !panelOpen && !busy ? pick() : null;
@@ -310,7 +311,18 @@ function frame(now = performance.now()) {
   }
   // Indoors, reflections come from a real hotel-room HDRI; outdoors, from the sky.
   const env = zone ? lib.skies.interior.env : lib.skies[timeOfDay].env;
-  if (scene.environment !== env) { scene.environment = env; scene.environmentIntensity = zone ? LOOKS[timeOfDay].envIndoor : LOOKS[timeOfDay].env; }
+  if (scene.environment !== env) scene.environment = env;
+  // Reflections come from a photo of a lit room: in a dark 212 they would light it like a lamp nobody can switch off.
+  const dark = zone?.name === 'room' && !world.room.lit();
+  // The open door lets the hall in: reflections relax toward normal as it opens (they are global, and the hall needs them).
+  const door = Math.min(1, world.room.angle / 1.2), darkEnv = (timeOfDay === 'day' && world.room.drapes > 0.5 ? 0.35 : 0.06) * (1 - door) + 0.5 * door;
+  scene.environmentIntensity = !zone ? LOOKS[timeOfDay].env : LOOKS[timeOfDay].envIndoor * (dark ? darkEnv : 1);
+  hemi.intensity = LOOKS[timeOfDay].hemi * (dark ? 0.2 + 0.5 * door : 1);
+  // Eye adaptation: after a while in a dark room your eyes open up, and a lit hallway glares.
+  adapt += ((dark ? 1 : 0) - adapt) * Math.min(1, dt / (dark ? 4 : 1.2));
+  renderer.toneMappingExposure = LOOKS[timeOfDay].exposure * (1 + 0.7 * adapt);
+  // Without shadow maps (phones) the sun would shine straight through walls: indoors, it doesn't shine at all.
+  sun.intensity = LOW && zone ? 0 : LOOKS[timeOfDay].sunI;
   $('where').textContent = zone ? (zone.name === 'room' ? 'Room 212' : zone.name) + (player.y > 2.5 && zone.name !== 'room' ? ' · floor 2' : '') : 'outside';
   sound.update({ zone: zone?.name, indoor: !!zone, highwayDistance: Math.abs(player.z - 75) });
   renderer.render(scene, camera);

@@ -9,7 +9,9 @@ import { Reflector } from 'three/addons/objects/Reflector.js';
 
 export const FLOOR2 = 3.2, CEIL = 2.95;
 
-export function buildWorld(scene, lib, game) {
+// opts.outside: the lot, roads, highway and scenery; opts.people: staff and guests; opts.station: the placeholder truck stop
+// across the interstate (remixes that build their own turn it off). All default on (the hotel game).
+export function buildWorld(scene, lib, game, { outside = true, people = true, station = true } = {}) {
   const colliders = [], surfaces = [], interact = [], updaters = [], lightAnchors = [], zones = [];
   const add = (o, x = 0, y = 0, z = 0, ry = 0) => { o.position.set(x, y, z); o.rotation.y = ry; scene.add(o); return o; };
   const solid = (x0, x1, y0, y1, z0, z1, on) => colliders.push({ x0: Math.min(x0, x1), x1: Math.max(x0, x1), y0, y1, z0: Math.min(z0, z1), z1: Math.max(z0, z1), on });
@@ -21,11 +23,12 @@ export function buildWorld(scene, lib, game) {
   // ---------- materials ----------
   // Painted walls share Poly Haven plaster detail (normal + roughness) under a flat paint color.
   const plaster = color => lib.surface('wall-plaster', { repeat: [1, 1], color, normalScale: 0.18 });
-  const paint = plaster('#e9e4da');
+  const paint = plaster('#dccfb7');   // warm greige, as in the interstate Holiday Inn references
   const corridorPaint = plaster('#d8d0c0');
   const roomAccent = plaster('#a66d50');
   const poolPaint = plaster('#9fd0de');
-  const ceiling = lib.surface('ceiling', { repeat: [1 / 3.66, 1 / 3.66] });     // ambientCG 2×2 ft acoustic tile
+  // ambientCG 2×2 ft acoustic tile, lifted to the bright white of every reference photo (it rendered a muddy grey-brown).
+  const ceiling = lib.surface('ceiling', { repeat: [1 / 3.66, 1 / 3.66], grade: 'saturate(15%) brightness(1.45) contrast(0.85)' });
   const drywall = F.mat('#f4f3ef', { roughness: 0.95 });
   F.skin.wood = lib.surface('walnut', { repeat: [1, 1], color: '#c9a27e', roughness: 0.9 });
   const charcoal = F.mat('#3f444b', { roughness: 0.8 });
@@ -34,13 +37,42 @@ export function buildWorld(scene, lib, game) {
   const stone = lib.surface('stone-facade', { repeat: [0.5, 0.5] });
   const parquet = lib.surface('parquet', { repeat: [0.4, 0.4], grade: 'saturate(20%) brightness(1.3) contrast(0.95)', color: '#a9b8c9' });   // cool blue-grey herringbone
   const carpet = patternedCarpet();
-  const roomCarpet = lib.surface('carpet', { repeat: [0.8, 0.8], color: '#a59a8b' });
+  const roomCarpet = stripedCarpet();   // linear-stripe guest-room carpet (reference room photos)
   const tile = lib.surface('bath-tile', { repeat: [1.2, 0.8], color: '#e6dccb' });             // pool deck: beige rectangular tile
   const bathFloor = lib.surface('bath-tile', { repeat: [1.6, 1.6], color: '#9a9fa6' });     // bathroom: grey porcelain
   const poolTile = lib.surface('pool-tile', { repeat: [1, 1], color: '#a9dcec' });
   const asphalt = lib.surface('asphalt', { repeat: [0.12, 0.12], color: '#7a7a7a' });
   const lawn = lib.surface('lawn', { repeat: [0.25, 0.25], color: '#9aa874' });
   const concrete = lib.surface('concrete', { repeat: [0.4, 0.4], color: '#d8d4cc' });
+
+  // Guest-room carpet: the long linear stripe of the reference rooms, greys and taupes, over Poly Haven wool.
+  function stripedCarpet() {
+    const tex = F.canvasTexture(512, 512, (g, w, h) => {
+      g.fillStyle = '#8f877c'; g.fillRect(0, 0, w, h);
+      const tones = ['#7a7267', '#a39a8c', '#6b655d', '#b5ac9d', '#857d72', '#5e5953', '#9c9385'];
+      for (let x = 0, i = 0; x < w; i++) { const sw = 3 + ((i * 37) % 11); g.fillStyle = tones[(i * 5) % tones.length]; g.fillRect(x, 0, sw, h); x += sw; }
+      for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${Math.random() < 0.5 ? '255,255,255' : '0,0,0'},${Math.random() * 0.06})`; g.fillRect(Math.random() * w, Math.random() * h, 1, 3); }
+    });
+    tex.wrapS = tex.wrapT = T.RepeatWrapping; tex.repeat.set(1 / 1.2, 1 / 1.2);
+    const pile = lib.surface('carpet', { repeat: [0.8, 0.8] });
+    return new T.MeshStandardMaterial({ map: tex, normalMap: pile.normalMap, roughnessMap: pile.roughnessMap, roughness: 1 });
+  }
+
+  // Lobby floor: polished 24-inch beige porcelain, slightly varied tile to tile, with Poly Haven floor-tile relief.
+  function lobbyTile() {
+    const tex = F.canvasTexture(1024, 1024, (g, w, h) => {
+      const n = 4, s = w / n;
+      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+        const k = (i * 7 + j * 13) % 5; g.fillStyle = ['#e7dcc8', '#e3d7c1', '#e9dfcc', '#e1d4be', '#e5d9c4'][k]; g.fillRect(i * s, j * s, s, s);
+        for (let q = 0; q < 160; q++) { g.fillStyle = `rgba(120,95,70,${Math.random() * 0.05})`; g.beginPath(); g.ellipse(i * s + Math.random() * s, j * s + Math.random() * s, 2 + Math.random() * 10, 1 + Math.random() * 4, Math.random() * 3, 0, 7); g.fill(); }
+      }
+      g.strokeStyle = '#b9ab95'; g.lineWidth = 4;
+      for (let i = 0; i <= n; i++) { g.beginPath(); g.moveTo(i * s, 0); g.lineTo(i * s, h); g.moveTo(0, i * s); g.lineTo(w, i * s); g.stroke(); }
+    });
+    tex.wrapS = tex.wrapT = T.RepeatWrapping; tex.repeat.set(1 / 2.44, 1 / 2.44);   // four 0.61 m tiles per texture
+    const relief = lib.surface('tile', { repeat: [1 / 2.44, 1 / 2.44] });
+    return new T.MeshStandardMaterial({ map: tex, normalMap: relief.normalMap, normalScale: new T.Vector2(0.25, 0.25), roughness: 0.32 });
+  }
 
   // Original hotel corridor carpet: navy field, teal lattice, gold medallions; Poly Haven wool for the pile.
   function patternedCarpet() {
@@ -218,7 +250,15 @@ export function buildWorld(scene, lib, game) {
   }
 
   // ---------- floor 1 slabs and ceilings ----------
-  slab(-12, 6.5, -9, 9, 0.01, parquet);                         // lobby
+  slab(-12, 6.5, -9, 9, 0.01, lobbyTile());                     // lobby: 24" beige porcelain (reference lobby 1)
+  {
+    // Dark tile bands: a border inset from the walls and a runner from the doors to the desk, as in the reference.
+    const band = F.mat('#5a4434', { roughness: 0.3 }), y = 0.0115;
+    const strip = (x0, x1, z0, z1) => { const m = new T.Mesh(new T.PlaneGeometry(x1 - x0, z1 - z0), band); m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, y, (z0 + z1) / 2); m.receiveShadow = true; statics.push(m); scene.add(m); };
+    for (const z of [-7.6, 7.6]) strip(-10.8, 5.2, z - 0.15, z + 0.15);
+    for (const x of [-10.8, 5.2]) strip(x - 0.15, x + 0.15, -7.6, 7.6);
+    strip(-2.95, -2.65, -2.2, 7.6); strip(-1.15, -0.85, -2.2, 7.6); strip(-8.4, -0.85, -2.35, -2.05);
+  }
   slab(6.5, 30, -1, 1, 0.01, carpet);                           // corridor F1
   slabWithHoles(6.5, 12, -9, -1, 0.01, concrete, [[6.5, 9, -4.5, -1]]);                        // core
   slab(12, 18, -9, -1, 0.01, lib.surface('gym-rubber', { repeat: [0.5, 0.5], color: '#9a9a9a' }));
@@ -291,6 +331,7 @@ export function buildWorld(scene, lib, game) {
   const lobbySign = F.sign('Heartland Inn', { w: 2.2, h: 0.5, bg: '#f4f1ea', fg: '#1d4f8f', font: 'bold 96px Georgia, serif' });
   lobbySign.position.set(-8.5, 2.0, -4.835); scene.add(lobbySign);
   wall('z', -12, -9, 9, 0, 4.4, poolPaint, { holes: [door(-3, -1.8), win(0.5, 8, 0.9, 2.4)] });
+  wall('z', -11.92, -9, 9, 0, CEIL, paint, { t: 0.01, collide: false, holes: [door(-3, -1.8), win(0.5, 8, 0.9, 2.4)] });   // lobby face: warm paint, not pool blue
   wall('z', 6.5, -9, -1, 0, CEIL, paint);
   wall('z', 6.5, 1, 9, 0, CEIL, roomAccent);
   // Glass in the pool wall openings.
@@ -389,7 +430,9 @@ export function buildWorld(scene, lib, game) {
   zone('corridor', -12, 30, 3, 6.5, -9, 9);
 
   // ---------- lobby furnishing ----------
-  add(lib.model('hotel-front-desk', { origin: true }), -8.4, 0, -3.3);
+  const desk = add(lib.model('hotel-front-desk', { origin: true }), -8.4, 0, -3.3);
+  { let wood = null; desk.traverse(n => { if (n.isMesh && n.material.name === 'walnut') wood = n.material; });
+    if (wood) desk.traverse(n => { if (n.isMesh && n.material.name === 'white_paint') n.material = wood; }); }
   solid(-10.75, -6.05, 0, 1.2, -3.95, -2.9);
   solid(-6.05, -5, 0, 1.2, -4.95, -2.9);                     // keep guests out from behind the desk
   solid(-12, -10.75, 0, 1.2, -4.95, -2.9);
@@ -397,7 +440,8 @@ export function buildWorld(scene, lib, game) {
   for (const [x, z] of [[-2, 4.4], [-3.6, -2.2]]) add(lib.model('hotel-lattice-pendant', { origin: true }), x, CEIL - 1.53, z);
   light(-2.5, 2.6, 0, '#ffe0b0', 12, 10);
   // West seating: sectional, lounge chairs, coffee table, plants.
-  add(lib.model('hotel-lobby-sofa', { origin: true }), -9.7, 0, 5.3, Math.PI / 2);
+  const lime = sofa => { sofa.traverse(n => { if (n.isMesh && n.material.name === 'beige_fabric') { n.material = n.material.clone(); n.material.color.set('#8f9a34'); } }); return sofa; };
+  add(lime(lib.model('hotel-lobby-sofa', { origin: true })), -9.7, 0, 5.3, Math.PI / 2);
   add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 3.6, -Math.PI * 0.75);
   add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 7.0, -Math.PI * 0.25);
   add(lib.model('ph-modern-coffee-table-01', { height: 0.4 }), -8.0, 0, 5.3);
@@ -470,8 +514,19 @@ export function buildWorld(scene, lib, game) {
     for (const x of [-5.2, 1.2]) {
       const c = mbox(0.55, CEIL, 0.55, F.skin.wood); c.position.set(x, CEIL / 2, 2.2); scene.add(c);
       solid(x - 0.28, x + 0.28, 0, CEIL, 1.92, 2.48);
-      for (const [dx, dz] of [[-0.28, -0.28], [0.28, -0.28], [-0.28, 0.28], [0.28, 0.28]]) F.box(0.02, CEIL - 0.3, 0.02, F.glow('#3a7bff', 2.2), x + dx, 0.15, 2.2 + dz, scene);
+      F.box(0.6, 0.12, 0.6, charcoal, x, 0, 2.2, scene); F.box(0.6, 0.08, 0.6, charcoal, x, CEIL - 0.08, 2.2, scene);
     }
+    // Recessed downlights in a grid across the lobby ceiling (reference lobby 1): one instanced draw call.
+    {
+      const spots = [];
+      for (let x = -10.8; x <= 5.6; x += 1.8) for (let z = -7.8; z <= 7.8; z += 1.8) if (!(x > 1.2 && x < 6 && z > 2.9 && z < 7.1)) spots.push([x, z]);
+      const can = new T.InstancedMesh(new T.CircleGeometry(0.075, 16), F.glow('#fff1d6', 2.4), spots.length);
+      spots.forEach(([x, z], i) => { dm.position.set(x, CEIL - 0.004, z); dm.rotation.set(Math.PI / 2, 0, 0); dm.scale.set(1, 1, 1); dm.updateMatrix(); can.setMatrixAt(i, dm.matrix); });
+      scene.add(can);
+    }
+    // Red lacquer panel framed in walnut behind the coffee bar (the reference's red coffee-bar wall).
+    { const panel = new T.Mesh(new T.PlaneGeometry(3.4, 1.35), redPanel); panel.position.set(3.4, 1.62, -8.885); scene.add(panel);
+      for (const [w, h, x, y] of [[3.56, 0.08, 3.4, 2.3], [3.56, 0.08, 3.4, 0.94], [0.08, 1.44, 1.66, 1.62], [0.08, 1.44, 5.14, 1.62]]) F.box(w, h, 0.03, F.skin.wood, x, y - h / 2, -8.875, scene); }
     // Framed abstract prints.
     painting(6.395, 1.75, 2.3, -Math.PI / 2, 0.9, 0.7, 1);
     painting(6.395, 1.75, 7.7, -Math.PI / 2, 0.9, 0.7, 2);
@@ -558,7 +613,17 @@ export function buildWorld(scene, lib, game) {
   for (const x of [13.2, 14.6]) add(lib.model('g3-treadmill', { width: 1.85, rotate: Math.PI / 2 }), x, 0, -6.4);
   add(lib.model('g3-exercise-bike', { height: 1.15, rotate: Math.PI / 2 }), 16.4, 0, -6.5);
   add(lib.model('hotel-dumbbell-rack', { origin: true }), 15.0, 0, -8.6);
-  const mirror = new T.Mesh(new T.PlaneGeometry(5.6, 2), F.mat('#cfd7dc', { metalness: 1, roughness: 0.05 })); mirror.position.set(15, 1.3, -8.84); scene.add(mirror);
+  // Gym mirror: a chrome plane reflects the environment map (a photo of another room, or the sky), so it showed the wrong
+  // room. Desktop renders a real reflection while you stand where you can see it; phones get a dim mirror with no reflection.
+  {
+    const dim = new T.Mesh(new T.PlaneGeometry(5.6, 2), F.mat('#5d6266', { metalness: 0, roughness: 0.35 }));
+    dim.material.envMapIntensity = 0; dim.position.set(15, 1.3, -8.84); scene.add(dim);
+    if (!economy) {
+      const real = new Reflector(new T.PlaneGeometry(5.6, 2), { textureWidth: 768, textureHeight: 274, color: 0xb8bcbf, clipBias: 0.003 });
+      real.position.set(15, 1.3, -8.83); real.visible = false; scene.add(real);
+      updaters.push((dt, t, p) => { real.visible = p.y < 2.5 && p.x > 9 && p.x < 21 && p.z > -9 && p.z < 2; dim.visible = !real.visible; });
+    }
+  }
   const gymTV = F.flatTV(1.1); add(gymTV.group, 17.85, 2.1, -5, -Math.PI / 2);
   const gymSign = F.sign('FITNESS CENTER\n5 AM – 11 PM · Room key required', { w: 1.2, h: 0.36, bg: '#24303f', font: 'bold 44px system-ui, sans-serif' });
   gymSign.position.set(14.5, 2.75, -0.885); scene.add(gymSign);
@@ -710,7 +775,8 @@ export function buildWorld(scene, lib, game) {
     // Entry door from the corridor (hinge on the west side, opens into the room).
     const d = openableDoor('212');
     d.group.position.set(R.x0 + 0.9, y, 1); d.group.rotation.y = Math.PI; scene.add(d.group);
-    const st = { angle: 0, open: false, timer: 0, lamps: true, bath: true, drapes: 1, tv: null };
+    const st = { angle: 0, open: false, timer: 0, lamps: true, bath: true, desk: true, drapes: 1, tv: null };
+    st.lit = () => st.lamps || st.bath || st.desk;
     solid(R.x0 + 0.4, R.x0 + 1.4, y, y + 2.2, 0.92, 1.08, () => st.angle < 1.1);
     interact.push({ pos: new T.Vector3(R.x0 + 0.9, y + 1.1, 0.75), r: 1.3, when: p => p.z < 1, label: () => st.open ? 'Door' : game.has('key card') ? 'Tap key card' : 'Room 212',
       use: () => {
@@ -720,7 +786,11 @@ export function buildWorld(scene, lib, game) {
         st.open = true; st.timer = 7; game.event('room-open');
       } });
     interact.push({ pos: new T.Vector3(R.x0 + 0.9, y + 1.1, 1.5), r: 1.0, when: p => p.z > 1, label: () => st.open ? 'Close door' : 'Open door', use: () => { st.open = !st.open; st.timer = st.open ? 7 : 0; } });
+    // Hall light through the open door: a spill just inside the doorway, as bright as the door is open.
+    const spill = { pos: new T.Vector3(R.x0 + 0.9, y + 1.9, 1.5), color: new T.Color('#fff2dc'), intensity: 0, distance: 6 };
+    lightAnchors.push(spill);
     updaters.push((dt, t, player) => {
+      spill.intensity = 7 * Math.min(1, st.angle / 1.2);
       const inDoorway = Math.abs(player.y - y) < 1 && player.x > R.x0 + 0.3 && player.x < R.x0 + 1.5 && player.z > 0.5 && player.z < 2.2;
       if (st.open) { st.timer -= dt; if (st.timer < 0 && !inDoorway) { st.open = false; game.sound.thud(); } }
       const target = st.open ? 1.45 : 0;
@@ -744,6 +814,8 @@ export function buildWorld(scene, lib, game) {
     });
     const planMesh = new T.Mesh(new T.PlaneGeometry(0.34, 0.24), new T.MeshStandardMaterial({ map: plan, roughness: 0.6 }));
     planMesh.position.set(0.5, 1.45, -0.026); planMesh.rotation.y = Math.PI; d.leaf.add(planMesh);
+    st.leaf = d.leaf; st.plan = plan;   // remixes hang things on the door and redraw the plan
+    interact.push({ pos: new T.Vector3(R.x0 + 0.4, y + 1.45, 1.12), r: 0.9, when: p => p.z > 1 && st.angle < 0.1, label: () => 'Read the fire evacuation plan', use: () => game.event('fire-plan') });
     // Do Not Disturb hanger on the corridor-side handle.
     const dnd = F.sign('PLEASE\nDO NOT\nDISTURB', { w: 0.1, h: 0.24, bg: '#b3141a', font: 'bold 60px system-ui, sans-serif' });
     dnd.position.set(0.88, 0.8, 0.07); dnd.visible = false; d.leaf.add(dnd);
@@ -768,7 +840,8 @@ export function buildWorld(scene, lib, game) {
     solid(15.36, 16.36, y, y + 2.1, 2.99, 3.99);
     const bathLight = { pos: new T.Vector3(15.2, y + 2.5, 2.5), color: new T.Color('#fff6ea'), intensity: 6, distance: 5 };
     lightAnchors.push(bathLight);
-    interact.push({ pos: new T.Vector3(13.95, y + 1.3, 2.4), r: 1.2, label: () => `Bathroom light ${st.bath ? 'off' : 'on'}`, use: () => { st.bath = !st.bath; bathLight.intensity = st.bath ? 6 : 0; game.sound.click(); } });
+    interact.push({ pos: new T.Vector3(13.95, y + 1.3, 2.4), r: 1.2, label: () => `Bathroom light ${st.bath ? 'off' : 'on'}`, use: () => { st.setBath(!st.bath); game.sound.click(); } });
+    st.setBath = on => { st.bath = on; bathLight.intensity = on ? 6 : 0; };
     interact.push({ pos: new T.Vector3(15.0, y + 1.0, 1.6), r: 1.0, label: () => 'Wash your hands', use: () => { game.sound.water(); game.say('Hot water takes a while, then arrives all at once.'); } });
 
     // Closet with luggage bench and the ice bucket.
@@ -802,8 +875,9 @@ export function buildWorld(scene, lib, game) {
     const bedLights = [5.05, 8.15].map(z => ({ pos: new T.Vector3(R.x1 - 0.4, y + 1.1, z), color: new T.Color('#ffe0b5'), intensity: 1.8, distance: 4.5 }));
     const roomLight = { pos: new T.Vector3(14.2, y + 2.6, 6.5), color: new T.Color('#ffe9d0'), intensity: 3.5, distance: 7 };
     lightAnchors.push(...bedLights, roomLight);
-    const setLamps = on => { st.lamps = on; lamps.forEach(l => (l.userData.shade.material.emissiveIntensity = on ? 0.8 : 0)); bedLights.forEach(b => (b.intensity = on ? 1.8 : 0)); roomLight.intensity = on ? 3.5 : 0.4; };
+    const setLamps = on => { st.lamps = on; lamps.forEach(l => (l.userData.shade.material.emissiveIntensity = on ? 0.8 : 0)); bedLights.forEach(b => (b.intensity = on ? 1.8 : 0)); roomLight.intensity = on ? 3.5 : 0; };
     setLamps(true);
+    st.setLamps = setLamps;
     interact.push({ pos: new T.Vector3(R.x1 - 0.3, y + 0.9, 5.05), r: 1.3, label: () => `Lamps ${st.lamps ? 'off' : 'on'}`, use: () => { setLamps(!st.lamps); game.sound.click(); } });
     interact.push({ pos: new T.Vector3(R.x1 - 1.4, y + 0.6, 6.6), r: 1.6, label: () => 'Lie down', use: () => game.event('sleep') });
     // Credenza + TV on the west wall, desk by the window, armchair, PTAC, window with drapes.
@@ -825,14 +899,14 @@ export function buildWorld(scene, lib, game) {
     const deskBulb = { pos: new T.Vector3(deskLamp.position.x, y + 1.25, 8.0), color: new T.Color('#ffe0b0'), intensity: 1.8, distance: 3.5 };
     lightAnchors.push(deskBulb);
     let deskLampOn = true;
+    st.setDesk = on => { deskLampOn = st.desk = on; deskBulb.intensity = on ? 1.8 : 0; lampMaterials.forEach(m => m.emissiveIntensity = on ? 0.6 : 0); };
     const lampMaterials = [];
     deskLamp.traverse(n => { if (n.isMesh) {
       n.material = n.material.clone();
       if (/bulb|light|emiss/i.test(n.material.name)) { n.material.emissive.set('#ffd39a'); n.material.emissiveIntensity = 0.6; lampMaterials.push(n.material); }
     } });
     interact.push({ pos: new T.Vector3(deskLamp.position.x + 0.2, y + 1, 8.0), r: 1.25, label: () => `Desk lamp ${deskLampOn ? 'off' : 'on'}`, use: () => {
-      deskLampOn = !deskLampOn; deskBulb.intensity = deskLampOn ? 1.8 : 0;
-      lampMaterials.forEach(m => m.emissiveIntensity = deskLampOn ? 0.6 : 0); game.sound.click();
+      st.setDesk(!deskLampOn); game.sound.click();
     } }); solid(R.x0, R.x0 + 0.71, y, y + 0.81, 7.72, 8.83);
     add(lib.model('ph-modern-arm-chair-01', { height: 0.88 }), R.x0 + 1.15, y, 8.1, -Math.PI / 2);
     add(lib.model('hotel-accent-chair-mustard', { origin: true }), R.x1 - 1.27, y, 8.3, -Math.PI / 2); solid(14.8, 15.66, y, y + 0.8, 7.89, 8.71);   // clear of nightstand and drapes   // window corner, clear of the nightstand
@@ -866,7 +940,8 @@ export function buildWorld(scene, lib, game) {
     const tex = F.canvasTexture(512, 288, (g, w, h) => { g.fillStyle = '#000'; g.fillRect(0, 0, w, h); });
     screen.material = new T.MeshBasicMaterial({ map: tex, color: '#000000' });
     const st = { on: !interactive, channel, last: 0 };
-    const channels = [weather, news, info, ballgame];
+    // Shared by every set: remixes add channels with game.tvChannels.push((g, w, h, t) => …).
+    const channels = game.tvChannels ??= [weather, news, info, ballgame];
     if (!interactive) screen.material.color.set('#ffffff');
     if (interactive) interact.push({ pos: new T.Vector3(x, y, z), r: 2.4, label: () => st.on ? (st.channel === channels.length - 1 ? 'Turn TV off' : 'Change channel') : 'Turn TV on',
       use: () => {
@@ -877,7 +952,7 @@ export function buildWorld(scene, lib, game) {
       } });
     function draw(t) { if (st.on) tex.redraw((g, w, h) => channels[st.channel](g, w, h, t)); }
     updaters.push((dt, t, player) => { if (st.on && t - st.last > 0.12 && player.pos.distanceTo(screen.getWorldPosition(new T.Vector3())) < 14) { st.last = t; draw(t); } });
-    game.tvs.push({ st, where });
+    game.tvs.push({ st, where, screen, draw });
     return st;
   }
   function header(g, w, label, color) { g.fillStyle = color; g.fillRect(0, 0, w, 40); g.fillStyle = '#fff'; g.font = 'bold 24px system-ui'; g.textAlign = 'left'; g.fillText(label, 14, 28); }
@@ -930,12 +1005,15 @@ export function buildWorld(scene, lib, game) {
     use: () => { if (!game.has('coffee')) { game.sound.pour(); game.give('coffee'); game.say('Decaf, regular, or “bold.” You pick bold. It is lukewarm.'); } else if (!game.has('cookie')) { game.give('cookie'); game.say('A plastic-wrapped chocolate chip cookie. Complimentary.'); } else game.say('Let’s not get greedy.'); } });
 
   // ---------- staff and guests ----------
-  const clerk = lib.person('rb-sophia-formal', { tint: '#1d4f8f' });
+  let clerk = null;
+  if (people) {
+  clerk = lib.person('rb-sophia-formal', { tint: '#1d4f8f' });
   add(clerk.root, -7.65, 0, -4.1, 0);
   updaters.push(dt => clerk.update(dt));
   interact.push({ pos: new T.Vector3(-8.4, 1.2, -2.6), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
   const ringBell = { pos: new T.Vector3(-9.0, 1.2, -2.7), r: 0.7, label: () => 'Ring the bell', use: () => { game.sound.bell(); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } };
   interact.push(ringBell);
+  }
 
   const walkers = [];
   function walker(id, tint, path, { speed = 1.1, pause = 2, cartObj = null, say = null } = {}) {
@@ -946,6 +1024,7 @@ export function buildWorld(scene, lib, game) {
     walkers.push(w);
     return w;
   }
+  if (people) {
   const hkCart = lib.model('hotel-housekeeping-cart', { origin: true }); scene.add(hkCart);
   walker('rb-emma-casual', '#7a8b99', [[-10, FLOOR2, -0.2], [27, FLOOR2, -0.2]], { speed: 0.7, pause: 6, cartObj: hkCart, say: '“Evening! Need extra towels? I’ve got plenty.”' });
   // A guest walks along the dry deck; no scaled adult passed off as a child.
@@ -954,6 +1033,7 @@ export function buildWorld(scene, lib, game) {
   const trucker = walker('rb-marcus-formal', '#6b4e2e', [[2.6, 0, -7.55], [2.6, 0, -7.55]], { pause: 9, say: '“Coffee’s better than the truck stop. Barely. You headed east or west?”' });
   trucker.p.root.rotation.y = Math.PI;
   walker('rb-emma-casual', '#3d6b4f', [[24.5, FLOOR2, -0.4], [7.6, FLOOR2, 0.2], [7.6, FLOOR2, 2.6], [7.6, FLOOR2, 0.2]], { speed: 0.9, pause: 5, say: '“Ice machine works, it just sounds like a car crash.”' });
+  }
   updaters.push((dt, t, player) => {
     for (const w of walkers) {
       w.p.update(dt);
@@ -1019,7 +1099,8 @@ export function buildWorld(scene, lib, game) {
   }
 
   // ---------- outside: lot, roads, highway, scenery ----------
-  buildOutside();
+  let carLamps = null;
+  if (outside) buildOutside();
   function buildOutside() {
     for (const [x0, x1, z0, z1] of [[-450, 450, 9, 450], [-450, 450, -450, -9], [-450, -24, -9, 9], [30, 450, -9, 9]]) {
       const g = new T.Mesh(new T.PlaneGeometry(x1 - x0, z1 - z0), lawn); g.rotation.x = -Math.PI / 2; g.position.set((x0 + x1) / 2, -0.02, (z0 + z1) / 2); g.receiveShadow = true;
@@ -1070,7 +1151,7 @@ export function buildWorld(scene, lib, game) {
     for (const [x, z] of [[-30, 27], [-10, 27], [10, 27], [30, 27], [-20, 42.5], [20, 42.5]]) {
       add(lightPole(), x, 0, z);
     }
-    for (const [x, z] of [[0, 27], [-25, 27], [25, 27], [0, 40]]) outdoor.push(lightAnchors[lightAnchors.push({ pos: new T.Vector3(x, 7.6, z), color: new T.Color('#ffd59a'), intensity: 16, distance: 24, base: 16 }) - 1]);
+    for (const [x, z] of [[0, 27], [-25, 27], [25, 27], [0, 40]]) outdoor.push(lightAnchors[lightAnchors.push({ pos: new T.Vector3(x, 7.6, z), color: new T.Color('#ffd59a'), intensity: 16, distance: 24, base: 16, outdoor: true }) - 1]);
     // Entrance bollards, a hydrant, the dumpster corral out back, a couple of cones.
     for (const x of [-4.4, -2.9, -1.1, 0.4]) { add(lib.model('g3-bollard'), x, 0, 11.3); solid(x - 0.12, x + 0.12, 0, 1, 11.18, 11.42); }
     add(lib.model('g3-fire-hydrant', { rotate: Math.PI }), 9.5, 0, 11.4);
@@ -1118,11 +1199,28 @@ export function buildWorld(scene, lib, game) {
       scene.add(car);
       traffic.push({ car, z: semi && lane[1] > 0 ? 64 : semi ? 86 : lane[0], dir: lane[1], speed: (semi ? 26 : lane[2]) * (0.9 + (i % 4) * 0.06), x: -450 + i * 41 });
     }
-    updaters.push(dt => { for (const c of traffic) { c.x += c.dir * c.speed * dt; if (c.x > 450) c.x = -450; if (c.x < -450) c.x = 450; c.car.position.set(c.x, 0, c.z); } });
+    // Head and tail lights after dusk: one Points cloud of soft glows (a single draw call for the whole interstate).
+    const glow = F.canvasTexture(64, 64, (g, w, h) => { const r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(0.2, 'rgba(255,255,255,.7)'); r.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = r; g.fillRect(0, 0, w, h); });
+    const lampPos = new Float32Array(traffic.length * 12), lampCol = new Float32Array(traffic.length * 12);
+    for (const c of traffic) { const sz = new T.Box3().setFromObject(c.car).getSize(new T.Vector3()); c.hx = sz.x / 2; c.hz = sz.z / 2; c.ly = sz.y > 3 ? 1.1 : 0.7; }
+    traffic.forEach((c, i) => [[1, 0.96, 0.82], [1, 0.96, 0.82], [1, 0.08, 0.04], [1, 0.08, 0.04]].forEach((col, k) => lampCol.set(col, i * 12 + k * 3)));
+    const lampGeo = new T.BufferGeometry(); lampGeo.setAttribute('position', new T.BufferAttribute(lampPos, 3)); lampGeo.setAttribute('color', new T.BufferAttribute(lampCol, 3));
+    carLamps = new T.Points(lampGeo, new T.PointsMaterial({ size: 1.5, map: glow, vertexColors: true, transparent: true, depthWrite: false, blending: T.AdditiveBlending, toneMapped: false }));
+    carLamps.frustumCulled = false; scene.add(carLamps);
+    updaters.push(dt => {
+      for (const [i, c] of traffic.entries()) {
+        c.x += c.dir * c.speed * dt; if (c.x > 450) c.x = -450; if (c.x < -450) c.x = 450; c.car.position.set(c.x, 0, c.z);
+        if (!carLamps.visible) continue;
+        const front = c.x + c.dir * (c.hx - 0.1), back = c.x - c.dir * (c.hx - 0.1), w = c.hz * 0.62;
+        lampPos.set([front, c.ly, c.z - w, front, c.ly, c.z + w, back, c.ly, c.z - w, back, c.ly, c.z + w], i * 12);
+      }
+      if (carLamps.visible) lampGeo.attributes.position.needsUpdate = true;
+    });
     game.traffic = traffic;
     // The pole sign by the frontage road.
     add(F.poleSign('HEARTLAND\nINN EXPRESS'), 34, 0, 45, 0);
     // Gas station and billboard across the interstate.
+    if (station) {
     const station = new T.Group();
     const store = mbox(16, 4.5, 10, F.mat('#cbbfa8')); store.position.set(0, 2.25, -6); station.add(store);
     const canopy2 = mbox(18, 1, 10, F.mat('#f2f2f2')); canopy2.position.set(0, 5.4, 8); station.add(canopy2);
@@ -1130,6 +1228,7 @@ export function buildWorld(scene, lib, game) {
     for (const x of [-6, 0, 6]) { const p = mbox(0.4, 4.9, 0.4, F.mat('#ddd')); p.position.set(x, 2.45, 8); station.add(p); const pump = mbox(0.8, 1.6, 0.5, F.mat('#c1121f')); pump.position.set(x, 0.8, 8); station.add(pump); }
     const ss = F.sign('ROUTE 66 TRAVEL STOP\nFUEL · FOOD · FIREWORKS', { w: 9, h: 1.6, bg: '#1d3557', fg: '#ffd166', font: 'bold 64px system-ui', emissive: 1.1 }); ss.position.set(0, 3.4, -0.98); station.add(ss);
     station.position.set(-70, 0, 112); station.rotation.y = Math.PI; scene.add(station);
+    }
     flat(-95, -45, 98, 130, lib.surface('asphalt', { repeat: [8, 5], color: '#6a6a6a' }), 0.007);
     for (const [x, z] of [[-60, 126], [-76, 126.5]]) add(vehicle('g3-semi-truck', Math.PI / 2), x, 0, z);
     const bb = new T.Group();
@@ -1221,7 +1320,11 @@ export function buildWorld(scene, lib, game) {
   }
 
   // Dusk: lot lights carry the outside; day: they're off.
-  const setTimeOfDay = name => { outdoor.forEach(a => (a.intensity = name === 'dusk' ? a.base : 0)); breakfast.group.visible = name === 'day'; };
+  const setTimeOfDay = name => { outdoor.forEach(a => (a.intensity = name === 'dusk' ? a.base : 0)); breakfast.group.visible = name === 'day'; if (carLamps) carLamps.visible = name === 'dusk'; };
 
-  return { setTimeOfDay, colliders, surfaces, interact, updaters, lightAnchors, zones, elevator, room, spawn: { x: 4.4, z: 17.0, yaw: 0.6 } };
+  // Light cells: point lights cast no shadows, so a corridor light 2 m from room 212 would light it through the wall.
+  // A light counts only inside its own cell (room 212 or the rest of the building), unless 212's door is open; lot lights always count.
+  const in212 = p => p.y > FLOOR2 - 0.5 && p.y < FLOOR2 + CEIL + 0.5 && p.x > R.x0 && p.x < R.x1 && p.z > R.z0 && p.z < R.z1;
+  const lightVisible = (a, eye) => a.outdoor || in212(a.pos) === in212(eye) || room.angle > 0.25;
+  return { setTimeOfDay, lightVisible, in212, walkers, clerk, colliders, surfaces, interact, updaters, lightAnchors, zones, elevator, room, spawn: { x: 4.4, z: 17.0, yaw: 0.6 } };
 }

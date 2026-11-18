@@ -28,7 +28,7 @@ It starts at dusk.
   - king bed, nightstand lamps (switchable), TV, desk and armchair
   - a PTAC unit under the window, and drapes that open and close
   - a closet with an ice bucket (fill it at the ice machine)
-  - a bathroom with vanity, lit mirror, toilet and tub/shower, plus a light switch
+  - a bathroom with vanity, lit mirror, toilet and textured glass shower enclosure, plus a light switch
   - a micro-fridge and microwave
   - lie down on the bed to end the night, then sleep until morning: daylight, and a hot breakfast bar in the lobby (waffle maker, eggs and sausage, juice).
 - **Outside.** The parking lot has LED light poles, bollards, a hydrant, a dumpster corral and parked 1990s cars (instanced, with varied paint). Beyond it are a frontage road with utility poles, sagging lines and street lights, the interstate with guard rails and moving cars and semis, the hotel's pole sign, a truck stop, a billboard, tree lines and a distant water tower.
@@ -37,7 +37,7 @@ It starts at dusk.
 
 `world.js` builds the floor plan, both floors and the outside, and handles colliders, walkable surfaces (stairs, elevator) and interactions. `fixtures.js` holds the original procedural models: beds, vending, elevator, gym equipment, bathroom fixtures and signage. `assets.js` loads warehouse parts. `main.js` runs movement, the interaction picker, the check-in script, vending and the HUD. `sound.js` plays Kenney footsteps plus synthesized ambience and effects.
 
-`check.mjs` runs a headless smoke test. It takes screenshots, then plays a scripted session: check in, ride the elevator up, open 212 with the key, lie down, and climb the stairs. It fails on any console error. Artifacts go to `artifacts/roadside-inn/`.
+`check.mjs` runs a headless smoke test (install its browser driver with `npm install --prefix projects/roadside-inn/.validation playwright-core`). It takes screenshots, then plays a scripted session: check in, ride the elevator up, open 212 with the key, lie down, and climb the stairs. It fails on any console error. Artifacts go to `artifacts/roadside-inn/`.
 
 ```sh
 node projects/roadside-inn/check.mjs          # screenshots + flow
@@ -68,3 +68,5 @@ Touch devices default to a 30 fps battery profile, pixel ratio capped at 1, four
 Residents use four textured, rigged human models from Microsoft Rocketbox / Avatar Studio (MIT), with their authored Idle, Walk, Wave and Talk clips. Unused clothing and facial morphs are removed and textures capped at 1K. Grab3D supplies the imported textured shower enclosure, treadmills and exercise bike (CC0). Source URLs, hashes and preparation notes are in `assets-provenance.json`; MIT notices are also embedded in the character GLBs and the packaged page.
 
 The elevator shaft has an actual opening in its ground-floor slab. Bedroom furniture is checked against measured wall clearances, the desk and TV cabinet have separate footprints, and artwork and signs have explicit surface clearance. The orange desk lamp has a working light switch. `node projects/roadside-inn/check.mjs repairs` checks the lamp, elevator, human poses and fixture bounds and saves screenshots.
+
+For software-rendered CI, `INN_FLOW_NO_CAPTURES=1 node projects/roadside-inn/check.mjs flow` checks interactions without captures. The `repairs` audit uses normal rendering; flow and phone control checks isolate the headless GPU and audio device. Results persist as `artifacts/roadside-inn/check-<mode>.json`.

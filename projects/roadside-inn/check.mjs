@@ -2,9 +2,9 @@
 // PLAYWRIGHT_MODULE=/tmp/warehouse-validation/node_modules/playwright-core/index.mjs node projects/roadside-inn/check.mjs
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { readFile, mkdir } from 'node:fs/promises';
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { extname, resolve, relative } from 'node:path';
-const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? '/tmp/warehouse-validation/node_modules/playwright-core/index.mjs');
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? new URL('./.validation/node_modules/playwright-core/index.mjs', import.meta.url).href);
 const mode = process.argv[2];
 const root = resolve(import.meta.dirname, '../..'), out = resolve(root, 'artifacts/roadside-inn');
 await mkdir(out, { recursive: true });
@@ -16,14 +16,35 @@ const server = createServer(async (req, res) => {
 });
 await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
 const port = server.address().port;
-const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required'] });
+const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required', '--mute-audio'] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+// Keep logic/control regressions independent of the headless GPU and audio device.
+// The repairs audit above exercises normal rendering; mobile captures one real frame at the end.
+if (mode === 'flow' || mode === 'mobile') {
+  await page.context().route('**/main.js', async route => {
+    let source = await readFile(resolve(root, 'projects/roadside-inn/main.js'), 'utf8');
+    source = source.replace('await renderer.compileAsync(scene, camera);', 'globalThis.__renderAudit = () => renderer.render(scene, camera);');
+    source = source.replace('renderer.render(scene, camera);\n  requestAnimationFrame', 'renderer.render(scene, camera);\n  requestAnimationFrame');
+    // Only replace the loop call; the renderAudit callback retains the real renderer.
+    source = source.replace('  renderer.render(scene, camera);', '  /* Real rendering is covered by the visual audit. */');
+    await route.fulfill({ contentType: 'text/javascript', body: source });
+  });
+  await page.context().route('**/sound.js', route => route.fulfill({ contentType: 'text/javascript', body: 'export const createSound = () => new Proxy({ start: async () => {}, toggleMute: () => true }, { get: (o, k) => o[k] || (() => {}) });' }));
+}
 const errors = [];
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', e => errors.push(String(e)));
 if (mode !== 'mobile') {
   await page.goto(`http://localhost:${port}/projects/roadside-inn/index.html${process.env.FULL ? '' : '?quality=low'}`);
   await page.waitForFunction(() => globalThis.__inn, null, { timeout: 180000 });
+  if (mode === 'flow') await page.evaluate(() => {
+    // Movement/interaction checks should not be limited by the software rasterizer.
+    // Render explicitly before each capture; the visual audit uses the normal renderer.
+    const render = __inn.renderer.render.bind(__inn.renderer);
+    __inn.renderer.render = () => {};
+    __inn.forceRender = () => render(__inn.scene, __inn.camera);
+  });
+  if (mode === 'flow' && process.env.INN_FLOW_NO_CAPTURES) { await page.evaluate(() => { __inn.forceRender = () => {}; }); page.screenshot = async () => {}; }
   await page.evaluate(() => __inn.begin());
 }
 const repairViews = {
@@ -54,7 +75,7 @@ const views = mode === 'repairs' ? repairViews : ['flow', 'profile', 'mobile'].i
 for (const [name, [x, y, z, yaw, pitch]] of Object.entries(views)) {
   await page.evaluate(([x, y, z, yaw, pitch]) => __inn.teleport(x, y, z, yaw, pitch), [x, y, z, yaw, pitch]);
   await page.waitForTimeout(700);
-  await page.screenshot({ path: `${out}/${name}.png`, timeout: 180000 });
+  await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/${name}.png`, timeout: 180000 });
 }
 if (mode === 'repairs') {
   const report = await page.evaluate(async () => {
@@ -111,7 +132,7 @@ if (mode === 'repairs') {
 const flow = {};
 const face = async (x, y, z, tx, tz) => { await page.evaluate(([x, y, z, tx, tz]) => __inn.teleport(x, y, z, Math.atan2(-(tx - x), -(tz - z)), 0), [x, y, z, tx, tz]); await page.waitForTimeout(1200); };
 const press = async (expect = '') => { await page.waitForFunction(e => getComputedStyle(document.getElementById('prompt')).display !== 'none' && document.getElementById('prompt').textContent.includes(e), expect, { timeout: 30000 }); const seen = await page.textContent('#prompt'); await page.keyboard.press('e'); return seen; };
-const walk = async (yaw, until, timeout = 180000) => {
+const walk = async (yaw, until, timeout = mode === 'flow' ? 30000 : 180000) => {
   await page.evaluate(y => __inn.controls.setLook(y, 0), yaw); await page.keyboard.down('w');
   try { await page.waitForFunction(until, null, { timeout, polling: 200 }); } finally { await page.keyboard.up('w'); }
   return page.evaluate(() => ({ x: +__inn.player.x.toFixed(2), y: +__inn.player.y.toFixed(2), z: +__inn.player.z.toFixed(2) }));
@@ -125,29 +146,32 @@ if (!mode || mode === 'flow') try {
   flow.panelPrompt = await press('Press 2');
   await page.waitForFunction(() => __inn.world.elevator.floor === 1 && __inn.world.elevator.doors > 0.95, null, { timeout: 240000 });
   flow.rodeTo = await page.evaluate(() => +__inn.player.y.toFixed(2));
-  await page.screenshot({ path: `${out}/flow-elevator-up.png` });
+  await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/flow-elevator-up.png` });
   // walk out of the car to room 212 by holding keys
   flow.outOfCar = await walk(Math.PI, () => __inn.player.z > -0.3);
   await face(12.9, 3.2, 0.2, 12.9, 1); flow.doorPrompt = await press('key card');
   await page.waitForTimeout(1200);
+  // Clear the wardrobe beside the entry before continuing into the bedroom.
+  await walk(Math.PI, () => __inn.player.z > 1.6);
+  await walk(-Math.PI / 2, () => __inn.player.x > 13.25);
   await walk(Math.PI, () => __inn.player.z > 3.5);
   flow.inRoom = await page.evaluate(() => ({ z: +__inn.player.z.toFixed(2), where: document.getElementById('where').textContent }));
-  await page.screenshot({ path: `${out}/flow-in-room.png` });
+  await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/flow-in-room.png` });
   await face(13.5, 3.2, 6.6, 15.4, 6.6); flow.bedPrompt = await press('Lie down'); await page.waitForTimeout(500);
   flow.sleep = await page.evaluate(() => !document.getElementById('panel').hidden);
-  await page.screenshot({ path: `${out}/flow-sleep.png` });
+  await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/flow-sleep.png` });
   await page.click('#morning'); await page.waitForTimeout(800);
   await face(-2.1, 0, -6.6, -2.1, -8.5); await page.evaluate(() => __inn.controls.setLook(0, -0.35));
   flow.wafflePrompt = await press('Make a waffle');
   await page.waitForFunction(() => __inn.game.has('waffle'), null, { timeout: 120000 }); flow.waffle = true;
   await page.evaluate(() => __inn.teleport(-2.2, 0, -4.5, 0, -0.12)); await page.waitForTimeout(1500);
-  await page.screenshot({ path: `${out}/flow-breakfast.png` });
+  await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/flow-breakfast.png` });
   // the stairs: walk up flight A and B
   await page.evaluate(() => __inn.teleport(10.1, 0, -1.5, 0, 0));
   flow.landing = await walk(0, () => __inn.player.z < -7.6);
   await page.evaluate(() => __inn.teleport(11.4, __inn.player.y, -7.6, Math.PI, 0));
   flow.stairsTop = await walk(Math.PI, () => __inn.player.z > 0);
-} catch (e) { flow.failed = e.message.split('\n')[0]; flow.state = await page.evaluate(() => ({ ...__inn.world.elevator, p: [__inn.player.x, __inn.player.y, __inn.player.z] })); errors.push("flow: " + flow.failed); console.log(JSON.stringify(flow)); await page.screenshot({ path: `${out}/flow-failure.png`, timeout: 120000 }).catch(() => errors.push("page unresponsive")); }
+} catch (e) { flow.failed = e.message.split('\n')[0]; flow.state = await page.evaluate(() => ({ ...__inn.world.elevator, p: [__inn.player.x, __inn.player.y, __inn.player.z] })); errors.push("flow: " + flow.failed); console.log(JSON.stringify(flow)); await writeFile(`${out}/check-${mode || 'all'}-failure.json`, JSON.stringify({ flow, errors }, null, 2)); await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/flow-failure.png`, timeout: 120000 }).catch(() => errors.push("page unresponsive")); }
 if (mode === 'mobile' || !mode) {
   const phone = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   phone.on('pageerror', e => errors.push('mobile: ' + e));
@@ -166,12 +190,13 @@ if (mode === 'mobile' || !mode) {
   await phone.waitForFunction(z => __inn.player.z < z - 1, before, { timeout: 120000 }).catch(() => errors.push('mobile: joystick did not move the player'));
   await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   flow.mobileMoved = +(before - await phone.evaluate(() => __inn.player.z)).toFixed(2);
-  await phone.screenshot({ path: `${out}/mobile.png` });
+  await phone.evaluate(() => { const render = __inn.renderer.render.bind(__inn.renderer); __inn.renderer.render = () => {}; globalThis.__renderAudit ? globalThis.__renderAudit() : render(__inn.scene, __inn.camera); });
+  await phone.screenshot({ path: `${out}/mobile.png`, timeout: 180000 });
   await phone.close();
 }
 if (process.env.TV) {   // turn the room TV on and photograph it (checks the screen's UVs)
   await page.evaluate(() => { __inn.teleport(13.9, 3.2, 6.4, 1.57, 0.05); const tv = __inn.world.interact.find(i => /TV on/.test(i.label()) && i.pos.y > 3 && i.pos.x < 14); tv.use(); tv.use(); });
-  await page.waitForTimeout(3000); await page.screenshot({ path: `${out}/tv-room.png`, timeout: 180000 });
+  await page.waitForTimeout(3000); await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/tv-room.png`, timeout: 180000 });
 }
 if (mode === 'profile') {
   console.log(JSON.stringify(await page.evaluate(() => {
@@ -186,6 +211,8 @@ if (mode === 'profile') {
     return Object.entries(by).sort((a, b) => b[1][0] - a[1][0]).slice(0, 25).map(([k, [t, n]]) => `${k}: ${Math.round(t / 1000)}k tris, ${n} meshes`);
   }), null, 1));
 }
-console.log(JSON.stringify({ flow, errors, shots: Object.keys(views).length, stats: mode === 'mobile' ? null : await page.evaluate(() => ({ colliders: __inn.world.colliders.length, interact: __inn.world.interact.length, drawCalls: __inn.renderer.info.render.calls, textures: __inn.renderer.info.memory.textures, programs: __inn.renderer.info.programs.length, triangles: __inn.renderer.info.render.triangles })) }, null, 1));
+const result = { flow, errors, shots: Object.keys(views).length, stats: mode === 'mobile' ? null : await page.evaluate(() => ({ colliders: __inn.world.colliders.length, interact: __inn.world.interact.length, drawCalls: __inn.renderer.info.render.calls, textures: __inn.renderer.info.memory.textures, programs: __inn.renderer.info.programs.length, triangles: __inn.renderer.info.render.triangles })) };
+await writeFile(`${out}/check-${mode || 'all'}.json`, JSON.stringify(result, null, 2));
+console.log(JSON.stringify(result, null, 1));
 await browser.close(); server.close();
 process.exit(errors.length ? 1 : 0);

@@ -1,0 +1,28 @@
+{
+  "flow": {
+    "deskPrompt": "ECheck in",
+    "key": true,
+    "callPrompt": "ECall elevator",
+    "panelPrompt": "EPress 2",
+    "rodeTo": 3.2,
+    "failed": "page.evaluate: TypeError: Cannot read properties of null (reading 'state')",
+    "state": {
+      "y": 3.2,
+      "target": 3.2,
+      "doors": 1,
+      "open": true,
+      "timer": 3.1502000000029797,
+      "moving": false,
+      "floor": 1,
+      "queue": null,
+      "p": [
+        7.9,
+        3.2,
+        -2.6
+      ]
+    }
+  },
+  "errors": [
+    "flow: page.evaluate: TypeError: Cannot read properties of null (reading 'state')"
+  ]
+}
