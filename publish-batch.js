@@ -15,24 +15,26 @@ const [flag, output] = args;
 if (!manifest || args.length > 2 || flag && flag !== '--local' || flag === '--local' && !output) throw Error('Usage: node publish-batch.js manifest.json [--network baseSepolia|arbitrumSepolia] [--local directory]');
 const base = new URL('./parts/',import.meta.url).pathname;
 const selected=JSON.parse(readFileSync(resolve(manifest)));
+// Another publisher's part is credited as "0x…/id": pinned on chain like any use, but never built or served from here.
+const foreign=(id)=>id.includes('/');
 const all=JSON.parse(readFileSync(join(base,'parts.json')));
 const ids=new Set();
 for(const p of selected){
     if(ids.has(p.id))throw Error(`Duplicate ID: ${p.id}`);ids.add(p.id);
     const raw=readFileSync(join(base,p.file),'utf8');
     if(p.type==='logic'&&!(p.exports??[]).every(e=>exportsOf(raw).includes(e.name)))throw Error(`Invalid exports: ${p.id}`);
-    for(const id of p.uses??[])if(!all.some(x=>x.id===id))throw Error(`Unknown dependency: ${id}`);
+    for(const id of p.uses??[])if(!foreign(id)&&!all.some(x=>x.id===id)&&!selected.some(x=>x.id===id))throw Error(`Unknown dependency: ${id}`);
 }
 if(flag==='--local'){
     const needed=new Map();
-    function visit(p){if(needed.has(p.id))return;needed.set(p.id,p);for(const id of p.uses??[])visit(selected.find(x=>x.id===id)??all.find(x=>x.id===id));}
+    function visit(p){if(needed.has(p.id))return;needed.set(p.id,p);for(const id of p.uses??[])if(!foreign(id))visit(selected.find(x=>x.id===id)??all.find(x=>x.id===id));}
     selected.forEach(visit);
     const urls=Object.fromEntries([...needed.values()].map(p=>[p.id,`parts/${p.file}${p.type==='asset'||p.type==='game'?'':'.json'}`]));
     for(const p of needed.values()){
         const path=join(output,'parts',p.file+(p.type==='asset'||p.type==='game'?'':'.json'));mkdirSync(dirname(path),{recursive:true});
         const raw=readFileSync(join(base,p.file));
         writeFileSync(path,p.type==='asset'?raw:p.type!=='game'?JSON.stringify({[STORED[p.type]]:raw.toString()}):raw.toString().replace('{/*PARTS*/}',JSON.stringify(urls)));
-        if(p.type==='game')writeFileSync(join(output,p.file),raw.toString().replace('{/*PARTS*/}',JSON.stringify(urls)));
+        if(p.type==='game')writeFileSync(join(output,`${p.id}.html`),raw.toString().replace('{/*PARTS*/}',JSON.stringify(urls)));
     }
     console.log(`Prepared ${needed.size} parts in ${resolve(output)}`);process.exit(0);
 }
@@ -47,9 +49,9 @@ while(todo.length){
     const records=[];
     for(const p of ready){
         const {file,...labels}=p;let content=readFileSync(join(base,file),'utf8');
-        const urls={};for(const id of p.uses??[]){const r=await fangorn.engine.readRecord(address,REPO,id);if(!r)throw Error(`Unpublished dependency ${id}`);urls[id]=`${gateway}/ipfs/${r.payload.src}`;}
+        const urls={};for(const id of (p.uses??[]).filter(id=>!foreign(id))){const r=await fangorn.engine.readRecord(address,REPO,id);if(!r)throw Error(`Unpublished dependency ${id}`);urls[id]=`${gateway}/ipfs/${r.payload.src}`;}
         if(p.type==='game')content=content.replace('{/*PARTS*/}',JSON.stringify(urls));
-        const record=await preparePart(fangorn,{...labels,uses:(p.uses??[]).map(id=>({id})),...(p.type==='asset'?{bytes:readFileSync(join(base,file))}:{content})});
+        const record=await preparePart(fangorn,{...labels,uses:(p.uses??[]).map(id=>foreign(id)?{publisher:id.split('/')[0],id:id.split('/')[1]}:{id}),...(p.type==='asset'?{bytes:readFileSync(join(base,file))}:{content})});
         const now=await fangorn.engine.readRecord(address,REPO,p.id);
         // measured alone doesn't republish: it's derived from the file, and a new file changes src anyway
         const same=(a,b)=>{const{measured:_,...x}=a,{measured:__,...y}=b;return JSON.stringify(x)===JSON.stringify(y);};

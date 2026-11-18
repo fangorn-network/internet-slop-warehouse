@@ -1,0 +1,47 @@
+{
+ "slug": "coffee-machine",
+ "triangles": 16552,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "coffee-machine.glb",
+   "bytes": 1261560
+  },
+  "blend": {
+   "name": "coffee-machine.blend",
+   "bytes": 1036234
+  },
+  "fbx": {
+   "name": "coffee-machine.fbx",
+   "bytes": 2279228
+  },
+  "obj": {
+   "name": "coffee-machine-obj.zip",
+   "bytes": 1169329
+  },
+  "usdz": {
+   "name": "coffee-machine.usdz",
+   "bytes": 2141673
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.245 x 0.402 x 0.339",
+  "triangles": 16552,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "retro espresso machine, approx. 24 x 30 x 34 cm",
+  "notes": "front faces -Y; sky-blue housing, steel brew group and drip tray, espresso cup with crema on a saucer, steam wand (+X), pressure gauge with mint zone and needle (no digits), steam dial, power button and indicator light, steel cup warmer on top; 'coffee-machine_portafilter' is a separate object with its origin on the brew-group axis (rotate around local Z to unlock, then lower along -Z); no text",
+  "set": "Cozy Kitchen & Food Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

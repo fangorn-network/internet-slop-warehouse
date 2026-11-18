@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Escape from Slopov II</title>
+<meta name="description" content="Co-op extraction shooter: up to four friends raid an abandoned town and the Heartland Inn Express at its south edge. Host a raid and share a link or QR code.">
+<!-- Escape from Slopov II is a remix of "Escape from Slopov" by 0xa6bdff4d59d418de726153b53a5bed69dad760b6 (CC0-1.0),
+     pinned as this part's parent; its systems (ballistics, body-part health, loadout, factions, firearms, gear, grid buildings,
+     combat audio) are that author's parts. The hotel is the Heartland Inn Express (heartland-hotel part: building CC0-1.0,
+     Poly Haven/Grab3D CC0, Microsoft Rocketbox MIT). Co-op: Trystero 0.27 (MIT). QR codes: qrcode-generator 1.4.4 (MIT, Kazuhiko Arase). -->
+<style>
+:root{--bg:#0c0e0d;--panel:#141816;--line:#2a302c;--text:#d7d3c5;--dim:#8d8a7e;--amber:#d9a441;--red:#c4493b;--green:#7fae5a}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#000;color:var(--text);font:14px/1.35 "Bahnschrift","DIN Alternate","Roboto Condensed","Arial Narrow",system-ui,sans-serif;touch-action:none;-webkit-user-select:none;user-select:none}
+canvas#c{position:fixed;inset:0;width:100%;height:100%;display:block}
+button{font:inherit;color:var(--text);background:#1d221f;border:1px solid var(--line);padding:4px 10px;cursor:pointer;letter-spacing:.04em}
+button:hover{border-color:var(--amber);color:#fff}button:disabled{opacity:.4;cursor:default;border-color:var(--line)}
+button.primary{background:var(--amber);color:#14110a;border-color:var(--amber);font-weight:700}
+.hidden{display:none!important}
+.mono{font-family:ui-monospace,"Cascadia Mono",Menlo,monospace}
+/* loading */
+#loading{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:50;text-align:center}
+#loading h1{font-size:44px;letter-spacing:.18em;margin:0 0 6px;color:var(--amber)}
+#bar{width:260px;height:4px;background:#222;margin:16px auto}#bar i{display:block;height:100%;width:0;background:var(--amber)}
+/* menu */
+#menu{position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,#1b211dcc,#0a0c0bf2 70%);z-index:20;display:flex;flex-direction:column}
+#menu header{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+#menu header h1{margin:0;font-size:22px;letter-spacing:.2em;color:var(--amber);white-space:nowrap}
+#menu header .money{margin-left:auto;font-size:18px}
+.tabs button{border-radius:0}.tabs button.on{border-color:var(--amber);color:var(--amber)}
+#menu main{flex:1;overflow:auto;padding:14px 18px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);padding:10px 12px}
+.panel h3{margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;display:flex;justify-content:space-between}
+.slot{border:1px solid var(--line);padding:6px 8px;margin-bottom:6px;background:#101311}
+.slot .label{font-size:11px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.row{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px dashed #222826;flex-wrap:wrap}
+.row:last-child{border-bottom:0}
+.row .name{flex:1;min-width:120px}.row .meta{color:var(--dim);font-size:12px}
+.row button{padding:1px 7px;font-size:12px}
+.cap{height:3px;background:#222;margin:4px 0 6px}.cap i{display:block;height:100%;background:var(--green)}
+.empty{color:#555;font-style:italic;padding:2px 0}
+.nested{margin-left:14px;border-left:1px solid var(--line);padding-left:8px}
+#toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);background:#000c;border:1px solid var(--amber);padding:6px 14px;z-index:60;pointer-events:none;transition:opacity .3s}
+/* hud */
+#hud{position:fixed;inset:0;pointer-events:none;z-index:5}
+#cross{position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px;opacity:.75}
+#cross:before,#cross:after{content:"";position:absolute;background:#fff}
+#cross:before{left:8px;top:0;width:2px;height:18px;clip-path:polygon(0 0,100% 0,100% 30%,0 30%,0 70%,100% 70%,100% 100%,0 100%)}
+#cross:after{top:8px;left:0;height:2px;width:18px;clip-path:polygon(0 0,30% 0,30% 100%,0 100%,0 0,70% 0,100% 0,100% 100%,70% 100%)}
+#hit{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px;opacity:0;border:2px solid #fff;transform:rotate(45deg);clip-path:polygon(0 0,35% 0,35% 35%,0 35%,0 65%,35% 65%,35% 100%,0 100%,0 0,100% 0,100% 35%,65% 35%,65% 0,100% 0,100% 100%,65% 100%,65% 65%,100% 65%)}
+#vitals{position:absolute;left:18px;bottom:16px;width:240px}
+.bar2{height:8px;background:#0008;border:1px solid #fff3;margin-top:4px}.bar2 i{display:block;height:100%}
+#ar i{background:#6c8bb0}
+#bodymap{display:grid;grid-template-columns:repeat(4,16px);grid-template-rows:16px 22px 16px 26px;gap:2px;margin:6px 0 4px;grid-template-areas:". h h ." "la t t ra" "la s s ra" ". ll rl ."}
+#bodymap i{border:1px solid #fff4;background:#5a9a4a}#bodymap i.gone{background:#111;border-color:#c4493b}
+[data-p=head]{grid-area:h;border-radius:8px}[data-p=thorax]{grid-area:t}[data-p=stomach]{grid-area:s}[data-p=leftArm]{grid-area:la}[data-p=rightArm]{grid-area:ra}[data-p=leftLeg]{grid-area:ll}[data-p=rightLeg]{grid-area:rl}
+#bodytext{font-size:11px;color:#fffc;text-shadow:0 1px 2px #000;margin-bottom:4px}
+#using{position:absolute;left:50%;top:46%;transform:translateX(-50%);font-size:18px;color:#e8e2cf;text-shadow:0 1px 3px #000}
+#ammo{position:absolute;right:20px;bottom:16px;text-align:right;text-shadow:0 1px 2px #000}
+#ammo b{font-size:30px}
+#prompt{position:absolute;left:50%;top:58%;transform:translateX(-50%);background:#000a;padding:4px 10px;border:1px solid #fff3}
+#status{position:absolute;left:50%;top:14px;transform:translateX(-50%);text-align:center;text-shadow:0 1px 3px #000;letter-spacing:.08em}
+#extract{position:absolute;left:50%;top:40%;transform:translateX(-50%);font-size:22px;color:var(--green);text-shadow:0 1px 3px #000}
+#dmg{position:absolute;inset:0;box-shadow:inset 0 0 160px 40px #a00;opacity:0;transition:opacity .4s}
+#scope{position:fixed;inset:0;z-index:4;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 0 31vmin,#000 31.3vmin)}
+#scope:before{content:"";position:absolute;left:50%;top:50%;width:62vmin;height:1px;margin-left:-31vmin;background:#000}
+#scope:after{content:"";position:absolute;left:50%;top:50%;height:62vmin;width:1px;margin-top:-31vmin;background:#000}
+#resume{position:absolute;left:50%;top:50%;transform:translate(-50%,40px);background:#000b;border:1px solid var(--amber);color:var(--amber);padding:8px 18px;letter-spacing:.16em}
+#hint{position:absolute;left:18px;top:14px;color:#fffa;font-size:12px;text-shadow:0 1px 2px #000;line-height:1.6}
+/* overlays */
+.overlay{position:fixed;inset:0;z-index:15;background:#070908e6;display:flex;flex-direction:column;padding:16px 18px;overflow:auto}
+.overlay h2{margin:0 0 10px;letter-spacing:.16em;font-size:18px;color:var(--amber);display:flex;justify-content:space-between;align-items:center}
+#mapov{align-items:center;justify-content:center}
+#mapov canvas{max-width:min(92vw,92vh);max-height:min(82vh,92vw);border:1px solid var(--line);image-rendering:pixelated}
+#end{align-items:center;justify-content:center;text-align:center}
+#end .panel{max-width:520px;width:100%}
+#coop{z-index:30}#coop .panel{max-width:520px;width:100%}
+#coop input{font:inherit;background:#0b0d0c;color:var(--text);border:1px solid var(--line);padding:5px 8px;min-width:0;user-select:text;-webkit-user-select:text}
+#qr{display:block;margin:10px auto;width:min(240px,62vw);height:auto;image-rendering:pixelated}
+#netbadge{position:fixed;top:8px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.12em;color:var(--amber);z-index:25;pointer-events:none}
+.credit{font-size:11px;color:var(--dim);letter-spacing:.04em}
+.credit b{color:var(--text);font-weight:400}
+#end h2{justify-content:center;font-size:30px}
+textarea{width:100%;height:110px;background:#0b0d0c;color:var(--text);border:1px solid var(--line);font:12px ui-monospace,monospace;user-select:text;-webkit-user-select:text}
+.trader-item{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed #222826}
+.trader-item .name{flex:1}.price{color:var(--amber);font-family:ui-monospace,monospace}
+.kind{font-size:11px;letter-spacing:.14em;color:var(--dim);margin:10px 0 2px;text-transform:uppercase}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<canvas id="c"></canvas>
+<div id="loading"><div><h1>ESCAPE FROM SLOPOV II</h1><div id="loadmsg">loading parts…</div><div id="bar"><i></i></div><p class="credit">A remix of <b>Escape from Slopov</b> by 0xa6bd…60b6 · hotel: <b>Heartland Inn Express</b></p></div></div>
+
+<div id="hud" class="hidden">
+  <div id="hint">WASD move · Shift sprint · LMB fire · RMB aim · R reload · B ammo type<br>E search/pick up · Tab inventory · M map · 4 bandage · 5 medkit · click to look</div>
+  <div id="status"></div>
+  <div id="cross"></div><div id="hit"></div>
+  <div id="prompt" class="hidden"></div>
+  <div id="resume" class="hidden">CLICK TO RESUME</div>
+  <div id="extract" class="hidden"></div>
+  <div id="using" class="hidden"></div>
+  <div id="vitals"><div>HEALTH <span id="hpv" class="mono"></span></div><div id="bodymap"><i data-p="head" title="Head"></i><i data-p="leftArm"></i><i data-p="thorax"></i><i data-p="rightArm"></i><i data-p="stomach"></i><i data-p="leftLeg"></i><i data-p="rightLeg"></i></div><div id="bodytext" class="mono"></div><div id="arwrap">ARMOR <span id="arv" class="mono"></span><div class="bar2" id="ar"><i></i></div></div></div>
+  <div id="ammo"><b class="mono" id="mag">0</b><span class="mono" id="reserve"></span><div id="ammotype"></div></div>
+  <div id="dmg"></div>
+</div>
+<div id="scope" class="hidden"></div>
+
+<div id="menu" class="hidden">
+  <header>
+    <h1>ESCAPE FROM SLOPOV II</h1><span class="credit">remix of <b>Escape from Slopov</b> by 0xa6bd…60b6</span>
+    <div class="tabs"><button data-tab="loadout" class="on">LOADOUT &amp; STASH</button><button data-tab="trader">TRADER</button></div>
+    <button id="savebtn">SAVE / LOAD</button>
+    <span class="money mono" id="money"></span>
+    <button id="coopbtn">CO-OP</button>
+    <button class="primary" id="deploy">DEPLOY TO SLOPOV ▸</button>
+  </header>
+  <main id="menumain"></main>
+</div>
+
+<div id="inv" class="overlay hidden"><h2><span>INVENTORY</span><button id="invclose">CLOSE (TAB)</button></h2><div class="cols" id="invcols"></div></div>
+<div id="mapov" class="overlay hidden"><h2 style="width:min(92vw,92vh)"><span>MAP OF SLOPOV</span><button id="mapclose">CLOSE (M)</button></h2><canvas id="mapc"></canvas></div>
+<div id="savebox" class="overlay hidden" style="align-items:center;justify-content:center"><div class="panel" style="max-width:560px;width:100%">
+  <h3>SAVE CODE <button onclick="document.getElementById('savebox').classList.add('hidden')">CLOSE</button></h3>
+  <p class="meta">This game runs sandboxed and cannot store anything. Copy this code to keep your stash; paste one and press Load to restore it.</p>
+  <textarea id="savecode" spellcheck="false"></textarea>
+  <div style="display:flex;gap:8px;margin-top:8px"><button id="savecopy">COPY</button><button id="saveload" class="primary">LOAD CODE</button><span id="savemsg" class="meta"></span></div>
+</div></div>
+<div id="end" class="overlay hidden"><div class="panel"><h2 id="endtitle"></h2><div id="endbody"></div><p><button class="primary" id="endok">BACK TO BASE</button></p></div></div>
+<div id="coop" class="overlay hidden" style="align-items:center;justify-content:center"><div class="panel">
+  <h3>CO-OP RAID <button id="coopclose">CLOSE</button></h3>
+  <p class="meta">Up to four players, peer to peer and encrypted. The host's town is the one everybody raids: deploy after the host does. Each player keeps their own stash, and every container and body has a copy of its loot for each of you.</p>
+  <div id="coopstart"><button class="primary" id="hostbtn">HOST A RAID</button>
+    <div style="display:flex;gap:8px;margin-top:10px"><input id="joincode" placeholder="paste a share link or room code" style="flex:1"><button id="joinbtn">JOIN</button></div></div>
+  <div id="coopshare" class="hidden">
+    <canvas id="qr" width="1" height="1" aria-label="QR code of the share link"></canvas>
+    <div style="display:flex;gap:8px"><input id="sharelink" readonly style="flex:1" aria-label="Share link"><button id="sharecopy">COPY</button></div>
+  </div>
+  <p id="coopstatus" class="meta" role="status"></p>
+  <button id="leavebtn" class="hidden">LEAVE ROOM</button>
+</div></div>
+<div id="netbadge"></div>
+<div id="toast" style="opacity:0"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
+// Escape from Slopov item catalog: everything the trader sells is everything a raid can drop.
+const CATALOG = {
+    ar: { name: 'AR-12 assault rifle', kind: 'gun', size: 4, price: 28000, mods: ['silencer', 'holo'],
+        fire: { mode: 'auto', rpm: 620, mag: 30, reload: 2.4, mult: 1, spread: 0.032, ads: 0.004, recoil: 0.012, range: 45, sound: 'rifle' } },
+    shotgun: { name: 'P-8 pump shotgun', kind: 'gun', size: 4, price: 14000, mods: ['silencer'],
+        fire: { mode: 'pump', cycle: 0.78, mag: 6, reloadEach: 0.55, pellets: 8, mult: 0.32, spread: 0.06, ads: 0.035, recoil: 0.05, range: 18, sound: 'shotgun' } },
+    bolt: { name: 'M-91 bolt-action rifle', kind: 'gun', size: 4, price: 22000, mods: ['scope'],
+        fire: { mode: 'bolt', cycle: 1.2, mag: 5, reloadEach: 0.6, mult: 2.1, spread: 0.05, ads: 0.0008, recoil: 0.045, range: 80, sound: 'bolt' } },
+    silencer: { name: 'Silencer', kind: 'mod', size: 1, price: 9000 },
+    holo: { name: 'Holographic sight', kind: 'mod', size: 1, price: 7500 },
+    scope: { name: '4x scope', kind: 'mod', size: 1, price: 12000 },
+    'armor-light': { name: 'Light armor', kind: 'armor', size: 4, price: 9000, armor: 'light', durability: 40, slow: 0 },
+    'armor-medium': { name: 'Medium armor', kind: 'armor', size: 4, price: 21000, armor: 'medium', durability: 60, slow: 0.05 },
+    'armor-heavy': { name: 'Heavy armor', kind: 'armor', size: 4, price: 38000, armor: 'heavy', durability: 85, slow: 0.12 },
+    'rig-light': { name: 'Light chest rig', kind: 'rig', size: 2, price: 3000, capacity: 4 },
+    'rig-medium': { name: 'Medium chest rig', kind: 'rig', size: 2, price: 8000, capacity: 8 },
+    'rig-big': { name: 'Big chest rig', kind: 'rig', size: 2, price: 16000, capacity: 12 },
+    'pack-small': { name: 'Small backpack', kind: 'backpack', size: 3, price: 2500, capacity: 8 },
+    'pack-medium': { name: 'Medium backpack', kind: 'backpack', size: 3, price: 7000, capacity: 16 },
+    'pack-large': { name: 'Large backpack', kind: 'backpack', size: 3, price: 15000, capacity: 26 },
+    map: { name: 'Map of Slopov', kind: 'map', size: 1, price: 1500 },
+    'ammo-standard': { name: 'Standard rounds', kind: 'ammo', size: 1, stack: 30, buyUnit: 30, price: 1500, ammo: 'standard' },
+    'ammo-hollow': { name: 'Hollow-point rounds', kind: 'ammo', size: 1, stack: 30, buyUnit: 30, price: 2200, ammo: 'hollow' },
+    'ammo-ap': { name: 'Armor-piercing rounds', kind: 'ammo', size: 1, stack: 30, buyUnit: 30, price: 4500, ammo: 'ap' },
+    cash: { name: 'Cash', kind: 'cash', size: 1, stack: 100000, price: 1 },
+    bandage: { name: 'Bandage', kind: 'med', size: 1, price: 1800, heal: 30, use: 2.5 },
+    medkit: { name: 'Field medkit', kind: 'med', size: 1, price: 8500, heal: 110, use: 5, restore: true },
+};
+const START_MONEY = 25000;
+
+
+// Every part this game builds on, by id -> its pinned file.
+const PARTS = {"fps-controls":"https://ipfs-test.fangorn.network/ipfs/bafkreifdkkwxdfthnenma3vyoypfvyr6zj5igr3ltzlycmg2wx2h3gtieu","perception-brain":"https://ipfs-test.fangorn.network/ipfs/bafkreihayx7whlaay34yv3hsjzbnd46z3vhaooxewswk7leckguolizzbu","grid-navigation":"https://ipfs-test.fangorn.network/ipfs/bafkreig3624wdnu7surrhjssmijvgxalwrcvmzbxvpypjt45h67ipwqctq","clip-animator":"https://ipfs-test.fangorn.network/ipfs/bafkreiahogjc53z7qaa7x4j7nnus5rxahr6ojuaxb2m7oukkb3fxc3zj2y","hdri-sky":"https://ipfs-test.fangorn.network/ipfs/bafkreif4o56shppr6t5ttbczmnyjhm5bgaklfsujajbd7y7mjznvtkv2ce","trigger-zones":"https://ipfs-test.fangorn.network/ipfs/bafkreieid7xttemo3ty6gk47tmb37f7ht7oztmevsgorvhuok4b5ly3iuy","save-codec":"https://ipfs-test.fangorn.network/ipfs/bafkreidn4z6x7eqvwyzbfj63ojuvg2jcconunztv2a5bhayrmyo2llfo7y","touch-controls":"https://ipfs-test.fangorn.network/ipfs/bafkreie6f27cac6h4vhzqm3rjrtwue5f2ikq5vcw2kzgs3v4xadyha5pqu","body-parts":"https://ipfs-test.fangorn.network/ipfs/bafkreidigu7akhqj7unrbntsms5kgysnddls3styrp7pivwzwl5fnn4jsu","ballistics":"https://ipfs-test.fangorn.network/ipfs/bafkreifuodm57feowt5fgzb2vtvxv5doburjy6zjslke44vorh2yhvx35y","extraction-loadout":"https://ipfs-test.fangorn.network/ipfs/bafkreibptpnsgudbf5e2uopvvdldb4fqi7i45kft72liuanbocglxe4mvq","faction-hostility":"https://ipfs-test.fangorn.network/ipfs/bafkreidz5ktyffukwyjufifio6x54u4orkr3jveu55i66qfjqlrethntmi","firearm-models":"https://ipfs-test.fangorn.network/ipfs/bafkreifndjgx7fvur2qjlynq5nquuprzfnsmbuebbibl7givjxrbubf4ze","tactical-gear-models":"https://ipfs-test.fangorn.network/ipfs/bafkreiforletnwbvj653ehm6ksq6jmmyss6ujutpennwlrlihchbjgkosq","grid-buildings":"https://ipfs-test.fangorn.network/ipfs/bafkreidpbwhrx7uoolaogkjiprmte6qz2lkiarptbajyvsj42qpcvwv6qm","firearm-viewmodel":"https://ipfs-test.fangorn.network/ipfs/bafkreigxfcgbz4g6wvwowv77a77orn2wy2zay2ubbja7ch7xexrgqm4flm","combat-audio":"https://ipfs-test.fangorn.network/ipfs/bafkreic3btduwv43terejrntfe3bigwgdper3toj5c2g6sr526aaarfbva","ph-hotel-dusk-sky":"https://ipfs-test.fangorn.network/ipfs/bafybeifl67tzvfunbnphwd6zc5j5fa2ioz4trsrvgtlmry5ic73woj5sry","brick-texture":"https://ipfs-test.fangorn.network/ipfs/bafybeicmbd6ebhhh5h5e7rp45dcao5lcblowjpcgnzt2oovamcw452uzge","ph-hotel-concrete-color":"https://ipfs-test.fangorn.network/ipfs/bafybeicrpyw3hlixgezxro2deeqcvg5sn2z6qcvznbyh32ussfqyhn2e4m","ph-hotel-concrete-normal":"https://ipfs-test.fangorn.network/ipfs/bafybeib3t2vzccba7xajwox3zehgeh5mksps2zodr3kdupn6aeje2vtgxa","ph-hotel-concrete-roughness":"https://ipfs-test.fangorn.network/ipfs/bafybeicpdapihnzzoivib5amay74y5lqbr7k2wkynywhvxbbfjcaq5o6wy","ph-store-asphalt-color":"https://ipfs-test.fangorn.network/ipfs/bafybeib5snde5nmdy7edabpymimo4t26dquyyk4jf4fybhledqtsay46am","ph-store-asphalt-normal":"https://ipfs-test.fangorn.network/ipfs/bafybeiccdlu5tealzakiqfgvsjqutoe5pst276ed2ybxoh4h3i2ugwbhh4","ph-store-asphalt-roughness":"https://ipfs-test.fangorn.network/ipfs/bafybeibi5s2vbivq6xuye3d7bclae4lcwtdgrjzujtspawl5wlrml3l6su","ph-store-floor-color":"https://ipfs-test.fangorn.network/ipfs/bafybeiczgvzf433jcyrs5b3bv6o2d3smkwg72ptwc4fowfor3h6e5vn4ha","ph-store-floor-normal":"https://ipfs-test.fangorn.network/ipfs/bafkreihpv74wjvlirxks5i5yo3k5vrr773tw3dlsodrqyeoiccksi3k73u","ph-store-floor-roughness":"https://ipfs-test.fangorn.network/ipfs/bafkreie4dglbo6es6iqlz7n4irtv2dguarecz6uawhcxpr54yeagg7xywy","forest-ground-texture":"https://ipfs-test.fangorn.network/ipfs/bafybeidjlqgtwmhoy4hjkskxgreaug2x2kg6f6vmwtt3powbhemzzw33ua","ph-forest-floor-normal":"https://ipfs-test.fangorn.network/ipfs/bafybeifitmj6bjn7lyhpinsoihtjt3hybucdn7y3bpxxq3fubchplkj4se","ph-forest-floor-roughness":"https://ipfs-test.fangorn.network/ipfs/bafkreibq3c2wua6xwew2c32yaenwovtcuqhfryony5ubdgs7aolicqafrq","ph-hotel-stone-facade-color":"https://ipfs-test.fangorn.network/ipfs/bafybeib32vwwhmryoyaqifgow3fmvfny7p2hozuyhi6fprsacua6oyq63q","ph-hotel-stone-facade-normal":"https://ipfs-test.fangorn.network/ipfs/bafybeigu2l5w7c7muhxdpb3k3mlibz7fempdpgpxblusowqts6aejzvgca","ph-hotel-stone-facade-roughness":"https://ipfs-test.fangorn.network/ipfs/bafkreic6l6fkfwzxnk54aqy6zasn4tsboywuoemluzvsvx2zkkm6xsehna","metal-plate-texture":"https://ipfs-test.fangorn.network/ipfs/bafybeie5fyws2n64tpuk2lygxwacjuc2ag5pyftinz3lfcn42opuk5gcra","ph-covered-car":"https://ipfs-test.fangorn.network/ipfs/bafybeigdchbpgc6uovmsjuojlryu35zose3xey2gedu7bwa23k24ne4jeq","g3-dumpster":"https://ipfs-test.fangorn.network/ipfs/bafybeigvv74a3pfuvbteu6uqvuljpfm46wsu5yod2btrplfdcybpxeixvq","barrel":"https://ipfs-test.fangorn.network/ipfs/bafybeigpbqf3fnybpgtnuqjsyp2khyslehbngb6huq3gjpa4cklq7jc4ra","ph-wooden-crate-01":"https://ipfs-test.fangorn.network/ipfs/bafybeihdxbef66b7io3dyibzoh2nfrfzsmhuexvlkfqzmnhpux7xxs5ydu","ph-ammo-box":"https://ipfs-test.fangorn.network/ipfs/bafybeigkxywuz2xo54jj72j3j6rmaq66dcvz55cn446wozxcflfatelg3q","ph-worn-metal-rack":"https://ipfs-test.fangorn.network/ipfs/bafybeicn2jhnf7emaxrkc63xgeqj3tb3wlbjzsb33u6arlfvxysp4ghibm","ph-metal-tool-chest":"https://ipfs-test.fangorn.network/ipfs/bafybeidcsgbtzwvvmqrpljlktjtlkh5xic24i3rrqm5kwjgv7lcawo5vyi","ph-wooden-bookshelf-worn":"https://ipfs-test.fangorn.network/ipfs/bafybeic46sunxysfmlz46zsgtlv7nqiok6yecnspbtlqhwqvkaowshmire","ph-painted-wooden-cabinet-02":"https://ipfs-test.fangorn.network/ipfs/bafybeiamr3efattz5u76xhhvagpnl3fkxgedwlavuwisnmgtt6e2z4x64m","ph-street-lamp-01":"https://ipfs-test.fangorn.network/ipfs/bafybeiglsb4wvfxdirrb6y4uqpi4afmnrg6i6yoide3krqwiioegxcdcri","g3-utility-pole":"https://ipfs-test.fangorn.network/ipfs/bafybeiayhjyky444usgy3zqlmvn4oyzxruj45gs4tqfoqclg3dryczpaga","g3-guard-rail":"https://ipfs-test.fangorn.network/ipfs/bafkreiehho2rl5cus33w3k3pcnht2w46uljentt2ow6r4nakpjfugu35qy","g3-bollard":"https://ipfs-test.fangorn.network/ipfs/bafkreicobabvn2uu7uyoomtt2uzij5h2gxamc6pbtlmahqvieceinb3t5u","ph-shrub-03":"https://ipfs-test.fangorn.network/ipfs/bafybeihe7gucvymqfnearyyopn7berwcg7k7yxixpwrvgo6pb3357ockja","hotel-desk":"https://ipfs-test.fangorn.network/ipfs/bafybeihghbrtffnnvx4c6eeh372hwnmjyro52zyi42lsnmuxtn62wp53tm","ph-plastic-monobloc-chair-01":"https://ipfs-test.fangorn.network/ipfs/bafybeih6xwdzpeab4gqpecdkdfobh5atgjhp34c5kaeazm42jajf3rasca","qt-thrift-casual":"https://ipfs-test.fangorn.network/ipfs/bafybeie7emit7mzj6dauskxh5gfdygjb2p23vlbiuaovbicpap3oicct5m","qt-thrift-manager":"https://ipfs-test.fangorn.network/ipfs/bafybeifph62suywwj7pjgjo7maaso6djuret4r34p2jn2shbthylqslt3m","qt-thrift-cashier":"https://ipfs-test.fangorn.network/ipfs/bafybeibav6odei4dytvmlnrp5cxjrfscqjedquytgxdrpcfuq4445mhozu","kenney-thrift-foley":"https://ipfs-test.fangorn.network/ipfs/bafkreigpivxcaiwrb3mpff44d233zpaurgeucxkgmpddritmg4sh3oiz7i"};
+Object.assign(PARTS, {/*PARTS*/}); // heartland-hotel, trystero-027: filled in by publish-batch
+const fetchPart = async (id) => { const url = PARTS[id]; const r = await fetch(url); if (!r.ok) throw new Error(id + ' ' + r.status); return r; };
+const logic = async (id) => { const url = PARTS[id], r = await fetchPart(id); const js = url.endsWith('.js') ? await r.text() : (await r.json()).js; return import('data:text/javascript;charset=utf-8,' + encodeURIComponent(js)); };
+
+const $ = (s) => document.querySelector(s);
+const rnd = (a, b) => a + Math.random() * (b - a), irnd = (a, b) => Math.floor(rnd(a, b + 1));
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const weighted = (table) => { let r = Math.random() * table.reduce((s, [, w]) => s + w, 0); for (const [v, w] of table) if ((r -= w) <= 0) return v; return table[0][0]; };
+let uidN = 0; const newUid = () => 'i' + Date.now().toString(36) + (uidN++).toString(36);
+const money = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const GUN_MODEL = { ar: 'assault-rifle', shotgun: 'shotgun', bolt: 'bolt-rifle' };
+const SHORT = { 'ammo-standard': 'STD', 'ammo-hollow': 'HP', 'ammo-ap': 'AP' };
+let toastT = 0; const toast = (msg) => { const t = $('#toast'); t.textContent = msg; t.style.opacity = 1; clearTimeout(toastT); toastT = setTimeout(() => (t.style.opacity = 0), 1800); };
+const setLoad = (msg, f) => { $('#loadmsg').textContent = msg; if (f != null) $('#bar i').style.width = Math.round(f * 100) + '%'; };
+
+// ---------------------------------------------------------------- parts
+const LOGIC = ['fps-controls', 'perception-brain', 'grid-navigation', 'body-parts', 'clip-animator', 'hdri-sky', 'trigger-zones', 'save-codec', 'touch-controls',
+    'ballistics', 'extraction-loadout', 'faction-hostility', 'firearm-models', 'tactical-gear-models', 'grid-buildings', 'firearm-viewmodel', 'combat-audio'];
+const M = Object.fromEntries(await Promise.all(LOGIC.map(async (id) => [id, await logic(id)])));
+setLoad('loading textures and models…', 0.05);
+
+// ---------------------------------------------------------------- renderer & scene
+const renderer = new THREE.WebGLRenderer({ canvas: $('#c'), antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.AgXToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x8d847a, 0.011);
+const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.03, 400);
+camera.rotation.order = 'YXZ'; scene.add(camera);
+const HIP_FOV = 72;
+addEventListener('resize', () => { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); });
+const sky = M['hdri-sky'].attach(scene, { url: PARTS['ph-hotel-dusk-sky'], intensity: 0.55 });
+const sun = new THREE.DirectionalLight(0xffcf9e, 3.6);
+sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.03;
+Object.assign(sun.shadow.camera, { left: -45, right: 45, top: 45, bottom: -45, near: 1, far: 160 });
+scene.add(sun, sun.target);
+
+// ---------------------------------------------------------------- assets
+let loaded = 0; const TOTAL_ASSETS = 40; const tick = () => setLoad('loading textures and models…', 0.05 + 0.9 * Math.min(1, ++loaded / TOTAL_ASSETS));
+const texLoader = new THREE.TextureLoader(), gltfLoader = new GLTFLoader();
+const tex = (id, srgb) => texLoader.loadAsync(PARTS[id]).then((t) => { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; if (srgb) t.colorSpace = THREE.SRGBColorSpace; tick(); return t; });
+const glb = (id) => gltfLoader.loadAsync(PARTS[id]).then((g) => { tick(); return g; });
+const pbr = async (base, texSize, extra = {}) => {
+    const [map, normalMap, roughnessMap] = await Promise.all([tex(base + '-color', true), tex(base + '-normal'), tex(base + '-roughness')]);
+    const m = new THREE.MeshStandardMaterial({ map, normalMap, roughnessMap, ...extra }); m.userData.texSize = texSize; return m;
+};
+const PROP_IDS = { car: 'ph-covered-car', dumpster: 'g3-dumpster', barrel: 'barrel', crate: 'ph-wooden-crate-01', ammobox: 'ph-ammo-box', rack: 'ph-worn-metal-rack',
+    toolchest: 'ph-metal-tool-chest', bookshelf: 'ph-wooden-bookshelf-worn', cabinet: 'ph-painted-wooden-cabinet-02', lamp: 'ph-street-lamp-01', pole: 'g3-utility-pole',
+    rail: 'g3-guard-rail', bollard: 'g3-bollard', shrub: 'ph-shrub-03', desk: 'hotel-desk', chair: 'ph-plastic-monobloc-chair-01' };
+// The Heartland Inn Express, built in its own plan (x -24..30, z -9..9, front +z), turned to face town from the south edge.
+const HOTEL = { x: 0, z: 58.5 };   // its back 0.5 m off the south fence (z 68)
+const hotelGroup = new THREE.Group(); scene.add(hotelGroup);
+const hotelReady = logic('heartland-hotel').then((m) => m.attach(hotelGroup, { say: toast }));
+const [mats, propGltfs, charGltfs, foley] = await Promise.all([
+    (async () => {
+        const [concrete, asphalt, floor, stone, brickMap, dirtMap, dirtN, dirtR, metalMap] = await Promise.all([
+            pbr('ph-hotel-concrete', 2.5), pbr('ph-store-asphalt', 4), pbr('ph-store-floor', 1.6), pbr('ph-hotel-stone-facade', 1.8),
+            tex('brick-texture', true), tex('forest-ground-texture', true), tex('ph-forest-floor-normal'), tex('ph-forest-floor-roughness'), tex('metal-plate-texture', true)]);
+        const brick = new THREE.MeshStandardMaterial({ map: brickMap, roughness: 0.92 }); brick.userData.texSize = 1.6;
+        const dirt = new THREE.MeshStandardMaterial({ map: dirtMap, normalMap: dirtN, roughnessMap: dirtR, color: 0xb0a690 }); dirt.userData.texSize = 3;
+        const metal = new THREE.MeshStandardMaterial({ map: metalMap, metalness: 0.6, roughness: 0.55, color: 0x9a9590 }); metal.userData.texSize = 1.5;
+        const roof = concrete.clone(); roof.color.set(0x77736c); roof.userData.texSize = 3;
+        const pavement = concrete.clone(); pavement.color.set(0xb5b0a6); pavement.userData.texSize = 1.2;
+        return { concrete, asphalt, floor, stone, brick, dirt, metal, roof, pavement };
+    })(),
+    Promise.all(Object.entries(PROP_IDS).map(async ([k, id]) => [k, await glb(id)])).then(Object.fromEntries),
+    Promise.all(['qt-thrift-casual', 'qt-thrift-manager', 'qt-thrift-cashier'].map(glb)),
+    fetchPart('kenney-thrift-foley').then((r) => r.json()).catch(() => null),
+]);
+setLoad('checking in at the Heartland Inn…', 0.95);
+const hotel = await hotelReady.catch((e) => { setLoad('The Heartland Inn failed to load: ' + e.message + '. Restart to try again.'); throw e; });
+hotelGroup.rotation.y = Math.PI; hotelGroup.position.set(HOTEL.x, 0, HOTEL.z); hotelGroup.updateMatrixWorld(true);
+const toHotel = (x, z) => ({ x: HOTEL.x - x, z: HOTEL.z - z });          // a half turn is its own inverse
+const fromHotel = (c) => ({ x0: HOTEL.x - c.x1, x1: HOTEL.x - c.x0, z0: HOTEL.z - c.z1, z1: HOTEL.z - c.z0 });
+const HB = fromHotel({ x0: -24, x1: 30, z0: -9, z1: 9 });
+const inHotel = (x, z) => x > HB.x0 && x < HB.x1 && z > HB.z0 && z < HB.z1;
+// Floor 1 is the raid (floor 2 is scenery): its solids, the stairs and the landing, in world space. Doors keep on(): closed is solid.
+const hotelSolids = [];
+for (const c of hotel.colliders) if (c.y0 < 1.6 && c.y1 > 0.3) hotelSolids.push({ ...fromHotel(c), on: c.on });
+for (const s of hotel.surfaces) if (typeof s.y === 'function' || s.y < -0.2 || (s.y > 0.2 && s.y < 2.6)) hotelSolids.push(fromHotel(s));
+{ // ground under the hotel's edges, below its own floor slab
+    const w = HB.x1 - HB.x0 + 2, d = HB.z1 - HB.z0 + 2, g = new THREE.PlaneGeometry(w, d), ts = mats.asphalt.userData.texSize;
+    g.attributes.uv.array.forEach((v, i, a) => (a[i] = v * (i % 2 ? d : w) / ts));
+    const pad = new THREE.Mesh(g, mats.asphalt); pad.rotation.x = -Math.PI / 2; pad.position.set((HB.x0 + HB.x1) / 2, -0.03, (HB.z0 + HB.z1) / 2); pad.receiveShadow = true; scene.add(pad);
+}
+setLoad('building Slopov…', 0.97);
+
+// ---------------------------------------------------------------- map layout (metres; x east, z south; north is -z)
+// x -60..60 (N columns); z -60..68 (NZ rows, the most grid-navigation takes): the south edge moved out for the hotel
+const CELL = 0.5, HALF = 60, N = HALF * 2 / CELL, NZ = 256, ZMAX = -HALF + NZ * CELL, ORIGIN = [-HALF, -HALF];
+const grid = Array.from({ length: NZ }, () => new Array(N).fill(','));
+const ci = (m) => Math.max(0, Math.min(N, Math.round((m + HALF) / CELL))), cz = (m) => Math.max(0, Math.min(NZ, Math.round((m + HALF) / CELL)));
+const fill = (x0, z0, x1, z1, ch) => { for (let z = cz(z0); z < cz(z1); z++) for (let x = ci(x0); x < ci(x1); x++) grid[z][x] = ch; };
+const MATCH = { brick: ['#', 'D', 'W'], concrete: ['C', 'd', 'w'], stone: ['S', 'P', 'V'] };
+function building(b) {
+    const [W, D, Wi] = MATCH[b.m], t = CELL;
+    fill(b.x0, b.z0, b.x1, b.z1, b.floor ?? '_');
+    fill(b.x0, b.z0, b.x1, b.z0 + t, W); fill(b.x0, b.z1 - t, b.x1, b.z1, W); fill(b.x0, b.z0, b.x0 + t, b.z1, W); fill(b.x1 - t, b.z0, b.x1, b.z1, W);
+    for (const p of b.parts ?? []) {
+        if ('x' in p) { const a = p.from ?? b.z0, c = p.to ?? b.z1; fill(p.x, a, p.x + t, c, W); if (p.door != null) fill(p.x, a + p.door, p.x + t, a + p.door + 1.5, D); }
+        else { const a = p.from ?? b.x0, c = p.to ?? b.x1; fill(a, p.z, c, p.z + t, W); if (p.door != null) fill(a + p.door, p.z, a + p.door + 1.5, p.z + t, D); }
+    }
+    const cut = (side, off, w, ch) => side === 'n' ? fill(b.x0 + off, b.z0, b.x0 + off + w, b.z0 + t, ch) : side === 's' ? fill(b.x0 + off, b.z1 - t, b.x0 + off + w, b.z1, ch)
+        : side === 'w' ? fill(b.x0, b.z0 + off, b.x0 + t, b.z0 + off + w, ch) : fill(b.x1 - t, b.z0 + off, b.x1, b.z0 + off + w, ch);
+    for (const [s, o, w = 1.5] of b.doors ?? []) cut(s, o, w, D);
+    for (const [s, o, w = 1.5] of b.windows ?? []) cut(s, o, w, Wi);
+}
+// roads and pavements
+fill(-5, -HALF, 5, ZMAX, '='); fill(-HALF, -5, HALF, 5, '='); fill(-3, -HALF, 3, ZMAX, '.'); fill(-HALF, -3, HALF, 3, '.');
+fill(-34, 40, 34, ZMAX, '.'); fill(5, -34, 9, -14, '.'); fill(14, 10, 56, 14, '.'); fill(30, 5, 34, 14, '.');
+const BUILDINGS = [
+    { name: 'Apartments', m: 'brick', x0: -50, z0: -50, x1: -20, z1: -36, doors: [['s', 6, 2], ['s', 22, 2]], windows: [['n', 3], ['n', 10], ['n', 18], ['n', 25], ['s', 12], ['s', 16], ['w', 6], ['e', 6]], parts: [{ x: -35, door: 6 }] },
+    { name: 'Office', m: 'stone', x0: -48, z0: 14, x1: -22, z1: 34, doors: [['n', 11, 2]], windows: [['n', 3], ['n', 18], ['n', 22], ['w', 4], ['w', 13], ['e', 4], ['e', 13], ['s', 5], ['s', 18]], parts: [{ z: 24, door: 11 }, { x: -35, from: 24, to: 34, door: 4 }] },
+    { name: 'Shop', m: 'concrete', x0: 10, z0: -32, x1: 30, z1: -16, doors: [['w', 6, 2.5], ['s', 14]], windows: [['w', 2], ['w', 11], ['n', 4], ['n', 12]], parts: [{ x: 22, door: 9 }] },
+    { name: 'Warehouse', m: 'concrete', floor: '-', x0: 18, z0: 16, x1: 54, z1: 46, doors: [['n', 8, 4], ['w', 20, 2], ['e', 10, 2]], windows: [['n', 20], ['n', 28], ['s', 6], ['s', 16], ['s', 26]], parts: [{ z: 36, from: 18, to: 34, door: 6 }, { x: 34, from: 36, to: 46, door: 3 }] },
+    { name: 'House', m: 'brick', x0: 34, z0: -52, x1: 48, z1: -40, doors: [['s', 2]], windows: [['n', 3], ['n', 9], ['e', 4], ['w', 4]], parts: [{ x: 41, door: 4 }] },
+    { name: 'Garages', m: 'concrete', floor: '-', x0: -50, z0: 42, x1: -34, z1: 52, doors: [['n', 1, 3.5], ['n', 6.5, 3.5], ['n', 11.5, 3.5]], parts: [{ x: -44.5 }, { x: -39 }] },
+    { name: 'Checkpoint', m: 'concrete', x0: 50, z0: -46, x1: 56, z1: -40, doors: [['w', 2]], windows: [['n', 2], ['s', 2], ['e', 2]] },
+    { name: 'Barracks', m: 'brick', x0: -16, z0: -30, x1: -6, z1: -14, doors: [['e', 7]], windows: [['w', 3], ['w', 11], ['n', 4], ['s', 4]], parts: [{ z: -19, door: 3 }] },
+];
+BUILDINGS.forEach(building);
+// The hotel: none of our ground or walls under it ('h'); its floor-1 solids, rounded outward, block paths and sight ('H').
+// Walking inside it uses its exact boxes instead (clear() below), so doorways keep their real width.
+const cover = (b, ch) => { for (let z = Math.floor((b.z0 + HALF) / CELL); z < Math.ceil((b.z1 + HALF) / CELL); z++) for (let x = Math.floor((b.x0 + HALF) / CELL); x < Math.ceil((b.x1 + HALF) / CELL); x++) if (grid[z]?.[x] != null) grid[z][x] = ch; };
+fill(HB.x0, HB.z0, HB.x1, HB.z1, 'h'); for (const c of hotelSolids) if (!c.on) cover(c, 'H');
+// perimeter fence and a few concrete barriers
+const FX = 60, FN = -60, FS = ZMAX; // the old town's fence on three sides; the south side moved out past the hotel
+fill(-FX, FN, FX, FN + CELL, 'F'); fill(-FX, FS - CELL, FX, FS, 'F'); fill(-FX, FN, -FX + CELL, FS, 'F'); fill(FX - CELL, FN, FX, FS, 'F');
+fill(8, 6, 14, 6.5, 'B'); fill(-14, -8, -8, -7.5, 'B'); fill(36, -14, 36.5, -8, 'B'); fill(-30, 8, -24, 8.5, 'B'); fill(42, -60, 42.5, -54, 'B');
+const rows = grid.map((r) => r.join(''));
+const LEGEND = {
+    '#': { type: 'wall', mat: 'brick' }, 'D': { type: 'door', mat: 'brick', floor: 'floor' }, 'W': { type: 'window', mat: 'brick', floor: 'floor' },
+    'C': { type: 'wall', mat: 'concrete' }, 'd': { type: 'door', mat: 'concrete', floor: 'concrete' }, 'w': { type: 'window', mat: 'concrete', floor: 'concrete' },
+    'S': { type: 'wall', mat: 'stone' }, 'P': { type: 'door', mat: 'stone', floor: 'floor' }, 'V': { type: 'window', mat: 'stone', floor: 'floor' },
+    'F': { type: 'wall', mat: 'metal', height: 2.6, roof: false }, 'B': { type: 'wall', mat: 'concrete', height: 1.1, roof: false },
+    '_': { type: 'floor', mat: 'floor', roof: 'roof' }, '-': { type: 'floor', mat: 'concrete', roof: 'roof' },
+    '.': { type: 'ground', mat: 'asphalt' }, ',': { type: 'ground', mat: 'dirt' }, '=': { type: 'ground', mat: 'pavement' },
+};
+const world = M['grid-buildings'].attach(scene, { rows, cellSize: CELL, origin: ORIGIN, height: 3.2, legend: LEGEND, materials: mats });
+const nav = M['grid-navigation'].attach(null, { rows, cellSize: CELL, origin: ORIGIN, blocked: ['#', 'W', 'C', 'w', 'S', 'V', 'F', 'B', 'H'], maxVisited: 24000 });
+// sight passes through windows and over low barriers; walls and fences block it
+const opaque = new Uint8Array(N * NZ); rows.forEach((r, z) => [...r].forEach((c, x) => { if ('#CSFH'.includes(c)) opaque[z * N + x] = 1; }));
+function los(a, b) {
+    const dx = b.x - a.x, dz = b.z - a.z, d = Math.hypot(dx, dz), steps = Math.ceil(d / 0.25);
+    for (let i = 1; i < steps; i++) { const x = Math.floor((a.x + dx * i / steps + HALF) / CELL), z = Math.floor((a.z + dz * i / steps + HALF) / CELL); if (opaque[z * N + x]) return false; }
+    return true;
+}
+const walk = (x, z) => nav.walkable(Math.floor((x + HALF) / CELL), Math.floor((z + HALF) / CELL));
+const solidAt = (x, z, r) => hotelSolids.some((c) => (!c.on || c.on()) && x + r > c.x0 && x - r < c.x1 && z + r > c.z0 && z - r < c.z1);
+const clear = (x, z, r = 0.28) => inHotel(x, z) ? !solidAt(x, z, r) : walk(x - r, z - r) && walk(x + r, z - r) && walk(x - r, z + r) && walk(x + r, z + r);
+
+// ---------------------------------------------------------------- props
+const propBoxes = [], interactables = [];
+const templates = {};
+for (const [k, g] of Object.entries(propGltfs)) {
+    g.scene.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    const box = new THREE.Box3().setFromObject(g.scene), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+    templates[k] = { scene: g.scene, size, offset: new THREE.Vector3(-c.x, -box.min.y, -c.z) };
+}
+function placeProp(k, x, z, rot = 0, { block = true, alignZ = false, loot = null, scale = 1, name } = {}) {
+    const t = templates[k]; if (!t) return null;
+    if (alignZ && t.size.x > t.size.z) rot += Math.PI / 2;
+    const inner = t.scene.clone(true); inner.position.copy(t.offset);
+    const root = new THREE.Group(); root.add(inner); root.position.set(x, 0, z); root.rotation.y = rot; root.scale.setScalar(scale);
+    scene.add(root); root.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(root);
+    if (block) {
+        propBoxes.push({ box, surface: ['car', 'dumpster', 'barrel', 'toolchest', 'rack', 'lamp', 'rail', 'bollard', 'ammobox'].includes(k) ? 'metal' : 'wood' });
+        for (let zz = box.min.z + 0.1; zz < box.max.z - 0.05; zz += CELL / 2) for (let xx = box.min.x + 0.1; xx < box.max.x - 0.05; xx += CELL / 2) {
+            const cx = Math.floor((xx + HALF) / CELL), cz = Math.floor((zz + HALF) / CELL); if (cx > 0 && cz > 0 && cx < N && cz < NZ) nav.setBlocked(cx, cz, true);
+        }
+    }
+    if (loot) interactables.push({ kind: 'container', position: box.getCenter(new THREE.Vector3()), label: name ?? k, table: loot, container: { items: [], capacity: Infinity }, root });
+    return root;
+}
+for (const c of hotel.colliders) { if (c.on) continue; const b = fromHotel(c); propBoxes.push({ box: new THREE.Box3(new THREE.Vector3(b.x0, c.y0, b.z0), new THREE.Vector3(b.x1, c.y1, b.z1)), surface: 'concrete' }); }
+// hotel loot, searched where its own furniture stands (hotel coordinates)
+for (const [x, z, label, table] of [[-8.4, -2.4, 'front desk', 'weapons'], [-4.2, 1.2, 'brochure rack', 'shelf'], [0.4, -5.7, 'luggage cart', 'crate'], [3.4, -7.8, 'coffee counter', 'shelf'],
+    [5.3, -6.6, 'vending machine', 'trash'], [-4.3, -7.0, 'pantry shelves', 'shelf'], [15.0, -7.8, 'gym rack', 'tools'], [-22.2, -3.4, 'pool bag', 'crate'], [-22.2, 1.8, 'pool bag', 'crate']]) {
+    const p = toHotel(x, z); interactables.push({ kind: 'container', position: new THREE.Vector3(p.x, 0.8, p.z), label, table, container: { items: [], capacity: Infinity } });
+}
+const L = (k, x, z, r, table, name) => placeProp(k, x, z, r, { loot: table, name });
+const HP = Math.PI / 2;
+// apartments
+L('bookshelf', -48.9, -44, HP, 'shelf', 'bookshelf'); L('cabinet', -40, -49.2, 0, 'shelf', 'cabinet'); L('crate', -37, -38.5, 0.2, 'crate', 'crate');
+L('desk', -28, -49, 0, 'desk', 'desk'); placeProp('chair', -28, -47.6, Math.PI, { block: false }); L('cabinet', -21, -44, -HP, 'shelf', 'cabinet'); L('ammobox', -30, -37.4, 0, 'ammo', 'ammo box');
+// office
+L('desk', -44, 17, 0, 'desk', 'desk'); placeProp('chair', -44, 18.3, Math.PI, { block: false }); L('desk', -30, 17, 0, 'desk', 'desk'); L('bookshelf', -47.2, 20, HP, 'shelf', 'bookshelf');
+L('cabinet', -22.9, 18, -HP, 'shelf', 'cabinet'); L('bookshelf', -41, 33.3, Math.PI, 'shelf', 'bookshelf'); L('desk', -44, 30, 0, 'desk', 'desk'); L('crate', -25, 32, 0, 'crate', 'crate'); L('ammobox', -30, 27, 0.4, 'ammo', 'ammo box');
+// shop
+placeProp('rack', 14, -27.5, 0); placeProp('rack', 14, -22, 0); L('desk', 18.5, -18, 0, 'desk', 'counter'); L('crate', 27, -30, 0, 'crate', 'crate'); L('toolchest', 28.9, -24, -HP, 'tools', 'tool chest'); L('cabinet', 24, -31.2, 0, 'shelf', 'cabinet');
+// warehouse
+for (const [x, z] of [[24, 22], [24, 28], [32, 22], [32, 28]]) placeProp('rack', x, z, 0);
+L('crate', 44, 30, 0, 'crate', 'crate'); L('crate', 45.4, 30.2, 0.3, 'crate', 'crate'); placeProp('crate', 44.6, 31.6, 0.1); L('crate', 48, 40, 0, 'crate', 'crate');
+placeProp('barrel', 38, 42); placeProp('barrel', 38.8, 42.7); L('toolchest', 52.9, 24, -HP, 'tools', 'tool chest'); placeProp('car', 44, 21, 0, { alignZ: false });
+L('desk', 22, 42, 0, 'desk', 'desk'); L('cabinet', 18.9, 44, HP, 'shelf', 'cabinet'); L('ammobox', 30, 44.6, 0, 'ammo', 'ammo box'); L('crate', 26.5, 44.5, 0, 'weapons', 'weapons crate'); L('bookshelf', 33.2, 43, -HP, 'shelf', 'bookshelf');
+// house
+L('cabinet', 34.9, -46, HP, 'shelf', 'cabinet'); L('crate', 38, -50.8, 0, 'crate', 'crate'); L('bookshelf', 47.2, -46, -HP, 'shelf', 'bookshelf'); L('desk', 44, -51, 0, 'desk', 'desk'); L('ammobox', 45, -41.2, 0, 'ammo', 'ammo box');
+// garages
+L('toolchest', -49.2, 47, HP, 'tools', 'tool chest'); placeProp('car', -41.5, 47.5, 0, { alignZ: true }); L('crate', -36, 50.5, 0, 'crate', 'crate'); placeProp('barrel', -37.5, 44.5);
+// checkpoint and barracks
+L('desk', 53.5, -44.8, 0, 'desk', 'desk'); L('ammobox', 55, -41.4, 0, 'ammo', 'ammo box');
+L('bookshelf', -15.2, -26, HP, 'shelf', 'bookshelf'); L('crate', -8, -28.5, 0, 'weapons', 'weapons crate'); L('ammobox', -12, -29.2, 0, 'ammo', 'ammo box'); L('desk', -11, -15.4, Math.PI, 'desk', 'desk'); L('cabinet', -15.2, -16.8, HP, 'shelf', 'cabinet');
+// outdoors
+placeProp('car', 1.5, -30, 0, { alignZ: true }); placeProp('car', -25, 1.2, 0, { alignZ: false }); placeProp('car', 12, -9, 0.4); placeProp('car', 40, 8.5, 0); placeProp('car', -30, -10, 1.2);
+for (const [x, z, r] of [[-18, -34, 0], [32, -13.5, 0], [17, 48, HP], [-20, 38, 0]]) L('dumpster', x, z, r, 'trash', 'dumpster');
+for (const [x, z] of [[16, 14.8], [16.8, 15.3], [15.3, 15.4], [-46, 39], [40, -37], [46.5, 9.4]]) placeProp('barrel', x, z, rnd(0, 6));
+L('crate', 8, -40, 0.3, 'crate', 'crate'); placeProp('crate', 9.3, -40.3, 0.1); L('crate', 46, 11.8, 0.7, 'crate', 'crate'); L('crate', -26, -12, 0, 'crate', 'crate'); L('ammobox', 47, -50, 0.5, 'ammo', 'ammo box');
+for (const z of [-50, -30, -10, 10, 30, 41]) placeProp('lamp', 4.6, z, -HP);
+for (const x of [-50, -30, 30, 50]) placeProp('lamp', x, 4.6, Math.PI);
+for (const z of [-45, -15, 15, 45]) placeProp('pole', -4.6, z, 0);
+for (let x = 20; x < 36; x += 4) placeProp('rail', x, 5.6, 0); for (let x = -40; x < -24; x += 4) placeProp('rail', x, -5.6, 0);
+for (const z of [-30, -27, -24, -21, -18]) placeProp('bollard', 8.6, z);
+{ let n = 0, guard = 0; while (n < 46 && guard++ < 4000) { const x = rnd(-56, 56), z = rnd(-56, 56); const c = grid[ci(z)]?.[ci(x)]; if (c === ',' && clear(x, z, 1.5) && Math.hypot(x + 54, z - 54) > 6) { placeProp('shrub', x, z, rnd(0, 6), { block: false, scale: rnd(0.8, 1.4) }); n++; } } }
+
+// extraction point: north-east corner, marked by a flare
+const EXTRACT = { x: 54, z: -54, r: 3.5 };
+const flare = new THREE.PointLight(0xff3b2a, 12, 18, 1.6); flare.position.set(EXTRACT.x, 0.4, EXTRACT.z); scene.add(flare);
+const smokeMat = new THREE.SpriteMaterial({ color: 0xc8c0b8, transparent: true, opacity: 0.35, depthWrite: false });
+const smoke = Array.from({ length: 14 }, (_, i) => { const s = new THREE.Sprite(smokeMat.clone()); s.userData.t = i / 14; scene.add(s); return s; });
+placeProp('ammobox', EXTRACT.x + 2, EXTRACT.z + 2, 0.6);
+
+// ---------------------------------------------------------------- characters
+const charTemplates = charGltfs.map((g) => {
+    const box = new THREE.Box3().setFromObject(g.scene), h = box.max.y - box.min.y;
+    g.scene.scale.multiplyScalar(1.78 / h); g.scene.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
+    return g;
+});
+const tint = (hex, name, palette) => palette[name] ?? null;
+const PALETTES = {
+    scav: { Red_Dark: 0x4f5236, LightBlue: 0x3a3f46, LightBrown: 0x5b4a36, White: 0x6f6a5c, Orange: 0x5a5034, Brown: 0x463a2c, Grey: 0x4a4c44 },
+    faction: { Suit: 0x1e2224, Tie: 0x2b2f24, White: 0x3a3f30, Grey: 0x2a2c2e, DarkBrown: 0x1a1a18, Black: 0x141414 },
+    zombie: { Skin: 0x7c8a6b, Skin_Darker: 0x6d7a5d, Red_Dark: 0x4a1d1a, LightBlue: 0x2e3236, LightBrown: 0x3e3326, White: 0x5d584a, Suit: 0x24221f, Tie: 0x3a1a18, Grey: 0x3a3a36, Orange: 0x4a2e22, Brown: 0x3a2e24, Eye: 0xd8d84a },
+};
+const matCache = new Map();
+function skin(model, faction) {
+    model.traverse((o) => {
+        if (!o.isMesh) return;
+        const name = (o.userData.baseMat ??= o.material).name, key = faction + ':' + o.userData.baseMat.uuid;
+        if (!matCache.has(key)) { const m = o.userData.baseMat.clone(); const c = tint(0, name, PALETTES[faction] ?? {}); if (c != null) m.color.set(c); if (faction === 'zombie') { m.color.multiplyScalar(0.85); if (name === 'Eye') { m.emissive = new THREE.Color(0x707020); } } matCache.set(key, m); }
+        o.material = matCache.get(key);
+    });
+}
+
+// ---------------------------------------------------------------- profile, stash & trader
+const freshProfile = () => {
+    const gun = pick(['ar', 'shotgun', 'bolt']);
+    return { v: 1, money: START_MONEY, stash: [], stats: { raids: 0, extracts: 0, kills: 0 }, equip: {
+        primary: { uid: newUid(), id: gun, mods: [], mag: { type: 'ammo-standard', n: CATALOG[gun].fire.mag } }, armor: null,
+        rig: { uid: newUid(), id: 'rig-light', items: [{ uid: newUid(), id: 'ammo-standard', n: 30 }, { uid: newUid(), id: 'ammo-standard', n: 30 }] },
+        backpack: { uid: newUid(), id: 'pack-small', items: [] }, map: { uid: newUid(), id: 'map' } } };
+};
+let profile = freshProfile(), LO = null;
+const bindProfile = () => { LO?.dispose(); LO = M['extraction-loadout'].attach(profile, { catalog: CATALOG, newUid, onReject: (why) => toast(why) }); };
+bindProfile();
+const H = () => LO.helpers;
+const codec = M['save-codec'].attach(null, { scenario: 'escape-from-slopov', version: 1, validate: (s) => s && Array.isArray(s.stash) && s.equip && Number.isFinite(s.money) });
+
+function itemLabel(it) {
+    const s = CATALOG[it.id]; let meta = '';
+    if (s.kind === 'ammo') meta = `${it.n} rds`;
+    else if (s.kind === 'cash') meta = money(it.n);
+    else if (s.kind === 'armor') meta = `${Math.round(it.durability ?? s.durability)}/${s.durability}`;
+    else if (s.kind === 'gun') meta = [...(it.mods ?? []).map((m) => CATALOG[m].name), it.mag?.n ? `${it.mag.n}/${s.fire.mag} ${SHORT[it.mag.type] ?? ''}` : 'empty'].join(' · ');
+    else if (s.capacity) meta = `${H().used(it.items ?? [])}/${s.capacity} slots`;
+    return { name: s.name, meta };
+}
+const h = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) k.startsWith('on') ? (e[k] = v) : e.setAttribute(k, v); e.append(...kids.flat().filter((x) => x != null)); return e; };
+const btn = (label, fn, disabled) => { const b = h('button', { onclick: (e) => { e.stopPropagation(); fn(); refresh(); } }, label); if (disabled) b.disabled = true; return b; };
+
+// Where things go when picked up: empty slot -> equip, small -> rig, else backpack.
+function stow(item, from) {
+    const s = CATALOG[item.id], slot = M['extraction-loadout'].SLOTS[s.kind];
+    if (slot && !profile.equip[slot]) return LO.equip(item.uid, from);
+    if (s.size === 1 && profile.equip.rig && H().used(profile.equip.rig.items) + H().slotsFor(item) <= CATALOG[profile.equip.rig.id].capacity) return LO.move(item.uid, from, 'rig');
+    if (profile.equip.backpack) return LO.move(item.uid, from, 'backpack');
+    return LO.move(item.uid, from, 'rig');
+}
+
+// Shared inventory view: equipment on the left, `other` (stash, crate, body) on the right.
+let invOther = null, invTitle = '', menuTab = 'loadout', inRaid = false;
+function equipmentPanel(otherRef, otherName) {
+    const p = h('div', { class: 'panel' }, h('h3', {}, 'Equipment'));
+    const eq = profile.equip;
+    const slot = (label, key) => {
+        const it = eq[key], box = h('div', { class: 'slot' }, h('div', { class: 'label' }, label));
+        if (!it) { box.append(h('div', { class: 'empty' }, 'empty')); p.append(box); return box; }
+        const { name, meta } = itemLabel(it);
+        box.append(h('div', { class: 'row' }, h('span', { class: 'name' }, name), h('span', { class: 'meta' }, meta),
+            otherRef ? btn('→ ' + otherName, () => LO.unequip(key, otherRef)) : null,
+            key !== 'backpack' && eq.backpack && !['rig'].includes(key) ? btn('→ Pack', () => LO.unequip(key, 'backpack')) : null));
+        if (key === 'primary') for (const m of it.mods ?? []) box.append(h('div', { class: 'row nested' }, h('span', { class: 'name' }, CATALOG[m].name), btn('Remove', () => LO.detachMod(it.uid, m, otherRef && !inRaid ? otherRef : 'backpack'))));
+        if (it.items) {
+            const cap = CATALOG[it.id].capacity, used = H().used(it.items);
+            box.append(h('div', { class: 'cap' }, h('i', { style: `width:${Math.min(100, used / cap * 100)}%` })));
+            if (!it.items.length) box.append(h('div', { class: 'empty nested' }, 'empty'));
+            for (const inner of it.items) {
+                const l = itemLabel(inner), other = key === 'rig' ? 'backpack' : 'rig';
+                box.append(h('div', { class: 'row nested' }, h('span', { class: 'name' }, l.name), h('span', { class: 'meta' }, l.meta),
+                    eq[other] && (other === 'backpack' || CATALOG[inner.id].size === 1) ? btn(other === 'rig' ? '→ Rig' : '→ Pack', () => LO.move(inner.uid, key, other)) : null,
+                    otherRef ? btn('→ ' + otherName, () => LO.move(inner.uid, key, otherRef)) : null,
+                    CATALOG[inner.id].kind === 'mod' && eq.primary ? btn('Fit', () => LO.attachMod(eq.primary.uid, inner.uid, key)) : null,
+                    CATALOG[inner.id].kind === 'med' && inRaid ? btn('Use', () => { toggleInv(false); useMed(inner.id); }) : null));
+            }
+        }
+        return box;
+    };
+    p.append(slot('Primary weapon', 'primary'), slot('Body armor', 'armor'), slot('Chest rig — reload source', 'rig'), slot('Backpack', 'backpack'), slot('Map', 'map'));
+    return p;
+}
+function containerPanel(title, ref, { sell = false, take = true } = {}) {
+    const b = LO.box(ref), p = h('div', { class: 'panel' }, h('h3', {}, h('span', {}, title), ref === 'stash' ? h('span', { class: 'mono' }, `${H().used(b.items)}/${b.capacity}`) : ''));
+    if (!b.items.length) p.append(h('div', { class: 'empty' }, ref === 'stash' ? 'Your stash is empty.' : 'Nothing here.'));
+    const rowFor = (it, src, nested) => {
+        const s = CATALOG[it.id], l = itemLabel(it), eqSlot = M['extraction-loadout'].SLOTS[s.kind];
+        return h('div', { class: 'row' + (nested ? ' nested' : '') }, h('span', { class: 'name' }, l.name), h('span', { class: 'meta' }, l.meta),
+            sell ? h('span', { class: 'price' }, money(LO.sellPrice(it))) : null, sell ? btn('Sell', () => LO.sell(it.uid)) : null,
+            !sell && take && inRaid ? btn('Take', () => stow(it, src)) : null,
+            !sell && eqSlot ? btn(profile.equip[eqSlot] ? 'Swap' : 'Equip', () => LO.equip(it.uid, src)) : null,
+            !sell && s.size === 1 && profile.equip.rig ? btn('→ Rig', () => LO.move(it.uid, src, 'rig')) : null,
+            !sell && profile.equip.backpack && !(s.capacity && it.items?.length) ? btn('→ Pack', () => LO.move(it.uid, src, 'backpack')) : null,
+            !sell && s.kind === 'mod' && profile.equip.primary ? btn('Fit', () => LO.attachMod(profile.equip.primary.uid, it.uid, src)) : null,
+            !sell && s.kind === 'gun' && ref === 'stash' && profile.equip.primary ? null : null);
+    };
+    for (const it of b.items) {
+        p.append(rowFor(it, ref));
+        if (it.items?.length) for (const inner of it.items) p.append(rowFor(inner, { items: it.items }, true));
+        if (ref === 'stash' && CATALOG[it.id].kind === 'gun' && it.mods?.length) for (const m of it.mods) p.append(h('div', { class: 'row nested' }, h('span', { class: 'name' }, CATALOG[m].name), btn('Remove', () => LO.detachMod(it.uid, m, 'stash'))));
+    }
+    return p;
+}
+function traderPanel() {
+    const p = h('div', { class: 'panel' }, h('h3', {}, 'Trader — Old Sasha'), h('div', { class: 'meta' }, 'Everything you can find out there, for a price. Ammo comes in boxes of 30.'));
+    const kinds = [['gun', 'Weapons'], ['mod', 'Weapon parts'], ['ammo', 'Ammunition'], ['armor', 'Body armor'], ['rig', 'Chest rigs'], ['backpack', 'Backpacks'], ['med', 'Medicine'], ['map', 'Maps']];
+    for (const [kind, label] of kinds) {
+        p.append(h('div', { class: 'kind' }, label));
+        for (const [id, s] of Object.entries(CATALOG).filter(([, s]) => s.kind === kind)) {
+            const extra = s.fire ? `mag ${s.fire.mag} · fits: ${s.mods.map((m) => CATALOG[m].name).join(', ')}` : s.capacity ? `${s.capacity} slots` : s.durability ? `class ${B.ARMOR[s.armor].cls} · ${s.durability} durability` : s.ammo ? { standard: 'medium pen · medium damage', hollow: 'low pen · high flesh damage', ap: 'high pen · low damage unless through armor' }[s.ammo] : kind === 'med' ? (s.restore ? `heals ${s.heal} · fixes destroyed limbs · ${s.use}s` : `heals ${s.heal} · ${s.use}s`) : kind === 'mod' ? { silencer: 'AR & shotgun · quiet shots', holo: 'AR · faster aim', scope: 'bolt-action · 4x zoom' }[id] : 'shows the exfil';
+            p.append(h('div', { class: 'trader-item' }, h('span', { class: 'name' }, s.name, h('div', { class: 'meta' }, extra)), h('span', { class: 'price' }, money(s.price)), btn('Buy', () => LO.buy(id), profile.money < s.price)));
+        }
+    }
+    return p;
+}
+function renderMenu() {
+    $('#money').textContent = money(profile.money);
+    document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('on', b.dataset.tab === menuTab));
+    const main = $('#menumain'); main.replaceChildren();
+    const cols = h('div', { class: 'cols' });
+    if (menuTab === 'loadout') cols.append(equipmentPanel('stash', 'Stash'), containerPanel('Stash', 'stash'));
+    else cols.append(traderPanel(), containerPanel('Sell from stash', 'stash', { sell: true }));
+    main.append(cols);
+    const broke = !profile.equip.primary && !profile.stash.some((i) => CATALOG[i.id].kind === 'gun') && profile.money < CATALOG.shotgun.price;
+    if (broke) main.prepend(h('div', { class: 'panel', style: 'margin-bottom:12px;border-color:var(--amber)' }, 'No gun and no money for one? Sasha takes pity. ',
+        btn('Take a charity kit', () => { profile.stash.push({ uid: newUid(), id: 'shotgun', mods: [], mag: { type: 'ammo-standard', n: 6 } }, { uid: newUid(), id: 'ammo-standard', n: 30 }); if (!profile.equip.rig) profile.stash.push({ uid: newUid(), id: 'rig-light', items: [] }); })));
+}
+function renderInv() {
+    const cols = $('#invcols'); cols.replaceChildren(equipmentPanel(invOther, invOther ? 'Container' : null));
+    cols.append(invOther ? containerPanel(invTitle, invOther) : h('div', { class: 'panel' }, h('h3', {}, 'Nearby'), h('div', { class: 'empty' }, 'Search a container or body with E to loot it.')));
+}
+function refresh() { if (!$('#menu').classList.contains('hidden')) renderMenu(); if (!$('#inv').classList.contains('hidden')) renderInv(); if (inRaid) rebuildWeaponIfChanged(); }
+document.querySelectorAll('.tabs button').forEach((b) => (b.onclick = () => { menuTab = b.dataset.tab; renderMenu(); }));
+$('#savebtn').onclick = () => { $('#savecode').value = codec.encode(profile); $('#savemsg').textContent = ''; $('#savebox').classList.remove('hidden'); };
+$('#savecopy').onclick = async () => { $('#savecode').select(); try { await navigator.clipboard.writeText($('#savecode').value); $('#savemsg').textContent = 'Copied.'; } catch { $('#savemsg').textContent = 'Select the text and copy it (Ctrl+C).'; } };
+$('#saveload').onclick = () => { try { profile = codec.decode($('#savecode').value); bindProfile(); $('#savemsg').textContent = 'Loaded.'; renderMenu(); } catch (e) { $('#savemsg').textContent = e.message; } };
+
+// ---------------------------------------------------------------- loot tables
+const ammoId = () => weighted([['ammo-standard', 60], ['ammo-hollow', 25], ['ammo-ap', 15]]);
+const make = (id, extra = {}) => { const s = CATALOG[id]; return { uid: newUid(), id, ...(s.kind === 'armor' ? { durability: Math.round(s.durability * rnd(0.45, 1)) } : {}), ...(s.capacity ? { items: [] } : {}), ...(s.kind === 'gun' ? { mods: [], mag: { type: ammoId(), n: irnd(0, s.fire.mag) } } : {}), ...extra }; };
+const roll = {
+    ammo: () => make(ammoId(), { n: irnd(10, 30) }),
+    cash: (a = 300, b = 3000) => make('cash', { n: Math.round(rnd(a, b) / 10) * 10 }),
+    mod: () => make(pick(['silencer', 'holo', 'scope'])),
+    armor: () => make(weighted([['armor-light', 55], ['armor-medium', 32], ['armor-heavy', 13]])),
+    rig: () => make(weighted([['rig-light', 50], ['rig-medium', 35], ['rig-big', 15]])),
+    pack: () => make(weighted([['pack-small', 50], ['pack-medium', 35], ['pack-large', 15]])),
+    gun: () => make(weighted([['shotgun', 40], ['ar', 30], ['bolt', 30]])),
+    med: () => make(weighted([['bandage', 70], ['medkit', 30]])),
+};
+const TABLES = {
+    crate: () => Array.from({ length: irnd(1, 3) }, () => weighted([[roll.ammo, 32], [roll.cash, 26], [roll.med, 12], [roll.mod, 11], [roll.armor, 7], [roll.rig, 6], [roll.pack, 6]])()),
+    ammo: () => Array.from({ length: irnd(1, 3) }, roll.ammo),
+    tools: () => Array.from({ length: irnd(1, 2) }, () => weighted([[roll.mod, 40], [roll.ammo, 30], [roll.med, 12], [roll.cash, 18]])()),
+    shelf: () => Array.from({ length: irnd(0, 2) }, () => weighted([[roll.cash, 45], [roll.ammo, 25], [roll.med, 18], [() => make('map'), 12]])()),
+    desk: () => Array.from({ length: irnd(0, 2) }, () => weighted([[() => roll.cash(500, 6000), 70], [roll.ammo, 20], [() => make('map'), 10]])()),
+    trash: () => Math.random() < 0.6 ? [weighted([[() => roll.cash(50, 600), 60], [roll.ammo, 40]])()] : [],
+    weapons: () => [roll.gun(), roll.ammo(), ...(Math.random() < 0.5 ? [roll.mod()] : []), ...(Math.random() < 0.35 ? [roll.armor()] : [])],
+};
+// loose items lying on floors, rerolled each raid
+const LOOSE = [...[[-2.5, 3], [20, 0], [26, 0], [-18.5, 5.5], [3.5, 6]].map(([x, z]) => { const p = toHotel(x, z); return [p.x, p.z]; }), [-44, -40], [-25, -42], [-40, 20], [-28, 30], [16, -25], [26, -20], [28, 24], [40, 34], [50, 40], [38, -44], [-46, 49], [53, -42], [-11, -26], [-10, -17], [0.5, 20], [-30, -3], [20, 8]];
+const gearBuild = (id) => {
+    const s = CATALOG[id];
+    if (s.kind === 'gun') { const g = M['firearm-models'].build(GUN_MODEL[id]); g.rotation.set(0, rnd(0, 6), Math.PI / 2); g.position.y = 0.04; return g; }
+    if (s.kind === 'ammo') { const g = templates.ammobox.scene.clone(true); const w = new THREE.Group(); g.position.copy(templates.ammobox.offset); w.add(g); w.scale.setScalar(0.45); return w; }
+    if (s.kind === 'mod') { const g = M['firearm-models'].buildAttachment(id); g.scale.setScalar(1.4); return g; }
+    const g = M['tactical-gear-models'].build(id); if (s.kind === 'armor' || s.kind === 'rig' || s.kind === 'backpack') { g.rotation.x = -HP; g.position.y = 0.12; } return g;
+};
+
+// ---------------------------------------------------------------- audio
+const audio = M['combat-audio'].attach(camera, { volume: 0.7 });
+const steps = (foley?.clips ? Object.entries(foley.clips).filter(([k]) => k.startsWith('footstep')).map(([, v]) => v) : []).map((src) => { const a = new Audio(src); a.volume = 0.32; return a; });
+const blip = (name, vol = 0.5) => { const src = foley?.clips?.[name]; if (!src) return; const a = new Audio(src); a.volume = vol; a.play().catch(() => {}); };
+let stepIdx = 0; const step = () => { const a = steps[stepIdx++ % (steps.length || 1)]; if (a) { a.currentTime = 0; a.playbackRate = rnd(0.9, 1.1); a.play().catch(() => {}); } };
+
+// ---------------------------------------------------------------- effects: impacts, tracers
+const decals = [], puffs = [];
+const holeMat = new THREE.MeshBasicMaterial({ color: 0x15130f, transparent: true, opacity: 0.85, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4 });
+const holeGeo = new THREE.CircleGeometry(0.035, 8);
+const puffMats = { dust: new THREE.SpriteMaterial({ color: 0xb8ad98, transparent: true, depthWrite: false }), blood: new THREE.SpriteMaterial({ color: 0x7a0f0a, transparent: true, depthWrite: false }), spark: new THREE.SpriteMaterial({ color: 0xffd38a, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }) };
+function hole(point, normal) { const m = new THREE.Mesh(holeGeo, holeMat); m.position.copy(point).addScaledVector(normal, 0.005); m.lookAt(point.clone().add(normal)); scene.add(m); decals.push(m); if (decals.length > 80) decals.shift().removeFromParent(); }
+function puff(point, kind) { const s = new THREE.Sprite(puffMats[kind].clone()); s.position.copy(point); s.scale.setScalar(0.08); s.userData.t = 0; s.userData.kind = kind; scene.add(s); puffs.push(s); }
+const tracerMat = new THREE.LineBasicMaterial({ color: 0xffe2a0, transparent: true, opacity: 0.6 }); const tracers = [];
+function tracer(a, b) { const g = new THREE.BufferGeometry().setFromPoints([a, b]); const l = new THREE.Line(g, tracerMat.clone()); l.userData.t = 0.06; scene.add(l); tracers.push(l); }
+
+// ---------------------------------------------------------------- combat core
+const B = M.ballistics;
+const raycaster = new THREE.Raycaster(); const tmpV = new THREE.Vector3();
+let actors = [], player = null, playerArmor = null, playerHealth = null, net = null; // net: the co-op room, when in one
+function rayActor(o, d, a, far) {
+    const r = a.faction === 'player' ? 0.32 : 0.34, ox = o.x - a.position.x, oz = o.z - a.position.z;
+    const A = d.x * d.x + d.z * d.z, Bq = 2 * (ox * d.x + oz * d.z), C = ox * ox + oz * oz - r * r, disc = Bq * Bq - 4 * A * C;
+    if (A < 1e-9 || disc < 0) return null;
+    const s = Math.sqrt(disc); let t = (-Bq - s) / (2 * A); if (t < 0) t = (-Bq + s) / (2 * A);
+    if (t < 0 || t > far) return null;
+    const y = o.y + d.y * t; return y >= 0 && y <= 1.82 ? { t, y } : null;
+}
+function fireRay(shooter, origin, dir, { ammo, mult = 1, range = 120, tracerFrom = null }) {
+    raycaster.set(origin, dir); raycaster.far = range;
+    let best = { t: range, kind: null };
+    const hit = raycaster.intersectObjects(world.colliders, false)[0];
+    if (hit) best = { t: hit.distance, kind: 'world', point: hit.point, normal: hit.face.normal.clone().transformDirection(hit.object.matrixWorld), surface: hit.object.userData.surface };
+    for (const p of propBoxes) { const pt = raycaster.ray.intersectBox(p.box, tmpV); if (pt) { const t = pt.distanceTo(origin); if (t < best.t) best = { t, kind: 'world', point: pt.clone(), normal: dir.clone().negate(), surface: p.surface }; } }
+    for (const a of actors) { if (a === shooter || a.dead || (a.remote && shooter?.faction === 'player')) continue; const r = rayActor(origin, dir, a, best.t); if (r && r.t < best.t) best = { t: r.t, kind: 'actor', actor: a, y: r.y, point: origin.clone().addScaledVector(dir, r.t) }; }
+    const end = best.point ?? origin.clone().addScaledVector(dir, range);
+    if (tracerFrom) tracer(tracerFrom, end);
+    if (best.kind === 'world') { hole(best.point, best.normal); puff(best.point, best.surface === 'metal' ? 'spark' : 'dust'); audio.impact(best.surface === 'metal' ? 'metal' : best.surface === 'wood' ? 'wood' : 'concrete', best.point); }
+    if (best.kind === 'actor') {
+        const a = best.actor, hd = a === player ? controls.input.yaw + Math.PI : a.heading;
+        const lateral = (best.point.x - a.position.x) * -Math.cos(hd) + (best.point.z - a.position.z) * Math.sin(hd);
+        const zone = M['body-parts'].hitZone(best.y / 1.78, lateral);
+        puff(best.point, 'blood'); audio.impact('flesh', best.point);
+        damageActor(a, { ammo: B.AMMO[CATALOG[ammo]?.ammo ?? 'standard'], ammoId: ammo, zone, mult, shooter });
+    }
+    return best;
+}
+function damageActor(a, { ammo, ammoId, zone, mult, shooter, melee }) {
+    if (a.dead) return;
+    // co-op: a friend is hurt on their own machine; a guest's hits on the town go to the host, who runs it
+    if (a.remote) { send('hurt', { b: shooter?.nid, f: shooter?.faction, z: zone, ...(melee ? { melee } : { a: ammoId, m: mult }) }, a.remote); return; }
+    if (net?.guest && a !== player) { if (shooter === player) { flashHit(zone === 'head'); send('hit', { n: a.nid, a: ammoId, z: zone, m: mult }, net.hostId); } return; }
+    let r;
+    a.lastZone = zone; a.lastHitBy = shooter;
+    if (melee) { const armored = (zone === 'thorax' || zone === 'stomach') && a.armorState?.durability > 0; r = { flesh: melee * (armored ? 0.7 : 1) }; if (armored) a.armorState.durability = Math.max(0, a.armorState.durability - 4); a.health.damage(r.flesh, shooter, zone); }
+    else r = a.ballistics.hit({ ammo, zone, multiplier: mult, source: shooter });
+    if (shooter === player && a !== player) { flashHit(zone === 'head'); }
+    if (a === player) { lastHitBy = shooter; hurt(r.flesh); return; }
+    a.alert = 6; if (shooter && !a.dead) { a.brain?.hear({ position: shooter.position, radius: 999 }); if (shooter.faction !== a.faction) a.grudge = shooter; }
+    if (a.health.dead) killActor(a, shooter);
+}
+const noise = (pos, radius) => { for (const a of actors) if (a !== player && !a.dead) a.brain?.hear({ position: pos, radius }); };
+
+// ---------------------------------------------------------------- AI actors
+const hostility = M['faction-hostility'].attach(null, {
+    actors: () => actors, canSee: (a, t) => see(a, t),
+    onConvert: (victim) => { victim.convertAt = 4 + rnd(0, 2); },
+});
+function see(a, t) {
+    const dx = t.position.x - a.position.x, dz = t.position.z - a.position.z, d = Math.hypot(dx, dz);
+    if (d > a.sight) return false;
+    if (a.faction !== 'zombie' && !(a.alert > 0) && d > 3) { const fx = Math.sin(a.heading), fz = Math.cos(a.heading); if ((dx * fx + dz * fz) / d < 0.35) return false; }
+    return los(a.position, t.position);
+}
+function moveActor(a, p) {
+    const r = 0.28;
+    if (clear(p.x, p.z, r)) { a.position.x = p.x; a.position.z = p.z; }
+    else if (clear(p.x, a.position.z, r)) a.position.x = p.x;
+    else if (clear(a.position.x, p.z, r)) a.position.z = p.z;
+}
+function randomWalkable(cx, cz, radius, minFromPlayer = 0) {
+    for (let i = 0; i < 300; i++) { const x = cx + rnd(-radius, radius), z = cz + rnd(-radius, radius); if (Math.abs(x) < 58 && z > -58 && z < ZMAX - 2 && clear(x, z, 0.4) && (!player || Math.hypot(x - player.position.x, z - player.position.z) > minFromPlayer)) return { x, z }; }
+    return null;
+}
+function kitFor(faction) {
+    if (faction === 'zombie') return { items: Math.random() < 0.25 ? [roll.cash(50, 500)] : [] };
+    const elite = faction === 'faction';
+    const gunId = elite ? weighted([['ar', 70], ['bolt', 30]]) : weighted([['ar', 35], ['shotgun', 40], ['bolt', 25]]);
+    const mods = gunId === 'ar' ? [...(Math.random() < (elite ? 0.7 : 0.1) ? ['holo'] : []), ...(Math.random() < (elite ? 0.5 : 0.1) ? ['silencer'] : [])] : gunId === 'bolt' ? (Math.random() < (elite ? 0.8 : 0.15) ? ['scope'] : []) : (Math.random() < 0.1 ? ['silencer'] : []);
+    const ammo = elite ? weighted([['ammo-ap', 50], ['ammo-hollow', 25], ['ammo-standard', 25]]) : weighted([['ammo-standard', 80], ['ammo-hollow', 20]]);
+    const gun = { uid: newUid(), id: gunId, mods, mag: { type: ammo, n: CATALOG[gunId].fire.mag } };
+    const armor = elite ? make(weighted([['armor-medium', 60], ['armor-heavy', 40]])) : Math.random() < 0.3 ? make('armor-light') : null;
+    const rig = make(elite ? weighted([['rig-medium', 60], ['rig-big', 40]]) : weighted([['rig-light', 70], ['rig-medium', 30]]));
+    rig.items.push({ uid: newUid(), id: ammo, n: irnd(15, 30) }); if (Math.random() < 0.5) rig.items.push({ uid: newUid(), id: ammo, n: irnd(10, 30) });
+    const pack = Math.random() < (elite ? 0.7 : 0.45) ? make(elite ? weighted([['pack-medium', 60], ['pack-large', 40]]) : 'pack-small') : null;
+    if (pack && Math.random() < 0.6) pack.items.push(Math.random() < 0.5 ? roll.cash(elite ? 1000 : 200, elite ? 6000 : 2500) : roll.ammo());
+    if (Math.random() < (elite ? 0.6 : 0.35)) rig.items.push(make(elite && Math.random() < 0.5 ? 'medkit' : 'bandage'));
+    const items = [gun, armor, rig, pack, Math.random() < (elite ? 0.4 : 0.15) ? make('map') : null, Math.random() < (elite ? 0.6 : 0.3) ? roll.cash(elite ? 800 : 150, elite ? 4000 : 1500) : null].filter(Boolean);
+    return { gun, armor, rig, pack, ammo, items };
+}
+const CLIPS = { idle: 'Idle', walk: 'Walk', run: 'Run', hit: 'HitRecieve' };
+function dressActor(a) {
+    a.gear?.forEach((g) => g.removeFromParent()); a.gear = [];
+    if (a.faction === 'zombie') return;
+    const add = (o, x, y, z, s = 1.15) => { o.position.set(x, y, z); o.scale.setScalar(s); a.root.add(o); a.gear.push(o); o.traverse((m) => { if (m.isMesh) m.castShadow = true; }); };
+    if (a.kit.armor) add(M['tactical-gear-models'].build(a.kit.armor.id), 0, 1.3, 0.0);
+    add(M['tactical-gear-models'].build(a.kit.rig.id), 0, 1.3, 0.02);
+    if (a.kit.pack) add(M['tactical-gear-models'].build(a.kit.pack.id), 0, 1.3, -0.02);
+    const gun = M['firearm-models'].build(GUN_MODEL[a.kit.gun.id], { attachments: a.kit.gun.mods.map((m) => m === 'holo' ? 'holo' : m) });
+    gun.rotation.y = Math.PI; add(gun, 0.16, 1.16, 0.26, 1);
+}
+function spawnActor(faction, at, patrolCenter) {
+    const tpl = faction === 'faction' ? charTemplates[1] : faction === 'scav' ? charTemplates[0] : pick(charTemplates);
+    const model = SkeletonUtils.clone(tpl.scene); skin(model, faction);
+    const root = new THREE.Group(); root.add(model); scene.add(root); root.position.set(at.x, 0, at.z);
+    const a = { faction, root, model, position: root.position, heading: rnd(0, 6.28), dead: false, sight: faction === 'zombie' ? 22 : 45, alert: 0, seeT: 0, burst: 0, burstT: 0, retarget: 0, target: null, anim: null };
+    a.kit = kitFor(faction);
+    a.anim = M['clip-animator'].attach(model, { animations: tpl.animations, clips: CLIPS, state: () => a.animState ?? 'idle', fade: 0.25 });
+    a.animState = 'idle';
+    configure(a, patrolCenter ?? at);
+    dressActor(a);
+    a.nid = ++nidSeq; byNid.set(a.nid, a);
+    actors.push(a); return a;
+}
+function configure(a, center) {
+    a.brain?.dispose(); a.health?.dispose();
+    const zombie = a.faction === 'zombie', f = zombie ? null : CATALOG[a.kit.gun.id].fire;
+    a.health = M['body-parts'].attach(a, { scale: zombie ? 0.6 : 1 });
+    a.armorState = a.kit.armor ? { cls: B.ARMOR[CATALOG[a.kit.armor.id].armor].cls, durability: a.kit.armor.durability, max: CATALOG[a.kit.armor.id].durability } : null;
+    a.ballistics = B.attach(a, { armor: a.armorState, health: a.health });
+    const patrol = Array.from({ length: 4 }, () => randomWalkable(center.x, center.z, zombie ? 18 : 12)).filter(Boolean);
+    a.brain = M['perception-brain'].attach(a, {
+        target: () => a.target, canSee: (s, t) => see(s, t),
+        path: (from, to) => (nav.lineOfSight(from, to) ? [{ x: to.x, z: to.z }] : nav.findPath(from, to)),
+        move: moveActor, patrol,
+        speed: zombie ? 1.1 : 1.5, chaseSpeed: zombie ? 5.4 : 3.6, sight: a.sight, memory: zombie ? 10 : 14,
+        attackRange: zombie ? 1.35 : Math.min(f.range, a.faction === 'faction' ? 50 : 38), attackEvery: zombie ? 1.0 : f.mode === 'auto' ? 1.5 : f.mode === 'pump' ? 1.1 : 1.8,
+        onAttack: (s, t) => attack(s, t),
+    });
+}
+function attack(a, t) {
+    a.heading = Math.atan2(t.position.x - a.position.x, t.position.z - a.position.z);
+    if (a.faction === 'zombie') {
+        if (Math.hypot(t.position.x - a.position.x, t.position.z - a.position.z) < 1.6) { damageActor(t, { melee: 24 + rnd(0, 10), zone: weighted([['thorax', 30], ['stomach', 25], ['leftArm', 15], ['rightArm', 15], ['leftLeg', 8], ['rightLeg', 8]]), shooter: a }); a.animState = 'hit'; a.animHold = 0.3; }
+        return;
+    }
+    if (a.seeT < (a.faction === 'faction' ? 0.45 : 0.8) || a.burst > 0) return;
+    const f = CATALOG[a.kit.gun.id].fire; a.burst = f.mode === 'auto' ? irnd(3, 6) : 1; a.burstT = 0;
+}
+function aiShoot(a, t) {
+    const f = CATALOG[a.kit.gun.id].fire, from = new THREE.Vector3(a.position.x + Math.sin(a.heading) * 0.55, 1.42, a.position.z + Math.cos(a.heading) * 0.55);
+    const aim = new THREE.Vector3(t.position.x, 1.15, t.position.z), d = from.distanceTo(aim);
+    const err = (a.faction === 'faction' ? 0.028 : 0.05) * (1 + d / 35) + (t.moving ? 0.012 : 0) + (f.mode === 'pump' ? 0.03 : 0);
+    const suppressed = a.kit.gun.mods.includes('silencer');
+    const ends = [];
+    for (let i = 0; i < (f.pellets || 1); i++) {
+        const dir = aim.clone().sub(from).normalize(); dir.x += rnd(-err, err); dir.y += rnd(-err, err) * 0.5; dir.z += rnd(-err, err); dir.normalize();
+        ends.push(from.clone().addScaledVector(dir, fireRay(a, from, dir, { ammo: a.kit.ammo, mult: f.mult, range: 120, tracerFrom: suppressed ? null : from }).t));
+    }
+    shareShot(from, ends, f.sound, suppressed);
+    audio.shot({ kind: f.sound, suppressed, position: from });
+    noise(from, suppressed ? 15 : 70);
+}
+function killActor(a, killer) {
+    a.dead = true; a.brain?.dispose(); a.brain = null; a.deadT = 0; a.killer = killer; a.anim.mixer.timeScale = 0;
+    if (killer === player) { stats.kills++; profile.stats.kills++; if (a.lastZone === 'head') toast('Headshot'); }
+    a.body = { kind: 'body', position: a.position.clone().setY(0.5), label: a.faction === 'zombie' ? 'zombie' : a.faction === 'faction' ? 'faction soldier' : 'scavenger', container: { items: a.kit.items, capacity: Infinity }, actor: a };
+    if (a.kit.armor && a.armorState) a.kit.armor.durability = Math.round(a.armorState.durability);
+    interactables.push(a.body);
+    hostility.killed(a, killer);
+}
+function riseAsZombie(a) {
+    // gear stays on the ground as a loot pile; the body gets up hungry
+    const pile = M['tactical-gear-models'].build(a.kit.pack?.id ?? 'pack-small'); pile.position.set(a.position.x + 0.4, 0, a.position.z); pile.rotation.x = -HP; scene.add(pile);
+    a.body.root = pile; a.body.position = pile.position.clone().setY(0.3); a.body.label = 'dropped gear'; a.body.actor = null;
+    a.faction = 'zombie'; a.kit = { items: [] }; a.dead = false; a.convertAt = null; a.root.rotation.set(0, 0, 0); a.root.position.y = 0; a.anim.mixer.timeScale = 1;
+    skin(a.model, 'zombie'); dressActor(a); a.sight = 22; configure(a, a.position);
+    audio.groan(a.position, 0.8);
+}
+function updateActors(dt) {
+    for (const a of actors) {
+        if (a === player || a.remote) continue;
+        if (a.dead) {
+            a.deadT += dt; const k = Math.min(1, a.deadT / 0.45); a.root.rotation.x = -HP * k * k; a.root.position.y = 0.12 * k;
+            if (a.convertAt != null && a.deadT > a.convertAt) riseAsZombie(a);
+            continue;
+        }
+        a.health.update(dt); a.alert = Math.max(0, a.alert - dt);
+        if ((a.retarget -= dt) <= 0) {
+            a.retarget = 0.25 + rnd(0, 0.1);
+            const g = a.grudge && !a.grudge.dead && see(a, a.grudge) ? a.grudge : null;
+            a.target = g ?? hostility.nearestHostile(a, { range: a.sight });
+        }
+        a.seeT = a.target && see(a, a.target) ? a.seeT + dt : 0;
+        const before = { x: a.position.x, z: a.position.z };
+        a.brain.update(dt);
+        if (a.burst > 0 && (a.burstT -= dt) <= 0) {
+            if (a.target && !a.target.dead && see(a, a.target)) { aiShoot(a, a.target); a.burst--; a.burstT = 60 / (CATALOG[a.kit.gun.id].fire.rpm || 100) * 1.7; }
+            else a.burst = 0;
+        }
+        // keep actors apart
+        for (const b of actors) { if (b === a || b.dead || b === player || b.remote) continue; const dx = a.position.x - b.position.x, dz = a.position.z - b.position.z, d = Math.hypot(dx, dz); if (d > 0.01 && d < 0.6) moveActor(a, { x: a.position.x + dx / d * (0.6 - d) * 0.5, z: a.position.z + dz / d * (0.6 - d) * 0.5 }); }
+        const sp = Math.hypot(a.position.x - before.x, a.position.z - before.z) / dt;
+        if (a.animHold > 0) a.animHold -= dt; else a.animState = sp > 2.6 ? 'run' : sp > 0.3 ? 'walk' : 'idle';
+        a.anim.mixer.timeScale = a.faction === 'zombie' ? (a.animState === 'run' ? 1.25 : 0.7) : 1;
+        let dh = a.heading - a.root.rotation.y; dh = Math.atan2(Math.sin(dh), Math.cos(dh)); a.root.rotation.y += dh * Math.min(1, dt * 10);
+        a.anim.update(dt);
+        if (a.faction === 'zombie' && Math.random() < dt * 0.12) audio.groan(a.position, rnd(0.85, 1.15));
+    }
+}
+
+// ---------------------------------------------------------------- player
+const controls = M['fps-controls'].attach(renderer.domElement, { onInteract: () => inRaid && interact(), onMenu: () => {} });
+let usingMed = null, vmFire = null, ads = false, adsTouch = false, vm = null, vmKey = '', pitchKick = 0, yawKick = 0, stats = null, raidTime = 0, stepT = 0, extractT = null, hurtT = 0;
+const vel = new THREE.Vector2();
+// fps-controls preventDefaults pointerdown, which suppresses mousedown/mouseup, and a second button pressed
+// mid-chord only arrives as pointermove. So read both buttons from the pointer events' `buttons` bitmask.
+let lockFailed = false, fireLatch = false, swallow = false, mouseFire = false; // latch: a click shorter than a frame still fires once
+function syncButtons(e) {
+    if (e.pointerType !== 'mouse' || !inRaid) return;
+    if (swallow) { controls.setFire(false); if (!(e.buttons & 1)) swallow = false; return; }
+    const was = mouseFire; mouseFire = !!(e.buttons & 1) && overlaysClosed(); ads = !!(e.buttons & 2);
+    if (mouseFire && !was) fireLatch = true;
+    controls.setFire(mouseFire);
+}
+renderer.domElement.addEventListener('pointerdown', (e) => {
+    audio.resume(); if (!inRaid || e.pointerType !== 'mouse') return;
+    // the click that takes the mouse back only does that (unless pointer lock is refused, then it shoots)
+    if (document.pointerLockElement !== renderer.domElement && overlaysClosed()) { relock(); if (!lockFailed) { swallow = true; controls.setFire(false); return; } }
+    syncButtons(e);
+});
+addEventListener('pointermove', syncButtons);
+addEventListener('pointerup', syncButtons);
+// Pointer lock keeps the cursor inside the game. Overlays release it for clicking; closing one takes it back.
+document.addEventListener('pointerlockerror', () => { lockFailed = true; }); // e.g. Chrome refuses for ~1s after Esc
+document.addEventListener('pointerlockchange', () => { if (document.pointerLockElement === renderer.domElement) lockFailed = false; else { controls.setFire(false); ads = false; mouseFire = false; } });
+const relock = () => { if (inRaid && overlaysClosed() && !player?.dead) controls.lock(); };
+const overlaysClosed = () => ['#inv', '#mapov', '#end'].every((s) => $(s).classList.contains('hidden'));
+addEventListener('keydown', (e) => {
+    audio.resume();
+    if (!inRaid) return;
+    if (e.code === 'Tab') { e.preventDefault(); toggleInv(); }
+    if (e.code === 'KeyM') { if (!profile.equip.map) toast('You did not bring a map.'); else { $('#mapov').classList.toggle('hidden'); drawMap(); if (!$('#mapov').classList.contains('hidden')) document.exitPointerLock?.(); else relock(); } }
+    if (e.code === 'Digit4') useMed('bandage');
+    if (e.code === 'Digit5') useMed('medkit');
+    if (e.code === 'KeyR' && overlaysClosed()) { if (vm && !vm.reload()) toast(Object.keys(LO.rigAmmo()).length ? 'Magazine full' : 'No ammo in your chest rig'); }
+    if (e.code === 'KeyB' && vm) { const types = Object.keys(LO.rigAmmo()); if (!types.length) toast('No ammo in your chest rig'); else { const i = types.indexOf(vm.ammoType); vm.setAmmoType(types[(i + 1) % types.length]); toast('Next reload: ' + CATALOG[vm.ammoType].name); } }
+});
+function toggleInv(force) {
+    const el = $('#inv'), open = force ?? el.classList.contains('hidden');
+    if (open) { if (!force) { invOther = null; } el.classList.remove('hidden'); renderInv(); document.exitPointerLock?.(); }
+    else { el.classList.add('hidden'); invOther = null; relock(); }
+}
+$('#invclose').onclick = () => toggleInv(false);
+$('#mapclose').onclick = () => { $('#mapov').classList.add('hidden'); relock(); };
+function rebuildWeaponIfChanged() {
+    const g = profile.equip.primary, key = g ? g.uid + ':' + (g.mods ?? []).join(',') : '';
+    if (key === vmKey) return; vmKey = key; vm?.dispose(); vm = null; $('#scope').classList.add('hidden');
+    if (!g) return;
+    g.mag ??= { type: null, n: 0 };
+    const model = M['firearm-models'].build(GUN_MODEL[g.id], { attachments: g.mods ?? [] });
+    const base = CATALOG[g.id].fire, f = { ...base }; vmFire = { f, base };
+    vm = M['firearm-viewmodel'].attach(camera, {
+        model, fire: f, magazine: g.mag, hipFov: HIP_FOV, hip: [0.2, -0.2, -0.5], adsDistance: 0.38,
+        available: () => Object.fromEntries(Object.entries(LO.rigAmmo())), takeAmmo: (t, n) => LO.takeAmmo(t, n),
+        returnAmmo: (t, n) => { if (profile.equip.rig && H().add(profile.equip.rig.items, CATALOG[profile.equip.rig.id].capacity, { uid: newUid(), id: t, n }, newUid) && profile.equip.backpack) H().add(profile.equip.backpack.items, CATALOG[profile.equip.backpack.id].capacity, { uid: newUid(), id: t, n }, newUid); },
+        onShot: ({ origin, directions, ammo, suppressed }) => {
+            shareShot(origin, directions.map((d) => origin.clone().addScaledVector(d, fireRay(player, origin, d, { ammo, mult: f.mult, range: 150 }).t)), f.sound, suppressed);
+            audio.shot({ kind: f.sound, suppressed }); noise(player.position, suppressed ? 15 : 70);
+        },
+        onKick: (p, y) => { pitchKick += p; yawKick += y; },
+        onDry: () => audio.dry(), onMechanics: (m) => audio.mechanics(m),
+        onScope: (on) => $('#scope').classList.toggle('hidden', !on),
+    });
+}
+function useMed(id) {
+    if (!inRaid || usingMed || !playerHealth) return;
+    if (!['rig', 'backpack'].some((k) => profile.equip[k]?.items.some((i) => i.id === id))) return toast(`No ${CATALOG[id].name.toLowerCase()} in your rig or backpack`);
+    if (playerHealth.value >= playerHealth.max) return toast('You are not hurt');
+    if (vm?.reloading) return;
+    usingMed = { id, t: CATALOG[id].use };
+}
+function finishMed() {
+    const { id } = usingMed; usingMed = null;
+    for (const k of ['rig', 'backpack']) { const list = profile.equip[k]?.items; const i = list?.findIndex((x) => x.id === id) ?? -1; if (i >= 0) { list.splice(i, 1); break; } }
+    const healed = playerHealth.heal(CATALOG[id].heal, { restore: !!CATALOG[id].restore });
+    blip('impactSoft_medium_000', 0.5); toast(`${CATALOG[id].name}: +${Math.round(healed)} HP`); refresh();
+}
+function hurt(n) {
+    hurtT = 0.6; $('#dmg').style.opacity = Math.min(0.85, 0.25 + n / 60);
+    if (playerHealth.dead && inRaid) die();
+}
+function flashHit(head) { const el = $('#hit'); el.style.opacity = 1; el.style.borderColor = head ? '#f55' : '#fff'; clearTimeout(flashHit.t); flashHit.t = setTimeout(() => (el.style.opacity = 0), 120); }
+function interactTarget() {
+    if (!player) return null;
+    const fwd = new THREE.Vector3(); camera.getWorldDirection(fwd);
+    let best = null, bestScore = 0;
+    for (const it of interactables) {
+        if (!it.container && !it.item) continue;
+        const dx = it.position.x - camera.position.x, dz = it.position.z - camera.position.z, d = Math.hypot(dx, dz);
+        if (d > 2.3) continue;
+        const dot = (dx * fwd.x + dz * fwd.z) / (d || 1) / Math.hypot(fwd.x, fwd.z);
+        const score = dot - d * 0.1; if (dot > 0.55 && score > bestScore) { best = it; bestScore = score; }
+    }
+    return best;
+}
+function interact() {
+    const it = interactTarget(); if (!it) { hotelTarget()?.use(); return; }
+    if (it.item) {
+        const temp = { items: [it.item], capacity: Infinity };
+        if (stow(it.item, temp)) { it.item.fir = true; it.root.removeFromParent(); interactables.splice(interactables.indexOf(it), 1); blip('impactSoft_medium_000', 0.6); toast('Picked up ' + CATALOG[it.item.id].name); refresh(); }
+        return;
+    }
+    if (!it.searched) { it.searched = true; if (it.table) it.container.items.push(...TABLES[it.table]()); it.container.items.forEach((x) => (x.fir = true)); }
+    blip(it.kind === 'body' ? 'impactSoft_medium_000' : 'impactMetal_light_000', 0.45);
+    invOther = it.container; invTitle = it.kind === 'body' ? 'Body: ' + it.label : it.label[0].toUpperCase() + it.label.slice(1);
+    toggleInv(true);
+}
+
+// ---------------------------------------------------------------- raid lifecycle
+const zones = M['trigger-zones'].attach(null, { zones: [{ position: EXTRACT, radius: EXTRACT.r }], actors: () => (player && !player.dead ? [player] : []),
+    onEnter: () => { extractT = 7; }, onLeave: () => { extractT = null; } });
+let spawnTimer = 0, looseItems = [];
+const SCAV_SPOTS = [[12, 40], [-18, 42], [-35, -30], [-35, 10], [20, -36], [-11, -22], [0, 0], [-20, -2], [20, 4], [-42, 40], [36, -34], [0, -40]];
+function startRaid() {
+    // clear previous raid
+    for (const a of actors) { if (a.remote) continue; a.root?.removeFromParent(); a.brain?.dispose(); a.body?.root && a.body.root !== a.root && a.body.root.removeFromParent(); }
+    actors = []; byNid.clear(); for (const s of looseItems) s.removeFromParent(); looseItems = [];
+    for (let i = interactables.length - 1; i >= 0; i--) { const it = interactables[i]; if (it.kind !== 'container') interactables.splice(i, 1); else { it.container.items = []; it.searched = false; } }
+    decals.splice(0).forEach((d) => d.removeFromParent());
+    // loose loot
+    for (const [x, z] of LOOSE) {
+        if (Math.random() > 0.6) continue;
+        const item = weighted([[roll.gun, 16], [roll.armor, 12], [roll.rig, 7], [roll.pack, 7], [roll.mod, 12], [roll.ammo, 20], [roll.med, 12], [() => roll.cash(300, 4000), 14]])();
+        const g = gearBuild(item.id); const root = new THREE.Group(); root.add(g); root.position.set(x + rnd(-0.5, 0.5), 0, z + rnd(-0.5, 0.5)); scene.add(root); looseItems.push(root);
+        root.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+        interactables.push({ kind: 'item', position: root.position.clone().setY(0.2), label: CATALOG[item.id].name, item, root });
+    }
+    // player
+    player = { faction: 'player', position: new THREE.Vector3(-54, 0, 54), dead: false, moving: false };
+    playerHealth = M['body-parts'].attach(player); usingMed = null;
+    const ar = profile.equip.armor; playerArmor = ar ? { cls: B.ARMOR[CATALOG[ar.id].armor].cls, durability: ar.durability ?? CATALOG[ar.id].durability, max: CATALOG[ar.id].durability } : null;
+    player.health = playerHealth; player.ballistics = B.attach(player, { armor: playerArmor, health: playerHealth }); player.armorState = playerArmor;
+    actors.push(player);
+    controls.setLook(Math.PI * 0.75 + Math.PI, 0); vel.set(0, 0); pitchKick = yawKick = 0;
+    // enemies: the host's town, or your own; a guest draws the host's (applyWorld)
+    if (net?.guest) netRaid = 0; else {
+    hostRaid++;
+    for (const [x, z] of SCAV_SPOTS) { const p = randomWalkable(x, z, 6, 30); if (p) spawnActor('scav', p, { x, z }); }
+    for (const [x, z, n] of [[36, 30, 2], [48, -50, 2], [-36, 22, 1], [2.5, 58.5, 2]]) for (let i = 0; i < n; i++) { const p = randomWalkable(x, z, 4, 30); if (p) spawnActor('faction', p, { x, z }); }
+    for (let i = 0; i < 14; i++) { const p = randomWalkable(0, 0, 55, 35); if (p) spawnActor('zombie', p); }
+    for (let i = 0; i < 6; i++) { const p = randomWalkable(HOTEL.x, HOTEL.z, 26, 30); if (p) spawnActor('zombie', p); } // guests who never checked out
+    }
+    stats = { kills: 0, start: performance.now() }; raidTime = 0; spawnTimer = 0; extractT = null;
+    vmKey = '__'; rebuildWeaponIfChanged();
+    profile.stats.raids++;
+    inRaid = true; $('#menu').classList.add('hidden'); $('#hud').classList.remove('hidden'); $('#status').textContent = profile.equip.map ? 'EXFIL: Checkpoint flare, north-east corner' : 'No map. Find the way out.';
+    controls.lock(); audio.resume();
+}
+function endRaid(survived, cause) {
+    inRaid = false; document.exitPointerLock?.(); controls.clear();
+    vm?.dispose(); vm = null; vmKey = ''; $('#scope').classList.add('hidden'); toggleInv(false); $('#mapov').classList.add('hidden');
+    if (playerArmor && profile.equip.armor) profile.equip.armor.durability = Math.round(playerArmor.durability);
+    const mins = Math.floor(raidTime / 60), secs = Math.floor(raidTime % 60).toString().padStart(2, '0');
+    let body;
+    if (survived) {
+        const banked = LO.extract(); profile.stats.extracts++;
+        const carried = [profile.equip.primary, profile.equip.armor, ...(profile.equip.rig?.items ?? []), ...(profile.equip.backpack?.items ?? [])].filter(Boolean);
+        body = `<p>You made it out.</p><p class="mono">Raid time ${mins}:${secs} · Kills ${stats.kills}</p><p>Cash banked: <b class="price">${money(banked)}</b></p><p class="meta">Everything you carried is still equipped. Sell finds at the trader, or store them in your stash.</p><p class="meta">Carried value about ${money(carried.reduce((s, i) => s + H().value(i), 0))}</p>`;
+    } else {
+        const lost = LO.die();
+        body = `<p>${cause}</p><p class="mono">Raid time ${mins}:${secs} · Kills ${stats.kills}</p><p>Lost: ${lost.map((i) => CATALOG[i.id].name).join(', ') || 'nothing'}</p><p class="meta">Everything you brought in is gone.</p>`;
+    }
+    $('#endtitle').textContent = survived ? 'EXTRACTED' : 'KILLED IN ACTION'; $('#endtitle').style.color = survived ? 'var(--green)' : 'var(--red)';
+    $('#endbody').innerHTML = body; $('#end').classList.remove('hidden'); $('#hud').classList.add('hidden');
+}
+function die() { player.dead = true; const by = lastHitBy?.faction; endRaid(false, player.lastZone === 'head' && by !== 'zombie' ? `Headshot from a ${by === 'faction' ? 'faction soldier' : 'scavenger'}.` : by === 'zombie' ? 'A zombie got you.' : by === 'faction' ? 'Killed by a faction soldier.' : by === 'scav' ? 'Shot by a scavenger.' : 'You died.'); }
+let lastHitBy = null;
+$('#endok').onclick = () => { $('#end').classList.add('hidden'); showMenu(); };
+$('#deploy').onclick = () => { if (!profile.equip.primary) { toast('Equip a weapon first.'); return; } if (net?.guest && !hostRaid) { toast('Waiting for the host to deploy.'); return; } startRaid(); };
+function showMenu() { $('#menu').classList.remove('hidden'); renderMenu(); }
+
+
+// ---------------------------------------------------------------- hotel upkeep: doors and elevator, lights, switches
+const hotelPlayer = { x: 1e4, y: 0, z: 1e4, pos: new THREE.Vector3(1e4, 1.62, 1e4) };
+const hotelLights = Array.from({ length: 4 }, () => { const l = new THREE.PointLight(0xffd9a8, 0, 9, 2); scene.add(l); return l; });
+const anchors = hotel.lightAnchors.map((a) => ({ a, at: a.pos.clone().applyMatrix4(hotelGroup.matrixWorld) }));
+let lightT = 0;
+function updateHotel(dt) {
+    const p = inRaid && player && !player.dead ? player.position : null, h = p ? toHotel(p.x, p.z) : { x: 1e4, z: 1e4 };
+    hotelPlayer.x = h.x; hotelPlayer.z = h.z; hotelPlayer.pos.set(h.x, 1.62, h.z);
+    hotel.update(dt, hotelPlayer);
+    if ((lightT -= dt) > 0) return; lightT = 0.25;
+    // ponytail: 4 pooled lights on the nearest lit fixtures, like the hotel game's mobile profile; more if interiors read too dark
+    const ranked = anchors.filter(({ a }) => a.intensity > 0).sort((u, v) => u.at.distanceToSquared(camera.position) - v.at.distanceToSquared(camera.position));
+    hotelLights.forEach((l, i) => { const r = ranked[i]; l.intensity = r && r.at.distanceTo(camera.position) < 30 ? r.a.intensity : 0; if (r) { l.position.copy(r.at); l.color.copy(r.a.color); l.distance = r.a.distance; } });
+}
+const hotelSpot = new THREE.Vector3(), hotelFwd = new THREE.Vector3();
+function hotelTarget() {   // the hotel's own E interactions (doors, switches, TVs) on floor 1
+    if (!inRaid || !player || !inHotel(player.position.x, player.position.z)) return null;
+    camera.getWorldDirection(hotelFwd);
+    let best = null, bestD = Infinity;
+    for (const it of hotel.interact) {
+        if (it.when && !it.when(hotelPlayer)) continue;
+        hotelSpot.copy(it.pos); if (it.dynamicY) hotelSpot.y = it.dynamicY();
+        hotelSpot.applyMatrix4(hotelGroup.matrixWorld);
+        if (Math.abs(hotelSpot.y - camera.position.y) > 1.7) continue;
+        hotelSpot.sub(camera.position); const d = hotelSpot.length();
+        if (d > it.r + 0.6 || hotelSpot.dot(hotelFwd) / (d || 1) < 0.5 || d >= bestD) continue;
+        best = it; bestD = d;
+    }
+    return best;
+}
+
+// ---------------------------------------------------------------- co-op: peer to peer, up to four
+// The host runs the town (AI, spawns, deaths) and sends it ten times a second. Guests draw it, send their hits on it to
+// the host, and take the hits the host's AI lands on them. Loot is per player: containers and bodies roll on each
+// machine, so nobody can take your find. Stashes stay in each player's own save code.
+// ponytail: no host migration; when the host leaves, their town stops. Add it if raids outlive hosts.
+const APP = 'slop-warehouse.escape-from-slopov-ii.v1', QR = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/+esm';
+const FCODE = { zombie: 'z', scav: 's', faction: 'f' }, FNAME = { z: 'zombie', s: 'scav', f: 'faction' }, ANIM = { i: 'idle', w: 'walk', r: 'run', h: 'hit' };
+const remotes = new Map();   // userId → a friend's stand-in: drawn everywhere, and on the host an actor the AI can see and hit
+let hostRaid = 0, netRaid = 0, nidSeq = 0, poseT = 0, worldT = 0; const byNid = new Map();
+// The warehouse page hands its address in (window.WAREHOUSE_URL), so links open this game there with ?room=.
+const pageURL = (() => { try { return new URL(window.WAREHOUSE_URL ?? (/^https?:/.test(location.href) ? location.href : '')); } catch { return null; } })();
+const send = (kind, data, target) => net?.act[kind].send(data, target ? { target } : {}).catch(() => {});
+PALETTES.player = { Red_Dark: 0xd2691e, Orange: 0xe07b24, LightBlue: 0x2f5d8a, White: 0xd9d4c4 };   // friends wear hi-vis
+
+function shareShot(origin, ends, kind, suppressed) {
+    if (net) send('shot', { o: v3(origin), e: ends.map(v3), k: kind, s: suppressed ? 1 : 0 });
+}
+const v3 = (v) => [+v.x.toFixed(2), +v.y.toFixed(2), +v.z.toFixed(2)];
+function remoteShot(d) {
+    const o = new THREE.Vector3(...d.o);
+    for (const e of d.e) { const end = new THREE.Vector3(...e); if (!d.s) tracer(o, end); puff(end, 'dust'); }
+    audio.shot({ kind: d.k, suppressed: !!d.s, position: o });
+    if (!net?.guest) noise(o, d.s ? 15 : 70);
+}
+function remoteAvatar(id) {
+    const tpl = charTemplates[0], model = SkeletonUtils.clone(tpl.scene); skin(model, 'player');
+    const root = new THREE.Group(); root.add(model); root.visible = false; scene.add(root);
+    const r = { faction: 'player', remote: id, root, model, position: root.position, heading: 0, dead: false, inRaid: false, moving: 0, gunId: '', gun: null, t: null };
+    r.anim = M['clip-animator'].attach(model, { animations: tpl.animations, clips: CLIPS, state: () => ['idle', 'walk', 'run'][r.moving], fade: 0.2 });
+    return r;
+}
+function onPose([x, z, yaw, moving, raid, dead, gunId], userId) {
+    let r = remotes.get(userId);
+    if (!r) { r = remoteAvatar(userId); remotes.set(userId, r); renderCoop(); toast('A friend joined the room'); }
+    if (!r.t || !r.inRaid) r.position.set(x, 0, z);
+    r.t = { x, z }; r.heading = yaw + Math.PI; r.moving = moving; r.inRaid = !!raid; r.dead = !!dead;
+    if (gunId !== r.gunId) {
+        r.gunId = gunId; r.gun?.removeFromParent(); r.gun = null;
+        if (GUN_MODEL[gunId]) { r.gun = M['firearm-models'].build(GUN_MODEL[gunId]); r.gun.rotation.y = Math.PI; r.gun.position.set(0.16, 1.16, 0.26); r.root.add(r.gun); }
+    }
+}
+function updateRemotes(dt) {
+    for (const r of remotes.values()) {
+        r.root.visible = r.inRaid;
+        if (!r.inRaid) continue;
+        const k = Math.min(1, dt * 12); r.position.x += (r.t.x - r.position.x) * k; r.position.z += (r.t.z - r.position.z) * k;
+        let dh = r.heading - r.root.rotation.y; dh = Math.atan2(Math.sin(dh), Math.cos(dh)); r.root.rotation.y += dh * Math.min(1, dt * 12);
+        r.root.rotation.x = r.dead ? -HP : 0; r.root.position.y = r.dead ? 0.12 : 0;
+        r.anim.update(dt);
+    }
+    // the host's AI hunts friends who are in the raid and alive
+    if (net && !net.guest) for (const r of remotes.values()) { const i = actors.indexOf(r), want = r.inRaid && !r.dead && hostRaid > 0; if (want && i < 0) actors.push(r); else if (!want && i >= 0) actors.splice(i, 1); }
+}
+function dropRemote(userId) {
+    const r = remotes.get(userId); if (!r) return;
+    r.root.removeFromParent(); remotes.delete(userId); const i = actors.indexOf(r); if (i >= 0) actors.splice(i, 1);
+    if (net?.guest && userId === net.hostId) { toast('The host left. Their town has gone quiet: extract when you can.'); coopStatus('The host left the room.'); }
+    renderCoop();
+}
+function netTick(dt) {
+    if (!net) return;
+    if ((poseT -= dt) <= 0) {
+        poseT = 1 / 12;
+        const p = player?.position ?? { x: 0, z: 0 }, sp = vel.length(), live = inRaid && player && !player.dead;
+        send('pose', [+p.x.toFixed(2), +p.z.toFixed(2), +controls.input.yaw.toFixed(2), sp > 4 ? 2 : sp > 0.6 ? 1 : 0, live ? 1 : 0, player?.dead ? 1 : 0, profile.equip.primary?.id ?? '']);
+    }
+    if (!net.guest && hostRaid && remotes.size && (worldT -= dt) <= 0) {
+        worldT = 0.1;
+        send('world', { r: hostRaid, a: actors.filter((a) => a.nid).map((a) => [a.nid, FCODE[a.faction], +a.position.x.toFixed(2), +a.position.z.toFixed(2), +a.heading.toFixed(2), (a.animState ?? 'idle')[0], a.dead ? 1 : 0, a.dead ? (a.killer?.remote ?? (a.killer === player ? net.id : '')) : '']) });
+    }
+}
+function applyWorld(d) {   // guest: the host's town
+    if (hostRaid !== d.r) { hostRaid = d.r; renderCoop(); }
+    if (!inRaid || !player) return;
+    if (netRaid !== d.r) { // the host started a new raid: their old town's people go
+        for (const a of actors) if (a !== player) { a.root?.removeFromParent(); if (a.body?.root && a.body.root !== a.root) a.body.root.removeFromParent(); }
+        actors = [player]; byNid.clear(); netRaid = d.r;
+        for (let i = interactables.length - 1; i >= 0; i--) if (interactables[i].kind === 'body') interactables.splice(i, 1);
+    }
+    for (const [nid, f, x, z, h, st, dead, killer] of d.a) {
+        let a = byNid.get(nid);
+        if (!a) { a = spawnActor(FNAME[f], { x, z }); byNid.delete(a.nid); a.nid = nid; byNid.set(nid, a); a.brain?.dispose(); a.brain = null; if (dead) { killActor(a, null); a.deadT = 9; } }
+        a.net = { x, z }; a.heading = h; a.animState = ANIM[st] ?? 'idle';
+        if (FNAME[f] === 'zombie' && a.faction !== 'zombie') { if (!a.dead) killActor(a, null); riseAsZombie(a); a.brain?.dispose(); a.brain = null; }
+        else if (dead && !a.dead) killActor(a, killer === net.id ? player : null);
+    }
+}
+function netActors(dt) {   // guest: ease the host's actors toward where it says they are
+    for (const a of actors) {
+        if (a === player || !a.root) continue;
+        if (a.dead) { a.deadT += dt; const k = Math.min(1, a.deadT / 0.45); a.root.rotation.x = -HP * k * k; a.root.position.y = 0.12 * k; continue; }
+        if (a.net) { const k = Math.min(1, dt * 10); a.position.x += (a.net.x - a.position.x) * k; a.position.z += (a.net.z - a.position.z) * k; }
+        let dh = a.heading - a.root.rotation.y; dh = Math.atan2(Math.sin(dh), Math.cos(dh)); a.root.rotation.y += dh * Math.min(1, dt * 10);
+        a.anim.mixer.timeScale = a.faction === 'zombie' ? (a.animState === 'run' ? 1.25 : 0.7) : 1; a.anim.update(dt);
+        if (a.faction === 'zombie' && Math.random() < dt * 0.12) audio.groan(a.position, rnd(0.85, 1.15));
+    }
+}
+function onHit(d, userId) {   // host: a guest shot one of our actors
+    const a = byNid.get(d.n), by = remotes.get(userId);
+    if (a && !a.dead && by) damageActor(a, { ammo: B.AMMO[CATALOG[d.a]?.ammo ?? 'standard'], ammoId: d.a, zone: d.z, mult: d.m, shooter: by });
+}
+function onHurt(d) {   // guest: the host's AI hit us
+    if (!inRaid || !player || player.dead) return;
+    const by = byNid.get(d.b) ?? { faction: d.f ?? 'zombie', position: player.position.clone() };
+    damageActor(player, d.melee ? { melee: d.melee, zone: d.z, shooter: by } : { ammo: B.AMMO[CATALOG[d.a]?.ammo ?? 'standard'], zone: d.z, mult: d.m, shooter: by });
+}
+async function connect(isHost, code = '') {
+    const pieces = code.trim().split('/');
+    if (!isHost && (pieces.length !== 2 || !pieces[0].includes('~') || pieces[1].length < 8)) throw new Error('That is not a whole share link or room code.');
+    const T = await logic('trystero-027');
+    const random = () => Array.from(crypto.getRandomValues(new Uint8Array(12)), (n) => n.toString(16).padStart(2, '0')).join('');
+    const password = isHost ? random() : pieces[1];
+    const room = T.joinRoom({ appId: APP, identity: 'none', password, maxUsers: 4, use: [T.roles(isHost ? { selfAsAdmin: true } : {})] }, isHost ? 'slopov-' + random() : pieces[0]);
+    const self = await room.getSelf();
+    const n = { room, guest: !isHost, id: self.userId, hostId: isHost ? self.userId : self.roomId.split('~').at(-1), code: self.roomId + '/' + password, act: {} };
+    for (const k of ['pose', 'shot', 'world', 'hit', 'hurt']) n.act[k] = room.makeAction(k);
+    n.act.pose.onMessage((d, { userId }) => Array.isArray(d) && onPose(d, userId));
+    n.act.shot.onMessage((d) => d?.o && Array.isArray(d.e) && remoteShot(d));
+    n.act.world.onMessage((d, { userId }) => n.guest && userId === n.hostId && Array.isArray(d?.a) && applyWorld(d));
+    n.act.hit.onMessage((d, { userId }) => !n.guest && onHit(d, userId));
+    n.act.hurt.onMessage((d, { userId }) => n.guest && userId === n.hostId && onHurt(d));
+    room.onUserLeave(({ userId }) => dropRemote(userId));
+    room.onError?.((e) => coopStatus('Connection: ' + (e?.message ?? e?.code ?? e)));
+    if (!isHost) hostRaid = 0;
+    net = n;
+    return n;
+}
+async function leave() {
+    const n = net; net = null; hostRaid = n?.guest ? 0 : hostRaid;
+    for (const id of [...remotes.keys()]) dropRemote(id);
+    await n?.room.leave().catch(() => {});
+    coopStatus('Solo. Your town is your own again.'); renderCoop(); renderMenu();
+}
+const coopStatus = (s) => { $('#coopstatus').textContent = s; };
+const shareLink = (code) => { if (!pageURL) return code; const u = new URL(pageURL); u.searchParams.set('room', code); return u.href; };
+function renderCoop() {
+    $('#coopstart').classList.toggle('hidden', !!net); $('#coopshare').classList.toggle('hidden', !net); $('#leavebtn').classList.toggle('hidden', !net);
+    const who = net ? `${1 + remotes.size}/4` : '';
+    $('#netbadge').textContent = net ? `CO-OP ${who}${net.guest ? '' : ' · HOST'}` : '';
+    $('#coopbtn').textContent = net ? `CO-OP ${who}` : 'CO-OP';
+    if (net) coopStatus(net.guest ? (hostRaid ? 'Connected. The host is in Slopov: deploy to join them.' : 'Connected. Waiting for the host to deploy.') : remotes.size ? `${remotes.size} friend${remotes.size > 1 ? 's' : ''} here. Deploy when ready.` : 'Room open. Send the link or show the QR code; deploy whenever you like.');
+}
+async function drawShare() {
+    const link = shareLink(net.code); $('#sharelink').value = link;
+    try {
+        const { default: qrcode } = await import(QR), qr = qrcode(0, 'L'); qr.addData(link); qr.make();
+        const n = qr.getModuleCount(), q = 4, s = 6, c = $('#qr'), g = c.getContext('2d');   // 4-module quiet zone
+        c.width = c.height = (n + q * 2) * s; g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.fillStyle = '#000';
+        for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (qr.isDark(r, k)) g.fillRect((k + q) * s, (r + q) * s, s, s);
+        c.classList.remove('hidden');
+    } catch { $('#qr').classList.add('hidden'); }
+}
+async function startCoop(isHost, code) {
+    $('#hostbtn').disabled = $('#joinbtn').disabled = true; coopStatus(isHost ? 'Opening an encrypted room…' : 'Joining…');
+    try { await connect(isHost, code); await drawShare(); renderCoop(); }
+    catch (e) { await net?.room.leave().catch(() => {}); net = null; coopStatus((isHost ? 'Could not open a room: ' : 'Could not join: ') + e.message); renderCoop(); }
+    finally { $('#hostbtn').disabled = $('#joinbtn').disabled = false; }
+}
+const roomFrom = (v) => { v = v.trim(); try { return new URL(v).searchParams.get('room') ?? v; } catch { return v; } };
+$('#coopbtn').onclick = () => { $('#coop').classList.remove('hidden'); renderCoop(); };
+$('#coopclose').onclick = () => $('#coop').classList.add('hidden');
+$('#hostbtn').onclick = () => startCoop(true);
+$('#joinbtn').onclick = () => startCoop(false, roomFrom($('#joincode').value));
+$('#leavebtn').onclick = () => leave();
+$('#sharecopy').onclick = async () => { $('#sharelink').select(); try { await navigator.clipboard.writeText($('#sharelink').value); coopStatus('Link copied.'); } catch { coopStatus('Select the link and copy it (Ctrl+C).'); } };
+
+// ---------------------------------------------------------------- map overlay
+const mapCanvas = $('#mapc'); mapCanvas.width = N * 3; mapCanvas.height = NZ * 3;
+const mapBase = document.createElement('canvas'); mapBase.width = N * 3; mapBase.height = NZ * 3;
+{ const g = mapBase.getContext('2d'); const col = { h: '#6f6a5e', H: '#1b1b1b', ',': '#5d5a45', '.': '#3a3a38', '=': '#76726a', '_': '#8d8574', '-': '#7d786c', F: '#222', B: '#555' };
+  rows.forEach((r, z) => [...r].forEach((c, x) => { g.fillStyle = col[c] ?? ('#CSwWV'.includes(c) || '#' === c ? '#1b1b1b' : 'DdP'.includes(c) ? '#8d8574' : '#1b1b1b'); g.fillRect(x * 3, z * 3, 3, 3); }));
+  g.fillStyle = '#e8dcc0'; g.font = 'bold 16px sans-serif'; g.textAlign = 'center';
+  for (const b of BUILDINGS) g.fillText(b.name.toUpperCase(), ((b.x0 + b.x1) / 2 + HALF) / CELL * 3, ((b.z0 + b.z1) / 2 + HALF) / CELL * 3 + 5);
+  g.fillText('HEARTLAND INN', ((HB.x0 + HB.x1) / 2 + HALF) / CELL * 3, ((HB.z0 + HB.z1) / 2 + HALF) / CELL * 3 + 5);
+  g.fillText('N ▲', N * 3 - 34, 26); }
+function drawMap() {
+    const g = mapCanvas.getContext('2d'); g.drawImage(mapBase, 0, 0);
+    const px = (x) => (x + HALF) / CELL * 3;
+    g.strokeStyle = '#ff4a3a'; g.lineWidth = 3; g.beginPath(); g.arc(px(EXTRACT.x), px(EXTRACT.z), EXTRACT.r / CELL * 3, 0, 7); g.stroke();
+    g.fillStyle = '#ff4a3a'; g.font = 'bold 15px sans-serif'; g.fillText('EXFIL', px(EXTRACT.x) - 28, px(EXTRACT.z) + 30);
+    if (player) { const x = px(player.position.x), z = px(player.position.z), yaw = controls.input.yaw; g.save(); g.translate(x, z); g.rotate(-yaw); g.fillStyle = '#7fd36a'; g.beginPath(); g.moveTo(0, -12); g.lineTo(8, 9); g.lineTo(-8, 9); g.closePath(); g.fill(); g.restore(); }
+}
+
+// ---------------------------------------------------------------- touch
+M['touch-controls'].attach(document.body, {
+    buttons: [{ label: 'fire', code: 'Fire' }, { label: 'aim', code: 'Aim' }, { label: 'reload', code: 'KeyR' }, { label: 'use', code: 'KeyE' }, { label: 'bag', code: 'Tab' }],
+    press: (code, down) => { if (code === 'Fire') controls.setFire(down); else if (code === 'Aim') { if (down) adsTouch = !adsTouch; } else dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { code, key: code, bubbles: true })); },
+});
+
+// ---------------------------------------------------------------- main loop
+const clock = new THREE.Clock();
+function updatePlayer(dt) {
+    const inp = controls.input, open = !overlaysClosed();
+    const slow = profile.equip.armor ? CATALOG[profile.equip.armor.id].slow : 0;
+    const gone = playerHealth.destroyed, legs = gone.filter((k) => k.endsWith('Leg')).length, arms = gone.filter((k) => k.endsWith('Arm')).length;
+    if (vmFire) { vmFire.f.spread = vmFire.base.spread * (1 + arms); vmFire.f.ads = vmFire.base.ads * (1 + arms * 3); }
+    if (usingMed) { if ((inp.fire || fireLatch) && !open) { usingMed = null; toast('Stopped treating'); } else if ((usingMed.t -= dt) <= 0) finishMed(); }
+    const aiming = (ads || adsTouch) && !open && !usingMed;
+    const running = inp.run && !aiming && !open && !legs && !usingMed;
+    const speed = (running ? 5.6 : aiming ? 2.0 : 3.3) * (1 - slow) * (1 - 0.3 * legs) * (usingMed ? 0.5 : 1);
+    let mx = open ? 0 : inp.x, mz = open ? 0 : inp.z; const len = Math.hypot(mx, mz); if (len > 1) { mx /= len; mz /= len; }
+    vel.x += (mx * speed - vel.x) * Math.min(1, dt * 10); vel.y += (mz * speed - vel.y) * Math.min(1, dt * 10);
+    const p = player.position, nx = p.x + vel.x * dt, nz = p.z + vel.y * dt;
+    if (clear(nx, p.z)) p.x = nx; else vel.x = 0;
+    if (clear(p.x, nz)) p.z = nz; else vel.y = 0;
+    const moving = vel.length() > 0.6; player.moving = moving;
+    // recoil recovers toward where the player was looking
+    const rec = Math.min(1, dt * 7); const kp = pitchKick * rec, ky = yawKick * rec; pitchKick -= kp; yawKick -= ky;
+    controls.setLook(inp.yaw + ky * 0.5, Math.max(-1.45, Math.min(1.45, inp.pitch + kp)));
+    const bobY = moving ? Math.abs(Math.sin(performance.now() / (running ? 140 : 210))) * 0.035 : 0;
+    camera.position.set(p.x, 1.62 + bobY, p.z); camera.rotation.set(controls.input.pitch, controls.input.yaw, 0);
+    if (moving && (stepT -= dt) <= 0) { stepT = running ? 0.32 : 0.48; step(); if (running) noise(p, 9); }
+    vm?.update(dt, { fire: (inp.fire || fireLatch) && !open && !usingMed, ads: aiming, moving, running }); fireLatch = false;
+}
+function updateHud() {
+    $('#hpv').textContent = `${Math.ceil(playerHealth.value)}/${playerHealth.max}`;
+    const parts = playerHealth.parts;
+    for (const el of document.querySelectorAll('#bodymap i')) { const p = parts[el.dataset.p], k = p.hp / p.max; el.classList.toggle('gone', p.hp <= 0); el.style.background = p.hp <= 0 ? '' : `hsl(${Math.round(k * 105)},50%,${30 + k * 12}%)`; el.title = `${p.name} ${Math.ceil(p.hp)}/${p.max}`; }
+    const gone = playerHealth.destroyed;
+    $('#bodytext').textContent = gone.length ? 'Destroyed: ' + gone.map((k) => parts[k].name.toLowerCase()).join(', ') : '';
+    $('#using').classList.toggle('hidden', !usingMed);
+    if (usingMed) $('#using').textContent = `Using ${CATALOG[usingMed.id].name.toLowerCase()}… ${usingMed.t.toFixed(1)}s`;
+    $('#arwrap').classList.toggle('hidden', !playerArmor);
+    if (playerArmor) { $('#ar i').style.width = playerArmor.durability / playerArmor.max * 100 + '%'; $('#arv').textContent = `${Math.round(playerArmor.durability)}/${playerArmor.max}`; }
+    const rig = LO.rigAmmo(), g = profile.equip.primary;
+    if (vm && g) {
+        $('#mag').textContent = vm.reloading ? '…' : g.mag.n;
+        $('#reserve').textContent = ' / ' + Object.values(rig).reduce((s, n) => s + n, 0) + ' in rig';
+        const next = vm.ammoType && rig[vm.ammoType] ? vm.ammoType : null;
+        $('#ammotype').textContent = `${CATALOG[g.id].name} · ${g.mag.type ? CATALOG[g.mag.type].name : '—'}${next && next !== g.mag.type ? ' · next: ' + SHORT[next] : ''}`;
+    } else { $('#mag').textContent = '—'; $('#reserve').textContent = ''; $('#ammotype').textContent = 'No weapon'; }
+    $('#cross').style.opacity = vm && vm.aim > 0.5 ? 0 : 0.75;
+    $('#resume').classList.toggle('hidden', document.pointerLockElement === renderer.domElement || lockFailed || !overlaysClosed() || matchMedia('(pointer: coarse)').matches);
+    const t = overlaysClosed() ? interactTarget() : null;
+    const ht = t || !overlaysClosed() ? null : hotelTarget();
+    $('#prompt').classList.toggle('hidden', !t && !ht);
+    if (ht) $('#prompt').textContent = 'E · ' + ht.label();
+    if (t) $('#prompt').textContent = t.item ? `E · pick up ${t.label}` : t.kind === 'body' ? `E · search ${t.label}` : `E · search ${t.label}${t.searched ? ' (searched)' : ''}`;
+    $('#extract').classList.toggle('hidden', extractT == null);
+    if (extractT != null) $('#extract').textContent = `EXTRACTING… ${extractT.toFixed(1)}`;
+    if (hurtT > 0) { hurtT -= 1 / 60; if (hurtT <= 0) $('#dmg').style.opacity = 0; }
+}
+function updateEffects(dt) {
+    for (let i = puffs.length - 1; i >= 0; i--) { const s = puffs[i]; s.userData.t += dt; const k = s.userData.t / (s.userData.kind === 'spark' ? 0.12 : 0.5); s.scale.setScalar(0.08 + k * (s.userData.kind === 'spark' ? 0.15 : 0.5)); s.material.opacity = Math.max(0, 0.8 * (1 - k)); s.position.y += dt * 0.2; if (k >= 1) { s.removeFromParent(); s.material.dispose(); puffs.splice(i, 1); } }
+    for (let i = tracers.length - 1; i >= 0; i--) { const l = tracers[i]; if ((l.userData.t -= dt) <= 0) { l.removeFromParent(); l.geometry.dispose(); l.material.dispose(); tracers.splice(i, 1); } }
+    const t = performance.now() / 1000;
+    flare.intensity = 10 + Math.sin(t * 23) * 2 + Math.sin(t * 7.3) * 2;
+    for (const s of smoke) { s.userData.t = (s.userData.t + dt * 0.12) % 1; const k = s.userData.t; s.position.set(EXTRACT.x + Math.sin(k * 9 + t * 0.3) * k * 1.5, 0.3 + k * 9, EXTRACT.z + k * 2); s.scale.setScalar(0.6 + k * 4); s.material.opacity = 0.4 * (1 - k); s.material.color.setHex(k < 0.15 ? 0xff7a5a : 0xbdb6ae); }
+}
+function loop() { requestAnimationFrame(loop); frame(Math.min(clock.getDelta(), 0.05)); renderer.render(scene, camera); }
+function frame(dt) {
+    sky.update(dt);
+    if (inRaid && player && !player.dead) {
+        raidTime += dt;
+        updatePlayer(dt); playerHealth.update(dt);
+        if (net?.guest) netActors(dt); else updateActors(dt);
+        zones.update();
+        if (extractT != null && (extractT -= dt) <= 0) { extractT = null; endRaid(true); }
+        if (!net?.guest && (spawnTimer += dt) > 45) { spawnTimer = 0; if (actors.filter((a) => a.faction === 'zombie' && !a.dead).length < 18) for (let i = 0; i < 4; i++) { const p = randomWalkable(0, 0, 56, 40); if (p) spawnActor('zombie', p); } }
+        updateHud();
+        sun.position.set(player.position.x - 30, 38, player.position.z + 22); sun.target.position.set(player.position.x, 0, player.position.z);
+    } else if (!inRaid) {
+        // slow fly-over behind the menu
+        const t = performance.now() / 22000; camera.position.set(Math.sin(t) * 46, 24, Math.cos(t) * 46); camera.lookAt(0, 2, 0);
+        sun.position.set(-30, 40, 22); sun.target.position.set(0, 0, 0); if (net?.guest) netActors(dt); else updateActors(dt); // a host's town lives on while friends are in it
+    }
+    updateHotel(dt); updateRemotes(dt); netTick(dt);
+    updateEffects(dt);
+}
+// debug handle for playtesting from the console
+window.efs = { get profile() { return profile; }, get actors() { return actors; }, get player() { return player; }, get vm() { return vm; }, controls, startRaid, frame, render: () => renderer.render(scene, camera), interact, camera, LO: () => LO, stow, interactables, damageActor, endRaid, get net() { return net; }, remotes, hotel, hotelSolids, clear, get hostRaid() { return hostRaid; } };
+setLoad('ready', 1);
+$('#loading').remove();
+showMenu();
+loop();
+const invited = pageURL?.searchParams.get('room');
+if (invited) { $('#coop').classList.remove('hidden'); startCoop(false, invited); }
+</script>
+</body></html>

@@ -1,0 +1,47 @@
+{
+ "slug": "cash-register",
+ "triangles": 10308,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "cash-register.glb",
+   "bytes": 1224572
+  },
+  "blend": {
+   "name": "cash-register.blend",
+   "bytes": 871390
+  },
+  "fbx": {
+   "name": "cash-register.fbx",
+   "bytes": 2113148
+  },
+  "obj": {
+   "name": "cash-register-obj.zip",
+   "bytes": 1086508
+  },
+  "usdz": {
+   "name": "cash-register.usdz",
+   "bytes": 1985243
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.500 x 0.456 x 0.502",
+  "triangles": 10308,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-25",
+  "real_size": "retro cash register, approx. 42 x 46 x 46 cm",
+  "notes": "mint housing with chrome edges, sloped key bank with 24 round blank keys (cream, butter, pink) with chrome rims and a long chrome total key, chrome side crank with a cream grip, flip display showing three stars instead of numbers under an arched chrome crest; cream cash drawer 'cash-register_drawer' is a separate object (origin at the middle of the drawer front, slides out along -Y) with compartments and plain gold coins; no text, no numbers",
+  "set": "Cozy Fast Food & Diner Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

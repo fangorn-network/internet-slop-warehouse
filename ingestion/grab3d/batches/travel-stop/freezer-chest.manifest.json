@@ -1,0 +1,47 @@
+{
+ "slug": "freezer-chest",
+ "triangles": 13588,
+ "texture_px": 4096,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "freezer-chest.glb",
+   "bytes": 4114672
+  },
+  "blend": {
+   "name": "freezer-chest.blend",
+   "bytes": 1770283
+  },
+  "fbx": {
+   "name": "freezer-chest.fbx",
+   "bytes": 6537180
+  },
+  "obj": {
+   "name": "freezer-chest-obj.zip",
+   "bytes": 2659079
+  },
+  "usdz": {
+   "name": "freezer-chest.usdz",
+   "bytes": 6241037
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "2.028 x 0.928 x 0.920",
+  "triangles": 13588,
+  "textures": "PBR 4096px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-25",
+  "real_size": "supermarket chest freezer, 2.0 m long, 0.9 m deep, 0.88 m high",
+  "notes": "island chest freezer with white cabinet, blue bumper and blank price rail, light blue inner tub and chrome wire dividers. Two sliding glass lids are separate objects (freezer-chest_lid_l, freezer-chest_lid_r, origin in the lid centre, slide along X, glass parented to its lid). Frozen goods without text inside. Front faces -Y.",
+  "set": "Cozy Supermarket & Grocery Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

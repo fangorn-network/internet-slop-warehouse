@@ -1,0 +1,47 @@
+{
+ "slug": "soda-fountain",
+ "triangles": 14180,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "soda-fountain.glb",
+   "bytes": 927684
+  },
+  "blend": {
+   "name": "soda-fountain.blend",
+   "bytes": 828020
+  },
+  "fbx": {
+   "name": "soda-fountain.fbx",
+   "bytes": 1654028
+  },
+  "obj": {
+   "name": "soda-fountain-obj.zip",
+   "bytes": 822010
+  },
+  "usdz": {
+   "name": "soda-fountain.usdz",
+   "bytes": 1531008
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.720 x 0.610 x 0.885",
+  "triangles": 14180,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-25",
+  "real_size": "countertop soda fountain, 72 cm wide, 70 cm high, approx. 0.72 x 0.61 x 0.93 m with the cup stack",
+  "notes": "pink side panels, cream front with chrome mouldings and five colour fields with white pictograms instead of logos (ice cube, four drops), recessed dispensing nook with stainless back, ice chute with a big push paddle, four nozzles with chrome push levers and colour coded paddles, drip tray with chrome grate, a polka dot cup under a nozzle, loose ice cubes and a stack of cups on top; no text, no logos, no brand colours",
+  "set": "Cozy Fast Food & Diner Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

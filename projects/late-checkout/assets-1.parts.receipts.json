@@ -1,0 +1,101 @@
+[
+  {
+    "id": "g3-phone-booth",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibywtrnae3blj543qsjcd3gf2ccae3bkp3wavu466xaswsurair6y",
+    "src": "bafybeifh3qqgp5war5gimtvqkgoozidjbhelq5unl2zy2fi6fofnvt2k2a",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeifh3qqgp5war5gimtvqkgoozidjbhelq5unl2zy2fi6fofnvt2k2a",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-gas-pump",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifysgqu2mactt75cmsaxrhleucd3kmo7x2kkz6phqrsyiwxyfuhjm",
+    "src": "bafybeia3qq5z2cfv5joiztlny4l2b7667oruvpdvhgm7qzdzo6q2ci57q4",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeia3qq5z2cfv5joiztlny4l2b7667oruvpdvhgm7qzdzo6q2ci57q4",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-newspaper-stand",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibheairxraicosfawzvjk4q2st5yahp5xdopc7ioeu5yybcz3ch5e",
+    "src": "bafybeifj5rcbnkdq3jpdjm65ypnrjjhqece3rchqmjnpfw6pmip4pisd7e",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeifj5rcbnkdq3jpdjm65ypnrjjhqece3rchqmjnpfw6pmip4pisd7e",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-grocery-shelf",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibhyjmlugg5jjjrwscjhlz5mc3lfm3nqxppuk7jmvniyyk3e3j6hm",
+    "src": "bafybeiechntubqhs4mnmzbj3qwgsdebkjxuoa5ntrvdh2rw6yjighn7bsa",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiechntubqhs4mnmzbj3qwgsdebkjxuoa5ntrvdh2rw6yjighn7bsa",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-upright-freezer",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreib27xjpuntz2lskyrpgjj2ek5ndjq2oljbgnh7p2iypryi4uthc6m",
+    "src": "bafybeig2yr2uivsgixis6u4t5nyggav7ckkhgb24ehb6erjord6hwydpbe",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeig2yr2uivsgixis6u4t5nyggav7ckkhgb24ehb6erjord6hwydpbe",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-cash-register",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibgbzmp6nlg4nnw5p74bbsmi62vfuqlxk3zoqfjr7pr3duklefpxm",
+    "src": "bafybeif75d4qvtwsxxnuvz5rnswdbgcojtuwb3sfrez74x2wxgqgi4d5gq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeif75d4qvtwsxxnuvz5rnswdbgcojtuwb3sfrez74x2wxgqgi4d5gq",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-freezer-chest",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreicbk4i65zy5jj2clkt54npfcicwvk4b4jjpdrl7hgnwzd6nms4r5m",
+    "src": "bafybeicajm7rih5w6jnrao4r6h4y4iwqaxblwobxm2icvdexlgn6lgxjby",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeicajm7rih5w6jnrao4r6h4y4iwqaxblwobxm2icvdexlgn6lgxjby",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-trash-can",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreihly4qpcocbh4jw7sgtppact3stofydt4vmcka7nkscvrd7zobjb4",
+    "src": "bafybeieinj77xitkrkub354byeta2myoez25hk6ve7upohgmcjxusr6kki",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeieinj77xitkrkub354byeta2myoez25hk6ve7upohgmcjxusr6kki",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-coffee-machine",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiggsrz4xjv5g2zxg42d27xsyku7fjna5vtgvk7vbwg4lryv3m56fu",
+    "src": "bafybeigp2beqomjxx2gic6pflqmjs5k2yrj6t33fgg3flqsswzs3uwbhxm",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeigp2beqomjxx2gic6pflqmjs5k2yrj6t33fgg3flqsswzs3uwbhxm",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-soda-fountain",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreic4b3jdd7bju53k3yvq3bq2xyq2pxb6ombcwrlqlmzngbvaptaxgy",
+    "src": "bafybeibui2p52gzqh4rucrpw2w24u2we6egxg7yvnzyi7a6b6n2wn7b3a4",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeibui2p52gzqh4rucrpw2w24u2we6egxg7yvnzyi7a6b6n2wn7b3a4",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  },
+  {
+    "id": "g3-end-cap-display",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiewwgbccdrzv5rrvv5obdioldcojkekltvw76z3c5rkv6u7vsdp2m",
+    "src": "bafybeihyxpim2z7fkkcax3crc53ow22rut3gsoqgd7x5wfj3cpyde3tp2m",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihyxpim2z7fkkcax3crc53ow22rut3gsoqgd7x5wfj3cpyde3tp2m",
+    "txHash": "0x7b87b731497dd97721e70a079344e0652fae110dc23e40d7cc78c574bfbddc49"
+  }
+]

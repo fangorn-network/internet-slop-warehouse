@@ -1,0 +1,47 @@
+{
+ "slug": "end-cap-display",
+ "triangles": 16710,
+ "texture_px": 4096,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "end-cap-display.glb",
+   "bytes": 2489740
+  },
+  "blend": {
+   "name": "end-cap-display.blend",
+   "bytes": 1593724
+  },
+  "fbx": {
+   "name": "end-cap-display.fbx",
+   "bytes": 4227308
+  },
+  "obj": {
+   "name": "end-cap-display-obj.zip",
+   "bytes": 2104625
+  },
+  "usdz": {
+   "name": "end-cap-display.usdz",
+   "bytes": 3786411
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "1.278 x 1.057 x 1.578",
+  "triangles": 16710,
+  "textures": "PBR 4096px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-25",
+  "real_size": "supermarket end cap display, 1.28 m wide, 1.05 m deep, 1.6 m high",
+  "notes": "promotional end cap shelf with red price rails and three stocked shelves, yellow canopy fascia with red stripes and an emissive light strip, big red promotion starburst with a star pictogram (no text, no digits) and a low red platform with a pyramid of cookie boxes and a small star topper. Front faces -Y.",
+  "set": "Cozy Supermarket & Grocery Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

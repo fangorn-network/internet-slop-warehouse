@@ -1,0 +1,47 @@
+{
+ "slug": "upright-freezer",
+ "triangles": 13899,
+ "texture_px": 4096,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "upright-freezer.glb",
+   "bytes": 3401100
+  },
+  "blend": {
+   "name": "upright-freezer.blend",
+   "bytes": 1681995
+  },
+  "fbx": {
+   "name": "upright-freezer.fbx",
+   "bytes": 5664844
+  },
+  "obj": {
+   "name": "upright-freezer-obj.zip",
+   "bytes": 2589752
+  },
+  "usdz": {
+   "name": "upright-freezer.usdz",
+   "bytes": 5383785
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.816 x 0.912 x 2.020",
+  "triangles": 13899,
+  "textures": "PBR 4096px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-25",
+  "real_size": "upright glass door freezer, 0.82 m wide, 0.84 m deep, 2.02 m high",
+  "notes": "supermarket upright freezer with white cabinet, light blue liner, blue header with snowflake pictograms, emissive LED strips, four chrome wire shelves with blue price rails, stocked with ice cream tubs, frozen vegetables and berries, pizza boxes, ice pop boxes and fish fingers without text. Moving part: upright-freezer_door (glass door, hinge on the left, origin on the hinge axis, rotate around Z, negative angle opens outwards, glass parented to the door). Front faces -Y.",
+  "set": "Cozy Supermarket & Grocery Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

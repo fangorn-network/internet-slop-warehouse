@@ -1,0 +1,523 @@
+[
+  {
+    "id": "g3-phone-booth",
+    "upstream": "phone-booth",
+    "source": "https://grab3d.com/models/city/phone-booth/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/phone-booth/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/phone-booth/manifest.json",
+    "manifestSha256": "59e7a0449c7159009731332d85d981208e60ff8c877deffc9bdb1c7e2b7cc91e",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/phone-booth/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/phone-booth/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "phone-booth.glb",
+      "bytes": 888908,
+      "url": "https://grab3d.com/dl/phone-booth/phone-booth.glb"
+    },
+    "sha256": "845701a5ad659b7833a53ef3f7ac75a907667e960d519a0df618a0667f030fe3",
+    "bytes": 888908,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:13.507Z",
+    "specs": {
+      "triangles": 7040,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.068,
+        1.068,
+        2.3
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-gas-pump",
+    "upstream": "gas-pump",
+    "source": "https://grab3d.com/models/city/gas-pump/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/gas-pump/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/gas-pump/manifest.json",
+    "manifestSha256": "c09ad76e6b6ca037d3e95607ea9d561310b6dd062f45207a2f92f4c63ca4ad26",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/gas-pump/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/gas-pump/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "gas-pump.glb",
+      "bytes": 1039328,
+      "url": "https://grab3d.com/dl/gas-pump/gas-pump.glb"
+    },
+    "sha256": "add218a9629513c3c18e45757e9c053e458d07e105ea03ac7b90ebb615d7b6e6",
+    "bytes": 1039328,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:17.477Z",
+    "specs": {
+      "triangles": 8930,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.379,
+        0.62,
+        1.8
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-newspaper-stand",
+    "upstream": "newspaper-stand",
+    "source": "https://grab3d.com/models/city/newspaper-stand/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/newspaper-stand/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/newspaper-stand/manifest.json",
+    "manifestSha256": "a09e3a38a45d8f3268e62f238493f115df041ca7192c2cc440a0a7663eb4272a",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/newspaper-stand/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/newspaper-stand/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "newspaper-stand.glb",
+      "bytes": 1049004,
+      "url": "https://grab3d.com/dl/newspaper-stand/newspaper-stand.glb"
+    },
+    "sha256": "3675ab33d7be5b8fbd8bfc8353a78a405f512e702c1c4cf4b37797d073edd2f7",
+    "bytes": 1049004,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:21.480Z",
+    "specs": {
+      "triangles": 3464,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.538,
+        0.492,
+        1
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-grocery-shelf",
+    "upstream": "grocery-shelf",
+    "source": "https://grab3d.com/models/furniture/grocery-shelf/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/grocery-shelf/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/grocery-shelf/manifest.json",
+    "manifestSha256": "19056f4fdb645f9c32fdcfc77ee608c968a04ee4ca8cee9b671bb37ac590f1fb",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/grocery-shelf/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/grocery-shelf/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "grocery-shelf.glb",
+      "bytes": 3271580,
+      "url": "https://grab3d.com/dl/grocery-shelf/grocery-shelf.glb"
+    },
+    "sha256": "4b268784d538a9874902e5d4f0848678b7348acfca2318b1f4e215c6ef70f53e",
+    "bytes": 3271580,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:25.553Z",
+    "specs": {
+      "triangles": 33506,
+      "trianglesLight": 16753,
+      "texturePx": 4096,
+      "texturePxLight": 1024,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.258,
+        1.036,
+        2
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-upright-freezer",
+    "upstream": "upright-freezer",
+    "source": "https://grab3d.com/models/furniture/upright-freezer/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/upright-freezer/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/upright-freezer/manifest.json",
+    "manifestSha256": "c3ca01461c6e5a79ad17d0155d3bbd3274e1c6c205fbdf596ec6cf6bf369d02c",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/upright-freezer/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/upright-freezer/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "upright-freezer.glb",
+      "bytes": 3401100,
+      "url": "https://grab3d.com/dl/upright-freezer/upright-freezer.glb"
+    },
+    "sha256": "d09dea8cd4882953c10ebfeac3b2dd99ae8d63aa39f54888e390d75205da8179",
+    "bytes": 3401100,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:29.829Z",
+    "specs": {
+      "triangles": 13899,
+      "trianglesLight": null,
+      "texturePx": 4096,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.816,
+        0.912,
+        2.02
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-cash-register",
+    "upstream": "cash-register",
+    "source": "https://grab3d.com/models/props/cash-register/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/cash-register/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/cash-register/manifest.json",
+    "manifestSha256": "3e4916d3bcbe73817b1b8d5e822e0996ceb47d1568d4c41c4c310c8a4033b7f7",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/cash-register/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/cash-register/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "cash-register.glb",
+      "bytes": 1224572,
+      "url": "https://grab3d.com/dl/cash-register/cash-register.glb"
+    },
+    "sha256": "067c2cbfa44ab40af6fb19cd82f778a63a865f34ed268768cdd7ca6c233add9a",
+    "bytes": 1224572,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:33.754Z",
+    "specs": {
+      "triangles": 10308,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.5,
+        0.456,
+        0.502
+      ],
+      "movingParts": [
+        "cash-register_drawer"
+      ]
+    }
+  },
+  {
+    "id": "g3-freezer-chest",
+    "upstream": "freezer-chest",
+    "source": "https://grab3d.com/models/furniture/freezer-chest/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/freezer-chest/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/freezer-chest/manifest.json",
+    "manifestSha256": "932678cd37570aaceee6b489b6100f66044e7be4a92e0270d880ee44d9a611c4",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/freezer-chest/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/freezer-chest/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "freezer-chest.glb",
+      "bytes": 4114672,
+      "url": "https://grab3d.com/dl/freezer-chest/freezer-chest.glb"
+    },
+    "sha256": "dcccea60bac12978db298cb9ecf6eabedd616872f24447f516ac4491f4bcfd7a",
+    "bytes": 4114672,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:38.017Z",
+    "specs": {
+      "triangles": 13588,
+      "trianglesLight": null,
+      "texturePx": 4096,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        2.028,
+        0.928,
+        0.92
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-trash-can",
+    "upstream": "trash-can",
+    "source": "https://grab3d.com/models/city/trash-can/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/trash-can/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/trash-can/manifest.json",
+    "manifestSha256": "a2669490c519224e9cbc31b4041b47319ac072cf5270dcf119c65222e266876c",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/trash-can/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/trash-can/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "trash-can.glb",
+      "bytes": 1020852,
+      "url": "https://grab3d.com/dl/trash-can/trash-can.glb"
+    },
+    "sha256": "2d6a5088a2affefe7451493426c59cf4878d31d30ef0a6399fd44754cbe1efc8",
+    "bytes": 1020852,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:42.131Z",
+    "specs": {
+      "triangles": 5064,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.594,
+        0.594,
+        0.94
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-coffee-machine",
+    "upstream": "coffee-machine",
+    "source": "https://grab3d.com/models/food/coffee-machine/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/coffee-machine/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/coffee-machine/manifest.json",
+    "manifestSha256": "02d2e2a69780b641eec78f1337ad0211dde24e5a2a14f101c3340c82293512f8",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/coffee-machine/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/coffee-machine/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "coffee-machine.glb",
+      "bytes": 1261560,
+      "url": "https://grab3d.com/dl/coffee-machine/coffee-machine.glb"
+    },
+    "sha256": "f39ce6185d29fe8195623fec657e7f57ac609d714d1611336c59fe2debfc90d3",
+    "bytes": 1261560,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:46.219Z",
+    "specs": {
+      "triangles": 16552,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.245,
+        0.402,
+        0.339
+      ],
+      "movingParts": [
+        "coffee-machine_portafilter"
+      ]
+    }
+  },
+  {
+    "id": "g3-soda-fountain",
+    "upstream": "soda-fountain",
+    "source": "https://grab3d.com/models/food/soda-fountain/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/soda-fountain/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/soda-fountain/manifest.json",
+    "manifestSha256": "fd1bef81270b05c168ded6853921ae934d6000bcfa7a035959e90fe35669e27c",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/soda-fountain/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/soda-fountain/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "soda-fountain.glb",
+      "bytes": 927684,
+      "url": "https://grab3d.com/dl/soda-fountain/soda-fountain.glb"
+    },
+    "sha256": "1407ddb2e183944d9373ebdcbc8258030237ab14bfed9ef907593d7ff2bbfd22",
+    "bytes": 927684,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:50.230Z",
+    "specs": {
+      "triangles": 14180,
+      "trianglesLight": null,
+      "texturePx": 2048,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        0.72,
+        0.61,
+        0.885
+      ],
+      "movingParts": []
+    }
+  },
+  {
+    "id": "g3-end-cap-display",
+    "upstream": "end-cap-display",
+    "source": "https://grab3d.com/models/furniture/end-cap-display/",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://grab3d.com/dl/end-cap-display/LICENSE.txt",
+    "licenseSha256": "01908a56d6cada52704b20c5094c2aa16c9d8be6f124349c986764067abfd921",
+    "manifestUrl": "https://grab3d.com/dl/end-cap-display/manifest.json",
+    "manifestSha256": "91bdf839c09ca4cfa753cc3df9ebe21989794e7ab06a9e78b32fa261750a9a74",
+    "origin": {
+      "method": "procedural",
+      "aiContent": false,
+      "aiAssistedCode": true,
+      "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+      "licenseUrl": "https://grab3d.com/dl/end-cap-display/LICENSE.txt",
+      "manifestUrl": "https://grab3d.com/dl/end-cap-display/manifest.json"
+    },
+    "download": {
+      "format": "glb",
+      "variant": "full",
+      "file": "end-cap-display.glb",
+      "bytes": 2489740,
+      "url": "https://grab3d.com/dl/end-cap-display/end-cap-display.glb"
+    },
+    "sha256": "18f76f519808183ad3dce0d228e7e49ad9d0a7d560203d192700b07ff5d2e96e",
+    "bytes": 2489740,
+    "extensionsRequired": [],
+    "acquiredAt": "2026-11-17T05:47:54.315Z",
+    "specs": {
+      "triangles": 16710,
+      "trianglesLight": null,
+      "texturePx": 4096,
+      "texturePxLight": null,
+      "maps": [
+        "baseColor",
+        "roughness",
+        "metallic",
+        "normal"
+      ],
+      "dimensionsMeters": [
+        1.278,
+        1.057,
+        1.578
+      ],
+      "movingParts": []
+    }
+  }
+]

@@ -1,0 +1,46 @@
+{
+ "slug": "trash-can",
+ "triangles": 5064,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "trash-can.glb",
+   "bytes": 1020852
+  },
+  "blend": {
+   "name": "trash-can.blend",
+   "bytes": 800201
+  },
+  "fbx": {
+   "name": "trash-can.fbx",
+   "bytes": 1236428
+  },
+  "obj": {
+   "name": "trash-can-obj.zip",
+   "bytes": 709194
+  },
+  "usdz": {
+   "name": "trash-can.usdz",
+   "bytes": 1174497
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.594 x 0.594 x 0.940",
+  "triangles": 5064,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "street litter bin, 60 cm wide, 94 cm tall",
+  "notes": "hollow body with plastic liner; four arched openings"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

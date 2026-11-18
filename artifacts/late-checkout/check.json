@@ -1,0 +1,30 @@
+{
+  "loadMs": 9813,
+  "downloadMBAtStart": 106.9,
+  "night": {
+    "seed": 43326,
+    "culprit": "Dana",
+    "kinds": [
+      "given",
+      "window",
+      "code",
+      "knock"
+    ],
+    "strange": [
+      "corridor-loop",
+      "phone-ring",
+      "tv-all",
+      "watch-lies"
+    ]
+  },
+  "flow": "ok",
+  "stats": {
+    "texMB": 289,
+    "heapMB": 294,
+    "calls": 1,
+    "programs": 77,
+    "streamPending": 23
+  },
+  "downloadMBTotal": 125.8,
+  "errors": []
+}

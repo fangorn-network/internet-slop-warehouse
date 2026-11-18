@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "host: Cannot read properties of undefined (reading 'scene')"
+  ]
+}

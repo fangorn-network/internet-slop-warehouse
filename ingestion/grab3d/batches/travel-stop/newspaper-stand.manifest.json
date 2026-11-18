@@ -1,0 +1,47 @@
+{
+ "slug": "newspaper-stand",
+ "triangles": 3464,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "newspaper-stand.glb",
+   "bytes": 1049004
+  },
+  "blend": {
+   "name": "newspaper-stand.blend",
+   "bytes": 992600
+  },
+  "fbx": {
+   "name": "newspaper-stand.fbx",
+   "bytes": 1661532
+  },
+  "obj": {
+   "name": "newspaper-stand-obj.zip",
+   "bytes": 1316035
+  },
+  "usdz": {
+   "name": "newspaper-stand.usdz",
+   "bytes": 1616854
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "0.538 x 0.492 x 1.000",
+  "triangles": 3464,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "newspaper vending box 0.52 x 0.47 x 1.00 m: steel housing 0.50 x 0.45 x 0.72 m on 0.20 m legs, display window 0.39 x 0.31 m",
+  "notes": "Generic, no brand or real titles: the displayed newspaper only shows illegible placeholder blocks. Bottom-hinged front door with toughened glass, rubber seal and flip-down pull handle, coin slot, coin return button and blank price card on the top module, locked service door, chain eyelet on the right side. Glass and newspaper keep their own materials (not baked).",
+  "set": "Urban Street Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "phone-booth",
+ "triangles": 7040,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "phone-booth.glb",
+   "bytes": 888908
+  },
+  "blend": {
+   "name": "phone-booth.blend",
+   "bytes": 869964
+  },
+  "fbx": {
+   "name": "phone-booth.fbx",
+   "bytes": 1459980
+  },
+  "obj": {
+   "name": "phone-booth-obj.zip",
+   "bytes": 972396
+  },
+  "usdz": {
+   "name": "phone-booth.usdz",
+   "bytes": 1343400
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "1.068 x 1.068 x 2.300",
+  "triangles": 7040,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-09-26",
+  "real_size": "open phone booth 1.06 x 1.06 x 2.30 m, 60 mm aluminium corner posts, 8 mm toughened glass, card phone housing 0.24 x 0.15 x 0.47 m at 1.03-1.50 m, shelf at 0.94 m",
+  "notes": "Generic modern booth, no operator branding: only a neutral handset pictogram on four backlit fascia panels. Open front, glass on both sides and beside the steel back column, bird-safety frit band. Phone with display, 12 stainless keys, card slot, handset in a recessed cradle and a stainless armoured cord. Glass, sign panels and downlight keep their own materials (not baked).",
+  "set": "Urban Street Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "slug": "grocery-shelf",
+ "triangles": 33506,
+ "texture_px": 4096,
+ "triangles_light": 16753,
+ "texture_px_light": 1024,
+ "files": {
+  "glb": {
+   "name": "grocery-shelf.glb",
+   "bytes": 3271580
+  },
+  "blend": {
+   "name": "grocery-shelf.blend",
+   "bytes": 2467515
+  },
+  "fbx": {
+   "name": "grocery-shelf.fbx",
+   "bytes": 5757676
+  },
+  "obj": {
+   "name": "grocery-shelf-obj.zip",
+   "bytes": 3103449
+  },
+  "usdz": {
+   "name": "grocery-shelf.usdz",
+   "bytes": 5120576
+  },
+  "glb_light": {
+   "name": "grocery-shelf-light.glb",
+   "bytes": 1119124
+  },
+  "fbx_light": {
+   "name": "grocery-shelf-light.fbx",
+   "bytes": 2125116
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "1.258 x 1.036 x 2.000",
+  "triangles": 33506,
+  "textures": "PBR 4096px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-25",
+  "real_size": "double-sided supermarket shelf module, 1.25 m wide, 1.0 m deep, 2.0 m high",
+  "notes": "gondola shelf with five shelves per side, white panels, mint price rails with blank tags, filled with generic groceries without text (cereal, pasta, cans, jars, bottles, snacks, drinks). Front faces -Y, both sides stocked.",
+  "set": "Cozy Supermarket & Grocery Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}

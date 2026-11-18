@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Late Checkout</title>
+<link rel="icon" href="data:,">
+<script type="importmap">{"imports":{"three":"../../node_modules/three/build/three.module.js","three/addons/":"../../node_modules/three/examples/jsm/","@dimforge/rapier3d-compat":"https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-compat@0.21.0/dist/rapier.mjs"}}</script>
+<style>
+  :root { --ink: #f4f1ea; --dim: rgba(244, 241, 234, .72); --panel: rgba(17, 22, 30, .78); --accent: #ffb347; }
+  html, body { margin: 0; height: 100%; background: #0d1117; color: var(--ink); font: 15px/1.4 system-ui, -apple-system, Segoe UI, sans-serif; overflow: hidden; }
+  canvas#world { display: block; width: 100vw; height: 100vh; outline: none; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #objective { position: absolute; left: 16px; top: 14px; max-width: min(420px, 70vw); background: var(--panel); padding: 8px 12px; border-radius: 8px; }
+  #objective small { display: block; color: var(--accent); letter-spacing: .12em; font-size: 11px; font-weight: 700; }
+  #tasks { list-style: none; margin: 4px 0 0; padding: 0; }
+  #tasks li { display: flex; gap: 8px; align-items: baseline; margin: 3px 0; opacity: 0; transform: translateY(-4px); transition: opacity .35s, transform .35s, max-height .6s; max-height: 60px; overflow: hidden; }
+  #tasks li.in { opacity: 1; transform: none; }
+  #tasks li.out { opacity: 0; max-height: 0; margin: 0; }
+  #tasks .box { flex: none; width: 12px; height: 12px; border: 1.5px solid var(--ink); border-radius: 3px; position: relative; top: 1px; }
+  #tasks li.done .box { background: var(--accent); border-color: var(--accent); }
+  #tasks li.done .box::after { content: ''; position: absolute; left: 3px; top: 0; width: 3px; height: 7px; border: solid #111; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  #tasks li.done span:last-child { color: var(--dim); text-decoration: line-through; }
+  #objective:not(:has(li)) { display: none; }
+  #pocket { position: absolute; right: 16px; top: 14px; text-align: right; background: var(--panel); padding: 8px 12px; border-radius: 8px; min-width: 120px; }
+  #pocket b { font-size: 18px; }
+  #pocket { pointer-events: auto; cursor: pointer; }
+  /* The clock sits top centre: time is the game, and the warehouse player's fullscreen buttons cover the top-right corner. */
+  #watch { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); background: var(--panel); padding: 4px 14px; border-radius: 8px; font: 600 22px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .05em; color: var(--accent); }
+  #pocket { top: 68px !important; }
+  @media (max-width: 640px) { #objective { top: 58px; max-width: calc(100vw - 170px); } #pocket { top: 58px !important; } }
+  #pocket ul { margin: 4px 0 0; padding: 0; list-style: none; color: var(--dim); font-size: 13px; }
+  #crosshair { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: rgba(255,255,255,.75); box-shadow: 0 0 2px #000; }
+  #prompt { position: absolute; left: 50%; top: calc(50% + 28px); transform: translateX(-50%); background: var(--panel); padding: 5px 12px; border-radius: 6px; white-space: nowrap; display: none; }
+  #prompt kbd { background: var(--ink); color: #111; border-radius: 4px; padding: 0 6px; margin-right: 6px; font: 700 13px system-ui; }
+  #say { position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%); max-width: min(680px, 90vw); text-align: center; font-size: 18px; text-shadow: 0 1px 3px #000, 0 0 12px #000; opacity: 0; transition: opacity .3s; }
+  #say.on { opacity: 1; }
+  #where { position: absolute; left: 16px; bottom: 14px; color: var(--dim); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 1px 2px #000; }
+  #keys { position: absolute; right: 16px; bottom: 14px; color: var(--dim); font-size: 12px; text-shadow: 0 1px 2px #000; }
+  .overlay { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(8, 11, 16, .55); backdrop-filter: blur(3px); }
+  .overlay[hidden] { display: none; }
+  .card { background: #f4f1ea; color: #1b2430; border-radius: 12px; padding: 24px 28px; width: min(460px, calc(100vw - 64px)); box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+  .card h1 { font: 700 30px Georgia, serif; margin: 0 0 4px; color: #1d4f8f; }
+  .card h2 { font: 700 20px Georgia, serif; margin: 0 0 10px; color: #1d4f8f; }
+  .card p { margin: 6px 0; }
+  .card .sub { color: #5b6470; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .card button { font: 600 15px system-ui; border: 0; border-radius: 8px; padding: 10px 16px; background: #1d4f8f; color: #fff; cursor: pointer; margin-top: 12px; }
+  .card button.ghost { background: transparent; color: #1d4f8f; border: 1px solid #1d4f8f; }
+  .card button:disabled { opacity: .4; cursor: default; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .grid button { margin: 0; text-align: left; background: #fff; color: #1b2430; border: 1px solid #c9c4b8; }
+  .grid button small { display: block; color: #5b6470; }
+  #loading .bar { height: 6px; background: #d9d3c6; border-radius: 3px; overflow: hidden; margin-top: 14px; }
+  #loading .bar i { display: block; height: 100%; width: 0; background: #1d4f8f; transition: width .2s; }
+  .credits { font-size: 12px; color: #5b6470; margin-top: 14px; }
+  .note { background: #fbf8ef; border-radius: 4px; padding: 14px 18px 22px; box-shadow: inset 0 0 0 1px #e2dccb; transform: rotate(-1.2deg); }
+  .note-head { font: 600 11px system-ui; letter-spacing: .14em; text-transform: uppercase; color: #1d4f8f; border-bottom: 2px solid #1d4f8f; padding-bottom: 6px; }
+  .note .hand { font: 400 28px/1.3 'Segoe Print', 'Bradley Hand', 'Comic Neue', cursive; color: #26262e; margin: 22px 0 6px; }
+  .page { background: #f3eedf; border-radius: 3px; padding: 14px 18px; box-shadow: inset 0 0 0 1px #d9d0b8; max-height: 60vh; overflow: auto; }
+  .page .type { font: 15px/1.45 'Courier New', ui-monospace, monospace; color: #222; margin: 10px 0; }
+  .page .back { font-size: 13px; color: #5b6470; border-top: 1px dashed #c9bfa4; padding-top: 8px; }
+  .hand { font-family: 'Segoe Print', 'Bradley Hand', 'Comic Neue', cursive; color: #26262e; font-size: 17px; }
+  .doc-title { font: 700 12px 'Courier New', monospace; letter-spacing: .12em; border-bottom: 2px solid #222; padding-bottom: 6px; }
+  .page.whole { transform: rotate(.6deg); }
+  .notice { background: #fbf8ef; padding: 14px 18px; border-radius: 3px; box-shadow: inset 0 0 0 1px #e2dccb; }
+  .notice ol { padding-left: 20px; margin: 12px 0 0; } .notice li { margin: 7px 0; font: 15px/1.4 Georgia, serif; }
+  .notice .fine, .small { font-size: 12px; color: #5b6470; }
+  .keypad-display { font: 700 34px ui-monospace, monospace; letter-spacing: .3em; text-align: center; background: #111; color: #7fff7f; border-radius: 6px; padding: 8px; margin: 10px 0; }
+  .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .keypad button { margin: 0; font-size: 20px; }
+  #ledger { font-size: 12px; color: #5b6470; margin-top: 8px; }
+  #touch { display: none; }
+  @media (pointer: coarse) {
+    #touch { display: block; }
+    #keys { display: none; }
+    #stick { position: fixed; left: 24px; bottom: 28px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.35); pointer-events: auto; touch-action: none; }
+    #stick i { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px; border-radius: 50%; background: rgba(255,255,255,.55); }
+    #useBtn { position: fixed; right: 28px; bottom: 40px; width: 76px; height: 76px; border-radius: 50%; border: 0; background: rgba(255,179,71,.85); color: #111; font: 700 22px system-ui; pointer-events: auto; touch-action: none; }
+    #where { bottom: 160px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="world" tabindex="0" aria-label="First-person mystery in a roadside hotel"></canvas>
+<div id="hud">
+  <div id="objective"><small id="taskHead">TONIGHT</small><ul id="tasks"></ul></div>
+  <div id="watch" aria-label="Time">9:40 PM</div>
+  <div id="pocket" title="Your pockets (J)"><b id="wallet">$7.25</b><ul id="bag"></ul></div>
+  <div id="crosshair"></div>
+  <div id="prompt"></div>
+  <div id="say" role="status" aria-live="polite"></div>
+  <div id="where"></div>
+  <div id="touch"><div id="stick" aria-label="Move"><i></i></div><button id="useBtn" aria-label="Interact">E</button></div>
+  <div id="keys">WASD move · mouse look · E interact · J pockets · Shift walk faster · M mute · Esc release mouse</div>
+</div>
+<div class="overlay" id="loading"><div class="card"><div class="sub">Exit 127 · Interstate 44 · Missouri</div><h1>Late Checkout</h1><p>Taking the exit…</p><div class="bar"><i id="progress"></i></div></div></div>
+<div class="overlay" id="start" hidden><div class="card">
+  <div class="sub">Exit 127 · Interstate 44 · Missouri</div>
+  <h1>Late Checkout</h1>
+  <p>Seven hours on the interstate. The sun is going down behind the truck stop and the pole sign just flickered on.</p>
+  <p>Check in at the front desk, then find your room. Take your time. Nothing is going to happen.</p>
+  <button id="begin">Walk in</button>
+  <div id="ledger"></div>
+  <div class="credits">Furniture, plants, lamps, textures and sky: Poly Haven (CC0). People: Microsoft Rocketbox / Avatar Studio (MIT). Cars, shower and cardio equipment: Grab3D (CC0). Footsteps: Kenney (CC0). Building, fixtures and code: original, CC0. A remix of Heartland Inn Express.</div>
+</div></div>
+<div class="overlay" id="panel" hidden><div class="card" id="panelCard"></div></div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

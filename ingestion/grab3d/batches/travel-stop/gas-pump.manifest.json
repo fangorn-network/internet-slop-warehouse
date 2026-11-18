@@ -1,0 +1,47 @@
+{
+ "slug": "gas-pump",
+ "triangles": 8930,
+ "texture_px": 2048,
+ "triangles_light": null,
+ "texture_px_light": null,
+ "files": {
+  "glb": {
+   "name": "gas-pump.glb",
+   "bytes": 1039328
+  },
+  "blend": {
+   "name": "gas-pump.blend",
+   "bytes": 799164
+  },
+  "fbx": {
+   "name": "gas-pump.fbx",
+   "bytes": 1798396
+  },
+  "obj": {
+   "name": "gas-pump-obj.zip",
+   "bytes": 935980
+  },
+  "usdz": {
+   "name": "gas-pump.usdz",
+   "bytes": 1663743
+  }
+ },
+ "extras": {
+  "license": "CC0-1.0",
+  "source": "grab3d.com",
+  "dimensions_m": "1.379 x 0.620 x 1.800",
+  "triangles": 8930,
+  "textures": "PBR 2048px: base color, roughness, metallic, normal (baked)",
+  "generator": "Created by grab3d",
+  "created": "2026-10-19",
+  "real_size": "fuel dispenser, 1.8 m tall, cabinet 70 x 42 cm",
+  "notes": "Cozy fuel pump: white cabinet on a concrete plinth, sky blue head with a soft lightbox and drop symbol, sky blue front panel with drop emblem, display with abstract glowing bars and dots (no digits), blank keypad, card reader slot, side vents, nozzle holster on the right side with a coral handled fuel nozzle and a long rubber hose. Movable part: gas-pump_nozzle (rotates about the Y axis at the hose swivel; rest = holstered, about -60 degrees lifts the spout out of the holster). No text, digits or logos. Front = -Y.",
+  "set": "Cozy Car Parts & Garage Kit"
+ },
+ "origin": {
+  "method": "procedural",
+  "detail": "Built procedurally with Blender scripts. The scripts were written with the help of an AI coding assistant. No generative AI model produced the geometry or textures directly.",
+  "ai_content": false,
+  "ai_assisted_code": true
+ }
+}
