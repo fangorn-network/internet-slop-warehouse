@@ -14,13 +14,13 @@ const { PART_IDS } = await import('./assets.js');
 const ids = new Set(PART_IDS);
 
 // Pins from every publish receipt in the repo (same publisher).
-const pins = {};
+const pins = {}, publishers = {};
 async function walk(dir) {
   for (const e of await readdir(dir, { withFileTypes: true })) {
     if (e.name === 'node_modules' || e.name.startsWith('.')) continue;
     const p = join(dir, e.name);
     if (e.isDirectory()) await walk(p);
-    else if (e.name.endsWith('receipts.json')) for (const r of JSON.parse(await readFile(p, 'utf8'))) if (r.src && r.id) pins[r.id] = `https://ipfs-test.fangorn.network/ipfs/${r.src}`;
+    else if (e.name.endsWith('receipts.json')) for (const r of JSON.parse(await readFile(p, 'utf8'))) if (r.src && r.id) { pins[r.id] = `https://ipfs-test.fangorn.network/ipfs/${r.src}`; publishers[r.id] = r.publisher; }
   }
 }
 for (const d of ['parts', 'projects', 'ingestion']) await walk(resolve(repo, d));
@@ -38,7 +38,9 @@ await writeFile(resolve(here, 'release.parts.json'), JSON.stringify([{
   title: 'Heartland Inn Express · a night off I-44', author: 'the internet slop warehouse', license: 'CC0-1.0 AND MIT',
   description: 'Realistic first-person walk through an interstate chain hotel in rural Missouri at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Textured rigged human staff and guests, textured shower enclosure and cardio equipment, functional desk lamp, corrected wall-mounted art and signage, clear elevator shaft. Automatic mobile battery profile. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.',
   tags: ['hotel', 'first-person', 'exploration', 'realistic', 'walking-sim', 'missouri', 'roadside', 'polyhaven', 'grab3d', 'cc0', 'mobile'],
-  uses: [...ids, 'physics-world'].sort(),   // physics.js bundles the warehouse's physics-world part: credit it
+  // physics.js bundles the warehouse's physics-world part: credit it, pinned from the chain as publisher/id (it isn't
+  // in parts/parts.json, which publish-batch checks plain ids against).
+  uses: [...ids, `${publishers['physics-world']}/physics-world`].sort(),
 }], null, 2) + '\n');
 console.log(`Packaged ${html.length} characters; ${ids.size} parts, ${ids.size - missing.length} pinned.`);
 if (missing.length) console.log(`Unpublished (publish before releasing the game): ${missing.join(', ')}`);
