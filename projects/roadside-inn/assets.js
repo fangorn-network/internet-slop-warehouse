@@ -23,7 +23,11 @@ const local = {
 };
 // Local paths are relative to this module (not the page), so remixes in other folders load the same files.
 const here = p => typeof location === 'undefined' ? p : new URL(p, import.meta.url).href;
-export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here(local[id] ?? (id.startsWith('hotel-') ? `./assets/${id}.glb` : null) ?? (id.startsWith('g3-') ? `../../parts/grab3d/${id}.glb` : id.startsWith('acg-') ? `../../parts/acg/${id}.jpg` : `../../parts/haven/${id}.${ext}`));
+// Heavy models load as their lite versions (ingestion/lite: simplified, 1K textures), published as <id>-lite. The game
+// still names them by the original id. 2.5 M triangles in the lobby were mostly these (lean-scenes skill).
+export const LITE = new Set(['ph-potted-plant-01', 'ph-potted-plant-04', 'hotel-king-bed', 'hotel-snack-vending', 'ph-desk-lamp-arm-01', 'ph-bar-chair-round-01', 'g3-semi-truck', 'g3-1990s-suv', 'g3-1990s-station-wagon', 'g3-1990s-sedan', 'g3-1990s-hatchback', 'g3-1990s-pickup-truck', 'g3-1990s-minivan', 'g3-utility-pole', 'g3-dumpster', 'g3-fire-hydrant', 'g3-grocery-shelf', 'g3-end-cap-display', 'g3-coffee-machine', 'g3-soda-fountain', 'g3-upright-freezer', 'g3-freezer-chest', 'g3-vending-machine']); // = ingestion/lite/hotel.json
+const file = id => LITE.has(id) ? `${id}-lite` : id;
+export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here(local[id] ?? (id.endsWith('-lite') ? `../../parts/lite/${id}.glb` : null) ?? (id.startsWith('hotel-') ? `./assets/${id}.glb` : null) ?? (id.startsWith('g3-') ? `../../parts/grab3d/${id}.glb` : id.startsWith('acg-') ? `../../parts/acg/${id}.jpg` : `../../parts/haven/${id}.${ext}`));
 
 const MODELS = [
   'rb-sophia-formal', 'rb-marcus-formal', 'rb-emma-casual', 'rb-andre-casual',
@@ -52,7 +56,7 @@ const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color
 const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling' }; // Maira's Dream; ambientCG
 const SKIES = { dusk: 'ph-hotel-dusk-sky', day: 'ph-hotel-farm-sky', interior: 'ph-hotel-room-hdri' };
 // Every warehouse part this game loads (package.mjs pins these).
-export const PART_IDS = [...MODELS, ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => `ph-hotel-${k}-${r}`)),
+export const PART_IDS = [...MODELS.map(file), ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => `ph-hotel-${k}-${r}`)),
   ...Object.values(STORE).flatMap(id => ['color', 'normal', 'roughness'].map(r => `${id}-${r}`)), ...Object.values(SKIES), 'kenney-thrift-foley'];
 
 // opts.skies: the three HDRs (the hotel game's sky and reflections); opts.people: the Rocketbox staff and guests.
@@ -78,7 +82,7 @@ export async function loadLibrary(onProgress = () => {}, { skies: withSkies = tr
   };
   // ponytail: 4 parallel downloads, fine for desktop; add priority loading if mobile startup drags.
   const jobs = [
-    ...models_.map(id => async () => { const m = await gltf.loadAsync(url(id)); budget(m.scene, id); models.set(id, m); tick(); }),
+    ...models_.map(id => async () => { const m = await gltf.loadAsync(url(file(id))); budget(m.scene, id); models.set(id, m); tick(); }),
     ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => () => loadMap(k, r, `ph-hotel-${k}-${r}`))),
     ...Object.entries(STORE).flatMap(([k, id]) => ['color', 'normal', 'roughness'].map(r => () => loadMap(k, r, `${id}-${r}`))),
   ];
@@ -153,7 +157,7 @@ export async function loadLibrary(onProgress = () => {}, { skies: withSkies = tr
     if (!best) return;
     loading = true;
     try {
-      const m = await gltf.loadAsync(url(best)); budget(m.scene, best); models.set(best, m);
+      const m = await gltf.loadAsync(url(file(best))); budget(m.scene, best); models.set(best, m);
       const list = pending.get(best); pending.delete(best);
       const staging = new T.Group(), inners = list.map(([g, opts]) => [g, fill(new T.Group(), m, opts)]);
       for (const [, inner] of inners) staging.add(inner.parent);

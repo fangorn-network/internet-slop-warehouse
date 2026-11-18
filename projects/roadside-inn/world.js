@@ -432,7 +432,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   zone('stairs', 9.5, 12, -1, 6.5, -8.5, -1);
   zone('elevator', 6.5, 9, -1, 6.5, -4.5, -1);
   zone('room', R.x0, R.x1, 3, 6.5, R.z0, R.z1);
-  zone('corridor', -12, 30, 3, 6.5, -9, 9);
+  zone('corridor', -12, 30, 3, 6.5, -9, 9); zones.at(-1).id = 'upstairs'; // its own zone for culling (zone-culling)
 
   // ---------- lobby furnishing ----------
   const desk = add(lib.model('hotel-front-desk', { origin: true }), -8.4, 0, -3.3);
@@ -1150,7 +1150,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     }
     for (let x = -26.6; x < 34; x += 2.75) if (rnd() < 0.25) park(x, -20, 0, carIds[Math.floor(rnd() * carIds.length)]);
     park(1.6, 20.75, Math.PI + 0.02, 'g3-1990s-station-wagon', '#3c6e91');
-    for (const [id, cars] of parked) instances(id, cars.map(c => c.m), false, cars.map(c => c.paint));
+    for (const [id, cars] of parked) instances(id, cars.map(c => c.m), false, cars.map(c => c.paint), 'outside');
     interact.push({ pos: new T.Vector3(1.6, 1, 20.75), r: 2.8, label: () => 'Your car', use: () => game.say(game.has('key card') ? 'Everything you need is already in your bag. Room 212 awaits.' : 'Your car, ticking as it cools. Seven hours on I-44. Time to check in.') });
     // Parking lot lights.
     for (const [x, z] of [[-30, 27], [-10, 27], [10, 27], [30, 27], [-20, 42.5], [20, 42.5]]) {
@@ -1183,17 +1183,17 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     // Guard rails, utility poles with sagging lines, and street lights along the frontage road (instanced).
     // ponytail: detailed rail only where you can see it (|x| < 48); plain beam beyond. Widen if the view distance grows.
     const rails = []; for (let x = -48; x < 48; x += 4) rails.push(at(x, 60.6), at(x, 89.4, Math.PI));
-    instances('g3-guard-rail', rails);
+    instances('g3-guard-rail', rails, false, null, 'outside');
     for (const z of [60.6, 89.4]) for (const [x0, x1] of [[-450, -50], [46, 450]]) { const r = mbox(x1 - x0, 0.32, 0.1, F.mat('#a9adb0', { metalness: 0.8, roughness: 0.4 })); r.position.set((x0 + x1) / 2, 0.6, z); scene.add(r); }
     const poleXs = []; for (let x = -220; x <= 220; x += 44) poleXs.push(x);
-    instances('g3-utility-pole', poleXs.map(x => at(x, 57, Math.PI / 2)));
+    instances('g3-utility-pole', poleXs.map(x => at(x, 57, Math.PI / 2)), false, null, 'outside');
     const wire = new T.LineBasicMaterial({ color: '#1c1c1c' });
     for (const dz of [-1.05, 0, 1.05]) {
       const pts = [];
       for (let i = 0; i < poleXs.length - 1; i++) for (let k = 0; k <= 10; k++) { const t = k / 10; pts.push(new T.Vector3(poleXs[i] + t * 44, 9.55 - (dz === 0 ? 0.35 : 0) - Math.sin(t * Math.PI) * 0.9, 57 + dz)); }
       scene.add(new T.Line(new T.BufferGeometry().setFromPoints(pts), wire));
     }
-    instances('g3-street-light', [-60, -20, 20, 60].map(x => at(x, 45.2)), true);
+    instances('g3-street-light', [-60, -20, 20, 60].map(x => at(x, 45.2)), true, null, 'outside');
     // Traffic: cars and semis loop along the interstate and the frontage road (front = +Z, so face along X).
     const traffic = [];
     for (let i = 0; i < 22; i++) {
@@ -1246,7 +1246,8 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     plantTrees();
   }
   // One InstancedMesh per mesh of a model, each placement a Matrix4 (model origin kept, bottom on the ground).
-  function instances(id, placements, emissiveHeads = false, paints = null) {
+  // `zone` names where they stand for zone culling: a lot of cars spans the whole lot, so its box can't say.
+  function instances(id, placements, emissiveHeads = false, paints = null, zone) {
     const src = lib.models.get(id).scene;
     src.updateMatrixWorld(true);
     const minY = new T.Box3().setFromObject(src).min.y;
@@ -1259,6 +1260,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
       if (paints && /body_pbr|paint/.test(n.material.name)) paints.forEach((c, i) => im.setColorAt(i, new T.Color(c)));
       im.castShadow = true; im.receiveShadow = true;
       im.computeBoundingSphere();
+      if (zone) im.userData.zone = zone;
       scene.add(im);
     });
   }

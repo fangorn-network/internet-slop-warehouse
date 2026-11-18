@@ -1,0 +1,33 @@
+[
+  {
+    "file": "zone-culling.js",
+    "type": "logic",
+    "id": "zone-culling",
+    "kind": "effect",
+    "title": "Zone culling",
+    "description": "Draw only what can be seen from where the camera stands: three.js frustum-culls but never occlusion-culls, so indoors it draws every room behind the walls. Give it the level's zone boxes and which zones each one sees (through doors, glass, windows); it buckets every top-level object into the smallest zone that wholly contains it and hides the zones you can't see. Walls and floors on zone borders stay drawn, groups across a border are split, and moving things, skinned characters and lights are never hidden. userData.zone names the zone of an InstancedMesh. Cut Heartland Inn's lobby from 1,180 to 823 draw calls. Also the skeleton of a multi-level game: zones plus what each sees.",
+    "tags": ["culling", "performance", "mobile", "indoor", "multi-level", "rooms", "portals", "zones", "three.js"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": { "method": "hand", "ai": "code", "tool": "Claude Code" },
+    "exports": [
+      { "name": "attach", "signature": "attach(scene, { zones, sees, margin }) → { update(eye), refresh(obj), zoneAt(eye), stats() }", "does": "buckets the scene by zone; update(camera.position) each frame shows only the zones seen from there" }
+    ],
+    "options": [
+      { "name": "zones", "type": "[{ name | id, x0, x1, y0, y1, z0, z1 }]", "default": "required", "does": "zone boxes in world metres; overlapping is fine, the smallest wins" },
+      { "name": "sees", "type": "{ [zone]: zone[] }", "default": "required", "does": "what each zone can see; 'outside' is no zone; a zone missing here sees everything" },
+      { "name": "margin", "type": "number", "default": 0.25, "does": "how far inside a zone's box an object must sit to belong to it, metres" }
+    ]
+  },
+  {
+    "file": "skills/lean-scenes/SKILL.md",
+    "type": "skill",
+    "id": "lean-scenes-skill",
+    "title": "Lean scenes: make a three.js game run on phones",
+    "description": "Agent skill: measure a game against a phone budget (300 draw calls, 500k triangles, 128 MB textures, 8 ms JS per frame), find what dominates, and cut it: asset weight classes, zones so rooms behind walls aren't drawn, instancing that still culls, shared materials, a light pool, pixel ratio and frame caps. Worked through Heartland Inn's real numbers.",
+    "tags": ["skill", "performance", "mobile", "optimization", "architecture", "culling", "multi-level", "three.js"],
+    "uses": ["zone-culling"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  }
+]

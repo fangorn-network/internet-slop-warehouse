@@ -1,0 +1,814 @@
+[
+  {
+    "id": "ph-potted-plant-01-lite",
+    "file": "lite/ph-potted-plant-01-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Potted Plant 01 (lite)",
+    "author": "Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature",
+      "potplant",
+      "plant",
+      "terracotta",
+      "pot",
+      "vase",
+      "medium",
+      "leaf",
+      "green",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Potted Plant 01 for phones and crowded scenes: 8,591 triangles instead of 176,226, textures at most 1024px, 1.33 MB instead of 6.32 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-01"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "ph-potted-plant-04-lite",
+    "file": "lite/ph-potted-plant-04-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Potted Plant 04 (lite)",
+    "author": "James Ray Cock",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "plants",
+      "potted plants",
+      "succulent",
+      "nature",
+      "cactus",
+      "aloe",
+      "potplant",
+      "small",
+      "pot",
+      "plant",
+      "decor",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Potted Plant 04 for phones and crowded scenes: 4,565 triangles instead of 8,929, textures at most 1024px, 0.73 MB instead of 2.12 MB. Simplified with meshoptimizer (error 0.008) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-04"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "hotel-king-bed-lite",
+    "file": "lite/hotel-king-bed-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Hotel king bed · original Blender model (lite)",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "bed",
+      "furniture",
+      "bedroom",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Hotel king bed · original Blender model for phones and crowded scenes: 17,214 triangles instead of 64,228, textures at most 1024px, 1.21 MB instead of 3.64 MB. Simplified with meshoptimizer (error 0.002) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/hotel-king-bed"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "hotel-snack-vending-lite",
+    "file": "lite/hotel-snack-vending-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Hotel snack vending · original Blender model (lite)",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "snack",
+      "vending",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Hotel snack vending · original Blender model for phones and crowded scenes: 6,074 triangles instead of 42,816, textures at most —px, 0.03 MB instead of 2.84 MB. Simplified with meshoptimizer (error 0.032) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/hotel-snack-vending"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "ph-desk-lamp-arm-01-lite",
+    "file": "lite/ph-desk-lamp-arm-01-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Desk Lamp Arm 01 (lite)",
+    "author": "Yann Kervran, Kuutti Siitonen",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "lighting",
+      "rigged",
+      "collection: the_shed",
+      "industrial",
+      "lamp",
+      "mounted",
+      "fixed",
+      "desk",
+      "table",
+      "light",
+      "arm",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Desk Lamp Arm 01 for phones and crowded scenes: 4,232 triangles instead of 24,102, textures at most 1024px, 0.8 MB instead of 2.87 MB. Simplified with meshoptimizer (error 0.008) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-desk-lamp-arm-01"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "ph-bar-chair-round-01-lite",
+    "file": "lite/ph-bar-chair-round-01-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Bar Chair Round 01 (lite)",
+    "author": "Dairon Sanchez",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "seating",
+      "furniture",
+      "bar",
+      "pub",
+      "stool",
+      "tall",
+      "wooden",
+      "classical",
+      "old",
+      "vintage",
+      "cigar",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Bar Chair Round 01 for phones and crowded scenes: 2,999 triangles instead of 14,373, textures at most 1024px, 0.82 MB instead of 2.81 MB. Simplified with meshoptimizer (error 0.008) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-bar-chair-round-01"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-semi-truck-lite",
+    "file": "lite/g3-semi-truck-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Semi Truck (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "semi truck",
+      "truck",
+      "lorry",
+      "vehicle",
+      "city builder",
+      "traffic",
+      "trailer",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Semi Truck (Grab3D) for phones and crowded scenes: 6,626 triangles instead of 49,550, textures at most 1024px, 0.98 MB instead of 2.2 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-semi-truck"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-suv-lite",
+    "file": "lite/g3-1990s-suv-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s SUV (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "suv",
+      "sport utility vehicle",
+      "4x4",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s SUV (Grab3D) for phones and crowded scenes: 3,398 triangles instead of 19,885, textures at most 1024px, 0.48 MB instead of 0.96 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-suv"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-station-wagon-lite",
+    "file": "lite/g3-1990s-station-wagon-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Station Wagon (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "station wagon",
+      "estate car",
+      "wagon",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Station Wagon (Grab3D) for phones and crowded scenes: 3,299 triangles instead of 19,859, textures at most 1024px, 0.45 MB instead of 0.92 MB. Simplified with meshoptimizer (error 0.064) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-station-wagon"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-sedan-lite",
+    "file": "lite/g3-1990s-sedan-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Sedan (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "sedan",
+      "saloon",
+      "family car",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Sedan (Grab3D) for phones and crowded scenes: 3,280 triangles instead of 19,368, textures at most 1024px, 0.41 MB instead of 0.85 MB. Simplified with meshoptimizer (error 0.064) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-sedan"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-hatchback-lite",
+    "file": "lite/g3-1990s-hatchback-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Hatchback (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "hatchback",
+      "compact car",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "vehicle",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Hatchback (Grab3D) for phones and crowded scenes: 3,170 triangles instead of 18,484, textures at most 1024px, 0.39 MB instead of 0.79 MB. Simplified with meshoptimizer (error 0.032) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-hatchback"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-pickup-truck-lite",
+    "file": "lite/g3-1990s-pickup-truck-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Pickup Truck (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "pickup truck",
+      "pickup",
+      "truck",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Pickup Truck (Grab3D) for phones and crowded scenes: 3,252 triangles instead of 18,384, textures at most 1024px, 0.47 MB instead of 0.89 MB. Simplified with meshoptimizer (error 0.064) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-pickup-truck"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-1990s-minivan-lite",
+    "file": "lite/g3-1990s-minivan-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "1990s Minivan (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "vehicles",
+      "minivan",
+      "mpv",
+      "people carrier",
+      "1990s car",
+      "90s",
+      "nineties",
+      "retro car",
+      "classic car",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of 1990s Minivan (Grab3D) for phones and crowded scenes: 3,334 triangles instead of 17,494, textures at most 1024px, 0.39 MB instead of 0.79 MB. Simplified with meshoptimizer (error 0.032) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-1990s-minivan"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-utility-pole-lite",
+    "file": "lite/g3-utility-pole-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Utility Pole (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "utility pole",
+      "telephone pole",
+      "power pole",
+      "pole",
+      "street",
+      "urban",
+      "city builder",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Utility Pole (Grab3D) for phones and crowded scenes: 4,756 triangles instead of 15,727, textures at most 1024px, 1.09 MB instead of 1.3 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-utility-pole"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-dumpster-lite",
+    "file": "lite/g3-dumpster-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Dumpster (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "dumpster",
+      "garbage container",
+      "trash",
+      "street",
+      "urban",
+      "city builder",
+      "alley",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Dumpster (Grab3D) for phones and crowded scenes: 3,194 triangles instead of 15,508, textures at most 512px, 0.33 MB instead of 0.69 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-dumpster"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-fire-hydrant-lite",
+    "file": "lite/g3-fire-hydrant-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Fire Hydrant (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "fire hydrant",
+      "hydrant",
+      "street",
+      "urban",
+      "city builder",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Fire Hydrant (Grab3D) for phones and crowded scenes: 4,628 triangles instead of 14,604, textures at most 512px, 0.45 MB instead of 0.76 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-fire-hydrant"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-grocery-shelf-lite",
+    "file": "lite/g3-grocery-shelf-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Grocery Shelf (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "grocery shelf",
+      "supermarket shelf",
+      "gondola shelf",
+      "shelving",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Grocery Shelf (Grab3D) for phones and crowded scenes: 13,314 triangles instead of 33,506, textures at most 1024px, 1.12 MB instead of 3.27 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-grocery-shelf"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-end-cap-display-lite",
+    "file": "lite/g3-end-cap-display-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "End Cap Display (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "end cap display",
+      "promotion display",
+      "end cap",
+      "sale",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of End Cap Display (Grab3D) for phones and crowded scenes: 10,676 triangles instead of 16,710, textures at most 1024px, 0.94 MB instead of 2.49 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-end-cap-display"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-coffee-machine-lite",
+    "file": "lite/g3-coffee-machine-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Coffee Machine (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "food",
+      "coffee machine",
+      "espresso machine",
+      "coffee",
+      "machine",
+      "kitchen",
+      "cooking game",
+      "appliance",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Coffee Machine (Grab3D) for phones and crowded scenes: 3,233 triangles instead of 16,552, textures at most 1024px, 0.44 MB instead of 1.26 MB. Simplified with meshoptimizer (error 0.004) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-coffee-machine"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-soda-fountain-lite",
+    "file": "lite/g3-soda-fountain-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Soda Fountain (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "food",
+      "soda fountain",
+      "drink dispenser",
+      "soft drinks",
+      "ice dispenser",
+      "fast food",
+      "restaurant",
+      "diner",
+      "cooking game",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Soda Fountain (Grab3D) for phones and crowded scenes: 3,284 triangles instead of 14,180, textures at most 1024px, 0.36 MB instead of 0.93 MB. Simplified with meshoptimizer (error 0.002) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-soda-fountain"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-upright-freezer-lite",
+    "file": "lite/g3-upright-freezer-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Upright Glass Door Freezer (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "upright freezer",
+      "glass door freezer",
+      "frozen food",
+      "freezer",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Upright Glass Door Freezer (Grab3D) for phones and crowded scenes: 10,011 triangles instead of 13,899, textures at most 1024px, 0.95 MB instead of 3.4 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-upright-freezer"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-freezer-chest-lite",
+    "file": "lite/g3-freezer-chest-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Freezer Chest (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "stylized",
+      "furniture",
+      "freezer chest",
+      "chest freezer",
+      "frozen food",
+      "freezer",
+      "supermarket",
+      "store simulator",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Freezer Chest (Grab3D) for phones and crowded scenes: 8,664 triangles instead of 13,588, textures at most 1024px, 0.91 MB instead of 4.11 MB. Simplified with meshoptimizer (error 0.01) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-freezer-chest"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "g3-vending-machine-lite",
+    "file": "lite/g3-vending-machine-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Vending Machine (Grab3D) (lite)",
+    "author": "Grab3D",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "grab3d",
+      "realistic",
+      "city",
+      "vending machine",
+      "soda machine",
+      "snack machine",
+      "machine",
+      "street",
+      "urban",
+      "city builder",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Vending Machine (Grab3D) for phones and crowded scenes: 6,678 triangles instead of 17,700, textures at most 1024px, 1.11 MB instead of 1.42 MB. Simplified with meshoptimizer (error 0.08) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/g3-vending-machine"
+    ],
+    "made": {
+      "method": "derived",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  }
+]

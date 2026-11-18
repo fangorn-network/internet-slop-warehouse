@@ -6,6 +6,7 @@ import { buildWorld, FLOOR2 } from './world.js';
 import { createSound } from './sound.js';
 import { quality } from './quality.js';
 import { createPlayer, EYE } from './player.js';
+import { attach as zoneCulling } from '../../parts/zone-culling.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('world');
@@ -87,6 +88,20 @@ const sound = createSound(lib.foley);
 game.sound = sound;
 world = buildWorld(scene, lib, game);
 applySky('dusk');
+// What each zone can see (doors, glass, windows). From the lobby there's no drawing room 212, upstairs or the travel stop's shelves.
+const SEES = {
+  lobby: ['outside', 'corridor', 'pool', 'gym', 'stairs', 'elevator'],
+  pool: ['lobby', 'outside'],
+  gym: ['corridor', 'lobby', 'outside'],
+  corridor: ['lobby', 'gym', 'stairs', 'elevator', 'pool', 'outside'],
+  stairs: ['corridor', 'upstairs', 'lobby'],
+  elevator: ['corridor', 'upstairs', 'lobby'],
+  upstairs: ['room', 'stairs', 'elevator', 'outside'],
+  room: ['upstairs', 'outside'],
+  'travel stop': ['outside'],
+  outside: ['lobby', 'pool', 'travel stop'],
+};
+const zones = zoneCulling(scene, { zones: world.zones, sees: SEES });
 const detailProps = [];
 scene.traverse(o => { if (o.userData.hotelProp) detailProps.push(o); });
 let detailClock = 0;
@@ -266,7 +281,7 @@ function frame(now = performance.now()) {
       if (!prop.visible && !prop.userData.distanceCulled) continue;
       prop.getWorldPosition(detailPosition);
       prop.userData.distanceCulled = detailPosition.distanceTo(camera.position) >= distance + prop.userData.visibilityRadius;
-      prop.visible = !prop.userData.distanceCulled;
+      prop.visible = !prop.userData.distanceCulled && !prop.userData.zoneHidden;
     }
   }
   // Indoors, reflections come from a real hotel-room HDRI; outdoors, from the sky.
@@ -285,9 +300,10 @@ function frame(now = performance.now()) {
   sun.intensity = LOW && zone ? 0 : LOOKS[timeOfDay].sunI;
   $('where').textContent = zone ? (zone.name === 'room' ? 'Room 212' : zone.name) + (player.y > 2.5 && zone.name !== 'room' ? ' · floor 2' : '') : 'outside';
   sound.update({ zone: zone?.name, indoor: !!zone, highwayDistance: Math.abs(player.z - 75) });
+  zones.update(camera.position);
   renderer.render(scene, camera);
 }
 frame();
 
 // Test hook: teleport and inspect state from automated browser checks.
-globalThis.__inn = { player, world, game, physics: phys, camera, controls, renderer, scene, quality, people: lib.people, teleport(x, y, z, yaw = 0, pitch = 0) { Object.assign(player, { x, y, z, vy: 0 }); controls.setLook(yaw, pitch); }, begin: () => $('begin').click(), FLOOR2 };
+globalThis.__inn = { zones, player, world, game, physics: phys, camera, controls, renderer, scene, quality, people: lib.people, teleport(x, y, z, yaw = 0, pitch = 0) { Object.assign(player, { x, y, z, vy: 0 }); controls.setLook(yaw, pitch); }, begin: () => $('begin').click(), FLOOR2 };

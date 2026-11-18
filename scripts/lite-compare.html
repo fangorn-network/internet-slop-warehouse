@@ -1,0 +1,21 @@
+<!doctype html>
+<!-- Original (left) beside its lite version (right): ?a=<glb url>&b=<glb url>. Used by the lite-model check. -->
+<meta charset="utf-8"><style>body{margin:0;background:#8a929a}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as T from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+const q = new URLSearchParams(location.search);
+const r = new T.WebGLRenderer({ antialias: true }); r.setSize(1000, 500); document.body.append(r.domElement);
+const scene = new T.Scene(); scene.background = new T.Color("#8a929a");
+scene.add(new T.HemisphereLight("#fff", "#555", 2)); const sun = new T.DirectionalLight("#fff", 2.5); sun.position.set(3, 5, 4); scene.add(sun);
+const load = (u) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(u).then((g) => g.scene);
+const [a, b] = await Promise.all([load(q.get("a")), load(q.get("b"))]);
+const box = new T.Box3().setFromObject(a), size = box.getSize(new T.Vector3()), c = box.getCenter(new T.Vector3());
+const gap = Math.max(size.x, size.z) * 1.3;
+for (const [o, dx] of [[a, -gap / 2], [b, gap / 2]]) { o.position.sub(c).add(new T.Vector3(dx, 0, 0)); scene.add(o); }
+const cam = new T.PerspectiveCamera(35, 2, 0.01, 1000), d = Math.max(gap * 2, size.y * 1.6) * 1.25;
+cam.position.set(0, size.y * 0.35, d); cam.lookAt(0, 0, 0);
+r.render(scene, cam); document.title = "ready";
+</script>
