@@ -51,7 +51,9 @@ while(todo.length){
         if(p.type==='game')content=content.replace('{/*PARTS*/}',JSON.stringify(urls));
         const record=await preparePart(fangorn,{...labels,uses:(p.uses??[]).map(id=>({id})),...(p.type==='asset'?{bytes:readFileSync(join(base,file))}:{content})});
         const now=await fangorn.engine.readRecord(address,REPO,p.id);
-        if(now&&JSON.stringify(now.payload)===JSON.stringify(record.payload))console.log(`${p.id}: unchanged`);
+        // measured alone doesn't republish: it's derived from the file, and a new file changes src anyway
+        const same=(a,b)=>{const{measured:_,...x}=a,{measured:__,...y}=b;return JSON.stringify(x)===JSON.stringify(y);};
+        if(now&&same(now.payload,record.payload))console.log(`${p.id}: unchanged`);
         else records.push(record);
     }
     let txHash;if(records.length)({txHash}=await commitParts(fangorn,records));

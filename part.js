@@ -22,9 +22,20 @@
 //   hooks      [{ name, default, does }]: callbacks in the options that replace a default behaviour
 //   overrides  { part: { publisher?, id }, hook }: this module exports `hook`, a drop-in for that part's hook
 //
+// An asset is measured at publish (measure.js): `measured` holds facts read from its bytes (a GLB's triangles,
+// size in metres, textures, rig; an image's pixels), never the publisher's word. Any part may say how it was
+// made, the disclosure stores and platforms ask for:
+//
+//   made       { method: hand | procedural | generated | scanned | mixed,
+//                ai: none (no AI) | code (AI wrote the code or scripts that made it) | content (a model made it),
+//                tool?: what made it ("Blender 4.0 script", "TRELLIS.2 4B, weights rev …, seed 42"), detail? }
+//              A reference image or concept you published goes in `uses`, like any part you built from.
+//
 // The contract: a behaviour exports `attach(object, opts) → { update(dt), dispose() }`, so every one is wired
 // the same way; an override exports the hook it names instead. That's "make X do Y where it would do Z":
 // attach(enemy, { onSee: fleeOnSee }) in place of patrol's default chase.
+
+import { measure } from "./site/measure.js";
 
 export const REPO = "internet-slop-warehouse";
 export const TYPES = ["game", "asset", "logic", "skill", "source"];
@@ -66,6 +77,16 @@ export function skillOf(md) {
     return { name, description };
 }
 
+export const METHODS = ["hand", "procedural", "generated", "scanned", "mixed"];
+export const AI = ["none", "code", "content"];
+/** How a part was made, checked → the payload's `made`. */
+function madeOf({ method, ai, tool, detail }) {
+    if (!METHODS.includes(method)) throw new Error(`made.method is one of ${METHODS.join(", ")}`);
+    if (!AI.includes(ai)) throw new Error(`made.ai is one of ${AI.join(", ")}: none, AI-written code, or AI-made content`);
+    if (method === "generated" && ai !== "content") throw new Error("a generated part's made.ai is content");
+    return { method, ai, ...(tool && { tool: String(tool).slice(0, 200) }), ...(detail && { detail: String(detail).slice(0, 500) }) };
+}
+
 /** A source part's origin, checked. */
 function originOf({ origin, license }) {
     const { repo, commit, path } = origin ?? {};
@@ -80,11 +101,13 @@ function originOf({ origin, license }) {
  * for, when that isn't `fangorn`'s own (the warehouse preparing a publisher's part): a pin without a publisher is theirs.
  */
 export async function preparePart(fangorn, part, { owner } = {}) {
-    const { type, id, title, description = "", tags = [], author, license, content, bytes, mime, parent, uses = [] } = part;
+    const { type, id, title, description = "", tags = [], author, license, content, bytes, mime, made, parent, uses = [] } = part;
     if (!TYPES.includes(type)) throw new Error(`type is one of ${TYPES.join(", ")}`);
     if (!ID.test(id ?? "")) throw new Error("id: lowercase letters, digits and dashes, up to 64");
     if (!title) throw new Error("title is required");
     if (type === "asset" ? !bytes?.length : typeof content !== "string" || !content) throw new Error(type === "asset" ? "an asset needs its file's bytes" : `a ${type} needs its source as content`);
+    // Checked before anything is stored: a bad GLB or disclosure fails the publish without uploading.
+    const checked = { ...(type === "asset" && { measured: measure(bytes) }), ...(made && { made: madeOf(made) }) };
     const address = owner ?? fangorn.getAddress();
 
     // Pin what it builds on: each must exist now, and the record keeps the version it saw.
@@ -125,6 +148,7 @@ export async function preparePart(fangorn, part, { owner } = {}) {
         ...(author && { author: String(author).slice(0, 64) }),
         ...(license && { license: String(license).slice(0, 64) }),
         ...(type === "asset" && mime && { mime }),
+        ...checked,
         ...logic,
         ...(parent && { parent: await pin(parent) }),
         ...(uses.length && { uses: await pinAll(uses, pin) }),

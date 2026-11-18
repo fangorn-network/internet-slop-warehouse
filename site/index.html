@@ -14,7 +14,7 @@
 <main>
   <header class="masthead">
     <a class="wordmark" href="./" aria-label="The internet slop warehouse home"><span class="logo" aria-hidden="true">S/W</span><span>SLOP WAREHOUSE<small>INTERNET DIVISION</small></span></a>
-    <nav aria-label="Main navigation"><a href="#inventory">Browse stock ↘</a><a href="#loading-dock">Bring your agent ↗</a></nav>
+    <nav aria-label="Main navigation"><a href="#inventory">Browse stock ↘</a><a href="#loading-dock">Bring your agent ↗</a><a href="./field.html">Field guide</a></nav>
     <span class="stock-status" id="status" role="status">Receiving inventory…</span>
   </header>
   <section class="hero" aria-labelledby="warehouse-title">
@@ -79,6 +79,7 @@
 <script type="module">
 import { categoriesFor, categoryOptions } from "./catalog.js";
 import { westmarch, fileURL } from "./api.js";
+import { measureUrl } from "./measure.js";
 
 // The whole page: the Worker's view (every record and the gateway), ranked by its /search (by words until it answers),
 // and played from storage.
@@ -294,6 +295,14 @@ async function play(r) {
     } else {
         const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = `${r.payload.mime ?? "file"} · open`;
         $("view").replaceChildren(a);
+        // Measured here from the stored file, so every GLB gets facts whoever published it and whenever.
+        if (r.payload.mime === "model/gltf-binary") measureUrl(url).then(({ bytes, glb: g }) => {
+            if (request !== playerRequest || !$("player").open || !g) return;
+            const facts = document.createElement("p");
+            facts.textContent = [`${g.triangles.toLocaleString()} triangles`, `${g.size.join(" × ")} m`, g.texturePx && `${g.texturePx}px textures`,
+                g.rigged && "rigged", g.animations && `${g.animations} animations`, g.compressed.length && g.compressed.join("+"), `${(bytes / 1e6).toFixed(1)} MB`].filter(Boolean).join(" · ");
+            $("view").append(facts);
+        }).catch(() => {});
     }
     const links = [];
     const p = r.payload.parent, parent = p && view.records.find((x) => x.publisher === p.publisher && x.id === p.id);

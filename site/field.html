@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Field guide · slop warehouse</title>
+<meta name="description" content="Every game in the warehouse as a specimen: the parts it carries, and the dark matter it brought itself.">
+<meta name="westmarch-api" content="https://internet-slop-warehouse.fangorn.network">
+<link rel="stylesheet" href="./warehouse.css">
+<style>
+:root{--dish:#12170f;--rim:#3d4630;--dark:#050704;--logic:#e5ff50;--skill:#ea9d65;--model:#d6d7bd;--image:#9fb38a;--audio:#7fb7a8;--other:#8a8f7c}
+.field-intro{display:grid;grid-template-columns:1.4fr 1fr;gap:30px;padding:40px 0 30px;align-items:end;border-bottom:1px solid var(--line)}
+.field-intro h1{font-size:clamp(48px,6.5vw,92px);margin:16px 0 18px}
+.field-intro p{margin:0;max-width:560px;color:#b6bdab;font-size:14px;line-height:1.7}
+.tally{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line)}
+.tally div{padding:14px 16px;border:1px solid var(--line);margin:-1px 0 0 -1px}
+.tally b{display:block;font:900 34px/1 Impact,'Arial Narrow',sans-serif;color:var(--accent)}
+.tally span{font:10px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;padding:16px 0;font:11px var(--mono);color:var(--muted);border-bottom:1px solid var(--line)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.field h2{font:900 28px/.95 Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin:38px 0 6px}
+.field h2 span{color:var(--accent)}
+.field .note{font:12px/1.6 var(--mono);color:var(--muted);margin:0 0 20px;max-width:760px}
+#specimens{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.dish{display:block;text-decoration:none;color:inherit;background:#1f241b;border:1px solid #11170e;box-shadow:5px 5px 0 #10150d;transition:opacity .25s}
+.dish:hover,.dish:focus-visible{outline:2px solid var(--accent);outline-offset:0}
+.dish svg{display:block;width:100%;aspect-ratio:1;background:radial-gradient(circle at 50% 45%,#1a2115,#0f130c 70%)}
+.dish .label{padding:11px 14px 13px;border-top:1px solid #2c3324}
+.dish h3{margin:0;font:900 22px/1 Impact,'Arial Narrow',sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+.dish .comp{display:block;margin-top:6px;font:10px/1.5 var(--mono);color:var(--muted)}
+.dish .comp b{color:var(--fg);font-weight:400}
+.dish .lineage{display:block;font:10px var(--mono);color:#8f9a78;margin-top:3px}
+.culture{transform-origin:50% 50%;animation:stream 420s linear infinite}
+.dish:nth-child(2n) .culture{animation-direction:reverse;animation-duration:510s}
+@keyframes stream{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.culture{animation:none}}
+[data-k]{transition:opacity .2s,stroke-width .2s}
+body.tracing .dish:not(.host){opacity:.28}
+body.tracing [data-k]:not(.lit){opacity:.35}
+[data-k].lit{stroke:#fff;stroke-width:2.5;opacity:1}
+#keystones{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0;border:1px solid var(--line)}
+.keystone{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--line);margin:-1px 0 0 -1px;font:12px var(--mono);cursor:default}
+.keystone svg{width:44px;height:44px}
+.keystone .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.keystone .t small{display:block;color:var(--muted);font-size:10px}
+.keystone .bar{height:6px;background:var(--accent);margin-top:5px;min-width:3px}
+.keystone b{font:900 24px Impact,'Arial Narrow',sans-serif;color:var(--accent)}
+.keystone.lit{background:var(--mark)}
+#spores{display:flex;flex-wrap:wrap;gap:4px;padding:16px;border:1px dashed #67714f}
+#spores a{display:block;width:22px;height:22px}
+#spores svg{width:22px;height:22px;display:block}
+#tip{position:fixed;z-index:10;pointer-events:none;background:#0d110b;border:1px solid var(--accent);padding:8px 10px;font:11px/1.5 var(--mono);max-width:280px;box-shadow:4px 4px 0 #0008}
+#tip b{display:block;color:var(--accent);font-size:12px}
+@media(max-width:650px){.field-intro{display:block;padding:28px 0 22px}.tally{margin-top:20px}#specimens{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}.dish h3{font-size:17px}#keystones{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="utility"><span>Public access / digital salvage department</span><span>Field guide to the specimens on site</span></div>
+<main class="field">
+  <header class="masthead">
+    <a class="wordmark" href="./" aria-label="The internet slop warehouse home"><span class="logo" aria-hidden="true">S/W</span><span>SLOP WAREHOUSE<small>INTERNET DIVISION</small></span></a>
+    <nav aria-label="Main navigation"><a href="./#inventory">Browse stock ↘</a><a href="./field.html" aria-current="page">Field guide</a></nav>
+    <span class="stock-status" id="status" role="status">Collecting specimens…</span>
+  </header>
+  <section class="field-intro">
+    <div><div class="eyebrow">Field guide / specimens on site</div>
+      <h1>What the games<br>are <span class="slop" style="color:var(--accent)">made of.</span></h1>
+      <p>Every game is a specimen. The dark mass is its <strong>dark matter</strong>: code in its own page that isn't any credited part. Around it, the logic it borrows and the assets it carries, through every part it pins. A part has the same shape in every game that carries it: hover one to find it everywhere it lives.</p>
+    </div>
+    <div class="tally" id="tally"></div>
+  </section>
+  <div class="legend" aria-label="Legend">
+    <span><i style="background:var(--dark);border:1px solid #3a4430"></i>dark matter (its own code)</span>
+    <span><i style="background:var(--logic)"></i>logic / source</span>
+    <span><i style="background:var(--skill)"></i>skill</span>
+    <span><i style="background:var(--model)"></i>model</span>
+    <span><i style="background:var(--image)"></i>texture / image</span>
+    <span><i style="background:var(--audio)"></i>sound</span>
+    <span><i style="border:1px dashed var(--skill)"></i>credit not in the index</span>
+  </div>
+  <h2>Specimens <span>/ games</span></h2>
+  <p class="note">Area is code: dark matter and logic are sized by bytes, each asset is one seed. Remixes sit next to what they came from.</p>
+  <div id="specimens"></div>
+  <h2>Keystone <span>parts</span></h2>
+  <p class="note">The parts living in the most games. Hover to see where.</p>
+  <div id="keystones"></div>
+  <h2>Spores <span>/ waiting</span></h2>
+  <p class="note" id="spore-note"></p>
+  <div id="spores"></div>
+  <footer class="footer" style="margin-top:40px"><span><strong>Internet slop warehouse</strong> / built from shared parts</span><span>Read live from the index, nothing stored here.</span></footer>
+</main>
+<div id="tip" hidden role="status"></div>
+<script type="module">
+import { packSiblings, packEnclose } from "https://cdn.jsdelivr.net/npm/d3-hierarchy@3.1.2/+esm";
+import { westmarch, fileURL } from "./api.js";
+
+const $ = (id) => document.getElementById(id);
+const base = new URLSearchParams(location.search).get("api") ?? document.querySelector('meta[name="westmarch-api"]').content;
+const api = westmarch(base), view = await api.view().catch((e) => ($("status").textContent = `Couldn't read the index: ${e.message}`, null));
+if (!view) throw new Error("no view");
+const key = (r) => `${r.publisher}/${r.id}`, pinKey = (p) => `${p.publisher}/${p.id}`;
+const records = new Map(view.records.map((r) => [key(r), r]));
+const games = view.records.filter((r) => r.type === "game");
+
+// Everything a game carries: what it pins, and what those pin, all the way down.
+const carried = new Map(), hosts = new Map();
+for (const g of games) {
+    const seen = new Set();
+    const walk = (k) => { if (seen.has(k)) return; seen.add(k); for (const u of records.get(k)?.payload.uses ?? []) walk(pinKey(u)); };
+    for (const u of g.payload.uses ?? []) walk(pinKey(u));
+    carried.set(key(g), seen);
+    for (const k of seen) (hosts.get(k) ?? hosts.set(k, new Set()).get(k)).add(key(g));
+}
+
+// Code is weighed by reading it: the gateway compresses JSON, so there's no Content-Length to HEAD. Files are
+// immutable and cached for a year, so a second visit costs nothing.
+// ponytail: downloads every game's page once (~7 MB uncompressed today); sizes in the view would remove it.
+const weigh = async (url) => {
+    const res = await fetch(url);
+    let n = 0; for await (const chunk of res.body) n += chunk.length;
+    return n;
+};
+const CODE = new Set(["game", "logic", "source", "skill"]), bytes = new Map();
+const toWeigh = [...new Set([...games.map(key), ...[...hosts.keys()].filter((k) => CODE.has(records.get(k)?.type))])];
+let weighed = 0, next = 0;
+await Promise.all(Array.from({ length: 8 }, async () => {
+    while (next < toWeigh.length) {
+        const k = toWeigh[next++];
+        bytes.set(k, await weigh(fileURL(view.gateway, records.get(k))).catch(() => 0));
+        $("status").textContent = `Weighing specimens… ${++weighed}/${toWeigh.length}`;
+    }
+}));
+
+// A part's shape comes from its content address: the same part looks the same everywhere.
+const hash = (s) => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; };
+const rng = (seed) => () => ((seed = Math.imul(seed ^ (seed >>> 15), 2246822507) ^ Math.imul(seed ^ (seed >>> 13), 3266489909)) >>> 0) / 4294967296;
+function blob(x, y, r, seed, wobble = 0.12, n = 9) {
+    const rnd = rng(seed), pts = Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2 + rnd() * 0.3, rr = r * (1 + wobble * (rnd() * 2 - 1)); return [x + Math.cos(a) * rr, y + Math.sin(a) * rr]; });
+    const p = (i) => pts[(i + n) % n], f = (v) => v.toFixed(1);
+    let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+    for (let i = 0; i < n; i++) {
+        const [a, b, c, e] = [p(i - 1), p(i), p(i + 1), p(i + 2)];
+        d += `C${f(b[0] + (c[0] - a[0]) / 6)} ${f(b[1] + (c[1] - a[1]) / 6)} ${f(c[0] - (e[0] - b[0]) / 6)} ${f(c[1] - (e[1] - b[1]) / 6)} ${f(c[0])} ${f(c[1])}`;
+    }
+    return d + "Z";
+}
+const colour = (r) => !r ? "none" : r.type === "logic" || r.type === "source" ? "var(--logic)" : r.type === "skill" ? "var(--skill)"
+    : /gltf|model/.test(r.payload.mime ?? "") ? "var(--model)" : /^image\//.test(r.payload.mime ?? "") ? "var(--image)" : /^audio\//.test(r.payload.mime ?? "") ? "var(--audio)" : "var(--other)";
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
+const SEED = 600;   // an asset's area, in bytes of code: one seed each
+
+function specimen(g) {
+    const k = key(g), own = Math.max(bytes.get(k) ?? 0, 200);
+    const cells = [{ k, dark: true, r: Math.sqrt(own) }];
+    for (const pk of carried.get(k)) {
+        const r = records.get(pk);
+        cells.push({ k: pk, rec: r, r: Math.sqrt(r && CODE.has(r.type) ? Math.max(bytes.get(pk) ?? 0, SEED) : SEED) });
+    }
+    cells.sort((a, b) => b.r - a.r);
+    packSiblings(cells);
+    const e = packEnclose(cells), s = 92 / e.r;
+    const body = cells.map((c) => {
+        const x = 100 + (c.x - e.x) * s, y = 100 + (c.y - e.y) * s, r = c.r * s * 0.93;
+        if (c.dark) return `<path d="${blob(x, y, r, hash(k), 0.16, 12)}" fill="var(--dark)" stroke="#2f3826" stroke-width="1"/>`;
+        const shape = r < 2.2 ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(r, 0.8).toFixed(1)}"` : `<path d="${blob(x, y, r, hash(c.rec?.cid ?? c.k))}"`;
+        return c.rec ? `${shape} data-k="${esc(c.k)}" fill="${colour(c.rec)}" fill-opacity=".85" stroke="#0b0f09" stroke-width=".6"/>`
+            : `${shape} data-k="${esc(c.k)}" fill="none" stroke="var(--skill)" stroke-dasharray="2 2"/>`;
+    }).join("");
+    const parts = [...carried.get(k)].map((pk) => records.get(pk));
+    const logic = parts.filter((r) => r && CODE.has(r.type)), assets = parts.filter((r) => r?.type === "asset");
+    const borrowed = logic.reduce((n, r) => n + (bytes.get(key(r)) ?? 0), 0), dark = Math.round((own / (own + borrowed)) * 100);
+    const parent = g.payload.parent && records.get(pinKey(g.payload.parent));
+    const a = document.createElement("a");
+    a.className = "dish"; a.href = `./?part=${encodeURIComponent(k)}`; a.dataset.game = k;
+    a.setAttribute("aria-label", `${g.payload.title}: ${dark}% dark matter, ${logic.length} logic parts, ${assets.length} assets. Open the game.`);
+    a.innerHTML = `<svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="97" fill="none" stroke="var(--rim)" stroke-dasharray="3 4"/><g class="culture">${body}</g></svg>
+        <div class="label"><h3>${esc(g.payload.title)}</h3><span class="comp"><b>${dark}%</b> dark matter · <b>${logic.length}</b> logic · <b>${assets.length}</b> assets</span>${parent ? `<span class="lineage">↳ remix of ${esc(parent.payload.title)}</span>` : ""}</div>`;
+    return { a, own, borrowed };
+}
+
+// Families: a remix sits right after what it came from; biggest families first.
+const rootOf = (g) => { let r = g, seen = new Set(); while (r.payload.parent && records.get(pinKey(r.payload.parent)) && !seen.has(key(r))) { seen.add(key(r)); r = records.get(pinKey(r.payload.parent)); } return key(r); };
+const families = Map.groupBy(games, rootOf), depth = (g) => { let d = 0, r = g; while (r.payload.parent && records.get(pinKey(r.payload.parent)) && d < 20) { d++; r = records.get(pinKey(r.payload.parent)); } return d; };
+const ordered = [...families.values()].sort((a, b) => b.reduce((n, g) => n + carried.get(key(g)).size, 0) - a.reduce((n, g) => n + carried.get(key(g)).size, 0)).flatMap((f) => f.sort((a, b) => depth(a) - depth(b)));
+let own = 0, borrowed = 0;
+$("specimens").replaceChildren(...ordered.map((g) => { const s = specimen(g); own += s.own; borrowed += s.borrowed; return s.a; }));
+
+// Keystones and spores.
+const parts = view.records.filter((r) => r.type !== "game");
+const keystones = parts.filter((r) => hosts.has(key(r))).sort((a, b) => hosts.get(key(b)).size - hosts.get(key(a)).size).slice(0, 12);
+const most = hosts.get(key(keystones[0]))?.size ?? 1;
+$("keystones").replaceChildren(...keystones.map((r) => {
+    const n = hosts.get(key(r)).size, d = document.createElement("div");
+    d.className = "keystone"; d.dataset.k = key(r);
+    d.innerHTML = `<svg viewBox="0 0 44 44" aria-hidden="true"><path d="${blob(22, 22, 17, hash(r.cid))}" fill="${colour(r)}" fill-opacity=".85"/></svg>
+        <span class="t">${esc(r.payload.title)}<small>${esc(r.type)} · in ${n} game${n === 1 ? "" : "s"}</small><span class="bar" style="width:${(n / most) * 100}%"></span></span><b>${n}</b>`;
+    return d;
+}));
+const spores = parts.filter((r) => !hosts.has(key(r)));
+$("spore-note").textContent = `${spores.length} of ${parts.length} parts aren't in any game yet. Each is somebody's starting point.`;
+$("spores").replaceChildren(...spores.map((r) => {
+    const a = document.createElement("a");
+    a.href = `./?part=${encodeURIComponent(key(r))}`; a.dataset.k = key(r); a.setAttribute("aria-label", `${r.payload.title} (${r.type})`);
+    a.innerHTML = `<svg viewBox="0 0 22 22" aria-hidden="true"><path d="${blob(11, 11, 8, hash(r.cid))}" fill="${colour(r)}" fill-opacity=".7"/></svg>`;
+    return a;
+}));
+
+const total = own + borrowed;
+$("tally").innerHTML = [[games.length, "specimens"], [parts.length, "parts"], [`${Math.round((own / total) * 100)}%`, "of game code is dark matter"], [keystones[0] ? hosts.get(key(keystones[0])).size : 0, `games carry ${esc(keystones[0]?.payload.title ?? "—")}`]]
+    .map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
+$("status").textContent = `${games.length} specimens, live from the index`;
+
+// Trace a part through every game that carries it.
+const tip = $("tip");
+function trace(k, ev) {
+    document.body.classList.toggle("tracing", !!k);
+    for (const el of document.querySelectorAll(".lit,.host")) el.classList.remove("lit", "host");
+    if (!k) { tip.hidden = true; return; }
+    for (const el of document.querySelectorAll(`[data-k="${CSS.escape(k)}"]`)) el.classList.add("lit");
+    for (const g of hosts.get(k) ?? []) document.querySelector(`.dish[data-game="${CSS.escape(g)}"]`)?.classList.add("host");
+    const r = records.get(k), n = hosts.get(k)?.size ?? 0;
+    tip.innerHTML = r ? `<b>${esc(r.payload.title)}</b>${esc(r.type)}${r.payload.mime ? ` · ${esc(r.payload.mime)}` : ""}<br>in ${n} game${n === 1 ? "" : "s"} · by ${esc(r.publisher.slice(0, 8))}…` : `<b>${esc(k.split("/")[1])}</b>credited, but not in the index`;
+    tip.hidden = false;
+    tip.style.left = `${Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8)}px`; tip.style.top = `${Math.min(ev.clientY + 14, innerHeight - tip.offsetHeight - 8)}px`;
+}
+let current = null;
+document.addEventListener("pointerover", (ev) => { const k = ev.target.closest?.("[data-k]")?.dataset.k ?? null; if (k !== current) { current = k; trace(k, ev); } });
+// On touch, the first tap on a part traces it; a second tap on the same part opens the game.
+let armed = null;
+document.addEventListener("click", (ev) => {
+    const k = ev.target.closest?.(".dish [data-k]")?.dataset.k;
+    if (!k || ev.pointerType !== "touch" || armed === k) return;
+    ev.preventDefault(); armed = k; current = k; trace(k, ev);
+});
+document.addEventListener("pointermove", (ev) => { if (current && !tip.hidden) { tip.style.left = `${Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8)}px`; tip.style.top = `${Math.min(ev.clientY + 14, innerHeight - tip.offsetHeight - 8)}px`; } });
+</script>
+</body>
+</html>
