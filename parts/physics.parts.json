@@ -1,0 +1,55 @@
+[
+  {
+    "file": "physics-world.js",
+    "type": "logic",
+    "id": "physics-world",
+    "kind": "rule",
+    "title": "Physics world (Rapier)",
+    "description": "Rigid-body physics for any three.js object, on the Rapier engine (WebAssembly, Apache-2.0). createWorld() steps at a fixed 60 Hz; attach(object) gives it a dynamic, fixed or kinematic body whose shape comes from the object itself: a box around it, a ball, a convex hull of a GLB's vertices, or exact triangles for level geometry. Collisions report impact speed for sounds, raycasts find what's in front of you, impulses throw things. Units are metres: size models from their measured size. The game maps @dimforge/rapier3d-compat@0.21.0 in its import map.",
+    "tags": ["physics", "rigid-body", "collision", "rapier", "wasm", "stacking", "throwing", "raycast", "kit"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": { "method": "hand", "ai": "code", "tool": "Claude Code; Rapier 0.21.0 (Apache-2.0) is imported, not copied" },
+    "exports": [
+      { "name": "createWorld", "signature": "createWorld({ gravity, step, maxSteps }) → Promise<{ update(dt), raycast(origin, direction, far), dispose(), raw, rapier }>", "does": "starts Rapier and a world; update(dt) steps at a fixed rate then moves every attached object" },
+      { "name": "attach", "signature": "attach(object, opts) → { update(), dispose(), body, impulse([x,y,z]), velocity([x,y,z]?) }", "does": "gives an object a rigid body and a collider shaped from its meshes" }
+    ],
+    "options": [
+      { "name": "world", "type": "world", "default": "required", "does": "from createWorld()" },
+      { "name": "body", "type": "dynamic | fixed | kinematic", "default": "dynamic", "does": "dynamic falls and collides; fixed never moves (floors, walls); kinematic follows the object as you move it and pushes dynamic bodies" },
+      { "name": "shape", "type": "box | ball | hull | mesh", "default": "box", "does": "box or ball around the object, hull of its vertices (good for GLBs), mesh of its exact triangles (fixed bodies only)" },
+      { "name": "mass", "type": "kg", "default": "from density", "does": "the body's mass; otherwise density × volume" },
+      { "name": "density", "type": "number", "default": 1, "does": "mass = density × volume in m³; what matters is the ratio between bodies (a ball at 9 knocks over crates at 0.6)" },
+      { "name": "friction", "type": "number", "default": 0.6, "does": "how much it grips" },
+      { "name": "restitution", "type": "number", "default": 0.1, "does": "how much it bounces (0–1)" },
+      { "name": "ccd", "type": "boolean", "default": false, "does": "continuous collision for fast things (bullets, thrown balls) so they don't pass through thin walls" }
+    ],
+    "hooks": [
+      { "name": "onContact", "default": "none", "does": "({ other, speed }) when this body starts touching another: play a sound, deal damage, score" }
+    ]
+  },
+  {
+    "file": "tower-topple.html",
+    "type": "game",
+    "id": "tower-topple",
+    "title": "Tower topple",
+    "description": "Knock a tower of crates off the table with eight balls: tap or click to throw. Every win adds a layer. A small physics-world demo, meant to be remixed: swap the crates for any GLB, change the table, add a slingshot. Crates and barrels collide with real physics; harder hits sound harder.",
+    "tags": ["physics", "toy", "puzzle", "3d", "demo", "starter", "kit", "mobile"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": { "method": "hand", "ai": "code", "tool": "Claude Code" },
+    "uses": ["physics-world", "hdri-sky", "day-sky", "crate-texture", "barrel", "hit-sound"]
+  },
+  {
+    "file": "skills/physics/SKILL.md",
+    "type": "skill",
+    "id": "physics-skill",
+    "title": "Add physics to a warehouse game",
+    "description": "Agent skill (SKILL.md for Claude Code and Codex): give a three.js game real rigid-body physics with the physics-world part (Rapier): the import map line, worlds and bodies, choosing shapes for GLBs, metres and measured sizes, throwing, contacts for sound and damage, raycasts, and the mistakes that make physics jitter, explode or tunnel. Tower topple is the worked example.",
+    "tags": ["skill", "recipe", "physics", "rapier", "three.js", "kit"],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": { "method": "hand", "ai": "code", "tool": "Claude Code" },
+    "uses": ["physics-world", "tower-topple"]
+  }
+]

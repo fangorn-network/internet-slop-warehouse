@@ -1,0 +1,131 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Tower topple</title>
+<meta name="description" content="Knock the crate tower off the table. A physics-world demo built from slop warehouse parts.">
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;background:#9cc3e6;font:15px system-ui,sans-serif}
+  #hud{position:fixed;top:10px;left:12px;color:#fff;text-shadow:0 1px 3px #000a;font-weight:600;pointer-events:none;line-height:1.5}
+  #msg{position:fixed;inset:0;display:grid;place-items:center;text-align:center;color:#fff;text-shadow:0 2px 4px #000a;font-size:24px;background:#0005;cursor:pointer}
+  #msg small{display:block;font-size:14px;opacity:.9;margin-top:8px}
+  #msg[hidden]{display:none}
+</style>
+<script type="importmap">{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+  "@dimforge/rapier3d-compat":"https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-compat@0.21.0/dist/rapier.mjs"}}</script>
+</head><body>
+<div id="hud"></div><div id="msg">loading physics…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+const PARTS = {/*PARTS*/};
+const logic = async (id) => import("data:text/javascript;charset=utf-8," + encodeURIComponent((await (await fetch(PARTS[id])).json()).js));
+const [physics, sky, crateTex, barrelGltf] = await Promise.all([
+    logic("physics-world"), logic("hdri-sky"),
+    new THREE.TextureLoader().loadAsync(PARTS["crate-texture"]), new GLTFLoader().loadAsync(PARTS["barrel"]),
+]);
+crateTex.colorSpace = THREE.SRGBColorSpace;
+const audio = new AudioContext();
+const hit = await audio.decodeAudioData(await (await fetch(PARTS["hit-sound"])).arrayBuffer());
+let lastHit = 0;
+const thud = (speed) => {   // louder and lower for harder hits; at most one every 40 ms
+    if (audio.currentTime - lastHit < 0.04) return;
+    lastHit = audio.currentTime;
+    const s = audio.createBufferSource(), g = audio.createGain();
+    s.buffer = hit; s.playbackRate.value = 0.6 + Math.random() * 0.3 + Math.min(speed, 12) / 40;
+    g.gain.value = Math.min(1, speed / 8); s.connect(g).connect(audio.destination); s.start();
+};
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true; renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(50, 1, 0.1, 200);
+const skyCtl = sky.attach(scene, { url: PARTS["day-sky"], blur: 0.05 });
+const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+sun.position.set(6, 10, 4); sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
+Object.assign(sun.shadow.camera, { left: -10, right: 10, top: 10, bottom: -10, far: 40 });
+scene.add(sun);
+
+const world = await physics.createWorld();
+// The ground far below and a table to clear. Both fixed: shapes come from their meshes.
+const ground = new THREE.Mesh(new THREE.BoxGeometry(60, 1, 60), new THREE.MeshStandardMaterial({ color: 0x6f8f55 }));
+ground.position.y = -3.5; ground.receiveShadow = true; scene.add(ground);
+physics.attach(ground, { world, body: "fixed" });
+const TABLE = 1.1;   // half-width of the table top, metres
+const table = new THREE.Mesh(new THREE.BoxGeometry(TABLE * 2, 0.3, TABLE * 2), new THREE.MeshStandardMaterial({ color: 0x8a5a3b, roughness: 0.8 }));
+table.position.y = -0.15; table.receiveShadow = table.castShadow = true; scene.add(table);
+physics.attach(table, { world, body: "fixed", friction: 0.8 });
+
+const crateMat = new THREE.MeshStandardMaterial({ map: crateTex }), crateGeo = new THREE.BoxGeometry(0.42, 0.42, 0.42);
+const BALLS = 8;
+let pieces = [], balls = [], level = 1, ballsLeft = 0, state = "loading", settleAt = 0;
+const add = (mesh, opts) => { mesh.castShadow = mesh.receiveShadow = true; scene.add(mesh); const b = physics.attach(mesh, { world, onContact: ({ speed }) => speed > 1.5 && thud(speed), ...opts }); return { mesh, b }; };
+const clear = (list) => { for (const { mesh, b } of list) { b.dispose(); scene.remove(mesh); } return []; };
+
+function build() {
+    pieces = clear(pieces); balls = clear(balls);
+    const layers = 2 + level, s = 0.43;
+    for (let y = 0; y < layers; y++) for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+        if (y % 2 && i === 1 && j === 1) continue;   // hollow every other layer: it falls more interestingly
+        const m = new THREE.Mesh(crateGeo, crateMat);
+        m.position.set((i - 1) * s, 0.21 + y * 0.425, (j - 1) * s);
+        m.rotation.y = (Math.random() - 0.5) * 0.06;   // a little crooked, like a person stacked it
+        pieces.push({ ...add(m, { density: 0.6 }), crate: true });
+    }
+    for (const [x, z] of [[0.82, 0.78], [-0.85, -0.75]]) {   // two barrels guard the corners: a hull from the GLB
+        const barrel = barrelGltf.scene.clone(true);
+        barrel.position.set(x, 0, z);
+        barrel.position.y = 0.001 - new THREE.Box3().setFromObject(barrel).min.y;   // sit it on the table, wherever its origin is
+        pieces.push(add(barrel, { shape: "hull", density: 0.4 }));
+    }
+    ballsLeft = BALLS; state = "aiming"; msg(null); hud();
+}
+const crates = () => pieces.filter((p) => p.crate);
+const onTable = (p) => Math.abs(p.mesh.position.x) < TABLE && Math.abs(p.mesh.position.z) < TABLE && p.mesh.position.y > -0.5;
+function hud() { $hud.textContent = `Level ${level} · crates left on the table: ${crates().filter(onTable).length}/${crates().length} · balls: ${ballsLeft}`; }
+
+const raycaster = new THREE.Raycaster(), ndc = new THREE.Vector2(), ballGeo = new THREE.SphereGeometry(0.16, 20, 14), ballMat = new THREE.MeshStandardMaterial({ color: 0xe23b3b, metalness: 0.2, roughness: 0.35 });
+addEventListener("pointerdown", (e) => {
+    audio.resume();
+    if (state !== "aiming" || e.target !== renderer.domElement || !ballsLeft) return;
+    ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+    raycaster.setFromCamera(ndc, camera);
+    const ball = new THREE.Mesh(ballGeo, ballMat);
+    ball.position.copy(camera.position).addScaledVector(raycaster.ray.direction, 0.6);
+    const b = add(ball, { shape: "ball", density: 9, restitution: 0.3, ccd: true });
+    b.b.velocity(raycaster.ray.direction.clone().multiplyScalar(20).toArray());
+    balls.push(b);
+    if (--ballsLeft === 0) settleAt = performance.now() + 3500;   // give the last ball time to do its work
+    hud();
+});
+addEventListener("keydown", (e) => { if (e.key === "r" || e.key === "R") build(); });
+const $hud = document.getElementById("hud"), $msg = document.getElementById("msg");
+function msg(html) { $msg.hidden = !html; if (html) $msg.innerHTML = html; }
+$msg.onclick = () => { audio.resume(); if (state === "won") level++; build(); };
+
+function resize() {
+    renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    const back = camera.aspect < 0.8 ? 9.5 : 7;   // phones in portrait stand further back to see the whole table
+    camera.position.set(0, 2.6, back); camera.lookAt(0, 0.9, 0);
+}
+addEventListener("resize", resize); resize();
+
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+    const dt = Math.min(clock.getDelta(), 0.1);
+    world.update(dt); skyCtl.update(dt);
+    if (state === "aiming") {
+        hud();
+        if (!crates().some(onTable)) { state = "won"; msg(`Table cleared!<small>Tap for level ${level + 1}: a taller tower, same eight balls</small>`); }
+        else if (!ballsLeft && performance.now() > settleAt) { state = "lost"; msg(`${crates().filter(onTable).length} crates held on<small>Tap or press R to try level ${level} again</small>`); }
+    }
+    for (const p of [...pieces, ...balls]) if (p.mesh.position.y < -20) p.b.dispose();   // fell off the world
+    renderer.render(scene, camera);
+});
+msg(`Knock every crate off the table<small>Tap or click to throw · eight balls · R restarts</small>`);
+state = "ready";
+</script>
+</body></html>
