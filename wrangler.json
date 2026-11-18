@@ -2,6 +2,8 @@
   "name": "internet-slop-warehouse",
   "account_id": "2e0a41ed3fec719d427dfae6512efddf",
   "compatibility_date": "2025-09-15",
-  "assets": { "directory": "./site" },
+  "main": "worker/votes.js",
+  "assets": { "directory": "./site", "binding": "ASSETS" },
+  "d1_databases": [{ "binding": "VOTES", "database_name": "slop-votes", "database_id": "8db0da60-f691-458b-a10f-7634d794df21" }],
   "workers_dev": true
 }

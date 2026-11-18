@@ -5,3 +5,8 @@ site/view.json
 worker/seed.sql
 worker/.wrangler/
 .env
+.wrangler/
+
+# local experiment caches and saved third-party pages
+benchmarks/cache/
+reddit/

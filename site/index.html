@@ -27,6 +27,8 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
 .board small{display:block;color:var(--muted);font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .board .meter{display:block;height:5px;background:var(--accent);margin-top:6px;min-width:3px}
 .board b{font:900 26px Impact,'Arial Narrow',sans-serif;color:var(--accent)}
+.card[data-weight] .stock-type{font-weight:700}.card[data-weight=light] .stock-type{color:#2e6b2b}.card[data-weight=medium] .stock-type{color:#7a5a00}.card[data-weight=heavy] .stock-type{color:#a3231a}
+.vote{white-space:nowrap}.vote[aria-pressed="true"]{background:var(--mark)}
 .board-note{font:12px var(--mono);color:var(--muted);margin:14px 0 0}
 @media(max-width:650px){.board{grid-template-columns:1fr}.kinds button{min-width:0}}
 </style>
@@ -63,7 +65,7 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
     <div class="inventory-heading"><h2 id="inventory-title">What's on the <span>shelves.</span></h2><span id="stock-count" role="status">Counting stock…</span></div>
     <div class="inventory-tools">
       <div class="kinds" role="group" aria-label="Show">
-        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="reused" aria-pressed="false"><span>Reused</span><span class="count" id="count-reused">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
+        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="top" aria-pressed="false"><span>Top</span><span class="count" id="count-top">—</span></button><button data-kind="reused" aria-pressed="false"><span>Reused</span><span class="count" id="count-reused">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
       </div>
       <label class="search-box"><span class="search-symbol" aria-hidden="true">⌕</span><input type="search" id="q" placeholder="Rummage through the warehouse…" aria-label="Search the warehouse"></label>
     </div>
@@ -81,6 +83,8 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
   <div class="bar">
     <div class="player-heading"><strong id="title"></strong><span class="meta" id="by"></span></div>
     <div class="player-actions">
+      <button id="up" class="vote" data-v="1" aria-pressed="false" title="Like this">▲ <span>0</span></button>
+      <button id="down" class="vote" data-v="-1" aria-pressed="false" title="Dislike this">▼ <span>0</span></button>
       <button id="share" title="Copy a link to this part">Copy link</button>
       <button id="restart" hidden title="Start this game again">Restart</button>
       <button id="expand" hidden aria-pressed="false" title="Fill the browser window">Expand</button>
@@ -116,6 +120,27 @@ const key = (r) => `${r.publisher}/${r.id}`;
 let semantic = { q: "", ids: null };
 let kind = "game";
 let category = "all";
+// Likes/dislikes: this page's own Worker (worker/votes.js), not the westmarch API. Off the warehouse's own host, they just don't show.
+let votes = { tally: {}, mine: {} };
+const vkey = (r) => key(r).toLowerCase();
+const tally = (r) => votes.tally[vkey(r)] ?? [0, 0];
+const score = (r) => tally(r)[0] - tally(r)[1];
+async function vote(r, v) {
+    try {
+        const res = await fetch("./api/votes", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ part: vkey(r), v }) });
+        if (res.ok) votes = await res.json(), showVotes(), render();
+    } catch {}
+}
+function showVotes() {
+    if (!currentPart) return;
+    const [up, down] = tally(currentPart), mine = votes.mine[vkey(currentPart)] ?? 0;
+    $("up").querySelector("span").textContent = up; $("down").querySelector("span").textContent = down;
+    $("up").setAttribute("aria-pressed", mine === 1); $("down").setAttribute("aria-pressed", mine === -1);
+}
+for (const b of document.querySelectorAll(".vote")) b.onclick = () => {
+    const v = Number(b.dataset.v);
+    if (currentPart) vote(currentPart, votes.mine[vkey(currentPart)] === v ? 0 : v); // pressing it again takes it back
+};
 const by = (r) => r.payload.author ?? short(r.publisher);
 $("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${api.base}/mcp`;
 api.manifest().then((m) => {
@@ -144,7 +169,7 @@ $("clear-filters").onclick = () => {
 };
 
 function renderCategories() {
-    document.querySelector(".category-bar").hidden = kind === "reused";
+    document.querySelector(".category-bar").hidden = kind === "reused" || kind === "top";
     const options = categoryOptions(view.records, kind);
     if (!options.some(([id]) => id === category)) category = "all";
     // Keep focus on the selected button when filtering with the keyboard.
@@ -166,7 +191,7 @@ function renderCategories() {
 }
 
 function rank(q) {
-    const games = kind === "reused" ? reused()
+    const games = kind === "reused" ? reused() : kind === "top" ? top()
         : view.records.filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return games;
@@ -182,6 +207,36 @@ function rank(q) {
 const publishersOf = (r) => new Set([...G.hosts.get(key(r))].map((g) => g.split("/")[0])).size;
 const reused = () => view.records.filter((r) => r.type !== "game" && G.hosts.has(key(r)))
     .sort((a, b) => G.hosts.get(key(b)).size - G.hosts.get(key(a)).size || publishersOf(b) - publishersOf(a));
+
+// The leaderboard by votes: anything with a vote, net likes first, then most liked.
+const top = () => view.records.filter((r) => votes.tally[vkey(r)]).sort((a, b) => score(b) - score(a) || tally(b)[0] - tally(a)[0]);
+
+// A model's weight class on a phone (the lean-scenes skill): from facts measured at publish, or read from the stored
+// file's head when its card scrolls into view (records older than measure.js have none).
+const kTris = (n) => n >= 1000 ? `${(n / 1000).toFixed(n < 10000 ? 1 : 0)}k` : String(n);
+function weightOf(g) {
+    const cls = g.triangles <= 5000 && (g.texturePx ?? 0) <= 1024 ? "light" : g.triangles <= 20000 && (g.texturePx ?? 0) <= 2048 ? "medium" : "heavy";
+    return { cls, label: `${cls === "light" ? "Phone-ready" : cls === "medium" ? "Medium" : "Heavy"} · ${kTris(g.triangles)} tris${g.texturePx > 1024 ? ` · ${g.texturePx}px` : ""}` };
+}
+const weighed = new Map(); // cid → measured glb facts
+function showWeight(b, r, g) {
+    if (!g) return; // a card replaced meanwhile just gets written and dropped
+    const w = weightOf(g);
+    b.dataset.weight = w.cls;
+    b.querySelector(".stock-type").textContent = w.label;
+    b.title = w.cls === "heavy" ? "Over a phone budget for a prop: see the lean-scenes skill" : "";
+    const lite = w.cls === "heavy" && view.records.find((x) => x.publisher === r.publisher && x.id === `${r.id}-lite`);
+    if (lite && !b.querySelector(".meta").textContent.includes("lite")) b.querySelector(".meta").textContent += " · lite version in stock";
+}
+const weigher = new IntersectionObserver((entries) => {
+    for (const { isIntersecting, target: b } of entries) {
+        if (!isIntersecting) continue;
+        weigher.unobserve(b);
+        const r = b.model;
+        if (weighed.has(r.cid)) { showWeight(b, r, weighed.get(r.cid)); continue; }
+        measureUrl(fileURL(view.gateway, r)).then(({ glb }) => { if (glb) weighed.set(r.cid, glb); showWeight(b, r, glb); }).catch(() => {});
+    }
+}, { rootMargin: "300px" });
 
 const LABELS = { game: ["Playable", "GAME CARTRIDGE", "Play game →"], logic: ["Mechanics", "BEHAVIOR MODULE", "View code →"],
     skill: ["Know-how", "AGENT SKILL", "Read skill →"], source: ["Reference", "SOURCE MIRROR", "View code →"] };
@@ -203,8 +258,9 @@ function render() {
     const hits = rank($("q").value);
     for (const type of ["game", "asset", "logic", "skill", "source"]) $("count-" + type).textContent = String(view.records.filter(r => r.type === type).length).padStart(2, "0");
     $("count-reused").textContent = String(reused().length).padStart(2, "0");
+    $("count-top").textContent = String(top().length).padStart(2, "0");
     if (kind === "reused") return renderBoard(hits);
-    const noun = kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
+    const noun = kind === "top" ? "rated part" + (hits.length === 1 ? "" : "s") : kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
     $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} ${noun} ${$("q").value.trim() ? "found" : "in this bin"}`;
     $("grid").replaceChildren(...hits.map((r) => {
         const b = document.createElement("button");
@@ -222,14 +278,16 @@ function render() {
         b.querySelector(".d").textContent = r.payload.description;
         b.querySelector(".tags").textContent = r.payload.tags.slice(0, 5).map(t => "#" + t).join(" ");
         const carriedBy = G.hosts.get(key(r))?.size;
-        b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (carriedBy ? ` · in ${carriedBy} game${carriedBy === 1 ? "" : "s"}` : "");
+        b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (carriedBy ? ` · in ${carriedBy} game${carriedBy === 1 ? "" : "s"}` : "")
+            + (votes.tally[vkey(r)] ? ` · ▲${tally(r)[0]} ▼${tally(r)[1]}` : "");
         if (r.type === "game") specimens.observe(b), b.game = r; // not b.part: Element.part is the built-in ::part token list
+        if (r.payload.mime === "model/gltf-binary") { const g = r.payload.measured?.glb ?? weighed.get(r.cid); if (g) showWeight(b, r, g); else b.model = r, weigher.observe(b); }
         b.querySelector(".open-label").textContent = LABELS[r.type]?.[2] ?? "View asset →";
         b.querySelector(".license-label").textContent = r.payload.license ?? "License unlisted";
         b.onclick = () => play(r);
         return b;
     }));
-    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${view.records.some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
+    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${kind === "top" ? "Nothing's been voted on yet. Open something and give it a ▲." : view.records.some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
 }
 
 // A game card's preview is its specimen: dark matter (its own code) and every part it carries. Weighed when it
@@ -342,6 +400,7 @@ async function play(r) {
     $("credits").open = false; $("player-message").hidden = true;
     $("title").textContent = r.payload.title;
     $("by").textContent = `by ${by(r)}`;
+    showVotes();
     if (!$("player").open) $("player").showModal(); // open now: the source can take a moment to come from storage
     const url = fileURL(view.gateway, r), game = r.type === "game";
     document.body.classList.add("player-open");
@@ -382,7 +441,7 @@ async function play(r) {
         if (r.payload.mime === "model/gltf-binary") measureUrl(url).then(({ bytes, glb: g }) => {
             if (request !== playerRequest || !$("player").open || !g) return;
             const facts = document.createElement("p");
-            facts.textContent = [`${g.triangles.toLocaleString()} triangles`, `${g.size.join(" × ")} m`, g.texturePx && `${g.texturePx}px textures`,
+            facts.textContent = [weightOf(g).label.split(" · ")[0], `${g.triangles.toLocaleString()} triangles`, `${g.size.join(" × ")} m`, g.texturePx && `${g.texturePx}px textures`,
                 g.rigged && "rigged", g.animations && `${g.animations} animations`, g.compressed.length && g.compressed.join("+"), `${(bytes / 1e6).toFixed(1)} MB`].filter(Boolean).join(" · ");
             $("view").append(facts);
         }).catch(() => {});
@@ -469,7 +528,7 @@ $("q").oninput = () => {
     render();
     clearTimeout(typing);
     const q = $("q").value;
-    if (q.trim() && kind !== "reused") typing = setTimeout(async () => { // the board ranks by words: /search has no "reused" type
+    if (q.trim() && kind !== "reused" && kind !== "top") typing = setTimeout(async () => { // the board ranks by words: /search has no "reused" type
         try {
             // ponytail: the k nearest, however far; a score floor once there are enough parts for it to matter
             const type = kind;
@@ -479,7 +538,17 @@ $("q").oninput = () => {
     }, 250);
 };
 
+async function loadVotes() {
+    try {
+        const res = await fetch("./api/votes");
+        if (!res.ok) return;
+        const text = await res.text();
+        if (text === JSON.stringify(votes)) return;
+        votes = JSON.parse(text); showVotes(); render();
+    } catch {}
+}
 async function load() {
+    loadVotes();
     try {
         const next = await api.view();
         if (next.root === view.root) return;

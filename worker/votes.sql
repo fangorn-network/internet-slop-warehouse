@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS votes (part TEXT NOT NULL, voter TEXT NOT NULL, v INTEGER NOT NULL CHECK (v IN (1, -1)), PRIMARY KEY (part, voter));
+CREATE INDEX IF NOT EXISTS votes_voter ON votes (voter);
