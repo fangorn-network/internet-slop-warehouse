@@ -8,13 +8,35 @@
 <!-- The westmarch Worker this page reads from (its API: westmarch worker/API.md). ?api=<url> overrides it, e.g. a local `wrangler dev`. -->
 <meta name="westmarch-api" content="https://internet-slop-warehouse.fangorn.network">
 <link rel="stylesheet" href="./warehouse.css">
+<style>
+/* Specimens and the reused board (see specimen.js). */
+.card-preview svg.dish{width:136px;height:136px;filter:none}.card-preview:has(svg.dish){justify-content:flex-end;padding-right:18px}.card-preview:has(svg.dish):before,.card-preview:has(svg.dish):after{display:none}.card-preview:has(svg.dish) .preview-label{max-width:calc(100% - 175px);line-height:1.6;font-size:10px;color:#d6dcc6}
+.culture{transform-origin:50% 50%;animation:stream 420s linear infinite}
+@keyframes stream{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.culture{animation:none}}
+[data-k]{transition:opacity .2s}
+body[data-tracing] #grid .card:has(svg.dish):not(.host){opacity:.35}
+body[data-tracing] svg [data-k]:not(.lit){opacity:.3}
+svg [data-k].lit{stroke:#fff;stroke-width:2.5}
+.board,.board-note{grid-column:1/-1}.board{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line)}
+.board button{width:100%;display:grid;grid-template-columns:28px 44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border:1px solid var(--line);margin:-1px 0 0 -1px;background:none;color:var(--fg);font:12px var(--mono);text-align:left}
+.board button:hover,.board button.lit{background:var(--mark)}
+.board svg{width:44px;height:44px}
+.board .rank{color:var(--muted);font-size:11px}
+.board .t{min-width:0}.board strong{display:block;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.board small{display:block;color:var(--muted);font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.board .meter{display:block;height:5px;background:var(--accent);margin-top:6px;min-width:3px}
+.board b{font:900 26px Impact,'Arial Narrow',sans-serif;color:var(--accent)}
+.board-note{font:12px var(--mono);color:var(--muted);margin:14px 0 0}
+@media(max-width:650px){.board{grid-template-columns:1fr}.kinds button{min-width:0}}
+</style>
 </head>
 <body>
 <div class="utility"><span>Public access / digital salvage department</span><span>Take what you need. Make something weird.</span></div>
 <main>
   <header class="masthead">
     <a class="wordmark" href="./" aria-label="The internet slop warehouse home"><span class="logo" aria-hidden="true">S/W</span><span>SLOP WAREHOUSE<small>INTERNET DIVISION</small></span></a>
-    <nav aria-label="Main navigation"><a href="#inventory">Browse stock ↘</a><a href="#loading-dock">Bring your agent ↗</a><a href="./field.html">Field guide</a></nav>
+    <nav aria-label="Main navigation"><a href="#inventory">Browse stock ↘</a><a href="#loading-dock">Bring your agent ↗</a></nav>
     <span class="stock-status" id="status" role="status">Receiving inventory…</span>
   </header>
   <section class="hero" aria-labelledby="warehouse-title">
@@ -41,7 +63,7 @@
     <div class="inventory-heading"><h2 id="inventory-title">What's on the <span>shelves.</span></h2><span id="stock-count" role="status">Counting stock…</span></div>
     <div class="inventory-tools">
       <div class="kinds" role="group" aria-label="Show">
-        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
+        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="reused" aria-pressed="false"><span>Reused</span><span class="count" id="count-reused">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
       </div>
       <label class="search-box"><span class="search-symbol" aria-hidden="true">⌕</span><input type="search" id="q" placeholder="Rummage through the warehouse…" aria-label="Search the warehouse"></label>
     </div>
@@ -80,12 +102,14 @@
 import { categoriesFor, categoryOptions } from "./catalog.js";
 import { westmarch, fileURL } from "./api.js";
 import { measureUrl } from "./measure.js";
+import { graph, weighGame, dish, glyph } from "./specimen.js";
+import { packSiblings, packEnclose } from "https://cdn.jsdelivr.net/npm/d3-hierarchy@3.1.2/+esm";
 
 // The whole page: the Worker's view (every record and the gateway), ranked by its /search (by words until it answers),
 // and played from storage.
 const api = westmarch(new URLSearchParams(location.search).get("api") ?? document.querySelector('meta[name="westmarch-api"]').content);
 const $ = (id) => document.getElementById(id);
-let view = { records: [] };
+let view = { records: [] }, G = graph(view);
 const short = (a) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 const key = (r) => `${r.publisher}/${r.id}`;
 
@@ -120,6 +144,7 @@ $("clear-filters").onclick = () => {
 };
 
 function renderCategories() {
+    document.querySelector(".category-bar").hidden = kind === "reused";
     const options = categoryOptions(view.records, kind);
     if (!options.some(([id]) => id === category)) category = "all";
     // Keep focus on the selected button when filtering with the keyboard.
@@ -141,7 +166,8 @@ function renderCategories() {
 }
 
 function rank(q) {
-    const games = view.records.filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
+    const games = kind === "reused" ? reused()
+        : view.records.filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return games;
     if (semantic.ids && semantic.q === q && semantic.kind === kind) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
@@ -152,6 +178,10 @@ function rank(q) {
         + 2 * r.payload.tags.some((t) => re.test(t)) + re.test(r.payload.description), 0);
     return games.map((r) => [r, score(r)]).filter(([, s]) => s).sort((a, b) => b[1] - a[1]).map(([r]) => r);
 }
+// Parts by how many games carry them (through any chain of credits), then by how many publishers made those games.
+const publishersOf = (r) => new Set([...G.hosts.get(key(r))].map((g) => g.split("/")[0])).size;
+const reused = () => view.records.filter((r) => r.type !== "game" && G.hosts.has(key(r)))
+    .sort((a, b) => G.hosts.get(key(b)).size - G.hosts.get(key(a)).size || publishersOf(b) - publishersOf(a));
 
 const LABELS = { game: ["Playable", "GAME CARTRIDGE", "Play game →"], logic: ["Mechanics", "BEHAVIOR MODULE", "View code →"],
     skill: ["Know-how", "AGENT SKILL", "Read skill →"], source: ["Reference", "SOURCE MIRROR", "View code →"] };
@@ -168,9 +198,12 @@ function stockGlyph(r) {
     return `<svg viewBox="0 0 100 100" aria-hidden="true">${shapes}</svg>`;
 }
 function render() {
+    delete document.body.dataset.tracing; // whatever was traced is about to be replaced
     renderCategories();
     const hits = rank($("q").value);
     for (const type of ["game", "asset", "logic", "skill", "source"]) $("count-" + type).textContent = String(view.records.filter(r => r.type === type).length).padStart(2, "0");
+    $("count-reused").textContent = String(reused().length).padStart(2, "0");
+    if (kind === "reused") return renderBoard(hits);
     const noun = kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
     $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} ${noun} ${$("q").value.trim() ? "found" : "in this bin"}`;
     $("grid").replaceChildren(...hits.map((r) => {
@@ -188,7 +221,9 @@ function render() {
         b.querySelector("h2").textContent = r.payload.title;
         b.querySelector(".d").textContent = r.payload.description;
         b.querySelector(".tags").textContent = r.payload.tags.slice(0, 5).map(t => "#" + t).join(" ");
-        b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (r.payload.uses?.length ? ` · uses ${r.payload.uses.length}` : "");
+        const carriedBy = G.hosts.get(key(r))?.size;
+        b.querySelector(".meta").textContent = by(r) + (r.payload.parent ? " · remix" : "") + (carriedBy ? ` · in ${carriedBy} game${carriedBy === 1 ? "" : "s"}` : "");
+        if (r.type === "game") specimens.observe(b), b.game = r; // not b.part: Element.part is the built-in ::part token list
         b.querySelector(".open-label").textContent = LABELS[r.type]?.[2] ?? "View asset →";
         b.querySelector(".license-label").textContent = r.payload.license ?? "License unlisted";
         b.onclick = () => play(r);
@@ -196,6 +231,54 @@ function render() {
     }));
     if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${view.records.some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
 }
+
+// A game card's preview is its specimen: dark matter (its own code) and every part it carries. Weighed when it
+// scrolls into view, since weighing reads the game's page.
+const specimens = new IntersectionObserver((entries) => {
+    for (const { isIntersecting, target: b } of entries) {
+        if (!isIntersecting) continue;
+        specimens.unobserve(b);
+        const r = b.game, g = G;
+        weighGame(r, g, (x) => fileURL(view.gateway, x)).then((w) => {
+            if (!b.isConnected || g !== G) return;
+            b.querySelector(".card-preview svg").outerHTML = dish(r, g, w.sizes, { packSiblings, packEnclose });
+            b.querySelector(".preview-label").textContent = `${w.dark}% DARK MATTER · ${w.logic} LOGIC · ${w.assets} ASSETS`;
+        }).catch((e) => console.warn(`couldn't weigh ${r.id}:`, e)); // the cartridge glyph stays
+    }
+}, { rootMargin: "300px" });
+
+// The leaderboard: what the most games carry. A dish's parts and these rows trace each other on hover.
+function renderBoard(hits) {
+    $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} parts carried by games ${$("q").value.trim() ? "found" : "· most reused first"}`;
+    const most = hits.length ? G.hosts.get(key(hits[0])).size : 1;
+    const board = document.createElement("ol");
+    board.className = "board";
+    board.append(...hits.map((r, i) => {
+        const n = G.hosts.get(key(r)).size, pubs = publishersOf(r), li = document.createElement("li");
+        li.innerHTML = `<button data-k="${key(r).replace(/"/g, "")}"><span class="rank">${String(i + 1).padStart(2, "0")}</span>${glyph(r)}<span class="t"><strong></strong><small></small><span class="meter" style="width:${(n / most) * 100}%"></span></span><b>${n}</b></button>`;
+        li.querySelector("strong").textContent = r.payload.title;
+        li.querySelector("small").textContent = `${LABELS[r.type]?.[0] ?? r.payload.mime ?? "asset"} · ${by(r)} · in ${n} game${n === 1 ? "" : "s"} by ${pubs} publisher${pubs === 1 ? "" : "s"}`;
+        li.querySelector("button").onclick = () => play(r);
+        return li;
+    }));
+    const idle = view.records.filter((r) => r.type !== "game" && !G.hosts.has(key(r))).length;
+    const note = document.createElement("p");
+    note.className = "board-note";
+    note.textContent = `${idle} parts aren't in any game yet: somebody's starting point.`;
+    $("grid").replaceChildren(board, note);
+    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing reused matches.</strong>Try another search.</p>`;
+}
+
+// Hover a part, in a specimen or on the board: it lights up in every game that carries it.
+document.addEventListener("pointerover", (ev) => {
+    const k = ev.target.closest?.("[data-k]")?.dataset.k ?? null;
+    if (k === document.body.dataset.tracing) return;
+    for (const el of document.querySelectorAll(".lit,.host")) el.classList.remove("lit", "host");
+    if (k) document.body.dataset.tracing = k; else delete document.body.dataset.tracing;
+    if (!k) return;
+    for (const el of document.querySelectorAll(`[data-k="${CSS.escape(k)}"]`)) el.classList.add("lit");
+    for (const b of document.querySelectorAll("#grid .card")) if (b.game && G.hosts.get(k)?.has(key(b.game))) b.classList.add("host");
+});
 
 let playerRequest = 0, currentPart = null, gameHTML = null;
 // Links name a publisher and part, so identical IDs from different publishers stay distinct.
@@ -386,7 +469,7 @@ $("q").oninput = () => {
     render();
     clearTimeout(typing);
     const q = $("q").value;
-    if (q.trim()) typing = setTimeout(async () => {
+    if (q.trim() && kind !== "reused") typing = setTimeout(async () => { // the board ranks by words: /search has no "reused" type
         try {
             // ponytail: the k nearest, however far; a score floor once there are enough parts for it to matter
             const type = kind;
@@ -400,7 +483,7 @@ async function load() {
     try {
         const next = await api.view();
         if (next.root === view.root) return;
-        view = next; render();
+        view = next; G = graph(view); render();
         $("status").textContent = `${view.records.length} parts in stock`;
         followPartURL();
     } catch (e) { $("status").textContent = `couldn't read the view: ${e.message}`; }
