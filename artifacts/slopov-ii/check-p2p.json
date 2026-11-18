@@ -1,5 +1,11 @@
 {
-  "errors": [
-    "host: Cannot read properties of undefined (reading 'scene')"
-  ]
+  "hotel": {
+    "colliders": 357,
+    "solids": 153,
+    "lobby": true,
+    "wall": false,
+    "desk": false
+  },
+  "qr": 318,
+  "errors": []
 }

@@ -12,7 +12,7 @@
     },
     "doorPrompt": "ETap key card",
     "inRoom": {
-      "z": 3.61,
+      "z": 3.71,
       "where": "Room 212"
     },
     "bedPrompt": "ELie down",
@@ -22,7 +22,7 @@
     "landing": {
       "x": 10.1,
       "y": 1.6,
-      "z": -7.73
+      "z": -7.78
     },
     "stairsTop": {
       "x": 11.4,
@@ -35,9 +35,9 @@
   "stats": {
     "colliders": 421,
     "interact": 89,
-    "drawCalls": 632,
-    "textures": 250,
+    "drawCalls": 626,
+    "textures": 248,
     "programs": 62,
-    "triangles": 1832580
+    "triangles": 638162
   }
 }

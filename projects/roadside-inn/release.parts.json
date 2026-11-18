@@ -1,24 +1,119 @@
 [
   {
-    "id": "heartland-inn",
-    "type": "game",
-    "file": "../artifacts/roadside-inn/heartland-inn.html",
-    "title": "Heartland Inn Express · a night off I-44",
-    "author": "the internet slop warehouse",
-    "license": "CC0-1.0 AND MIT",
-    "description": "Realistic first-person walk through an interstate chain hotel in rural Missouri at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Textured rigged human staff and guests, textured shower enclosure and cardio equipment, functional desk lamp, corrected wall-mounted art and signage, clear elevator shaft. Automatic mobile battery profile. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.",
+    "id": "heartland-hotel",
+    "type": "logic",
+    "kind": "effect",
+    "file": "../artifacts/roadside-inn/heartland-hotel.js",
+    "title": "Heartland Inn Express (building and engine)",
+    "description": "The two-storey interstate hotel from Heartland Inn Express, shared by every game set in it. attach(parent) drops the building into any three.js scene: lobby, front desk, pantry, lounge, pool wing, gym, elevator, switchback stair, corridors and room 212, with colliders, walkable floors, doors, the elevator and interactions. Games that are the hotel use its engine instead: loadLibrary (every asset, pinned, lite models for phones), buildWorld (also the parking lot, interstate and travel stop, plus zones and what each zone sees, for zone-culling), createPlayer (a physics first-person player on physics-world), createSound, attachInput (keyboard, mouse and touch) and quality (a battery-conscious phone profile). Heartland Inn, Late Checkout and Escape from Slopov II load it rather than bundling the hotel.",
     "tags": [
       "hotel",
+      "building",
+      "level",
+      "interior",
+      "engine",
       "first-person",
-      "exploration",
       "realistic",
-      "walking-sim",
-      "missouri",
-      "roadside",
-      "polyhaven",
-      "grab3d",
-      "cc0",
-      "mobile"
+      "three.js",
+      "effect",
+      "cc0"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0 AND MIT",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(parent, opts) → Promise<{ colliders, surfaces, interact, lightAnchors, zones, sees, elevator, room, setTimeOfDay, update(dt, player), dispose() }>",
+        "does": "Load the pinned assets and build the hotel into parent"
+      },
+      {
+        "name": "loadLibrary",
+        "signature": "loadLibrary(onProgress, { skies, people, stream }) → Promise<lib>",
+        "does": "Load the hotel’s models, surfaces, skies and people"
+      },
+      {
+        "name": "buildWorld",
+        "signature": "buildWorld(scene, lib, game, { outside, people, station }) → world",
+        "does": "Build the hotel and its surroundings; world.zones and world.sees feed zone-culling"
+      },
+      {
+        "name": "createPlayer",
+        "signature": "createPlayer(scene, world, { sound }) → Promise<{ player, physics, move(dt, controls, camera), use(), zone() }>",
+        "does": "The first-person player: physics when Rapier loads, a walker otherwise"
+      },
+      {
+        "name": "createSound",
+        "signature": "createSound(foley) → sound",
+        "does": "Footsteps, ambience and effects"
+      },
+      {
+        "name": "attachInput",
+        "signature": "attachInput(canvas, { onUse, onInspect, onMenu }) → controls",
+        "does": "Keyboard, mouse look and touch controls"
+      },
+      {
+        "name": "quality",
+        "signature": "{ economy, fps, pixelRatio, lights }",
+        "does": "The phone profile: 30 fps, pixel ratio 1, four lights"
+      },
+      {
+        "name": "PART_IDS",
+        "signature": "string[]",
+        "does": "Every warehouse part the hotel loads"
+      },
+      {
+        "name": "FLOOR2",
+        "signature": "number",
+        "does": "Height of the second floor (3.2 m)"
+      },
+      {
+        "name": "EYE",
+        "signature": "number",
+        "does": "Eye height, metres"
+      },
+      {
+        "name": "RADIUS",
+        "signature": "number",
+        "does": "Player radius, metres"
+      }
+    ],
+    "options": [
+      {
+        "name": "outside",
+        "type": "boolean",
+        "default": false,
+        "does": "attach: also build the parking lot, roads, interstate and scenery"
+      },
+      {
+        "name": "people",
+        "type": "boolean",
+        "default": false,
+        "does": "attach: also add the desk clerk, housekeeper and guests"
+      },
+      {
+        "name": "parts",
+        "type": "object",
+        "default": "{}",
+        "does": "attach: id → URL overrides for the pinned assets"
+      },
+      {
+        "name": "onProgress",
+        "type": "function",
+        "default": "noop",
+        "does": "Loading progress, 0..1"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "say",
+        "default": "noop",
+        "does": "Show a line of hotel text (signs, locked doors)"
+      },
+      {
+        "name": "has",
+        "default": "() => true",
+        "does": "Whether the player holds an item (the key card opens the pool, gym and room 212)"
+      }
     ],
     "uses": [
       "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/physics-world",
@@ -146,6 +241,32 @@
       "rb-emma-casual",
       "rb-marcus-formal",
       "rb-sophia-formal"
+    ]
+  },
+  {
+    "id": "heartland-inn",
+    "type": "game",
+    "file": "../artifacts/roadside-inn/heartland-inn.html",
+    "title": "Heartland Inn Express · a night off I-44",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0 AND MIT",
+    "description": "Realistic first-person walk through an interstate chain hotel in rural Missouri at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Textured rigged human staff and guests, textured shower enclosure and cardio equipment, functional desk lamp, corrected wall-mounted art and signage, clear elevator shaft. Automatic mobile battery profile. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.",
+    "tags": [
+      "hotel",
+      "first-person",
+      "exploration",
+      "realistic",
+      "walking-sim",
+      "missouri",
+      "roadside",
+      "polyhaven",
+      "grab3d",
+      "cc0",
+      "mobile"
+    ],
+    "uses": [
+      "heartland-hotel",
+      "zone-culling"
     ]
   }
 ]

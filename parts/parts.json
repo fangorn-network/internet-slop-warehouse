@@ -11448,7 +11448,7 @@
     "id": "zone-culling",
     "kind": "effect",
     "title": "Zone culling",
-    "description": "Draw only what can be seen from where the camera stands: three.js frustum-culls but never occlusion-culls, so indoors it draws every room behind the walls. Give it the level's zone boxes and which zones each one sees (through doors, glass, windows); it buckets every top-level object into the smallest zone that wholly contains it and hides the zones you can't see. Walls and floors on zone borders stay drawn, groups across a border are split, and moving things, skinned characters and lights are never hidden. userData.zone names the zone of an InstancedMesh. Cut Heartland Inn's lobby from 1,180 to 823 draw calls. Also the skeleton of a multi-level game: zones plus what each sees.",
+    "description": "Draw only what can be seen from where the camera stands: three.js frustum-culls but never occlusion-culls, so indoors it draws every room behind the walls. Give it the level's zone boxes and which zones each one sees (through doors, glass, windows); it buckets every top-level object into the smallest zone that wholly contains it and hides the zones you can't see. It hides through render layers, never `visible`, so the game keeps full control of what it shows and hides. Walls and floors on zone borders stay drawn, groups across a border are split, and moving things, skinned characters and lights are never hidden. userData.zone names the zone of an InstancedMesh. Cut Heartland Inn's lobby from 1,180 to 823 draw calls. Also the skeleton of a multi-level game: zones plus what each sees.",
     "tags": [
       "culling",
       "performance",
@@ -11656,5 +11656,249 @@
     ],
     "author": "the internet slop warehouse",
     "license": "CC0-1.0"
+  },
+  {
+    "id": "heartland-hotel",
+    "type": "logic",
+    "kind": "effect",
+    "file": "../artifacts/roadside-inn/heartland-hotel.js",
+    "title": "Heartland Inn Express (building and engine)",
+    "description": "The two-storey interstate hotel from Heartland Inn Express, shared by every game set in it. attach(parent) drops the building into any three.js scene: lobby, front desk, pantry, lounge, pool wing, gym, elevator, switchback stair, corridors and room 212, with colliders, walkable floors, doors, the elevator and interactions. Games that are the hotel use its engine instead: loadLibrary (every asset, pinned, lite models for phones), buildWorld (also the parking lot, interstate and travel stop, plus zones and what each zone sees, for zone-culling), createPlayer (a physics first-person player on physics-world), createSound, attachInput (keyboard, mouse and touch) and quality (a battery-conscious phone profile). Heartland Inn, Late Checkout and Escape from Slopov II load it rather than bundling the hotel.",
+    "tags": [
+      "hotel",
+      "building",
+      "level",
+      "interior",
+      "engine",
+      "first-person",
+      "realistic",
+      "three.js",
+      "effect",
+      "cc0"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0 AND MIT",
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(parent, opts) → Promise<{ colliders, surfaces, interact, lightAnchors, zones, sees, elevator, room, setTimeOfDay, update(dt, player), dispose() }>",
+        "does": "Load the pinned assets and build the hotel into parent"
+      },
+      {
+        "name": "loadLibrary",
+        "signature": "loadLibrary(onProgress, { skies, people, stream }) → Promise<lib>",
+        "does": "Load the hotel’s models, surfaces, skies and people"
+      },
+      {
+        "name": "buildWorld",
+        "signature": "buildWorld(scene, lib, game, { outside, people, station }) → world",
+        "does": "Build the hotel and its surroundings; world.zones and world.sees feed zone-culling"
+      },
+      {
+        "name": "createPlayer",
+        "signature": "createPlayer(scene, world, { sound }) → Promise<{ player, physics, move(dt, controls, camera), use(), zone() }>",
+        "does": "The first-person player: physics when Rapier loads, a walker otherwise"
+      },
+      {
+        "name": "createSound",
+        "signature": "createSound(foley) → sound",
+        "does": "Footsteps, ambience and effects"
+      },
+      {
+        "name": "attachInput",
+        "signature": "attachInput(canvas, { onUse, onInspect, onMenu }) → controls",
+        "does": "Keyboard, mouse look and touch controls"
+      },
+      {
+        "name": "quality",
+        "signature": "{ economy, fps, pixelRatio, lights }",
+        "does": "The phone profile: 30 fps, pixel ratio 1, four lights"
+      },
+      {
+        "name": "PART_IDS",
+        "signature": "string[]",
+        "does": "Every warehouse part the hotel loads"
+      },
+      {
+        "name": "FLOOR2",
+        "signature": "number",
+        "does": "Height of the second floor (3.2 m)"
+      },
+      {
+        "name": "EYE",
+        "signature": "number",
+        "does": "Eye height, metres"
+      },
+      {
+        "name": "RADIUS",
+        "signature": "number",
+        "does": "Player radius, metres"
+      }
+    ],
+    "options": [
+      {
+        "name": "outside",
+        "type": "boolean",
+        "default": false,
+        "does": "attach: also build the parking lot, roads, interstate and scenery"
+      },
+      {
+        "name": "people",
+        "type": "boolean",
+        "default": false,
+        "does": "attach: also add the desk clerk, housekeeper and guests"
+      },
+      {
+        "name": "parts",
+        "type": "object",
+        "default": "{}",
+        "does": "attach: id → URL overrides for the pinned assets"
+      },
+      {
+        "name": "onProgress",
+        "type": "function",
+        "default": "noop",
+        "does": "Loading progress, 0..1"
+      }
+    ],
+    "hooks": [
+      {
+        "name": "say",
+        "default": "noop",
+        "does": "Show a line of hotel text (signs, locked doors)"
+      },
+      {
+        "name": "has",
+        "default": "() => true",
+        "does": "Whether the player holds an item (the key card opens the pool, gym and room 212)"
+      }
+    ],
+    "uses": [
+      "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/physics-world",
+      "acg-hotel-ceiling-color",
+      "acg-hotel-ceiling-normal",
+      "acg-hotel-ceiling-roughness",
+      "g3-1990s-hatchback-lite",
+      "g3-1990s-minivan-lite",
+      "g3-1990s-pickup-truck-lite",
+      "g3-1990s-sedan-lite",
+      "g3-1990s-station-wagon-lite",
+      "g3-1990s-suv-lite",
+      "g3-bollard",
+      "g3-cash-register",
+      "g3-coffee-machine-lite",
+      "g3-dumpster-lite",
+      "g3-end-cap-display-lite",
+      "g3-exercise-bike",
+      "g3-fire-hydrant-lite",
+      "g3-freezer-chest-lite",
+      "g3-gas-pump",
+      "g3-grocery-shelf-lite",
+      "g3-guard-rail",
+      "g3-newspaper-stand",
+      "g3-phone-booth",
+      "g3-semi-truck-lite",
+      "g3-shower-cabin",
+      "g3-soda-fountain-lite",
+      "g3-street-light",
+      "g3-traffic-cone",
+      "g3-trash-can",
+      "g3-treadmill",
+      "g3-upright-freezer-lite",
+      "g3-utility-pole-lite",
+      "g3-vending-machine-lite",
+      "hotel-accent-chair-green",
+      "hotel-accent-chair-mustard",
+      "hotel-breakfast-bar",
+      "hotel-centerpiece",
+      "hotel-closet",
+      "hotel-coffee-station",
+      "hotel-credenza-tv",
+      "hotel-desk",
+      "hotel-drum-pendant",
+      "hotel-dumbbell-rack",
+      "hotel-elevator-car",
+      "hotel-floor-lamp",
+      "hotel-front-desk",
+      "hotel-headboard",
+      "hotel-housekeeping-cart",
+      "hotel-ice-bucket",
+      "hotel-ice-machine",
+      "hotel-king-bed-lite",
+      "hotel-lattice-pendant",
+      "hotel-lobby-sofa",
+      "hotel-luggage-cart",
+      "hotel-microfridge",
+      "hotel-nightstand",
+      "hotel-pool-chaise",
+      "hotel-pool-rail",
+      "hotel-ptac",
+      "hotel-room-door",
+      "hotel-shelving-unit",
+      "hotel-snack-vending-lite",
+      "hotel-snake-plant",
+      "hotel-table-lamp",
+      "hotel-toilet",
+      "hotel-vanity",
+      "kenney-thrift-foley",
+      "municipal-water-tower",
+      "ph-bar-chair-round-01-lite",
+      "ph-desk-lamp-arm-01-lite",
+      "ph-hotel-bath-tile-color",
+      "ph-hotel-bath-tile-normal",
+      "ph-hotel-bath-tile-roughness",
+      "ph-hotel-carpet-color",
+      "ph-hotel-carpet-normal",
+      "ph-hotel-carpet-roughness",
+      "ph-hotel-concrete-color",
+      "ph-hotel-concrete-normal",
+      "ph-hotel-concrete-roughness",
+      "ph-hotel-dusk-sky",
+      "ph-hotel-farm-sky",
+      "ph-hotel-gym-rubber-color",
+      "ph-hotel-gym-rubber-normal",
+      "ph-hotel-gym-rubber-roughness",
+      "ph-hotel-lawn-color",
+      "ph-hotel-lawn-normal",
+      "ph-hotel-parquet-color",
+      "ph-hotel-parquet-normal",
+      "ph-hotel-parquet-roughness",
+      "ph-hotel-pool-tile-color",
+      "ph-hotel-pool-tile-normal",
+      "ph-hotel-room-hdri",
+      "ph-hotel-stone-facade-color",
+      "ph-hotel-stone-facade-normal",
+      "ph-hotel-stone-facade-roughness",
+      "ph-hotel-wall-plaster-normal",
+      "ph-hotel-wall-plaster-roughness",
+      "ph-hotel-walnut-color",
+      "ph-hotel-walnut-normal",
+      "ph-hotel-walnut-roughness",
+      "ph-korean-fire-extinguisher-01",
+      "ph-lifebuoy",
+      "ph-mid-century-lounge-chair",
+      "ph-modern-arm-chair-01",
+      "ph-modern-ceiling-lamp-01",
+      "ph-modern-coffee-table-01",
+      "ph-ottoman-01",
+      "ph-potted-plant-01-lite",
+      "ph-potted-plant-04-lite",
+      "ph-round-wooden-table-01",
+      "ph-shrub-03",
+      "ph-side-table-01",
+      "ph-store-asphalt-color",
+      "ph-store-asphalt-normal",
+      "ph-store-asphalt-roughness",
+      "ph-store-floor-color",
+      "ph-store-floor-normal",
+      "ph-store-floor-roughness",
+      "ph-throw-pillows-01",
+      "ph-wall-clock",
+      "ph-wetfloorsign-01",
+      "rb-andre-casual",
+      "rb-emma-casual",
+      "rb-marcus-formal",
+      "rb-sophia-formal"
+    ]
   }
 ]

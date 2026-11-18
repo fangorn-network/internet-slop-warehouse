@@ -1,11 +1,21 @@
 // SPDX-License-Identifier: CC0-1.0
-// The Heartland Inn Express building as a drop-in logic part: load its pinned assets, build it into any three.js scene.
-// Bundled by package.mjs from projects/roadside-inn (world.js, fixtures.js, assets.js, people.js); PINS is filled in there.
-import { loadLibrary, PART_IDS } from '../roadside-inn/assets.js';
-import { buildWorld, FLOOR2 } from '../roadside-inn/world.js';
+// heartland-hotel: the Heartland Inn Express as one warehouse logic part, shared by every game set in it (Heartland
+// Inn, Late Checkout, Escape from Slopov II). Games load it instead of bundling the hotel, so a game's page holds only
+// its own code. Bundled by projects/roadside-inn/package.mjs, with every asset pinned.
+//
+// Two ways in:
+// - attach(parent, opts): drop the building into any three.js scene (Slopov II).
+// - the engine, for games that are the hotel: loadLibrary, buildWorld, createPlayer, createSound, attachInput, quality.
+import { loadLibrary, PART_IDS } from './assets.js';
+import { buildWorld, FLOOR2 } from './world.js';
 
-const PINS = '__HOTEL_PINS__';   // package.mjs swaps in { id: url } (a string survives minifying)
-export { PART_IDS, FLOOR2 };
+// package.mjs prepends `globalThis.__HOTEL_PINS__ = { id: url }` to the bundle; a game's own pins win.
+globalThis.WAREHOUSE_PARTS = { ...globalThis.__HOTEL_PINS__, ...globalThis.WAREHOUSE_PARTS };
+export { PART_IDS, FLOOR2, loadLibrary, buildWorld };
+export { attach as attachInput } from './input.js';
+export { createSound } from './sound.js';
+export { quality } from './quality.js';
+export { createPlayer, RADIUS, EYE } from './player.js';
 
 const SOUNDS = new Proxy({}, { get: () => () => {} });
 
@@ -15,7 +25,7 @@ const SOUNDS = new Proxy({}, { get: () => () => {} });
  * (static walls are merged in world space while it builds).
  */
 export async function attach(parent, { outside = false, people = false, parts = {}, onProgress = () => {}, say = () => {}, has = () => true } = {}) {
-    globalThis.WAREHOUSE_PARTS = { ...PINS, ...globalThis.WAREHOUSE_PARTS, ...parts };
+    globalThis.WAREHOUSE_PARTS = { ...globalThis.WAREHOUSE_PARTS, ...parts };
     const lib = await loadLibrary(onProgress, { skies: false, people });   // the host scene brings its own sky
     const game = { say, has, give() {}, take() {}, event() {}, vend() {}, checkIn() {}, sound: SOUNDS, tvs: [], traffic: [] };
     const world = buildWorld(parent, lib, game, { outside, people });

@@ -1,30 +1,30 @@
 {
-  "loadMs": 9813,
-  "downloadMBAtStart": 106.9,
+  "loadMs": 11296,
+  "downloadMBAtStart": 94.9,
   "night": {
-    "seed": 43326,
-    "culprit": "Dana",
+    "seed": 69251,
+    "culprit": "Mr. Harlan",
     "kinds": [
       "given",
-      "window",
       "code",
+      "vend",
       "knock"
     ],
     "strange": [
+      "lobby-dark",
       "corridor-loop",
-      "phone-ring",
       "tv-all",
-      "watch-lies"
+      "phone-ring"
     ]
   },
   "flow": "ok",
   "stats": {
-    "texMB": 289,
-    "heapMB": 294,
+    "texMB": 297,
+    "heapMB": 271,
     "calls": 1,
-    "programs": 77,
-    "streamPending": 23
+    "programs": 83,
+    "streamPending": 14
   },
-  "downloadMBTotal": 125.8,
+  "downloadMBTotal": 116.5,
   "errors": []
 }

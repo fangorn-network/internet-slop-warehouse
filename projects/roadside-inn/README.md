@@ -47,7 +47,9 @@ node projects/roadside-inn/check.mjs physics  # shove an armchair, pick up and t
 
 ## Shared with remixes
 
-Games built on the hotel use its modules instead of copies. Late Checkout does. [player.js](player.js) is the first-person player: physics when Rapier loads, the old walker otherwise, plus footsteps, head bob and carrying. [station.js](station.js) is the Route 66 Travel Stop across the interstate, built by `world.js` (`station: true`), with its Grab3D parts in the hotel's asset library. [imports.mjs](imports.mjs) is the CDN import map and bundled-part credits that `package.mjs` scripts write.
+The hotel ships once, as the **`heartland-hotel`** logic part ([hotel-part.js](hotel-part.js), every asset pinned), and every game set in it loads that part instead of bundling the hotel: Heartland Inn, Late Checkout and Escape from Slopov II. Each game's page holds only its own code (Heartland Inn: 18 KB, Late Checkout: 78 KB), so its credits and its dark matter on the warehouse page say what it really is. `attach(parent)` drops the building into any scene (Slopov II); games that *are* the hotel use its engine: `loadLibrary`, `buildWorld` (with `zones` and `sees` for zone culling), `createPlayer`, `createSound`, `attachInput` and `quality`. In source, games import the modules directly; [release.mjs](release.mjs) turns those imports into runtime loads of the part when packaging (`PART_MODULES`), and builds the part itself.
+
+[player.js](player.js) is the first-person player: physics when Rapier loads, the old walker otherwise, plus footsteps, head bob and carrying. [station.js](station.js) is the Route 66 Travel Stop across the interstate, built by `world.js` (`station: true`), with its Grab3D parts in the hotel's asset library. [imports.mjs](imports.mjs) is the CDN import map and bundled-part credits that `package.mjs` scripts write.
 
 ## Physics
 
@@ -72,7 +74,7 @@ If Rapier can't load (offline, a blocked CDN), the game logs `physics off` and w
 
 - **Batch 1** (30 parts): published. Receipts are in `assets-1.parts.receipts.json`.
 - **Batch 2** (16 parts: Grab3D and the dusk sky): `node publish-batch.js projects/roadside-inn/assets-2.parts.json --network baseSepolia`
-- **The game:** run `node projects/roadside-inn/package.mjs`, which writes `artifacts/roadside-inn/heartland-inn.html` and `release.parts.json`, pinning every part from the publish receipts and listing any that are still unpublished. Then run `node publish-batch.js projects/roadside-inn/release.parts.json --network baseSepolia`.
+- **The part and the game:** `node projects/roadside-inn/package.mjs` writes `artifacts/roadside-inn/heartland-hotel.js`, `heartland-inn.html` and `release.parts.json` (the part first: the game pins it). Then `node publish-batch.js projects/roadside-inn/release.parts.json --network baseSepolia`. Late Checkout and Slopov II pick up a new hotel when they're repackaged and republished after it.
 
 ## Mobile rendering and residents
 

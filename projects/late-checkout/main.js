@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: CC0-1.0
 // Late Checkout: a remix of Heartland Inn Express (projects/roadside-inn). The hotel, its assets and fixtures are
-// imported unchanged; this file runs the player, the HUD and the acts. Forked from roadside-inn/main.js.
+// loaded unchanged from the heartland-hotel part when packaged; this file runs the player, the HUD and the acts. Forked from roadside-inn/main.js.
 import * as T from 'three';
 import { attach as attachInput } from '../roadside-inn/input.js';
 import { loadLibrary } from '../roadside-inn/assets.js';
@@ -8,6 +8,7 @@ import { buildWorld, FLOOR2 } from '../roadside-inn/world.js';
 import { createSound } from '../roadside-inn/sound.js';
 import { quality } from '../roadside-inn/quality.js';
 import { createPlayer, RADIUS, EYE } from '../roadside-inn/player.js';
+import { attach as zoneCulling } from '../../parts/zone-culling.js';
 import { createDream } from './stage/dream.js';
 import { createDirector } from './stage/director.js';
 import { arrival } from './acts/arrival.js';
@@ -104,6 +105,7 @@ applyLook('dusk');
 const sound = createSound(lib.foley);
 game.sound = sound;
 world = buildWorld(scene, lib, game);   // the Heartland, travel stop included
+const zones = zoneCulling(scene, { zones: world.zones, sees: world.sees });   // don't draw wings you can't see
 // The Heartland's player (roadside-inn/player.js): physics when Rapier loads, the old walker when it doesn't.
 const walker = await createPlayer(scene, world, { sound });
 applyLook('dusk');
@@ -374,6 +376,7 @@ function frame(now = performance.now()) {
   $('where').textContent = zone ? (zone.name === 'room' ? 'Room 212' : zone.name) + (player.y > 2.5 && zone.name !== 'room' ? ' · floor 2' : '') : 'outside';
   sound.update({ zone: zone?.name, indoor: !!zone, highwayDistance: Math.abs(player.z - 75), roadLevel: sound.roadLevel ?? 1 });
   if (started) sfx.update(dt, zone?.name);
+  zones.update(camera.position);
   fx.render(scene, camera, dt);
 }
 frame();

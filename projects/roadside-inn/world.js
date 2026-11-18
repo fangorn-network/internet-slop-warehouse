@@ -1325,5 +1325,19 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // A light counts only inside its own cell (room 212 or the rest of the building), unless 212's door is open; lot lights always count.
   const in212 = p => p.y > FLOOR2 - 0.5 && p.y < FLOOR2 + CEIL + 0.5 && p.x > R.x0 && p.x < R.x1 && p.z > R.z0 && p.z < R.z1;
   const lightVisible = (a, eye) => a.outdoor || in212(a.pos) === in212(eye) || room.angle > 0.25;
-  return { setTimeOfDay, lightVisible, in212, walkers, clerk, colliders, surfaces, interact, updaters, lightAnchors, zones, elevator, room, spawn: { x: 4.4, z: 17.0, yaw: 0.6 } };
+  // What each zone can see through doors, glass and windows, for zone culling (parts/zone-culling.js): from the lobby
+  // there's no drawing room 212, upstairs or the travel stop's shelves.
+  const sees = {
+    lobby: ['outside', 'corridor', 'pool', 'gym', 'stairs', 'elevator'],
+    pool: ['lobby', 'outside'],
+    gym: ['corridor', 'lobby', 'outside'],
+    corridor: ['lobby', 'gym', 'stairs', 'elevator', 'pool', 'outside'],
+    stairs: ['corridor', 'upstairs', 'lobby'],
+    elevator: ['corridor', 'upstairs', 'lobby'],
+    upstairs: ['room', 'stairs', 'elevator', 'outside'],
+    room: ['upstairs', 'outside'],
+    'travel stop': ['outside'],
+    outside: ['lobby', 'pool', 'travel stop'],
+  };
+  return { setTimeOfDay, lightVisible, in212, walkers, clerk, colliders, surfaces, interact, updaters, lightAnchors, zones, sees, elevator, room, spawn: { x: 4.4, z: 17.0, yaw: 0.6 } };
 }

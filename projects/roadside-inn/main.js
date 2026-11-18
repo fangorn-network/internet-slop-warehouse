@@ -88,20 +88,7 @@ const sound = createSound(lib.foley);
 game.sound = sound;
 world = buildWorld(scene, lib, game);
 applySky('dusk');
-// What each zone can see (doors, glass, windows). From the lobby there's no drawing room 212, upstairs or the travel stop's shelves.
-const SEES = {
-  lobby: ['outside', 'corridor', 'pool', 'gym', 'stairs', 'elevator'],
-  pool: ['lobby', 'outside'],
-  gym: ['corridor', 'lobby', 'outside'],
-  corridor: ['lobby', 'gym', 'stairs', 'elevator', 'pool', 'outside'],
-  stairs: ['corridor', 'upstairs', 'lobby'],
-  elevator: ['corridor', 'upstairs', 'lobby'],
-  upstairs: ['room', 'stairs', 'elevator', 'outside'],
-  room: ['upstairs', 'outside'],
-  'travel stop': ['outside'],
-  outside: ['lobby', 'pool', 'travel stop'],
-};
-const zones = zoneCulling(scene, { zones: world.zones, sees: SEES });
+const zones = zoneCulling(scene, { zones: world.zones, sees: world.sees });
 const detailProps = [];
 scene.traverse(o => { if (o.userData.hotelProp) detailProps.push(o); });
 let detailClock = 0;
@@ -281,7 +268,7 @@ function frame(now = performance.now()) {
       if (!prop.visible && !prop.userData.distanceCulled) continue;
       prop.getWorldPosition(detailPosition);
       prop.userData.distanceCulled = detailPosition.distanceTo(camera.position) >= distance + prop.userData.visibilityRadius;
-      prop.visible = !prop.userData.distanceCulled && !prop.userData.zoneHidden;
+      prop.visible = !prop.userData.distanceCulled;
     }
   }
   // Indoors, reflections come from a real hotel-room HDRI; outdoors, from the sky.

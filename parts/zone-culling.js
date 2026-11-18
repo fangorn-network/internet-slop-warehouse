@@ -9,7 +9,8 @@
 // floors, a building's shell), or lies in no zone but touches one, is always drawn. Anything outside every zone is in "outside". Things that move between zones (skinned
 // characters, `userData.loose` props, `userData.moves`) are always drawn, unless `userData.zone` names a zone,
 // which beats the box (an InstancedMesh's box spans every instance, so say where it stands), as are lights: hiding a light changes the
-// light count and recompiles every shader.
+// light count and recompiles every shader. Hiding is by render layers, so `visible` stays the game's own: hidden
+// objects also drop out of raycasts (Raycaster tests layers), which only matters for zones you can't see.
 // ponytail: buckets top-level objects once, when they arrive; an object that moves later without a flag stays in
 // its first bucket. refresh(obj) re-buckets one.
 import { Box3 } from "three";
@@ -44,6 +45,16 @@ export function attach(scene, { zones, sees, margin = 0.25 }) {
         bucket.set(obj, null);
     }
     const refresh = (obj) => place(obj);
+    // Hidden through render layers, never `visible`: the game keeps full control of what it shows and hides (a
+    // breakfast bar at dawn, a note under the door), and a camera on layer 0 just doesn't draw what's in no layer.
+    // Walks the subtree each time, so children that arrive later (streamed models) hide with their parent.
+    function hide(obj, off) {
+        obj.userData.zoneHidden = off;
+        obj.traverse((o) => {
+            if (off && o.userData.zoneMask === undefined) { o.userData.zoneMask = o.layers.mask; o.layers.mask = 0; }
+            else if (!off && o.userData.zoneMask !== undefined) { o.layers.mask = o.userData.zoneMask; delete o.userData.zoneMask; }
+        });
+    }
 
     let seen = null, last = -1;
     function update(eye) {
@@ -56,11 +67,7 @@ export function attach(scene, { zones, sees, margin = 0.25 }) {
         if (seen?.here === here) return here;
         const visible = sees[here] ? new Set([here, ...sees[here]]) : null;
         seen = { here };
-        for (const [o, k] of bucket) {
-            if (k === null) continue;
-            o.userData.zoneHidden = !!visible && !visible.has(k);
-            o.visible = !o.userData.zoneHidden && !o.userData.distanceCulled; // plays well with a distance culler
-        }
+        for (const [o, k] of bucket) if (k !== null) hide(o, !!visible && !visible.has(k));
         return here;
     }
     function stats() {
