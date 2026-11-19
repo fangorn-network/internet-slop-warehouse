@@ -166,7 +166,7 @@ function startAudio(){
   const noise=audio.createBuffer(1,audio.sampleRate*2,audio.sampleRate),d=noise.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){b=(b+.02*(Math.random()*2-1))/1.02;d[i]=b*3;}
   const hum=audio.createBufferSource();hum.buffer=noise;hum.loop=true;const lp=audio.createBiquadFilter();lp.type='lowpass';lp.frequency.value=180;const hg=audio.createGain();hg.gain.value=.12;hum.connect(lp).connect(hg).connect(master);hum.start();
   const mains=audio.createOscillator();mains.frequency.value=60;const mg=audio.createGain();mg.gain.value=.012;mains.connect(mg).connect(master);mains.start();
-  panner=new PannerNode(audio,{panningModel:'HRTF',distanceModel:'linear',refDistance:1,maxDistance:1e4,rolloffFactor:0});
+  panner=audio.createPanner();Object.assign(panner,{panningModel:'HRTF',distanceModel:'linear',refDistance:1,maxDistance:1e4,rolloffFactor:0});
   ringGain=audio.createGain();ringGain.gain.value=0;
   const bell=audio.createGain();bell.gain.value=0;
   for(const f of [440,480]){const o=audio.createOscillator();o.frequency.value=f;o.connect(bell);o.start();}
@@ -177,9 +177,11 @@ function startAudio(){
 }
 function updateAudio(){
   if(!audio)return;const L=audio.listener,f=new THREE.Vector3();camera.getWorldDirection(f);
-  L.positionX.value=camera.position.x;L.positionY.value=camera.position.y;L.positionZ.value=camera.position.z;
-  L.forwardX.value=f.x;L.forwardY.value=f.y;L.forwardZ.value=f.z;L.upX.value=0;L.upY.value=1;L.upZ.value=0;
-  panner.positionX.value=phone.position.x;panner.positionY.value=phone.position.y+.6;panner.positionZ.value=phone.position.z;
+  const c=camera.position,p=phone.position;
+  // Firefox has no AudioParam fields on the listener: fall back to the older setters
+  if(L.positionX){L.positionX.value=c.x;L.positionY.value=c.y;L.positionZ.value=c.z;L.forwardX.value=f.x;L.forwardY.value=f.y;L.forwardZ.value=f.z;L.upX.value=0;L.upY.value=1;L.upZ.value=0;}
+  else{L.setPosition(c.x,c.y,c.z);L.setOrientation(f.x,f.y,f.z,0,1,0);}
+  if(panner.positionX){panner.positionX.value=p.x;panner.positionY.value=p.y+.6;panner.positionZ.value=p.z;}else panner.setPosition(p.x,p.y+.6,p.z);
   // loudness follows the walking distance through doors and corridors, not the straight line through walls
   const ix=Math.floor(pos.x/CELL),iy=Math.floor(pos.z/CELL),{width,height:h}=hotel.world,steps=goalDist[(layer*h+iy)*width+ix];
   const target=ringOn?(steps<0?.02:1/(1+Math.max(0,steps)*.28)):0;
@@ -194,6 +196,7 @@ function answer(){mode='menu';ringOn=false;answered++;controls.clear();document.
   $('title').textContent=`Night ${night+1}`;$('lead').textContent=LINES[(night+seed)%LINES.length];$('sub').textContent=`You walked ${hotel.dist[hotel.goal]} rooms deep. Tomorrow the hallways will be different.`;$('go').textContent='Sleep';$('veil').classList.remove('hidden');}
 function pause(){if(mode!=='walking')return;mode='menu';controls.clear();document.exitPointerLock?.();$('go').textContent='Keep walking';$('veil').classList.remove('hidden');}
 function frame(now){
+  requestAnimationFrame(frame); // first, so one bad frame can't stop the game
   const dt=Math.min(.05,(now-last)/1000);last=now;
   if(mode==='walking'){
     const inp=controls.input,len=Math.hypot(inp.x,inp.z),speed=(inp.run?3.2:1.7)*dt;
@@ -204,11 +207,12 @@ function frame(now){
     const p=phone.position;if(Math.hypot(pos.x-p.x,pos.z-p.z)<1.1&&Math.abs(height-p.y)<1)answer();
     beacon.intensity=ringOn?2.5+Math.sin(now*.02)*.8:.8;
   }
-  updateAudio();renderer.render(scene,camera);requestAnimationFrame(frame);
+  try{updateAudio();}catch(e){console.warn('audio',e);}
+  renderer.render(scene,camera);
 }
 function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}
 addEventListener('resize',resize);resize();
-$('go').onclick=()=>{startAudio();audio.resume();if(answered>night){night++;buildNight();}$('veil').classList.add('hidden');mode='walking';last=performance.now();$('c').requestPointerLock?.();};
+$('go').onclick=()=>{try{startAudio();audio.resume();}catch(e){console.warn('no audio',e);}if(answered>night){night++;buildNight();}$('veil').classList.add('hidden');mode='walking';last=performance.now();$('c').requestPointerLock?.();};
 try{buildNight();$('go').disabled=false;$('go').textContent='Begin the audit';$('status').textContent=`Seed ${seed} · ?seed=${seed} for the same hotel`;}catch(e){$('status').textContent='Could not build the hotel: '+e.message;}
 requestAnimationFrame(frame);
 window.nightAudit={get hotel(){return hotel},get pos(){return{...pos,layer,height}},teleport(i){const c=cellXYZ(i);pos={x:c.cx,z:c.cz};layer=c.z;height=c.z*STOREY;},step:(x,z)=>{moveAxis('x',x);moveAxis('z',z);stair();},get mode(){return mode},set furniture(v){furniture=v},look:(y,p=0)=>controls.setLook(y,p),renderer};
