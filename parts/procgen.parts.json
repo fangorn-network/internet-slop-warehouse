@@ -1,0 +1,532 @@
+[
+  {
+    "file": "worldgen.js",
+    "type": "logic",
+    "id": "worldgen",
+    "kind": "rule",
+    "title": "Worldgen: seeded 2D/3D WFC, noise, playtest bot and seed sweep",
+    "description": "Pure-data procedural generation toolkit. mulberry32 rng and a stateless coordinate hash (a world as a function of seed, x, y), smooth value noise and fbm, and wave function collapse in 2D or stacked 3D layers: clockwise [n,e,s,w(,up,down)] sockets, automatic distinct rotations ('%' in vertical sockets becomes the rotation, so stair halves stack facing the same way), sealed borders, pinned cells, weighted minimum-entropy choice, propagation and deterministic restarts; throws on contradictory rules. fromExample() learns directional tile rules and border rules from a hand-drawn character map. flood() checks reachability through passable sockets in 2D/3D. playRows() is a playtest bot for character maps (# wall, S start, G goal, a-z keys, A-Z doors); sweep() runs any generator over many seeds and returns failing seeds plus min/median/max of every metric. No renderer or browser. Original code dedicated to CC0.",
+    "tags": [
+      "procedural",
+      "procgen",
+      "wfc",
+      "wave-function-collapse",
+      "noise",
+      "fbm",
+      "seeded",
+      "deterministic",
+      "playtest",
+      "roguelike",
+      "level-generation",
+      "tilemap",
+      "kit",
+      "cc0",
+      "3d",
+      "wfc-3d",
+      "example-based",
+      "reachability"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { world, update(dt), dispose() }",
+        "does": "Collapse once with the collapse options and pass the grid to onReady."
+      },
+      {
+        "name": "rng",
+        "signature": "rng(seed) → random()",
+        "does": "Deterministic PRNG in [0,1)."
+      },
+      {
+        "name": "hash",
+        "signature": "hash(...ints) → uint32",
+        "does": "Stateless integer hash for per-cell or per-chunk seeds."
+      },
+      {
+        "name": "noise2",
+        "signature": "noise2(x, y, seed) → [0,1]",
+        "does": "Smooth value noise."
+      },
+      {
+        "name": "fbm",
+        "signature": "fbm(x, y, { seed, octaves, lacunarity, gain }) → [0,1]",
+        "does": "Fractal value noise for terrain, moisture, density."
+      },
+      {
+        "name": "withRotations",
+        "signature": "withRotations(tiles) → tiles",
+        "does": "Add the distinct quarter turns of tiles marked rotate: true, as id@1..3 with base and rotation."
+      },
+      {
+        "name": "playRows",
+        "signature": "playRows(rows, { wall }) → { ok, steps, keys, coverage, reason }",
+        "does": "Greedy playtest bot for character maps: collect reachable keys, open doors, reach G."
+      },
+      {
+        "name": "sweep",
+        "signature": "sweep({ generate, check, seeds, from }) → { seeds, passed, failures, stats }",
+        "does": "Run generate(seed) → check(world) over many seeds; collect failures and metric ranges."
+      },
+      {
+        "name": "collapse",
+        "signature": "collapse({ width, height, depth, seed, tiles, fixed, edge, maxRestarts }) → { width, height, depth, seed, attempt, cells }",
+        "does": "Socketed, directional or neighbour-list WFC in 2D or 3D; cells are tile ids, index (z*height+y)*width+x."
+      },
+      {
+        "name": "fromExample",
+        "signature": "fromExample(rows) → { tiles, edge }",
+        "does": "Learn tiles, weights, per-direction neighbours and border rules from a character-map example; spread into collapse."
+      },
+      {
+        "name": "flood",
+        "signature": "flood(world, tiles, { from, passable, solid }) → { reached, dist, coverage }",
+        "does": "Reachability and walking distance through passable sockets, 2D or 3D."
+      }
+    ],
+    "options": [
+      {
+        "name": "width",
+        "type": "integer",
+        "default": 16,
+        "does": "Grid width in cells (width × height ≤ 16384)."
+      },
+      {
+        "name": "height",
+        "type": "integer",
+        "default": 16,
+        "does": "Grid height in cells."
+      },
+      {
+        "name": "seed",
+        "type": "uint32",
+        "default": 1,
+        "does": "World identity; send once to peers."
+      },
+      {
+        "name": "maxRestarts",
+        "type": "integer",
+        "default": 24,
+        "does": "Deterministic restarts before throwing."
+      },
+      {
+        "name": "depth",
+        "type": "integer",
+        "default": 1,
+        "does": "Layers (storeys); >1 needs six sockets per tile."
+      },
+      {
+        "name": "tiles",
+        "type": "Tile[]",
+        "default": "required",
+        "does": "{ id, weight, sockets: [n,e,s,w(,up,down)], rotate } or { id, weight, allow: [[n],[e],[s],[w]] } or { id, weight, neighbors }."
+      },
+      {
+        "name": "fixed",
+        "type": "{x,y,z,id}[]",
+        "default": "[]",
+        "does": "Cells pinned to a tile."
+      },
+      {
+        "name": "edge",
+        "type": "string | socket[6] | (tile, d) => boolean",
+        "default": "none",
+        "does": "Seal the outside: one side socket, a socket per direction, or a rule (fromExample gives one)."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "default": "none",
+        "does": "Receive the collapsed grid from attach."
+      }
+    ]
+  },
+  {
+    "file": "lock-key-dungeon.js",
+    "type": "logic",
+    "id": "lock-key-dungeon",
+    "kind": "rule",
+    "title": "Lock-and-key dungeon generator",
+    "description": "Seeded dungeon that is solvable by construction: rooms grown as a random spanning tree on a grid, start and goal at the two ends of its longest path, up to six locked rooms spread along that critical path, each key in the deepest reachable dead end before its lock, and loops that only join rooms behind the same locks so no shortcut skips a door. Every room carries zone, depth, onPath and kind (start, goal, lock, key, room) for theming. toRows() renders a character map (# . S G a-f A-F) for any renderer, grid-navigation or the worldgen playtest bot; 500 swept seeds are all solvable and every lock is required. Original code dedicated to CC0.",
+    "tags": [
+      "procedural",
+      "procgen",
+      "dungeon",
+      "roguelike",
+      "lock-and-key",
+      "metroidvania",
+      "level-generation",
+      "rpg",
+      "seeded",
+      "deterministic",
+      "kit",
+      "cc0"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { dungeon, rows, update(dt), dispose() }",
+        "does": "Generate once and pass dungeon and rows to onReady."
+      },
+      {
+        "name": "generate",
+        "signature": "generate({ seed, width, height, rooms, keys, loops }) → { rooms, doors, start, goal, path, keys }",
+        "does": "Room graph with locks, keys and safe loops."
+      },
+      {
+        "name": "toRows",
+        "signature": "toRows(dungeon, { room }) → string[]",
+        "does": "Character map: rooms of room×room floor cells, one-cell doors."
+      }
+    ],
+    "options": [
+      {
+        "name": "seed",
+        "type": "uint32",
+        "default": 1,
+        "does": "Dungeon identity."
+      },
+      {
+        "name": "width",
+        "type": "integer",
+        "default": 6,
+        "does": "Room grid width."
+      },
+      {
+        "name": "height",
+        "type": "integer",
+        "default": 6,
+        "does": "Room grid height."
+      },
+      {
+        "name": "rooms",
+        "type": "integer",
+        "default": 16,
+        "does": "Room count (fits the grid)."
+      },
+      {
+        "name": "keys",
+        "type": "integer",
+        "default": 2,
+        "does": "Locks along the critical path, 0–6; throws if the path is too short."
+      },
+      {
+        "name": "loops",
+        "type": "number",
+        "default": 0.2,
+        "does": "Chance of an extra door between neighbouring rooms in the same zone."
+      },
+      {
+        "name": "room",
+        "type": "integer",
+        "default": 5,
+        "does": "Floor cells per room side in toRows (≥ 3)."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "default": "none",
+        "does": "Receive (dungeon, rows) from attach."
+      }
+    ]
+  },
+  {
+    "file": "keyring.html",
+    "type": "game",
+    "id": "keyring",
+    "title": "Keyring",
+    "description": "Top-down procedural dungeon crawl. Each floor is generated from a seed, played by a bot before you see it, and only kept if the bot can clear it; the bot's step count is your par. Find the gold keys, open the matching lettered doors, reach the green exit; rooms reveal as you enter them. Floors grow bigger with more locks as you go deeper. Arrow keys or WASD, or swipe on phones. Share ?seed= for the same floors. The starter for the procgen skill.",
+    "tags": [
+      "procedural",
+      "roguelike",
+      "dungeon",
+      "puzzle",
+      "2d",
+      "mobile",
+      "starter",
+      "kit",
+      "seeded"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "uses": [
+      "lock-key-dungeon",
+      "worldgen"
+    ]
+  },
+  {
+    "file": "hotel-wfc.js",
+    "type": "logic",
+    "id": "hotel-wfc",
+    "kind": "rule",
+    "title": "Hotel WFC: multi-storey corridors, rooms and stairwells",
+    "description": "A hotel from 3D wave function collapse. Base tiles with [n,e,s,w,up,down] sockets (c corridor, r room, w wall, d door, s% stair): halls, corners, tees, dead ends, corridor doors, rectangular rooms of any size with doors, and one-cell stairwells whose halves only stack facing the same way. A lobby crossroads and the stair beside it are pinned; every plan is flood-checked from the lobby and re-rolled on sub-seeds until it reaches an upper floor, a room and a minimum share of the building. Returns the world, reachable cells, walking distances and the farthest room as a goal. Takes worldgen's functions as options. Pure data; draw it with socket-mesher. Original code dedicated to CC0.",
+    "tags": [
+      "procedural",
+      "procgen",
+      "wfc",
+      "wfc-3d",
+      "hotel",
+      "interior",
+      "building",
+      "liminal",
+      "horror",
+      "multi-storey",
+      "stairs",
+      "seeded",
+      "kit",
+      "cc0"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(object, opts) → { hotel, update(dt), dispose() }",
+        "does": "Generate once and hand the hotel to onReady."
+      },
+      {
+        "name": "generate",
+        "signature": "generate({ seed, width, height, floors, minCoverage, collapse, withRotations, flood, hash }) → { world, tiles, start, goal, reached, dist, coverage, rooms, attempts }",
+        "does": "Collapse and flood-check a hotel."
+      },
+      {
+        "name": "TILES",
+        "signature": "Tile[]",
+        "does": "Editable base tile set; weights shape the plan."
+      },
+      {
+        "name": "kind",
+        "signature": "kind(tile) → void | corridor | room | stair-low | stair-high",
+        "does": "What a tile is, for drawing and dressing."
+      },
+      {
+        "name": "passable",
+        "signature": "passable(socket) → boolean",
+        "does": "Walkable faces: corridor, room, door, stair."
+      }
+    ],
+    "options": [
+      {
+        "name": "seed",
+        "type": "uint32",
+        "default": 1,
+        "does": "Hotel identity."
+      },
+      {
+        "name": "width",
+        "type": "integer",
+        "default": 14,
+        "does": "Cells east-west."
+      },
+      {
+        "name": "height",
+        "type": "integer",
+        "default": 14,
+        "does": "Cells north-south."
+      },
+      {
+        "name": "floors",
+        "type": "integer",
+        "default": 2,
+        "does": "Storeys, 1–6."
+      },
+      {
+        "name": "minCoverage",
+        "type": "number",
+        "default": 0.6,
+        "does": "Share of non-void cells the lobby must reach."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "onReady",
+        "default": "none",
+        "does": "Receive the hotel from attach."
+      }
+    ]
+  },
+  {
+    "file": "socket-mesher.js",
+    "type": "logic",
+    "id": "socket-mesher",
+    "kind": "effect",
+    "title": "Socket mesher: draw WFC grids from their sockets",
+    "description": "Turn any 2D or 3D wave function collapse grid into three.js without a model per tile. Say which pieces stand on a face with a given socket (a wall on 'w', a door frame on 'd') and which go inside a cell (floor, ceiling, stairs, furniture); pieces are modelled once for the north face or rotation 0 and turned into place. placements() is pure data with a per-cell seeded random for dressing; build() makes one InstancedMesh per piece, so draw calls equal piece kinds, not cells. Pass flood().reached as only to skip sealed-off cells. Original code dedicated to CC0.",
+    "tags": [
+      "procedural",
+      "wfc",
+      "three.js",
+      "instancing",
+      "modular",
+      "kitbash",
+      "level-builder",
+      "performance",
+      "dressing",
+      "kit",
+      "cc0"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "exports": [
+      {
+        "name": "attach",
+        "signature": "attach(parent, { world, tiles, pieces, cell, storey, only, face, inside }) → { group, update(dt), dispose() }",
+        "does": "Build the grid into parent."
+      },
+      {
+        "name": "placements",
+        "signature": "placements(world, tiles, { cell, storey, only, face, inside, seed }) → Map(piece → [{ x, y, z, rot }])",
+        "does": "Where every piece goes, from socket rules."
+      },
+      {
+        "name": "build",
+        "signature": "build(placements, pieces) → Group",
+        "does": "One InstancedMesh per piece; group.userData.dispose() frees them."
+      }
+    ],
+    "options": [
+      {
+        "name": "cell",
+        "type": "number",
+        "default": 3,
+        "does": "Cell width in metres."
+      },
+      {
+        "name": "storey",
+        "type": "number",
+        "default": 3,
+        "does": "Layer height in metres."
+      },
+      {
+        "name": "only",
+        "type": "Set<number>",
+        "default": "all cells",
+        "does": "Cells to draw."
+      },
+      {
+        "name": "pieces",
+        "type": "{ name: { geometry, material } }",
+        "default": "required",
+        "does": "The kit."
+      }
+    ],
+    "hooks": [
+      {
+        "name": "face",
+        "default": "() => []",
+        "does": "(ctx) → pieces on one side face, modelled for north."
+      },
+      {
+        "name": "inside",
+        "default": "() => []",
+        "does": "(ctx) → pieces inside a cell, modelled for rotation 0."
+      }
+    ]
+  },
+  {
+    "file": "night-audit.html",
+    "type": "game",
+    "id": "night-audit",
+    "title": "Night Audit",
+    "description": "First-person liminal horror walk through a two-storey hotel that is rebuilt by 3D wave function collapse every night. Follow a ringing phone through carpeted corridors, open doors and stairwells; the ring is panned toward the phone and grows louder by walking distance through the building, not through walls. Answer it and sleep; tomorrow the hallways are different. Every plan is flood-checked so the phone is always reachable. WASD/arrows, mouse or drag to look, Shift to hurry; thumbstick on phones. Share ?seed= for the same hotel. The 3D starter for the procgen skill.",
+    "tags": [
+      "procedural",
+      "wfc",
+      "horror",
+      "liminal",
+      "hotel",
+      "first-person",
+      "exploration",
+      "3d",
+      "mobile",
+      "starter",
+      "seeded"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "uses": [
+      "worldgen",
+      "hotel-wfc",
+      "socket-mesher",
+      "fps-controls",
+      "touch-controls",
+      "ph-hotel-carpet-color",
+      "ph-hotel-carpet-normal",
+      "ph-hotel-wall-plaster-normal",
+      "acg-hotel-ceiling-color",
+      "ph-hotel-walnut-color"
+    ]
+  },
+  {
+    "file": "skills/procgen/SKILL.md",
+    "type": "skill",
+    "id": "procgen-skill",
+    "title": "Procedural worlds that are always playable",
+    "description": "Agent skill (SKILL.md for Claude Code and Codex): build game worlds as a function of a seed with worldgen (2D/3D wave function collapse with sockets and rotations, rules learned from a drawn example, noise, chunk hashes, flood reachability) and lock-key-dungeon, draw 3D WFC grids from their sockets with socket-mesher, and prove every seed playable with the playRows bot and a seed sweep in tests and at runtime. Covers structure-from-graph, detail-from-WFC layering, dressing, instancing, determinism for P2P, chunked worlds and theming generators from text.",
+    "tags": [
+      "skill",
+      "recipe",
+      "procedural",
+      "procgen",
+      "wfc",
+      "roguelike",
+      "dungeon",
+      "playtest",
+      "kit",
+      "3d",
+      "wfc-3d",
+      "three.js"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "uses": [
+      "worldgen",
+      "lock-key-dungeon",
+      "keyring",
+      "hotel-wfc",
+      "socket-mesher",
+      "night-audit"
+    ]
+  }
+]

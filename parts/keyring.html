@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Keyring</title>
+<style>
+:root{--bg:#0e0d12;--wall:#24212c;--floor:#3b3646;--seen:#2c2935;--ink:#e9e4f2;--dim:#8d86a0;--key:#f2c14e;--door:#d9643a;--goal:#5fd3a5;--you:#7fb2ff}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,sans-serif;overflow:hidden;touch-action:none}
+canvas{display:block;margin:0 auto}
+#hud{position:fixed;top:0;left:0;right:0;display:flex;gap:16px;justify-content:center;padding:10px 16px;font-variant-numeric:tabular-nums;pointer-events:none}
+#hud b{color:var(--key)}
+#msg{position:fixed;inset:0;display:grid;place-items:center;text-align:center;background:#0e0d12d9;padding:16px}
+#msg.hidden{display:none}#msg h1{margin:0 0 8px;font-size:28px;letter-spacing:.04em}#msg p{color:var(--dim);margin:6px 0}
+button{font:inherit;background:var(--goal);color:#0e0d12;border:0;border-radius:8px;padding:10px 18px;margin-top:12px;cursor:pointer}
+</style></head><body>
+<div id="hud"><span>Floor <b id="floor">1</b></span><span>Keys <b id="keys">–</b></span><span>Steps <b id="steps">0</b> / par <span id="par">0</span></span></div>
+<canvas id="c"></canvas>
+<div id="msg"><div><h1>Keyring</h1><p>Every floor is generated from a seed and checked by a bot before you see it.</p><p>Find the keys, open the doors, reach the green exit. Beat the bot's par.</p><p>Arrows / WASD, or swipe.</p><button id="go">Descend</button><p id="seedline"></p></div></div>
+<script type="module">
+const PARTS={/*PARTS*/};
+async function load(id){const res=await fetch(PARTS[id]);if(!res.ok)throw Error('Could not load '+id);const {js}=await res.json();return import('data:text/javascript;charset=utf-8,'+encodeURIComponent(js));}
+const [dungeon,worldgen]=await Promise.all([load('lock-key-dungeon'),load('worldgen')]);
+const $=id=>document.getElementById(id),cv=$('c'),ctx=cv.getContext('2d'),css=n=>getComputedStyle(document.documentElement).getPropertyValue(n);
+const ROOM=4,S=ROOM+1,seed=Number(new URLSearchParams(location.search).get('seed'))||Math.floor(Math.random()*1e6);
+let level=0,rows,grid,px,py,held,steps,par,seen,playing=false,total=0,totalPar=0;
+$('seedline').textContent=`Seed ${seed}: share ?seed=${seed} for the same floors.`;
+
+function build(){ // keep trying sub-seeds until the bot can clear the floor: no unwinnable floor reaches a player
+  const size=Math.min(4+(level>>1),8),opts={width:size,height:size,rooms:Math.min(7+level*3,size*size),keys:Math.min(1+(level>>1),6),loops:.25};
+  for(let k=0;;k++){try{const d=dungeon.generate({...opts,seed:worldgen.hash(seed,level,k)}),r=dungeon.toRows(d,{room:ROOM}),play=worldgen.playRows(r);if(play.ok)return{r,par:play.steps};}catch{}}
+}
+function next(){
+  ({r:rows,par}=build());grid=rows.map(r=>[...r]);held=new Set();steps=0;seen=new Set();
+  py=rows.findIndex(r=>r.includes('S'));px=rows[py].indexOf('S');grid[py][px]='.';reveal();hud();resize();
+}
+function reveal(){seen.add(`${Math.floor(px/S)},${Math.floor(py/S)}`);}
+const visible=(x,y)=>[Math.floor(x/S),Math.floor((x-1)/S)].some(bx=>[Math.floor(y/S),Math.floor((y-1)/S)].some(by=>seen.has(`${bx},${by}`)));
+function hud(){$('floor').textContent=level+1;$('keys').textContent=[...held].join(' ').toUpperCase()||'–';$('steps').textContent=steps;$('par').textContent=par;}
+
+let audio;function blip(f,d=.08,type='square'){try{audio??=new AudioContext();const o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.06,audio.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+d);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+d);}catch{}}
+
+function move(dx,dy){
+  if(!playing)return;const x=px+dx,y=py+dy,c=grid[y]?.[x];
+  if(!c||c==='#')return;
+  if(c>='A'&&c<='F'){if(!held.has(c.toLowerCase())){blip(90,.15,'sawtooth');return;}grid[y][x]='.';blip(330);}
+  px=x;py=y;steps++;
+  if(c>='a'&&c<='f'){held.add(c);grid[y][x]='.';blip(880,.12,'triangle');blip(1320,.12,'triangle');}
+  reveal();hud();
+  if(c==='G'){playing=false;total+=steps;totalPar+=par;blip(523,.3,'triangle');level++;
+    $('msg').querySelector('h1').textContent=`Floor ${level} cleared`;
+    $('msg').querySelector('p').textContent=`${steps} steps against a par of ${par}. ${steps<=par?'You matched the bot.':'The bot found a shorter way.'}`;
+    $('msg').querySelectorAll('p')[1].textContent=`Running total: ${total} / ${totalPar}`;$('msg').querySelectorAll('p')[2].textContent='';
+    $('go').textContent='Go deeper';$('msg').classList.remove('hidden');}
+  draw();
+}
+
+function resize(){const W=rows[0].length,H=rows.length,t=Math.max(4,Math.floor(Math.min(innerWidth/W,(innerHeight-48)/H)));cv.width=W*t;cv.height=H*t;cv.style.marginTop='44px';cv.dataset.t=t;draw();}
+function draw(){
+  if(!rows)return;const t=+cv.dataset.t;ctx.fillStyle=css('--bg');ctx.fillRect(0,0,cv.width,cv.height);
+  for(let y=0;y<grid.length;y++)for(let x=0;x<grid[0].length;x++){
+    if(!visible(x,y))continue;const c=grid[y][x];
+    ctx.fillStyle=c==='#'?css('--wall'):css('--floor');ctx.fillRect(x*t,y*t,t,t);
+    if(c>='a'&&c<='f'){ctx.fillStyle=css('--key');ctx.beginPath();ctx.arc((x+.5)*t,(y+.5)*t,t*.3,0,7);ctx.fill();}
+    if(c>='A'&&c<='F'){ctx.fillStyle=css('--door');ctx.fillRect(x*t+1,y*t+1,t-2,t-2);ctx.fillStyle=css('--bg');ctx.font=`bold ${t*.6}px system-ui`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(c,(x+.5)*t,(y+.55)*t);}
+    if(c==='G'){ctx.fillStyle=css('--goal');ctx.fillRect(x*t+2,y*t+2,t-4,t-4);}
+  }
+  ctx.fillStyle=css('--you');ctx.beginPath();ctx.arc((px+.5)*t,(py+.5)*t,t*.38,0,7);ctx.fill();
+}
+
+const KEYS={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]};
+addEventListener('keydown',e=>{const k=KEYS[e.key]??KEYS[e.key.toLowerCase()];if(k){e.preventDefault();move(...k);}else if(e.key==='Enter'&&!playing)$('go').click();});
+let touch;addEventListener('pointerdown',e=>{touch=[e.clientX,e.clientY];});
+addEventListener('pointermove',e=>{if(!touch)return;const dx=e.clientX-touch[0],dy=e.clientY-touch[1];if(Math.hypot(dx,dy)<24)return;Math.abs(dx)>Math.abs(dy)?move(Math.sign(dx),0):move(0,Math.sign(dy));touch=[e.clientX,e.clientY];});
+addEventListener('pointerup',()=>{touch=null;});
+addEventListener('resize',()=>rows&&resize());
+$('go').onclick=()=>{$('msg').classList.add('hidden');next();playing=true;};
+window.keyringDebug={get rows(){return rows},get pos(){return[px,py]},get par(){return par},get level(){return level},move};
+</script></body></html>

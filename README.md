@@ -163,3 +163,12 @@ node publish-batch.js projects/slopov-ii/release.parts.json --local /tmp/slopov-
 PLAYWRIGHT_MODULE=projects/roadside-inn/.validation/node_modules/playwright-core/index.mjs node scripts/test-slopov-ii-p2p.mjs
 node publish-batch.js projects/slopov-ii/release.parts.json --network baseSepolia
 ```
+
+## Procedural worlds
+
+[Keyring](parts/keyring.html) is a seeded dungeon crawl whose floors are played by a bot before you see them; the bot's steps are your par. It runs on two pure-data parts: `worldgen` (socketed wave function collapse with rotations, noise, coordinate hashing, the `playRows` playtest bot and `sweep` over many seeds) and `lock-key-dungeon` (solvable-by-construction locks, keys and loops). [Night Audit](parts/night-audit.html) is the 3D version: a two-storey hotel rebuilt each night by 3D WFC (`hotel-wfc`: corridors, rooms, doors and stairwells, flood-checked from the lobby), drawn from its sockets by `socket-mesher` (one InstancedMesh per piece, about 20 draw calls). The [procgen skill](parts/skills/procgen/SKILL.md) covers the seed contract, character maps, rules from a drawn example, layering structure and WFC detail in 3D, and proving every seed playable.
+
+```sh
+node publish-batch.js parts/procgen.parts.json --local /tmp/procgen-preview
+npx vitest run parts/worldgen.test.js
+```
