@@ -2,7 +2,7 @@
 // Nothing here is warehouse-specific; give it a base URL and it talks to any app.
 // ponytail: one file in site/ for now; lift it into its own package when a second app wants it.
 
-/** @param {string} base  the deployment, e.g. https://internet-slop-warehouse.fangorn.network */
+/** @param {string} base  the deployment, e.g. https://internet-slop-warehouse-sepolia.fangorn.network */
 export function westmarch(base) {
     base = base.replace(/\/+$/, "");
     async function call(path, init) {

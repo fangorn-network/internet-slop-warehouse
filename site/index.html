@@ -30,7 +30,9 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
 .card[data-weight] .stock-type{font-weight:700}.card[data-weight=light] .stock-type{color:#2e6b2b}.card[data-weight=medium] .stock-type{color:#7a5a00}.card[data-weight=heavy] .stock-type{color:#a3231a}
 .vote{white-space:nowrap}.vote[aria-pressed="true"]{background:var(--mark)}
 .board-note{font:12px var(--mono);color:var(--muted);margin:14px 0 0}
-@media(max-width:650px){.board{grid-template-columns:1fr}.kinds button{min-width:0}}
+.play-cta{display:inline-block;margin-top:22px;padding:14px 26px;background:var(--accent);color:#1b1e19;font:900 22px Impact,'Arial Narrow',sans-serif;text-transform:uppercase;text-decoration:none;box-shadow:5px 5px 0 #11160d}.play-cta:hover{background:#efff95}
+.kinds{align-items:center}.kinds-label{font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:0 8px 0 14px}.kinds-label:first-child{padding-left:0}
+@media(max-width:650px){.board{grid-template-columns:1fr}.kinds button{min-width:0}.kinds-label{display:none}}
 </style>
 </head>
 <body>
@@ -38,13 +40,14 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
 <main>
   <header class="masthead">
     <a class="wordmark" href="./" aria-label="The internet slop warehouse home"><span class="logo" aria-hidden="true">S/W</span><span>SLOP WAREHOUSE<small>INTERNET DIVISION</small></span></a>
-    <nav aria-label="Main navigation"><a href="#inventory">Browse stock ↘</a><a href="#loading-dock">Bring your agent ↗</a></nav>
+    <nav aria-label="Main navigation"><a href="#inventory">Play games ↘</a><a href="#loading-dock">Bring your agent ↗</a></nav>
     <span class="stock-status" id="status" role="status">Receiving inventory…</span>
   </header>
   <section class="hero" aria-labelledby="warehouse-title">
     <div><div class="eyebrow">Est. whenever / open for questionable business</div>
       <h1 id="warehouse-title">The internet<br><span class="slop">slop</span> warehouse.</h1>
       <p class="hero-copy"><strong>Games. Loose parts. Unreasonable potential.</strong><br>Play something strange. Strip it for parts. Let your agent build the next thing. Everything here is somebody else's starting point.</p>
+      <a class="play-cta" href="#inventory">▶ Play a game</a>
     </div>
     <div class="cargo" aria-hidden="true">
       <div class="crate crate-a"><span class="crate-icon">↗</span><span>PLAYABLE SLOP<small>GAMES / HANDLE WITH CURIOSITY</small></span></div>
@@ -65,7 +68,7 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
     <div class="inventory-heading"><h2 id="inventory-title">What's on the <span>shelves.</span></h2><span id="stock-count" role="status">Counting stock…</span></div>
     <div class="inventory-tools">
       <div class="kinds" role="group" aria-label="Show">
-        <button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><button data-kind="top" aria-pressed="false"><span>Top</span><span class="count" id="count-top">—</span></button><button data-kind="reused" aria-pressed="false"><span>Reused</span><span class="count" id="count-reused">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
+        <span class="kinds-label" aria-hidden="true">Play</span><button data-kind="game" aria-pressed="true"><span>Games</span><span class="count" id="count-game">—</span></button><span class="kinds-label" aria-hidden="true">Parts</span><button data-kind="reused" aria-pressed="false"><span>Reused</span><span class="count" id="count-reused">—</span></button><button data-kind="asset" aria-pressed="false"><span>Assets</span><span class="count" id="count-asset">—</span></button><button data-kind="logic" aria-pressed="false"><span>Logic</span><span class="count" id="count-logic">—</span></button><button data-kind="skill" aria-pressed="false"><span>Skills</span><span class="count" id="count-skill">—</span></button><button data-kind="source" aria-pressed="false"><span>Source</span><span class="count" id="count-source">—</span></button>
       </div>
       <label class="search-box"><span class="search-symbol" aria-hidden="true">⌕</span><input type="search" id="q" placeholder="Rummage through the warehouse…" aria-label="Search the warehouse"></label>
     </div>
@@ -169,7 +172,7 @@ $("clear-filters").onclick = () => {
 };
 
 function renderCategories() {
-    document.querySelector(".category-bar").hidden = kind === "reused" || kind === "top";
+    document.querySelector(".category-bar").hidden = kind === "reused";
     const options = categoryOptions(view.records, kind);
     if (!options.some(([id]) => id === category)) category = "all";
     // Keep focus on the selected button when filtering with the keyboard.
@@ -191,25 +194,23 @@ function renderCategories() {
 }
 
 function rank(q) {
-    const games = kind === "reused" ? reused() : kind === "top" ? top()
+    const games = kind === "reused" ? reused()
         : view.records.filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
+    if (kind === "game") games.sort((a, b) => score(b) - score(a) || tally(b)[0] - tally(a)[0]); // most liked first (stable: ties keep view order)
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return games;
     if (semantic.ids && semantic.q === q && semantic.kind === kind) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
     // word hits over title (x3), tags (x2) and description, until (or where there's no) /search
     // at the start of a word, and only words of 3+ letters: "a" and "in" would match nearly every description
     const res = words.filter((w) => w.length > 2).map((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`, "i"));
-    const score = (r) => res.reduce((s, re) => s + 3 * re.test(r.payload.title)
+    const hit = (r) => res.reduce((s, re) => s + 3 * re.test(r.payload.title)
         + 2 * r.payload.tags.some((t) => re.test(t)) + re.test(r.payload.description), 0);
-    return games.map((r) => [r, score(r)]).filter(([, s]) => s).sort((a, b) => b[1] - a[1]).map(([r]) => r);
+    return games.map((r) => [r, hit(r)]).filter(([, s]) => s).sort((a, b) => b[1] - a[1]).map(([r]) => r);
 }
 // Parts by how many games carry them (through any chain of credits), then by how many publishers made those games.
 const publishersOf = (r) => new Set([...G.hosts.get(key(r))].map((g) => g.split("/")[0])).size;
 const reused = () => view.records.filter((r) => r.type !== "game" && G.hosts.has(key(r)))
     .sort((a, b) => G.hosts.get(key(b)).size - G.hosts.get(key(a)).size || publishersOf(b) - publishersOf(a));
-
-// The leaderboard by votes: anything with a vote, net likes first, then most liked.
-const top = () => view.records.filter((r) => votes.tally[vkey(r)]).sort((a, b) => score(b) - score(a) || tally(b)[0] - tally(a)[0]);
 
 // A model's weight class on a phone (the lean-scenes skill): from facts measured at publish, or read from the stored
 // file's head when its card scrolls into view (records older than measure.js have none).
@@ -258,9 +259,8 @@ function render() {
     const hits = rank($("q").value);
     for (const type of ["game", "asset", "logic", "skill", "source"]) $("count-" + type).textContent = String(view.records.filter(r => r.type === type).length).padStart(2, "0");
     $("count-reused").textContent = String(reused().length).padStart(2, "0");
-    $("count-top").textContent = String(top().length).padStart(2, "0");
     if (kind === "reused") return renderBoard(hits);
-    const noun = kind === "top" ? "rated part" + (hits.length === 1 ? "" : "s") : kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
+    const noun = kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
     $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} ${noun} ${$("q").value.trim() ? "found" : "in this bin"}`;
     $("grid").replaceChildren(...hits.map((r) => {
         const b = document.createElement("button");
@@ -287,7 +287,7 @@ function render() {
         b.onclick = () => play(r);
         return b;
     }));
-    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${kind === "top" ? "Nothing's been voted on yet. Open something and give it a ▲." : view.records.some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
+    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${view.records.some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
 }
 
 // A game card's preview is its specimen: dark matter (its own code) and every part it carries. Weighed when it
@@ -528,7 +528,7 @@ $("q").oninput = () => {
     render();
     clearTimeout(typing);
     const q = $("q").value;
-    if (q.trim() && kind !== "reused" && kind !== "top") typing = setTimeout(async () => { // the board ranks by words: /search has no "reused" type
+    if (q.trim() && kind !== "reused") typing = setTimeout(async () => { // the board ranks by words: /search has no "reused" type
         try {
             // ponytail: the k nearest, however far; a score floor once there are enough parts for it to matter
             const type = kind;
