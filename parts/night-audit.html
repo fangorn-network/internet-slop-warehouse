@@ -32,7 +32,7 @@ let night=0,hotel,by,group,goalDist,phone,beacon,pos={x:0,z:0},layer=0,height=0,
 const renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(70,1,.05,20);camera.rotation.order='YXZ';
-scene.background=new THREE.Color(0x0b0907);scene.fog=new THREE.FogExp2(0x0b0907,.085);
+scene.background=new THREE.Color(0x0b0907);scene.fog=new THREE.FogExp2(0x0b0907,.12);
 scene.add(new THREE.HemisphereLight(0xffe2b8,0x6b5a44,.7));
 const torch=new THREE.SpotLight(0xfff1d6,22,16,.55,.5,1.6);torch.position.set(0,0,0);camera.add(torch);torch.target.position.set(0,-.15,-1);camera.add(torch.target);scene.add(camera);
 const loader=new THREE.TextureLoader();
@@ -55,9 +55,16 @@ const mat={
   phone:new THREE.MeshStandardMaterial({color:0x7a1612,roughness:.4}),
 };
 // Heartland Inn's furniture (original Blender models, CC0), all authored floor-centred and facing +z.
-const MODELS=['hotel-room-door','hotel-king-bed-lite','hotel-nightstand','hotel-table-lamp','hotel-credenza-tv','hotel-snack-vending-lite','hotel-ice-machine','hotel-housekeeping-cart','ph-wetfloorsign-01'];
+// Plus photoscanned Poly Haven models (CC0, real scale, facing +z) for the things that make it feel lived in.
+const MODELS=['hotel-room-door','hotel-king-bed-lite','hotel-nightstand','hotel-table-lamp','hotel-credenza-tv','hotel-snack-vending-lite','hotel-ice-machine','hotel-housekeeping-cart','ph-wetfloorsign-01',
+  'ph-hanging-picture-frame-02-lite','ph-korean-fire-extinguisher-01-lite','ph-wall-clock-lite','ph-vintage-grandfather-clock-01-lite','ph-sofa-02','ph-plastic-monobloc-chair-01','ph-armchair-01-lite','ph-side-table-01-lite','ph-pull-chain-light-socket-lite','ph-lightbulb-01-lite'];
 let loadedModels=0;const gltf=new GLTFLoader();
 const models=Object.fromEntries(await Promise.all(MODELS.map(id=>gltf.loadAsync(PARTS[id]).then(g=>{$('go').textContent=`Loading furniture ${++loadedModels}/${MODELS.length}`;return[id,g.scene];}))));
+// glTF glass loads as transmission, and one transmissive material makes three.js render the whole opaque scene a second
+// time every frame. Plain transparency looks the same on a clock face or a bulb.
+// Poly Haven's frame and clock glass is also authored opaque black, which hides what's behind it: make all glass see-through.
+for(const m of Object.values(models))m.traverse(o=>{const x=o.material;if(x&&(x.transmission>0||/glass/i.test(x.name)))Object.assign(x,{transmission:0,transparent:true,opacity:Math.min(x.opacity,.25),depthWrite:false});});
+const bulb=new THREE.Group();bulb.add(models['ph-pull-chain-light-socket-lite'],models['ph-lightbulb-01-lite']);models['ph-lightbulb-01-lite'].position.y=-.25; // a bare bulb on its socket
 const doorFrame=models['hotel-room-door'].clone();doorFrame.getObjectByName('door_leaf').removeFromParent();
 const doorLeaf=models['hotel-room-door'].getObjectByName('door_leaf').clone();doorLeaf.position.set(0,0,0); // hinge at the origin
 const H=CELL/2,STEPS=10,side=H-DOOR,G={
@@ -78,9 +85,12 @@ const pieces={
   'sconce':{geometry:G.box(.16,.24,.07).translate(0,1.85,-H+.04),material:mat.glow},
   'picture':{geometry:G.box(.62,.46,.03).translate(0,1.5,-H+.02),material:mat.frame},
   'canvas':{geometry:G.plane(.52,.36).translate(0,1.5,-H+.036),material:mat.art},
+  'print':{geometry:G.plane(.68,.44).translate(0,1.52,-H+.012),material:mat.art},
   'light-panel':{geometry:G.plane(.55,.55).rotateX(Math.PI/2).translate(0,STOREY-.03,0),material:mat.panel},
   'step':{geometry:G.box(CELL-.04,STOREY/STEPS,CELL/STEPS),material:mat.wood},
   'bed':models['hotel-king-bed-lite'],'nightstand':models['hotel-nightstand'],'lamp':models['hotel-table-lamp'],'credenza':models['hotel-credenza-tv'],
+  'art':models['ph-hanging-picture-frame-02-lite'],'extinguisher':models['ph-korean-fire-extinguisher-01-lite'],'clock':models['ph-wall-clock-lite'],'grandfather':models['ph-vintage-grandfather-clock-01-lite'],
+  'sofa':models['ph-sofa-02'],'chair':models['ph-plastic-monobloc-chair-01'],'armchair':models['ph-armchair-01-lite'],'side-table':models['ph-side-table-01-lite'],'bulb':bulb,
   'vending':models['hotel-snack-vending-lite'],'ice':models['hotel-ice-machine'],'cart':models['hotel-housekeeping-cart'],'wet-sign':models['ph-wetfloorsign-01'],
 };
 // A king bed against the north wall of each room's north-west corner, head to the wall, with a nightstand and lamp
@@ -90,7 +100,7 @@ const BED=x=>[{piece:'bed',at:[x,0,-H+1.18]},...[-1.4,1.4].flatMap(dx=>[{piece:'
 const hasBed=t=>t.rotation===0&&(t.base==='room-corner'||t.base==='room-corner-door-side');
 const hasTV=t=>t.rotation===3&&(t.base==='room-corner'||t.base==='room-corner-door'); // local west wall is the room's south wall
 // Footprints in each model's own frame, from its measured bounds: what the player can't walk through.
-const SOLID={bed:[-1.12,1.12,-1.01,1.14],nightstand:[-.26,.26,-.21,.23],credenza:[-1.3,1.3,-.25,.25],vending:[-.49,.49,-.43,.44],ice:[-.3,.3,-.33,.35],cart:[-.63,1.09,-.25,.25],'wet-sign':[-.15,.15,-.19,.17]};
+const SOLID={bed:[-1.12,1.12,-1.01,1.14],nightstand:[-.26,.26,-.21,.23],credenza:[-1.3,1.3,-.25,.25],vending:[-.49,.49,-.43,.44],ice:[-.3,.3,-.33,.35],cart:[-.63,1.09,-.25,.25],'wet-sign':[-.15,.15,-.19,.17],grandfather:[-.31,.31,-.19,.24],sofa:[-.9,.9,-.48,.34],chair:[-.32,.32,-.34,.29],armchair:[-.42,.42,-.42,.35],'side-table':[-.28,.28,-.23,.23]};
 
 function rules(){return{cell:CELL,storey:STOREY,only:hotel.reached,seed:hotel.world.seed,
   inside({tile,random}){
@@ -101,13 +111,17 @@ function rules(){return{cell:CELL,storey:STOREY,only:hotel.reached,seed:hotel.wo
     if(k==='stair-low')for(let s=0;s<STEPS;s++)out.push({piece:'step',at:[0,(s+.5)*STOREY/STEPS,H-(s+.5)*CELL/STEPS]});
     if(k==='room'&&hasBed(tile))out.push(...BED(bedX(tile)));
     if(k==='room'&&hasTV(tile))out.push({piece:'credenza',at:[-H+.27,0,.1],rot:Math.PI/2});
-    if(tile.base==='end')out.push(random()<.5?{piece:'vending',at:[0,0,H-.48],rot:Math.PI}:{piece:'ice',at:[0,0,H-.38],rot:Math.PI});
-    if(tile.base==='hall'){const r=random();if(r<.06)out.push({piece:'cart',at:[H-.3,0,0],rot:Math.PI/2});else if(r<.11)out.push({piece:'wet-sign',at:[-.5,0,.2],rot:random()*6});}
+    if(tile.base==='end'){const r=random();out.push(r<.4?{piece:'vending',at:[0,0,H-.48],rot:Math.PI}:r<.7?{piece:'ice',at:[0,0,H-.38],rot:Math.PI}:{piece:'grandfather',at:[0,0,H-.25],rot:Math.PI});}
+    if(tile.base==='tee'&&random()<.35)out.push({piece:'sofa',at:[-H+.5,0,0],rot:Math.PI/2});
+    if(k==='room'&&tile.base==='room-corner'&&tile.rotation===2)out.push({piece:'armchair',at:[-H+.55,0,-H+.55],rot:Math.PI/4},{piece:'side-table',at:[-H+.32,0,-H+1.3]});
+    if(k==='stair-high')out.push({piece:'bulb',at:[0,STOREY-.02,0]});
+    if(tile.base==='hall'){const r=random();if(r<.06)out.push({piece:'cart',at:[H-.3,0,0],rot:Math.PI/2});else if(r<.11)out.push({piece:'wet-sign',at:[-.5,0,.2],rot:random()*6});else if(r<.14)out.push({piece:'chair',at:[-.45,0,.35],rot:random()*6});}
     return out;
   },
+  // walls: sconces, Poly Haven frames (empty, so each gets a muted print behind its glass), extinguishers, clocks
   face({socket,tile,other,i,j,d,random}){
     const room=hotelGen.kind(tile)==='room',wall=room?(hasBed(tile)&&d===0?'accent-wall':'room-wall'):'wall';
-    if(socket==='w'||!other){const out=[wall,'base'],r=random();if(!room&&r<.14)out.push('sconce');else if(r<.26)out.push('picture','canvas');return out;}
+    if(socket==='w'||!other){const out=[wall,'base'],r=random();if(!room&&r<.12)out.push('sconce');else if(r<.24)out.push({piece:'art',at:[0,1.55,-H]},'print');else if(!room&&r<.27)out.push({piece:'extinguisher',at:[0,0,-H+.13]});else if(r<.29)out.push({piece:'clock',at:[0,2.05,-H]});return out;}
     if(socket==='d'){const out=[{piece:'door-side',at:[-(DOOR+side/2),0,0]},{piece:'door-side',at:[DOOR+side/2,0,0]},'door-top'];
       // one Heartland door per doorway, its face to the corridor, swung open into the room
       const k=hotelGen.kind(tile),ko=hotelGen.kind(other),front=(k==='corridor'&&ko!=='corridor')||(k===ko&&i<j);
@@ -120,7 +134,9 @@ function buildNight(){
   if(group){scene.remove(group);group.userData.dispose();}
   hotel=hotelGen.generate({seed:worldgen.hash(seed,night),width:14,height:14,floors:2,...worldgen});
   by=new Map(hotel.tiles.map(t=>[t.id,t]));
-  const where=mesher.placements(hotel.world,hotel.tiles,rules());group=mesher.build(where,pieces,{chunk:{bed:CELL*2,credenza:CELL*2,lamp:CELL*2,nightstand:CELL*4}});scene.add(group); // the heavy models cull by block
+  roomOf=rooms();
+  const where=placed=mesher.placements(hotel.world,hotel.tiles,rules());group=mesher.build(where,pieces,{chunk:(o,name)=>!FURNITURE.includes(name)?null:roomOf[o.cell]>=0?'room'+roomOf[o.cell]:[o.x,o.y,o.z].map(v=>Math.floor(v/(CELL*3))).join()});scene.add(group);
+  near=group.children.filter(m=>FURNITURE.includes(m.name)); // furniture blocks, shown by room or distance in frame()
   colliders=mesher.footprints(where,SOLID).map(c=>({l:Math.round(c.y/STOREY),x0:c.x0-R,x1:c.x1+R,z0:c.z0-R,z1:c.z1+R}));
   goalDist=worldgen.flood(hotel.world,hotel.tiles,{from:hotel.goal,passable:hotelGen.passable}).dist;
   const g=cellXYZ(hotel.goal);
@@ -136,7 +152,16 @@ function buildNight(){
   colliders.push({l:g.z,x0:phone.position.x-.26-R,x1:phone.position.x+.26+R,z0:phone.position.z-.21-R,z1:phone.position.z+.23+R});
   $('hud').textContent=`Night ${night+1}`;
 }
-let colliders=[],furniture=true;
+let colliders=[],furniture=true,near=[],roomOf=[],placed;
+// Which room each cell belongs to (cells joined by room-to-room faces), -1 for corridors and stairs.
+function rooms(){const {cells}=hotel.world,out=new Int32Array(cells.length).fill(-1);let n=0;
+  for(const i of hotel.reached){if(out[i]>=0||hotelGen.kind(by.get(cells[i]))!=='room')continue;const q=[i];out[i]=n;
+    for(let h=0;h<q.length;h++){const c=cellXYZ(q[h]);for(let d=0;d<4;d++){if(by.get(cells[q[h]]).sockets[d]!=='r')continue;const j=q[h]+DX[d]+DY[d]*hotel.world.width;if(out[j]<0){out[j]=n;q.push(j);}}}n++;}
+  return out;}
+// Walls don't occlude for the GPU, so furniture is drawn in blocks: each room's as one block, shown while you're in it or
+// within ROOM metres (looking in through its door); corridor props in ~8 m blocks shown within CULL metres.
+// (Cheap models with many materials, like the vending machine and cart, stay whole: blocks cost a draw call per material.)
+const FURNITURE=['bed','lamp','nightstand','credenza','door-frame','door-leaf','art','extinguisher','grandfather','sofa','chair','armchair','side-table'],CULL=12,ROOM=8;
 function cellXYZ(i){const {width,height}=hotel.world,x=i%width,y=((i/width)|0)%height,z=(i/(width*height))|0;return{x,y,z,cx:(x+.5)*CELL,cz:(y+.5)*CELL};}
 function tileAt(x,y,z){const {width,height,depth}=hotel.world;if(x<0||y<0||z<0||x>=width||y>=height||z>=depth)return null;return by.get(hotel.world.cells[(z*height+y)*width+x]);}
 
@@ -227,6 +252,8 @@ function frame(now){
     const p=phone.position;if(Math.hypot(pos.x-p.x,pos.z-p.z)<1.1&&Math.abs(height-p.y)<1)answer();
     beacon.intensity=ringOn?2.5+Math.sin(now*.02)*.8:.8;
   }
+  const cp=camera.position,here=roomOf[(layer*hotel.world.height+Math.floor(pos.z/CELL))*hotel.world.width+Math.floor(pos.x/CELL)];
+  for(const m of near){const b=m.userData.block,d=cp.distanceTo(m.boundingSphere.center)-m.boundingSphere.radius;m.visible=String(b).startsWith('room')?b==='room'+here||d<ROOM:d<CULL;}
   try{updateAudio();}catch(e){console.warn('audio',e);}
   renderer.render(scene,camera);
 }
@@ -235,5 +262,5 @@ addEventListener('resize',resize);resize();
 $('go').onclick=()=>{try{startAudio();audio.resume();}catch(e){console.warn('no audio',e);}if(answered>night){night++;buildNight();}$('veil').classList.add('hidden');mode='walking';last=performance.now();$('c').requestPointerLock?.();};
 try{buildNight();$('go').disabled=false;$('go').textContent='Begin the audit';$('status').textContent=`Seed ${seed} · ?seed=${seed} for the same hotel`;}catch(e){$('status').textContent='Could not build the hotel: '+e.message;}
 requestAnimationFrame(frame);
-window.nightAudit={get hotel(){return hotel},get pos(){return{...pos,layer,height}},teleport(i){const c=cellXYZ(i);pos={x:c.cx,z:c.cz};layer=c.z;height=c.z*STOREY;},step:(x,z)=>{moveAxis('x',x);moveAxis('z',z);stair();},get mode(){return mode},get scene(){return scene},set furniture(v){furniture=v},look:(y,p=0)=>controls.setLook(y,p),renderer};
+window.nightAudit={get hotel(){return hotel},get pos(){return{...pos,layer,height}},teleport(i){const c=cellXYZ(i);pos={x:c.cx,z:c.cz};layer=c.z;height=c.z*STOREY;},step:(x,z)=>{moveAxis('x',x);moveAxis('z',z);stair();},get mode(){return mode},get scene(){return scene},get placed(){return placed},setPos(x,z,l){pos={x,z};layer=l;height=l*STOREY;},set furniture(v){furniture=v},look:(y,p=0)=>controls.setLook(y,p),renderer};
 </script></body></html>

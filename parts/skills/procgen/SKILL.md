@@ -13,7 +13,7 @@ Two parts, both pure data (no three.js, no DOM), so they run in tests and on eve
 - **`hotel-wfc`**: a multi-storey hotel from 3D WFC (corridors, rooms with doors, stairwells), flood-checked from a pinned lobby.
 - **`socket-mesher`** (three.js): draws any WFC grid from its sockets, one InstancedMesh per piece.
 
-Working starts: **Keyring** (`keyring`), a 2D dungeon crawler that keeps only floors the bot can clear and uses the bot's steps as par; **Night Audit** (`night-audit`), a first-person walk through a hotel rebuilt by 3D WFC every night, following a ringing phone.
+Working starts: **Keyring** (`keyring`), a 2D dungeon crawler that keeps only floors the bot can clear and uses the bot's steps as par; **WFC Hotel** (`wfc-hotel`), a no-asset template: a first-person hotel rebuilt by 3D WFC every night, boxes and flat colours, every piece named with a footprint; **Night Audit** (`night-audit`), its remix with Heartland Inn furniture, photoscanned Poly Haven props and real textures. Start from the template; swap pieces by name, keep the footprints honest, re-run the budget.
 
 ## The contract: the world is a function of the seed
 
@@ -52,7 +52,12 @@ WFC is good at local detail and bad at overall structure. Layer it:
 2. **Tiles are sockets, not models.** Name socket vocabularies after what stands on the face (`w` wall, `d` door, `c` corridor, `r` room). `socket-mesher` turns sockets into pieces: `face(ctx)` puts a wall on every `w` face, a frame on every `d`; `inside(ctx)` puts floor, ceiling, stairs, furniture. Model each piece once, for the north face or rotation 0. New tiles then cost one line and no art.
 3. **Go 3D with six sockets** `[n, e, s, w, up, down]` and `depth`. Plain slabs share an up/down socket (`f`); a stair is two tiles whose vertical socket is `'s%'`, so `withRotations()` makes `s0…s3` and the halves only stack facing the same way. Seal the outside with `edge: ['w','w','w','w','f','f']`.
 4. **Richness is dressing, not more rules.** Use `ctx.random()` (seeded per cell) for pictures, sconces, light panels, door angles; put furniture in one corner tile per room (the rotation-0 corner), clear of door faces. Check every door has a clear approach, or the bot (and players) get stuck behind a bed.
-5. **Budget.** Draw calls = piece kinds (Night Audit: ~20 calls, 11–16k triangles for a two-storey hotel). Fog and a torch hide the far end; no real-time lights per lamp, just emissive panels.
+5. **Budget.** With boxes, draw calls = piece kinds (the WFC Hotel template: 30–90 calls, ~15k triangles). Real models change that; Night Audit's lessons, measured against the lean-scenes budget:
+   - Use lite versions (`ingestion/lite/lite.mjs`, `<id>-lite`) and look at them next to the original: maximum-error simplification can wreck small round things (a wall clock went octagonal).
+   - An InstancedMesh is drawn whole. Pass `chunk` to `build()`: a function keyed by room (`placement.cell` → room id) lets you show a room's furniture only when you're in it or near its door; corridor props by distance blocks. Hide blocks beyond the fog.
+   - Keep cheap models with many materials whole: each block costs a draw call per material.
+   - glTF glass loads as transmission, and one transmissive material makes three.js render the whole opaque scene twice: set `transmission = 0` and use plain transparency. (That halved Night Audit's frame.)
+   - Fog and a torch hide the far end; no real-time lights per lamp, just emissive panels.
 6. **Walk on the sockets.** Collision can be read straight off the faces: block a move across a face unless both sides are passable, narrow doors to their width, treat a stair cell as a ramp from its entrance to its exit edge. Night Audit's `blocked()`/`stair()` are a template.
 7. **Playtest in a browser** by walking the `flood` path cell to cell through the real movement code (the cells must also share a passable face, not just consecutive distances), with furniture on and off.
 

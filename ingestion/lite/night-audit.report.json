@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ph-hanging-picture-frame-02",
+    "dest": "parts/lite/ph-hanging-picture-frame-02-lite.glb",
+    "before": 3678,
+    "after": 624,
+    "error": 0.08,
+    "texturePx": 512,
+    "size": [
+      0.751,
+      0.499,
+      0.024
+    ],
+    "mb": 0.19,
+    "srcMb": 0.69
+  },
+  {
+    "id": "ph-korean-fire-extinguisher-01",
+    "dest": "parts/lite/ph-korean-fire-extinguisher-01-lite.glb",
+    "before": 9913,
+    "after": 1699,
+    "error": 0.008,
+    "texturePx": 512,
+    "size": [
+      0.279,
+      0.658,
+      0.367
+    ],
+    "mb": 0.43,
+    "srcMb": 1.62
+  },
+  {
+    "id": "ph-armchair-01",
+    "dest": "parts/lite/ph-armchair-01-lite.glb",
+    "before": 5626,
+    "after": 2006,
+    "error": 0.004,
+    "texturePx": 1024,
+    "size": [
+      0.845,
+      1.065,
+      0.762
+    ],
+    "mb": 0.71,
+    "srcMb": 0.77
+  },
+  {
+    "id": "ph-side-table-01",
+    "dest": "parts/lite/ph-side-table-01-lite.glb",
+    "before": 2756,
+    "after": 901,
+    "error": 0.004,
+    "texturePx": 512,
+    "size": [
+      0.548,
+      0.551,
+      0.449
+    ],
+    "mb": 0.17,
+    "srcMb": 0.5
+  },
+  {
+    "id": "ph-vintage-grandfather-clock-01",
+    "dest": "parts/lite/ph-vintage-grandfather-clock-01-lite.glb",
+    "before": 8582,
+    "after": 2675,
+    "error": 0.004,
+    "texturePx": 1024,
+    "size": [
+      0.626,
+      2.191,
+      0.427
+    ],
+    "mb": 0.76,
+    "srcMb": 2.99
+  },
+  {
+    "id": "ph-pull-chain-light-socket",
+    "dest": "parts/lite/ph-pull-chain-light-socket-lite.glb",
+    "before": 10902,
+    "after": 598,
+    "error": 0.032,
+    "texturePx": 256,
+    "size": [
+      0.109,
+      0.165,
+      0.11
+    ],
+    "mb": 0.08,
+    "srcMb": 2.05
+  },
+  {
+    "id": "ph-lightbulb-01",
+    "dest": "parts/lite/ph-lightbulb-01-lite.glb",
+    "before": 4372,
+    "after": 426,
+    "error": 0.032,
+    "texturePx": 256,
+    "size": [
+      0.059,
+      0.1,
+      0.059
+    ],
+    "mb": 0.05,
+    "srcMb": 1.94
+  },
+  {
+    "id": "ph-wall-clock",
+    "dest": "parts/lite/ph-wall-clock-lite.glb",
+    "before": 3658,
+    "after": 1807,
+    "error": 0.002,
+    "texturePx": 512,
+    "size": [
+      0.32,
+      0.32,
+      0.047
+    ],
+    "mb": 0.22,
+    "srcMb": 1.56
+  }
+]

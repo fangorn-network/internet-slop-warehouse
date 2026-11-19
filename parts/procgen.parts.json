@@ -468,11 +468,46 @@
     ]
   },
   {
+    "file": "wfc-hotel.html",
+    "type": "game",
+    "id": "wfc-hotel",
+    "title": "WFC Hotel (template)",
+    "description": "A no-asset template for procedural interiors: a two-storey hotel rebuilt by 3D wave function collapse each night (corridors, rooms, doors, stairwells), drawn from its sockets with flat colours and box furniture, so it loads instantly. First-person walking with socket collision, stairs as ramps, furniture footprints, a ringing phone heard by walking distance, and a new hotel each night. Every piece has a name and footprint: remix it by swapping materials for textures and box groups for models of the same names (Night Audit is the worked example). WASD/arrows, mouse or drag to look, Shift to hurry; thumbstick on phones; ?seed= for the same hotel.",
+    "tags": [
+      "template",
+      "starter",
+      "procedural",
+      "wfc",
+      "hotel",
+      "interior",
+      "first-person",
+      "3d",
+      "mobile",
+      "no-assets",
+      "seeded",
+      "kit"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "made": {
+      "method": "hand",
+      "ai": "code",
+      "tool": "Claude Code"
+    },
+    "uses": [
+      "worldgen",
+      "hotel-wfc",
+      "socket-mesher",
+      "fps-controls",
+      "touch-controls"
+    ]
+  },
+  {
     "file": "night-audit.html",
     "type": "game",
     "id": "night-audit",
     "title": "Night Audit",
-    "description": "First-person liminal horror walk through a two-storey hotel that is rebuilt by 3D wave function collapse every night. Dressed with the Heartland Inn's furniture and surfaces: its room doors, king beds, nightstands and lamps, TV credenzas, vending and ice machines, housekeeping carts, navy corridor carpet and terracotta accent walls. Follow a ringing phone through corridors, open doors and stairwells; the ring is panned toward the phone and grows louder by walking distance through the building, not through walls. Answer it and sleep; tomorrow the hallways are different. Every plan is flood-checked so the phone is always reachable. WASD/arrows, mouse or drag to look, Shift to hurry; thumbstick on phones. Share ?seed= for the same hotel. The 3D starter for the procgen skill.",
+    "description": "First-person liminal horror walk through a two-storey hotel that is rebuilt by 3D wave function collapse every night. A remix of the no-asset WFC Hotel template, dressed with photoscanned Poly Haven pieces (hanging picture frames, fire extinguishers, wall clocks, a grandfather clock, sofas, a lone plastic chair, armchairs, side tables, bare pull-chain bulbs) and the Heartland Inn's furniture and surfaces: its room doors, king beds, nightstands and lamps, TV credenzas, vending and ice machines, housekeeping carts, navy corridor carpet and terracotta accent walls. Follow a ringing phone through corridors, open doors and stairwells; the ring is panned toward the phone and grows louder by walking distance through the building, not through walls. Answer it and sleep; tomorrow the hallways are different. Every plan is flood-checked so the phone is always reachable. WASD/arrows, mouse or drag to look, Shift to hurry; thumbstick on phones. Share ?seed= for the same hotel. The 3D starter for the procgen skill.",
     "tags": [
       "procedural",
       "wfc",
@@ -515,8 +550,21 @@
       "hotel-snack-vending-lite",
       "hotel-ice-machine",
       "hotel-housekeeping-cart",
-      "ph-wetfloorsign-01"
-    ]
+      "ph-wetfloorsign-01",
+      "ph-hanging-picture-frame-02-lite",
+      "ph-korean-fire-extinguisher-01-lite",
+      "ph-wall-clock-lite",
+      "ph-vintage-grandfather-clock-01-lite",
+      "ph-sofa-02",
+      "ph-plastic-monobloc-chair-01",
+      "ph-armchair-01-lite",
+      "ph-side-table-01-lite",
+      "ph-pull-chain-light-socket-lite",
+      "ph-lightbulb-01-lite"
+    ],
+    "parent": {
+      "id": "wfc-hotel"
+    }
   },
   {
     "file": "skills/procgen/SKILL.md",
@@ -551,6 +599,7 @@
       "keyring",
       "hotel-wfc",
       "socket-mesher",
+      "wfc-hotel",
       "night-audit"
     ]
   }

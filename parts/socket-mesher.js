@@ -19,24 +19,24 @@ const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
  * rotation 0 and turned by the tile's rotation. Either returns [name | { piece, at: [x, y, z], rot }].
  * ctx = { i, j (neighbour cell or -1), x, y, z, d (face only), tile, socket, other (neighbour tile), random() }.
  * only: a Set of cell indices to draw (e.g. flood().reached); cells outside it are skipped entirely.
- * Returns Map(piece → [{ x, y, z, rot }]).
+ * Returns Map(piece → [{ x, y, z, rot, cell }]).
  */
 export function placements(world, tiles, { cell = 3, storey = 3, only, face = () => [], inside = () => [], seed = world.seed ?? 1 } = {}) {
   const { width, height, depth = 1, cells } = world, layer = width * height, by = new Map(tiles.map((t) => [t.id, t])), out = new Map();
-  const put = (spec, cx, cy, cz, turn) => {
+  const put = (spec, cx, cy, cz, turn, cell) => {
     const { piece, at = [0, 0, 0], rot = 0 } = typeof spec === 'string' ? { piece: spec } : spec;
     const c = Math.cos(turn), s = Math.sin(turn); // rotate about Y by turn: (x, z) → (x c + z s, -x s + z c)
-    (out.get(piece) ?? out.set(piece, []).get(piece)).push({ x: cx + at[0] * c + at[2] * s, y: cy + at[1], z: cz - at[0] * s + at[2] * c, rot: turn + rot });
+    (out.get(piece) ?? out.set(piece, []).get(piece)).push({ x: cx + at[0] * c + at[2] * s, y: cy + at[1], z: cz - at[0] * s + at[2] * c, rot: turn + rot, cell });
   };
   for (let i = 0; i < cells.length; i++) {
     if (only && !only.has(i)) continue;
     const tile = by.get(cells[i]), x = i % width, y = ((i / width) | 0) % height, z = (i / layer) | 0;
     const cx = (x + 0.5) * cell, cy = z * storey, cz = (y + 0.5) * cell, random = rng((seed * 2654435761) ^ (i * 40503));
-    for (const spec of inside({ i, j: -1, x, y, z, tile, random }) ?? []) put(spec, cx, cy, cz, -(tile.rotation ?? 0) * Math.PI / 2);
+    for (const spec of inside({ i, j: -1, x, y, z, tile, random }) ?? []) put(spec, cx, cy, cz, -(tile.rotation ?? 0) * Math.PI / 2, i);
     for (let d = 0; d < 4; d++) {
       const nx = x + DX[d], ny = y + DY[d], j = nx < 0 || ny < 0 || nx >= width || ny >= height ? -1 : i + DX[d] + DY[d] * width;
       const ctx = { i, j, x, y, z, d, tile, socket: tile.sockets?.[d], other: j < 0 ? null : by.get(cells[j]), random };
-      for (const spec of face(ctx) ?? []) put(spec, cx, cy, cz, -d * Math.PI / 2);
+      for (const spec of face(ctx) ?? []) put(spec, cx, cy, cz, -d * Math.PI / 2, i);
     }
   }
   return out;
@@ -77,18 +77,20 @@ function merge(list) {
  * GLB scene, or a clone with nodes removed) is placed in its own frame, so author or pick models facing +z.
  * chunk (metres, optional) splits each piece's instances into blocks of that size, so three.js can frustum-cull them
  * (one InstancedMesh's bounds cover every instance, so unchunked it's always drawn whole). Give a number for every piece,
- * or { piece: metres } to chunk only the heavy ones: blocks cost draw calls (one per block per material). Returns a Group; dispose() frees it.
+ * { piece: metres } to chunk only the heavy ones, or (placement, piece) → key | null to block by anything (a room id from
+ * placement.cell, say). Blocks cost draw calls (one per block per material). Each mesh keeps its key in userData.block. Returns a Group; dispose() frees it.
  */
 export function build(where, pieces, { chunk = 0 } = {}) {
   const group = new THREE.Group(), m = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0), one = new THREE.Vector3(1, 1, 1), p = new THREE.Vector3();
   for (const [name, all] of where) {
     const piece = pieces[name]; if (!piece) throw Error(`No piece called ${name}`);
-    const subs = piece.isObject3D ? flatten(piece) : [piece], blocks = new Map(), size = typeof chunk === 'number' ? chunk : chunk[name] ?? 0;
-    for (const o of all) { const k = size > 0 ? [o.x, o.y, o.z].map((v) => Math.floor(v / size)).join() : ''; (blocks.get(k) ?? blocks.set(k, []).get(k)).push(o); }
-    for (const list of blocks.values()) for (const { geometry, material } of subs) {
+    const subs = piece.isObject3D ? flatten(piece) : [piece], blocks = new Map(), size = typeof chunk === 'number' ? chunk : typeof chunk === 'function' ? 0 : chunk[name] ?? 0;
+    const keyOf = typeof chunk === 'function' ? (o) => chunk(o, name) ?? '' : (o) => (size > 0 ? [o.x, o.y, o.z].map((v) => Math.floor(v / size)).join() : '');
+    for (const o of all) { const k = keyOf(o); (blocks.get(k) ?? blocks.set(k, []).get(k)).push(o); }
+    for (const [block, list] of blocks) for (const { geometry, material } of subs) {
       const mesh = new THREE.InstancedMesh(geometry, material, list.length);
       list.forEach((o, k) => mesh.setMatrixAt(k, m.compose(p.set(o.x, o.y, o.z), q.setFromAxisAngle(up, o.rot), one)));
-      mesh.name = name; mesh.computeBoundingSphere(); group.add(mesh);
+      mesh.name = name; mesh.userData.block = block; mesh.computeBoundingSphere(); group.add(mesh);
     }
   }
   group.userData.dispose = () => group.children.forEach((c) => c.dispose());

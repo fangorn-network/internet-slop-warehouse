@@ -1,0 +1,43 @@
+[
+ {
+  "id": "ph-hanging-picture-frame-02",
+  "triangles": 500,
+  "texture": 512,
+  "lockBorder": true
+ },
+ {
+  "id": "ph-korean-fire-extinguisher-01",
+  "triangles": 1500,
+  "texture": 512
+ },
+ {
+  "id": "ph-wall-clock",
+  "triangles": 1800,
+  "texture": 512
+ },
+ {
+  "id": "ph-armchair-01",
+  "triangles": 2000,
+  "texture": 1024
+ },
+ {
+  "id": "ph-side-table-01",
+  "triangles": 800,
+  "texture": 512
+ },
+ {
+  "id": "ph-vintage-grandfather-clock-01",
+  "triangles": 2500,
+  "texture": 1024
+ },
+ {
+  "id": "ph-pull-chain-light-socket",
+  "triangles": 600,
+  "texture": 256
+ },
+ {
+  "id": "ph-lightbulb-01",
+  "triangles": 400,
+  "texture": 256
+ }
+]

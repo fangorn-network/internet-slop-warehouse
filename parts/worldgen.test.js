@@ -144,3 +144,13 @@ describe('hotel-wfc', () => {
     }
   });
 });
+
+import { readFileSync } from 'node:fs';
+describe('procgen games', () => {
+  // A one-line game is easy to break with a stray // comment that swallows the rest of a line: parse each module script.
+  for (const file of ['keyring.html', 'wfc-hotel.html', 'night-audit.html']) it(`${file} parses`, () => {
+    const html = readFileSync(new URL(file, import.meta.url), 'utf8'), at = html.indexOf('<script type="module">') + 22;
+    const js = html.slice(at, html.indexOf('</script>', at)).replace('{/*PARTS*/}', '{}').replace(/^import .*$/gm, '');
+    expect(() => new Function(`return async () => {${js}\n}`)).not.toThrow();
+  });
+});

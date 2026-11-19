@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>WFC Hotel</title>
+<style>
+:root{--ink:#efe6d6;--dim:#a99c86;--bg:#0b0907;--accent:#d9b36c}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.5 Georgia,serif;overflow:hidden;touch-action:none}
+canvas{display:block;width:100%;height:100%}
+#hud{position:fixed;top:12px;left:16px;letter-spacing:.08em;color:var(--dim);font-size:13px;pointer-events:none;text-transform:uppercase}
+#veil{position:fixed;inset:0;display:grid;place-items:center;text-align:center;background:#0b0907e6;padding:16px;z-index:20}
+#veil.hidden{display:none}#veil h1{font-weight:normal;letter-spacing:.2em;text-transform:uppercase;margin:0 0 14px;font-size:26px}
+#veil p{color:var(--dim);max-width:30em;margin:8px auto}
+button{font:inherit;background:none;color:var(--accent);border:1px solid var(--accent);border-radius:2px;padding:10px 22px;margin-top:16px;cursor:pointer;letter-spacing:.1em}
+#status{font-size:13px;color:var(--dim);margin-top:12px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body>
+<canvas id="c"></canvas><div id="hud"></div>
+<div id="veil"><div><h1 id="title">WFC Hotel</h1><p id="lead">A phone is ringing somewhere in the hotel. The hallways were not like this yesterday. (A template: no assets, every piece a box. Remix it.)</p><p id="sub">Follow the ringing. WASD or arrows to walk, mouse or drag to look, Shift to hurry. Headphones help.</p><button id="go" disabled>Loading…</button><p id="status"></p></div></div>
+<script type="module">
+import * as THREE from 'three';
+const PARTS={/*PARTS*/};
+const $=id=>document.getElementById(id);
+async function load(id){const res=await fetch(PARTS[id]);if(!res.ok)throw Error('Could not load '+id);const {js}=await res.json();return import('data:text/javascript;charset=utf-8,'+encodeURIComponent(js));}
+const [worldgen,hotelGen,mesher,fps,touch]=await Promise.all(['worldgen','hotel-wfc','socket-mesher','fps-controls','touch-controls'].map(load));
+
+const CELL=2.6,STOREY=2.8,R=.28,DOOR=.5,EYE=1.6,DX=[0,1,0,-1],DY=[-1,0,1,0];
+const seed=Number(new URLSearchParams(location.search).get('seed'))||Math.floor(Math.random()*1e6);
+let night=0,hotel,by,group,goalDist,phone,beacon,pos={x:0,z:0},layer=0,height=0,mode='loading',ringOn=true,last=performance.now(),answered=0;
+
+// ---------- renderer, materials, pieces ----------
+const renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(70,1,.05,20);camera.rotation.order='YXZ';
+scene.background=new THREE.Color(0x0b0907);scene.fog=new THREE.FogExp2(0x0b0907,.085);
+scene.add(new THREE.HemisphereLight(0xffe2b8,0x6b5a44,.7));
+const torch=new THREE.SpotLight(0xfff1d6,22,16,.55,.5,1.6);torch.position.set(0,0,0);camera.add(torch);torch.target.position.set(0,-.15,-1);camera.add(torch.target);scene.add(camera);
+// No assets: flat colours and boxes, so this loads instantly and every piece is easy to swap. Remixes replace the
+// materials with textures and the furniture groups with models of the same names and footprints (see Night Audit).
+const flat=(color,extra={})=>new THREE.MeshStandardMaterial({color,roughness:.9,...extra});
+const mat={
+  hallFloor:flat(0x2e3a5c),roomFloor:flat(0x8a7d68),wall:flat(0xd8d0c0),roomWall:flat(0xdccfb7),accent:flat(0xa66d50),
+  ceiling:flat(0xe8e4dc,{emissive:0x2a2826}),wood:flat(0x6b4a33,{roughness:.7}),
+  frame:flat(0x2a2119,{roughness:.5,metalness:.2}),art:flat(0x4a5a52,{roughness:.8}),
+  glow:new THREE.MeshStandardMaterial({color:0x332211,emissive:0xffc77a,emissiveIntensity:2.2}),
+  panel:new THREE.MeshStandardMaterial({color:0x222222,emissive:0xfff3dc,emissiveIntensity:1.4}),
+  phone:flat(0x7a1612,{roughness:.4}),
+  linen:flat(0xeeeae2),runner:flat(0x4a6a8f),steel:flat(0xb8bcc0,{metalness:.6,roughness:.4}),black:flat(0x101010,{roughness:.3}),
+  red:flat(0x8e2a2a),yellow:flat(0xe8c020),
+};
+// Furniture as groups of boxes, floor-centred and facing +z like real models, sized to the same footprints.
+const box=(w,h,d,m,x=0,y=0,z=0)=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);b.position.set(x,y+h/2,z);return b;};
+const grp=(...k)=>{const g=new THREE.Group();g.add(...k);return g;};
+const models={
+  'hotel-king-bed-lite':grp(box(2.24,.35,2.15,mat.wood,0,0,.065),box(2.18,.25,2.08,mat.linen,0,.35,.08),box(2.24,.75,.08,mat.wood,0,.35,-1.0),box(.7,.14,.4,mat.linen,-.5,.6,-.72),box(.7,.14,.4,mat.linen,.5,.6,-.72),box(2.22,.04,.5,mat.runner,0,.6,.55)),
+  'hotel-nightstand':box(.52,.56,.44,mat.wood),
+  'hotel-table-lamp':grp(box(.1,.3,.1,mat.linen),box(.34,.26,.34,mat.glow,0,.3,0)),
+  'hotel-credenza-tv':grp(box(2.6,.75,.5,mat.wood),box(1.25,.72,.05,mat.black,0,.92,-.18)),
+  'hotel-snack-vending-lite':grp(box(.98,1.85,.86,mat.red),box(.66,1.2,.02,mat.glow,-.08,.45,.44)),
+  'hotel-ice-machine':grp(box(.6,1.6,.68,mat.steel),box(.3,.25,.02,mat.black,0,.9,.35)),
+  'hotel-housekeeping-cart':grp(box(1.7,1.0,.5,mat.art,.23,.1,0)),
+  'ph-wetfloorsign-01':grp(box(.3,.63,.06,mat.yellow)),
+};
+const door=grp(box(.07,2.13,.16,mat.wood,-.53),box(.07,2.13,.16,mat.wood,.53),box(1.13,.07,.16,mat.wood,0,2.1));
+const doorFrame=door,doorLeaf=grp(box(1.0,2.06,.04,mat.wood,.5),box(.12,.03,.05,mat.steel,.88,.95,.04));
+const H=CELL/2,STEPS=10,side=H-DOOR,G={
+  plane:(w,h)=>new THREE.PlaneGeometry(w,h),box:(w,h,d)=>new THREE.BoxGeometry(w,h,d),
+};
+const pieces={
+  'hall-floor':{geometry:G.plane(CELL,CELL).rotateX(-Math.PI/2),material:mat.hallFloor},
+  'room-floor':{geometry:G.plane(CELL,CELL).rotateX(-Math.PI/2),material:mat.roomFloor},
+  // 2 cm under the floor above, or the undersides of upstairs furniture and baseboards z-fight through it
+  'ceiling':{geometry:G.plane(CELL,CELL).rotateX(Math.PI/2).translate(0,STOREY-.02,0),material:mat.ceiling},
+  'wall':{geometry:G.plane(CELL,STOREY).translate(0,STOREY/2,-H),material:mat.wall},
+  'room-wall':{geometry:G.plane(CELL,STOREY).translate(0,STOREY/2,-H),material:mat.roomWall},
+  'base':{geometry:G.box(CELL,.12,.02).translate(0,.06,-H+.01),material:mat.wood},
+  'door-side':{geometry:G.plane(side,STOREY).translate(0,STOREY/2,-H),material:mat.wall},
+  'door-top':{geometry:G.plane(DOOR*2,STOREY-2.1).translate(0,2.1+(STOREY-2.1)/2,-H),material:mat.wall},
+  'door-frame':doorFrame,'door-leaf':doorLeaf,
+  'accent-wall':{geometry:G.plane(CELL,STOREY).translate(0,STOREY/2,-H),material:mat.accent},
+  'sconce':{geometry:G.box(.16,.24,.07).translate(0,1.85,-H+.04),material:mat.glow},
+  'picture':{geometry:G.box(.62,.46,.03).translate(0,1.5,-H+.02),material:mat.frame},
+  'canvas':{geometry:G.plane(.52,.36).translate(0,1.5,-H+.036),material:mat.art},
+  'light-panel':{geometry:G.plane(.55,.55).rotateX(Math.PI/2).translate(0,STOREY-.03,0),material:mat.panel},
+  'step':{geometry:G.box(CELL-.04,STOREY/STEPS,CELL/STEPS),material:mat.wood},
+  'bed':models['hotel-king-bed-lite'],'nightstand':models['hotel-nightstand'],'lamp':models['hotel-table-lamp'],'credenza':models['hotel-credenza-tv'],
+  'vending':models['hotel-snack-vending-lite'],'ice':models['hotel-ice-machine'],'cart':models['hotel-housekeeping-cart'],'wet-sign':models['ph-wetfloorsign-01'],
+};
+// A king bed against the north wall of each room's north-west corner, head to the wall, with a nightstand and lamp
+// either side (Heartland's spacing); shifted east when the door is in the west wall. A TV credenza on the south wall.
+const bedX=t=>t.base==='room-corner-door-side'?.8:.4;
+const BED=x=>[{piece:'bed',at:[x,0,-H+1.18]},...[-1.4,1.4].flatMap(dx=>[{piece:'nightstand',at:[x+dx,0,-H+.25]},{piece:'lamp',at:[x+dx,.56,-H+.25]}])];
+const hasBed=t=>t.rotation===0&&(t.base==='room-corner'||t.base==='room-corner-door-side');
+const hasTV=t=>t.rotation===3&&(t.base==='room-corner'||t.base==='room-corner-door'); // local west wall is the room's south wall
+// Footprints in each model's own frame, from its measured bounds: what the player can't walk through.
+const SOLID={bed:[-1.12,1.12,-1.01,1.14],nightstand:[-.26,.26,-.21,.23],credenza:[-1.3,1.3,-.25,.25],vending:[-.49,.49,-.43,.44],ice:[-.3,.3,-.33,.35],cart:[-.63,1.09,-.25,.25],'wet-sign':[-.15,.15,-.19,.17]};
+
+function rules(){return{cell:CELL,storey:STOREY,only:hotel.reached,seed:hotel.world.seed,
+  inside({tile,random}){
+    const k=hotelGen.kind(tile),out=[];
+    if(k!=='stair-high')out.push(k==='room'?'room-floor':'hall-floor');
+    if(k!=='stair-low')out.push('ceiling');
+    if(k==='corridor'&&random()<.4)out.push('light-panel');
+    if(k==='stair-low')for(let s=0;s<STEPS;s++)out.push({piece:'step',at:[0,(s+.5)*STOREY/STEPS,H-(s+.5)*CELL/STEPS]});
+    if(k==='room'&&hasBed(tile))out.push(...BED(bedX(tile)));
+    if(k==='room'&&hasTV(tile))out.push({piece:'credenza',at:[-H+.27,0,.1],rot:Math.PI/2});
+    if(tile.base==='end')out.push(random()<.5?{piece:'vending',at:[0,0,H-.48],rot:Math.PI}:{piece:'ice',at:[0,0,H-.38],rot:Math.PI});
+    if(tile.base==='hall'){const r=random();if(r<.06)out.push({piece:'cart',at:[H-.3,0,0],rot:Math.PI/2});else if(r<.11)out.push({piece:'wet-sign',at:[-.5,0,.2],rot:random()*6});}
+    return out;
+  },
+  face({socket,tile,other,i,j,d,random}){
+    const room=hotelGen.kind(tile)==='room',wall=room?(hasBed(tile)&&d===0?'accent-wall':'room-wall'):'wall';
+    if(socket==='w'||!other){const out=[wall,'base'],r=random();if(!room&&r<.14)out.push('sconce');else if(r<.26)out.push('picture','canvas');return out;}
+    if(socket==='d'){const out=[{piece:'door-side',at:[-(DOOR+side/2),0,0]},{piece:'door-side',at:[DOOR+side/2,0,0]},'door-top'];
+      // one Heartland door per doorway, its face to the corridor, swung open into the room
+      const k=hotelGen.kind(tile),ko=hotelGen.kind(other),front=(k==='corridor'&&ko!=='corridor')||(k===ko&&i<j);
+      if(front)out.push({piece:'door-frame',at:[0,0,-H]},{piece:'door-leaf',at:[-DOOR,0,-H],rot:1.25+random()*.45});return out;}
+    return [];
+  }};}
+
+// ---------- the hotel ----------
+function buildNight(){
+  if(group){scene.remove(group);group.userData.dispose();}
+  hotel=hotelGen.generate({seed:worldgen.hash(seed,night),width:14,height:14,floors:2,...worldgen});
+  by=new Map(hotel.tiles.map(t=>[t.id,t]));
+  const where=mesher.placements(hotel.world,hotel.tiles,rules());group=mesher.build(where,pieces,{chunk:{bed:CELL*2,credenza:CELL*2,lamp:CELL*2,nightstand:CELL*4}});scene.add(group); // the heavy models cull by block
+  colliders=mesher.footprints(where,SOLID).map(c=>({l:Math.round(c.y/STOREY),x0:c.x0-R,x1:c.x1+R,z0:c.z0-R,z1:c.z1+R}));
+  goalDist=worldgen.flood(hotel.world,hotel.tiles,{from:hotel.goal,passable:hotelGen.passable}).dist;
+  const g=cellXYZ(hotel.goal);
+  phone??=new THREE.Group();phone.clear();
+  const table=models['hotel-nightstand'].clone();
+  const handset=new THREE.Mesh(new THREE.BoxGeometry(.24,.09,.14),mat.phone);handset.position.y=.6;
+  beacon??=new THREE.PointLight(0xff7040,3,6,1.6);beacon.position.y=1;
+  phone.add(table,handset,beacon);
+  // the phone stands on a nightstand in the first corner of the goal cell that no furniture covers
+  const spot=[[.6,.6],[-.6,.6],[.6,-.6],[-.6,-.6],[0,0]].map(([dx,dz])=>[g.cx+dx,g.cz+dz]).find(([x,z])=>!colliders.some(c=>c.l===g.z&&x>c.x0-.3&&x<c.x1+.3&&z>c.z0-.3&&z<c.z1+.3))??[g.cx,g.cz];
+  phone.position.set(spot[0],g.z*STOREY,spot[1]);scene.add(phone);
+  const s=cellXYZ(hotel.start);pos={x:s.cx,z:s.cz+.6};layer=0;height=0;ringOn=true;
+  colliders.push({l:g.z,x0:phone.position.x-.26-R,x1:phone.position.x+.26+R,z0:phone.position.z-.21-R,z1:phone.position.z+.23+R});
+  $('hud').textContent=`Night ${night+1}`;
+}
+let colliders=[],furniture=true;
+function cellXYZ(i){const {width,height}=hotel.world,x=i%width,y=((i/width)|0)%height,z=(i/(width*height))|0;return{x,y,z,cx:(x+.5)*CELL,cz:(y+.5)*CELL};}
+function tileAt(x,y,z){const {width,height,depth}=hotel.world;if(x<0||y<0||z<0||x>=width||y>=height||z>=depth)return null;return by.get(hotel.world.cells[(z*height+y)*width+x]);}
+
+// ---------- walking: faces from sockets, stairs as ramps ----------
+function blocked(ix,iy,d,lateral){
+  const a=tileAt(ix,iy,layer),b=tileAt(ix+DX[d],iy+DY[d],layer);if(!a||!b)return true;
+  const s=a.sockets[d],o=b.sockets[(d+2)%4];
+  if(!hotelGen.passable(s)||!hotelGen.passable(o))return true;
+  return (s==='d'||o==='d')&&Math.abs(lateral)>DOOR-R;
+}
+function stair(){
+  const ix=Math.floor(pos.x/CELL),iy=Math.floor(pos.z/CELL),t=tileAt(ix,iy,layer);if(!t)return;
+  const k=hotelGen.kind(t);if(k!=='stair-low'&&k!=='stair-high'){height=layer*STOREY;return;}
+  const lo=k==='stair-low'?layer:layer-1,fx=pos.x/CELL-ix,fz=pos.z/CELL-iy,p=[1-fz,fx,fz,1-fx][t.rotation??0];
+  height=(lo+p)*STOREY;layer=p>.5?lo+1:lo;
+}
+function moveAxis(axis,delta){
+  const ix=Math.floor(pos.x/CELL),iy=Math.floor(pos.z/CELL),fx=pos.x-ix*CELL,fz=pos.z-iy*CELL;
+  if(axis==='x'){
+    let nx=pos.x+delta;const lat=fz-H;
+    if(delta>0&&nx-ix*CELL>CELL-R&&(blocked(ix,iy,1,lat)||crossBlocked(ix+1,iy,fz)))nx=ix*CELL+CELL-R;
+    if(delta<0&&nx-ix*CELL<R&&(blocked(ix,iy,3,lat)||crossBlocked(ix-1,iy,fz)))nx=ix*CELL+R;
+    pos.x=nx;
+  }else{
+    let nz=pos.z+delta;const lat=fx-H;
+    if(delta>0&&nz-iy*CELL>CELL-R&&(blocked(ix,iy,2,lat)||crossBlockedZ(ix,iy+1,fx)))nz=iy*CELL+CELL-R;
+    if(delta<0&&nz-iy*CELL<R&&(blocked(ix,iy,0,lat)||crossBlockedZ(ix,iy-1,fx)))nz=iy*CELL+R;
+    pos.z=nz;
+  }
+  // inside a doorway, keep clear of the jambs
+  const jx=Math.floor(pos.x/CELL),jy=Math.floor(pos.z/CELL),gx=pos.x-jx*CELL,gz=pos.z-jy*CELL,t=tileAt(jx,jy,layer);
+  if(t){if((gx>CELL-R&&t.sockets[1]==='d')||(gx<R&&t.sockets[3]==='d'))pos.z=jy*CELL+H+Math.max(-(DOOR-R),Math.min(DOOR-R,gz-H));
+        if((gz>CELL-R&&t.sockets[2]==='d')||(gz<R&&t.sockets[0]==='d'))pos.x=jx*CELL+H+Math.max(-(DOOR-R),Math.min(DOOR-R,gx-H));}
+  for(const c of furniture?colliders:[])if(c.l===layer&&pos.x>c.x0&&pos.x<c.x1&&pos.z>c.z0&&pos.z<c.z1){
+    const push=[pos.x-c.x0,c.x1-pos.x,pos.z-c.z0,c.z1-pos.z],m=Math.min(...push),k=push.indexOf(m);
+    if(k===0)pos.x=c.x0;else if(k===1)pos.x=c.x1;else if(k===2)pos.z=c.z0;else pos.z=c.z1;}
+}
+// stepping sideways into a neighbour while hugging one of its walls
+const crossBlocked=(nx,iy,fz)=>{const t=tileAt(nx,iy,layer);if(!t)return true;return (fz<R&&!hotelGen.passable(t.sockets[0]))||(fz>CELL-R&&!hotelGen.passable(t.sockets[2]));};
+const crossBlockedZ=(ix,ny,fx)=>{const t=tileAt(ix,ny,layer);if(!t)return true;return (fx<R&&!hotelGen.passable(t.sockets[3]))||(fx>CELL-R&&!hotelGen.passable(t.sockets[1]));};
+
+// ---------- sound: a ringing phone heard along the corridors ----------
+let audio,ringGain,panner;
+function startAudio(){
+  if(audio)return;audio=new AudioContext();
+  const master=audio.createGain();master.gain.value=.8;master.connect(audio.destination);
+  const noise=audio.createBuffer(1,audio.sampleRate*2,audio.sampleRate),d=noise.getChannelData(0);let b=0;for(let i=0;i<d.length;i++){b=(b+.02*(Math.random()*2-1))/1.02;d[i]=b*3;}
+  const hum=audio.createBufferSource();hum.buffer=noise;hum.loop=true;const lp=audio.createBiquadFilter();lp.type='lowpass';lp.frequency.value=180;const hg=audio.createGain();hg.gain.value=.12;hum.connect(lp).connect(hg).connect(master);hum.start();
+  const mains=audio.createOscillator();mains.frequency.value=60;const mg=audio.createGain();mg.gain.value=.012;mains.connect(mg).connect(master);mains.start();
+  panner=audio.createPanner();Object.assign(panner,{panningModel:'HRTF',distanceModel:'linear',refDistance:1,maxDistance:1e4,rolloffFactor:0});
+  ringGain=audio.createGain();ringGain.gain.value=0;
+  const bell=audio.createGain();bell.gain.value=0;
+  for(const f of [440,480]){const o=audio.createOscillator();o.frequency.value=f;o.connect(bell);o.start();}
+  const shape=audio.createWaveShaper();shape.curve=new Float32Array([-.6,0,.6]);
+  bell.connect(shape).connect(ringGain).connect(panner).connect(master);
+  // US cadence: two seconds on, four off
+  const cadence=()=>{const t=audio.currentTime;for(let k=0;k<20;k++){const s=t+k*6;bell.gain.setValueAtTime(0,s);bell.gain.linearRampToValueAtTime(.25,s+.02);bell.gain.setValueAtTime(.25,s+2);bell.gain.linearRampToValueAtTime(0,s+2.04);}setTimeout(cadence,110000);};cadence();
+}
+function updateAudio(){
+  if(!audio)return;const L=audio.listener,f=new THREE.Vector3();camera.getWorldDirection(f);
+  const c=camera.position,p=phone.position;
+  // Firefox has no AudioParam fields on the listener: fall back to the older setters
+  if(L.positionX){L.positionX.value=c.x;L.positionY.value=c.y;L.positionZ.value=c.z;L.forwardX.value=f.x;L.forwardY.value=f.y;L.forwardZ.value=f.z;L.upX.value=0;L.upY.value=1;L.upZ.value=0;}
+  else{L.setPosition(c.x,c.y,c.z);L.setOrientation(f.x,f.y,f.z,0,1,0);}
+  if(panner.positionX){panner.positionX.value=p.x;panner.positionY.value=p.y+.6;panner.positionZ.value=p.z;}else panner.setPosition(p.x,p.y+.6,p.z);
+  // loudness follows the walking distance through doors and corridors, not the straight line through walls
+  const ix=Math.floor(pos.x/CELL),iy=Math.floor(pos.z/CELL),{width,height:h}=hotel.world,steps=goalDist[(layer*h+iy)*width+ix];
+  const target=ringOn?(steps<0?.02:1/(1+Math.max(0,steps)*.28)):0;
+  ringGain.gain.setTargetAtTime(target,audio.currentTime,.25);
+}
+
+// ---------- loop ----------
+const controls=fps.attach($('c'),{onMenu:()=>pause()});
+touch.attach(document.body,{buttons:[]});
+const LINES=['"Front desk. Your room is ready." The line goes quiet, but stays open.','Static, then your own voice, reading a room number you do not recognise.','"You checked out this morning," says the clerk. "Didn\'t you?"','Someone breathes on the line and hangs up. Far off, another phone begins to ring.','"Housekeeping will be up shortly." You never asked for housekeeping.'];
+function answer(){mode='menu';ringOn=false;answered++;controls.clear();document.exitPointerLock?.();
+  $('title').textContent=`Night ${night+1}`;$('lead').textContent=LINES[(night+seed)%LINES.length];$('sub').textContent=`You walked ${hotel.dist[hotel.goal]} rooms deep. Tomorrow the hallways will be different.`;$('go').textContent='Sleep';$('veil').classList.remove('hidden');}
+function pause(){if(mode!=='walking')return;mode='menu';controls.clear();document.exitPointerLock?.();$('go').textContent='Keep walking';$('veil').classList.remove('hidden');}
+function frame(now){
+  requestAnimationFrame(frame); // first, so one bad frame can't stop the game
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  if(mode==='walking'){
+    const inp=controls.input,len=Math.hypot(inp.x,inp.z),speed=(inp.run?3.2:1.7)*dt;
+    if(len>0){const sx=inp.x/Math.max(1,len)*speed,sz=inp.z/Math.max(1,len)*speed,n=Math.ceil(Math.max(Math.abs(sx),Math.abs(sz))/.1);
+      for(let k=0;k<n;k++){moveAxis('x',sx/n);moveAxis('z',sz/n);stair();}}
+    camera.rotation.set(inp.pitch,inp.yaw,0);
+    const bob=len>0?Math.sin(now*.011)*.025:0;camera.position.set(pos.x,height+EYE+bob,pos.z);
+    const p=phone.position;if(Math.hypot(pos.x-p.x,pos.z-p.z)<1.1&&Math.abs(height-p.y)<1)answer();
+    beacon.intensity=ringOn?2.5+Math.sin(now*.02)*.8:.8;
+  }
+  try{updateAudio();}catch(e){console.warn('audio',e);}
+  renderer.render(scene,camera);
+}
+function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}
+addEventListener('resize',resize);resize();
+$('go').onclick=()=>{try{startAudio();audio.resume();}catch(e){console.warn('no audio',e);}if(answered>night){night++;buildNight();}$('veil').classList.add('hidden');mode='walking';last=performance.now();$('c').requestPointerLock?.();};
+try{buildNight();$('go').disabled=false;$('go').textContent='Begin the audit';$('status').textContent=`Seed ${seed} · ?seed=${seed} for the same hotel`;}catch(e){$('status').textContent='Could not build the hotel: '+e.message;}
+requestAnimationFrame(frame);
+window.nightAudit={get hotel(){return hotel},get pos(){return{...pos,layer,height}},teleport(i){const c=cellXYZ(i);pos={x:c.cx,z:c.cz};layer=c.z;height=c.z*STOREY;},step:(x,z)=>{moveAxis('x',x);moveAxis('z',z);stair();},get mode(){return mode},get scene(){return scene},set furniture(v){furniture=v},look:(y,p=0)=>controls.setLook(y,p),renderer};
+</script></body></html>

@@ -17,7 +17,7 @@ const base = new URL('./parts/',import.meta.url).pathname;
 const selected=JSON.parse(readFileSync(resolve(manifest)));
 // Another publisher's part is credited as "0x…/id": pinned on chain like any use, but never built or served from here.
 const foreign=(id)=>id.includes('/');
-const all=JSON.parse(readFileSync(join(base,'parts.json')));
+const all=['parts.json','lite.parts.json'].flatMap(f=>JSON.parse(readFileSync(join(base,f)))); // the seed parts and their lite versions
 const ids=new Set();
 for(const p of selected){
     if(ids.has(p.id))throw Error(`Duplicate ID: ${p.id}`);ids.add(p.id);
@@ -44,7 +44,8 @@ if(network==='sandbox')throw Error('Set NETWORK explicitly for public publishing
 const address=fangorn.getAddress(),gateway=fangorn.getConfig().ipfsGateway;
 const receipts=[];let todo=[...selected];const done=new Set();
 while(todo.length){
-    const ready=todo.filter(p=>(p.uses??[]).every(id=>!ids.has(id)||done.has(id)));
+    // a remix waits for its parent too, so both can go in one batch
+    const ready=todo.filter(p=>[...(p.uses??[]),...(p.parent?.id&&!p.parent.publisher?[p.parent.id]:[])].every(id=>!ids.has(id)||done.has(id)));
     if(!ready.length)throw Error('Cyclic dependencies');
     const records=[];
     for(const p of ready){

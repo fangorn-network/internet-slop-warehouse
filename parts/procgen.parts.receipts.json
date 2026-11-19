@@ -6,7 +6,7 @@
     "cid": "bafyreidqtxrzvpnjsgm7xanjykivgaj4loq3c23nsuv2zd5cpyocci3xbe",
     "src": "bafkreibpylp3xszhp5hwx24mggwpfftq5dqfhqwe5yu4sfpxkbecaq7334",
     "url": "https://ipfs-test.fangorn.network/ipfs/bafkreibpylp3xszhp5hwx24mggwpfftq5dqfhqwe5yu4sfpxkbecaq7334",
-    "txHash": "0x926e3d5496f818718aa64dcb7914f155ca53ff1cec851df45ab8c674b6f2ea0e"
+    "txHash": "0x0e799578a16f7c317609aa3b48d54c31d5149d136f0e4b7c38e50d4753b0491a"
   },
   {
     "id": "lock-key-dungeon",
@@ -15,7 +15,7 @@
     "cid": "bafyreidxbr4jokzbxhztbek5qezxoe76jtlbf2e7t6kgbhk32ib27vvafe",
     "src": "bafkreigk2v5rswsfsu4yetc33tu3muwhc3i7c4dth4o3n76kfszovhnn3m",
     "url": "https://ipfs-test.fangorn.network/ipfs/bafkreigk2v5rswsfsu4yetc33tu3muwhc3i7c4dth4o3n76kfszovhnn3m",
-    "txHash": "0x926e3d5496f818718aa64dcb7914f155ca53ff1cec851df45ab8c674b6f2ea0e"
+    "txHash": "0x0e799578a16f7c317609aa3b48d54c31d5149d136f0e4b7c38e50d4753b0491a"
   },
   {
     "id": "hotel-wfc",
@@ -24,16 +24,16 @@
     "cid": "bafyreiew6wzsejunfvo3us3rp6ewfhfhdqcuttbvdpkxbwcfcel6mplg24",
     "src": "bafkreieiytuadiepe4uxltivpbq7vfmxkat33pj3mhjihiyu3jndicdrpq",
     "url": "https://ipfs-test.fangorn.network/ipfs/bafkreieiytuadiepe4uxltivpbq7vfmxkat33pj3mhjihiyu3jndicdrpq",
-    "txHash": "0x926e3d5496f818718aa64dcb7914f155ca53ff1cec851df45ab8c674b6f2ea0e"
+    "txHash": "0x0e799578a16f7c317609aa3b48d54c31d5149d136f0e4b7c38e50d4753b0491a"
   },
   {
     "id": "socket-mesher",
     "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
     "network": "baseSepolia",
-    "cid": "bafyreicnxuus642gcadcqypxdrsw3kboanhz6fw24qbe3jsmxmlr3sncqi",
-    "src": "bafkreia7qsbtd572jptwxxhlcxydfc7a5rr3slhiw4enq6p5hgafrv55ky",
-    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreia7qsbtd572jptwxxhlcxydfc7a5rr3slhiw4enq6p5hgafrv55ky",
-    "txHash": "0x926e3d5496f818718aa64dcb7914f155ca53ff1cec851df45ab8c674b6f2ea0e"
+    "cid": "bafyreib5bdqybvckt4nhxwes4pajlctgxpo2nvm4yv5yftqsxu5exr325a",
+    "src": "bafkreigsfe6ffpnvtesllo7u6bwsfwnha65lms6a67i5tu3u4wiqrsngve",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreigsfe6ffpnvtesllo7u6bwsfwnha65lms6a67i5tu3u4wiqrsngve",
+    "txHash": "0x0e799578a16f7c317609aa3b48d54c31d5149d136f0e4b7c38e50d4753b0491a"
   },
   {
     "id": "keyring",
@@ -42,24 +42,33 @@
     "cid": "bafyreidj457vfsdk4jgd56rel4pchq7llzahlbap4wtd53nm24izfk3vla",
     "src": "bafkreiasbbwgnlqkhhdzy4sif7hhkgtnpizfp4ij4bekplpalje4aw5tiy",
     "url": "https://ipfs-test.fangorn.network/ipfs/bafkreiasbbwgnlqkhhdzy4sif7hhkgtnpizfp4ij4bekplpalje4aw5tiy",
-    "txHash": "0x0178f17fb2a6ddcc23ca41743a84c763cc7a3faf53cfa5af40386b22c9fc545f"
+    "txHash": "0x8173421f7754a35de439f0ef2155869dd106e7dd5d06972cceac76668d5dfcc6"
+  },
+  {
+    "id": "wfc-hotel",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreihzwhbue7tmg6yr54ejydv45rfelasfz7eeww5wwx74milas76zya",
+    "src": "bafkreifn5jhnyu2lyympmo3ouhgs2cijytzogoh67oynqm7qrsimxnlc3e",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreifn5jhnyu2lyympmo3ouhgs2cijytzogoh67oynqm7qrsimxnlc3e",
+    "txHash": "0x8173421f7754a35de439f0ef2155869dd106e7dd5d06972cceac76668d5dfcc6"
   },
   {
     "id": "night-audit",
     "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
     "network": "baseSepolia",
-    "cid": "bafyreia5tz7xxezqrlwariaghcg2nwkt3ckhnrjplazhqvpp4t2xabh64u",
-    "src": "bafkreidncqp36ck65m3ybuckrqxba6bmi4thz26u4ugmr37hpxddcna7ju",
-    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidncqp36ck65m3ybuckrqxba6bmi4thz26u4ugmr37hpxddcna7ju",
-    "txHash": "0x0178f17fb2a6ddcc23ca41743a84c763cc7a3faf53cfa5af40386b22c9fc545f"
+    "cid": "bafyreicw3ta7tlcflue3ox4oqr22xcwnn6ayql5cy3ncnnch6wtuzattoi",
+    "src": "bafkreidp4onozfimej5qe2w7rs6jwjlwuisn5lqkghphq4olzyyawa324q",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidp4onozfimej5qe2w7rs6jwjlwuisn5lqkghphq4olzyyawa324q",
+    "txHash": "0x2bd89cdf6764ba11527d0d0d81046cdec538a3edd8086fa9b5d43b7bf26b3105"
   },
   {
     "id": "procgen-skill",
     "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
     "network": "baseSepolia",
-    "cid": "bafyreifdxfh3mfjuby3v3u4bor4kzrf5xeunykvzlm7muh3c6ualh3cvpu",
-    "src": "bafkreigqei5boseosb6flvb4rbh4zmipw467g4tpqy4vhfk5qkuieitfna",
-    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreigqei5boseosb6flvb4rbh4zmipw467g4tpqy4vhfk5qkuieitfna",
-    "txHash": "0x2392d7787c4363e55d6514bfa6418502bf1ec5df16c728bf4ece09050882e9e9"
+    "cid": "bafyreie3e22z6q3qys4ubvx5efqhbkzcmmomasykf7gakgrpr5235rmrlu",
+    "src": "bafkreih6ms72d7i6ejzrkj3npqk5ymrr63rsfnhb6keevlu74esxzdnd7y",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreih6ms72d7i6ejzrkj3npqk5ymrr63rsfnhb6keevlu74esxzdnd7y",
+    "txHash": "0x4de019719efd43c60a259246b5ec23993de07a2f4acf8ca1cbbd16d72028df75"
   }
 ]
