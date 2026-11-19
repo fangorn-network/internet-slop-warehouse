@@ -2,7 +2,8 @@
 // socket-mesher: draw a wave-function-collapse grid (2D or 3D) in three.js without modelling a mesh per tile.
 // Geometry comes from the sockets: you say which piece stands on a face with a given socket (a wall on 'w',
 // a door frame on 'd') and what goes inside a cell (floor, ceiling, stairs, a bed); every piece is one
-// InstancedMesh, so draw calls = piece kinds, not cells. placements() is pure data; build() makes the meshes.
+// InstancedMesh per material, so draw calls = piece kinds, not cells. Pieces may be whole GLB models. placements() is
+// pure data; build() makes the meshes; footprints() turns placements into collision boxes.
 import * as THREE from 'three';
 
 function rng(seed) {
@@ -41,17 +42,71 @@ export function placements(world, tiles, { cell = 3, storey = 3, only, face = ()
   return out;
 }
 
-/** One InstancedMesh per piece: pieces = { name: { geometry, material } }. Returns a Group; dispose() frees it. */
-export function build(where, pieces) {
+// A loaded model as instanceable parts: every mesh baked into the model's own frame, merged per material where the
+// attributes line up, so a GLB of 30 meshes and 4 materials costs 4 draw calls however many times it's placed.
+function flatten(object) {
+  object.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(object.matrixWorld).invert(), byMaterial = new Map();
+  object.traverse((m) => {
+    if (!m.isMesh || Array.isArray(m.material)) return;
+    const g = m.geometry.clone().applyMatrix4(new THREE.Matrix4().multiplyMatrices(inv, m.matrixWorld));
+    (byMaterial.get(m.material) ?? byMaterial.set(m.material, []).get(m.material)).push(g);
+  });
+  return [...byMaterial].flatMap(([material, list]) => merge(list).map((geometry) => ({ geometry, material })));
+}
+function merge(list) {
+  if (list.length === 1) return list;
+  const key = (g) => Object.keys(g.attributes).sort().map((n) => n + g.attributes[n].itemSize).join();
+  const groups = new Map(); for (const g of list) (groups.get(key(g)) ?? groups.set(key(g), []).get(key(g))).push(g);
+  return [...groups.values()].map((gs) => {
+    if (gs.length === 1) return gs[0];
+    const out = new THREE.BufferGeometry(), names = Object.keys(gs[0].attributes), counts = gs.map((g) => g.attributes.position.count);
+    for (const n of names) {
+      const size = gs[0].attributes[n].itemSize, arr = new Float32Array(counts.reduce((a, b) => a + b, 0) * size); let o = 0;
+      for (const g of gs) { const a = g.attributes[n]; for (let i = 0; i < a.count; i++) for (let k = 0; k < size; k++) arr[o++] = a.getComponent(i, k); }
+      out.setAttribute(n, new THREE.BufferAttribute(arr, size));
+    }
+    const index = []; let base = 0;
+    gs.forEach((g, gi) => { if (g.index) for (let i = 0; i < g.index.count; i++) index.push(base + g.index.getX(i)); else for (let i = 0; i < counts[gi]; i++) index.push(base + i); base += counts[gi]; });
+    out.setIndex(index); return out;
+  });
+}
+
+/**
+ * One InstancedMesh per piece and material: pieces = { name: { geometry, material } | Object3D }. An Object3D (a loaded
+ * GLB scene, or a clone with nodes removed) is placed in its own frame, so author or pick models facing +z.
+ * chunk (metres, optional) splits each piece's instances into blocks of that size, so three.js can frustum-cull them
+ * (one InstancedMesh's bounds cover every instance, so unchunked it's always drawn whole). Give a number for every piece,
+ * or { piece: metres } to chunk only the heavy ones: blocks cost draw calls (one per block per material). Returns a Group; dispose() frees it.
+ */
+export function build(where, pieces, { chunk = 0 } = {}) {
   const group = new THREE.Group(), m = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0), one = new THREE.Vector3(1, 1, 1), p = new THREE.Vector3();
-  for (const [name, list] of where) {
+  for (const [name, all] of where) {
     const piece = pieces[name]; if (!piece) throw Error(`No piece called ${name}`);
-    const mesh = new THREE.InstancedMesh(piece.geometry, piece.material, list.length);
-    list.forEach((o, k) => mesh.setMatrixAt(k, m.compose(p.set(o.x, o.y, o.z), q.setFromAxisAngle(up, o.rot), one)));
-    mesh.name = name; mesh.computeBoundingSphere(); group.add(mesh);
+    const subs = piece.isObject3D ? flatten(piece) : [piece], blocks = new Map(), size = typeof chunk === 'number' ? chunk : chunk[name] ?? 0;
+    for (const o of all) { const k = size > 0 ? [o.x, o.y, o.z].map((v) => Math.floor(v / size)).join() : ''; (blocks.get(k) ?? blocks.set(k, []).get(k)).push(o); }
+    for (const list of blocks.values()) for (const { geometry, material } of subs) {
+      const mesh = new THREE.InstancedMesh(geometry, material, list.length);
+      list.forEach((o, k) => mesh.setMatrixAt(k, m.compose(p.set(o.x, o.y, o.z), q.setFromAxisAngle(up, o.rot), one)));
+      mesh.name = name; mesh.computeBoundingSphere(); group.add(mesh);
+    }
   }
   group.userData.dispose = () => group.children.forEach((c) => c.dispose());
   return group;
+}
+
+/**
+ * Axis-aligned footprints for collision, from placements: boxes = { piece: [x0, x1, z0, z1] } in the piece's own frame
+ * (metres), turned with each placement. Returns [{ piece, x0, x1, z0, z1, y }].
+ */
+export function footprints(where, boxes) {
+  const out = [];
+  for (const [piece, [x0, x1, z0, z1]] of Object.entries(boxes)) for (const o of where.get(piece) ?? []) {
+    const c = Math.cos(o.rot), s = Math.sin(o.rot), xs = [], zs = [];
+    for (const [x, z] of [[x0, z0], [x1, z0], [x0, z1], [x1, z1]]) { xs.push(o.x + x * c + z * s); zs.push(o.z - x * s + z * c); }
+    out.push({ piece, x0: Math.min(...xs), x1: Math.max(...xs), z0: Math.min(...zs), z1: Math.max(...zs), y: o.y });
+  }
+  return out;
 }
 
 /** Behaviour contract: build the grid into `parent` (an Object3D) and remove it on dispose. */

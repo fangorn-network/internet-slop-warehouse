@@ -36,57 +36,57 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) → { world, update(dt), dispose() }",
+        "signature": "attach(object, opts) \u2192 { world, update(dt), dispose() }",
         "does": "Collapse once with the collapse options and pass the grid to onReady."
       },
       {
         "name": "rng",
-        "signature": "rng(seed) → random()",
+        "signature": "rng(seed) \u2192 random()",
         "does": "Deterministic PRNG in [0,1)."
       },
       {
         "name": "hash",
-        "signature": "hash(...ints) → uint32",
+        "signature": "hash(...ints) \u2192 uint32",
         "does": "Stateless integer hash for per-cell or per-chunk seeds."
       },
       {
         "name": "noise2",
-        "signature": "noise2(x, y, seed) → [0,1]",
+        "signature": "noise2(x, y, seed) \u2192 [0,1]",
         "does": "Smooth value noise."
       },
       {
         "name": "fbm",
-        "signature": "fbm(x, y, { seed, octaves, lacunarity, gain }) → [0,1]",
+        "signature": "fbm(x, y, { seed, octaves, lacunarity, gain }) \u2192 [0,1]",
         "does": "Fractal value noise for terrain, moisture, density."
       },
       {
         "name": "withRotations",
-        "signature": "withRotations(tiles) → tiles",
+        "signature": "withRotations(tiles) \u2192 tiles",
         "does": "Add the distinct quarter turns of tiles marked rotate: true, as id@1..3 with base and rotation."
       },
       {
         "name": "playRows",
-        "signature": "playRows(rows, { wall }) → { ok, steps, keys, coverage, reason }",
+        "signature": "playRows(rows, { wall }) \u2192 { ok, steps, keys, coverage, reason }",
         "does": "Greedy playtest bot for character maps: collect reachable keys, open doors, reach G."
       },
       {
         "name": "sweep",
-        "signature": "sweep({ generate, check, seeds, from }) → { seeds, passed, failures, stats }",
-        "does": "Run generate(seed) → check(world) over many seeds; collect failures and metric ranges."
+        "signature": "sweep({ generate, check, seeds, from }) \u2192 { seeds, passed, failures, stats }",
+        "does": "Run generate(seed) \u2192 check(world) over many seeds; collect failures and metric ranges."
       },
       {
         "name": "collapse",
-        "signature": "collapse({ width, height, depth, seed, tiles, fixed, edge, maxRestarts }) → { width, height, depth, seed, attempt, cells }",
+        "signature": "collapse({ width, height, depth, seed, tiles, fixed, edge, maxRestarts }) \u2192 { width, height, depth, seed, attempt, cells }",
         "does": "Socketed, directional or neighbour-list WFC in 2D or 3D; cells are tile ids, index (z*height+y)*width+x."
       },
       {
         "name": "fromExample",
-        "signature": "fromExample(rows) → { tiles, edge }",
+        "signature": "fromExample(rows) \u2192 { tiles, edge }",
         "does": "Learn tiles, weights, per-direction neighbours and border rules from a character-map example; spread into collapse."
       },
       {
         "name": "flood",
-        "signature": "flood(world, tiles, { from, passable, solid }) → { reached, dist, coverage }",
+        "signature": "flood(world, tiles, { from, passable, solid }) \u2192 { reached, dist, coverage }",
         "does": "Reachability and walking distance through passable sockets, 2D or 3D."
       }
     ],
@@ -95,7 +95,7 @@
         "name": "width",
         "type": "integer",
         "default": 16,
-        "does": "Grid width in cells (width × height ≤ 16384)."
+        "does": "Grid width in cells (width \u00d7 height \u2264 16384)."
       },
       {
         "name": "height",
@@ -179,18 +179,18 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) → { dungeon, rows, update(dt), dispose() }",
+        "signature": "attach(object, opts) \u2192 { dungeon, rows, update(dt), dispose() }",
         "does": "Generate once and pass dungeon and rows to onReady."
       },
       {
         "name": "generate",
-        "signature": "generate({ seed, width, height, rooms, keys, loops }) → { rooms, doors, start, goal, path, keys }",
+        "signature": "generate({ seed, width, height, rooms, keys, loops }) \u2192 { rooms, doors, start, goal, path, keys }",
         "does": "Room graph with locks, keys and safe loops."
       },
       {
         "name": "toRows",
-        "signature": "toRows(dungeon, { room }) → string[]",
-        "does": "Character map: rooms of room×room floor cells, one-cell doors."
+        "signature": "toRows(dungeon, { room }) \u2192 string[]",
+        "does": "Character map: rooms of room\u00d7room floor cells, one-cell doors."
       }
     ],
     "options": [
@@ -222,7 +222,7 @@
         "name": "keys",
         "type": "integer",
         "default": 2,
-        "does": "Locks along the critical path, 0–6; throws if the path is too short."
+        "does": "Locks along the critical path, 0\u20136; throws if the path is too short."
       },
       {
         "name": "loops",
@@ -234,7 +234,7 @@
         "name": "room",
         "type": "integer",
         "default": 5,
-        "does": "Floor cells per room side in toRows (≥ 3)."
+        "does": "Floor cells per room side in toRows (\u2265 3)."
       }
     ],
     "hooks": [
@@ -307,12 +307,12 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(object, opts) → { hotel, update(dt), dispose() }",
+        "signature": "attach(object, opts) \u2192 { hotel, update(dt), dispose() }",
         "does": "Generate once and hand the hotel to onReady."
       },
       {
         "name": "generate",
-        "signature": "generate({ seed, width, height, floors, minCoverage, collapse, withRotations, flood, hash }) → { world, tiles, start, goal, reached, dist, coverage, rooms, attempts }",
+        "signature": "generate({ seed, width, height, floors, minCoverage, collapse, withRotations, flood, hash }) \u2192 { world, tiles, start, goal, reached, dist, coverage, rooms, attempts }",
         "does": "Collapse and flood-check a hotel."
       },
       {
@@ -322,12 +322,12 @@
       },
       {
         "name": "kind",
-        "signature": "kind(tile) → void | corridor | room | stair-low | stair-high",
+        "signature": "kind(tile) \u2192 void | corridor | room | stair-low | stair-high",
         "does": "What a tile is, for drawing and dressing."
       },
       {
         "name": "passable",
-        "signature": "passable(socket) → boolean",
+        "signature": "passable(socket) \u2192 boolean",
         "does": "Walkable faces: corridor, room, door, stair."
       }
     ],
@@ -354,7 +354,7 @@
         "name": "floors",
         "type": "integer",
         "default": 2,
-        "does": "Storeys, 1–6."
+        "does": "Storeys, 1\u20136."
       },
       {
         "name": "minCoverage",
@@ -377,19 +377,21 @@
     "id": "socket-mesher",
     "kind": "effect",
     "title": "Socket mesher: draw WFC grids from their sockets",
-    "description": "Turn any 2D or 3D wave function collapse grid into three.js without a model per tile. Say which pieces stand on a face with a given socket (a wall on 'w', a door frame on 'd') and which go inside a cell (floor, ceiling, stairs, furniture); pieces are modelled once for the north face or rotation 0 and turned into place. placements() is pure data with a per-cell seeded random for dressing; build() makes one InstancedMesh per piece, so draw calls equal piece kinds, not cells. Pass flood().reached as only to skip sealed-off cells. Original code dedicated to CC0.",
+    "description": "Turn any 2D or 3D wave function collapse grid into three.js without a model per tile. Say which pieces stand on a face with a given socket (a wall on 'w', a door frame on 'd') and which go inside a cell (floor, ceiling, stairs, furniture); pieces are modelled once for the north face or rotation 0 and turned into place. placements() is pure data with a per-cell seeded random for dressing; build() makes one InstancedMesh per piece and material; a piece may be a whole GLB scene (its meshes baked and merged per material), so draw calls equal piece kinds, not cells. footprints() turns placements into collision boxes from each model's own bounds. Pass flood().reached as only to skip sealed-off cells. Original code dedicated to CC0.",
     "tags": [
-      "procedural",
-      "wfc",
-      "three.js",
+      "cc0",
+      "dressing",
+      "glb",
+      "gltf",
       "instancing",
-      "modular",
+      "kit",
       "kitbash",
       "level-builder",
+      "modular",
       "performance",
-      "dressing",
-      "kit",
-      "cc0"
+      "procedural",
+      "three.js",
+      "wfc"
     ],
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
@@ -401,18 +403,23 @@
     "exports": [
       {
         "name": "attach",
-        "signature": "attach(parent, { world, tiles, pieces, cell, storey, only, face, inside }) → { group, update(dt), dispose() }",
+        "signature": "attach(parent, { world, tiles, pieces, cell, storey, only, face, inside }) \u2192 { group, update(dt), dispose() }",
         "does": "Build the grid into parent."
       },
       {
         "name": "placements",
-        "signature": "placements(world, tiles, { cell, storey, only, face, inside, seed }) → Map(piece → [{ x, y, z, rot }])",
+        "signature": "placements(world, tiles, { cell, storey, only, face, inside, seed }) \u2192 Map(piece \u2192 [{ x, y, z, rot }])",
         "does": "Where every piece goes, from socket rules."
       },
       {
         "name": "build",
-        "signature": "build(placements, pieces) → Group",
-        "does": "One InstancedMesh per piece; group.userData.dispose() frees them."
+        "signature": "build(placements, pieces, { chunk }) \u2192 Group",
+        "does": "One InstancedMesh per piece and material (per chunk, if given, so blocks frustum-cull); pieces are { geometry, material } or Object3D (a loaded GLB)."
+      },
+      {
+        "name": "footprints",
+        "signature": "footprints(placements, { piece: [x0, x1, z0, z1] }) \u2192 [{ piece, x0, x1, z0, z1, y }]",
+        "does": "Turned collision boxes for placed pieces."
       }
     ],
     "options": [
@@ -439,18 +446,24 @@
         "type": "{ name: { geometry, material } }",
         "default": "required",
         "does": "The kit."
+      },
+      {
+        "name": "chunk",
+        "type": "number | { piece: number }",
+        "default": 0,
+        "does": "build: block size in metres for culling, for every piece or per piece; 0 = one mesh per piece."
       }
     ],
     "hooks": [
       {
         "name": "face",
         "default": "() => []",
-        "does": "(ctx) → pieces on one side face, modelled for north."
+        "does": "(ctx) \u2192 pieces on one side face, modelled for north."
       },
       {
         "name": "inside",
         "default": "() => []",
-        "does": "(ctx) → pieces inside a cell, modelled for rotation 0."
+        "does": "(ctx) \u2192 pieces inside a cell, modelled for rotation 0."
       }
     ]
   },
@@ -459,7 +472,7 @@
     "type": "game",
     "id": "night-audit",
     "title": "Night Audit",
-    "description": "First-person liminal horror walk through a two-storey hotel that is rebuilt by 3D wave function collapse every night. Follow a ringing phone through carpeted corridors, open doors and stairwells; the ring is panned toward the phone and grows louder by walking distance through the building, not through walls. Answer it and sleep; tomorrow the hallways are different. Every plan is flood-checked so the phone is always reachable. WASD/arrows, mouse or drag to look, Shift to hurry; thumbstick on phones. Share ?seed= for the same hotel. The 3D starter for the procgen skill.",
+    "description": "First-person liminal horror walk through a two-storey hotel that is rebuilt by 3D wave function collapse every night. Dressed with the Heartland Inn's furniture and surfaces: its room doors, king beds, nightstands and lamps, TV credenzas, vending and ice machines, housekeeping carts, navy corridor carpet and terracotta accent walls. Follow a ringing phone through corridors, open doors and stairwells; the ring is panned toward the phone and grows louder by walking distance through the building, not through walls. Answer it and sleep; tomorrow the hallways are different. Every plan is flood-checked so the phone is always reachable. WASD/arrows, mouse or drag to look, Shift to hurry; thumbstick on phones. Share ?seed= for the same hotel. The 3D starter for the procgen skill.",
     "tags": [
       "procedural",
       "wfc",
@@ -490,7 +503,19 @@
       "ph-hotel-carpet-normal",
       "ph-hotel-wall-plaster-normal",
       "acg-hotel-ceiling-color",
-      "ph-hotel-walnut-color"
+      "ph-hotel-walnut-color",
+      "acg-hotel-carpet-color",
+      "acg-hotel-carpet-normal",
+      "acg-hotel-carpet-roughness",
+      "hotel-room-door",
+      "hotel-king-bed-lite",
+      "hotel-nightstand",
+      "hotel-table-lamp",
+      "hotel-credenza-tv",
+      "hotel-snack-vending-lite",
+      "hotel-ice-machine",
+      "hotel-housekeeping-cart",
+      "ph-wetfloorsign-01"
     ]
   },
   {
