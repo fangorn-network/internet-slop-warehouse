@@ -1,0 +1,3 @@
+{"at":"2026-11-17T15:50:42.818Z","event":"setup","mode":"semantic","fixtureRoot":"bafyreibycvekyxezblss7g2mn3jbutgwbb6frhiic265bz63ijkcmu4uc4","records":355,"elapsedMs":191812.327754,"embedder":{"model":"google/embeddinggemma-300m","dim":256,"dtype":"q8"}}
+{"at":"2026-11-17T15:50:42.820Z","event":"request","method":"initialize","elapsedMs":0.018941999995149672,"responseBytes":301,"failed":false}
+{"at":"2026-11-17T15:50:42.948Z","event":"request","method":"tools/call","tool":"search","arguments":{"query":"music audio sound","k":3},"elapsedMs":126.68328599998495,"responseBytes":4134,"failed":false}

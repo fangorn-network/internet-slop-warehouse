@@ -1,0 +1,14 @@
+PASS full ordinary-play simulation order north → east → south
+PASS full ordinary-play simulation order north → south → east
+PASS full ordinary-play simulation order east → north → south
+PASS full ordinary-play simulation order east → south → north
+PASS full ordinary-play simulation order south → north → east
+PASS full ordinary-play simulation order south → east → north
+PASS RR1 start migration
+PASS RR1 partial migration
+PASS RR1 completed migration
+PASS RR1 start continued to new extraction
+PASS RR1 partial continued to new extraction
+PASS RR1 completed continued to new extraction
+PASS corruption/schema rejection, lag API, flood shortcut, packaging, frozen v1 byte integrity, inline JS parsing
+PASS 10210 simulation/source assertions. Browser rendering, input, touch and real play NOT VERIFIED.

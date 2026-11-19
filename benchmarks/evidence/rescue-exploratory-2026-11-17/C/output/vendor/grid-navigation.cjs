@@ -1,0 +1,25 @@
+// CC0. Bounded four-neighbor A*, dynamic obstacles and supercover line of sight. X/Z coordinates.
+function attach(object,{rows,cellSize=1,origin=[0,0],blocked=['#'],maxVisited=8192}={}){
+ if(!Array.isArray(rows)||!rows.length||rows.length>256||!rows[0]?.length||rows[0].length>256||rows.some(r=>typeof r!=='string'||r.length!==rows[0].length)||!Number.isFinite(cellSize)||cellSize<=0||!origin.every(Number.isFinite)||!Number.isSafeInteger(maxVisited)||maxVisited<1)throw new RangeError('Invalid navigation grid');
+ const width=rows[0].length,height=rows.length,dynamic=new Map();let dead=false;
+ const key=(x,z)=>z*width+x;
+ const walkable=(x,z)=>!dead&&Number.isInteger(x)&&Number.isInteger(z)&&x>=0&&z>=0&&x<width&&z<height&&(dynamic.has(key(x,z))?!dynamic.get(key(x,z)):!blocked.includes(rows[z][x]));
+ const cell=p=>({x:Math.floor((p.x-origin[0])/cellSize),z:Math.floor((p.z-origin[1])/cellSize)});
+ const world=(x,z)=>({x:origin[0]+(x+.5)*cellSize,y:0,z:origin[1]+(z+.5)*cellSize});
+ function lineOfSight(a,b){if(![a?.x,a?.z,b?.x,b?.z].every(Number.isFinite))return false;const from=cell(a),to=cell(b);let x=from.x,z=from.z;const dx=to.x-x,dz=to.z-z,nx=Math.abs(dx),nz=Math.abs(dz),sx=Math.sign(dx),sz=Math.sign(dz);let ix=0,iz=0;
+  if(!walkable(x,z))return false;
+  while(ix<nx||iz<nz){const decision=(1+2*ix)*nz-(1+2*iz)*nx;if(decision===0){if(!walkable(x+sx,z)||!walkable(x,z+sz))return false;x+=sx;z+=sz;ix++;iz++;}else if(decision<0){x+=sx;ix++;}else{z+=sz;iz++;}if(!walkable(x,z))return false;}return true;
+ }
+ function findPath(a,b){if(dead)return[];const start=cell(a),goal=cell(b);if(!walkable(start.x,start.z)||!walkable(goal.x,goal.z))return[];
+  const first=key(start.x,start.z),last=key(goal.x,goal.z),distance=new Map([[first,0]]),previous=new Map(),closed=new Set(),heap=[];
+  const push=n=>{heap.push(n);let i=heap.length-1;while(i>0){const p=(i-1)>>1;if(heap[p].f<=n.f)break;heap[i]=heap[p];i=p;}heap[i]=n;};
+  const pop=()=>{const first=heap[0],last=heap.pop();if(heap.length){let i=0;while(true){let c=i*2+1;if(c>=heap.length)break;if(c+1<heap.length&&heap[c+1].f<heap[c].f)c++;if(heap[c].f>=last.f)break;heap[i]=heap[c];i=c;}heap[i]=last;}return first;};
+  push({id:first,x:start.x,z:start.z,f:0});
+  while(heap.length&&closed.size<maxVisited){const n=pop();if(closed.has(n.id))continue;if(n.id===last){const result=[];let k=last;while(k!==first){result.push(world(k%width,Math.floor(k/width)));k=previous.get(k);}return result.reverse();}closed.add(n.id);
+   for(const [dx,dz]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=n.x+dx,z=n.z+dz;if(!walkable(x,z))continue;const id=key(x,z),g=distance.get(n.id)+1;if(g>=(distance.get(id)??Infinity))continue;distance.set(id,g);previous.set(id,n.id);push({id,x,z,f:g+Math.abs(x-goal.x)+Math.abs(z-goal.z)});}
+  }return[];
+ }
+ return{width,height,cellSize,cell,world,walkable,lineOfSight,findPath,setBlocked(x,z,value){if(x<0||z<0||x>=width||z>=height||!Number.isInteger(x)||!Number.isInteger(z))throw new RangeError('Obstacle outside grid');if(value===null)dynamic.delete(key(x,z));else dynamic.set(key(x,z),!!value);},update(){},dispose(){dead=true;dynamic.clear();}};
+}
+
+if(typeof module!=="undefined")module.exports={attach};else globalThis.GridNavigation={attach};

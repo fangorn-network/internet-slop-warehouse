@@ -1,0 +1,94 @@
+{
+  "format": "rescue-relay-neutral-fixture-v1",
+  "license": "CC0-1.0",
+  "source": "Original benchmark fixture; no prior condition or warehouse source",
+  "versions": {
+    "starter": "1.0.0",
+    "update": "2.0.0",
+    "save": "RR1/schema1"
+  },
+  "browserBaselineVerified": false,
+  "scoredRunReady": false,
+  "files": [
+    {
+      "path": "build.cjs",
+      "bytes": 3950,
+      "sha256": "9b093383dc0b0e6a78463ca22229df63f489f47a271273fa7f03e0c300dcc6bc"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3547,
+      "sha256": "91bb1d3000a41fc7c30e776a0fb9a68d0b3b57396077e67a135a828322d81298"
+    },
+    {
+      "path": "saves/completed.txt",
+      "bytes": 156,
+      "sha256": "12209198175bf5c4bc4c18aa4dd881f9dc72d771c49a3468889132479e12d3e8"
+    },
+    {
+      "path": "saves/expectations.json",
+      "bytes": 585,
+      "sha256": "bd9872f0818a0c932ced6cd43bf0a5b3378faf457dd4bbe04ea1dc78dc4ae07e"
+    },
+    {
+      "path": "saves/partial.txt",
+      "bytes": 117,
+      "sha256": "18c3618e47b9c738dacb1fac8865cf158a285ab852fd215b55d5245f2e9aea10"
+    },
+    {
+      "path": "saves/start.txt",
+      "bytes": 108,
+      "sha256": "fa3cfb964149d2fc5dde998acd5a2841ea0f8c7ed4e15fab9ffe19d6cb02e476"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 706,
+      "sha256": "f1decf2640907c20cba0a4953169de20cc9d039021456b84632f3dfe3a9550e3"
+    },
+    {
+      "path": "test.cjs",
+      "bytes": 4919,
+      "sha256": "ac89101dba3cdc4b3dcf64c883ad2bf27ee7eefa07b5e427a5b2b06ac95ef042"
+    },
+    {
+      "path": "v1/app.js",
+      "bytes": 4369,
+      "sha256": "4afc2ce05382a7b5350731d3a2e80434297ac3228cc5a07476463248704e9970"
+    },
+    {
+      "path": "v1/core.cjs",
+      "bytes": 3356,
+      "sha256": "7f8a344ab42bbed1a5b741faddb7c0a6e282a381058fdd70863663da4e488fb8"
+    },
+    {
+      "path": "v1/index.html",
+      "bytes": 10882,
+      "sha256": "b4936960277974ceff55efc5780d6a440e157982c5edc15abaad921f4fe99bc6"
+    },
+    {
+      "path": "v1/style.css",
+      "bytes": 1376,
+      "sha256": "a846dd6e953a0824c8e159d44ae7257488b548a1c79a9abbb5e03a62ef240413"
+    },
+    {
+      "path": "v1/template.html",
+      "bytes": 1805,
+      "sha256": "5ce7d16571ead09cc674ef1b246478463318a59c85634619094ae1cf641caa71"
+    },
+    {
+      "path": "v2-update/core.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "v2-update/MIGRATION.md",
+      "bytes": 1851,
+      "sha256": "ab20163982c4888ca35b6a492f0932c4176223c59c64d6dd47978292f6a65e11"
+    }
+  ]
+}

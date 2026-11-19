@@ -160,5 +160,59 @@
       "roughness"
     ],
     "description": "Terrazzo005 roughness map, 1K, from https://ambientcg.com/a/Terrazzo005. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-carpet-color",
+    "file": "acg/acg-hotel-carpet-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric022 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "carpet",
+      "color"
+    ],
+    "description": "Fabric022 color map, 1K, from https://ambientcg.com/a/Fabric022. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-carpet-normal",
+    "file": "acg/acg-hotel-carpet-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric022 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "carpet",
+      "normal"
+    ],
+    "description": "Fabric022 normal map, 1K, from https://ambientcg.com/a/Fabric022. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-hotel-carpet-roughness",
+    "file": "acg/acg-hotel-carpet-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric022 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "hotel",
+      "carpet",
+      "roughness"
+    ],
+    "description": "Fabric022 roughness map, 1K, from https://ambientcg.com/a/Fabric022. Linear roughness. CC0-1.0."
   }
 ]

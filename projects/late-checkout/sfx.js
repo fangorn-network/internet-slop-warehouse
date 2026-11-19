@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: CC0-1.0
-// Late Checkout's sound, all synthesized and placed in the world (stage/audio.js does the placing).
+// Late Checkout's sound, all synthesized and placed in the world (roadside-inn/stage/audio.js does the placing).
 // Before the turn: a hotel at night, machines humming where they stand, the interstate outside, a radio at the travel stop.
 // After it: the interstate goes silent, a low drone comes up, the building makes noises somewhere else (footsteps
 // overhead, a door down the hall, a knock that isn't yours), the radio slows and goes flat. From 5 AM a heartbeat,
 // faster as six gets closer.
-import { createSoundscape } from './stage/audio.js';
+import { createSoundscape } from '../roadside-inn/stage/audio.js';
 import { at, DAWN } from './run/clock.js';
 import { DOORS } from './run/spots.js';
 

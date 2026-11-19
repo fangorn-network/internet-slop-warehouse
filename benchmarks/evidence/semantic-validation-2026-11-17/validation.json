@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "vectors": 355,
+  "dimensions": 256,
+  "modelRevision": "5090578d9565bb06545b4552f76e6bc2c93e4a66",
+  "queriesChecked": 1,
+  "results": [
+    {
+      "id": "winter-audio",
+      "score": 0.4772309826649502
+    },
+    {
+      "id": "mairas-store-sound",
+      "score": 0.46685064379457986
+    },
+    {
+      "id": "woodland-sound",
+      "score": 0.4544226115944141
+    }
+  ],
+  "cacheSha256": "7882baf0f8dfb3c0138d5e21d57faa4ccba0884d15ddd3b621a09a252ae460c6",
+  "scope": "Local q8 semantic adapter; not hosted runtime parity or retrieval-quality benchmark"
+}

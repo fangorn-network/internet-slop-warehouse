@@ -1,0 +1,38 @@
+{
+  "saveSchema": 1,
+  "cases": {
+    "start": {
+      "schema": 1,
+      "player": {
+        "x": 1.5,
+        "y": 1.5
+      },
+      "signals": [],
+      "completed": false
+    },
+    "partial": {
+      "schema": 1,
+      "player": {
+        "x": 4.5,
+        "y": 3.5
+      },
+      "signals": [
+        "north"
+      ],
+      "completed": false
+    },
+    "completed": {
+      "schema": 1,
+      "player": {
+        "x": 1.5,
+        "y": 11.920000000000002
+      },
+      "signals": [
+        "east",
+        "north",
+        "south"
+      ],
+      "completed": true
+    }
+  }
+}

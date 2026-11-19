@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rescue Relay — neutral starter v1</title><style>:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0a1718;color:#edf4ef}*{box-sizing:border-box}body{max-width:880px;margin:auto;padding:20px}h1{font-size:26px;margin:0 0 8px}p{line-height:1.5;color:#bfd1cc}header,footer,.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}header{justify-content:space-between}canvas{display:block;width:100%;height:auto;border:1px solid #45625f;border-radius:8px;touch-action:none}button{font:inherit;min-height:44px;min-width:44px;border:1px solid #52706b;background:#213d39;color:#fff;border-radius:6px;padding:10px 14px;cursor:pointer}button:hover,button.held{background:#3c6259}button:focus-visible,textarea:focus-visible{outline:3px solid #e7bd75;outline-offset:3px}.controls{justify-content:space-between;margin:12px 0}.pad{display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,44px);gap:5px;touch-action:none}.pad [data-dir=up]{grid-column:2}.pad [data-dir=left]{grid-column:1;grid-row:2}.pad [data-dir=down]{grid-column:2;grid-row:2}.pad [data-dir=right]{grid-column:3;grid-row:2}textarea{display:block;width:100%;min-height:90px;font:12px monospace;padding:10px;background:#102524;color:#dceee7;border:1px solid #52706b;border-radius:6px}small{color:#a4bcb5}#status{min-height:48px}details{margin-top:18px}summary{cursor:pointer;padding:8px 0}footer{font-size:12px;margin-top:16px}
+</style></head><body>
+<header><h1>Rescue Relay: baseline expedition</h1><span id="progress">0 / 3 signals active</span></header>
+<p>Walk to each amber signal and activate it. Then return to the extraction pad in the southwest. This neutral starter has no rescue, component inventory or escort mission yet.</p>
+<canvas width="800" height="560" aria-label="Expedition map. Three signal towers and a southwest extraction point."></canvas>
+<div class="row controls"><div class="row"><button id="activate">Activate (E)</button><button id="pause">Pause</button><button id="restart">Restart</button></div><div class="pad" aria-label="Movement"><button data-dir="up" aria-label="Move up">↑</button><button data-dir="left" aria-label="Move left">←</button><button data-dir="down" aria-label="Move down">↓</button><button data-dir="right" aria-label="Move right">→</button></div></div>
+<p id="status" role="status">Activate three signals, then return to extraction.</p><small>WASD / arrows to walk. E or Activate near a signal. No audio or network services.</small>
+<details><summary>Portable save</summary><label for="save">Save string</label><textarea id="save" spellcheck="false"></textarea><div class="row"><button id="export">Export save</button><button id="load">Load save</button></div><p>A rejected save leaves the current expedition unchanged. The checksum detects corruption; it is not a signature or anti-cheat mechanism.</p></details>
+<footer>Original neutral benchmark fixture · CC0-1.0 · Browser baseline verification pending</footer>
+<script>/* Original neutral benchmark fixture, CC0-1.0. No warehouse source used. */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.RescueRelay=factory();})(globalThis,function(){
+  'use strict';
+  const width=20,height=14,radius=.22,speed=3.5;
+  const walls=[{x:6,y:2,w:2,h:5},{x:11,y:7,w:4,h:2},{x:3,y:9,w:4,h:2}];
+  const signals=[{id:'north',x:4.5,y:3.5},{id:'east',x:15.5,y:3.5},{id:'south',x:17.5,y:11.5}];
+  const start={x:1.5,y:1.5},extraction={x:1.5,y:12.5};
+  const clone=x=>JSON.parse(JSON.stringify(x));
+  function blocked(x,y){return !Number.isFinite(x)||!Number.isFinite(y)||x-radius<1||y-radius<1||x+radius>width-1||y+radius>height-1||walls.some(w=>x+radius>w.x&&x-radius<w.x+w.w&&y+radius>w.y&&y-radius<w.y+w.h);}
+  function fresh(){return {schema:1,player:clone(start),signals:[],completed:false};}
+  function validate(s){
+    if(!s||s.schema!==1||!s.player||blocked(s.player.x,s.player.y)||!Array.isArray(s.signals)||typeof s.completed!=='boolean')return false;
+    if(s.signals.some(id=>!signals.some(t=>t.id===id))||new Set(s.signals).size!==s.signals.length)return false;
+    if(s.completed&&(s.signals.length!==3||Math.hypot(s.player.x-extraction.x,s.player.y-extraction.y)>.7))return false;
+    return true;
+  }
+  function checkFinish(s){if(s.signals.length===3&&Math.hypot(s.player.x-extraction.x,s.player.y-extraction.y)<.7)s.completed=true;}
+  function move(s,dx,dy,dt){
+    if(s.completed)return;
+    dx=Number.isFinite(dx)?dx:0;dy=Number.isFinite(dy)?dy:0;dt=Math.max(0,Math.min(.05,Number.isFinite(dt)?dt:0));
+    const n=Math.hypot(dx,dy);if(!n)return;
+    const nx=s.player.x+dx/n*speed*dt,ny=s.player.y+dy/n*speed*dt;
+    if(!blocked(nx,s.player.y))s.player.x=nx;if(!blocked(s.player.x,ny))s.player.y=ny;checkFinish(s);
+  }
+  function activateSignal(s,id){const t=signals.find(t=>t.id===id);if(!t||s.signals.includes(id)||Math.hypot(s.player.x-t.x,s.player.y-t.y)>.9)return false;s.signals.push(id);checkFinish(s);return true;}
+  function checksum(text){let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');}
+  const encode=s=>typeof Buffer!=='undefined'?Buffer.from(s,'utf8').toString('base64url'):btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const decode=s=>typeof Buffer!=='undefined'?Buffer.from(s,'base64url').toString('utf8'):atob(s.replace(/-/g,'+').replace(/_/g,'/'));
+  function save(s){if(!validate(s))throw new Error('Invalid state');const payload=JSON.stringify({schema:1,player:{x:s.player.x,y:s.player.y},signals:[...s.signals].sort(),completed:s.completed});return 'RR1.'+encode(payload)+'.'+checksum(payload);}
+  function load(text){
+    if(typeof text!=='string'||text.length>4096||!/^RR1\.[A-Za-z0-9_-]+\.[a-f0-9]{8}$/.test(text.trim()))throw new Error('Invalid save envelope');
+    const parts=text.trim().split('.'),payload=decode(parts[1]);if(checksum(payload)!==parts[2])throw new Error('Save checksum mismatch');
+    const s=JSON.parse(payload);if(!validate(s))throw new Error('Invalid saved state');return {schema:1,player:{x:s.player.x,y:s.player.y},signals:[...s.signals],completed:s.completed};
+  }
+  return {version:'1.0.0',width,height,walls,signals,start,extraction,speed,radius,fresh,blocked,validate,move,activateSignal,save,load};
+});
+</script><script>/* Original benchmark presentation, CC0-1.0. */
+(()=>{
+ const R=globalThis.RescueRelay,c=document.querySelector('canvas'),ctx=c.getContext('2d'),held=new Set(),pointers=new Map();
+ let state=R.fresh(),paused=false,last=performance.now();
+ const $=s=>document.querySelector(s),cell=40;
+ function clear(){held.clear();pointers.clear();document.querySelectorAll('[data-dir]').forEach(b=>b.classList.remove('held'));}
+ function status(text){$('#status').textContent=text;}
+ function refresh(){
+   $('#progress').textContent=state.signals.length+' / 3 signals active';
+   $('#pause').textContent=paused?'Resume':'Pause';
+   if(state.completed)status('Baseline expedition complete. Restart or export this completed save.');
+ }
+ function activate(){
+   if(paused||state.completed)return;
+   const t=R.signals.find(t=>Math.hypot(state.player.x-t.x,state.player.y-t.y)<=.9);
+   status(t?(R.activateSignal(state,t.id)?'Activated '+t.id+' signal.':t.id+' signal is already active.'):'Move closer to a signal and press Activate.');refresh();
+ }
+ const keys={ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};
+ addEventListener('keydown',e=>{if(e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement)return;if(keys[e.code]){e.preventDefault();held.add(e.code);}if(e.code==='KeyE'&&!e.repeat){e.preventDefault();activate();}});
+ addEventListener('keyup',e=>held.delete(e.code));addEventListener('blur',clear);document.addEventListener('visibilitychange',()=>{if(document.hidden)clear();});
+ document.querySelectorAll('[data-dir]').forEach(b=>{
+   b.addEventListener('pointerdown',e=>{e.preventDefault();pointers.set(e.pointerId,b.dataset.dir);b.setPointerCapture(e.pointerId);b.classList.add('held');});
+   const release=e=>{pointers.delete(e.pointerId);if(![...pointers.values()].includes(b.dataset.dir))b.classList.remove('held');};
+   ['pointerup','pointercancel','lostpointercapture'].forEach(t=>b.addEventListener(t,release));
+ });
+ $('#activate').onclick=activate;
+ $('#pause').onclick=()=>{paused=!paused;clear();refresh();};
+ $('#restart').onclick=()=>{state=R.fresh();paused=false;clear();status('Activate three signals, then return to extraction.');refresh();};
+ $('#export').onclick=()=>{$('#save').value=R.save(state);status('Save exported. Copy it to another page or device.');};
+ $('#load').onclick=()=>{try{const next=R.load($('#save').value);state=next;paused=false;clear();status('Save loaded. Existing progress preserved.');refresh();}catch(e){status('Save rejected: '+e.message+'. Current expedition unchanged.');}};
+ function draw(){
+   ctx.fillStyle='#132728';ctx.fillRect(0,0,c.width,c.height);
+   ctx.strokeStyle='#234142';ctx.lineWidth=1;for(let x=0;x<=R.width;x++){ctx.beginPath();ctx.moveTo(x*cell,0);ctx.lineTo(x*cell,c.height);ctx.stroke();}for(let y=0;y<=R.height;y++){ctx.beginPath();ctx.moveTo(0,y*cell);ctx.lineTo(c.width,y*cell);ctx.stroke();}
+   ctx.fillStyle='#385458';for(const w of R.walls)ctx.fillRect(w.x*cell,w.y*cell,w.w*cell,w.h*cell);
+   ctx.font='14px system-ui';ctx.textAlign='center';
+   for(const t of R.signals){const active=state.signals.includes(t.id);ctx.fillStyle=active?'#85dfa2':'#edbc68';ctx.beginPath();ctx.arc(t.x*cell,t.y*cell,14,0,Math.PI*2);ctx.fill();ctx.fillStyle='#e4eeec';ctx.fillText(t.id.toUpperCase(),t.x*cell,t.y*cell-22);}
+   ctx.strokeStyle=state.signals.length===3?'#85dfa2':'#83908e';ctx.lineWidth=3;ctx.strokeRect((R.extraction.x-.4)*cell,(R.extraction.y-.4)*cell,.8*cell,.8*cell);ctx.fillStyle='#e4eeec';ctx.textAlign='left';ctx.fillText('EXTRACTION',R.extraction.x*cell+24,R.extraction.y*cell+5);
+   ctx.fillStyle='#a9d9ff';ctx.beginPath();ctx.arc(state.player.x*cell,state.player.y*cell,10,0,Math.PI*2);ctx.fill();
+   if(paused||state.completed){ctx.fillStyle='#071414b8';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='26px system-ui';ctx.fillText(state.completed?'Expedition complete':'Paused',c.width/2,c.height/2);}
+ }
+ function frame(now){const dt=(now-last)/1000;last=now;const dirs=new Set([...held].map(k=>keys[k]).concat([...pointers.values()]));if(!paused){R.move(state,Number(dirs.has('right'))-Number(dirs.has('left')),Number(dirs.has('down'))-Number(dirs.has('up')),dt);refresh();}draw();requestAnimationFrame(frame);}
+ refresh();requestAnimationFrame(frame);
+})();
+</script></body></html>

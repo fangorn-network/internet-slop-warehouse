@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1e28"><title>Lantern Courier</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<canvas id="world" aria-label="3D settlement and courier"></canvas>
+<div id="hud" class="hidden">
+ <header><div class="brand">LANTERN COURIER<small>THE LAST LIGHT ROUTE</small></div><div class="top-actions"><button id="mute" aria-label="Toggle sound">Sound off</button><button id="pause">Pause</button></div></header>
+ <section class="manifest" aria-label="Delivery manifest"><div class="manifest-title"><span>SETTLEMENT SUPPLIES</span><b id="progress">0 / 3</b></div><div id="deliveries"></div></section>
+ <section class="route-map"><canvas id="map" width="180" height="220" aria-label="Route map: depot south, clinic west, hearth north, beacon east"></canvas><span>SAFE PATH <i></i> • STORM CUT <em></em></span></section>
+ <div class="bottom"><div class="objective"><span id="carry">EMPTY HANDS</span><strong id="action">Collect a parcel</strong><small id="prompt">WASD / arrows · E interact · Space lantern · Esc pause</small></div><div class="ability"><button id="lantern">✦ <span>Light lantern</span><kbd>SPACE</kbd></button><div class="meter"><i id="cooldown"></i></div><small id="abilityStatus">Ready · 3s of protection</small></div></div>
+ <div id="toast" role="status" aria-live="polite"></div><div id="recallFlash"></div>
+ <div id="touch"><div id="stick" aria-label="Drag to move"><div id="knob"></div><span>MOVE</span></div><button id="interactTouch">Collect / deliver</button></div>
+ <div class="run-stats"><span id="timer">0:00</span><span id="recalls">0 recalls</span></div>
+</div>
+<div id="overlay" class="overlay"><section id="panel">
+ <div class="eyebrow">A SMALL JOURNEY THROUGH THE STORM</div><h1>Lantern<br><em>Courier</em></h1><p class="intro">The settlement has gone dark.<br>Carry three supplies. Bring its lights home.</p>
+ <div class="instructions"><div><b>01</b><span>Collect one parcel at the depot.<br>Match its symbol to a destination.</span></div><div><b>02</b><span>The outer causeway is safer.<br>The narrow center cut saves time.</span></div><div><b>03</b><span>Moving storms recall you to a safe light.<br>Your lantern protects for 3 seconds.</span></div></div>
+ <button id="start" class="primary">Begin the route <span>→</span></button><p class="controls">WASD / arrows move · E collect / deliver<br>Space lantern · Esc pause · Touch controls available</p><small class="expect">About 3–5 minutes · Headphones optional</small>
+</section></div>
+<div id="fatal" class="hidden">The 3D view could not start. Use a browser with WebGL enabled and serve this folder over HTTP.</div>
+<script type="module" src="main.mjs"></script>
+</body></html>

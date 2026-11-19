@@ -1,0 +1,9 @@
+{
+  "url": "http://127.0.0.1:8897",
+  "at": "2026-11-16T23:17:14.180Z",
+  "status": "blocked",
+  "stage": "browser-launch",
+  "error": "browserType.launch: Target page, context or browser has been closed\n[pid=18][err] [18:18:1116/171713.887136:ERROR:third_party/crashpad/crashpad/util/linux/socket.cc:45] setsockopt: Operation not permitted (1)\n\u001b[2m  - [pid=18][err] [18:18:1116/171713.887136:ERROR:third_party/crashpad/crashpad/util/linux/socket.cc:45] setsockopt: Operation not permitted (1)\u001b[22m",
+  "results": [],
+  "scope": "No browser or gameplay checks ran"
+}

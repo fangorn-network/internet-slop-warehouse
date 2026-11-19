@@ -1,0 +1,6 @@
+# Rescue Relay C run log
+
+2026-11-17T16:23:43Z — Started within C only. Read task, access and starter sources. Browser/localhost intentionally not attempted. Frozen adapter semantic navigation search requested.
+2026-11-17T16:26:56.015Z — Early playable-source checkpoint: unchanged v1 package copied, v2 core vendored unchanged, semantic grid-navigation retrieved and vendored with CommonJS/browser wrapper. Standalone v2 page built with repair inventory, dynamic flood crossing, grid-routed escort, UI and RR1/RR2 saves. Browser remains unverified. Next: exhaustive mission simulation and rejection/migration checks.
+2026-11-17T16:31:35.247Z — Verification checkpoint: all six repair/escort routes, all repair subsets, RR1 import/continuation, RR2 roundtrips and rejection, v2 collision/lag, deterministic package and simulated UI checks pass. 34,354 tracked checks / 11,204 simulation ticks; separate original v1 suite passes 10 checks. Browser and physical device play unverified. Added exact provenance, source manifest, launch/build/migration/test/report documentation.
+2026-11-17T16:31:35.329Z — Final: source/artifact manifest verified; supplied starter hashes unchanged; result.json completed with actual elapsed time, telemetry unknown/null and browser limitations explicit. Delivery ready in output/index.html.

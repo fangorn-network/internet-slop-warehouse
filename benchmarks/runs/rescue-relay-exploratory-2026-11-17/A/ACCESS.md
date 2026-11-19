@@ -1,0 +1,1 @@
+Use ordinary tools/public docs/packages/assets and the supplied original neutral starter/update. Do not access the Internet Slop Warehouse, its source, hosted catalog, parts or mirrors. Starter/ is an explicit shared-fixture exemption.

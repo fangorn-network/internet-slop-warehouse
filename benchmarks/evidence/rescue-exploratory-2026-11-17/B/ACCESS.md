@@ -1,0 +1,1 @@
+Use ordinary tools/public sources plus frozen inventory/ through file/text search. Discover relevant parts yourself; reuse optional. Do not use live warehouse tools/newer records. Preserve source/license/version/modification notes. Starter/update bytes identical in every condition.

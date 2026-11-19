@@ -1,0 +1,1 @@
+Use ordinary tools, public docs, packages and assets. Do not access the Internet Slop Warehouse or its source, hosted catalog, mirrored parts or live tools. The provided ordinary Three.js library is allowed.

@@ -79,23 +79,9 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     return new T.MeshStandardMaterial({ map: tex, normalMap: relief.normalMap, normalScale: new T.Vector2(0.25, 0.25), roughness: 0.32 });
   }
 
-  // Original hotel corridor carpet: navy field, teal lattice, gold medallions; Poly Haven wool for the pile.
+  // Corridor carpet: a real navy loop-pile carpet tile (ambientCG Fabric022, CC0), about 0.5 m a tile.
   function patternedCarpet() {
-    const tex = F.canvasTexture(512, 512, (g, w, h) => {
-      g.fillStyle = '#1f2b44'; g.fillRect(0, 0, w, h);
-      for (let i = 0; i < 4000; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * 0.04})`; g.fillRect(Math.random() * w, Math.random() * h, 2, 2); }
-      g.strokeStyle = '#2f7f86'; g.lineWidth = 14;
-      for (const o of [-w, 0, w]) { g.beginPath(); g.moveTo(o, 0); g.lineTo(o + w, h); g.moveTo(o + w, 0); g.lineTo(o, h); g.stroke(); }
-      g.strokeStyle = '#3c4f74'; g.lineWidth = 4; g.strokeRect(w / 4, h / 4, w / 2, h / 2);
-      for (const [x, y] of [[0, 0], [w, 0], [0, h], [w, h], [w / 2, h / 2]]) {
-        g.fillStyle = '#c9a24a'; g.beginPath(); g.moveTo(x, y - 46); g.lineTo(x + 46, y); g.lineTo(x, y + 46); g.lineTo(x - 46, y); g.closePath(); g.fill();
-        g.fillStyle = '#8c3b2e'; g.beginPath(); g.arc(x, y, 18, 0, 7); g.fill();
-      }
-    });
-    tex.wrapS = tex.wrapT = T.RepeatWrapping; tex.repeat.set(1 / 1.6, 1 / 1.6);
-    const pile = lib.surface('carpet', { repeat: [0.6, 0.6] });
-    pile.map = tex; pile.color.set('#ffffff'); pile.normalScale.set(0.6, 0.6);
-    return pile;
+    return lib.surface('corridor', { repeat: [2, 2], color: '#b4c6ff', roughness: 1 });   // cooled: the hall's 2700 K lights turn plain navy olive
   }
 
   // Hotel art: a consistent "Heartland" series (barn at sunset, tractor in wheat, hay bales, windmill), painted on a
@@ -273,8 +259,10 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   slabWithHoles(-12, 30, -9, 9, CEIL + 0.02, ceiling, [[9.5, 12, -8.5, -1], [6.5, 9, -4.5, -1]]);
   slab(-24, -12, -9, 9, 4.38, ceiling);                                      // below the roof slab's underside (4.4)
   // Floor 2 slab (seen from below as the ceiling above) and its walkable areas.
-  slab(-12, 30, -1, 1, FLOOR2, carpet);
-  slab(10.8, 12, -2, -1, FLOOR2, carpet);
+  // 3 mm proud of FLOOR2: the ground-floor walls under them (the stair entry's, at z = -1) top out at exactly FLOOR2, and
+  // where nothing on floor 2 sits on them (the stair doorway) their tops z-fought through the carpet.
+  slab(-12, 30, -1, 1, FLOOR2 + 0.003, carpet);
+  slab(10.8, 12, -2, -1, FLOOR2 + 0.003, carpet);
   slab(6, 9, 1, 4, FLOOR2, tile);
   slabWithHoles(-12, 30, -9, 9, FLOOR2 + CEIL + 0.02, ceiling, [[12, 16.5, 1, 9]]);
   slab(12, 16.5, 1, 9, FLOOR2 + CEIL + 0.005, drywall);                       // guest room: drywall, not tile

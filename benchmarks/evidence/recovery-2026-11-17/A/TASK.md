@@ -1,0 +1,5 @@
+# Scavenger v1
+
+Build a browser-playable scavenger scene with keyboard and touch controls. The player collects three distinct objects and opens an exit after collecting all three. Include visible progress, a restart action, and sound that starts only after a user gesture. Serve the result as static files. Provide dependency and license information. Creative style is unrestricted. Deliver a working artifact, launch instructions, and a list of reused sources and modifications.
+
+Time limit: 60 minutes. Model/spending configuration must be set consistently before starting. Work only in output/. Do not publish publicly. Report all reused sources.

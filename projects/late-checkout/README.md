@@ -38,7 +38,7 @@ node projects/late-checkout/check.mjs              # plays a whole night in Chro
 - **The lockout.** Pick up the note in the hall and the door swings shut behind you, and your key card no longer works. Dana re-keys it, which costs ten minutes.
 - **The trail is a trail.** A piece exists only once the one before it is found, so nothing turns up in your freezer before the note.
 - **Hauntings announce themselves.** The picture swells into the dream look, a low tone falls and a line names what's happening. The endless corridor happens behind a blink, and the lobby lights die bank by bank with a buzz.
-- **Sound** (`stage/audio.js`, `sfx.js`):
+- **Sound** (`roadside-inn/stage/audio.js`, `sfx.js`):
   - **Machines, placed where they stand:** hums from the vending and ice machines, buzz from the pole sign and the travel-stop fluorescents, a radio across the road that slows and goes flat after the turn.
   - **Events in space:** knocks come from doors, the payphone rings from the payphone, TVs hiss where they stand.
   - **After the turn:** a night drone, footsteps overhead and distant doors.
@@ -63,7 +63,7 @@ node projects/late-checkout/check.mjs              # plays a whole night in Chro
 
 `case.js` is pure data, which is why `case.test.mjs` can check 5000 seeds for solvability. `run.js` binds a night to the hotel, `strange.js` runs the hauntings, `clock.js` keeps time, and `spots.js` is the catalog of hiding places.
 
-## The framework (`stage/` and the shared loader)
+## The framework (the hotel's `stage/` and the shared loader)
 
 The hotel already struggled on phones. Measured in headless Chrome at phone size, it downloaded **138 MB** before the first frame and held about **1.45 GB** of textures. Mobile Safari kills a tab at roughly 1–1.5 GB.
 
@@ -72,8 +72,8 @@ The hotel already struggled on phones. Measured in headless Chrome at phone size
 | Texture budget | `roadside-inn/assets.js` `budget()` | Textures are capped by each model's real size; small props on phones drop their normal and roughness maps. Texture memory: **1450 → ~280 MB.** |
 | Streaming | `loadLibrary(…, { stream: true })` | 29 decorative props load after the first frame, nearest first. Each compiles off to the side before appearing. Phones skip props more than 45 m away. |
 | Light cells | `world.lightVisible` | A point light counts only in its own cell (room 212, or the rest of the building), unless the door is open. |
-| Post pass | `stage/dream.js` | One pass for the dream look, fades, white flash, peephole fisheye and eyelids. Skipped when nothing is active. |
-| Acts | `stage/director.js` | Named scenes; `go()` fades out, runs exit and enter, then fades in. |
+| Post pass | `roadside-inn/stage/dream.js` | One pass for the dream look, fades, white flash, peephole fisheye and eyelids. Skipped when nothing is active. |
+| Acts | `roadside-inn/stage/director.js` | Named scenes; `go()` fades out, runs exit and enter, then fades in. |
 
 Shared fixes (the original game gets them too):
 

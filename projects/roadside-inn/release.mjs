@@ -33,6 +33,10 @@ export const PART_MODULES = {
   [inn('sound.js')]: ['heartland-hotel', { createSound: 'createSound' }],
   [inn('quality.js')]: ['heartland-hotel', { quality: 'quality' }],
   [inn('player.js')]: ['heartland-hotel', { createPlayer: 'createPlayer', RADIUS: 'RADIUS', EYE: 'EYE' }],
+  [inn('stage/dream.js')]: ['heartland-hotel', { createDream: 'createDream' }],
+  [inn('stage/director.js')]: ['heartland-hotel', { createDirector: 'createDirector' }],
+  [inn('stage/audio.js')]: ['heartland-hotel', { createSoundscape: 'createSoundscape' }],
+  [inn('stage/scenes.js')]: ['heartland-hotel', { createReel: 'createReel', pickScenes: 'pickScenes' }],
   [resolve(repo, 'parts/zone-culling.js')]: ['zone-culling', { attach: 'attach' }],
 };
 // One shared loader: a logic part's stored JSON holds its module as { js }; import it once, from the page's pins.
@@ -72,8 +76,8 @@ export async function buildHotelPart() {
   const entry = {
     id: 'heartland-hotel', type: 'logic', kind: 'effect', file: '../artifacts/roadside-inn/heartland-hotel.js',
     title: 'Heartland Inn Express (building and engine)',
-    description: 'The two-storey interstate hotel from Heartland Inn Express, shared by every game set in it. attach(parent) drops the building into any three.js scene: lobby, front desk, pantry, lounge, pool wing, gym, elevator, switchback stair, corridors and room 212, with colliders, walkable floors, doors, the elevator and interactions. Games that are the hotel use its engine instead: loadLibrary (every asset, pinned, lite models for phones), buildWorld (also the parking lot, interstate and travel stop, plus zones and what each zone sees, for zone-culling), createPlayer (a physics first-person player on physics-world), createSound, attachInput (keyboard, mouse and touch) and quality (a battery-conscious phone profile). Heartland Inn, Late Checkout and Escape from Slopov II load it rather than bundling the hotel.',
-    tags: ['hotel', 'building', 'level', 'interior', 'engine', 'first-person', 'realistic', 'three.js', 'effect', 'cc0'],
+    description: 'The two-storey interstate hotel from Heartland Inn Express, shared by every game set in it. attach(parent) drops the building into any three.js scene: lobby, front desk, pantry, lounge, pool wing, gym, elevator, switchback stair, corridors and room 212, with colliders, walkable floors, doors, the elevator and interactions. Games that are the hotel use its engine instead: loadLibrary (every asset, pinned, lite models for phones), buildWorld (also the parking lot, interstate and travel stop, plus zones and what each zone sees, for zone-culling), createPlayer (a physics first-person player on physics-world), createSound, attachInput (keyboard, mouse and touch) and quality (a battery-conscious phone profile). It also carries the stage for games told in scenes: a post pass (dream look, fades, peephole, eyelids), a director of acts, a soundscape of placed sounds, and a reel that splices scenes (check in, then a haunting, or a quiet night). Heartland Inn, Late Checkout, Escape from Slopov II and Catherine load it rather than bundling the hotel.',
+    tags: ['hotel', 'building', 'level', 'interior', 'engine', 'first-person', 'realistic', 'three.js', 'effect', 'scenes', 'director', 'post-processing', 'spatial-audio', 'cc0'],
     author: 'the internet slop warehouse', license: 'CC0-1.0 AND MIT',
     exports: [
       { name: 'attach', signature: 'attach(parent, opts) → Promise<{ colliders, surfaces, interact, lightAnchors, zones, sees, elevator, room, setTimeOfDay, update(dt, player), dispose() }>', does: 'Load the pinned assets and build the hotel into parent' },
@@ -83,6 +87,11 @@ export async function buildHotelPart() {
       { name: 'createSound', signature: 'createSound(foley) → sound', does: 'Footsteps, ambience and effects' },
       { name: 'attachInput', signature: 'attachInput(canvas, { onUse, onInspect, onMenu }) → controls', does: 'Keyboard, mouse look and touch controls' },
       { name: 'quality', signature: '{ economy, fps, pixelRatio, lights }', does: 'The phone profile: 30 fps, pixel ratio 1, four lights' },
+      { name: 'createDream', signature: 'createDream(renderer, { economy }) → fx { set, snap, to, render(scene, camera, dt), resize, values }', does: 'One post pass for scenes: dream look, fades, white flash, door-peephole fisheye and eyelids' },
+      { name: 'createDirector', signature: 'createDirector({ fx, acts, ctx }) → { go(name, { fadeOut, fadeIn }), update(dt), name }', does: 'Named acts of one world, with fades between them' },
+      { name: 'createSoundscape', signature: 'createSoundscape(synth, { economy }) → { at(pos, play), loop(pos, make, { range, gain, on }), update(camera, { wet }) }', does: 'Sounds placed in the hotel, looping emitters and a shared reverb' },
+      { name: 'createReel', signature: 'createReel(ctx, scenes, { fx, onEnd }) → Promise<{ director, start() }>', does: 'Splice scenes ({ acts, start, install }) into one playthrough; a scene calls ctx.next() when done' },
+      { name: 'pickScenes', signature: 'pickScenes(all, fallback) → scene[]', does: 'The scenes named in ?scenes=a,b' },
       { name: 'PART_IDS', signature: 'string[]', does: 'Every warehouse part the hotel loads' },
       { name: 'FLOOR2', signature: 'number', does: 'Height of the second floor (3.2 m)' },
       { name: 'EYE', signature: 'number', does: 'Eye height, metres' },

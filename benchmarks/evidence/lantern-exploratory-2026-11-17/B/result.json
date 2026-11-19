@@ -1,0 +1,48 @@
+{
+  "runId": "lantern-courier-exploratory-2026-11-17-B",
+  "taskId": "lantern-courier-v1-exploratory",
+  "condition": "B",
+  "status": "completed",
+  "metrics": {
+    "elapsedSeconds": 532.9,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null
+  },
+  "reuse": [
+    {
+      "id": "three",
+      "version": "0.170.0",
+      "license": "MIT",
+      "source": "supplied vendor/three.module.min.js",
+      "modifications": "none"
+    },
+    {
+      "id": "ability-clock",
+      "recordCid": "bafyreidgcsaecxbc3g2qzivncznsxupq44ecct56mbdvna62osmvdkbtxq",
+      "sourceCid": "bafkreiar5imxyfin6suovhtej2gja4z2nms4e66zdbv46lyxdvbmmckjhu",
+      "license": "CC0-1.0",
+      "modifications": "none; extracted js value verbatim"
+    }
+  ],
+  "acceptance": {
+    "implementationComplete": true,
+    "modelTestsPassed": 7,
+    "packageTestsPassed": 2,
+    "syntaxChecksPassed": true,
+    "safeRouteSimulationSeconds": 166.2,
+    "safeRouteSimulationRecalls": 0,
+    "browserVerified": false,
+    "keyboardTouchWiringPresent": true,
+    "runtimeFilesLocal": true,
+    "sourceAndLicenseNotes": true,
+    "launchInstructions": true,
+    "appendOnlyLog": true,
+    "published": false
+  },
+  "deviations": [
+    "Exploratory run: soft resource targets, no hard provider-level enforcement; actual browser QA unavailable.",
+    "Actual browser QA unavailable as specified; rendering, mobile usability, audio and novice duration remain unverified. Safe-route duration is model simulation only."
+  ]
+}

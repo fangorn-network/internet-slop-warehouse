@@ -1,0 +1,681 @@
+[
+  {
+    "id": "ph-pull-chain-light-socket",
+    "upstreamId": "pull_chain_light_socket",
+    "creator": "Josh Dean",
+    "source": "https://polyhaven.com/a/pull_chain_light_socket",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-18T22:57:42.253Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/pull_chain_light_socket/pull_chain_light_socket_1k.gltf",
+        "bytes": 4348,
+        "sha256": "093c38e382efeaf605be0133bec7a93a8b2c935c40a5d0f311468053681d8258",
+        "upstreamMd5": "bf3a19bf800db09f2741c08360123f72"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/pull_chain_light_socket/pull_chain_light_socket.bin",
+        "bytes": 283524,
+        "sha256": "a258aff9c893175c7ddcd09a904900ff10047a1a3ad51688b867c95208b45b4e",
+        "upstreamMd5": "2386405ddd9115f0e6b91c1966f93247"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pull_chain_light_socket/pull_chain_light_socket_nor_gl_1k.jpg",
+        "bytes": 572512,
+        "sha256": "8af515ce9ad355961bfc086830c54e065a579a737f233cea627735f850256860",
+        "upstreamMd5": "3a3808406e6153229cfe57701846fdbc"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pull_chain_light_socket/pull_chain_light_socket_diff_1k.jpg",
+        "bytes": 458455,
+        "sha256": "92675203e71250358db8e200a8a367ff39839f231db93050135718769b155552",
+        "upstreamMd5": "5f06d967f5c2b2544d9aafedb2365ead"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pull_chain_light_socket/pull_chain_light_socket_arm_1k.jpg",
+        "bytes": 729658,
+        "sha256": "35a97a7025587b8d11cbe32e385b8383fe8e7cb05e1e84c74f58cf31c5f1c295",
+        "upstreamMd5": "ff67fb67d6e7b402a5298b5194e76e1b"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-pull-chain-light-socket.glb",
+      "bytes": 2046864,
+      "sha256": "30be281735f0dcb16e8b0ed449d4d3ce79600bae423ccaa8203f4cb9dcdeb4c7",
+      "meshes": 2,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "name": "Pull Chain Light Socket",
+      "type": 2,
+      "authors": {
+        "Josh Dean": "All"
+      },
+      "info": null,
+      "date_published": 1694995200,
+      "categories": [
+        "lighting",
+        "collection: hidden_alley"
+      ],
+      "tags": [
+        "light",
+        "fitting",
+        "socket",
+        "bulb",
+        "fixture",
+        "ceiling",
+        "lamp",
+        "chord"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 10902,
+      "texel_density": 31553.42254334143,
+      "dimensions": [
+        110.2633886039257,
+        110.2633848786354,
+        165.41572205081323
+      ],
+      "files_hash": "8a23a75031188d91dc77677e24dcf2c56f7a25af",
+      "description": "Free 8K model of a vintage porcelain pull-chain light socket with worn glossy finish, visible mounting cavities, brass beaded chain and small bell pull.",
+      "category_id": "7a1ddd73-d1c9-5e16-8de0-e8e1ff3eae5f",
+      "category": "Lighting/Bulbs & Fittings/Sockets & Fittings",
+      "collections": [
+        "hidden_alley"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "ceramic",
+          "brass"
+        ]
+      },
+      "img_version": "9b6680bc",
+      "download_count": 2853,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/pull_chain_light_socket.png?width=256&height=256&format=webp&v=9b6680bc"
+    }
+  },
+  {
+    "id": "ph-lightbulb-01",
+    "upstreamId": "lightbulb_01",
+    "creator": "Josh Dean",
+    "source": "https://polyhaven.com/a/lightbulb_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-18T22:57:42.855Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/lightbulb_01/lightbulb_01_1k.gltf",
+        "bytes": 5721,
+        "sha256": "6b17f2a316b0562fc5eeaa9a7dd64855c0f76499b64e9ad45081ed7243116826",
+        "upstreamMd5": "986746bdf4c993214512761ae5efb301"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/lightbulb_01/lightbulb_01.bin",
+        "bytes": 114776,
+        "sha256": "6df75cf32b286d6ead20a98c26ddab7fd46a5742c4e4c52eeec1bbb20126b737",
+        "upstreamMd5": "e4db6889652c52d164e649b1101ebffd"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_nor_gl_1k.jpg",
+        "bytes": 262367,
+        "sha256": "7003bb598feee5cf0d592d53e228992afe56580a0f012a38ce888f5fe9ea98f2",
+        "upstreamMd5": "42fa73f5c93d4d89fe6094a4127475c6"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_diff_1k.jpg",
+        "bytes": 310075,
+        "sha256": "8b11885644f5c1d08eb142974ceb8e43edfe7585042fa1e45ff86e79e3569863",
+        "upstreamMd5": "754718705441e6924a6a8c72d0de88a6"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_arm_1k.jpg",
+        "bytes": 326758,
+        "sha256": "0602d1b32e535f5af1bebc36dda76498dec87c4b2c144fd68d82b54bcb460260",
+        "upstreamMd5": "21b7d5796114fe012c9866da9e2cb041"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_emissive_1k.jpg",
+        "bytes": 22999,
+        "sha256": "4267e103b28112291061a722430ca9d75909bb7c3cbe4d7466a67f608e26aeee",
+        "upstreamMd5": "2ede5ca5a42ed8d1e510d35bcc535565"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_nor_gl_1k.jpg",
+        "bytes": 262367,
+        "sha256": "7003bb598feee5cf0d592d53e228992afe56580a0f012a38ce888f5fe9ea98f2",
+        "upstreamMd5": "42fa73f5c93d4d89fe6094a4127475c6"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_diff_1k.jpg",
+        "bytes": 310075,
+        "sha256": "8b11885644f5c1d08eb142974ceb8e43edfe7585042fa1e45ff86e79e3569863",
+        "upstreamMd5": "754718705441e6924a6a8c72d0de88a6"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/lightbulb_01/lightbulb_01_arm_1k.jpg",
+        "bytes": 326758,
+        "sha256": "0602d1b32e535f5af1bebc36dda76498dec87c4b2c144fd68d82b54bcb460260",
+        "upstreamMd5": "21b7d5796114fe012c9866da9e2cb041"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-lightbulb-01.glb",
+      "bytes": 1939896,
+      "sha256": "6262f4393237123933d7aecc92ed98a37517ccf49e5fefc8a3fd56da8f0a6b01",
+      "meshes": 1,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1669593600,
+      "name": "Lightbulb 01",
+      "type": 2,
+      "info": null,
+      "authors": {
+        "Josh Dean": "All"
+      },
+      "sponsors": [
+        "3237733"
+      ],
+      "categories": [
+        "lighting",
+        "collection: the_shed"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 4372,
+      "texel_density": 23427.774354344423,
+      "dimensions": [
+        59.98999997973442,
+        59.99000743031502,
+        100.28896853327751
+      ],
+      "files_hash": "0f45de394da900da2d80c517460af9bbf364125c",
+      "tags": [
+        "globe",
+        "filament",
+        "light",
+        "lamp",
+        "shed",
+        "bulb",
+        "illumination",
+        "incandescent",
+        "coil filament",
+        "glass bulb"
+      ],
+      "description": "Free 4K model of a worn glass incandescent bulb: globe with visible coil filament, metal screw base, realistic scratches, smudges and reflective surface.",
+      "category_id": "0b2c1912-1998-5404-bdeb-7d6b082ffef6",
+      "category": "Lighting/Bulbs & Fittings/Bulbs",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "glass",
+          "metal"
+        ]
+      },
+      "img_version": "5fc1549d",
+      "download_count": 24472,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/lightbulb_01.png?width=256&height=256&format=webp&v=5fc1549d"
+    }
+  },
+  {
+    "id": "ph-vintage-grandfather-clock-01",
+    "upstreamId": "vintage_grandfather_clock_01",
+    "creator": "Yann Kervran, James Ray Cock",
+    "source": "https://polyhaven.com/a/vintage_grandfather_clock_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-18T22:57:45.291Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/vintage_grandfather_clock_01/vintage_grandfather_clock_01_1k.gltf",
+        "bytes": 7868,
+        "sha256": "5d3aa1d5daabe830aed603e448a8f14f3993ec8a1116e083c181420a4fe1573a",
+        "upstreamMd5": "4d2f771bb5d436d90a51a3898fca91d7"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/vintage_grandfather_clock_01/vintage_grandfather_clock_01.bin",
+        "bytes": 337224,
+        "sha256": "a6369fa664dd13d281e87c63f0ba31a0350291c93322fd10ec63f2ba4d252fd3",
+        "upstreamMd5": "4f5932b271405233d3b7ce175d0030e1"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_grandfather_clock_01/vintage_grandfather_clock_01_nor_gl_1k.jpg",
+        "bytes": 639744,
+        "sha256": "a41aff853e19918f81c6b3d2a4b14034ca002b136779f8e5daa10d33cbdbecf7",
+        "upstreamMd5": "59d8c7699450fe8fb995defdda657911"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_grandfather_clock_01/vintage_grandfather_clock_01_diff_1k.jpg",
+        "bytes": 628931,
+        "sha256": "2da73ab925dd5c18aa4c428f34519919a115dc45c37cf27976a3a15323ef7d9f",
+        "upstreamMd5": "8cbc3cc8f787da9ab3f251ee2be1ad25"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_grandfather_clock_01/vintage_grandfather_clock_01_arm_1k.jpg",
+        "bytes": 748415,
+        "sha256": "e0425b70773bc624f296f3b83f3a8001ac05f3d2cbcd1b1e1bd79dd1ca4b94de",
+        "upstreamMd5": "3ec5c1e3facd0cdad5fb8879eabd26b3"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_grandfather_clock_01/vintage_grandfather_clock_01_diff_1k.jpg",
+        "bytes": 628931,
+        "sha256": "2da73ab925dd5c18aa4c428f34519919a115dc45c37cf27976a3a15323ef7d9f",
+        "upstreamMd5": "8cbc3cc8f787da9ab3f251ee2be1ad25"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-vintage-grandfather-clock-01.glb",
+      "bytes": 2988072,
+      "sha256": "dc76e3d1b8c58c22d040a5b22b97c771b30366ee528fd0b8435fb500f6df975f",
+      "meshes": 3,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "tags": [
+        "vintage",
+        "antique",
+        "fancy",
+        "time",
+        "clock",
+        "old",
+        "wooden",
+        "ornate"
+      ],
+      "name": "Vintage Grandfather Clock 01",
+      "date_published": 1627430400,
+      "sponsors": [
+        "26820710"
+      ],
+      "categories": [
+        "decorative",
+        "appliances",
+        "rigged"
+      ],
+      "authors": {
+        "Yann Kervran": "Rigging",
+        "James Ray Cock": "Modeling & Texturing"
+      },
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 12604,
+      "dimensions": [
+        996.6365396976471,
+        795.2136099338531,
+        2190.5919313430786
+      ],
+      "description": "Free 8K model - ornate vintage wooden grandfather clock with antique brass dial and moonphase, fully rigged for animation; ideal for decorative or period sets.",
+      "category_id": "78e2cdf4-5d1e-5e5a-9396-933299fbe72b",
+      "category": "Electronics & Appliances/Clocks & Timepieces/Grandfather Clocks",
+      "img_version": "72714663",
+      "files_hash": "225a23b74efa589c46b353905b3a5d18718ec80d",
+      "geonodes": true,
+      "texel_density": 3056.349470879425,
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood",
+          "brass",
+          "glass"
+        ],
+        "rigged": true,
+        "geonodes": true
+      },
+      "download_count": 29751,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/vintage_grandfather_clock_01.png?width=256&height=256&format=webp&v=72714663"
+    }
+  },
+  {
+    "id": "ph-gothiccommode-01",
+    "upstreamId": "GothicCommode_01",
+    "creator": "Kirill Sannikov",
+    "source": "https://polyhaven.com/a/GothicCommode_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-18T22:57:45.669Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/GothicCommode_01/GothicCommode_01_1k.gltf",
+        "bytes": 7054,
+        "sha256": "290602a9d999ddff0073288758e162fbfbb69834c0cd93e83f6691996e94d775",
+        "upstreamMd5": "491a4bb1c267ecd9f6592c55308a5286"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/GothicCommode_01/GothicCommode_01.bin",
+        "bytes": 135224,
+        "sha256": "1a1d7b7840d7357a21a4825a10df00b7957355c21babced7864592593bd97293",
+        "upstreamMd5": "4f691c34556ea46dd5bc59833e2d5ae9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/GothicCommode_01/GothicCommode_01_nor_gl_1k.jpg",
+        "bytes": 148711,
+        "sha256": "bafa9433cc98fc52687958989015d7f1b9c4048ac930cb2e1174edef8bd34d8e",
+        "upstreamMd5": "98f49cd397fc5ee4e95e7c33eef140f9"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/GothicCommode_01/GothicCommode_01_diff_1k.jpg",
+        "bytes": 139422,
+        "sha256": "096ec1663936b25f773fd3070c89a732cf3e856187404e9715fa2c8311325800",
+        "upstreamMd5": "f4a5fb099986a9627f675efe1b77ae10"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/GothicCommode_01/GothicCommode_01_arm_1k.jpg",
+        "bytes": 173750,
+        "sha256": "c0a23a8775c8714d5f6cea62af044480b71b935e56eab675ee9b3f0330e5dce5",
+        "upstreamMd5": "b4eacccbd3add26eb3c714ea8585a90d"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-gothiccommode-01.glb",
+      "bytes": 601368,
+      "sha256": "6b33e3fbfe7888d727447986d7665796d4d5bb149b764e8260953732fec7355b",
+      "meshes": 4,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "tags": [
+        "vintage",
+        "wood",
+        "table",
+        "gothic",
+        "shelf",
+        "furniture",
+        "decorative"
+      ],
+      "date_published": 1585605600,
+      "name": "Gothic Commode 01",
+      "categories": [
+        "furniture",
+        "shelves"
+      ],
+      "authors": {
+        "Kirill Sannikov": "All"
+      },
+      "sponsors": [
+        "66627515"
+      ],
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 3897,
+      "texel_density": 11.58479802006512,
+      "dimensions": [
+        1201.4026641845703,
+        580.6596577167511,
+        1212.042630148815
+      ],
+      "files_hash": "44af11eb2a3a9261b91143b84907aeede142858e",
+      "description": "Free 4K model: vintage Gothic wooden commode with carved arches, three drawers and decorative trim.",
+      "category_id": "f4401003-06dc-5a1f-97c1-f7a27a1c88d4",
+      "category": "Furniture/Storage Furniture/Drawers & Dressers",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "209ed365",
+      "download_count": 39063,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/GothicCommode_01.png?width=256&height=256&format=webp&v=209ed365"
+    }
+  },
+  {
+    "id": "ph-wooden-stool-01",
+    "upstreamId": "wooden_stool_01",
+    "creator": "Kuutti Siitonen",
+    "source": "https://polyhaven.com/a/wooden_stool_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-18T22:57:46.177Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/wooden_stool_01/wooden_stool_01_1k.gltf",
+        "bytes": 2715,
+        "sha256": "f28566454af27175839c10645a37a2a16b373e4be8aecddd0d8a3d704cfc0330",
+        "upstreamMd5": "6a3c9169ce7ade1796efca8b88c75c50"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/wooden_stool_01/wooden_stool_01.bin",
+        "bytes": 290924,
+        "sha256": "a9b21b8c75719057db549dfee5b8c1cc76edc2727367790fb9fc49963e34ae7a",
+        "upstreamMd5": "883e9617a69e90be7e19447dca83041c"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_stool_01/wooden_stool_01_nor_gl_1k.jpg",
+        "bytes": 230812,
+        "sha256": "10b587d76b74e752f15d03d2c4725cddb439b174dcddae2444e1534de61d77dc",
+        "upstreamMd5": "99541327d77d7f8a740aad45ff86760f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_stool_01/wooden_stool_01_diff_1k.jpg",
+        "bytes": 233863,
+        "sha256": "cb5c7ec2e27f5ad2ced7791da5e2cc9f1d03ab2c6ffbb63df8256dc271869206",
+        "upstreamMd5": "11e0ab4da421bf248e8d9de2c34a95fb"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/wooden_stool_01/wooden_stool_01_rough_1k.jpg",
+        "bytes": 203406,
+        "sha256": "23b43e05961731de864e4902a14c614b33d804fd91821c284fa90a8d2ca23fe1",
+        "upstreamMd5": "339c0ab3c8c1618a0ebcd281004ea5ba"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-wooden-stool-01.glb",
+      "bytes": 960732,
+      "sha256": "fe0ca52a41ac0de7346513aba10508f106013e5b6ce8f97e3996f9417242881d",
+      "meshes": 1,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "donated": true,
+      "date_published": 1634688000,
+      "name": "Wooden Stool 01",
+      "type": 2,
+      "authors": {
+        "Kuutti Siitonen": "All"
+      },
+      "categories": [
+        "seating",
+        "furniture",
+        "collection: the_shed"
+      ],
+      "tags": [
+        "old",
+        "worn",
+        "dirty",
+        "workshop",
+        "outdoor",
+        "stool",
+        "woodwork",
+        "shop"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 10946,
+      "texel_density": 10354.855086104666,
+      "dimensions": [
+        425.3551661968231,
+        442.36281514167786,
+        437.35266576914
+      ],
+      "files_hash": "8649ad7ef50e62cfd22d57a62ac0c3d525fb93f3",
+      "description": "Free 8K model of an old, worn wooden stool with a cracked round seat, turned legs and weathered grain, dusty finish and workshop-aged patina.",
+      "category_id": "302a40f3-e544-5721-b63b-ca3574e9975a",
+      "category": "Furniture/Seating/Stools & Bar Seating",
+      "collections": [
+        "the_shed"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "1163a287",
+      "download_count": 13018,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/wooden_stool_01.png?width=256&height=256&format=webp&v=1163a287"
+    }
+  },
+  {
+    "id": "ph-hanging-picture-frame-02",
+    "upstreamId": "hanging_picture_frame_02",
+    "creator": "James Ray Cock",
+    "source": "https://polyhaven.com/a/hanging_picture_frame_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-18T22:57:46.760Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/hanging_picture_frame_02/hanging_picture_frame_02_1k.gltf",
+        "bytes": 6433,
+        "sha256": "ea9a1d44e8d794e224a5342204669a328b57d64d5df629d1d5d86e60e27245e5",
+        "upstreamMd5": "4db648e1f6ba5444a53adb31c81c8705"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/hanging_picture_frame_02/hanging_picture_frame_02.bin",
+        "bytes": 115080,
+        "sha256": "0ed5813c8b30f63807ffac962e47135d3248b3804e07cb93862c13e29bed83d8",
+        "upstreamMd5": "3e88b7525d7bf9b8f33660100c953cff"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_artwork_nor_gl_1k.jpg",
+        "bytes": 45035,
+        "sha256": "8a700c0d7d3f464177ead95879d60a8bf43ef77c034881379b2c036406ab9e27",
+        "upstreamMd5": "5682ebd5c7acef6af307013b707affb0"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_artwork_diff_1k.jpg",
+        "bytes": 138383,
+        "sha256": "7e26aee962965fb201975ef5a99e2751a24c4b461b48e8348cea9f31cde027c2",
+        "upstreamMd5": "4cc4caf766c1889ae5d7e8c71acbe19b"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_artwork_roughness_1k.jpg",
+        "bytes": 74142,
+        "sha256": "305018ab800cbd02d61c08f9c5a422c2777f2b5cbb20579f671be56a1fb21853",
+        "upstreamMd5": "ffe5f1805a7219ce745c950b71115bec"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_nor_gl_1k.jpg",
+        "bytes": 56776,
+        "sha256": "79367cf9d7e4981263dd1439297585148d6c93500acaffa7afeb534351e68b86",
+        "upstreamMd5": "bc686a415608ae66bd88f70d081fd572"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_diff_1k.jpg",
+        "bytes": 146402,
+        "sha256": "575f2b6481b9e02474750ded776a0b490744228cb64d9b346f28bd78b9cf5897",
+        "upstreamMd5": "906c164baad3f02b67244998b7558a9c"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/hanging_picture_frame_02/hanging_picture_frame_02_arm_1k.jpg",
+        "bytes": 113780,
+        "sha256": "67378630bc6bb69799f8ee0fde4ab11ecd9e7a43ed3dfef402fdd784d8c2cea3",
+        "upstreamMd5": "01e09bbe488c7a2953b5a207fdf192ca"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-hanging-picture-frame-02.glb",
+      "bytes": 693588,
+      "sha256": "68c17c69c769a1859d94e34d592df97c7d585d1dd6fad773c924c3afb22d523f",
+      "meshes": 1,
+      "materials": 3,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "tags": [
+        "wood",
+        "painting",
+        "old",
+        "art",
+        "frame"
+      ],
+      "name": "Hanging Picture Frame 02",
+      "categories": [
+        "decorative",
+        "wall decoration"
+      ],
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "date_published": 1623767614,
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 3678,
+      "texel_density": 8788.73899561775,
+      "dimensions": [
+        751.8134415149689,
+        33.07514381594956,
+        499.9999701976776
+      ],
+      "files_hash": "f03e795394b46309121f238f59e712801a0e6e90",
+      "description": "Free 8K model of a vintage wooden hanging picture frame with distressed white finish and faded painted artwork - perfect for decorative wall scenes and period interiors.",
+      "category_id": "120bc7c7-4121-53e5-848a-89f3cb7cbf51",
+      "category": "Decor & Art/Wall Decor/Picture Frames & Art",
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "wood"
+        ]
+      },
+      "img_version": "85c54925",
+      "download_count": 23890,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/hanging_picture_frame_02.png?width=256&height=256&format=webp&v=85c54925"
+    }
+  }
+]

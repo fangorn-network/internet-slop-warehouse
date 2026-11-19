@@ -1,0 +1,10 @@
+# Lantern Courier implementation log
+
+2026-11-17T00:00:00Z — Run initiated; exact start UTC follows in next entry. Constraints read. Browser/localhost unavailable; no browser retries planned.
+2026-11-17T16:12:39.764820+00:00 — Checkpoint 1: output directory present, result running. Plan authored route, original procedural art, local Three.js 0.170.0, shared deterministic gameplay core.
+
+2026-11-17T16:17:53.663832+00:00 — Correction: first entry placeholder 00:00:00Z is not an observed timestamp. Actual initialization was 2026-11-17T16:12:39Z. Checkpoint 2: core.mjs, index.html, style.css, main.mjs implemented. Two semantic queries returned controllers/building systems; none adopted, as they add gravity/first-person or map dependencies outside this authored causeway game. All art and gameplay are original procedural source.
+
+2026-11-17T16:21:36.504338+00:00 — Checkpoint 3: 8 gameplay tests pass, complete input-driven run 198.8 seconds and 0 recalls; central cut 15.9 seconds vs west arc 31.1 seconds (collision-aware simulation, hazard delays excluded only for distance comparison). Initial boundary test accidentally intersected a storm; isolated its geometry assertion with test-only immunity. Node --test child execution failed without detailed output in sandbox; direct node test-file execution runs successfully. Extracted shared input module and passed 4 injected-EventTarget tests for held keys, cooldown key repeats, touch release, blur/hidden/cancel/reset cleanup, menu gating. 3 static checks pass, including local imports and Three revision 170. Found and fixed destination-sign reset for a second attempt. Actual browser/WebGL/mobile not exercised.
+
+2026-11-17T16:22:58.602374+00:00 — Final checkpoint: all 15 tests passed after input refactor and keyboard-focused button handling fix. Source syntax checks pass. Launch, licenses, exact dependency version, discovery/modification notes and evidence report written. All runtime assets are local; no publication. Final result.json set completed with measured elapsed time; unavailable token/cost fields remain null. Browser/render/mobile/audio behavior remains unverified.

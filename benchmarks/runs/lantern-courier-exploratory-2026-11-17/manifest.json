@@ -1,0 +1,21 @@
+{
+  "taskId": "lantern-courier-v1-exploratory",
+  "briefSha256": "c4c55c5b91430cb47be984c727edbad6b6c2bbfda84d6a9d4e5eb779f1ac5887",
+  "conditions": [
+    "A",
+    "B",
+    "C-semantic-local"
+  ],
+  "repetitions": 1,
+  "scope": "Exploratory fixed-spec builds for human play comparison, not a hard-token or statistical experiment",
+  "safetyMinutes": 60,
+  "softOutputTokenTarget": 25000,
+  "softApiEquivalentUsdTarget": 0.75,
+  "ordinaryLibrary": {
+    "name": "three",
+    "version": "0.170.0",
+    "sha256": "08fd7545d13d2c7fb65ab691530a802dafefd638596501854f267d0fb13c39e7"
+  },
+  "qualityRatings": "not collected; founder comparison pending",
+  "fixtureRoot": "bafyreibycvekyxezblss7g2mn3jbutgwbb6frhiic265bz63ijkcmu4uc4"
+}

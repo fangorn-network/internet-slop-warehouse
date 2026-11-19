@@ -1,0 +1,230 @@
+[
+  {
+    "id": "ph-oldhouse-floorboards-color",
+    "file": "haven/ph-oldhouse-floorboards-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house floorboards color",
+    "author": "Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "floorboards",
+      "color"
+    ],
+    "description": "Weathered rough-sawn floorboards, color map (1K). sRGB base color. Source https://polyhaven.com/a/raw_wooden_floor_01, by Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-floorboards-normal",
+    "file": "haven/ph-oldhouse-floorboards-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house floorboards normal",
+    "author": "Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "floorboards",
+      "normal"
+    ],
+    "description": "Weathered rough-sawn floorboards, normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/raw_wooden_floor_01, by Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-floorboards-roughness",
+    "file": "haven/ph-oldhouse-floorboards-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house floorboards roughness",
+    "author": "Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "floorboards",
+      "roughness"
+    ],
+    "description": "Weathered rough-sawn floorboards, roughness map (1K). Linear roughness. Source https://polyhaven.com/a/raw_wooden_floor_01, by Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-wallpaper-color",
+    "file": "haven/ph-oldhouse-wallpaper-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house wallpaper color",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "wallpaper",
+      "color"
+    ],
+    "description": "Aged, stained wallpaper, color map (1K). sRGB base color. Source https://polyhaven.com/a/decrepit_wallpaper, by Rob Tuytel. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-wallpaper-normal",
+    "file": "haven/ph-oldhouse-wallpaper-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house wallpaper normal",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "wallpaper",
+      "normal"
+    ],
+    "description": "Aged, stained wallpaper, normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/decrepit_wallpaper, by Rob Tuytel. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-wallpaper-roughness",
+    "file": "haven/ph-oldhouse-wallpaper-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house wallpaper roughness",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "wallpaper",
+      "roughness"
+    ],
+    "description": "Aged, stained wallpaper, roughness map (1K). Linear roughness. Source https://polyhaven.com/a/decrepit_wallpaper, by Rob Tuytel. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-wainscot-color",
+    "file": "haven/ph-oldhouse-wainscot-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house wainscot color",
+    "author": "Dimitrios Savva",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "wainscot",
+      "color"
+    ],
+    "description": "Dark wood wainscot panelling, color map (1K). sRGB base color. Source https://polyhaven.com/a/wooden_panels, by Dimitrios Savva. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-wainscot-normal",
+    "file": "haven/ph-oldhouse-wainscot-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house wainscot normal",
+    "author": "Dimitrios Savva",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "wainscot",
+      "normal"
+    ],
+    "description": "Dark wood wainscot panelling, normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/wooden_panels, by Dimitrios Savva. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-wainscot-roughness",
+    "file": "haven/ph-oldhouse-wainscot-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house wainscot roughness",
+    "author": "Dimitrios Savva",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "wainscot",
+      "roughness"
+    ],
+    "description": "Dark wood wainscot panelling, roughness map (1K). Linear roughness. Source https://polyhaven.com/a/wooden_panels, by Dimitrios Savva. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-ceiling-color",
+    "file": "haven/ph-oldhouse-ceiling-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house ceiling color",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "ceiling",
+      "color"
+    ],
+    "description": "Grey plaster ceiling, color map (1K). sRGB base color. Source https://polyhaven.com/a/grey_plaster_02, by Rob Tuytel. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-ceiling-normal",
+    "file": "haven/ph-oldhouse-ceiling-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house ceiling normal",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "ceiling",
+      "normal"
+    ],
+    "description": "Grey plaster ceiling, normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/grey_plaster_02, by Rob Tuytel. CC0-1.0."
+  },
+  {
+    "id": "ph-oldhouse-ceiling-roughness",
+    "file": "haven/ph-oldhouse-ceiling-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Old house ceiling roughness",
+    "author": "Rob Tuytel",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "old-house",
+      "realistic",
+      "texture",
+      "pbr",
+      "ceiling",
+      "roughness"
+    ],
+    "description": "Grey plaster ceiling, roughness map (1K). Linear roughness. Source https://polyhaven.com/a/grey_plaster_02, by Rob Tuytel. CC0-1.0."
+  }
+]

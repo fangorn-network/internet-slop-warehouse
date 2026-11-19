@@ -1,0 +1,1 @@
+PASS VM DOM simulation: app initialization, drawing at simulated mobile width, keyboard, pause/resume clears input, pointer movement/release, restart, export/load, rejected load, blur pause. Not a browser/device test.

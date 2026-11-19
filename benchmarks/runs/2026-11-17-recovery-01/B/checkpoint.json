@@ -1,0 +1,21 @@
+{
+  "stage": "builder-finalized",
+  "rawResult": "output/result.json",
+  "normalizedResult": "result.json",
+  "artifactFiles": [
+    "output/FINAL-REPORT.md",
+    "output/LICENSE",
+    "output/README.md",
+    "output/RUN-LOG.md",
+    "output/SOURCES.md",
+    "output/TEST-RESULTS.txt",
+    "output/core.mjs",
+    "output/game.mjs",
+    "output/index.html",
+    "output/result.json",
+    "output/smoke.mjs",
+    "output/style.css",
+    "output/test.mjs",
+    "output/vendor/collect.mjs"
+  ]
+}

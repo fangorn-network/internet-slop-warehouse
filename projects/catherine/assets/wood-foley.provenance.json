@@ -1,0 +1,58 @@
+[
+  {
+    "id": "footstep_wood_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_wood_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "5f1c252942a220d658121bd9417448cd19649ded9fff2ff15f6e50899373ce8e",
+    "bytes": 5949
+  },
+  {
+    "id": "footstep_wood_001",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_wood_001.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "e4f68e1c9fd55b4dc8ca89ed2bbab6f200171bc54bdc18aa96b80d8e7336f462",
+    "bytes": 5929
+  },
+  {
+    "id": "footstep_wood_002",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_wood_002.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "9ff095b05cee5eec40b081defe3f0eef7232bb16d4865ce03b9f6dbab875cfdd",
+    "bytes": 5895
+  },
+  {
+    "id": "footstep_wood_003",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_wood_003.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "2a68a083daa9eda08fed0ea5da5280dfbe0de226196c576be02f95259dd139d9",
+    "bytes": 6207
+  },
+  {
+    "id": "footstep_wood_004",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/footstep_wood_004.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "b33e0854e2b3f6b6492e25c25ef8f90447a332f7c6bb25dd02edced9581d3441",
+    "bytes": 5799
+  },
+  {
+    "id": "impactWood_heavy_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/impactWood_heavy_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "15ff82332f342c30e469215539e1cc57e11b221aa2cf7e11e811d313a9927f3d",
+    "bytes": 6233
+  },
+  {
+    "id": "impactPlank_medium_000",
+    "source": "https://raw.githubusercontent.com/receptron/mulmocast-media/main/soundeffects/kenney/impact-sounds/impactPlank_medium_000.ogg",
+    "official": "https://kenney.nl/assets/impact-sounds",
+    "license": "CC0-1.0",
+    "sha256": "8403cd7a043f0391574c88c55dd205743725b5363d2407f6de145f201690b68f",
+    "bytes": 12016
+  }
+]

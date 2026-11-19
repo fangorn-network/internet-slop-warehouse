@@ -1,0 +1,7 @@
+{
+  "agents": [
+    {"condition": "A", "agentPath": "/root/recovery_a", "sessionId": "01a1ea2f-6f9f-78e0-8759-eb71ff8a3c5d", "parentSessionId": "01a1e64c-d29d-76d1-8e4a-43f972ca34fb"},
+    {"condition": "B", "agentPath": "/root/recovery_b", "sessionId": "01a1ea2f-8a73-7620-a9a1-983af8b2c8ec", "parentSessionId": "01a1e64c-d29d-76d1-8e4a-43f972ca34fb"},
+    {"condition": "C-semantic-local", "agentPath": "/root/recovery_c", "sessionId": "01a1ea34-b37b-75f2-8374-e4f4f47ed583", "parentSessionId": "01a1e64c-d29d-76d1-8e4a-43f972ca34fb"}
+  ]
+}

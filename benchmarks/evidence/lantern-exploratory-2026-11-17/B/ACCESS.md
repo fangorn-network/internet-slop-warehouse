@@ -1,0 +1,1 @@
+Use ordinary tools/public sources plus frozen inventory/ through file and text search. Discover relevant material yourself. Reuse optional; do not use live warehouse tools/newer records. Preserve sources/licenses/versions/modifications.

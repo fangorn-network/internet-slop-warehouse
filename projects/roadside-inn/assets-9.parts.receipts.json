@@ -1,0 +1,29 @@
+[
+  {
+    "id": "acg-hotel-carpet-color",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibemi6cuwn5pfrgbbsdmoqhvkzgf6m766w6advtbggmgjce7khrcm",
+    "src": "bafybeiga3kfcugyk4p7gglnpmkb7cartf4o7ykygwpgumyfipugiibdbxy",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiga3kfcugyk4p7gglnpmkb7cartf4o7ykygwpgumyfipugiibdbxy",
+    "txHash": "0xeec30bef53c729fe7558973617a5a2681c5b7a70e5252b16b72b73b0931c4556"
+  },
+  {
+    "id": "acg-hotel-carpet-normal",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreia6k2zprfmomzm5q6o4ggk3iq2zv47vkqn4jw4ezapqbmyquyw3pi",
+    "src": "bafybeia3np4ljwtu3oxpnh6wqj37krq4uuijfp4iwymc5hshsjnihtws6e",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeia3np4ljwtu3oxpnh6wqj37krq4uuijfp4iwymc5hshsjnihtws6e",
+    "txHash": "0xeec30bef53c729fe7558973617a5a2681c5b7a70e5252b16b72b73b0931c4556"
+  },
+  {
+    "id": "acg-hotel-carpet-roughness",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreighumkw4meiemcx6w5rr5mhihuzapfk6yrwvhmzhb52gmzn6bmjoq",
+    "src": "bafybeihkw2aog7m63ssijfc4ezurx2tyuiy5ifqrhuxmuean62pvof4dvu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihkw2aog7m63ssijfc4ezurx2tyuiy5ifqrhuxmuean62pvof4dvu",
+    "txHash": "0xeec30bef53c729fe7558973617a5a2681c5b7a70e5252b16b72b73b0931c4556"
+  }
+]

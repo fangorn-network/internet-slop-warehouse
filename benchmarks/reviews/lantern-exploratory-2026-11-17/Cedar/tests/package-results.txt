@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: HTML, module imports and stylesheet references are packaged locally
+ok 1 - HTML, module imports and stylesheet references are packaged locally
+  ---
+  duration_ms: 6.327982
+  type: 'test'
+  ...
+# Subtest: input lifecycle handlers and equivalent keyboard/touch actions are wired
+ok 2 - input lifecycle handlers and equivalent keyboard/touch actions are wired
+  ---
+  duration_ms: 2.58627
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13.549764

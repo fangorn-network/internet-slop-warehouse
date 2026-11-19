@@ -1,0 +1,8 @@
+Built standalone index.html
+{
+  "status": "passed",
+  "checks": 22104,
+  "simulationSteps": 7162,
+  "orders": 6,
+  "browserPlay": "not performed: prohibited by run policy"
+}

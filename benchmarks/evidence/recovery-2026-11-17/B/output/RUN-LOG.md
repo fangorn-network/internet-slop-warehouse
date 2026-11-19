@@ -1,0 +1,8 @@
+# Run log (append only)
+
+- 2026-11-17T15:45:40Z — Started condition B. Read TASK.md and ACCESS.md. Only supplied frozen inventory and ordinary coding tools permitted. No subagents, publication, paid services, live warehouse search, or external dependencies planned.
+- 2026-11-17T15:46:00Z — Created output directory. Browser/localhost sockets are known blocked by environment; will not retry browser installation or launch. Tests will distinguish simulation/source evidence from browser evidence.
+- 2026-11-17T15:52:00Z — Inspected frozen catalog and collect/trigger-zones source payloads. Chose collect (CC0) unchanged; implemented original canvas scene and pure game-state adapter, keyboard/touch controls, progress, restart, gated exit and gesture-gated synthesized audio. No installs or network requests.
+- 2026-11-17T15:50:15Z — Timestamp correction: first recorded tool clock was 15:45:54Z; the earlier 15:45:40Z start was an estimate. The 15:52:00Z checkpoint was a mistaken forward estimate, not an observed clock. Implementation and source inspection were complete before observed 15:48:47Z.
+- 2026-11-17T15:50:15Z — Initial route test stopped early at the valid win radius, while its helper expected arrival at the exact gate center; corrected helper to accept completed state. Eight simulation tests now pass; mocked DOM/Canvas integration, three syntax checks and HTML local-reference checks pass. No browser evidence claimed.
+- 2026-11-17T15:50:15Z — END: completed artifact, launch instructions, source/license inventory, tests and final report. result.json finalized. No publication, installs, external requests or subagents.

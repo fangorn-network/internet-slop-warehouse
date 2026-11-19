@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "started_utc": "2026-11-17T15:45:50.792099+00:00",
+  "metrics": {
+    "tokens": null,
+    "cost_usd": null,
+    "elapsed_seconds": 142.83,
+    "external_dependencies": 0
+  },
+  "browser_verification": "not performed: browser and localhost sockets blocked",
+  "ended_utc": "2026-11-17T15:48:13.619512+00:00",
+  "artifact": "index.html",
+  "report": "FINAL-REPORT.md",
+  "sources": "README.md",
+  "checks": {
+    "syntax": "passed: app.mjs and game.mjs",
+    "simulation_passed": 7,
+    "browser": "not performed: browser and localhost sockets blocked"
+  }
+}

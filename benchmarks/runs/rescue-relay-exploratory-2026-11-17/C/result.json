@@ -1,0 +1,67 @@
+{
+  "runId": "rescue-relay-exploratory-2026-11-17-C",
+  "taskId": "rescue-relay-update-v1-exploratory",
+  "condition": "C-semantic-local",
+  "status": "completed",
+  "metrics": {
+    "elapsedSeconds": 472,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null
+  },
+  "reuse": [
+    {
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "id": "grid-navigation",
+      "type": "logic",
+      "license": "CC0-1.0",
+      "recordCid": "bafyreibfa3thki4lzs3jbi2r5lm2td4cvuc2kgpzpbktjqhqav6ivkfbpq",
+      "sourceCid": "bafkreig3624wdnu7surrhjssmijvgxalwrcvmzbxvpypjt45h67ipwqctq",
+      "discovery": "one frozen semantic search and one get",
+      "local": "output/vendor/grid-navigation.cjs",
+      "modifications": "ESM export replaced with CommonJS/browser-global wrapper; algorithm unchanged"
+    }
+  ],
+  "acceptance": {
+    "sourceAndSimulation": {
+      "recoverRepairProgression": true,
+      "allSixRepairOrders": true,
+      "escortAroundObstacles": true,
+      "waitFollow": true,
+      "environmentalRouteChoice": true,
+      "feedbackAndControls": true,
+      "pauseRestart": true,
+      "v2DependencyPinned": true,
+      "v1SavesPreserved": true,
+      "rr2PortableAndConsistent": true,
+      "corruptLoadAtomic": true,
+      "reproducibleStaticArtifact": true,
+      "frozenV1Unchanged": true,
+      "checks": 34354,
+      "simulatedTicks": 11204,
+      "originalBaselineTests": 10,
+      "uiVmSimulation": true
+    },
+    "browserPlayVerified": false,
+    "physicalTouchVerified": null,
+    "visualLayoutVerified": null
+  },
+  "deviations": [
+    "Exploratory fixed-spec build; soft resource targets, browser QA pending; identical neutral starter exempt from A warehouse restriction.",
+    "Actual browser and localhost blocked by run rules; no launch/install retry attempted. Tests are deterministic Node and VM DOM simulations only. No telemetry values inferred."
+  ],
+  "startedAt": "2026-11-17T16:23:43Z",
+  "completedAt": "2026-11-17T16:31:35.329Z",
+  "artifacts": {
+    "launch": "output/index.html",
+    "readme": "output/README.md",
+    "sourceManifest": "output/MANIFEST.json",
+    "sources": "output/SOURCES.md",
+    "migration": "output/MIGRATION.md",
+    "report": "output/REPORT.md",
+    "tests": "output/TEST-RESULTS.txt",
+    "originalTests": "output/V1-TEST-RESULTS.txt",
+    "frozenV1": "output/frozen-v1/v1/index.html"
+  }
+}

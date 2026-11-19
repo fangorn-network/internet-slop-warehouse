@@ -1,0 +1,35 @@
+[
+  {
+    "artifact": "Aspen",
+    "postWinFreezeAndFullReset": "pass",
+    "matchingCarryDedup": "pass",
+    "bothHazardsRetainProgressCargoAndGrace": "pass",
+    "cooldownRepeatPause": "pass",
+    "gridReachability": "pass",
+    "shortcutLength": 73,
+    "perimeterLength": 125,
+    "shortcutHazardExposure": "pass"
+  },
+  {
+    "artifact": "Cedar",
+    "postWinFreezeAndFullReset": "pass",
+    "matchingCarryDedup": "pass",
+    "bothHazardsRetainProgressCargoAndGrace": "pass",
+    "cooldownRepeatPause": "pass",
+    "gridReachability": "pass",
+    "shortcutLength": 56,
+    "perimeterLength": 104,
+    "shortcutHazardExposure": "pass"
+  },
+  {
+    "artifact": "Redwood",
+    "postWinFreezeAndFullReset": "pass",
+    "matchingCarryDedup": "pass",
+    "bothHazardsRetainProgressCargoAndGrace": "pass",
+    "cooldownRepeatPause": "pass",
+    "gridReachability": "pass",
+    "shortcutLength": 50,
+    "perimeterLength": 98,
+    "shortcutHazardExposure": "pass"
+  }
+]

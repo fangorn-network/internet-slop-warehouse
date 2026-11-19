@@ -1,0 +1,3 @@
+PASS static dependencies, HTML IDs, real Three.js scene construction, 106 CPU-renderer-stub frames, keyboard/touch interaction, held-key rejection, pause, blur, pointer cancellation, page visibility, audio failure, finish, restart.
+LIMIT: this does not create WebGL, lay out CSS, dispatch real browser input, or verify actual play.
+INDEPENDENT MIXED INPUT: owner stick release clears held keyboard = true

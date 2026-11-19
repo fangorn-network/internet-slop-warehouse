@@ -1,0 +1,58 @@
+{
+  "runId": "lantern-courier-exploratory-2026-11-17-C",
+  "taskId": "lantern-courier-v1-exploratory",
+  "condition": "C-semantic-local",
+  "status": "completed",
+  "metrics": {
+    "elapsedSeconds": 618.8,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null
+  },
+  "reuse": [
+    {
+      "name": "Three.js",
+      "version": "0.170.0",
+      "source": "supplied vendor/three.module.min.js",
+      "license": "MIT",
+      "modified": false
+    }
+  ],
+  "acceptance": {
+    "staticFilesComplete": true,
+    "gameplaySimulationTestsPassed": 8,
+    "inputEventTargetTestsPassed": 4,
+    "staticTestsPassed": 3,
+    "simulatedFullRouteSeconds": 198.8,
+    "simulatedFullRouteRecalls": 0,
+    "shortcutGeometrySeconds": 15.9,
+    "safeWestGeometrySeconds": 31.1,
+    "keyboardImplemented": true,
+    "touchImplemented": true,
+    "pauseMuteRestartImplemented": true,
+    "browserVerified": false,
+    "webglVerified": false,
+    "mobileVerified": false,
+    "published": false
+  },
+  "deviations": [
+    "Exploratory run: soft resource targets, no hard provider-level enforcement; actual browser QA unavailable."
+  ],
+  "startedAt": "2026-11-17T16:12:39.764655+00:00",
+  "completedAt": "2026-11-17T16:22:58.602374+00:00",
+  "discovery": {
+    "mode": "frozen-semantic-local",
+    "searchQueries": 2,
+    "getCalls": 0,
+    "warehouseReuse": false,
+    "retrievalFailures": 0
+  },
+  "artifacts": {
+    "entry": "output/index.html",
+    "launch": "output/README.md",
+    "report": "output/REPORT.md",
+    "sources": "output/SOURCES.md",
+    "log": "output/RUN-LOG.md"
+  }
+}

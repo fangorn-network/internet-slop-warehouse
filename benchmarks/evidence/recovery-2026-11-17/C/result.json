@@ -1,0 +1,91 @@
+{
+  "runId": "2026-11-17-recovery-01",
+  "taskId": "scavenger-v1",
+  "condition": "C-semantic-local",
+  "status": "finalized",
+  "fixtureRoot": "bafyreibycvekyxezblss7g2mn3jbutgwbb6frhiic265bz63ijkcmu4uc4",
+  "budget": {
+    "elapsedMinutes": 60,
+    "modelUsd": null,
+    "tokenCap": null
+  },
+  "metrics": {
+    "setupSeconds": 0.237123604,
+    "elapsedSeconds": 215.731,
+    "humanInterventionMinutes": 0,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null,
+    "externalToolCostUsd": 0,
+    "searchCalls": 1,
+    "retrievalCalls": 1,
+    "retrievedBytes": 2893,
+    "repairAttempts": 0
+  },
+  "reuse": [
+    {
+      "publisher": "0x7b16387c5a8c514880e48bcacd52782fcf9da936",
+      "id": "collect",
+      "type": "logic",
+      "version": "bafyreiboqbeceozw5nalignugur2crrjpdcywg7jhpcekgt4wx5bwk7yni",
+      "license": "CC0-1.0",
+      "localPath": "output/vendor/collect.mjs",
+      "modifications": "None; newline transport decoding only. Integrated using screen-coordinate adapter, bob/spin disabled, radius 30."
+    }
+  ],
+  "acceptance": {
+    "desktop-load": {
+      "status": "unverified",
+      "evidence": "Browser/localhost unavailable by task constraint; responsive source and instrumented DOM render checked, not a real browser load."
+    },
+    "mobile-load": {
+      "status": "unverified",
+      "evidence": "Browser/localhost unavailable by task constraint; responsive source and instrumented DOM render checked, not a real browser load."
+    },
+    "keyboard-movement": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "touch-movement": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "all-objects-reachable": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "collect-once": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "exit-locked-before-three": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "exit-opens-after-three": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "restart-restores-state": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "audio-user-gesture": {
+      "status": "passed-simulation",
+      "evidence": "output/test.mjs and output/TEST-RESULTS.txt; actual core BFS movement/state or instrumented DOM/Canvas/WebAudio simulation. Real browser behavior unverified."
+    },
+    "dependencies-reachable": {
+      "status": "passed",
+      "evidence": "output/test.mjs verifies every HTML dependency exists locally; no external runtime dependencies."
+    },
+    "license-and-source-information": {
+      "status": "passed",
+      "evidence": "output/SOURCES.md, LICENSE, vendor/collect.metadata.json: retained publisher, CIDs, CC0 declaration, source and integration details."
+    }
+  },
+  "deviations": [
+    "Local q8 semantic search adapter instead of hosted production runtime; index is prewarmed and setup measured separately.",
+    "Browser and localhost unavailable as declared; tests use actual core simulation and instrumented DOM/Canvas/WebAudio substitutes; real browser behavior unverified."
+  ]
+}

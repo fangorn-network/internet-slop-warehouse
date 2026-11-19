@@ -1,0 +1,9 @@
+# Rescue Relay A run log
+
+2026-11-17T16:19:53.978812+00:00 — Started. Read task, access rules, v1 sources and v2 migration. Browser/localhost known blocked; will use source and deterministic simulations only. No network sources or services planned.
+
+2026-11-17T16:25:22Z — First coherent static artifact built: component/repair state, north-controlled flood shortcut, graph escort, RR1/RR2 load/save, touch/keyboard/pause UI. First simulation exposed waypoint overshoot in test movement driver (fixed by limiting simulated input duration to remaining distance); mission escort already caps waypoint steps. Continuing deterministic checks. An initial documentation/test write used an output-relative path from output cwd and failed without changes; corrected paths.
+
+2026-11-17T16:26:08Z — Six complete repair-order movement simulations pass, including escort detours, wait/follow and mid-escort load; three RR1 migrations pass; frozen original passes all 10 checks. Simulation exposed route-connector backtracking near grid nodes; fixed mission route smoothing by selecting the furthest collision-visible waypoint, then reran all six orders successfully (7325 assertions at this checkpoint). Added continuation of migrated saves and carried-inventory repeated loads. No browser evidence claimed.
+
+2026-11-17T16:27:59.705589+00:00 — Final: 10210 mission/source assertions passed; all six repair orders, carried inventory/repeated loading, all three v1 migrations continued through new extraction, flood egress and shortcut. Actual source event harness passed keyboard/touch cancellation, pause/resume, blur, restart before/after victory and save wiring. All 10 frozen baseline checks passed; repeat build SHA-256 identical. No browser/localhost attempts. Delivered standalone index, exact manifest, unchanged frozen fixture, source/license/migration/launch/test notes. result.json complete; elapsed 485.727 seconds. Token/cost fields remain null for external telemetry.

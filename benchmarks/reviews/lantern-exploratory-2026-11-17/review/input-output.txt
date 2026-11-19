@@ -1,0 +1,2 @@
+Redwood actual input module: secondary pointer cannot steal/release stick; owner release preserves keyboard; cancel clears all.
+Cedar actual extracted handlers: independent simultaneous direction pointers, owner release, keyboard preserved, blur clears and pauses. This is a handler harness, not native browser dispatch.

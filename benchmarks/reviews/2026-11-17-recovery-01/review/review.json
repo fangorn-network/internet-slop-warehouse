@@ -1,0 +1,75 @@
+{
+  "stage": "three_artifacts_complete",
+  "artifacts": {
+    "Larch": {
+      "assessment": "provisional_functional_acceptance_with_minor_input_bugs",
+      "supplied_core_tests_passed": 8,
+      "supplied_mock_smoke_passed": true,
+      "independent_state_probes_passed": true,
+      "independent_input_probes_passed": true,
+      "findings": [
+        "keyboard_alias_release_erases_other_held_alias",
+        "pointer_release_erases_other_held_pointer"
+      ]
+    },
+    "Willow": {
+      "assessment": "provisional_functional_acceptance_with_minor_input_bugs",
+      "supplied_core_tests_passed": 7,
+      "independent_state_probes_passed": true,
+      "independent_input_probes_passed": true,
+      "findings": [
+        "keyboard_alias_release_erases_other_held_alias",
+        "pointer_release_erases_other_held_pointer",
+        "source_only_audio_failure_can_abort_input_or_restart"
+      ]
+    },
+    "Birch": {
+      "assessment": "provisional_functional_acceptance_with_restart_and_audio_failure_bugs",
+      "supplied_core_and_mock_checks_passed": true,
+      "independent_state_probes_passed": true,
+      "independent_input_ownership_passed": true,
+      "findings": [
+        "restart_after_victory_is_noop_reproduced",
+        "optional_audio_constructor_failure_prevents_start_reproduced",
+        "source_only_multi_pointer_held_style_cleared_early"
+      ]
+    }
+  },
+  "evidence": {
+    "source_inspection": true,
+    "node_simulation": true,
+    "actual_browser": false,
+    "browser_blocked": true,
+    "perfect_blinding_claimed": false
+  },
+  "requirements": {
+    "reachability": "both_pass_independent_walk",
+    "collection_deduplication": "both_pass",
+    "exit_gating": "both_pass_all_eight_subsets",
+    "reset": "both_pass",
+    "input_cancellation": "both_pass_blur_visibility_pointercancel",
+    "input_ownership": "both_have_alias_and_pointer_edge_bugs",
+    "audio_user_gesture_gate": "both_pass_source_and_mock_startup_check",
+    "static_delivery": "both_present",
+    "dependencies_license_launch_sources": "both_present",
+    "Birch": {
+      "reachability": "pass_independent_walk",
+      "collection_deduplication": "pass",
+      "exit_gating": "pass_all_eight_subsets",
+      "reset": "pass_during_play_and_explore_again_but_restart_after_win_noop",
+      "input_cancellation": "pass",
+      "input_ownership": "pass_alias_and_pointer",
+      "audio_user_gesture_gate": "pass_source_and_mock_startup",
+      "static_delivery": "present",
+      "dependencies_license_launch_sources": "present"
+    }
+  },
+  "reviewer_files": [
+    "REVIEW.md",
+    "probes.mjs",
+    "state-probes.mjs",
+    "probe-results.json",
+    "birch-probes.mjs",
+    "birch-results.json"
+  ]
+}

@@ -1,0 +1,2 @@
+PASS: actual-step BFS routes reach three distinct relics and gate; locked exit, collect-once, all callback once, victory, reset state, normalized movement.
+PASS: instrumented DOM adapter startup/render, keyboard prevention, pointer cancellation, restart UI, no initial AudioContext, gesture creates audio, sound toggle plays; all HTML dependencies local. These substitutes do not establish browser compatibility.

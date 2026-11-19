@@ -1,0 +1,10 @@
+PASS Exit stays locked before collecting all three
+PASS Collection deduplicates and emits one event per object
+PASS Planters and perimeter block walking
+PASS Diagonal movement has the same total speed
+PASS Large deltas are clamped to prevent wall tunnelling
+PASS Complete route collects three distinct objects and wins at exit
+PASS New game resets inventory, exit, elapsed time and player
+PASS Reused collector disposal stops collection
+{"passed":8,"failed":0,"type":"Node simulation; no browser execution"}
+PASS mocked DOM/Canvas integration: initial frame, gesture-gated audio, start, keyboard, pointer capture/release, blur and restart. Actual browser not run.

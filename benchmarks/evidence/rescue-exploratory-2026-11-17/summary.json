@@ -1,0 +1,697 @@
+{
+  "collectedAt": "2026-11-17T21:07:14.113Z",
+  "scope": "Instrumentation pilot; one run per condition; inspect C label for search mode; acceptance is builder-reported pending independent review; unavailable cost measurements stay null",
+  "results": [
+    {
+      "condition": "A",
+      "status": "complete",
+      "metrics": {
+        "elapsedSeconds": 485.727,
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "outputTokens": null,
+        "modelCostUsd": null
+      },
+      "acceptanceStatusCounts": {},
+      "unstructuredAcceptanceFields": 13,
+      "adapter": null,
+      "deviations": [
+        "Exploratory fixed-spec build; soft resource targets, browser QA pending; identical neutral starter exempt from A warehouse restriction."
+      ]
+    },
+    {
+      "condition": "B",
+      "status": "completed",
+      "metrics": {
+        "elapsedSeconds": 458.284,
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "outputTokens": null,
+        "modelCostUsd": null
+      },
+      "acceptanceStatusCounts": {},
+      "unstructuredAcceptanceFields": 10,
+      "adapter": null,
+      "deviations": [
+        "Browser and localhost prohibited; actual browser baseline and updated game play remain unverified. Source/VM/simulation evidence is labeled explicitly.",
+        "Original completed expedition retained as legacyCompleted; added rescue remains pending, per supplied migration contract."
+      ]
+    },
+    {
+      "condition": "C-semantic-local",
+      "status": "completed",
+      "metrics": {
+        "elapsedSeconds": 472,
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "outputTokens": null,
+        "modelCostUsd": null
+      },
+      "acceptanceStatusCounts": {},
+      "unstructuredAcceptanceFields": 4,
+      "adapter": {
+        "setupProcesses": 2,
+        "searchCalls": 1,
+        "getCalls": 1,
+        "responseBytes": 11739,
+        "failedRequests": 0
+      },
+      "deviations": [
+        "Exploratory fixed-spec build; soft resource targets, browser QA pending; identical neutral starter exempt from A warehouse restriction.",
+        "Actual browser and localhost blocked by run rules; no launch/install retry attempted. Tests are deterministic Node and VM DOM simulations only. No telemetry values inferred."
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "A/TASK.md",
+      "bytes": 4063,
+      "sha256": "1025270115e40b0e8bc35d0a54c7617344fd59ae78a87846b1462305a208ccdd"
+    },
+    {
+      "path": "A/ACCESS.md",
+      "bytes": 236,
+      "sha256": "ede3f11e0bdf3df9261eba0f10cda34c004b2f3428d6f8fbc9fcb079221a67eb"
+    },
+    {
+      "path": "A/result.json",
+      "bytes": 2830,
+      "sha256": "10ccb9b707926b57d64d6c3dc363d59fe7f874e832e554424226f0dc273508f9"
+    },
+    {
+      "path": "A/output/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "A/output/MANIFEST.json",
+      "bytes": 1414,
+      "sha256": "ba3d0d4a55bea7af5e084f7962d0fec012700ac0a4697ccb9ef470517ae3fb0c"
+    },
+    {
+      "path": "A/output/README.md",
+      "bytes": 5282,
+      "sha256": "ea6d40653de8856ce9d3cc44575968f4623fd591ac4b5f550e0b92d939922806"
+    },
+    {
+      "path": "A/output/RUN-LOG.md",
+      "bytes": 1977,
+      "sha256": "25a7ccd43d729be225597e73312ff24f277a9a2bad94b0c3078a5a1e16a245e5"
+    },
+    {
+      "path": "A/output/SOURCES.md",
+      "bytes": 1265,
+      "sha256": "6fde9f17c67578883551f8eb8724bd5c3493b3e2557f3aa9200d70ee9148adfe"
+    },
+    {
+      "path": "A/output/TEST-RESULTS.txt",
+      "bytes": 1845,
+      "sha256": "c3e8336326b04e130efff433813db85ca03075b28a5919f2a7769fa538abf2ba"
+    },
+    {
+      "path": "A/output/app.js",
+      "bytes": 9056,
+      "sha256": "162519bda5739ba1fead0a91c521d1086c79e79e6e9a0f1091d5e1b8eca13c11"
+    },
+    {
+      "path": "A/output/build.cjs",
+      "bytes": 1221,
+      "sha256": "7a8a0602e3a82c782604c9921f9a3e36e2cd4981f516fb1c5736674bb6171de7"
+    },
+    {
+      "path": "A/output/frozen-v1/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "A/output/frozen-v1/MANIFEST.json",
+      "bytes": 2703,
+      "sha256": "bccddbe6f173828625849cca518483e7cdc93c3b562090fffb2a2941eac4bf10"
+    },
+    {
+      "path": "A/output/frozen-v1/README.md",
+      "bytes": 3547,
+      "sha256": "91bb1d3000a41fc7c30e776a0fb9a68d0b3b57396077e67a135a828322d81298"
+    },
+    {
+      "path": "A/output/frozen-v1/SOURCES.md",
+      "bytes": 706,
+      "sha256": "f1decf2640907c20cba0a4953169de20cc9d039021456b84632f3dfe3a9550e3"
+    },
+    {
+      "path": "A/output/frozen-v1/TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "A/output/frozen-v1/build.cjs",
+      "bytes": 3950,
+      "sha256": "9b093383dc0b0e6a78463ca22229df63f489f47a271273fa7f03e0c300dcc6bc"
+    },
+    {
+      "path": "A/output/frozen-v1/saves/completed.txt",
+      "bytes": 156,
+      "sha256": "12209198175bf5c4bc4c18aa4dd881f9dc72d771c49a3468889132479e12d3e8"
+    },
+    {
+      "path": "A/output/frozen-v1/saves/expectations.json",
+      "bytes": 585,
+      "sha256": "bd9872f0818a0c932ced6cd43bf0a5b3378faf457dd4bbe04ea1dc78dc4ae07e"
+    },
+    {
+      "path": "A/output/frozen-v1/saves/partial.txt",
+      "bytes": 117,
+      "sha256": "18c3618e47b9c738dacb1fac8865cf158a285ab852fd215b55d5245f2e9aea10"
+    },
+    {
+      "path": "A/output/frozen-v1/saves/start.txt",
+      "bytes": 108,
+      "sha256": "fa3cfb964149d2fc5dde998acd5a2841ea0f8c7ed4e15fab9ffe19d6cb02e476"
+    },
+    {
+      "path": "A/output/frozen-v1/test.cjs",
+      "bytes": 4919,
+      "sha256": "ac89101dba3cdc4b3dcf64c883ad2bf27ee7eefa07b5e427a5b2b06ac95ef042"
+    },
+    {
+      "path": "A/output/frozen-v1/v1/app.js",
+      "bytes": 4369,
+      "sha256": "4afc2ce05382a7b5350731d3a2e80434297ac3228cc5a07476463248704e9970"
+    },
+    {
+      "path": "A/output/frozen-v1/v1/core.cjs",
+      "bytes": 3356,
+      "sha256": "7f8a344ab42bbed1a5b741faddb7c0a6e282a381058fdd70863663da4e488fb8"
+    },
+    {
+      "path": "A/output/frozen-v1/v1/index.html",
+      "bytes": 10882,
+      "sha256": "b4936960277974ceff55efc5780d6a440e157982c5edc15abaad921f4fe99bc6"
+    },
+    {
+      "path": "A/output/frozen-v1/v1/style.css",
+      "bytes": 1376,
+      "sha256": "a846dd6e953a0824c8e159d44ae7257488b548a1c79a9abbb5e03a62ef240413"
+    },
+    {
+      "path": "A/output/frozen-v1/v1/template.html",
+      "bytes": 1805,
+      "sha256": "5ce7d16571ead09cc674ef1b246478463318a59c85634619094ae1cf641caa71"
+    },
+    {
+      "path": "A/output/frozen-v1/v2-update/MIGRATION.md",
+      "bytes": 1851,
+      "sha256": "ab20163982c4888ca35b6a492f0932c4176223c59c64d6dd47978292f6a65e11"
+    },
+    {
+      "path": "A/output/frozen-v1/v2-update/core.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "A/output/index.html",
+      "bytes": 28310,
+      "sha256": "238170254621ae91f5cf2085f881e208938bef34273b6c353d42ce10ae8a2363"
+    },
+    {
+      "path": "A/output/mission.cjs",
+      "bytes": 8680,
+      "sha256": "6d6dc367ded91ff39e1b23515e31792b1e6471e929a786590b6d074541aed9bb"
+    },
+    {
+      "path": "A/output/style.css",
+      "bytes": 3251,
+      "sha256": "6c2bc3d778a072a7d2f55d0c7fe3b83dba598f03b9a98d6d77572888922dfac0"
+    },
+    {
+      "path": "A/output/template.html",
+      "bytes": 3642,
+      "sha256": "a6871427512484c63040f2a55d32c961eb9ceb83869cf8d8ab5e5e691dac7227"
+    },
+    {
+      "path": "A/output/test.cjs",
+      "bytes": 7501,
+      "sha256": "4a8bf64bf8ed6a00ad94891b9ed047c7373da4fd9560f286c8cfdc3f99d87e65"
+    },
+    {
+      "path": "A/output/ui-source-test.cjs",
+      "bytes": 4337,
+      "sha256": "fa3aa10b328199337153d9e8e27f26bb3cb609cf1287cdd2c8f3c871a23c9d01"
+    },
+    {
+      "path": "A/output/vendor/relay-core-2.0.0.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "B/TASK.md",
+      "bytes": 4063,
+      "sha256": "1025270115e40b0e8bc35d0a54c7617344fd59ae78a87846b1462305a208ccdd"
+    },
+    {
+      "path": "B/ACCESS.md",
+      "bytes": 283,
+      "sha256": "8efaac5f9c34cd03e549c15bdfb02e8d69d55b846d0b69efb5b31dfd9f6fe9b2"
+    },
+    {
+      "path": "B/result.json",
+      "bytes": 2574,
+      "sha256": "809f7b2dcd1fdeecb66c2d34aebd1aa37795c0e996e572b3d22e1db14f799016"
+    },
+    {
+      "path": "B/output/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "B/output/MANIFEST.json",
+      "bytes": 5894,
+      "sha256": "7be5466cf1afd8bebbe2a5c47d75a418d8b13cdb514dafd61f935f6acaad725f"
+    },
+    {
+      "path": "B/output/MIGRATION.md",
+      "bytes": 2943,
+      "sha256": "47a3f414e253102dfe00b0b02b41458cecace5bbc86977afa3977467c583e9da"
+    },
+    {
+      "path": "B/output/README.md",
+      "bytes": 2271,
+      "sha256": "e9f63007b497cf3055901bc2f76face0a2ee3888420702a65364e34ba84d033d"
+    },
+    {
+      "path": "B/output/REPORT.md",
+      "bytes": 4688,
+      "sha256": "04c116bc1caadf63af822d00260fa143692b306520251c01b2c69dfb673bf900"
+    },
+    {
+      "path": "B/output/RUN-LOG.md",
+      "bytes": 1595,
+      "sha256": "1fc7f5fb1cc79e882bf59fd2b7de49d2da4785077a22a4df7d9a444fc85d2d7f"
+    },
+    {
+      "path": "B/output/SOURCES.md",
+      "bytes": 2361,
+      "sha256": "e6defa75ec3fb459c0831b91bd2ab6529c7abc0f3fa9dca3e0307d361e81ec6c"
+    },
+    {
+      "path": "B/output/TEST-RESULTS.txt",
+      "bytes": 174,
+      "sha256": "e376904c9d1297fba185c4583989886d01de9fcd0a77b8c9abbb3e83ee32347a"
+    },
+    {
+      "path": "B/output/V1-TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "B/output/build.cjs",
+      "bytes": 463,
+      "sha256": "fea27c10c3ef84d02df906b3c2b427a555d0db955f31f33df5ce018ca4b32051"
+    },
+    {
+      "path": "B/output/game/app.js",
+      "bytes": 9397,
+      "sha256": "7f3861254f8f7165cc98a3ffe4c333d93f0f6421225b0ccbd3157bde2c060592"
+    },
+    {
+      "path": "B/output/game/dependency-2.0.0.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "B/output/game/mission.cjs",
+      "bytes": 7583,
+      "sha256": "12761b937966930012506584b60c1697ee9daf4114f54cbc185b8f69a845c258"
+    },
+    {
+      "path": "B/output/game/navigation.cjs",
+      "bytes": 3363,
+      "sha256": "2a486ff69209880da86bd3534bf53dcefc7ac737e3ccbad7700e825546a71fa0"
+    },
+    {
+      "path": "B/output/game/style.css",
+      "bytes": 3152,
+      "sha256": "5ca21659d0889b7585559efaa565183c3d69b3be80b0d412a134cbc655ab1dec"
+    },
+    {
+      "path": "B/output/game/template.html",
+      "bytes": 3294,
+      "sha256": "3191906d1df5d37dd304728338b1471a406fc87f3c95ec733f24b6fda0b4c698"
+    },
+    {
+      "path": "B/output/index.html",
+      "bytes": 30457,
+      "sha256": "5de444fd84da9b77db6762b5d6a24254ca6a230bba381774b97d24cbaf958d41"
+    },
+    {
+      "path": "B/output/package.cjs",
+      "bytes": 1465,
+      "sha256": "8bf9e55356528f84d30cb7b1515457b079f90bd858136b4ae1b3488cd691571e"
+    },
+    {
+      "path": "B/output/sources/grid-navigation.source.json",
+      "bytes": 3172,
+      "sha256": "dbf6b961b69f952313a6526213535c0bb445566437abf0f4cf9d3fbe87da029c"
+    },
+    {
+      "path": "B/output/test.cjs",
+      "bytes": 9217,
+      "sha256": "2597fefde5769f7b3a629e27abc35ef905d79ad713e42d8081d091de16b5a0ef"
+    },
+    {
+      "path": "B/output/v1-frozen/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "B/output/v1-frozen/MANIFEST.json",
+      "bytes": 2703,
+      "sha256": "bccddbe6f173828625849cca518483e7cdc93c3b562090fffb2a2941eac4bf10"
+    },
+    {
+      "path": "B/output/v1-frozen/README.md",
+      "bytes": 3547,
+      "sha256": "91bb1d3000a41fc7c30e776a0fb9a68d0b3b57396077e67a135a828322d81298"
+    },
+    {
+      "path": "B/output/v1-frozen/SOURCES.md",
+      "bytes": 706,
+      "sha256": "f1decf2640907c20cba0a4953169de20cc9d039021456b84632f3dfe3a9550e3"
+    },
+    {
+      "path": "B/output/v1-frozen/TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "B/output/v1-frozen/build.cjs",
+      "bytes": 3950,
+      "sha256": "9b093383dc0b0e6a78463ca22229df63f489f47a271273fa7f03e0c300dcc6bc"
+    },
+    {
+      "path": "B/output/v1-frozen/saves/completed.txt",
+      "bytes": 156,
+      "sha256": "12209198175bf5c4bc4c18aa4dd881f9dc72d771c49a3468889132479e12d3e8"
+    },
+    {
+      "path": "B/output/v1-frozen/saves/expectations.json",
+      "bytes": 585,
+      "sha256": "bd9872f0818a0c932ced6cd43bf0a5b3378faf457dd4bbe04ea1dc78dc4ae07e"
+    },
+    {
+      "path": "B/output/v1-frozen/saves/partial.txt",
+      "bytes": 117,
+      "sha256": "18c3618e47b9c738dacb1fac8865cf158a285ab852fd215b55d5245f2e9aea10"
+    },
+    {
+      "path": "B/output/v1-frozen/saves/start.txt",
+      "bytes": 108,
+      "sha256": "fa3cfb964149d2fc5dde998acd5a2841ea0f8c7ed4e15fab9ffe19d6cb02e476"
+    },
+    {
+      "path": "B/output/v1-frozen/test.cjs",
+      "bytes": 4919,
+      "sha256": "ac89101dba3cdc4b3dcf64c883ad2bf27ee7eefa07b5e427a5b2b06ac95ef042"
+    },
+    {
+      "path": "B/output/v1-frozen/v1/app.js",
+      "bytes": 4369,
+      "sha256": "4afc2ce05382a7b5350731d3a2e80434297ac3228cc5a07476463248704e9970"
+    },
+    {
+      "path": "B/output/v1-frozen/v1/core.cjs",
+      "bytes": 3356,
+      "sha256": "7f8a344ab42bbed1a5b741faddb7c0a6e282a381058fdd70863663da4e488fb8"
+    },
+    {
+      "path": "B/output/v1-frozen/v1/index.html",
+      "bytes": 10882,
+      "sha256": "b4936960277974ceff55efc5780d6a440e157982c5edc15abaad921f4fe99bc6"
+    },
+    {
+      "path": "B/output/v1-frozen/v1/style.css",
+      "bytes": 1376,
+      "sha256": "a846dd6e953a0824c8e159d44ae7257488b548a1c79a9abbb5e03a62ef240413"
+    },
+    {
+      "path": "B/output/v1-frozen/v1/template.html",
+      "bytes": 1805,
+      "sha256": "5ce7d16571ead09cc674ef1b246478463318a59c85634619094ae1cf641caa71"
+    },
+    {
+      "path": "B/output/v1-frozen/v2-update/MIGRATION.md",
+      "bytes": 1851,
+      "sha256": "ab20163982c4888ca35b6a492f0932c4176223c59c64d6dd47978292f6a65e11"
+    },
+    {
+      "path": "B/output/v1-frozen/v2-update/core.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "C/TASK.md",
+      "bytes": 4063,
+      "sha256": "1025270115e40b0e8bc35d0a54c7617344fd59ae78a87846b1462305a208ccdd"
+    },
+    {
+      "path": "C/ACCESS.md",
+      "bytes": 2158,
+      "sha256": "1ca9dd0b0adf7bc63ee075c12f29208942b1e45a0101e109aabb11b794aec550"
+    },
+    {
+      "path": "C/result.json",
+      "bytes": 2426,
+      "sha256": "15faef1ec7b0659c22620a3250356e6d5fa98f46fc7223830971a0b3c5bcb1b6"
+    },
+    {
+      "path": "C/adapter-metrics.jsonl",
+      "bytes": 1005,
+      "sha256": "945ba8c20c394bfce9d7ebcada4646e0777956abc8df09248ba971bb5cf0d09b"
+    },
+    {
+      "path": "C/output/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "C/output/MANIFEST.json",
+      "bytes": 7028,
+      "sha256": "40ca80590ae4a4069a627f4b41a258a1f69639cae9bb4be8944275eaa3feb406"
+    },
+    {
+      "path": "C/output/MIGRATION.md",
+      "bytes": 3334,
+      "sha256": "a95e03251dedd8894e1281884923125e096cb264461066165b543ec71c7d18ba"
+    },
+    {
+      "path": "C/output/NOTICE.md",
+      "bytes": 388,
+      "sha256": "47e17de405a249a0e1f0193facdcbbeba9f6bc0ff6600c5ee5b915f943daeade"
+    },
+    {
+      "path": "C/output/README.md",
+      "bytes": 2298,
+      "sha256": "9a6b3128b3dcaf544e9ba4083fa6cd70d599d491d6ecc737822b12b998878a1d"
+    },
+    {
+      "path": "C/output/REPORT.md",
+      "bytes": 4297,
+      "sha256": "bd5100516c291d2fb6044c5f9e8cef19ad7e3a5a361557fe320c55c93744dc32"
+    },
+    {
+      "path": "C/output/RUN-LOG.md",
+      "bytes": 1329,
+      "sha256": "b89b7fa1f4fba4be9d9de9779a1b615483a1c0b179a99811e6cfee8a79f0c3b1"
+    },
+    {
+      "path": "C/output/SOURCES.md",
+      "bytes": 3103,
+      "sha256": "7388a7a0f91dd079b59fcc48070ed972ce2fd3366842355f9446ec759a61669e"
+    },
+    {
+      "path": "C/output/TEST-RESULTS.txt",
+      "bytes": 1026,
+      "sha256": "13a1252039cf31fc68a09a92e8d63dcd486445c02ed1acfed1ce714a40dd7f98"
+    },
+    {
+      "path": "C/output/V1-TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "C/output/build.cjs",
+      "bytes": 501,
+      "sha256": "151af52292a0c3c9d740f8264e58605b4520cfb58e82e8c64a87c2c1f90780ff"
+    },
+    {
+      "path": "C/output/frozen-v1/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "C/output/frozen-v1/MANIFEST.json",
+      "bytes": 2703,
+      "sha256": "bccddbe6f173828625849cca518483e7cdc93c3b562090fffb2a2941eac4bf10"
+    },
+    {
+      "path": "C/output/frozen-v1/README.md",
+      "bytes": 3547,
+      "sha256": "91bb1d3000a41fc7c30e776a0fb9a68d0b3b57396077e67a135a828322d81298"
+    },
+    {
+      "path": "C/output/frozen-v1/SOURCES.md",
+      "bytes": 706,
+      "sha256": "f1decf2640907c20cba0a4953169de20cc9d039021456b84632f3dfe3a9550e3"
+    },
+    {
+      "path": "C/output/frozen-v1/TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "C/output/frozen-v1/build.cjs",
+      "bytes": 3950,
+      "sha256": "9b093383dc0b0e6a78463ca22229df63f489f47a271273fa7f03e0c300dcc6bc"
+    },
+    {
+      "path": "C/output/frozen-v1/saves/completed.txt",
+      "bytes": 156,
+      "sha256": "12209198175bf5c4bc4c18aa4dd881f9dc72d771c49a3468889132479e12d3e8"
+    },
+    {
+      "path": "C/output/frozen-v1/saves/expectations.json",
+      "bytes": 585,
+      "sha256": "bd9872f0818a0c932ced6cd43bf0a5b3378faf457dd4bbe04ea1dc78dc4ae07e"
+    },
+    {
+      "path": "C/output/frozen-v1/saves/partial.txt",
+      "bytes": 117,
+      "sha256": "18c3618e47b9c738dacb1fac8865cf158a285ab852fd215b55d5245f2e9aea10"
+    },
+    {
+      "path": "C/output/frozen-v1/saves/start.txt",
+      "bytes": 108,
+      "sha256": "fa3cfb964149d2fc5dde998acd5a2841ea0f8c7ed4e15fab9ffe19d6cb02e476"
+    },
+    {
+      "path": "C/output/frozen-v1/test.cjs",
+      "bytes": 4919,
+      "sha256": "ac89101dba3cdc4b3dcf64c883ad2bf27ee7eefa07b5e427a5b2b06ac95ef042"
+    },
+    {
+      "path": "C/output/frozen-v1/v1/app.js",
+      "bytes": 4369,
+      "sha256": "4afc2ce05382a7b5350731d3a2e80434297ac3228cc5a07476463248704e9970"
+    },
+    {
+      "path": "C/output/frozen-v1/v1/core.cjs",
+      "bytes": 3356,
+      "sha256": "7f8a344ab42bbed1a5b741faddb7c0a6e282a381058fdd70863663da4e488fb8"
+    },
+    {
+      "path": "C/output/frozen-v1/v1/index.html",
+      "bytes": 10882,
+      "sha256": "b4936960277974ceff55efc5780d6a440e157982c5edc15abaad921f4fe99bc6"
+    },
+    {
+      "path": "C/output/frozen-v1/v1/style.css",
+      "bytes": 1376,
+      "sha256": "a846dd6e953a0824c8e159d44ae7257488b548a1c79a9abbb5e03a62ef240413"
+    },
+    {
+      "path": "C/output/frozen-v1/v1/template.html",
+      "bytes": 1805,
+      "sha256": "5ce7d16571ead09cc674ef1b246478463318a59c85634619094ae1cf641caa71"
+    },
+    {
+      "path": "C/output/frozen-v1/v2-update/MIGRATION.md",
+      "bytes": 1851,
+      "sha256": "ab20163982c4888ca35b6a492f0932c4176223c59c64d6dd47978292f6a65e11"
+    },
+    {
+      "path": "C/output/frozen-v1/v2-update/core.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "C/output/grid-navigation-retrieval.json",
+      "bytes": 4982,
+      "sha256": "43eac3be775a967c9b379fb713b8b899035b1f9367052c6d08a79d84bf7a0e3b"
+    },
+    {
+      "path": "C/output/index.html",
+      "bytes": 28828,
+      "sha256": "5c7d53ba27c94dbcabcb5b85f8733dc494cc139e01796b8145d7a4980a55a45a"
+    },
+    {
+      "path": "C/output/manifest.cjs",
+      "bytes": 1285,
+      "sha256": "4b0340a93b257df9a61a89289e9312378c887f76721c70302e3561186bdea204"
+    },
+    {
+      "path": "C/output/saves/completed-upgraded.txt",
+      "bytes": 357,
+      "sha256": "844f8e5e240a3159dfd68f93cf5b7066d87c8103861838b494a7afbf19b36d21"
+    },
+    {
+      "path": "C/output/saves/extracted.txt",
+      "bytes": 376,
+      "sha256": "afa77795b4df83fbafcd034256d53e31ae5a117e1cc2011cac13369b6d3cff18"
+    },
+    {
+      "path": "C/output/saves/partial-upgraded.txt",
+      "bytes": 358,
+      "sha256": "44f897494341c6b92df9751471a818b8c06f498fffa15fbba812762262f02b92"
+    },
+    {
+      "path": "C/output/saves/start-upgraded.txt",
+      "bytes": 358,
+      "sha256": "44f897494341c6b92df9751471a818b8c06f498fffa15fbba812762262f02b92"
+    },
+    {
+      "path": "C/output/test.cjs",
+      "bytes": 8489,
+      "sha256": "1b34e9d6a85563abb1be0a2700afc8d0e23ae9b6d8447950e2646bde619f03b7"
+    },
+    {
+      "path": "C/output/ui-smoke.cjs",
+      "bytes": 3281,
+      "sha256": "40a09653f8a945ba25c796ed5da649c43f2176dc2b3e387325dd16d42a850406"
+    },
+    {
+      "path": "C/output/v2/app.js",
+      "bytes": 8498,
+      "sha256": "44c9cc5eb96ef94256e2d106b96b0ac6a086626ec209005e06b7f864e018efb8"
+    },
+    {
+      "path": "C/output/v2/mission.cjs",
+      "bytes": 7440,
+      "sha256": "671ebd7421698935f9779d86c37bd6c21686479627fd845b5072f82818546ef6"
+    },
+    {
+      "path": "C/output/v2/style.css",
+      "bytes": 3241,
+      "sha256": "288b3328aec377b9c06c4dd234f4df4f140ce2e1a90939a25e0778bb0bac6a7f"
+    },
+    {
+      "path": "C/output/v2/template.html",
+      "bytes": 2745,
+      "sha256": "befcebdacc6e3737a03e7e03dfac55881f4eba60a5698337dd3fbd11cf89e1a7"
+    },
+    {
+      "path": "C/output/vendor/grid-navigation.cjs",
+      "bytes": 3230,
+      "sha256": "cc6bdf13e3270813cd05bee2a2b6361a54950ed0befffb5fdb6fe91f0105574b"
+    },
+    {
+      "path": "C/output/vendor/grid-navigation.original.mjs",
+      "bytes": 3140,
+      "sha256": "1622c49b3c3fae706a478307dd5e43ac22233eb860329ad98d1674259d413b4a"
+    },
+    {
+      "path": "C/output/vendor/relay-core-2.0.0.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    }
+  ]
+}

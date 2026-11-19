@@ -1,0 +1,18 @@
+[
+  {
+    "label": "Larch",
+    "noAudioBeforeGesture": true,
+    "blurVisibilityAndCancelClear": true,
+    "restartClearsInputAndProgress": true,
+    "aliasReleaseDropsHeldDirection": true,
+    "firstPointerReleaseDropsSecondPointer": true
+  },
+  {
+    "label": "Willow",
+    "noAudioBeforeGesture": true,
+    "blurVisibilityAndCancelClear": true,
+    "restartClearsInputAndProgress": true,
+    "aliasReleaseDropsHeldDirection": true,
+    "firstPointerReleaseDropsSecondPointer": true
+  }
+]

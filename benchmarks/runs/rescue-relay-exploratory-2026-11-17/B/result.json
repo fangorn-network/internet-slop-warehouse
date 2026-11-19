@@ -1,0 +1,58 @@
+{
+  "runId": "rescue-relay-exploratory-2026-11-17-B",
+  "taskId": "rescue-relay-update-v1-exploratory",
+  "condition": "B",
+  "status": "completed",
+  "metrics": {
+    "elapsedSeconds": 458.284,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null
+  },
+  "reuse": [
+    {
+      "id": "grid-navigation",
+      "recordCid": "bafyreibfa3thki4lzs3jbi2r5lm2td4cvuc2kgpzpbktjqhqav6ivkfbpq",
+      "sourceCid": "bafkreig3624wdnu7surrhjssmijvgxalwrcvmzbxvpypjt45h67ipwqctq",
+      "license": "CC0-1.0",
+      "origin": "supplied frozen inventory",
+      "modifications": "ES export replaced with local CommonJS/browser wrapper; algorithm unchanged",
+      "path": "output/game/navigation.cjs"
+    }
+  ],
+  "acceptance": {
+    "componentRepairProgression": "passed deterministic simulation for all six orders",
+    "escortRoutingWaitFollow": "passed deterministic simulation and mid-route reload",
+    "environmentalObstruction": "passed gate collision, detour and all-prefix reachability simulations",
+    "feedbackControlsPauseRestart": "implemented; source inspected; browser interaction unverified",
+    "dependencyUpdate": "exact supplied 2.0.0 bytes vendored; API/lag checks pass",
+    "legacyMigration": "three supplied RR1 fixtures preserve position/repairs/old completion and complete new escort in simulation",
+    "portableSave": "RR2 round trips, invariants, corruption rejection, repeated load and browser codec VM checks pass",
+    "staticArtifact": "self-contained output/index.html; deterministic rebuild and exact hashes",
+    "frozenV1": "18 files byte-identical to starter; original 10 checks pass",
+    "browserPlay": "not performed: explicitly prohibited"
+  },
+  "deviations": [
+    "Browser and localhost prohibited; actual browser baseline and updated game play remain unverified. Source/VM/simulation evidence is labeled explicitly.",
+    "Original completed expedition retained as legacyCompleted; added rescue remains pending, per supplied migration contract."
+  ],
+  "startedAt": "2026-11-17T16:20:37.407Z",
+  "completedAt": "2026-11-17T16:28:15.691Z",
+  "artifacts": {
+    "launch": "output/index.html",
+    "readme": "output/README.md",
+    "report": "output/REPORT.md",
+    "manifest": "output/MANIFEST.json",
+    "tests": "output/TEST-RESULTS.txt",
+    "legacyTests": "output/V1-TEST-RESULTS.txt",
+    "log": "output/RUN-LOG.md"
+  },
+  "evidence": {
+    "assertions": 22104,
+    "simulationAdvanceSteps": 7162,
+    "repairOrders": 6,
+    "legacyFixtureCount": 3,
+    "browserVerified": false
+  }
+}

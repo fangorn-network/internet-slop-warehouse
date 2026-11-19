@@ -1,0 +1,11 @@
+PASS fresh state and signal distance/duplicate rejection
+PASS wall, boundary and non-finite input behavior
+PASS extraction rejects incomplete state under normal movement
+PASS all six signal activation orders complete via normal movement
+PASS v1 fixtures round-trip and are accepted unchanged by v2
+PASS corruption, invalid schema and invalid state rejected without caller mutation
+PASS v2 breaks move API and preserves lag distance with bounded collision substeps
+PASS v2 normal route retains baseline objective loop
+PASS standalone HTML contains exact core and presentation sources
+PASS all manifest files match recorded checksums
+10 baseline simulation/package checks passed. Actual browser verification pending.

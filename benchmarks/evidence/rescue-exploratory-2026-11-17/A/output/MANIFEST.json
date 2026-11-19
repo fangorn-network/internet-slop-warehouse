@@ -1,0 +1,27 @@
+{
+  "artifact": "Rescue Relay: The Last Signal",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "neutral-relay-core",
+      "version": "2.0.0",
+      "source": "../starter/v2-update/core.cjs",
+      "runtime": "inlined exact local copy",
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    }
+  ],
+  "files": {
+    "index.html": "238170254621ae91f5cf2085f881e208938bef34273b6c353d42ce10ae8a2363",
+    "template.html": "a6871427512484c63040f2a55d32c961eb9ceb83869cf8d8ab5e5e691dac7227",
+    "style.css": "6c2bc3d778a072a7d2f55d0c7fe3b83dba598f03b9a98d6d77572888922dfac0",
+    "app.js": "162519bda5739ba1fead0a91c521d1086c79e79e6e9a0f1091d5e1b8eca13c11",
+    "mission.cjs": "6d6dc367ded91ff39e1b23515e31792b1e6471e929a786590b6d074541aed9bb",
+    "vendor/relay-core-2.0.0.cjs": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4",
+    "build.cjs": "7a8a0602e3a82c782604c9921f9a3e36e2cd4981f516fb1c5736674bb6171de7",
+    "test.cjs": "4a8bf64bf8ed6a00ad94891b9ed047c7373da4fd9560f286c8cfdc3f99d87e65",
+    "ui-source-test.cjs": "fa3aa10b328199337153d9e8e27f26bb3cb609cf1287cdd2c8f3c871a23c9d01",
+    "README.md": "ea6d40653de8856ce9d3cc44575968f4623fd591ac4b5f550e0b92d939922806",
+    "SOURCES.md": "6fde9f17c67578883551f8eb8724bd5c3493b3e2557f3aa9200d70ee9148adfe",
+    "LICENSE": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+  }
+}

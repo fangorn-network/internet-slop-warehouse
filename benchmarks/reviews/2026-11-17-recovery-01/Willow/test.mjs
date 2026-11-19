@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import{createGame,step,ITEMS,BLOCKS}from'./game.mjs';
+let checks=0;const check=(name,fn)=>{fn();checks++;console.log(`PASS ${name}`);};
+check('Exit remains locked before collecting every treasure',()=>{const s=createGame();s.x=450;s.y=65;assert.deepEqual(step(s,{},0),[]);assert.equal(s.won,false);});
+check('Items collect once and have three distinct identities',()=>{const s=createGame();assert.equal(new Set(ITEMS.map(i=>i.id)).size,3);for(const i of ITEMS){s.x=i.x;s.y=i.y;assert.equal(step(s,{},0).length,1);assert.equal(step(s,{},0).length,0);}assert.equal(s.collected.length,3);});
+check('Planter blocks movement',()=>{const s=createGame();s.x=BLOCKS[0].x-15;s.y=175;step(s,{right:true},.05);assert.equal(s.x,BLOCKS[0].x-15);});
+check('Diagonal movement has same total speed as cardinal movement',()=>{const a=createGame(),b=createGame();step(a,{right:true},.05);step(b,{right:true,down:true},.05);assert.ok(Math.abs(Math.hypot(b.x-450,b.y-300)-(a.x-450))<.00001);});
+check('Time step clamp and world bounds prevent long jumps',()=>{const s=createGame();step(s,{right:true},100);assert.equal(s.x,459.25);s.x=872;step(s,{right:true},.05);assert.equal(s.x,872);});
+check('A walkable route collects all objects and opens exit',()=>{const s=createGame();function walk(x,y){for(let i=0;i<1000;i++){const dx=x-s.x,dy=y-s.y;if(Math.abs(dx)<4&&Math.abs(dy)<4)return;step(s,{right:dx>3,left:dx< -3,down:dy>3,up:dy< -3},1/60);}assert.fail(`Route blocked going to ${x},${y} from ${s.x},${s.y}`);}walk(140,300);walk(140,150);walk(140,300);walk(745,300);walk(745,150);walk(745,300);walk(450,300);walk(450,465);assert.equal(s.collected.length,3);walk(450,90);for(let i=0;i<30&&!s.won;i++)step(s,{up:true},1/60);assert.equal(s.won,true);const old={...s,collected:[...s.collected]};step(s,{down:true},.05);assert.deepEqual(s,old);});
+check('Restart creates an independent empty game state',()=>{const a=createGame();a.collected.push('seed');a.won=true;const b=createGame();assert.deepEqual(b,{x:450,y:300,collected:[],won:false,time:0});});
+console.log(`${checks} simulation checks passed.`);

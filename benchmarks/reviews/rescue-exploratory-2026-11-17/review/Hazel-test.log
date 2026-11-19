@@ -1,0 +1,15 @@
+PASS ordinary simulated route, repair order north → east → south
+PASS ordinary simulated route, repair order north → south → east
+PASS ordinary simulated route, repair order east → north → south
+PASS ordinary simulated route, repair order east → south → north
+PASS ordinary simulated route, repair order south → north → east
+PASS ordinary simulated route, repair order south → east → north
+PASS RR1 start
+PASS RR1 partial
+PASS RR1 completed
+PASS migrated start full mission
+PASS migrated partial full mission
+PASS migrated completed full mission
+Built standalone index.html (no runtime imports)
+PASS corruption, semantic saves, collision, reachability, dependency pin, v1 integrity, JS syntax, deterministic standalone build
+{"checks":34354,"ticks":11204,"browserPlayVerified":false}

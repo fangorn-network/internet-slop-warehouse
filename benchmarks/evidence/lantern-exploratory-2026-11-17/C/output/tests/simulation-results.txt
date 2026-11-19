@@ -1,0 +1,60 @@
+SIMULATED RUN: 198.8s, 0 recalls. Safe-first route; scripted lantern timing.
+SIMULATED SHORTCUT: 15.9s vs 31.1s safe west arc; excludes hazard delays.
+TAP version 13
+# Subtest: three distinct parcels: one carry slot and matching destination only
+ok 1 - three distinct parcels: one carry slot and matching destination only
+  ---
+  duration_ms: 1.450988
+  type: 'test'
+  ...
+# Subtest: both moving storms recall, retain cargo/deliveries, and grant grace
+ok 2 - both moving storms recall, retain cargo/deliveries, and grant grace
+  ---
+  duration_ms: 1.272662
+  type: 'test'
+  ...
+# Subtest: lantern is edge activated, protects, rejects cooldown and recharges
+ok 3 - lantern is edge activated, protects, rejects cooldown and recharges
+  ---
+  duration_ms: 2.550337
+  type: 'test'
+  ...
+# Subtest: pause freezes gameplay and full restart resets complete run
+ok 4 - pause freezes gameplay and full restart resets complete run
+  ---
+  duration_ms: 0.577002
+  type: 'test'
+  ...
+# Subtest: normalized diagonal speed and bounded collision resist off-route shortcuts
+ok 5 - normalized diagonal speed and bounded collision resist off-route shortcuts
+  ---
+  duration_ms: 2.213543
+  type: 'test'
+  ...
+# Subtest: walkability flood fill reaches every parcel, destination and road section
+ok 6 - walkability flood fill reaches every parcel, destination and road section
+  ---
+  duration_ms: 5.007752
+  type: 'test'
+  ...
+# Subtest: full player-input simulation completes three deliveries and repeat resets
+ok 7 - full player-input simulation completes three deliveries and repeat resets
+  ---
+  duration_ms: 18.931757
+  type: 'test'
+  ...
+# Subtest: shortcut is materially shorter than western arc and visibly storm-exposed
+ok 8 - shortcut is materially shorter than western arc and visibly storm-exposed
+  ---
+  duration_ms: 2.68037
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43.101834

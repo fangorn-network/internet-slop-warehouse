@@ -1,0 +1,8 @@
+PASS Exit remains locked before collecting every treasure
+PASS Items collect once and have three distinct identities
+PASS Planter blocks movement
+PASS Diagonal movement has same total speed as cardinal movement
+PASS Time step clamp and world bounds prevent long jumps
+PASS A walkable route collects all objects and opens exit
+PASS Restart creates an independent empty game state
+7 simulation checks passed.

@@ -1,0 +1,17 @@
+{
+  "taskId": "rescue-relay-update-v1-exploratory",
+  "briefSha256": "b9ff794a79c0e6b6f6a1a8b008aeafbff3908f293ee37b3e294a2d239c0624fa",
+  "starterManifestSha256": "bccddbe6f173828625849cca518483e7cdc93c3b562090fffb2a2941eac4bf10",
+  "conditions": [
+    "A",
+    "B",
+    "C-semantic-local"
+  ],
+  "repetitions": 1,
+  "scope": "Exploratory human-play comparison; starter actual browser validation pending; no hard token budget enforcement",
+  "safetyMinutes": 60,
+  "softOutputTokenTarget": 25000,
+  "softApiEquivalentUsdTarget": 0.75,
+  "qualityRatings": "not collected",
+  "fixtureRoot": "bafyreibycvekyxezblss7g2mn3jbutgwbb6frhiic265bz63ijkcmu4uc4"
+}

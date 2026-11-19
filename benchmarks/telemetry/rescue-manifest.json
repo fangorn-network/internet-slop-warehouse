@@ -1,0 +1,22 @@
+{
+  "agents": [
+    {
+      "condition": "A",
+      "agentPath": "/root/rescue_a",
+      "sessionId": "01a1ea4e-197a-7f33-9f09-ee06e4de58a3",
+      "parentSessionId": "01a1e64c-d29d-76d1-8e4a-43f972ca34fb"
+    },
+    {
+      "condition": "B",
+      "agentPath": "/root/rescue_b",
+      "sessionId": "01a1ea4e-fd76-7ea1-b4bb-64c51d4f74ca",
+      "parentSessionId": "01a1e64c-d29d-76d1-8e4a-43f972ca34fb"
+    },
+    {
+      "condition": "C",
+      "agentPath": "/root/rescue_c",
+      "sessionId": "01a1ea51-ec93-79a0-8b4e-b25a0a244881",
+      "parentSessionId": "01a1e64c-d29d-76d1-8e4a-43f972ca34fb"
+    }
+  ]
+}

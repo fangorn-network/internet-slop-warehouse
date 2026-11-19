@@ -1,0 +1,230 @@
+{
+  "format": "rescue-relay-return-signal-static-v1",
+  "version": "2.1.0",
+  "license": "CC0-1.0",
+  "runtimeDependencies": {
+    "relayCore": "2.0.0",
+    "gridNavigation": {
+      "recordCid": "bafyreibfa3thki4lzs3jbi2r5lm2td4cvuc2kgpzpbktjqhqav6ivkfbpq",
+      "sourceCid": "bafkreig3624wdnu7surrhjssmijvgxalwrcvmzbxvpypjt45h67ipwqctq"
+    }
+  },
+  "browserPlayVerified": false,
+  "files": [
+    {
+      "path": "build.cjs",
+      "bytes": 501,
+      "sha256": "151af52292a0c3c9d740f8264e58605b4520cfb58e82e8c64a87c2c1f90780ff"
+    },
+    {
+      "path": "frozen-v1/build.cjs",
+      "bytes": 3950,
+      "sha256": "9b093383dc0b0e6a78463ca22229df63f489f47a271273fa7f03e0c300dcc6bc"
+    },
+    {
+      "path": "frozen-v1/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "frozen-v1/MANIFEST.json",
+      "bytes": 2703,
+      "sha256": "bccddbe6f173828625849cca518483e7cdc93c3b562090fffb2a2941eac4bf10"
+    },
+    {
+      "path": "frozen-v1/README.md",
+      "bytes": 3547,
+      "sha256": "91bb1d3000a41fc7c30e776a0fb9a68d0b3b57396077e67a135a828322d81298"
+    },
+    {
+      "path": "frozen-v1/saves/completed.txt",
+      "bytes": 156,
+      "sha256": "12209198175bf5c4bc4c18aa4dd881f9dc72d771c49a3468889132479e12d3e8"
+    },
+    {
+      "path": "frozen-v1/saves/expectations.json",
+      "bytes": 585,
+      "sha256": "bd9872f0818a0c932ced6cd43bf0a5b3378faf457dd4bbe04ea1dc78dc4ae07e"
+    },
+    {
+      "path": "frozen-v1/saves/partial.txt",
+      "bytes": 117,
+      "sha256": "18c3618e47b9c738dacb1fac8865cf158a285ab852fd215b55d5245f2e9aea10"
+    },
+    {
+      "path": "frozen-v1/saves/start.txt",
+      "bytes": 108,
+      "sha256": "fa3cfb964149d2fc5dde998acd5a2841ea0f8c7ed4e15fab9ffe19d6cb02e476"
+    },
+    {
+      "path": "frozen-v1/SOURCES.md",
+      "bytes": 706,
+      "sha256": "f1decf2640907c20cba0a4953169de20cc9d039021456b84632f3dfe3a9550e3"
+    },
+    {
+      "path": "frozen-v1/TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "frozen-v1/test.cjs",
+      "bytes": 4919,
+      "sha256": "ac89101dba3cdc4b3dcf64c883ad2bf27ee7eefa07b5e427a5b2b06ac95ef042"
+    },
+    {
+      "path": "frozen-v1/v1/app.js",
+      "bytes": 4369,
+      "sha256": "4afc2ce05382a7b5350731d3a2e80434297ac3228cc5a07476463248704e9970"
+    },
+    {
+      "path": "frozen-v1/v1/core.cjs",
+      "bytes": 3356,
+      "sha256": "7f8a344ab42bbed1a5b741faddb7c0a6e282a381058fdd70863663da4e488fb8"
+    },
+    {
+      "path": "frozen-v1/v1/index.html",
+      "bytes": 10882,
+      "sha256": "b4936960277974ceff55efc5780d6a440e157982c5edc15abaad921f4fe99bc6"
+    },
+    {
+      "path": "frozen-v1/v1/style.css",
+      "bytes": 1376,
+      "sha256": "a846dd6e953a0824c8e159d44ae7257488b548a1c79a9abbb5e03a62ef240413"
+    },
+    {
+      "path": "frozen-v1/v1/template.html",
+      "bytes": 1805,
+      "sha256": "5ce7d16571ead09cc674ef1b246478463318a59c85634619094ae1cf641caa71"
+    },
+    {
+      "path": "frozen-v1/v2-update/core.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "frozen-v1/v2-update/MIGRATION.md",
+      "bytes": 1851,
+      "sha256": "ab20163982c4888ca35b6a492f0932c4176223c59c64d6dd47978292f6a65e11"
+    },
+    {
+      "path": "grid-navigation-retrieval.json",
+      "bytes": 4982,
+      "sha256": "43eac3be775a967c9b379fb713b8b899035b1f9367052c6d08a79d84bf7a0e3b"
+    },
+    {
+      "path": "index.html",
+      "bytes": 28828,
+      "sha256": "5c7d53ba27c94dbcabcb5b85f8733dc494cc139e01796b8145d7a4980a55a45a"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "manifest.cjs",
+      "bytes": 1285,
+      "sha256": "4b0340a93b257df9a61a89289e9312378c887f76721c70302e3561186bdea204"
+    },
+    {
+      "path": "MIGRATION.md",
+      "bytes": 3334,
+      "sha256": "a95e03251dedd8894e1281884923125e096cb264461066165b543ec71c7d18ba"
+    },
+    {
+      "path": "NOTICE.md",
+      "bytes": 388,
+      "sha256": "47e17de405a249a0e1f0193facdcbbeba9f6bc0ff6600c5ee5b915f943daeade"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2298,
+      "sha256": "9a6b3128b3dcaf544e9ba4083fa6cd70d599d491d6ecc737822b12b998878a1d"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4297,
+      "sha256": "bd5100516c291d2fb6044c5f9e8cef19ad7e3a5a361557fe320c55c93744dc32"
+    },
+    {
+      "path": "saves/completed-upgraded.txt",
+      "bytes": 357,
+      "sha256": "844f8e5e240a3159dfd68f93cf5b7066d87c8103861838b494a7afbf19b36d21"
+    },
+    {
+      "path": "saves/extracted.txt",
+      "bytes": 376,
+      "sha256": "afa77795b4df83fbafcd034256d53e31ae5a117e1cc2011cac13369b6d3cff18"
+    },
+    {
+      "path": "saves/partial-upgraded.txt",
+      "bytes": 358,
+      "sha256": "44f897494341c6b92df9751471a818b8c06f498fffa15fbba812762262f02b92"
+    },
+    {
+      "path": "saves/start-upgraded.txt",
+      "bytes": 358,
+      "sha256": "44f897494341c6b92df9751471a818b8c06f498fffa15fbba812762262f02b92"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 3103,
+      "sha256": "7388a7a0f91dd079b59fcc48070ed972ce2fd3366842355f9446ec759a61669e"
+    },
+    {
+      "path": "TEST-RESULTS.txt",
+      "bytes": 1026,
+      "sha256": "13a1252039cf31fc68a09a92e8d63dcd486445c02ed1acfed1ce714a40dd7f98"
+    },
+    {
+      "path": "test.cjs",
+      "bytes": 8489,
+      "sha256": "1b34e9d6a85563abb1be0a2700afc8d0e23ae9b6d8447950e2646bde619f03b7"
+    },
+    {
+      "path": "ui-smoke.cjs",
+      "bytes": 3281,
+      "sha256": "40a09653f8a945ba25c796ed5da649c43f2176dc2b3e387325dd16d42a850406"
+    },
+    {
+      "path": "V1-TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "v2/app.js",
+      "bytes": 8498,
+      "sha256": "44c9cc5eb96ef94256e2d106b96b0ac6a086626ec209005e06b7f864e018efb8"
+    },
+    {
+      "path": "v2/mission.cjs",
+      "bytes": 7440,
+      "sha256": "671ebd7421698935f9779d86c37bd6c21686479627fd845b5072f82818546ef6"
+    },
+    {
+      "path": "v2/style.css",
+      "bytes": 3241,
+      "sha256": "288b3328aec377b9c06c4dd234f4df4f140ce2e1a90939a25e0778bb0bac6a7f"
+    },
+    {
+      "path": "v2/template.html",
+      "bytes": 2745,
+      "sha256": "befcebdacc6e3737a03e7e03dfac55881f4eba60a5698337dd3fbd11cf89e1a7"
+    },
+    {
+      "path": "vendor/grid-navigation.cjs",
+      "bytes": 3230,
+      "sha256": "cc6bdf13e3270813cd05bee2a2b6361a54950ed0befffb5fdb6fe91f0105574b"
+    },
+    {
+      "path": "vendor/grid-navigation.original.mjs",
+      "bytes": 3140,
+      "sha256": "1622c49b3c3fae706a478307dd5e43ac22233eb860329ad98d1674259d413b4a"
+    },
+    {
+      "path": "vendor/relay-core-2.0.0.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    }
+  ]
+}

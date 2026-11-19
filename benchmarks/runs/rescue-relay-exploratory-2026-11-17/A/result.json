@@ -1,0 +1,53 @@
+{
+  "runId": "rescue-relay-exploratory-2026-11-17-A",
+  "taskId": "rescue-relay-update-v1-exploratory",
+  "condition": "A",
+  "status": "complete",
+  "metrics": {
+    "elapsedSeconds": 485.727,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null
+  },
+  "reuse": [
+    {
+      "source": "supplied neutral starter fixture",
+      "version": "1.0.0 frozen package and 2.0.0 update",
+      "license": "CC0-1.0",
+      "location": "output/frozen-v1/ and output/vendor/relay-core-2.0.0.cjs",
+      "modified": false
+    },
+    {
+      "source": "original run-authored expedition extension",
+      "version": "1.0.0",
+      "license": "CC0-1.0",
+      "location": "output/mission.cjs, app.js, style.css, template.html"
+    }
+  ],
+  "acceptance": {
+    "artifact": "output/index.html \u2014 self-contained static artifact; built reproducibly",
+    "recoverRepair": "Simulation passed all six repair orders, once-only components and repairs, prerequisite feedback",
+    "escort": "Collision-tested route graph, wait/follow and two-person extraction passed via movement simulations",
+    "obstruction": "North repair opens meaningful flood shortcut; all orders remain reachable",
+    "ui": "Actual source event harness passed keyboard, touch/cancel, pause/resume, blur, restart before/after victory and export/load; native browser behavior unverified",
+    "v2": "Exact byte-identical core 2.0.0; new advance API, lag and clamping checks passed",
+    "v1Migration": "All three supplied RR1 fixtures preserve positions, repairs, consumed parts and legacy completion; all continued to new extraction in simulation",
+    "portableSave": "RR2 inventory/escort/victory roundtrips, repeated load and corruption/schema rejection passed",
+    "frozenV1": "Complete starter copied unchanged; byte integrity and all 10 baseline tests passed",
+    "sourceSimulationAssertions": 10210,
+    "reproducibility": "Repeated build yields identical standalone page and manifest",
+    "browserPlay": "unverified \u2014 known environment restriction; no installation/launch/localhost attempts",
+    "externalServices": "none; no warehouse/catalog/mirror access, subagents, paid services, or publication"
+  },
+  "deviations": [
+    "Exploratory fixed-spec build; soft resource targets, browser QA pending; identical neutral starter exempt from A warehouse restriction."
+  ],
+  "startedAt": "2026-11-17T16:19:53.978812+00:00",
+  "completedAt": "2026-11-17T16:27:59.705589+00:00",
+  "limitations": [
+    "No actual browser rendering, native keyboard/touch/focus or real-play verification; operator checklist in output/README.md.",
+    "Checksum protects against accidental corruption, not intentional editing.",
+    "New escort remains pending after old completion, which is retained and communicated."
+  ]
+}

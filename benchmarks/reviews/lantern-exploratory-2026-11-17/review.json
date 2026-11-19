@@ -1,0 +1,192 @@
+{
+  "brief": "lantern-courier-v1",
+  "review_date": "2026-11-17",
+  "scope": "Independent bounded functional source/simulation review; not browser play or quality ratings",
+  "perfect_blinding": false,
+  "browser_attempted": false,
+  "artifacts": [
+    {
+      "artifact": "Aspen",
+      "overall": "no_core_blocker_reproduced",
+      "required_spec": {
+        "1": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "2": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "3": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "4": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "5": {
+          "status": "supported_with_issue",
+          "level": "source/simulation",
+          "unverified": "Actual browser operation and human perception remain unverified.",
+          "fail": "Mixed keyboard/stick input ownership: owning stick pointerup clears held keyboard input."
+        },
+        "6": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "7": {
+          "status": "supported",
+          "level": "source/simulation",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "8": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        }
+      },
+      "known_issues": [
+        "Releasing the touch stick also clears a held keyboard movement key; release and press the key again to resume."
+      ],
+      "blockers": [],
+      "unverified": [
+        "Browser/WebGL rendering and static-host load",
+        "1280x800 and 390x844 layout, clipping and performance",
+        "Native pointer capture, focus and audio behavior",
+        "Novice comprehension and 3\u20135 minute pacing",
+        "Camera/occlusion readability, responsiveness, feel, fun and replay motivation"
+      ],
+      "evidence": [
+        "review/supplied-tests.tap",
+        "review/probe-results.json",
+        "review/aspen-input-output.txt"
+      ]
+    },
+    {
+      "artifact": "Cedar",
+      "overall": "no_core_blocker_reproduced",
+      "required_spec": {
+        "1": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "2": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "3": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "4": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "5": {
+          "status": "supported",
+          "level": "source/simulation",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "6": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "7": {
+          "status": "supported",
+          "level": "source/simulation",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "8": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        }
+      },
+      "known_issues": [],
+      "blockers": [],
+      "unverified": [
+        "Browser/WebGL rendering and static-host load",
+        "1280x800 and 390x844 layout, clipping and performance",
+        "Native pointer capture, focus and audio behavior",
+        "Novice comprehension and 3\u20135 minute pacing",
+        "Camera/occlusion readability, responsiveness, feel, fun and replay motivation"
+      ],
+      "evidence": [
+        "review/supplied-tests.tap",
+        "review/probe-results.json",
+        "review/input-output.txt"
+      ]
+    },
+    {
+      "artifact": "Redwood",
+      "overall": "no_core_blocker_reproduced",
+      "required_spec": {
+        "1": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "2": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "3": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "4": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "5": {
+          "status": "supported",
+          "level": "source/simulation",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "6": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "7": {
+          "status": "supported",
+          "level": "source/simulation",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        },
+        "8": {
+          "status": "supported",
+          "level": "source/simulation plus UI wiring; browser clarity unverified",
+          "unverified": "Actual browser operation and human perception remain unverified."
+        }
+      },
+      "known_issues": [],
+      "blockers": [],
+      "unverified": [
+        "Browser/WebGL rendering and static-host load",
+        "1280x800 and 390x844 layout, clipping and performance",
+        "Native pointer capture, focus and audio behavior",
+        "Novice comprehension and 3\u20135 minute pacing",
+        "Camera/occlusion readability, responsiveness, feel, fun and replay motivation"
+      ],
+      "evidence": [
+        "review/supplied-tests.tap",
+        "review/probe-results.json",
+        "review/input-output.txt"
+      ]
+    }
+  ]
+}

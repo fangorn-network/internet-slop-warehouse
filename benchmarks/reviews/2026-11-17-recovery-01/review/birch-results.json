@@ -1,0 +1,11 @@
+{
+  "stateSubsetAndDedup": true,
+  "independentWalkingRoute": true,
+  "noAudioBeforeGesture": true,
+  "aliasOwnership": true,
+  "pointerOwnership": true,
+  "cancellation": true,
+  "restartDuringPlay": true,
+  "restartAfterWinIsNoOp": true,
+  "exploreAgainResets": true
+}

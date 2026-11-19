@@ -1,0 +1,50 @@
+[
+  {
+    "artifact": "Juniper",
+    "test": "v1-frozen/test.cjs",
+    "exit": 0,
+    "tail": "PASS fresh state and signal distance/duplicate rejection\nPASS wall, boundary and non-finite input behavior\nPASS extraction rejects incomplete state under normal movement\nPASS all six signal activation orders complete via normal movement\nPASS v1 fixtures round-trip and are accepted unchanged by v2\nPASS corruption, invalid schema and invalid state rejected without caller mutation\nPASS v2 breaks move API and preserves lag distance with bounded collision substeps\nPASS v2 normal route retains baseline objective loop\nPASS standalone HTML contains exact core and presentation sources\nPASS all manifest files match recorded checksums\n10 baseline simulation/package checks passed. Actual browser verification pending.\n"
+  },
+  {
+    "artifact": "Juniper",
+    "test": "test.cjs",
+    "exit": 0,
+    "tail": "Built standalone index.html\n{\n  \"status\": \"passed\",\n  \"checks\": 22104,\n  \"simulationSteps\": 7162,\n  \"orders\": 6,\n  \"browserPlay\": \"not performed: prohibited by run policy\"\n}\n"
+  },
+  {
+    "artifact": "Hazel",
+    "test": "frozen-v1/test.cjs",
+    "exit": 0,
+    "tail": "PASS fresh state and signal distance/duplicate rejection\nPASS wall, boundary and non-finite input behavior\nPASS extraction rejects incomplete state under normal movement\nPASS all six signal activation orders complete via normal movement\nPASS v1 fixtures round-trip and are accepted unchanged by v2\nPASS corruption, invalid schema and invalid state rejected without caller mutation\nPASS v2 breaks move API and preserves lag distance with bounded collision substeps\nPASS v2 normal route retains baseline objective loop\nPASS standalone HTML contains exact core and presentation sources\nPASS all manifest files match recorded checksums\n10 baseline simulation/package checks passed. Actual browser verification pending.\n"
+  },
+  {
+    "artifact": "Hazel",
+    "test": "test.cjs",
+    "exit": 0,
+    "tail": "PASS ordinary simulated route, repair order north \u2192 east \u2192 south\nPASS ordinary simulated route, repair order north \u2192 south \u2192 east\nPASS ordinary simulated route, repair order east \u2192 north \u2192 south\nPASS ordinary simulated route, repair order east \u2192 south \u2192 north\nPASS ordinary simulated route, repair order south \u2192 north \u2192 east\nPASS ordinary simulated route, repair order south \u2192 east \u2192 north\nPASS RR1 start\nPASS RR1 partial\nPASS RR1 completed\nPASS migrated start full mission\nPASS migrated partial full mission\nPASS migrated completed full mission\nBuilt standalone index.html (no runtime imports)\nPASS corruption, semantic saves, collision, reachability, dependency pin, v1 integrity, JS syntax, deterministic standalone build\n{\"checks\":34354,\"ticks\":11204,\"browserPlayVerified\":false}\n"
+  },
+  {
+    "artifact": "Hazel",
+    "test": "ui-smoke.cjs",
+    "exit": 0,
+    "tail": "PASS VM DOM simulation: app initialization, drawing at simulated mobile width, keyboard, pause/resume clears input, pointer movement/release, restart, export/load, rejected load, blur pause. Not a browser/device test.\n"
+  },
+  {
+    "artifact": "Alder",
+    "test": "frozen-v1/test.cjs",
+    "exit": 0,
+    "tail": "PASS fresh state and signal distance/duplicate rejection\nPASS wall, boundary and non-finite input behavior\nPASS extraction rejects incomplete state under normal movement\nPASS all six signal activation orders complete via normal movement\nPASS v1 fixtures round-trip and are accepted unchanged by v2\nPASS corruption, invalid schema and invalid state rejected without caller mutation\nPASS v2 breaks move API and preserves lag distance with bounded collision substeps\nPASS v2 normal route retains baseline objective loop\nPASS standalone HTML contains exact core and presentation sources\nPASS all manifest files match recorded checksums\n10 baseline simulation/package checks passed. Actual browser verification pending.\n"
+  },
+  {
+    "artifact": "Alder",
+    "test": "test.cjs",
+    "exit": 0,
+    "tail": "PASS full ordinary-play simulation order north \u2192 east \u2192 south\nPASS full ordinary-play simulation order north \u2192 south \u2192 east\nPASS full ordinary-play simulation order east \u2192 north \u2192 south\nPASS full ordinary-play simulation order east \u2192 south \u2192 north\nPASS full ordinary-play simulation order south \u2192 north \u2192 east\nPASS full ordinary-play simulation order south \u2192 east \u2192 north\nPASS RR1 start migration\nPASS RR1 partial migration\nPASS RR1 completed migration\nPASS RR1 start continued to new extraction\nPASS RR1 partial continued to new extraction\nPASS RR1 completed continued to new extraction\nPASS corruption/schema rejection, lag API, flood shortcut, packaging, frozen v1 byte integrity, inline JS parsing\nPASS 10210 simulation/source assertions. Browser rendering, input, touch and real play NOT VERIFIED.\n"
+  },
+  {
+    "artifact": "Alder",
+    "test": "ui-source-test.cjs",
+    "exit": 0,
+    "tail": "PASS actual source handler simulation: keyboard, touch/cancel, pause/resume, blur, restart before/after victory, E recovery, export/load and rejected-load preservation. Native browser controls/rendering NOT VERIFIED.\n"
+  }
+]

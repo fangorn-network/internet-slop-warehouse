@@ -1,0 +1,42 @@
+{
+  "runId": "lantern-courier-exploratory-2026-11-17-A",
+  "taskId": "lantern-courier-v1-exploratory",
+  "condition": "A",
+  "status": "complete",
+  "metrics": {
+    "elapsedSeconds": 583.5,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null
+  },
+  "reuse": [
+    {
+      "name": "Three.js",
+      "version": "0.170.0",
+      "path": "output/vendor/three.module.min.js",
+      "license": "MIT",
+      "source": "https://github.com/mrdoob/three.js/tree/r170",
+      "provided": true
+    }
+  ],
+  "acceptance": {
+    "staticSubmission": "output/index.html",
+    "report": "output/REPORT.md",
+    "launchInstructions": "output/README.md",
+    "implementationLog": "output/RUN-LOG.md",
+    "coreTestsPassed": 10,
+    "cpuIntegrationFrames": 106,
+    "javascriptSyntaxChecks": "passed",
+    "safeRouteSimulatedSeconds": 136.4,
+    "safeRouteMeters": 443.4,
+    "allRequiredFeaturesImplementedInSource": true,
+    "actualBrowserPlay": "unverified",
+    "browserAttempted": false,
+    "publication": false
+  },
+  "deviations": [
+    "Exploratory run: soft resource targets, no hard provider-level enforcement; actual browser QA unavailable.",
+    "No actual WebGL rendering, browser layout, touch-device play, performance, occlusion or real new-player pacing validation was possible. CPU integration uses a renderer/DOM stub, not a browser."
+  ]
+}

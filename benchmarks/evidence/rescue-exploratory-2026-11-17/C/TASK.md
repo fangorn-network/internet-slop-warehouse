@@ -1,0 +1,20 @@
+You are maintaining **Rescue Relay**, the supplied browser expedition prototype. Turn it into a coherent short rescue mission, apply the supplied dependency update, and preserve existing expeditions. Use the supplied starter rather than replacing it with an unrelated game.
+
+The mission takes place around three damaged signal towers. Your player recovers a distinct component for each tower, repairs towers in an order they choose, and uses the restored signals to locate and escort a stranded surveyor to the extraction point. Keep the starter's recognizable route, movement controls, and baseline functionality.
+
+Required behavior:
+
+1. Add recover/repair progression with visible prerequisite feedback. Components collect once, repair consumes the correct component once, and towers retain repaired state. Every tower can be repaired through ordinary play.
+2. The rescued surveyor begins following only after all three towers are restored. They can navigate the authored route to extraction without walking through obstacles or becoming permanently stuck. Include a clear wait/follow action and explain it in game.
+3. Add one environmental obstruction that a repaired tower resolves. It must change a meaningful route choice while preserving reachability for every valid repair order.
+4. Provide coherent arrival, repair, rescue, and extraction feedback; in-game controls; visible progress; pause/resume; restart before and after victory; keyboard and touch controls; and mute if audio is present.
+5. Apply the supplied v2 dependency update. Preserve all unaffected starter behavior. Explain interface adaptations and pin exact versions of dependencies, including reused external work.
+6. Load the supplied v1 saves. Preserve completed work and player/mission state that still has meaning; initialize new state safely and communicate any unavoidable change. Reject invalid/corrupted saves without crashing or destroying the current expedition.
+7. Export a new portable save that resumes the same mission state in a fresh page. Saved inventory, repaired towers, surveyor state, and extraction status must be internally consistent. A save must not award duplicate components/repairs/rewards on repeated load.
+8. Supply a reproducible static artifact and an exact dependency/source manifest. Reopening that artifact must not silently pick up a newer unpinned version. Existing v1 artifact behavior must remain reproducible from its frozen package.
+
+Make this feel like a small finished rescue experience, with legible goals, responsive controls, coherent presentation, and a satisfying conclusion. Do not maximize feature count. Procedural or reusable assets are both allowed; no specific inventory item, engine, or implementation is required. Preserve the starter's license and record all sources/modifications. No paid services/assets, accounts, public publication, or backend requirement.
+
+
+## Common run rules
+The identical neutral fixture in starter/ is allowed in every condition, including A, and is not a warehouse-derived component. Preserve starter/ unchanged; adapt copies under output/ and retain an unchanged reproducible v1 package. Follow starter/v2-update/MIGRATION.md: activated v1 towers become repaired, their components do not respawn, and the new escort objective may remain after old completion. This is an exploratory fixed-spec run, not a scored or hard-token-budget experiment; baseline actual browser play is unverified though source/simulation/package checks pass. 60-minute safety cap, soft targets 25,000 output tokens and $0.75 Standard API-equivalent model use (externally observed, may overshoot in-flight calls). No paid services/subagents/public publication. Keep implementation/tests/docs in output/ and update existing root result.json. Start append-only output/RUN-LOG.md with UTC and checkpoint early. Browser and localhost blocked: do not retry installation or launches. Distinguish source/simulation evidence from real play. All runtime code/assets local static. Token telemetry collected externally, do not invent counts.

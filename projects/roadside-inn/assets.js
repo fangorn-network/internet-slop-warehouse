@@ -53,7 +53,7 @@ export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-04', 'ph-mid
   ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'snake-plant', 'centerpiece', 'floor-lamp', 'luggage-cart', 'shelving-unit', 'lattice-pendant', 'drum-pendant', 'coffee-station', 'housekeeping-cart'].map(s => 'hotel-' + s), ...STATION_PARTS]);
 const PBR = ['color', 'normal', 'roughness'];
 const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR };
-const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling' }; // Maira's Dream; ambientCG
+const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling', corridor: 'acg-hotel-carpet' }; // Maira's Dream; ambientCG (corridor: Fabric022)
 const SKIES = { dusk: 'ph-hotel-dusk-sky', day: 'ph-hotel-farm-sky', interior: 'ph-hotel-room-hdri' };
 // Every warehouse part this game loads (package.mjs pins these).
 export const PART_IDS = [...MODELS.map(file), ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => `ph-hotel-${k}-${r}`)),

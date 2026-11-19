@@ -1,0 +1,83 @@
+{
+  "runId": "scavenger-v1-A-recovery-20261117",
+  "taskId": "scavenger-v1",
+  "condition": "A",
+  "status": "implemented-with-validation-limitations",
+  "fixtureRoot": "bafyreibycvekyxezblss7g2mn3jbutgwbb6frhiic265bz63ijkcmu4uc4",
+  "budget": {
+    "elapsedMinutes": 60,
+    "modelUsd": null,
+    "tokenCap": null
+  },
+  "metrics": {
+    "setupSeconds": null,
+    "elapsedSeconds": 142.83,
+    "humanInterventionMinutes": null,
+    "inputTokens": null,
+    "cachedInputTokens": null,
+    "outputTokens": null,
+    "modelCostUsd": null,
+    "externalToolCostUsd": null,
+    "searchCalls": null,
+    "retrievalCalls": null,
+    "retrievedBytes": null,
+    "repairAttempts": null
+  },
+  "reuse": [],
+  "acceptance": {
+    "desktop-load": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "mobile-load": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "keyboard-movement": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "touch-movement": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "all-objects-reachable": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "collect-once": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "exit-locked-before-three": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "exit-opens-after-three": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "restart-restores-state": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "audio-user-gesture": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "dependencies-reachable": {
+      "status": "not-evaluated",
+      "evidence": null
+    },
+    "license-and-source-information": {
+      "status": "not-evaluated",
+      "evidence": null
+    }
+  },
+  "deviations": [
+    "Builder wrote a separate output/result.json schema; parent mapped reported duration to common template without inferring missing metrics.",
+    "Browser checks unavailable; independent acceptance review pending."
+  ],
+  "builderReport": "output/result.json",
+  "measurement": "Builder-reported wallclock; no independent model-token or dollar telemetry."
+}

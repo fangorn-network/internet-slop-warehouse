@@ -1,0 +1,182 @@
+[
+  {
+    "id": "ph-oldhouse-floorboards-color",
+    "source": "https://polyhaven.com/a/raw_wooden_floor_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Charlotte Baglioni",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raw_wooden_floor_01/raw_wooden_floor_01_diff_1k.jpg",
+      "md5": "aa27b0b4cf2dc6dc991dd0294d44b53b",
+      "size": 906627
+    },
+    "bytes": 906627,
+    "sha256": "178c135596828bec6f3f8e531f6cb7994ff3ade2a2cc128da9c066e19e08ef15",
+    "acquiredAt": "2026-11-18T22:57:47.455Z"
+  },
+  {
+    "id": "ph-oldhouse-floorboards-normal",
+    "source": "https://polyhaven.com/a/raw_wooden_floor_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Charlotte Baglioni",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raw_wooden_floor_01/raw_wooden_floor_01_nor_gl_1k.jpg",
+      "md5": "6b9cd2f55308c9210c8da60eed8aa028",
+      "size": 537353
+    },
+    "bytes": 537353,
+    "sha256": "d293eef963527a36666777f8a8b3299058466fc1a053af38a4b67ede1fa0345f",
+    "acquiredAt": "2026-11-18T22:57:47.543Z"
+  },
+  {
+    "id": "ph-oldhouse-floorboards-roughness",
+    "source": "https://polyhaven.com/a/raw_wooden_floor_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Charlotte Baglioni",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/raw_wooden_floor_01/raw_wooden_floor_01_rough_1k.jpg",
+      "md5": "764821115434910e70b4a3cd8ae0bb9e",
+      "size": 509209
+    },
+    "bytes": 509209,
+    "sha256": "448cd943f1273c00f65ad4da101a24e8f49f4d8ab069b97fa1c60b89f66dba38",
+    "acquiredAt": "2026-11-18T22:57:47.627Z"
+  },
+  {
+    "id": "ph-oldhouse-wallpaper-color",
+    "source": "https://polyhaven.com/a/decrepit_wallpaper",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 814172,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/decrepit_wallpaper/decrepit_wallpaper_diff_1k.jpg",
+      "md5": "25db62cc09d0350756e60c0127853bbb"
+    },
+    "bytes": 814172,
+    "sha256": "895823967eba5296c0928694d1299964aa1884184215c510515fb246f5bbe4ec",
+    "acquiredAt": "2026-11-18T22:57:48.008Z"
+  },
+  {
+    "id": "ph-oldhouse-wallpaper-normal",
+    "source": "https://polyhaven.com/a/decrepit_wallpaper",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 691701,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/decrepit_wallpaper/decrepit_wallpaper_nor_gl_1k.jpg",
+      "md5": "1f8002bef047744e4d27e2f998e6caa2"
+    },
+    "bytes": 691701,
+    "sha256": "dcb75f00c055b23f82250ef5c7ced71a5e28e197a563ff69011d8deb2c45a83c",
+    "acquiredAt": "2026-11-18T22:57:48.088Z"
+  },
+  {
+    "id": "ph-oldhouse-wallpaper-roughness",
+    "source": "https://polyhaven.com/a/decrepit_wallpaper",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 402582,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/decrepit_wallpaper/decrepit_wallpaper_rough_1k.jpg",
+      "md5": "9d0adc4ca540ee91f91925f8ec059722"
+    },
+    "bytes": 402582,
+    "sha256": "25dd0dfc2021fe98fa40fbeaed8e634e420c2a34fa9227f36525d56b01cec22d",
+    "acquiredAt": "2026-11-18T22:57:48.155Z"
+  },
+  {
+    "id": "ph-oldhouse-wainscot-color",
+    "source": "https://polyhaven.com/a/wooden_panels",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dimitrios Savva",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wooden_panels/wooden_panels_diff_1k.jpg",
+      "md5": "d1c1bd9d4afdae703def7e7229f97565",
+      "size": 657473
+    },
+    "bytes": 657473,
+    "sha256": "736793db480954a1da44280522dfe86cededf6f3891344db76d5d0329cbf168d",
+    "acquiredAt": "2026-11-18T22:57:48.541Z"
+  },
+  {
+    "id": "ph-oldhouse-wainscot-normal",
+    "source": "https://polyhaven.com/a/wooden_panels",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dimitrios Savva",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wooden_panels/wooden_panels_nor_gl_1k.jpg",
+      "md5": "1925362853edf65d2b6092188c18c222",
+      "size": 486187
+    },
+    "bytes": 486187,
+    "sha256": "3853ab00e3860d804bb8738f3d7a38451917d7a8b5cf480f5c1d8cf82c8e375a",
+    "acquiredAt": "2026-11-18T22:57:48.614Z"
+  },
+  {
+    "id": "ph-oldhouse-wainscot-roughness",
+    "source": "https://polyhaven.com/a/wooden_panels",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dimitrios Savva",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wooden_panels/wooden_panels_rough_1k.jpg",
+      "md5": "fbb5eb0df4b084435bf4dccee903ae81",
+      "size": 584707
+    },
+    "bytes": 584707,
+    "sha256": "4b90d2f54238551cd78c8dbcb65b5af10b64674002e5dc0c19753da80333991b",
+    "acquiredAt": "2026-11-18T22:57:48.687Z"
+  },
+  {
+    "id": "ph-oldhouse-ceiling-color",
+    "source": "https://polyhaven.com/a/grey_plaster_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 772312,
+      "md5": "fe17ee482114c15690c2bc853c572bbc",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_plaster_02/grey_plaster_02_diff_1k.jpg"
+    },
+    "bytes": 772312,
+    "sha256": "c455b6513a37908480eedd59f697719649aca97d3c76525718a77d7d600e2d22",
+    "acquiredAt": "2026-11-18T22:57:49.064Z"
+  },
+  {
+    "id": "ph-oldhouse-ceiling-normal",
+    "source": "https://polyhaven.com/a/grey_plaster_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 636432,
+      "md5": "48636f9e7c651f6370b2549e0d3eaa4b",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_plaster_02/grey_plaster_02_nor_gl_1k.jpg"
+    },
+    "bytes": 636432,
+    "sha256": "f827876a78beebdbfca173ded1cd448117b433a0f9772a7c866bca91cb27884a",
+    "acquiredAt": "2026-11-18T22:57:49.143Z"
+  },
+  {
+    "id": "ph-oldhouse-ceiling-roughness",
+    "source": "https://polyhaven.com/a/grey_plaster_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Rob Tuytel",
+    "download": {
+      "size": 626062,
+      "md5": "960bdf615f72635752f0d45f48429a33",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_plaster_02/grey_plaster_02_rough_1k.jpg"
+    },
+    "bytes": 626062,
+    "sha256": "bc72ae4ba0d4330af80bc140dab4e3d97f850b9e545b36d21ccb9d9ffa5ef420",
+    "acquiredAt": "2026-11-18T22:57:49.212Z"
+  }
+]

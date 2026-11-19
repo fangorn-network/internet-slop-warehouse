@@ -1,0 +1,199 @@
+{
+  "format": "rescue-relay-static-package-1",
+  "version": "2.1.0",
+  "artifact": "index.html",
+  "dependencies": [
+    {
+      "name": "RescueRelay",
+      "version": "2.0.0",
+      "path": "game/dependency-2.0.0.cjs"
+    },
+    {
+      "name": "grid-navigation",
+      "recordCid": "bafyreibfa3thki4lzs3jbi2r5lm2td4cvuc2kgpzpbktjqhqav6ivkfbpq",
+      "sourceCid": "bafkreig3624wdnu7surrhjssmijvgxalwrcvmzbxvpypjt45h67ipwqctq",
+      "path": "game/navigation.cjs"
+    }
+  ],
+  "tooling": {
+    "node": "22.21.1",
+    "packages": []
+  },
+  "excludedMutableEvidence": [
+    "RUN-LOG.md",
+    "TEST-RESULTS.txt",
+    "V1-TEST-RESULTS.txt"
+  ],
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "MIGRATION.md",
+      "bytes": 2943,
+      "sha256": "47a3f414e253102dfe00b0b02b41458cecace5bbc86977afa3977467c583e9da"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2271,
+      "sha256": "e9f63007b497cf3055901bc2f76face0a2ee3888420702a65364e34ba84d033d"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4688,
+      "sha256": "04c116bc1caadf63af822d00260fa143692b306520251c01b2c69dfb673bf900"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 2361,
+      "sha256": "e6defa75ec3fb459c0831b91bd2ab6529c7abc0f3fa9dca3e0307d361e81ec6c"
+    },
+    {
+      "path": "build.cjs",
+      "bytes": 463,
+      "sha256": "fea27c10c3ef84d02df906b3c2b427a555d0db955f31f33df5ce018ca4b32051"
+    },
+    {
+      "path": "game/app.js",
+      "bytes": 9397,
+      "sha256": "7f3861254f8f7165cc98a3ffe4c333d93f0f6421225b0ccbd3157bde2c060592"
+    },
+    {
+      "path": "game/dependency-2.0.0.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    },
+    {
+      "path": "game/mission.cjs",
+      "bytes": 7583,
+      "sha256": "12761b937966930012506584b60c1697ee9daf4114f54cbc185b8f69a845c258"
+    },
+    {
+      "path": "game/navigation.cjs",
+      "bytes": 3363,
+      "sha256": "2a486ff69209880da86bd3534bf53dcefc7ac737e3ccbad7700e825546a71fa0"
+    },
+    {
+      "path": "game/style.css",
+      "bytes": 3152,
+      "sha256": "5ca21659d0889b7585559efaa565183c3d69b3be80b0d412a134cbc655ab1dec"
+    },
+    {
+      "path": "game/template.html",
+      "bytes": 3294,
+      "sha256": "3191906d1df5d37dd304728338b1471a406fc87f3c95ec733f24b6fda0b4c698"
+    },
+    {
+      "path": "index.html",
+      "bytes": 30457,
+      "sha256": "5de444fd84da9b77db6762b5d6a24254ca6a230bba381774b97d24cbaf958d41"
+    },
+    {
+      "path": "package.cjs",
+      "bytes": 1465,
+      "sha256": "8bf9e55356528f84d30cb7b1515457b079f90bd858136b4ae1b3488cd691571e"
+    },
+    {
+      "path": "sources/grid-navigation.source.json",
+      "bytes": 3172,
+      "sha256": "dbf6b961b69f952313a6526213535c0bb445566437abf0f4cf9d3fbe87da029c"
+    },
+    {
+      "path": "test.cjs",
+      "bytes": 9217,
+      "sha256": "2597fefde5769f7b3a629e27abc35ef905d79ad713e42d8081d091de16b5a0ef"
+    },
+    {
+      "path": "v1-frozen/LICENSE",
+      "bytes": 305,
+      "sha256": "a228d9cb4e68c84ec9791b1ab7e5108ccb2845338c6dc26e63471ebaf5009d3e"
+    },
+    {
+      "path": "v1-frozen/MANIFEST.json",
+      "bytes": 2703,
+      "sha256": "bccddbe6f173828625849cca518483e7cdc93c3b562090fffb2a2941eac4bf10"
+    },
+    {
+      "path": "v1-frozen/README.md",
+      "bytes": 3547,
+      "sha256": "91bb1d3000a41fc7c30e776a0fb9a68d0b3b57396077e67a135a828322d81298"
+    },
+    {
+      "path": "v1-frozen/SOURCES.md",
+      "bytes": 706,
+      "sha256": "f1decf2640907c20cba0a4953169de20cc9d039021456b84632f3dfe3a9550e3"
+    },
+    {
+      "path": "v1-frozen/TEST-RESULTS.txt",
+      "bytes": 715,
+      "sha256": "fdecb9e5239d8d46cad6e65750b79651c737608079fc9340833db686658db98c"
+    },
+    {
+      "path": "v1-frozen/build.cjs",
+      "bytes": 3950,
+      "sha256": "9b093383dc0b0e6a78463ca22229df63f489f47a271273fa7f03e0c300dcc6bc"
+    },
+    {
+      "path": "v1-frozen/saves/completed.txt",
+      "bytes": 156,
+      "sha256": "12209198175bf5c4bc4c18aa4dd881f9dc72d771c49a3468889132479e12d3e8"
+    },
+    {
+      "path": "v1-frozen/saves/expectations.json",
+      "bytes": 585,
+      "sha256": "bd9872f0818a0c932ced6cd43bf0a5b3378faf457dd4bbe04ea1dc78dc4ae07e"
+    },
+    {
+      "path": "v1-frozen/saves/partial.txt",
+      "bytes": 117,
+      "sha256": "18c3618e47b9c738dacb1fac8865cf158a285ab852fd215b55d5245f2e9aea10"
+    },
+    {
+      "path": "v1-frozen/saves/start.txt",
+      "bytes": 108,
+      "sha256": "fa3cfb964149d2fc5dde998acd5a2841ea0f8c7ed4e15fab9ffe19d6cb02e476"
+    },
+    {
+      "path": "v1-frozen/test.cjs",
+      "bytes": 4919,
+      "sha256": "ac89101dba3cdc4b3dcf64c883ad2bf27ee7eefa07b5e427a5b2b06ac95ef042"
+    },
+    {
+      "path": "v1-frozen/v1/app.js",
+      "bytes": 4369,
+      "sha256": "4afc2ce05382a7b5350731d3a2e80434297ac3228cc5a07476463248704e9970"
+    },
+    {
+      "path": "v1-frozen/v1/core.cjs",
+      "bytes": 3356,
+      "sha256": "7f8a344ab42bbed1a5b741faddb7c0a6e282a381058fdd70863663da4e488fb8"
+    },
+    {
+      "path": "v1-frozen/v1/index.html",
+      "bytes": 10882,
+      "sha256": "b4936960277974ceff55efc5780d6a440e157982c5edc15abaad921f4fe99bc6"
+    },
+    {
+      "path": "v1-frozen/v1/style.css",
+      "bytes": 1376,
+      "sha256": "a846dd6e953a0824c8e159d44ae7257488b548a1c79a9abbb5e03a62ef240413"
+    },
+    {
+      "path": "v1-frozen/v1/template.html",
+      "bytes": 1805,
+      "sha256": "5ce7d16571ead09cc674ef1b246478463318a59c85634619094ae1cf641caa71"
+    },
+    {
+      "path": "v1-frozen/v2-update/MIGRATION.md",
+      "bytes": 1851,
+      "sha256": "ab20163982c4888ca35b6a492f0932c4176223c59c64d6dd47978292f6a65e11"
+    },
+    {
+      "path": "v1-frozen/v2-update/core.cjs",
+      "bytes": 3716,
+      "sha256": "47b60511b14b92395f4dccd9ce113b0458595b81c1825a81bf4e5d9333cf1df4"
+    }
+  ]
+}

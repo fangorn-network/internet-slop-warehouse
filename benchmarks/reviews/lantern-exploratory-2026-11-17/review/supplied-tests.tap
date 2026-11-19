@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: Aspen/test-core.mjs
+ok 1 - Aspen/test-core.mjs
+  ---
+  duration_ms: 99.998089
+  type: 'test'
+  ...
+# Subtest: Aspen/test-integration.mjs
+ok 2 - Aspen/test-integration.mjs
+  ---
+  duration_ms: 340.044481
+  type: 'test'
+  ...
+# Subtest: Cedar/tests/model.test.mjs
+ok 3 - Cedar/tests/model.test.mjs
+  ---
+  duration_ms: 86.624738
+  type: 'test'
+  ...
+# Subtest: Cedar/tests/package.test.mjs
+ok 4 - Cedar/tests/package.test.mjs
+  ---
+  duration_ms: 56.543866
+  type: 'test'
+  ...
+# Subtest: Redwood/tests/core.test.mjs
+ok 5 - Redwood/tests/core.test.mjs
+  ---
+  duration_ms: 106.402885
+  type: 'test'
+  ...
+# Subtest: Redwood/tests/input.test.mjs
+ok 6 - Redwood/tests/input.test.mjs
+  ---
+  duration_ms: 54.042909
+  type: 'test'
+  ...
+# Subtest: Redwood/tests/static.test.mjs
+ok 7 - Redwood/tests/static.test.mjs
+  ---
+  duration_ms: 87.445197
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 351.603087

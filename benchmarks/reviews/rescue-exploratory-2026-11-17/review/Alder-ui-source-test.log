@@ -1,0 +1,1 @@
+PASS actual source handler simulation: keyboard, touch/cancel, pause/resume, blur, restart before/after victory, E recovery, export/load and rejected-load preservation. Native browser controls/rendering NOT VERIFIED.

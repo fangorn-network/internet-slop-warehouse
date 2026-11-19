@@ -1,0 +1,561 @@
+{
+  "collectedAt": "2026-11-17T15:55:44.666Z",
+  "scope": "Completed instrumentation pilot; one run per condition; C uses warmed local q8 semantic search. Builder-reported acceptance fields are not comparative scores; consult independent review. No actual browser acceptance or model-dollar telemetry.",
+  "results": [
+    {
+      "condition": "A",
+      "status": "implemented-with-validation-limitations",
+      "metrics": {
+        "setupSeconds": null,
+        "elapsedSeconds": 142.83,
+        "humanInterventionMinutes": null,
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "outputTokens": null,
+        "modelCostUsd": null,
+        "externalToolCostUsd": null,
+        "searchCalls": null,
+        "retrievalCalls": null,
+        "retrievedBytes": null,
+        "repairAttempts": null
+      },
+      "acceptanceStatusCounts": {
+        "not-evaluated": 12
+      },
+      "adapter": null,
+      "deviations": [
+        "Builder wrote a separate output/result.json schema; parent mapped reported duration to common template without inferring missing metrics.",
+        "Browser checks unavailable; independent acceptance review pending."
+      ]
+    },
+    {
+      "condition": "B",
+      "status": "implemented-with-validation-limitations",
+      "metrics": {
+        "setupSeconds": null,
+        "elapsedSeconds": 262,
+        "humanInterventionMinutes": null,
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "outputTokens": null,
+        "modelCostUsd": null,
+        "externalToolCostUsd": null,
+        "searchCalls": null,
+        "retrievalCalls": null,
+        "retrievedBytes": null,
+        "repairAttempts": null
+      },
+      "acceptanceStatusCounts": {
+        "not-evaluated": 12
+      },
+      "adapter": null,
+      "deviations": [
+        "Builder wrote a separate output/result.json schema; parent mapped reported duration to common template without inferring missing metrics.",
+        "Browser checks unavailable; independent acceptance review pending."
+      ]
+    },
+    {
+      "condition": "C-semantic-local",
+      "status": "finalized",
+      "metrics": {
+        "setupSeconds": 0.237123604,
+        "elapsedSeconds": 215.731,
+        "humanInterventionMinutes": 0,
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "outputTokens": null,
+        "modelCostUsd": null,
+        "externalToolCostUsd": 0,
+        "searchCalls": 1,
+        "retrievalCalls": 1,
+        "retrievedBytes": 2893,
+        "repairAttempts": 0
+      },
+      "acceptanceStatusCounts": {
+        "unverified": 2,
+        "passed-simulation": 8,
+        "passed": 2
+      },
+      "adapter": {
+        "setupProcesses": 2,
+        "searchCalls": 1,
+        "getCalls": 1,
+        "responseBytes": 16865,
+        "failedRequests": 0
+      },
+      "deviations": [
+        "Local q8 semantic search adapter instead of hosted production runtime; index is prewarmed and setup measured separately.",
+        "Browser and localhost unavailable as declared; tests use actual core simulation and instrumented DOM/Canvas/WebAudio substitutes; real browser behavior unverified."
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "A/TASK.md",
+      "bytes": 650,
+      "sha256": "25c3df8c56f31c72761201682fefd40d362e421b0c6f1145fcb6c59b924b74d9"
+    },
+    {
+      "path": "A/ACCESS.md",
+      "bytes": 114,
+      "sha256": "e51d9cc8ccd372b4c3187119c38d2e434fa22ab5e13f71056c18236d786779f0"
+    },
+    {
+      "path": "A/result.json",
+      "bytes": 2200,
+      "sha256": "24e02de2c93f27e3bff53946bd0a7a23a0d75f318ae9df7f3a8f97493772db1f"
+    },
+    {
+      "path": "A/output/FINAL-REPORT.md",
+      "bytes": 1067,
+      "sha256": "8eb7e62bd131d87798124be782a580a03d8696d8f5bef3f3779cf2de73734917"
+    },
+    {
+      "path": "A/output/LICENSE",
+      "bytes": 1095,
+      "sha256": "b850a4ab3576e385154753ac25fc4ea5265ff487628a81ea942a6d1e08ae3523"
+    },
+    {
+      "path": "A/output/README.md",
+      "bytes": 2667,
+      "sha256": "f1fde4e71c4b1158b918935c4320d3e25a38329ea93307fa944779b0a0d67c02"
+    },
+    {
+      "path": "A/output/RUN-LOG.md",
+      "bytes": 969,
+      "sha256": "7cdccccf61ea6f4f9c42b5007d0c4f734dcbb5de52ae617d853b833f7d4769f7"
+    },
+    {
+      "path": "A/output/TEST-RESULTS.txt",
+      "bytes": 407,
+      "sha256": "389992012b0287c06a9f74cb1624bf6ce58501436d08762f066fac036ff4ebee"
+    },
+    {
+      "path": "A/output/app.mjs",
+      "bytes": 6247,
+      "sha256": "3804de59fc56a0aca851bc8b26278f6008455478cee15e01347a862896475252"
+    },
+    {
+      "path": "A/output/game.mjs",
+      "bytes": 1314,
+      "sha256": "d9b612c08f6738c2e0bfcf5b34dfe5f857e8115689f42fe7cce627b51bccfcb2"
+    },
+    {
+      "path": "A/output/index.html",
+      "bytes": 1904,
+      "sha256": "5377f1c04289a57967c9662119c580aadd202ee769ef8cb4968e01bd7b742565"
+    },
+    {
+      "path": "A/output/result.json",
+      "bytes": 586,
+      "sha256": "113e6c2d4caf9cdc58c241137fc7fa400f885e5928a0194fa4da4864634415fd"
+    },
+    {
+      "path": "A/output/style.css",
+      "bytes": 2581,
+      "sha256": "ecfb52204b6bd6be8d377dd708cc7f7d28349ace3e9d7af2a80216d2d1e51bfc"
+    },
+    {
+      "path": "A/output/test.mjs",
+      "bytes": 2125,
+      "sha256": "70535dc04de103fb6de93ce6d2488882fbd2e835f42e343f5bdbf16ac796fdc2"
+    },
+    {
+      "path": "B/TASK.md",
+      "bytes": 650,
+      "sha256": "25c3df8c56f31c72761201682fefd40d362e421b0c6f1145fcb6c59b924b74d9"
+    },
+    {
+      "path": "B/ACCESS.md",
+      "bytes": 102,
+      "sha256": "688dc563600ef925e7170f2f603a46e6ca488f998f04386b9455e90e2eff9257"
+    },
+    {
+      "path": "B/result.json",
+      "bytes": 2465,
+      "sha256": "7b898716d99b05de405fccd0a92d9608198bc0acf39738202830ff07ba72f733"
+    },
+    {
+      "path": "B/output/FINAL-REPORT.md",
+      "bytes": 2606,
+      "sha256": "89a3965213acb97229d8da27c14382cf40623b9ae817c8acba3832a274551139"
+    },
+    {
+      "path": "B/output/LICENSE",
+      "bytes": 1173,
+      "sha256": "0f792a4f8dbebd539ecf0545a0bffc6b5d03d7e9818532fa80c2fb93e24674f9"
+    },
+    {
+      "path": "B/output/README.md",
+      "bytes": 2041,
+      "sha256": "ea716e778107b5713f990a933be33e6443913c324735464ec69a795b71300a95"
+    },
+    {
+      "path": "B/output/RUN-LOG.md",
+      "bytes": 1653,
+      "sha256": "137333159490a2dd61fd67d1bd63ec0862b4eef2d862ca7ca6633ef0f146f058"
+    },
+    {
+      "path": "B/output/SOURCES.md",
+      "bytes": 2043,
+      "sha256": "70037aa003005441c0ecd3993419ef46e64c3f5acac27477fd05325abce98e86"
+    },
+    {
+      "path": "B/output/TEST-RESULTS.txt",
+      "bytes": 664,
+      "sha256": "b15ad203e151f52d5f638d5e7771d2d0ef2ec1466c4ff7b5446bc0ddf5063039"
+    },
+    {
+      "path": "B/output/core.mjs",
+      "bytes": 1599,
+      "sha256": "bf93a42dab7e5859b79ea8d7ecf388f118ff10d02ac8967cc4d9ffe0cfb89208"
+    },
+    {
+      "path": "B/output/game.mjs",
+      "bytes": 8110,
+      "sha256": "916d85fd5bb18a37be0231432066f2ab77e4b6d9610768b7d6b81bf021bdb6f3"
+    },
+    {
+      "path": "B/output/index.html",
+      "bytes": 2366,
+      "sha256": "39bf9e24df9a84e9bedf5f1905e324d0c893c4852f152c0365a9f999ad9c6c46"
+    },
+    {
+      "path": "B/output/result.json",
+      "bytes": 720,
+      "sha256": "4a7a13372b879bbfa322da1fe713946cb6c47303d28012a8914c7fb3804c7c20"
+    },
+    {
+      "path": "B/output/smoke.mjs",
+      "bytes": 2472,
+      "sha256": "edc7732a8c59e8554c6a8709bbd9dcfc91d6e467747a63840bb60a6704f3108d"
+    },
+    {
+      "path": "B/output/style.css",
+      "bytes": 3439,
+      "sha256": "e130ccc9b373ed8a5283da5fd3726a0a2cef888a50c79e421df7bae7e52b4003"
+    },
+    {
+      "path": "B/output/test.mjs",
+      "bytes": 2793,
+      "sha256": "10038a01f8a2af40fd94f421d6cd588bb069e1df4c3833e59c7610ba60ed755d"
+    },
+    {
+      "path": "B/output/vendor/collect.mjs",
+      "bytes": 1160,
+      "sha256": "6e872d976b717ee4d75f1edfd9e90ded1eee69713929db72383c21f1a953d290"
+    },
+    {
+      "path": "C/TASK.md",
+      "bytes": 650,
+      "sha256": "25c3df8c56f31c72761201682fefd40d362e421b0c6f1145fcb6c59b924b74d9"
+    },
+    {
+      "path": "C/ACCESS.md",
+      "bytes": 2144,
+      "sha256": "7363e22de445cdbdb6fc7fb5ac5e4cba67cdabcc57ffe687d61893651e2547b8"
+    },
+    {
+      "path": "C/result.json",
+      "bytes": 4261,
+      "sha256": "74833287b0821617a6835faf6dd3d71316a2e96e4f8d59c6d8b1501c677f1eb6"
+    },
+    {
+      "path": "C/adapter-metrics.jsonl",
+      "bytes": 1015,
+      "sha256": "e5e81f1993db4914912b7e02e3cfb09f0291f35db1116b2d674c04fdcb88aa19"
+    },
+    {
+      "path": "C/output/LICENSE",
+      "bytes": 413,
+      "sha256": "cb64f3854dcd79485a0afd875f82d7fb2896c44bad8db9c61cc6dae4acc96f35"
+    },
+    {
+      "path": "C/output/README.md",
+      "bytes": 2300,
+      "sha256": "539ac920ba045fdeb3353c23a3c226b92b76329c1a638830df9c6c1cca8ddc41"
+    },
+    {
+      "path": "C/output/REPORT.md",
+      "bytes": 2468,
+      "sha256": "a3e9d4b3a1c3c507b7809b9401bf8017dba224f917b69d5310fb78856aae7871"
+    },
+    {
+      "path": "C/output/RUN-LOG.md",
+      "bytes": 614,
+      "sha256": "4c43d89f30a61c9c7607a84145a3ed890a3ef677953caddf5bbd6f67c9585344"
+    },
+    {
+      "path": "C/output/SOURCES.md",
+      "bytes": 1841,
+      "sha256": "3b8363baa99a1f6b6967da27c8f71d55ac7b72ce0990bdbe336f4bb955e287e2"
+    },
+    {
+      "path": "C/output/TEST-RESULTS.txt",
+      "bytes": 413,
+      "sha256": "909e315c1c2a5b39b91efd87707b8936bc86258e342daec77cca9d4dde2d259c"
+    },
+    {
+      "path": "C/output/app.mjs",
+      "bytes": 6013,
+      "sha256": "e7040a848f984ef7ede63cbb79bc26bea907f3d11b94bf5616dd2efb168d79d3"
+    },
+    {
+      "path": "C/output/game.mjs",
+      "bytes": 1412,
+      "sha256": "635c69d620386d6a9ef1665b75d8654092a602ee8be0e5df96ed57d7c61f9fbb"
+    },
+    {
+      "path": "C/output/get-response.jsonl",
+      "bytes": 2894,
+      "sha256": "8751747b2b0b78de3ea6579f6ffaf34141017c825bac9c4a4a29fd0652ddc367"
+    },
+    {
+      "path": "C/output/index.html",
+      "bytes": 1800,
+      "sha256": "985bfc9c218e861e9623acd3641930cc50682c18d44addb9ff858cc9b30fc47f"
+    },
+    {
+      "path": "C/output/search-response.jsonl",
+      "bytes": 13973,
+      "sha256": "8e591ec84c94397afdbe3788024a7b43b6063c4849283fc92b00a6c9ef5faf40"
+    },
+    {
+      "path": "C/output/style.css",
+      "bytes": 2782,
+      "sha256": "2af4a40461e58b2415cfa9887d064690c12e22b7ba63a91abf03213fc2b17c8b"
+    },
+    {
+      "path": "C/output/test.mjs",
+      "bytes": 5089,
+      "sha256": "8956de4ff8b3ecba361c2707299c69f4a3e5fda549228f3f9b74c1b5520d8857"
+    },
+    {
+      "path": "C/output/vendor/collect.metadata.json",
+      "bytes": 3141,
+      "sha256": "39e08e94ae228385f291c72665f23b874ef48de25b7c175e82f8b4513b6e5ccd"
+    },
+    {
+      "path": "C/output/vendor/collect.mjs",
+      "bytes": 1160,
+      "sha256": "6e872d976b717ee4d75f1edfd9e90ded1eee69713929db72383c21f1a953d290"
+    }
+  ],
+  "independentReview": {
+    "status": "completed",
+    "actualBrowser": false,
+    "report": "independent-review/review/REVIEW.md",
+    "mapping": {
+      "Larch": "B",
+      "Willow": "A",
+      "Birch": "C-semantic-local"
+    },
+    "files": [
+      {
+        "path": "independent-review/Birch/LICENSE",
+        "bytes": 413,
+        "sha256": "cb64f3854dcd79485a0afd875f82d7fb2896c44bad8db9c61cc6dae4acc96f35"
+      },
+      {
+        "path": "independent-review/Birch/README.md",
+        "bytes": 2300,
+        "sha256": "539ac920ba045fdeb3353c23a3c226b92b76329c1a638830df9c6c1cca8ddc41"
+      },
+      {
+        "path": "independent-review/Birch/SOURCES.md",
+        "bytes": 1841,
+        "sha256": "3b8363baa99a1f6b6967da27c8f71d55ac7b72ce0990bdbe336f4bb955e287e2"
+      },
+      {
+        "path": "independent-review/Birch/TEST-RESULTS.txt",
+        "bytes": 413,
+        "sha256": "909e315c1c2a5b39b91efd87707b8936bc86258e342daec77cca9d4dde2d259c"
+      },
+      {
+        "path": "independent-review/Birch/app.mjs",
+        "bytes": 6013,
+        "sha256": "e7040a848f984ef7ede63cbb79bc26bea907f3d11b94bf5616dd2efb168d79d3"
+      },
+      {
+        "path": "independent-review/Birch/game.mjs",
+        "bytes": 1412,
+        "sha256": "635c69d620386d6a9ef1665b75d8654092a602ee8be0e5df96ed57d7c61f9fbb"
+      },
+      {
+        "path": "independent-review/Birch/index.html",
+        "bytes": 1800,
+        "sha256": "985bfc9c218e861e9623acd3641930cc50682c18d44addb9ff858cc9b30fc47f"
+      },
+      {
+        "path": "independent-review/Birch/style.css",
+        "bytes": 2782,
+        "sha256": "2af4a40461e58b2415cfa9887d064690c12e22b7ba63a91abf03213fc2b17c8b"
+      },
+      {
+        "path": "independent-review/Birch/test.mjs",
+        "bytes": 5089,
+        "sha256": "8956de4ff8b3ecba361c2707299c69f4a3e5fda549228f3f9b74c1b5520d8857"
+      },
+      {
+        "path": "independent-review/Birch/vendor/collect.metadata.json",
+        "bytes": 3141,
+        "sha256": "39e08e94ae228385f291c72665f23b874ef48de25b7c175e82f8b4513b6e5ccd"
+      },
+      {
+        "path": "independent-review/Birch/vendor/collect.mjs",
+        "bytes": 1160,
+        "sha256": "6e872d976b717ee4d75f1edfd9e90ded1eee69713929db72383c21f1a953d290"
+      },
+      {
+        "path": "independent-review/Larch/LICENSE",
+        "bytes": 1173,
+        "sha256": "0f792a4f8dbebd539ecf0545a0bffc6b5d03d7e9818532fa80c2fb93e24674f9"
+      },
+      {
+        "path": "independent-review/Larch/README.md",
+        "bytes": 2041,
+        "sha256": "ea716e778107b5713f990a933be33e6443913c324735464ec69a795b71300a95"
+      },
+      {
+        "path": "independent-review/Larch/SOURCES.md",
+        "bytes": 2043,
+        "sha256": "70037aa003005441c0ecd3993419ef46e64c3f5acac27477fd05325abce98e86"
+      },
+      {
+        "path": "independent-review/Larch/TEST-RESULTS.txt",
+        "bytes": 664,
+        "sha256": "b15ad203e151f52d5f638d5e7771d2d0ef2ec1466c4ff7b5446bc0ddf5063039"
+      },
+      {
+        "path": "independent-review/Larch/core.mjs",
+        "bytes": 1599,
+        "sha256": "bf93a42dab7e5859b79ea8d7ecf388f118ff10d02ac8967cc4d9ffe0cfb89208"
+      },
+      {
+        "path": "independent-review/Larch/game.mjs",
+        "bytes": 8110,
+        "sha256": "916d85fd5bb18a37be0231432066f2ab77e4b6d9610768b7d6b81bf021bdb6f3"
+      },
+      {
+        "path": "independent-review/Larch/index.html",
+        "bytes": 2366,
+        "sha256": "39bf9e24df9a84e9bedf5f1905e324d0c893c4852f152c0365a9f999ad9c6c46"
+      },
+      {
+        "path": "independent-review/Larch/smoke.mjs",
+        "bytes": 2472,
+        "sha256": "edc7732a8c59e8554c6a8709bbd9dcfc91d6e467747a63840bb60a6704f3108d"
+      },
+      {
+        "path": "independent-review/Larch/style.css",
+        "bytes": 3439,
+        "sha256": "e130ccc9b373ed8a5283da5fd3726a0a2cef888a50c79e421df7bae7e52b4003"
+      },
+      {
+        "path": "independent-review/Larch/test.mjs",
+        "bytes": 2793,
+        "sha256": "10038a01f8a2af40fd94f421d6cd588bb069e1df4c3833e59c7610ba60ed755d"
+      },
+      {
+        "path": "independent-review/Larch/vendor/collect.mjs",
+        "bytes": 1160,
+        "sha256": "6e872d976b717ee4d75f1edfd9e90ded1eee69713929db72383c21f1a953d290"
+      },
+      {
+        "path": "independent-review/TASK.md",
+        "bytes": 464,
+        "sha256": "051aa09261fecff81eb8a7cea2bdf7b01efa733bb0e61a7fcd3702c8587df501"
+      },
+      {
+        "path": "independent-review/Willow/LICENSE",
+        "bytes": 1095,
+        "sha256": "b850a4ab3576e385154753ac25fc4ea5265ff487628a81ea942a6d1e08ae3523"
+      },
+      {
+        "path": "independent-review/Willow/README.md",
+        "bytes": 2667,
+        "sha256": "f1fde4e71c4b1158b918935c4320d3e25a38329ea93307fa944779b0a0d67c02"
+      },
+      {
+        "path": "independent-review/Willow/TEST-RESULTS.txt",
+        "bytes": 407,
+        "sha256": "389992012b0287c06a9f74cb1624bf6ce58501436d08762f066fac036ff4ebee"
+      },
+      {
+        "path": "independent-review/Willow/app.mjs",
+        "bytes": 6247,
+        "sha256": "3804de59fc56a0aca851bc8b26278f6008455478cee15e01347a862896475252"
+      },
+      {
+        "path": "independent-review/Willow/game.mjs",
+        "bytes": 1314,
+        "sha256": "d9b612c08f6738c2e0bfcf5b34dfe5f857e8115689f42fe7cce627b51bccfcb2"
+      },
+      {
+        "path": "independent-review/Willow/index.html",
+        "bytes": 1904,
+        "sha256": "5377f1c04289a57967c9662119c580aadd202ee769ef8cb4968e01bd7b742565"
+      },
+      {
+        "path": "independent-review/Willow/style.css",
+        "bytes": 2581,
+        "sha256": "ecfb52204b6bd6be8d377dd708cc7f7d28349ace3e9d7af2a80216d2d1e51bfc"
+      },
+      {
+        "path": "independent-review/Willow/test.mjs",
+        "bytes": 2125,
+        "sha256": "70535dc04de103fb6de93ce6d2488882fbd2e835f42e343f5bdbf16ac796fdc2"
+      },
+      {
+        "path": "independent-review/review/Birch-instrumented.mjs",
+        "bytes": 6200,
+        "sha256": "d538a5af1db1fbcbf32f93f7185a973de6874cf8585129af5c8405a854d011cb"
+      },
+      {
+        "path": "independent-review/review/Larch-instrumented.mjs",
+        "bytes": 8272,
+        "sha256": "fef75faafcfade5f975f4863b4760092e2427b6bab5072110a1fdffe562f670a"
+      },
+      {
+        "path": "independent-review/review/REVIEW.md",
+        "bytes": 9136,
+        "sha256": "2ddf5386be52dc32eab3ff13500c3cb14ed831940a3647cc928ea8fd7aadfe26"
+      },
+      {
+        "path": "independent-review/review/Willow-instrumented.mjs",
+        "bytes": 6410,
+        "sha256": "50932336c384e0dfaba4410065507f8adfbcded30aa23c3b65cff852ec7946ef"
+      },
+      {
+        "path": "independent-review/review/birch-probes.mjs",
+        "bytes": 4042,
+        "sha256": "5476815930b57b9e37c1b94a49172fb59c0f46b482f7a529e5dfcb6dcfad035e"
+      },
+      {
+        "path": "independent-review/review/birch-results.json",
+        "bytes": 271,
+        "sha256": "0c0279a34ff448d18f47dbc04827831f6f9c68bcaaff26e2fcb485ea3373c20d"
+      },
+      {
+        "path": "independent-review/review/probe-results.json",
+        "bytes": 492,
+        "sha256": "ca40b9259afa19b26fd0b3679708a940e3d36f9c75140c2b302665aec9304a77"
+      },
+      {
+        "path": "independent-review/review/probes.mjs",
+        "bytes": 3550,
+        "sha256": "704896a3cfc48841a7eb6b042d663a32914195e3053cb79a7f2d77b96a12bb3e"
+      },
+      {
+        "path": "independent-review/review/review.json",
+        "bytes": 2710,
+        "sha256": "373e860299dbb9b9a67691aabdb8ef66659e1f000554e849b5bac9072574eafe"
+      },
+      {
+        "path": "independent-review/review/state-probes.mjs",
+        "bytes": 1541,
+        "sha256": "da3eb51fa1aaebd39b878e980e754cd1d735cc7dea618104813ba2250bc3d848"
+      }
+    ]
+  }
+}

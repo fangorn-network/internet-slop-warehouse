@@ -1,0 +1,25 @@
+{
+  "status": "completed",
+  "condition": "B",
+  "started_at": "2026-11-17T15:45:54Z",
+  "completed_at": "2026-11-17T15:50:15Z",
+  "artifact": "index.html",
+  "launch_command": "python3 -m http.server 8000",
+  "browser_verified": false,
+  "metrics": {
+    "simulation_tests_passed": 8,
+    "simulation_tests_failed": 0,
+    "mock_integration_checks_passed": 1,
+    "runtime_external_dependencies": 0,
+    "reused_runtime_modules": 1,
+    "npm_installs": 0,
+    "browser_tests_run": 0,
+    "wall_clock_seconds": 262,
+    "token_usage": null,
+    "cost": null
+  },
+  "limitations": [
+    "Actual browser rendering, device input and audio output unverified; browser/localhost blocked."
+  ],
+  "report": "FINAL-REPORT.md"
+}

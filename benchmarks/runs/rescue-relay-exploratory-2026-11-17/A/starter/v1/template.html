@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rescue Relay — neutral starter v1</title><style>__STYLE__</style></head><body>
+<header><h1>Rescue Relay: baseline expedition</h1><span id="progress">0 / 3 signals active</span></header>
+<p>Walk to each amber signal and activate it. Then return to the extraction pad in the southwest. This neutral starter has no rescue, component inventory or escort mission yet.</p>
+<canvas width="800" height="560" aria-label="Expedition map. Three signal towers and a southwest extraction point."></canvas>
+<div class="row controls"><div class="row"><button id="activate">Activate (E)</button><button id="pause">Pause</button><button id="restart">Restart</button></div><div class="pad" aria-label="Movement"><button data-dir="up" aria-label="Move up">↑</button><button data-dir="left" aria-label="Move left">←</button><button data-dir="down" aria-label="Move down">↓</button><button data-dir="right" aria-label="Move right">→</button></div></div>
+<p id="status" role="status">Activate three signals, then return to extraction.</p><small>WASD / arrows to walk. E or Activate near a signal. No audio or network services.</small>
+<details><summary>Portable save</summary><label for="save">Save string</label><textarea id="save" spellcheck="false"></textarea><div class="row"><button id="export">Export save</button><button id="load">Load save</button></div><p>A rejected save leaves the current expedition unchanged. The checksum detects corruption; it is not a signature or anti-cheat mechanism.</p></details>
+<footer>Original neutral benchmark fixture · CC0-1.0 · Browser baseline verification pending</footer>
+<script>__CORE__</script><script>__APP__</script></body></html>

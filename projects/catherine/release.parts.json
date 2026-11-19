@@ -1,0 +1,52 @@
+[
+  {
+    "id": "catherine",
+    "type": "game",
+    "file": "../artifacts/catherine/catherine.html",
+    "title": "Catherine · a dream at the Heartland Inn",
+    "description": "A short first-person dream in room 212 of the Heartland Inn, adapted from a real dream report (Sleep and Dream Database, melvin-dreams, 1993; CC BY 4.0). 3 AM: heavy footsteps on a wooden floor come down a carpeted hall and stop at your door. Through the peephole, a woman with her head bowed to it. Open the door and the hall is the house that stood there before the hotel: floorboards, wainscot, bare bulbs on pull chains, a grandfather clock ticking. Her steps walk away from you; she is at the end of the hall, her back to you. Reach out. Built as scenes on the hotel's stage: ?scenes=checkin,catherine plays an ordinary evening first. Spatial audio with reverb; desktop and touch controls.",
+    "tags": [
+      "horror",
+      "dream",
+      "first-person",
+      "hotel",
+      "ghost",
+      "short",
+      "scenes",
+      "spatial-audio",
+      "sddb",
+      "remix",
+      "cc0",
+      "mobile"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0 AND MIT AND CC-BY-4.0",
+    "parent": {
+      "id": "heartland-inn"
+    },
+    "uses": [
+      "heartland-hotel",
+      "kenney-wood-foley",
+      "ph-gothiccommode-01",
+      "ph-hanging-picture-frame-02",
+      "ph-lightbulb-01",
+      "ph-oldhouse-ceiling-color",
+      "ph-oldhouse-ceiling-normal",
+      "ph-oldhouse-ceiling-roughness",
+      "ph-oldhouse-floorboards-color",
+      "ph-oldhouse-floorboards-normal",
+      "ph-oldhouse-floorboards-roughness",
+      "ph-oldhouse-wainscot-color",
+      "ph-oldhouse-wainscot-normal",
+      "ph-oldhouse-wainscot-roughness",
+      "ph-oldhouse-wallpaper-color",
+      "ph-oldhouse-wallpaper-normal",
+      "ph-oldhouse-wallpaper-roughness",
+      "ph-pull-chain-light-socket",
+      "ph-vintage-grandfather-clock-01",
+      "ph-wooden-bookshelf-worn",
+      "ph-wooden-stool-01",
+      "zone-culling"
+    ]
+  }
+]

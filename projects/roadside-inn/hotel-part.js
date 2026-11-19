@@ -6,6 +6,8 @@
 // Two ways in:
 // - attach(parent, opts): drop the building into any three.js scene (Slopov II).
 // - the engine, for games that are the hotel: loadLibrary, buildWorld, createPlayer, createSound, attachInput, quality.
+// - the stage, for games told in scenes: createDream (one post pass: dream look, fades, peephole, eyelids),
+//   createDirector (named acts with fades), createSoundscape (placed sounds and loops), createReel/pickScenes (scenes spliced into a reel).
 import { loadLibrary, PART_IDS } from './assets.js';
 import { buildWorld, FLOOR2 } from './world.js';
 
@@ -16,6 +18,10 @@ export { attach as attachInput } from './input.js';
 export { createSound } from './sound.js';
 export { quality } from './quality.js';
 export { createPlayer, RADIUS, EYE } from './player.js';
+export { createDream } from './stage/dream.js';
+export { createDirector } from './stage/director.js';
+export { createSoundscape } from './stage/audio.js';
+export { createReel, pickScenes } from './stage/scenes.js';
 
 const SOUNDS = new Proxy({}, { get: () => () => {} });
 

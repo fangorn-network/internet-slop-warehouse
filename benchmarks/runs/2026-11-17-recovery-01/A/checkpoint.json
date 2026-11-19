@@ -1,0 +1,18 @@
+{
+  "stage": "builder-finalized",
+  "rawResult": "output/result.json",
+  "normalizedResult": "result.json",
+  "artifactFiles": [
+    "output/FINAL-REPORT.md",
+    "output/LICENSE",
+    "output/README.md",
+    "output/RUN-LOG.md",
+    "output/TEST-RESULTS.txt",
+    "output/app.mjs",
+    "output/game.mjs",
+    "output/index.html",
+    "output/result.json",
+    "output/style.css",
+    "output/test.mjs"
+  ]
+}
