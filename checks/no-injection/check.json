@@ -1,0 +1,27 @@
+{
+  "title": "No prompt injection",
+  "description": "Scans the text an agent will read (params.fields of the payload, and a skill's or markdown file's text) for prompt injection: attempts to override the agent's guidance, piping downloads into a shell, pointing at credentials, and invisible Unicode tag characters.",
+  "params": {
+    "type": "object",
+    "properties": {
+      "fields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Payload fields to scan (default title, description)"
+      },
+      "file": {
+        "type": "boolean",
+        "description": "Also scan the file's text: { md }, { text } or a text/markdown file (default true)"
+      }
+    }
+  },
+  "tags": [
+    "check",
+    "prompt-injection",
+    "agents",
+    "text"
+  ],
+  "license": "MIT"
+}

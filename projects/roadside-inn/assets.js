@@ -32,27 +32,29 @@ export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here
 const MODELS = [
   'rb-sophia-formal', 'rb-marcus-formal', 'rb-emma-casual', 'rb-andre-casual',
   'g3-shower-cabin', 'g3-treadmill', 'g3-exercise-bike',
-  'ph-modern-arm-chair-01', 'ph-mid-century-lounge-chair', 'ph-ottoman-01',
+  'ph-modern-arm-chair-01', 'ph-ottoman-01',
   'ph-modern-coffee-table-01', 'ph-side-table-01', 'ph-modern-ceiling-lamp-01', 'ph-potted-plant-01',
-  'ph-potted-plant-04', 'ph-throw-pillows-01', 'ph-bar-chair-round-01', 'ph-round-wooden-table-01',
+  'ph-potted-plant-04', 'ph-throw-pillows-01', 'ph-round-wooden-table-01',
   'ph-wetfloorsign-01', 'ph-lifebuoy', 'ph-wall-clock',
   'ph-shrub-03', 'ph-korean-fire-extinguisher-01',
   'municipal-water-tower', 'ph-desk-lamp-arm-01',
   // original Blender furniture (blender/bed.py, blender/furniture.py)
-  ...['king-bed', 'headboard', 'nightstand', 'table-lamp', 'credenza-tv', 'desk', 'closet', 'microfridge', 'ptac', 'vanity', 'toilet', 'front-desk', 'snack-vending', 'drum-pendant', 'luggage-cart', 'lobby-sofa', 'accent-chair-green', 'accent-chair-mustard',
+  ...['king-bed', 'headboard', 'nightstand', 'table-lamp', 'credenza-tv', 'desk', 'closet', 'microfridge', 'ptac', 'vanity', 'toilet', 'snack-vending', 'luggage-cart', 'lobby-sofa', 'accent-chair-mustard',
     'coffee-station', 'breakfast-bar', 'ice-machine', 'ice-bucket', 'elevator-car', 'dumbbell-rack', 'pool-chaise', 'pool-rail', 'housekeeping-cart', 'room-door',
-    'shelving-unit', 'floor-lamp', 'snake-plant', 'centerpiece', 'lattice-pendant'].map(s => 'hotel-' + s),
+    'floor-lamp', 'snake-plant'].map(s => 'hotel-' + s),
+  // Formula Blue lobby (blender/lobby.py) and a Poly Haven stone-top coffee table
+  ...['checkin-pod', 'sectional', 'lounge-chair-navy', 'communal-table', 'bar-stool', 'market-cooler', 'market-shelf', 'business-center', 'task-chair'].map(s => 'hotel-' + s), 'ph-coffee-table-round-01',
   ...['1990s-sedan', '1990s-suv', '1990s-pickup-truck', '1990s-minivan', '1990s-station-wagon', '1990s-hatchback', 'semi-truck', 'dumpster', 'utility-pole', 'street-light', 'vending-machine', 'fire-hydrant', 'traffic-cone', 'bollard', 'guard-rail'].map(s => 'g3-' + s),
   ...STATION_PARTS,   // the travel stop across the interstate (station.js)
 ];
 // Decorative props nothing inspects after placing them (no traverse, bounds or named parts), outside room 212 (whose
 // clearance pass measures every prop). With stream: true these load after the first frame, nearest first.
-export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-04', 'ph-mid-century-lounge-chair', 'ph-bar-chair-round-01', 'ph-round-wooden-table-01',
+export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-04', 'ph-round-wooden-table-01',
   'ph-lifebuoy', 'ph-wetfloorsign-01', 'ph-wall-clock', 'ph-throw-pillows-01', 'ph-ottoman-01', 'ph-modern-coffee-table-01', 'ph-side-table-01',
   'ph-korean-fire-extinguisher-01', 'municipal-water-tower', 'g3-treadmill', 'g3-exercise-bike', 'g3-dumpster',
-  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'snake-plant', 'centerpiece', 'floor-lamp', 'luggage-cart', 'shelving-unit', 'lattice-pendant', 'drum-pendant', 'coffee-station', 'housekeeping-cart'].map(s => 'hotel-' + s), ...STATION_PARTS]);
+  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'snake-plant', 'floor-lamp', 'luggage-cart', 'coffee-station', 'housekeeping-cart', 'bar-stool', 'task-chair', 'market-shelf', 'business-center'].map(s => 'hotel-' + s), 'ph-coffee-table-round-01', ...STATION_PARTS]);
 const PBR = ['color', 'normal', 'roughness'];
-const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR };
+const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, oak: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR };
 const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling', corridor: 'acg-hotel-carpet' }; // Maira's Dream; ambientCG (corridor: Fabric022)
 const SKIES = { dusk: 'ph-hotel-dusk-sky', day: 'ph-hotel-farm-sky', interior: 'ph-hotel-room-hdri' };
 // Every warehouse part this game loads (package.mjs pins these).

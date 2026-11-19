@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ph-coffee-table-round-01",
+    "file": "haven/ph-coffee-table-round-01.glb",
+    "type": "asset",
+    "title": "Coffee Table Round 01",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Ulan Cabanilla",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "furniture",
+      "table",
+      "modern",
+      "marble",
+      "tea",
+      "coffee",
+      "metal",
+      "sleek",
+      "contemporary",
+      "cocktail"
+    ],
+    "description": "Coffee Table Round 01 from Poly Haven, by Ulan Cabanilla. Self-contained GLB with 1K textures. Upstream polygon count: 4044; 1 meshes. Source: https://polyhaven.com/a/coffee_table_round_01. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  }
+]

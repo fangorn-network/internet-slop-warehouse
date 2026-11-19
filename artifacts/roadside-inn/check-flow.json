@@ -33,8 +33,8 @@
   "errors": [],
   "shots": 0,
   "stats": {
-    "colliders": 421,
-    "interact": 89,
+    "colliders": 426,
+    "interact": 88,
     "drawCalls": 0,
     "textures": 0,
     "programs": 0,

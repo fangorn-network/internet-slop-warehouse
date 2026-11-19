@@ -10,7 +10,7 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "@fangorn-network/sdk": "^0.1.6",
+    "@fangorn-network/sdk": "^0.2.0",
     "@fangorn-network/westmarch": "^0.3.2",
     "viem": "^2.56.3"
   },

@@ -28,9 +28,10 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // ---------- materials ----------
   // Painted walls share Poly Haven plaster detail (normal + roughness) under a flat paint color.
   const plaster = color => lib.surface('wall-plaster', { repeat: [1, 1], color, normalScale: 0.18 });
-  const paint = plaster('#dccfb7');   // warm greige, as in the interstate Holiday Inn references
+  const paint = plaster('#e9e7e2');   // Formula Blue: crisp warm white (the older greige read as 2010s)
   const corridorPaint = plaster('#d8d0c0');
   const roomAccent = plaster('#a66d50');
+  const loungeAccent = plaster('#1c3358');   // navy accent wall in the great room
   const poolPaint = plaster('#9fd0de');
   // ambientCG 2×2 ft acoustic tile, lifted to the bright white of every reference photo (it rendered a muddy grey-brown).
   const ceiling = lib.surface('ceiling', { repeat: [1 / 3.66, 1 / 3.66], grade: 'saturate(15%) brightness(1.45) contrast(0.85)' });
@@ -63,20 +64,43 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     return new T.MeshStandardMaterial({ map: tex, normalMap: pile.normalMap, roughnessMap: pile.roughnessMap, roughness: 1 });
   }
 
-  // Lobby floor: polished 24-inch beige porcelain, slightly varied tile to tile, with Poly Haven floor-tile relief.
-  function lobbyTile() {
-    const tex = F.canvasTexture(1024, 1024, (g, w, h) => {
-      const n = 4, s = w / n;
-      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
-        const k = (i * 7 + j * 13) % 5; g.fillStyle = ['#e7dcc8', '#e3d7c1', '#e9dfcc', '#e1d4be', '#e5d9c4'][k]; g.fillRect(i * s, j * s, s, s);
-        for (let q = 0; q < 160; q++) { g.fillStyle = `rgba(120,95,70,${Math.random() * 0.05})`; g.beginPath(); g.ellipse(i * s + Math.random() * s, j * s + Math.random() * s, 2 + Math.random() * 10, 1 + Math.random() * 4, Math.random() * 3, 0, 7); g.fill(); }
+  // The great room's oversized regional map (the prototype's local nod): I-44 and old Route 66 across the Ozarks, rivers,
+  // the towns along the way, and big local type. Original artwork, drawn on a canvas.
+  function regionalMap() {
+    return F.canvasTexture(2048, 1190, (g, w, h) => {
+      g.fillStyle = '#eef0f1'; g.fillRect(0, 0, w, h);
+      g.strokeStyle = 'rgba(19,38,74,0.07)'; g.lineWidth = 2;                                             // survey grid
+      for (let x = 0; x < w; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+      for (let y = 0; y < h; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+      let r = 44; const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
+      g.fillStyle = 'rgba(19,38,74,0.06)';                                                                  // Ozark relief, stippled
+      for (let i = 0; i < 9000; i++) { const x = rnd() * w, y = h * 0.35 + rnd() * h * 0.65; if (Math.sin(x * 0.01) + Math.cos(y * 0.013) > 0.4) g.fillRect(x, y, 3, 3); }
+      const river = (pts, width) => { g.strokeStyle = '#3d7bd9'; g.lineWidth = width; g.lineCap = 'round'; g.beginPath(); pts.forEach(([x, y], k) => k ? g.lineTo(x * w, y * h) : g.moveTo(x * w, y * h)); g.stroke(); };
+      river([[0, 0.12], [0.2, 0.16], [0.42, 0.1], [0.62, 0.17], [0.8, 0.13], [1, 0.2]], 14);                  // Missouri River
+      river([[0.38, 0.95], [0.4, 0.75], [0.46, 0.6], [0.5, 0.45], [0.53, 0.3], [0.56, 0.16]], 7);             // Gasconade
+      river([[0.62, 0.8], [0.68, 0.62], [0.74, 0.48], [0.86, 0.38], [0.97, 0.3]], 7);                       // Meramec
+      river([[0.05, 0.98], [0.15, 0.85], [0.2, 0.7], [0.24, 0.58]], 6);
+      const towns = [['St. Louis', 0.93, 0.24, 1], ['Sullivan', 0.78, 0.4], ['Cuba', 0.68, 0.47], ['Rolla', 0.6, 0.53, 1], ['St. Robert', 0.52, 0.58], ['Lebanon', 0.38, 0.69, 1], ['Marshfield', 0.28, 0.76], ['Springfield', 0.2, 0.82, 1], ['Joplin', 0.04, 0.9]];
+      const road = (color, width, dash) => { g.strokeStyle = color; g.lineWidth = width; g.setLineDash(dash); g.beginPath(); towns.forEach(([, x, y], k) => k ? g.lineTo(x * w, y * h) : g.moveTo(x * w, y * h)); g.stroke(); g.setLineDash([]); };
+      road('#ffffff', 34, []); road('#13264a', 22, []);                                                       // I-44
+      g.save(); g.translate(0, 26); road('#c0392b', 6, [22, 14]); g.restore();                               // Route 66, just south
+      for (const [name, x, y, big] of towns) {
+        g.fillStyle = '#ffffff'; g.beginPath(); g.arc(x * w, y * h, big ? 18 : 12, 0, 7); g.fill();
+        g.fillStyle = '#13264a'; g.beginPath(); g.arc(x * w, y * h, big ? 11 : 7, 0, 7); g.fill();
+        g.font = `${big ? 'bold 46px' : '600 34px'} system-ui, sans-serif`; g.textAlign = 'left'; g.fillStyle = '#13264a';
+        g.fillText(name.toUpperCase(), x * w + 26, y * h - 22);
       }
-      g.strokeStyle = '#b9ab95'; g.lineWidth = 4;
-      for (let i = 0; i <= n; i++) { g.beginPath(); g.moveTo(i * s, 0); g.lineTo(i * s, h); g.moveTo(0, i * s); g.lineTo(w, i * s); g.stroke(); }
+      const shield = (x, y) => { g.fillStyle = '#1d4fb8'; g.beginPath(); g.moveTo(x - 38, y - 40); g.lineTo(x + 38, y - 40); g.quadraticCurveTo(x + 44, y + 20, x, y + 46); g.quadraticCurveTo(x - 44, y + 20, x - 38, y - 40); g.fill();
+        g.fillStyle = '#c0392b'; g.fillRect(x - 38, y - 40, 76, 18); g.fillStyle = '#fff'; g.font = 'bold 40px system-ui'; g.textAlign = 'center'; g.fillText('44', x, y + 18); };
+      shield(0.47 * w, 0.66 * h); shield(0.75 * w, 0.36 * h);
+      const here = [0.555, 0.555];                                                                            // the Heartland, off exit 172
+      g.fillStyle = '#e8b400'; g.beginPath(); g.arc(here[0] * w, here[1] * h, 22, 0, 7); g.fill(); g.strokeStyle = '#13264a'; g.lineWidth = 6; g.stroke();
+      g.font = 'italic 600 36px Georgia, serif'; g.fillStyle = '#13264a'; g.textAlign = 'left'; g.fillText('you are here', here[0] * w + 30, here[1] * h + 50);
+      g.textAlign = 'left'; g.fillStyle = '#13264a'; g.font = 'bold 132px system-ui, sans-serif'; g.fillText('OZARK', 70, 330);
+      g.fillStyle = '#1d4fb8'; g.fillText('HIGHLANDS', 70, 460);
+      g.fillStyle = '#13264a'; g.font = '600 40px system-ui, sans-serif'; g.fillText('ROUTE 66  ·  INTERSTATE 44  ·  MISSOURI', 76, 530);
+      g.font = '32px system-ui, sans-serif'; g.fillStyle = 'rgba(19,38,74,0.7)'; g.fillText('37.95° N   91.77° W', 76, 580);
     });
-    tex.wrapS = tex.wrapT = T.RepeatWrapping; tex.repeat.set(1 / 2.44, 1 / 2.44);   // four 0.61 m tiles per texture
-    const relief = lib.surface('tile', { repeat: [1 / 2.44, 1 / 2.44] });
-    return new T.MeshStandardMaterial({ map: tex, normalMap: relief.normalMap, normalScale: new T.Vector2(0.25, 0.25), roughness: 0.32 });
   }
 
   // Corridor carpet: a real navy loop-pile carpet tile (ambientCG Fabric022, CC0), about 0.5 m a tile.
@@ -155,6 +179,14 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
           g.save(); g.translate(x, y); g.rotate(a); g.fillStyle = ['#9c8466', '#7d6650', '#b39b7a'][i % 3];
           g.beginPath(); g.ellipse(0, 0, L, L * 0.35, 0, 0, 7); g.fill(); g.strokeStyle = '#5c4636'; g.lineWidth = 3; g.beginPath(); g.moveTo(-L, 0); g.lineTo(L, 0); g.stroke(); g.restore();
         }
+      } else if (kind === 'geo') {                                   // low-pile geometric: grays and navy, Formula Blue
+        g.fillStyle = '#7c838c'; g.fillRect(0, 0, w, h);
+        const s = 64, tones = ['#6e757e', '#8b929a', '#5f6670', '#9aa1a8', '#283c5e', '#7c838c', '#727982'];
+        for (let y = 0; y < h; y += s) for (let x = 0; x < w; x += s) for (const up of [0, 1]) {
+          g.fillStyle = tones[Math.floor(rnd() * (rnd() < 0.12 ? tones.length : 4))];
+          g.beginPath(); if (up) { g.moveTo(x, y); g.lineTo(x + s, y); g.lineTo(x, y + s); } else { g.moveTo(x + s, y); g.lineTo(x + s, y + s); g.lineTo(x, y + s); } g.fill();
+        }
+        g.strokeStyle = '#1f2f4c'; g.lineWidth = 26; g.strokeRect(30, 30, w - 60, h - 60);
       } else {
         g.fillStyle = '#56657a'; g.fillRect(0, 0, w, h);
         const blues = ['#2f4a73', '#3e6aa8', '#8aa1bd', '#c7cfd8', '#1f2f4a', '#6f86a6'];
@@ -241,22 +273,17 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   }
 
   // ---------- floor 1 slabs and ceilings ----------
-  slab(-12, 6.5, -9, 9, 0.01, lobbyTile());                     // lobby: 24" beige porcelain (reference lobby 1)
-  {
-    // Dark tile bands: a border inset from the walls and a runner from the doors to the desk, as in the reference.
-    const band = F.mat('#5a4434', { roughness: 0.3 }), y = 0.0115;
-    const strip = (x0, x1, z0, z1) => { const m = new T.Mesh(new T.PlaneGeometry(x1 - x0, z1 - z0), band); m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, y, (z0 + z1) / 2); m.receiveShadow = true; statics.push(m); scene.add(m); };
-    for (const z of [-7.6, 7.6]) strip(-10.8, 5.2, z - 0.15, z + 0.15);
-    for (const x of [-10.8, 5.2]) strip(x - 0.15, x + 0.15, -7.6, 7.6);
-    strip(-2.95, -2.65, -2.2, 7.6); strip(-1.15, -0.85, -2.2, 7.6); strip(-8.4, -0.85, -2.35, -2.05);
-  }
+  // Lobby floor: light oak commercial plank (Poly Haven laminate_floor_02), lifted toward the pale oak of the prototype.
+  slab(-12, 6.5, -9, 9, 0.01, lib.surface('oak', { repeat: [0.45, 0.45], grade: 'saturate(40%) brightness(1.18) contrast(0.92)', roughness: 1 }));
   slab(6.5, 30, -1, 1, 0.01, carpet);                           // corridor F1
   slabWithHoles(6.5, 12, -9, -1, 0.01, concrete, [[6.5, 9, -4.5, -1]]);                        // core
   slab(12, 18, -9, -1, 0.01, lib.surface('gym-rubber', { repeat: [0.5, 0.5], color: '#9a9a9a' }));
   slabWithHoles(-24, -12, -9, 9, 0.01, tile, [[-21, -16, -7, 3], [-15.2, -12.8, 4.6, 7]]);
   slab(6.5, 12, 1, 9, 0.01, concrete);
   slab(12, 30, 1, 9, 0.01, roomCarpet); slab(18, 30, -9, -1, 0.01, roomCarpet);
-  slabWithHoles(-12, 30, -9, 9, CEIL + 0.02, ceiling, [[9.5, 12, -8.5, -1], [6.5, 9, -4.5, -1]]);
+  { const lit = ceiling.clone(); lit.emissive.set('#f4f2ee'); lit.emissiveIntensity = 0.28;   // light bouncing off a white floor-to-ceiling lobby
+    slab(-12, 6.5, -9, 9, CEIL + 0.02, lit); }
+  slabWithHoles(6.5, 30, -9, 9, CEIL + 0.02, ceiling, [[9.5, 12, -8.5, -1], [6.5, 9, -4.5, -1]]);
   slab(-24, -12, -9, 9, 4.38, ceiling);                                      // below the roof slab's underside (4.4)
   // Floor 2 slab (seen from below as the ceiling above) and its walkable areas.
   // 3 mm proud of FLOOR2: the ground-floor walls under them (the stair entry's, at z = -1) top out at exactly FLOOR2, and
@@ -268,7 +295,6 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   slab(12, 16.5, 1, 9, FLOOR2 + CEIL + 0.005, drywall);                       // guest room: drywall, not tile
   // Downlights (emissive discs) on both ceilings.
   const discs = [];
-  for (let x = -10; x <= 5; x += 3) for (const z of [-6, -2, 2, 6]) discs.push([x, CEIL - 0.005, z]);
   for (let x = 8; x <= 29; x += 3.5) discs.push([x, CEIL - 0.005, 0], [x - 17, FLOOR2 + CEIL - 0.005, 0], [x, FLOOR2 + CEIL - 0.005, 0]);
   for (let x = -22; x <= -14; x += 4) for (const z of [-6, 0, 6]) discs.push([x, 4.355, z]);
   const disc = new T.InstancedMesh(new T.CircleGeometry(0.09, 16), F.glow('#fff4e0', 2.2), discs.length);
@@ -320,13 +346,10 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // Lobby: back office behind the desk, pool glass, east wall with corridor opening.
   wall('x', -5, -12, -5, 0, CEIL, paint);
   wall('z', -5, -9, -5, 0, CEIL, paint);
-  const feature = mbox(6.6, CEIL, 0.06, stone); feature.position.set(-8.5, CEIL / 2, -4.9); scene.add(feature);
-  const lobbySign = F.sign('Heartland Inn', { w: 2.2, h: 0.5, bg: '#f4f1ea', fg: '#1d4f8f', font: 'bold 96px Georgia, serif' });
-  lobbySign.position.set(-8.5, 2.0, -4.835); scene.add(lobbySign);
   wall('z', -12, -9, 9, 0, 4.4, poolPaint, { holes: [door(-3, -1.8), win(0.5, 8, 0.9, 2.4)] });
   wall('z', -11.92, -9, 9, 0, CEIL, paint, { t: 0.01, collide: false, holes: [door(-3, -1.8), win(0.5, 8, 0.9, 2.4)] });   // lobby face: warm paint, not pool blue
   wall('z', 6.5, -9, -1, 0, CEIL, paint);
-  wall('z', 6.5, 1, 9, 0, CEIL, roomAccent);
+  wall('z', 6.5, 1, 9, 0, CEIL, loungeAccent);
   // Glass in the pool wall openings.
   { const g = new T.Mesh(new T.PlaneGeometry(7.5, 1.5), F.glass()); g.rotation.y = Math.PI / 2; g.position.set(-12, 1.65, 4.25); scene.add(g); }
   // Core: elevator shaft and stairwell walls (both floors).
@@ -422,41 +445,101 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   zone('room', R.x0, R.x1, 3, 6.5, R.z0, R.z1);
   zone('corridor', -12, 30, 3, 6.5, -9, 9); zones.at(-1).id = 'upstairs'; // its own zone for culling (zone-culling)
 
-  // ---------- lobby furnishing ----------
-  const desk = add(lib.model('hotel-front-desk', { origin: true }), -8.4, 0, -3.3);
-  { let wood = null; desk.traverse(n => { if (n.isMesh && n.material.name === 'walnut') wood = n.material; });
-    if (wood) desk.traverse(n => { if (n.isMesh && n.material.name === 'white_paint') n.material = wood; }); }
-  solid(-10.75, -6.05, 0, 1.2, -3.95, -2.9);
-  solid(-6.05, -5, 0, 1.2, -4.95, -2.9);                     // keep guests out from behind the desk
-  solid(-12, -10.75, 0, 1.2, -4.95, -2.9);
-  light(-8.4, 2.7, -2.5, '#ffe2b5', 10, 8);
-  for (const [x, z] of [[-2, 4.4], [-3.6, -2.2]]) add(lib.model('hotel-lattice-pendant', { origin: true }), x, CEIL - 1.53, z);
-  light(-2.5, 2.6, 0, '#ffe0b0', 12, 10);
-  // West seating: sectional, lounge chairs, coffee table, plants.
-  const lime = sofa => { sofa.traverse(n => { if (n.isMesh && n.material.name === 'beige_fabric') { n.material = n.material.clone(); n.material.color.set('#8f9a34'); } }); return sofa; };
-  add(lime(lib.model('hotel-lobby-sofa', { origin: true })), -9.7, 0, 5.3, Math.PI / 2);
-  loose(add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 3.6, -Math.PI * 0.75), { density: 0.5 });
-  loose(add(lib.model('ph-mid-century-lounge-chair', { height: 1.0 }), -6.6, 0, 7.0, -Math.PI * 0.25), { density: 0.5 });
+  // ---------- lobby: the Formula Blue prototype (current Holiday Inn Express) ----------
+  // White, oak and navy; open check-in pods in front of a branded slat wall; the market beside them; a great room with
+  // a sectional, the TV wall and a regional map; a bar-height communal table with power; an open business center.
+  const cool = '#fff3e4';                                  // 4000 K, neutral rather than the old 2700 K amber
+  // Check-in pods. Dana stands behind the right-hand one; the gaps are closed so guests stay on their side.
+  for (const x of [-9.9, -7.65]) { add(lib.model('hotel-checkin-pod', { origin: true }), x, 0, -3.0); solid(x - 0.8, x + 0.8, 0, 1.1, -3.38, -2.54); }
+  solid(-12, -10.7, 0, 1.2, -4.95, -3.1); solid(-9.1, -8.45, 0, 1.2, -3.4, -3.1); solid(-6.85, -5, 0, 1.2, -4.95, -3.1);
+  { const bell = new T.Mesh(new T.SphereGeometry(0.045, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2), F.mat('#c9a35a', { metalness: 1, roughness: 0.25 })); bell.position.set(-7.05, 1.06, -2.72); scene.add(bell); }
+  // Linear LED pendant over the pods.
+  { const bar = F.box(3.4, 0.05, 0.1, F.mat('#1b1d21', { roughness: 0.5 }), -8.8, 2.3, -3.0, scene); bar.name = 'Pod pendant';
+    F.box(3.36, 0.006, 0.07, F.glow('#fff6ea', 2.6), -8.8, 2.296, -3.0, scene);
+    for (const x of [-10.3, -7.3]) F.box(0.004, CEIL - 2.35, 0.004, F.mat('#222'), x, 2.35, -3.0, scene); }
+  light(-8.8, 2.1, -2.2, cool, 12, 9);
+
+  // Branded feature wall: vertical oak slats on navy, the lit logo, and a flush screen that runs the weather.
+  {
+    const back = new T.Mesh(new T.PlaneGeometry(6.6, CEIL), F.mat('#13264a', { roughness: 0.9 })); back.position.set(-8.5, CEIL / 2, -4.925); scene.add(back);
+    const slatGeo = new T.BoxGeometry(0.05, CEIL - 0.02, 0.035), n = 87;
+    const slats = new T.InstancedMesh(slatGeo, lib.surface('oak', { repeat: [0.06, 1.4], grade: 'saturate(70%) brightness(1.1)', roughness: 1 }), n);
+    for (let i = 0; i < n; i++) { dm.position.set(-11.72 + i * 0.075, CEIL / 2, -4.905); dm.rotation.set(0, 0, 0); dm.scale.set(1, 1, 1); dm.updateMatrix(); slats.setMatrixAt(i, dm.matrix); }
+    slats.receiveShadow = true; scene.add(slats); statics.push(slats);
+    const logo = F.sign('Heartland Inn\nEXPRESS', { w: 2.0, h: 0.62, bg: '#0d2350', fg: '#ffffff', font: 'bold 104px Georgia, serif', emissive: 0.9 });
+    logo.position.set(-9.9, 2.05, -4.86); scene.add(logo);
+    F.box(2.1, 0.012, 0.06, F.glow('#9cc0ff', 2.2), -9.9, 2.40, -4.86, scene);        // wall-washer above the logo
+  }
+  const lobbyTV = F.flatTV(1.4); add(lobbyTV.group, -7.2, 2.1, -4.87);
+
+  // Sundry market in the alcove on the office's east face, right beside the pods for the clerk to watch.
+  add(lib.model('hotel-market-cooler', { origin: true }), -4.56, 0, -8.15, Math.PI / 2); solid(-5, -4.17, 0, 2.1, -8.85, -7.45);
+  for (const z of [-6.85, -5.62]) { add(lib.model('hotel-market-shelf', { origin: true }), -4.71, 0, z, Math.PI / 2); solid(-5, -4.48, 0, 1.7, z - 0.6, z + 0.6); }
+  { const s = F.sign('MARKET  ·  GRAB & GO', { w: 2.4, h: 0.28, bg: '#13264a', font: 'bold 64px system-ui, sans-serif', emissive: 0.4 }); s.rotation.y = Math.PI / 2; s.position.set(-4.92, 2.5, -7.0); scene.add(s); }
+  light(-3.6, 2.1, -7.0, cool, 8, 7);
+
+  // Bar-height communal table with pop-up power, metal-and-vinyl stools; a ring pendant over it.
+  add(lib.model('hotel-communal-table', { origin: true }), -1.7, 0, -5.4); solid(-3.3, -0.1, 0, 1.06, -5.85, -4.95);
+  for (const dx of [-1.2, -0.4, 0.4, 1.2]) for (const [dz, ry] of [[-0.78, 0], [0.78, Math.PI]]) loose(add(lib.model('hotel-bar-stool', { origin: true }), -1.7 + dx, 0, -5.4 + dz, ry), { carry: true, density: 0.3 });
+  light(-1.7, 2.1, -5.0, cool, 10, 8);
+
+  // Open business center in the semi-private corner by the corridor.
+  add(lib.model('hotel-business-center', { origin: true }), 6.1, 0, -3.0, -Math.PI / 2); solid(5.75, 6.5, 0, 1.1, -3.98, -2.02);
+  for (const z of [-3.55, -2.85]) loose(add(lib.model('hotel-task-chair', { origin: true }), 5.35, 0, z, Math.PI / 2 + (z + 3.2) * 0.4), { density: 0.4 });
+  { const s = F.sign('BUSINESS CENTER', { w: 1.1, h: 0.18, bg: '#13264a', font: 'bold 54px system-ui, sans-serif' }); s.rotation.y = -Math.PI / 2; s.position.set(6.42, 2.3, -3.0); scene.add(s); }
+
+  // Great room (SE): the TV on a navy panelled wall, an oversized regional map, a gray-and-navy sectional.
+  const loungeTV = F.flatTV(2.1); add(loungeTV.group, 6.36, 1.95, 6.4, -Math.PI / 2);
+  {
+    const panel = mbox(0.04, 2.3, 4.2, F.mat('#1a3156', { roughness: 0.95 })); panel.position.set(6.41, 1.55, 6.4); scene.add(panel);
+    for (let i = 1; i < 14; i++) F.box(0.005, 2.3, 0.012, F.mat('#0f2040', { roughness: 1 }), 6.388, 0.4, 4.3 + i * 0.3, scene);   // routed grooves
+    const credenza = F.box(2.4, 0.5, 0.42, F.mat('#f2f1ee', { roughness: 0.4 }), 0, 0, 0); add(credenza, 6.21, 0, 6.4, -Math.PI / 2); solid(5.98, 6.5, 0, 0.55, 5.2, 7.6);
+    const map = new T.Mesh(new T.PlaneGeometry(2.5, 1.45), new T.MeshStandardMaterial({ map: regionalMap(), roughness: 0.7 }));
+    map.rotation.y = -Math.PI / 2; map.position.set(6.414, 1.6, 2.65); map.name = 'Regional map'; scene.add(map);
+    F.box(0.012, 1.49, 2.54, F.mat('#f4f3ef', { roughness: 0.6 }), 6.423, 0.855, 2.65, scene);
+  }
+  add(lib.model('hotel-sectional', { origin: true }), 2.2, 0, 6.4, Math.PI / 2); solid(1.72, 2.68, 0, 0.85, 4.97, 7.83); solid(2.68, 3.38, 0, 0.6, 4.97, 5.92);
+  loose(add(lib.model('ph-coffee-table-round-01', { height: 0.42 }), 4.25, 0, 6.7), { density: 0.6 });
+  loose(add(lib.model('hotel-lounge-chair-navy', { origin: true }), 4.9, 0, 8.15, -2.7), { density: 0.5 });
+  loose(add(lib.model('hotel-lounge-chair-navy', { origin: true }), 4.6, 0, 4.15, -0.5), { density: 0.5 });
+  loose(add(lib.model('ph-side-table-01', { height: 0.5 }), 2.25, 0, 8.4), { carry: true, density: 0.4 });
+  add(lib.model('hotel-table-lamp', { origin: true }), 2.25, 0.5, 8.4);
+  { const rug = new T.Mesh(new T.PlaneGeometry(3.6, 4.4), rugMaterial('geo', [1, 1])); rug.rotation.x = -Math.PI / 2; rug.position.set(3.6, 0.016, 6.4); scene.add(rug); }
+  light(3.8, 2.1, 6.4, cool, 10, 9);
+
+  // West living room by the pool glass: gray sofa, navy chairs, ring pendant; a reading pair by the window.
+  const gray = sofa => { sofa.traverse(n => { if (n.isMesh && n.material.name === 'beige_fabric') { n.material = n.material.clone(); n.material.color.set('#3f4247'); } }); return sofa; };
+  add(gray(lib.model('hotel-lobby-sofa', { origin: true })), -9.9, 0, 5.3, Math.PI / 2); solid(-10.35, -9.45, 0, 0.9, 4.15, 6.45);
+  loose(add(lib.model('hotel-lounge-chair-navy', { origin: true }), -6.6, 0, 3.9, -Math.PI * 0.72), { density: 0.5 });
+  loose(add(lib.model('hotel-lounge-chair-navy', { origin: true }), -6.6, 0, 6.7, -Math.PI * 0.28), { density: 0.5 });
   loose(add(lib.model('ph-modern-coffee-table-01', { height: 0.4 }), -8.0, 0, 5.3), { density: 0.6 });
-  loose(add(lib.model('ph-throw-pillows-01', { height: 0.3 }), -9.9, 0.45, 4.6, Math.PI / 2), { carry: true, shape: 'box', density: 0.1 });
-  add(lib.model('ph-potted-plant-01', { height: 1.6 }), -11.4, 0, 8.4);
+  loose(add(lib.model('ph-throw-pillows-01', { height: 0.3 }), -10.0, 0.45, 4.6, Math.PI / 2), { carry: true, shape: 'box', density: 0.1 });
   loose(add(lib.model('ph-potted-plant-04', { height: 0.3 }), -8.0, 0.4, 5.1), { carry: true, shape: 'box', density: 0.6 });
-  const rug = new T.Mesh(new T.CircleGeometry(2.3, 64), rugMaterial('leaves', [1, 1])); rug.rotation.x = -Math.PI / 2; rug.position.set(-8.2, 0.024, 5.3); scene.add(rug);
-  solid(-10.2, -9.0, 0, 0.9, 3.9, 6.7); solid(-8.4, -7.6, 0, 0.5, 4.7, 5.9);
-  light(-8, 2.6, 5, '#ffdcae', 9, 8);
-  // Brochure rack and luggage cart near the entrance.
-  const rack = F.box(0.6, 1.4, 0.3, F.mat('#3b3027'), 0, 0, 0); add(rack, -4.6, 0, 1.2, Math.PI / 2);
+  { const rug = new T.Mesh(new T.PlaneGeometry(3.4, 4.2), rugMaterial('geo', [1, 1])); rug.rotation.x = -Math.PI / 2; rug.position.set(-8.1, 0.024, 5.3); scene.add(rug); }
+  solid(-8.4, -7.6, 0, 0.5, 4.7, 5.9);
+  for (const [x, z] of [[-10.35, 3.75], [-10.35, 6.85]]) { add(lib.model('hotel-floor-lamp', { origin: true }), x, 0, z); light(x, 1.5, z, '#ffe2bd', 2.5, 4); }
+  light(-8, 2.1, 5, cool, 9, 8);
+  loose(add(lib.model('hotel-lounge-chair-navy', { origin: true }), -10.9, 0, 1.4, Math.PI * 0.6), { density: 0.5 });
+  loose(add(lib.model('hotel-lounge-chair-navy', { origin: true }), -9.2, 0, 1.0, -Math.PI * 0.75), { density: 0.5 });
+  loose(add(lib.model('ph-side-table-01', { height: 0.5 }), -10.1, 0, 0.6), { carry: true, density: 0.4 });
+  add(lib.model('hotel-table-lamp', { origin: true }), -10.1, 0.5, 0.6);
+  light(-10, 1.2, 1, '#ffe2bd', 2.5, 4);
+
+  // Brochure rack and luggage cart near the entrance; a walk-off mat inside the doors.
+  const rack = F.box(0.6, 1.4, 0.3, F.mat('#2a2d33'), 0, 0, 0); add(rack, -4.6, 0, 1.2, Math.PI / 2);
   for (let i = 0; i < 8; i++) F.box(0.1, 0.22, 0.02, F.mat(['#d23b2f', '#2f7bd2', '#3fa34d', '#f4b400'][i % 4]), (i % 2) * 0.24 - 0.12, 0.4 + Math.floor(i / 2) * 0.25, 0.16, rack);
-  loose(add(lib.model('hotel-luggage-cart', { origin: true }), 0.4, 0, -6.5, 0.3), { density: 0.35 }); solid(-0.2, 1.0, 0, 2, -6.9, -6.1); unboxed();
+  loose(add(lib.model('hotel-luggage-cart', { origin: true }), -5.0, 0, 6.3, 0.3), { density: 0.35 }); solid(-5.6, -4.4, 0, 2, -0.4 + 6.3, 0.4 + 6.3); unboxed();
+  { const mat = new T.Mesh(new T.PlaneGeometry(3.2, 1.6), lib.surface('carpet', { repeat: [2, 1], color: '#4a4e55' })); mat.rotation.x = -Math.PI / 2; mat.position.set(-2, 0.014, 8.1); scene.add(mat); }
+  light(-2, 2.1, 1.5, cool, 10, 9);
 
   // Pantry (NE): coffee counter, vending, cooler, bar tables.
   add(lib.model('hotel-coffee-station', { origin: true }), 3.4, 0, -8.6); solid(1.8, 5, 0, 1, -8.95, -8.25);
   add(lib.model('hotel-snack-vending', { origin: true, rotate: -Math.PI / 2 }), 6.0, 0, -6.6); solid(5.5, 6.5, 0, 2, -7.1, -6.1);
   add(lib.model('g3-vending-machine', { rotate: -Math.PI / 2, height: 1.85 }), 6.03, 0, -5.4); solid(5.55, 6.5, 0, 2, -5.88, -4.92);
-  for (const [x, z] of [[2.2, -5.4], [3.9, -3.2]]) {
+  for (const [x, z] of [[2.5, -5.3]]) {
     add(lib.model('ph-round-wooden-table-01', { height: 1.0 }), x, 0, z);
     solid(x - 0.45, x + 0.45, 0, 1, z - 0.45, z + 0.45);
-    for (let k = 0; k < 3; k++) { const a = k * 2.1 + 0.4; loose(add(lib.model('ph-bar-chair-round-01', { height: 0.75 }), x + Math.cos(a) * 0.9, 0, z + Math.sin(a) * 0.9, -a - Math.PI / 2), { carry: true, density: 0.3 }); }
+    for (let k = 0; k < 3; k++) { const a = k * 2.1 + 0.4; loose(add(lib.model('hotel-bar-stool', { origin: true }), x + Math.cos(a) * 0.8, 0, z + Math.sin(a) * 0.8, -a - Math.PI / 2), { carry: true, density: 0.3 }); }
   }
   add(F.trashReceptacle(), 1.35, 0, -8.6);
   add(lib.model('ph-wall-clock', { height: 0.4 }), 0.75, 1.9, -8.86);
@@ -484,64 +567,39 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   interact.push({ pos: new T.Vector3(-0.8, 1.2, -7.9), r: 1.1, when: () => breakfast.group.visible, label: () => 'Orange juice',
     use: () => { game.sound.pour(); game.give('orange juice'); game.say('“Orange drink.” Close enough.'); } });
 
-  // Lounge (SE) with the big TV on the east wall.
-  const loungeTV = F.flatTV(1.9); add(loungeTV.group, 6.4, 1.75, 5, -Math.PI / 2);
-  const tvCabinet = F.box(2.2, 0.55, 0.45, F.mat('#5b4a3c'), 0, 0, 0); add(tvCabinet, 6.2, 0, 5, -Math.PI / 2); solid(5.95, 6.5, 0, 0.6, 3.9, 6.1);
-  add(lib.model('hotel-lobby-sofa', { origin: true }), 1.9, 0, 5, Math.PI / 2); solid(1.5, 2.5, 0, 0.9, 3.9, 6.1);
-  loose(add(lib.model('hotel-accent-chair-green', { origin: true }), 3.6, 0, 7.4, Math.PI), { density: 0.5 });
-  loose(add(lib.model('hotel-accent-chair-green', { origin: true }), 3.6, 0, 2.6, 0), { density: 0.5 });
-  loose(add(lib.model('ph-ottoman-01', { height: 0.42 }), 3.6, 0, 5), { carry: true, density: 0.3 });
-  loose(add(lib.model('ph-side-table-01', { height: 0.5 }), 2.0, 0, 7.1), { carry: true, density: 0.4 });
-  add(lib.model('ph-potted-plant-01', { height: 1.6 }), 5.9, 0, 8.4);
-  const rug2 = new T.Mesh(new T.PlaneGeometry(3.6, 4.6), rugMaterial('stripes', [1, 1])); rug2.rotation.x = -Math.PI / 2; rug2.position.set(3.6, 0.015, 5); scene.add(rug2);
-  light(3.8, 2.2, 5, '#ffdcae', 9, 8);
-
-  // ---------- lobby atmosphere (after the Holiday Inn reference photos) ----------
+  // ---------- lobby atmosphere ----------
   {
-    // Walnut ceiling feature over the lounge with its own downlights.
-    const soffit = mbox(4.4, 0.18, 3.8, F.skin.wood); soffit.position.set(3.6, CEIL - 0.09, 5); scene.add(soffit);
-    for (const [dx, dz] of [[-1.3, -1.1], [1.3, -1.1], [-1.3, 1.1], [1.3, 1.1]]) F.box(0.16, 0.01, 0.16, F.glow('#fff1d8', 2.2), 3.6 + dx, CEIL - 0.19, 5 + dz, scene);
-    // Drum pendants over the round seating area and the pantry tables.
-    for (const [x, z, sc] of [[-8.2, 5.3, 1.25], [2.2, -5.4, 0.85], [3.9, -3.2, 0.85]]) { const p = lib.model('hotel-drum-pendant', { origin: true }); p.scale.setScalar(sc); add(p, x, CEIL - 1.03 * sc, z); }
-    // Walnut-clad columns with blue LED reveals, flanking the walk from the doors.
-    for (const x of [-5.2, 1.2]) {
-      const c = mbox(0.55, CEIL, 0.55, F.skin.wood); c.position.set(x, CEIL / 2, 2.2); scene.add(c);
-      solid(x - 0.28, x + 0.28, 0, CEIL, 1.92, 2.48);
-      F.box(0.6, 0.12, 0.6, charcoal, x, 0, 2.2, scene); F.box(0.6, 0.08, 0.6, charcoal, x, CEIL - 0.08, 2.2, scene);
+    // Oak ceiling cloud over the great room with its own downlights.
+    const cloud = mbox(4.4, 0.16, 4.0, lib.surface('oak', { repeat: [0.5, 0.5], grade: 'saturate(45%) brightness(1.5)' })); cloud.position.set(3.6, CEIL - 0.08, 6.4); scene.add(cloud);
+    for (const [dx, dz] of [[-1.3, -1.2], [1.3, -1.2], [-1.3, 1.2], [1.3, 1.2]]) F.box(0.14, 0.01, 0.14, F.glow('#fff6ea', 2.4), 3.6 + dx, CEIL - 0.17, 6.4 + dz, scene);
+    // Ring pendants: over the communal table and the west seating.
+    for (const [x, z, r] of [[-1.7, -5.4, 0.6], [-8.1, 5.3, 0.75]]) {
+      const ring = new T.Mesh(new T.TorusGeometry(r, 0.022, 10, 72), F.mat('#1b1d21', { roughness: 0.4, metalness: 0.6 }));
+      ring.rotation.x = Math.PI / 2; ring.position.set(x, 2.15, z); ring.name = 'Ring pendant'; scene.add(ring);
+      const glow = new T.Mesh(new T.TorusGeometry(r, 0.012, 6, 72), F.glow('#fff6ea', 2.6)); glow.rotation.x = Math.PI / 2; glow.position.set(x, 2.13, z); scene.add(glow);
+      for (let k = 0; k < 3; k++) { const a = k * 2.094; F.box(0.003, CEIL - 2.15, 0.003, F.mat('#222'), x + Math.cos(a) * r, 2.15, z + Math.sin(a) * r, scene); }
     }
-    // Recessed downlights in a grid across the lobby ceiling (reference lobby 1): one instanced draw call.
+    // White columns with a charcoal base, flanking the walk from the doors.
+    for (const x of [-5.2, 1.2]) {
+      const c = mbox(0.55, CEIL, 0.55, drywall); c.position.set(x, CEIL / 2, 2.2); scene.add(c);
+      solid(x - 0.28, x + 0.28, 0, CEIL, 1.92, 2.48);
+      F.box(0.58, 0.1, 0.58, charcoal, x, 0, 2.2, scene);
+    }
+    // Recessed 4000 K downlights on a grid (one instanced draw call), clear of the oak cloud.
     {
       const spots = [];
-      for (let x = -10.8; x <= 5.6; x += 1.8) for (let z = -7.8; z <= 7.8; z += 1.8) if (!(x > 1.2 && x < 6 && z > 2.9 && z < 7.1)) spots.push([x, z]);
-      const can = new T.InstancedMesh(new T.CircleGeometry(0.075, 16), F.glow('#fff1d6', 2.4), spots.length);
+      for (let x = -10.8; x <= 5.6; x += 1.8) for (let z = -7.8; z <= 7.8; z += 1.8) if (!(x > 1.3 && x < 5.9 && z > 4.3 && z < 8.5) && !(x < -5 && z < -5)) spots.push([x, z]);
+      const can = new T.InstancedMesh(new T.CircleGeometry(0.075, 16), F.glow('#fff6ea', 2.6), spots.length);
       spots.forEach(([x, z], i) => { dm.position.set(x, CEIL - 0.004, z); dm.rotation.set(Math.PI / 2, 0, 0); dm.scale.set(1, 1, 1); dm.updateMatrix(); can.setMatrixAt(i, dm.matrix); });
       scene.add(can);
     }
-    // Red lacquer panel framed in walnut behind the coffee bar (the reference's red coffee-bar wall).
-    { const panel = new T.Mesh(new T.PlaneGeometry(3.4, 1.35), redPanel); panel.position.set(3.4, 1.62, -8.885); scene.add(panel);
-      for (const [w, h, x, y] of [[3.56, 0.08, 3.4, 2.3], [3.56, 0.08, 3.4, 0.94], [0.08, 1.44, 1.66, 1.62], [0.08, 1.44, 5.14, 1.62]]) F.box(w, h, 0.03, F.skin.wood, x, y - h / 2, -8.875, scene); }
-    // Framed abstract prints.
-    painting(6.395, 1.75, 2.3, -Math.PI / 2, 0.9, 0.7, 1);
-    painting(6.395, 1.75, 7.7, -Math.PI / 2, 0.9, 0.7, 2);
+    // Navy panel framed in oak behind the coffee bar.
+    { const panel = new T.Mesh(new T.PlaneGeometry(3.4, 1.35), F.mat('#13264a', { roughness: 0.85 })); panel.position.set(3.4, 1.62, -8.885); scene.add(panel);
+      const oakTrim = lib.surface('oak', { repeat: [1, 1] });
+      for (const [w, h, x, y] of [[3.56, 0.08, 3.4, 2.3], [3.56, 0.08, 3.4, 0.94], [0.08, 1.44, 1.66, 1.62], [0.08, 1.44, 5.14, 1.62]]) F.box(w, h, 0.03, oakTrim, x, y - h / 2, -8.875, scene); }
     painting(-11.895, 1.8, -0.6, Math.PI / 2, 1.0, 0.75, 0);
-    // Shelving, centerpiece, floor lamps, snake plants.
-    add(lib.model('hotel-shelving-unit', { origin: true, rotate: Math.PI / 2 }), -4.78, 0, -7.0); solid(-4.95, -4.55, 0, 2, -7.95, -6.05);
-    add(lib.model('hotel-centerpiece', { origin: true }), -2, 0, 4.4); solid(-2.6, -1.4, 0, 1, 3.8, 5.0);
-    for (const [x, z] of [[-10.35, 3.75], [-10.35, 6.85], [1.4, 3.45]]) { add(lib.model('hotel-floor-lamp', { origin: true }), x, 0, z); light(x, 1.5, z, '#ffcf8f', 3, 4); }
-    for (const [x, z] of [[-11.4, 0.4], [5.85, 1.6], [0.9, 8.4], [-4.6, -4.4], [-6.1, 8.4]]) { loose(add(lib.model('hotel-snake-plant', { origin: true }), x, 0, z), { carry: true, shape: 'box', density: 0.5 }); solid(x - 0.2, x + 0.2, 0, 1, z - 0.2, z + 0.2); unboxed(); }
-    // Breakfast communal table with stools.
-    const table = new T.Group();
-    F.box(2.4, 0.05, 0.9, F.skin.wood, 0, 1.0, 0, table);
-    for (const x of [-1.0, 1.0]) F.box(0.08, 1.0, 0.7, F.mat('#2b2d30', { metalness: 0.6, roughness: 0.4 }), x, 0, 0, table);
-    add(table, -2.2, 0, -5.6); solid(-3.4, -1.0, 0, 1.05, -6.05, -5.15);
-    for (const [dx, dz, ry] of [[-0.8, -0.75, 0], [0, -0.75, 0], [0.8, -0.75, 0], [-0.8, 0.75, Math.PI], [0, 0.75, Math.PI], [0.8, 0.75, Math.PI]]) loose(add(lib.model('ph-bar-chair-round-01', { height: 0.75 }), -2.2 + dx, 0, -5.6 + dz, ry), { carry: true, density: 0.3 });
-    // Second seating group by the west windows.
-    loose(add(lib.model('hotel-accent-chair-mustard', { origin: true }), -10.9, 0, 1.4, Math.PI * 0.6), { density: 0.5 });
-    loose(add(lib.model('hotel-accent-chair-green', { origin: true }), -9.2, 0, 1.0, -Math.PI * 0.75), { density: 0.5 });
-    loose(add(lib.model('ph-side-table-01', { height: 0.5 }), -10.1, 0, 0.6), { carry: true, density: 0.4 });
-    add(lib.model('hotel-table-lamp', { origin: true }), -10.1, 0.5, 0.6);
-    loose(add(lib.model('ph-potted-plant-04', { height: 0.32 }), -2.2, 1.05, -5.6), { carry: true, shape: 'box', density: 0.6 });
-    light(-10, 1.2, 1, '#ffcf8f', 3, 4);
+    for (const [x, z] of [[-11.4, 8.4], [5.95, 1.15], [0.9, 8.4], [-6.1, 8.4], [-4.6, -4.4], [6.0, 8.5]]) { loose(add(lib.model('hotel-snake-plant', { origin: true }), x, 0, z), { carry: true, shape: 'box', density: 0.5 }); solid(x - 0.2, x + 0.2, 0, 1, z - 0.2, z + 0.2); unboxed(); }
+    add(lib.model('ph-potted-plant-01', { height: 1.6 }), -11.4, 0, -4.4);
   }
 
   // ---------- pool wing ----------
@@ -929,13 +987,13 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   }
 
   // ---------- TVs with channels ----------
-  function tvSet(screen, x, y, z, where, { interactive = true, channel = 0 } = {}) {
+  function tvSet(screen, x, y, z, where, { interactive = true, channel = 0, on = !interactive } = {}) {
     const tex = F.canvasTexture(512, 288, (g, w, h) => { g.fillStyle = '#000'; g.fillRect(0, 0, w, h); });
     screen.material = new T.MeshBasicMaterial({ map: tex, color: '#000000' });
-    const st = { on: !interactive, channel, last: 0 };
+    const st = { on, channel, last: 0 };
     // Shared by every set: remixes add channels with game.tvChannels.push((g, w, h, t) => …).
     const channels = game.tvChannels ??= [weather, news, info, ballgame];
-    if (!interactive) screen.material.color.set('#ffffff');
+    if (on) screen.material.color.set('#ffffff');
     if (interactive) interact.push({ pos: new T.Vector3(x, y, z), r: 2.4, label: () => st.on ? (st.channel === channels.length - 1 ? 'Turn TV off' : 'Change channel') : 'Turn TV on',
       use: () => {
         game.sound.click();
@@ -988,7 +1046,8 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     g.fillText('STL   3', 20, 74); g.fillText('KC    2', 20, 98); g.fillText('▲ 7th', 110, 86);
     header(g, w, 'BALLY SPORTS MIDWEST', '#11212d');
   }
-  tvSet(loungeTV.screen, 5.2, 1.6, 5, 'lounge');
+  tvSet(loungeTV.screen, 4.6, 1.6, 6.4, 'lounge', { on: true, channel: 1 });   // lobby TVs run the news at low volume
+  tvSet(lobbyTV.screen, -7.2, 2.0, -3.6, 'lobby', { interactive: false, channel: 0 });
   tvSet(gymTV.screen, 16.5, 1.8, -1.0, 'gym', { interactive: false, channel: 3 });
 
   // ---------- vending and coffee ----------
@@ -1003,8 +1062,8 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   clerk = lib.person('rb-sophia-formal', { tint: '#1d4f8f' });
   add(clerk.root, -7.65, 0, -4.1, 0);
   updaters.push(dt => clerk.update(dt));
-  interact.push({ pos: new T.Vector3(-8.4, 1.2, -2.6), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
-  const ringBell = { pos: new T.Vector3(-9.0, 1.2, -2.7), r: 0.7, label: () => 'Ring the bell', use: () => { game.sound.bell(); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } };
+  interact.push({ pos: new T.Vector3(-7.9, 1.2, -2.4), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
+  const ringBell = { pos: new T.Vector3(-7.05, 1.15, -2.65), r: 0.5, label: () => 'Ring the bell', use: () => { game.sound.bell(); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } };
   interact.push(ringBell);
   }
 

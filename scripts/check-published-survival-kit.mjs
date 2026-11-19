@@ -1,6 +1,6 @@
 const { chromium }=await import(process.env.PLAYWRIGHT_MODULE??'playwright-core');
 import {readFile,writeFile,mkdir} from 'node:fs/promises';import assert from 'node:assert/strict';
-const origin='https://internet-slop-warehouse.quickbeam.workers.dev',api='https://internet-slop-warehouse.fangorn.network',ids=['no-road-home'];
+const origin='https://internet-slop-warehouse.quickbeam.workers.dev',api='https://internet-slop-warehouse-sepolia.fangorn.network',ids=['no-road-home'];
 const receipts=JSON.parse(await readFile('parts/survival-kit.parts.receipts.json'));await mkdir('artifacts/survival-kit',{recursive:true});
 for(const id of ids){const r=receipts.find(x=>x.id===id),res=await fetch(r.url);assert(res.ok);const {html}=await res.json();assert.equal(typeof html,'string');assert(!html.includes('{/*PARTS*/}'));await writeFile('artifacts/survival-kit/'+id+'-play.html',html);}
 const archive=JSON.parse(await readFile('parts/survival-starter.parts.receipts.json'))[0];let catalog;

@@ -1,6 +1,6 @@
 const { chromium }=await import(process.env.PLAYWRIGHT_MODULE??'playwright-core');
 import {readFile,writeFile,mkdir} from 'node:fs/promises';import assert from 'node:assert/strict';
-const origin='https://internet-slop-warehouse.quickbeam.workers.dev',api='https://internet-slop-warehouse.fangorn.network',ids=['dead-letter-lake','lunar-lost-property','the-quiet-engine'];
+const origin='https://internet-slop-warehouse.quickbeam.workers.dev',api='https://internet-slop-warehouse-sepolia.fangorn.network',ids=['dead-letter-lake','lunar-lost-property','the-quiet-engine'];
 const receipts=JSON.parse(await readFile('parts/weird-worlds.parts.receipts.json'));await mkdir('artifacts/weird-worlds',{recursive:true});
 for(const id of ids){const r=receipts.find(x=>x.id===id),res=await fetch(r.url);assert(res.ok);const {html}=await res.json();assert.equal(typeof html,'string');assert(!html.includes('{/*PARTS*/}'));await writeFile('artifacts/weird-worlds/'+id+'-play.html',html);}
 let catalog;

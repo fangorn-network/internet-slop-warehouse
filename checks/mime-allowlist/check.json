@@ -1,0 +1,7 @@
+{
+  "title": "MIME allowlist",
+  "description": "Refuses a file whose payload.mime isn't in params.allowed, or whose bytes don't look like that mime (PNG, JPEG, WAV, GLB, JSON, ZIP signatures): an HTML page labelled as an image is refused.",
+  "params": { "type": "object", "required": ["allowed"], "properties": { "allowed": { "type": "array", "items": { "type": "string" } } } },
+  "tags": ["check", "mime", "file"],
+  "license": "MIT"
+}

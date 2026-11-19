@@ -1,0 +1,9 @@
+{
+  "title": "Code scan",
+  "description": "For code a game runs ({ html }, { js }, { code }): refuses crypto miners, password inputs, forms that post off-site, beacons, and scripts, imports, fetches or sockets to hosts outside params.hosts (default: the CDNs the warehouse's games use, and its IPFS gateway).",
+  "params": { "type": "object", "properties": {
+    "hosts": { "type": "array", "items": { "type": "string" }, "description": "Hosts code may load from or talk to" }
+  } },
+  "tags": ["check", "html", "javascript", "security"],
+  "license": "MIT"
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Valid GLB",
+  "description": "For model/gltf-binary files: a well-formed glTF 2.0 binary (header, length, JSON chunk, BIN chunk when a buffer needs one) that is self-contained: no buffer or image loads from a URL, so a model can't call out when it's loaded.",
+  "tags": ["check", "glb", "gltf", "3d", "file"],
+  "license": "MIT"
+}

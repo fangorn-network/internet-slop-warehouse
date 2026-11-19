@@ -1,0 +1,13 @@
+{
+  "flow": {},
+  "errors": [],
+  "shots": 2,
+  "stats": {
+    "colliders": 426,
+    "interact": 88,
+    "drawCalls": 760,
+    "textures": 222,
+    "programs": 72,
+    "triangles": 752442
+  }
+}

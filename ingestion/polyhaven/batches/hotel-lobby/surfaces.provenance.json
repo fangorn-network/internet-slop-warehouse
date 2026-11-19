@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ph-hotel-oak-color",
+    "source": "https://polyhaven.com/a/laminate_floor_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dario Barresi, Charlotte Baglioni",
+    "download": {
+      "size": 721641,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_diff_1k.jpg",
+      "md5": "34ab81c5882c1083028ffa71d40fe44d"
+    },
+    "bytes": 721641,
+    "sha256": "c112a8fb107d8600a2974af2f9fa9b595c491a33a59982e22706e9650990bf8f",
+    "acquiredAt": "2026-11-19T21:04:58.850Z"
+  },
+  {
+    "id": "ph-hotel-oak-normal",
+    "source": "https://polyhaven.com/a/laminate_floor_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dario Barresi, Charlotte Baglioni",
+    "download": {
+      "size": 515725,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_nor_gl_1k.jpg",
+      "md5": "40f4b1e4a5cafbd3bd1b02e8367cf3b1"
+    },
+    "bytes": 515725,
+    "sha256": "ec501e1c76269cabc1648ab0e3f38db1b062ffef7ff4ce037fdc369383afd005",
+    "acquiredAt": "2026-11-19T21:04:59.511Z"
+  },
+  {
+    "id": "ph-hotel-oak-roughness",
+    "source": "https://polyhaven.com/a/laminate_floor_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Dario Barresi, Charlotte Baglioni",
+    "download": {
+      "size": 560815,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/laminate_floor_02/laminate_floor_02_rough_1k.jpg",
+      "md5": "6ef14a4d438a44103689739248ef50b7"
+    },
+    "bytes": 560815,
+    "sha256": "1d48d21a8497d83d4148e4378bf6891e052c98b58cdce1f79003bcc24a3aff8f",
+    "acquiredAt": "2026-11-19T21:05:00.082Z"
+  }
+]

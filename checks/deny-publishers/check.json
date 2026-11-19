@@ -1,0 +1,7 @@
+{
+  "title": "Deny publishers",
+  "description": "Refuses every record from the listed publisher addresses: a takedown list.",
+  "params": { "type": "object", "required": ["publishers"], "properties": { "publishers": { "type": "array", "items": { "type": "string", "pattern": "^0x[0-9a-fA-F]{40}$" } } } },
+  "tags": ["check", "moderation", "denylist"],
+  "license": "MIT"
+}

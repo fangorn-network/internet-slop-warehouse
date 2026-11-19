@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ph-hotel-oak-color",
+    "file": "haven/ph-hotel-oak-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel oak color",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "oak",
+      "color"
+    ],
+    "description": "Light oak commercial laminate plank (lobby floor, oak veneers), color map (1K). sRGB base color. Source https://polyhaven.com/a/laminate_floor_02, by Dario Barresi, Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-oak-normal",
+    "file": "haven/ph-hotel-oak-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel oak normal",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "oak",
+      "normal"
+    ],
+    "description": "Light oak commercial laminate plank (lobby floor, oak veneers), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/laminate_floor_02, by Dario Barresi, Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-oak-roughness",
+    "file": "haven/ph-hotel-oak-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel oak roughness",
+    "author": "Dario Barresi, Charlotte Baglioni",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "oak",
+      "roughness"
+    ],
+    "description": "Light oak commercial laminate plank (lobby floor, oak veneers), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/laminate_floor_02, by Dario Barresi, Charlotte Baglioni. CC0-1.0."
+  }
+]

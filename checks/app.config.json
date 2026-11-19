@@ -1,0 +1,54 @@
+{
+  "schema": {
+    "type": "object", "required": ["title", "description"],
+    "properties": {
+      "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+      "description": { "type": "string", "maxLength": 5000 },
+      "tags": { "type": "array", "items": { "type": "string" } },
+      "author": { "type": "string" },
+      "license": { "type": "string" },
+      "src": { "type": "string" },
+      "uses": { "type": "array", "items": { "type": "object", "required": ["id"] } },
+      "parent": { "type": "object", "required": ["id"] }
+    }
+  },
+  "rules": [
+    { "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/deny-publishers", "with": { "publishers": [] } },
+    { "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/no-injection", "with": { "fields": ["title", "description"], "file": false } }
+  ],
+  "types": {
+    "game": {
+      "description": "a playable browser game: a self-contained HTML page, stored as { html }",
+      "schema": { "type": "object", "required": ["src"] },
+      "rules": [{ "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/code-scan" }]
+    },
+    "asset": {
+      "description": "a file a game loads (model, texture, sound), with mime",
+      "schema": { "type": "object", "required": ["src", "mime"], "properties": { "mime": { "type": "string" } } },
+      "rules": [
+        { "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/mime-allowlist", "with": { "allowed": ["model/gltf-binary", "image/jpeg", "image/png", "image/vnd.radiance", "audio/wav", "application/json", "text/markdown", "text/plain"] } },
+        { "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/glb" },
+        { "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/no-injection", "with": { "fields": [], "file": true } }
+      ]
+    },
+    "logic": {
+      "description": "a reusable ES module (movement, AI, physics …), stored as { js }, labelled with its exports, options and hooks",
+      "schema": { "type": "object", "required": ["src", "kind", "exports"], "properties": { "exports": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["name"] } } } },
+      "rules": [{ "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/code-scan" }]
+    },
+    "skill": {
+      "description": "an Agent Skills SKILL.md, stored as { md }; a recipe is a skill tagged \"recipe\" that lists its parts in uses",
+      "schema": { "type": "object", "required": ["src", "skill"] },
+      "rules": [{ "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/no-injection", "with": { "fields": [], "file": true } }]
+    },
+    "source": {
+      "description": "a code file mirrored from elsewhere, stored as { code }, with origin { repo, commit, path } and its upstream license",
+      "schema": { "type": "object", "required": ["src", "origin", "license"], "properties": { "origin": { "type": "object", "required": ["repo", "commit", "path"] } } },
+      "rules": [{ "check": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936/internet-slop-warehouse/code-scan" }]
+    },
+    "check": {
+      "description": "a check the warehouse runs on parts (checks/): an ES module, stored as { js }, exporting validate(record, ctx) → true | reason, with params, the JSON Schema of its options",
+      "schema": { "type": "object", "required": ["src"], "properties": { "params": { "type": "object" } } }
+    }
+  }
+}

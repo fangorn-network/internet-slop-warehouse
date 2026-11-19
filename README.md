@@ -1,6 +1,6 @@
 # the internet slop warehouse
 
-Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of. It runs as a stock westmarch Worker at **https://internet-slop-warehouse.fangorn.network** (deployed from the `ops` repo), and the page ([site/](site/)) is plain files that read its API, served at **https://internet-slop-warehouse.quickbeam.workers.dev** by a small Worker ([wrangler.json](wrangler.json), `npm run deploy`) that also keeps likes/dislikes. The page can be hosted anywhere; off that Worker, votes just don't show.
+Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of. It runs as a stock westmarch Worker at **https://internet-slop-warehouse-sepolia.fangorn.network** (deployed from the `ops` repo), and the page ([site/](site/)) is plain files that read its API, served at **https://internet-slop-warehouse.quickbeam.workers.dev** by a small Worker ([wrangler.json](wrangler.json), `npm run deploy`) that also keeps likes/dislikes. The page can be hosted anywhere; off that Worker, votes just don't show.
 
 Needs Node 22.13+ and `npm install` (westmarch comes from npm, `^0.3.1`).
 
@@ -28,7 +28,7 @@ On the sandbox (`npm run sandbox` in westmarch), leave out `NETWORK` (`AS=bob` p
 
 The warehouse has no Worker code of its own. The deployment is westmarch's generic Worker, configured in the `ops` repo's `apps.json` and deployed by its `Deploy apps` workflow; the API it serves is documented in westmarch's `worker/API.md` (`openapi.yaml`). [site/api.js](site/api.js) is a small client for it, with nothing warehouse-specific in it: `westmarch(base)` gives you `manifest()` (`/api.json`: name, gateway, types, `mcp`, `connect`), `view()`, `search(q, { k, type })` and `publish(token, { record, file, pin })`.
 
-- **Agents**: `claude mcp add --transport http internet-slop-warehouse https://internet-slop-warehouse.fangorn.network/mcp` (`search`, `repos`, `get`, `publish`).
+- **Agents**: `claude mcp add --transport http internet-slop-warehouse https://internet-slop-warehouse-sepolia.fangorn.network/mcp` (`search`, `repos`, `get`, `publish`).
 - **Publishing from a browser or agent** goes through `/publish` on a fangorn.network grant, which a person gets from the manifest's `connect` link. The scripts here (`publish.js`, `publish-batch.js`, `seed.js`) still publish straight to the chain with your CLI key.
 
 ## Tests
@@ -162,6 +162,16 @@ node projects/slopov-ii/package.mjs                                             
 node publish-batch.js projects/slopov-ii/release.parts.json --local /tmp/slopov-ii    # preview at /escape-from-slopov-ii.html
 PLAYWRIGHT_MODULE=projects/roadside-inn/.validation/node_modules/playwright-core/index.mjs node scripts/test-slopov-ii-p2p.mjs
 node publish-batch.js projects/slopov-ii/release.parts.json --network baseSepolia
+```
+
+## Escape from Night Audit (Slopov II × Night Audit)
+
+[projects/escape-from-night-audit/game.html](projects/escape-from-night-audit/game.html) moves Escape from Slopov II's extraction loop (stash, trader, loot tables, ballistics, body-part health, factions) into Night Audit's hotel. Every raid is a new single-storey hotel from `hotel-wfc`, drawn by `socket-mesher`. You check in at the lobby, search the furniture (nightstands, credenzas, vending and ice machines, housekeeping carts, grandfather clocks), and get out by answering the ringing phone in the farthest room and holding the line for 7 s. The ring gets louder by walking distance. Walls come from the tile sockets (`clear()`), and the AI's nav and sight grid is sampled from the same function. Spawns only land on squares flood-filled from the lobby. Solo only: Slopov II's co-op was cut. Slopov save codes still load.
+
+```sh
+node projects/escape-from-night-audit/package.mjs
+node publish-batch.js projects/escape-from-night-audit/release.parts.json --local /tmp/efna    # preview at /escape-from-night-audit.html
+node scripts/test-escape-from-night-audit.mjs /tmp/efna
 ```
 
 ## Procedural worlds

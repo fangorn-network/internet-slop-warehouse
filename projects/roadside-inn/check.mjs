@@ -178,10 +178,10 @@ if (mode === 'physics') try {
   const prop = (name, x, z) => page.evaluate(([name, x, z]) => { const l = __inn.physics.loose.find(l => l.o.name === name && Math.hypot(l.o.position.x - x, l.o.position.z - z) < 0.6); globalThis.__prop = l; return l ? l.o.position.toArray().map(v => +v.toFixed(2)) : null; }, [name, x, z]);
   const now = () => page.evaluate(() => __prop.o.position.toArray().map(v => +v.toFixed(2)));
   flow.physics = await page.evaluate(() => ({ loose: __inn.physics.loose.length, pinned: __inn.physics.pinned.length }));
-  flow.chairFrom = await prop('hotel-accent-chair-green', 3.6, 2.6);
+  flow.chairFrom = await prop('hotel-lounge-chair-navy', 4.6, 4.15);
   // Walk until the chair has been pushed, not for a fixed time: headless frame rates vary a lot (the flow walks the same way).
-  await face(3.6, 0, 1.2, 3.6, 2.6);
-  flow.chairWalk = await walk(Math.PI, () => Math.hypot(__prop.o.position.x - 3.6, __prop.o.position.z - 2.6) > 0.25);
+  await face(4.6, 0, 2.6, 4.6, 4.15);
+  flow.chairWalk = await walk(Math.PI, () => Math.hypot(__prop.o.position.x - 4.6, __prop.o.position.z - 4.15) > 0.25);
   flow.chairTo = await now();
   flow.walker = await page.evaluate(() => { const c = __inn.physics.me.controller, hits = []; for (let i = 0; i < c.numComputedCollisions(); i++) { const h = c.computedCollision(i), t = h?.collider.translation(); if (h) hits.push({ n: [h.normal1.x, h.normal1.y, h.normal1.z].map(v => +v.toFixed(2)), at: [t.x, t.y, t.z].map(v => +v.toFixed(2)), type: h.collider.parent()?.bodyType() }); } return { p: [__inn.player.x, __inn.player.y, __inn.player.z].map(v => +v.toFixed(2)), hits: hits.slice(0, 4) }; });
   await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/physics-chair.png` });
@@ -238,7 +238,7 @@ if (mode === 'profile') {
   }), null, 1));
 }
 const result = { flow, errors, shots: Object.keys(views).length, stats: mode === 'mobile' ? null : await page.evaluate(() => ({ colliders: __inn.world.colliders.length, interact: __inn.world.interact.length, drawCalls: __inn.renderer.info.render.calls, textures: __inn.renderer.info.memory.textures, programs: __inn.renderer.info.programs.length, triangles: __inn.renderer.info.render.triangles })) };
-await writeFile(`${out}/check-${mode || 'all'}.json`, JSON.stringify(result, null, 2));
+await writeFile(`${out}/check-${mode?.startsWith("{") ? "views" : mode || 'all'}.json`, JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 1));
 await browser.close(); server.close();
 process.exit(errors.length ? 1 : 0);
