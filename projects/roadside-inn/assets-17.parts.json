@@ -1,0 +1,188 @@
+[
+ {
+  "id": "acg-lobby-carpet-color",
+  "file": "acg/acg-lobby-carpet-color.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "ambientCG Carpet001 \u00b7 color",
+  "author": "ambientCG (Lennart Demes)",
+  "license": "CC0-1.0",
+  "tags": [
+   "ambientcg",
+   "pbr",
+   "texture",
+   "lobby",
+   "carpet",
+   "color"
+  ],
+  "description": "Carpet001 color map, 1K, from https://ambientcg.com/a/Carpet001. sRGB base color. CC0-1.0."
+ },
+ {
+  "id": "acg-lobby-carpet-normal",
+  "file": "acg/acg-lobby-carpet-normal.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "ambientCG Carpet001 \u00b7 normal",
+  "author": "ambientCG (Lennart Demes)",
+  "license": "CC0-1.0",
+  "tags": [
+   "ambientcg",
+   "pbr",
+   "texture",
+   "lobby",
+   "carpet",
+   "normal"
+  ],
+  "description": "Carpet001 normal map, 1K, from https://ambientcg.com/a/Carpet001. OpenGL normal, linear. CC0-1.0."
+ },
+ {
+  "id": "acg-lobby-carpet-roughness",
+  "file": "acg/acg-lobby-carpet-roughness.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "ambientCG Carpet001 \u00b7 roughness",
+  "author": "ambientCG (Lennart Demes)",
+  "license": "CC0-1.0",
+  "tags": [
+   "ambientcg",
+   "pbr",
+   "texture",
+   "lobby",
+   "carpet",
+   "roughness"
+  ],
+  "description": "Carpet001 roughness map, 1K, from https://ambientcg.com/a/Carpet001. Linear roughness. CC0-1.0."
+ },
+ {
+  "id": "acg-lobby-corridor-color",
+  "file": "acg/acg-lobby-corridor-color.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "ambientCG Carpet006 \u00b7 color",
+  "author": "ambientCG (Lennart Demes)",
+  "license": "CC0-1.0",
+  "tags": [
+   "ambientcg",
+   "pbr",
+   "texture",
+   "lobby",
+   "corridor",
+   "color"
+  ],
+  "description": "Carpet006 color map, 1K, from https://ambientcg.com/a/Carpet006. sRGB base color. CC0-1.0."
+ },
+ {
+  "id": "acg-lobby-corridor-normal",
+  "file": "acg/acg-lobby-corridor-normal.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "ambientCG Carpet006 \u00b7 normal",
+  "author": "ambientCG (Lennart Demes)",
+  "license": "CC0-1.0",
+  "tags": [
+   "ambientcg",
+   "pbr",
+   "texture",
+   "lobby",
+   "corridor",
+   "normal"
+  ],
+  "description": "Carpet006 normal map, 1K, from https://ambientcg.com/a/Carpet006. OpenGL normal, linear. CC0-1.0."
+ },
+ {
+  "id": "acg-lobby-corridor-roughness",
+  "file": "acg/acg-lobby-corridor-roughness.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "ambientCG Carpet006 \u00b7 roughness",
+  "author": "ambientCG (Lennart Demes)",
+  "license": "CC0-1.0",
+  "tags": [
+   "ambientcg",
+   "pbr",
+   "texture",
+   "lobby",
+   "corridor",
+   "roughness"
+  ],
+  "description": "Carpet006 roughness map, 1K, from https://ambientcg.com/a/Carpet006. Linear roughness. CC0-1.0."
+ },
+ {
+  "id": "ph-hotel-linen-color",
+  "file": "haven/ph-hotel-linen-color.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "Hotel linen color",
+  "author": "colormass, Rico Cilliers",
+  "license": "CC0-1.0",
+  "tags": [
+   "polyhaven",
+   "hotel",
+   "lobby",
+   "realistic",
+   "texture",
+   "pbr",
+   "linen",
+   "color"
+  ],
+  "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), color map (1K). sRGB base color. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+ },
+ {
+  "id": "ph-hotel-linen-normal",
+  "file": "haven/ph-hotel-linen-normal.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "Hotel linen normal",
+  "author": "colormass, Rico Cilliers",
+  "license": "CC0-1.0",
+  "tags": [
+   "polyhaven",
+   "hotel",
+   "lobby",
+   "realistic",
+   "texture",
+   "pbr",
+   "linen",
+   "normal"
+  ],
+  "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+ },
+ {
+  "id": "ph-hotel-linen-roughness",
+  "file": "haven/ph-hotel-linen-roughness.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "Hotel linen roughness",
+  "author": "colormass, Rico Cilliers",
+  "license": "CC0-1.0",
+  "tags": [
+   "polyhaven",
+   "hotel",
+   "lobby",
+   "realistic",
+   "texture",
+   "pbr",
+   "linen",
+   "roughness"
+  ],
+  "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+ },
+ {
+  "id": "hotel-impact-foley",
+  "file": "../projects/roadside-inn/assets/impact-foley.json",
+  "type": "asset",
+  "mime": "application/json",
+  "title": "Kenney \u00b7 impact sounds for things landing (wood, ceramic, plastic, metal, soft)",
+  "author": "Kenney",
+  "license": "CC0-1.0",
+  "tags": [
+   "sound",
+   "impact",
+   "foley",
+   "physics",
+   "cc0",
+   "kenney"
+  ],
+  "description": "11 original Kenney CC0 Impact Sounds clips (impactGeneric_light_000, impactGeneric_light_001, impactMetal_light_000, impactPlank_medium_000, impactPlate_light_000, impactPlate_light_001, impactSoft_heavy_000, impactSoft_medium_000, impactWood_heavy_000, impactWood_light_000, impactWood_medium_000). JSON clips map of embedded Ogg data URLs, played by the Heartland Inn when props land, scaled by impact energy. Source https://kenney.nl/assets/impact-sounds; acquired from the receptron/mulmocast-media mirror (per-file sha256 in projects/roadside-inn/assets/impact-foley.provenance.json). Unmodified audio."
+ }
+]

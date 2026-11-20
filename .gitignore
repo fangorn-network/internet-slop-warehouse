@@ -10,3 +10,15 @@ worker/.wrangler/
 # local experiment caches and saved third-party pages
 benchmarks/cache/
 reddit/
+
+# Heartland Inn realism line: third-party reference photos (studied, never shipped), agents' scratch screenshots
+projects/roadside-inn/blender/photos/
+__pycache__/
+artifacts/roadside-inn/cast/
+artifacts/roadside-inn/god/
+artifacts/roadside-inn/god-flow/
+artifacts/roadside-inn/natasha/
+artifacts/roadside-inn/victor/
+artifacts/roadside-inn/lead/
+artifacts/roadside-inn/publish/
+artifacts/roadside-inn/check-*.json

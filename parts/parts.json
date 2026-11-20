@@ -9613,15 +9613,19 @@
     "license": "CC0-1.0",
     "tags": [
       "hotel",
-      "furniture",
       "realistic",
       "blender",
       "original",
       "cc0",
-      "snack",
-      "vending"
+      "lobby",
+      "labels",
+      "vending",
+      "snacks",
+      "chips",
+      "candy",
+      "machine"
     ],
-    "description": "Glass-front snack vending machine: lit product bay, spiral coils with packages, keypad, display, coin slot, delivery bin. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
+    "description": "Glass-front snack machine, 0.98 x 0.86 x 1.85 m: six trays of spiral coils loaded three deep with printed chip bags, candy and granola bars, cookies and crackers; price strips, keypad, tap-to-pay reader, lit lit LCD display (\"MAKE SELECTION\"), delivery bin, branded header. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-drum-pendant",
@@ -9739,10 +9743,15 @@
       "blender",
       "original",
       "cc0",
+      "lobby",
+      "labels",
       "coffee",
-      "station"
+      "breakfast",
+      "counter",
+      "airpot",
+      "cups"
     ],
-    "description": "Lobby coffee station, 3.2 m: charcoal base, quartz top, three airpot dispensers, cup stacks, condiment caddy, covered muffin tray. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0)."
+    "description": "Self-serve coffee bar, 3.2 m: oak and white credenza, three thermal servers on brew stands, hot water tower, oak cup caddy, condiment organizer, creamer cups, stir sticks, napkins, cookies. Cookies, creamer bottles and the tea box are separate take_* nodes, for games to lift out as pick-up-able props. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-breakfast-bar",
@@ -12482,7 +12491,7 @@
       "check-in",
       "pod"
     ],
-    "description": "Standalone open check-in pod (Holiday Inn Express Formula Blue style), 1.5 m: white solid-surface shell with rounded corners, navy inlay band, cobalt LED under the toe kick and the top overhang (material \"led_blue\"). Staff side: monitor, keycard encoder, receipt printer; guest side: card terminal. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Standalone check-in pod, 1.5 m: white solid-surface shell, cobalt LED washes, navy band, staff monitor. Desk equipment comes with hotel-desk-items / hotel-desk-closed. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-sectional",
@@ -12505,7 +12514,7 @@
       "sectional",
       "seating"
     ],
-    "description": "L-shaped modular sectional, 2.7 m with a 1.65 m chaise: charcoal-gray woven fabric, navy and cobalt throw pillows, brushed square legs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "L-shaped modular sectional, 2.7 m with a 1.65 m chaise: charcoal-gray woven fabric, navy and cobalt throw pillows, brushed square legs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0). Throw pillows lean on the back cushions’ raked faces rather than into them."
   },
   {
     "id": "hotel-lounge-chair-navy",
@@ -12541,19 +12550,20 @@
     "license": "CC0-1.0",
     "tags": [
       "hotel",
-      "furniture",
       "realistic",
       "blender",
       "original",
       "cc0",
-      "formula-blue",
       "lobby",
+      "labels",
       "table",
-      "bar-height",
       "communal",
-      "power"
+      "power",
+      "outlet",
+      "usb",
+      "oak"
     ],
-    "description": "Bar-height communal table, 3.2 x 0.9 m, top at 1.05 m: light oak slab on black steel trestles, four pop-up power modules with AC sockets and USB ports. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Bar-height communal table, 3.2 x 0.9 x 1.05 m: light oak slab, black steel trestle legs and stretcher, four flush pop-up power modules, each with two US duplex receptacles, USB-A and USB-C ports and a status LED. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-bar-stool",
@@ -12576,7 +12586,7 @@
       "bar-stool",
       "seating"
     ],
-    "description": "Counter-height stool, seat 0.76 m: navy vinyl seat with a low back, black steel legs and footrest rungs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Counter stool, seat 0.76 m: firm foam seat and upholstered back in cobalt herringbone weave, tapered splayed walnut-stain legs with rungs, a brushed kick plate. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-market-cooler",
@@ -12588,20 +12598,21 @@
     "license": "CC0-1.0",
     "tags": [
       "hotel",
-      "furniture",
       "realistic",
       "blender",
       "original",
       "cc0",
-      "formula-blue",
       "lobby",
+      "labels",
       "market",
       "refrigerator",
       "cooler",
       "drinks",
-      "glass-door"
+      "glass-door",
+      "bottles",
+      "cans"
     ],
-    "description": "Two-door glass merchandiser for a hotel sundry market, 1.35 x 0.72 x 2.05 m: black frame, lit blue header, LED-lit shelves of bottled water, sodas, juice and milk. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Two-door glass merchandiser, 1.35 x 0.72 x 2.05 m, stocked like a hotel lobby market: spring water, sports drinks, energy cans, colas and lemon-lime in 20 oz bottles, orange and root beer cans, juices, sweet tea, pint milk cartons and cold brew, faced two to four deep, each with a printed wrap label (cans show theirs between aluminium ends; coloured drinks are opaque so rows sort cleanly); LED-lit shelves, price rail, lit header. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-market-shelf",
@@ -12613,43 +12624,47 @@
     "license": "CC0-1.0",
     "tags": [
       "hotel",
-      "furniture",
       "realistic",
       "blender",
       "original",
       "cc0",
-      "formula-blue",
       "lobby",
+      "labels",
       "market",
       "shelf",
       "snacks",
-      "retail"
+      "chips",
+      "candy",
+      "toiletries",
+      "medicine"
     ],
-    "description": "Sundry shelving, 1.2 x 0.42 x 1.65 m: dark laminate case, shelves of single-serve chips, candy, pain-relief packets and travel toiletries, white price strips. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Sundry shelving, 1.2 m: single-serve chip, pretzel, trail mix, gummy and popcorn bags; candy, granola and protein bars on edge; boxed cookies and crackers; pain relievers, antacid, cold medicine, bandages, toothpaste and laundry pods; blister cards (toothbrush, razor, deodorant, USB-C cable, stain pen); microwave mac and cheese, soup and noodle cups. Price strips on every shelf. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-business-center",
     "type": "asset",
     "file": "../projects/roadside-inn/assets/hotel-business-center.glb",
-    "title": "Hotel business center counter · original Blender model",
+    "title": "Hotel business center · original Blender model",
     "mime": "model/gltf-binary",
     "author": "the internet slop warehouse",
     "license": "CC0-1.0",
     "tags": [
       "hotel",
-      "furniture",
       "realistic",
       "blender",
       "original",
       "cc0",
-      "formula-blue",
       "lobby",
+      "labels",
       "business-center",
       "computer",
+      "monitor",
+      "keyboard",
+      "mouse",
       "printer",
       "desk"
     ],
-    "description": "Open business center counter, 1.9 m: oak top on a white laminate base, two all-in-one PCs with keyboards and mice, a networked laser printer. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Open business center counter: oak top, two all-in-one PCs (login and boarding-pass screens), keyboards, mice on pads, a notepad, and a laser multifunction printer (scanner lid with document feeder, output bay with printed sheets, angled touch panel, paper cassettes, vents). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
   },
   {
     "id": "hotel-task-chair",
@@ -12672,6 +12687,701 @@
       "task-chair",
       "seating"
     ],
-    "description": "Mesh-back task chair on a five-star base with casters and armrests, seat 0.47 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0)."
+    "description": "Business-center task chair: waterfall-front foam seat and contoured back (lumbar curve, wrapped sides) in charcoal herringbone weave, padded T-arms, seat mechanism with lever, gas lift in a bellows sleeve, tapered five-star base on twin-wheel casters. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "ph-potted-plant-02",
+    "file": "haven/ph-potted-plant-02.glb",
+    "type": "asset",
+    "title": "Potted Plant 02",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Rico Cilliers",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature",
+      "potplant",
+      "plant",
+      "pot",
+      "vase",
+      "medium",
+      "leaf",
+      "green",
+      "terracotta"
+    ],
+    "description": "Potted Plant 02 from Poly Haven, by Rico Cilliers. Self-contained GLB with 1K textures. Upstream polygon count: 69806; 3 meshes. Source: https://polyhaven.com/a/potted_plant_02. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+  },
+  {
+    "id": "ph-potted-plant-02-lite",
+    "file": "lite/ph-potted-plant-02-lite.glb",
+    "type": "asset",
+    "mime": "model/gltf-binary",
+    "title": "Potted Plant 02 (lite)",
+    "author": "Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "decorative",
+      "plants",
+      "potted plants",
+      "nature",
+      "potplant",
+      "plant",
+      "pot",
+      "vase",
+      "medium",
+      "leaf",
+      "green",
+      "terracotta",
+      "lite",
+      "lod",
+      "mobile"
+    ],
+    "description": "A light version of Potted Plant 02 for phones and crowded scenes: 7,953 triangles instead of 69,806, textures at most 1024px, 1.08 MB instead of 2.63 MB. Simplified with meshoptimizer (error 0.016) by ingestion/lite/lite.mjs; same look from a few metres. Credits and license as the original.",
+    "uses": [
+      "0x7b16387c5a8c514880e48bcacd52782fcf9da936/ph-potted-plant-02"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "gltf-transform 4.5.1 + meshoptimizer 1.3.0 simplify; sharp texture resize"
+    }
+  },
+  {
+    "id": "hotel-outlet",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-outlet.glb",
+    "title": "Hotel wall outlet · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "outlet",
+      "receptacle",
+      "electrical",
+      "wall",
+      "detail"
+    ],
+    "description": "US duplex receptacle (NEMA 5-15) on a white Decora wall plate, receptacles 0.3 m above the floor; origin on the floor at the wall face. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-brochure-rack",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-brochure-rack.glb",
+    "title": "Hotel brochure rack · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "brochure",
+      "rack",
+      "literature",
+      "tourism",
+      "display"
+    ],
+    "description": "Floor-standing literature rack, 1.45 m: black steel frame, four tiers of clear acrylic pockets holding printed local brochures (caverns, dinner cruise, Route 66, float trips, living history, outlet mall, scenic byway, rewards program). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-newspaper",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-newspaper.glb",
+    "title": "Folded newspaper · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "newspaper",
+      "paper",
+      "clutter",
+      "detail"
+    ],
+    "description": "A broadsheet folded in half, front page up (The Ozark Ledger, invented), 0.3 x 0.2 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-newspaper-stack",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-newspaper-stack.glb",
+    "title": "Newspaper stacks · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "newspaper",
+      "paper",
+      "breakfast",
+      "detail"
+    ],
+    "description": "Complimentary morning papers: two titles, the second fanned across the first at an angle, its top copy askew. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-coffee-cup",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-cup.glb",
+    "title": "Takeaway coffee cup · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "coffee",
+      "cup",
+      "clutter",
+      "detail"
+    ],
+    "description": "A 12 oz printed hotel hot cup with kraft sleeve and black sip lid, left behind by a guest. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-phone",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-phone.glb",
+    "title": "Smartphone, charging · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "phone",
+      "smartphone",
+      "clutter",
+      "detail"
+    ],
+    "description": "A smartphone lying face up with its lock screen lit (a message notification), a charging plug in its bottom port; draw the cable in the game. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-area-rug",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-area-rug.glb",
+    "title": "Hotel area rug · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "rug",
+      "carpet",
+      "textile",
+      "floor"
+    ],
+    "description": "Low-pile area rug, 3.6 x 4.4 m: gray and navy geometric pattern, navy border, bound edge; pile normal from the ambientCG corridor carpet (CC0). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-entry-mat",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-entry-mat.glb",
+    "title": "Hotel entry mat · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "labels",
+      "mat",
+      "entrance",
+      "floor",
+      "logo"
+    ],
+    "description": "Walk-off entry mat, 3.0 x 1.5 m: charcoal carpet with the Heartland Inn Express logo, beveled black rubber border; pile normal from the ambientCG corridor carpet (CC0). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-coffee-board",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-board.glb",
+    "title": "Hotel coffee bar pegboard · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "coffee",
+      "sign",
+      "pegboard",
+      "wall"
+    ],
+    "description": "Black merchandising pegboard for behind a coffee bar, 3.1 x 1.4 m in an oak frame: a printed slogan and today's roasts. Origin at the wall's floor line, face +Z, board centered 1.62 m up. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-waste-cabinet",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-waste-cabinet.glb",
+    "title": "Hotel built-in waste station · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "trash",
+      "recycling",
+      "cabinet",
+      "millwork",
+      "coffee"
+    ],
+    "description": "Built-in trash and recycling cabinet, 0.9 x 0.62 x 0.94 m, matching the coffee credenza: two openings in the quartz top with steel grommets over lined bins, trash and recycle plates on the oak doors, a napkin and a cup lid caught at the rims. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-waste-bin",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-waste-bin.glb",
+    "title": "Hotel lobby wastebasket · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "trash",
+      "bin",
+      "wastebasket"
+    ],
+    "description": "Lobby wastebasket, 0.32 x 0.32 x 0.62 m: oak-laminate box, open top with a brushed steel rim, a black liner folded over the rim and sagging unevenly. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-desk-items",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-desk-items.glb",
+    "title": "Front desk clutter (staffed) · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "front-desk",
+      "reception",
+      "props",
+      "bell",
+      "key-card"
+    ],
+    "description": "Staffed check-in pod clutter for a 1.08 m top (origin at the pod's floor center, guests at +Z): key-card encoder with a card in it, thermal receipt printer with a receipt curling out, card terminal on a swivel stand, call bell, lathed apples in a bowl, Wi-Fi tent card, registration card, key-card sleeves, ballpoints in a steel cup, succulent, mug, stapler, sticky note. Pick-up-able items are take_* nodes. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "hotel-desk-closed",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-desk-closed.glb",
+    "title": "Front desk clutter (closed pod) · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "front-desk",
+      "reception",
+      "props",
+      "phone"
+    ],
+    "description": "Unattended check-in pod props for a 1.08 m top: encoder, receipt printer, card terminal, 'please see next agent' tent card, ballpoints in a cup, registration cards, desk phone. Pick-up-able items are take_* nodes. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "ph-hotel-herringbone-color",
+    "file": "haven/ph-hotel-herringbone-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel herringbone color",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "herringbone",
+      "color"
+    ],
+    "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), color map (1K). sRGB base color. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-herringbone-normal",
+    "file": "haven/ph-hotel-herringbone-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel herringbone normal",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "herringbone",
+      "normal"
+    ],
+    "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-herringbone-roughness",
+    "file": "haven/ph-hotel-herringbone-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel herringbone roughness",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "herringbone",
+      "roughness"
+    ],
+    "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "hotel-lobby-sofa-2",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-lobby-sofa-2.glb",
+    "title": "Hotel lobby sofa, cloth-simulated · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse; upholstery texture by Poly Haven",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "sofa",
+      "couch",
+      "seating",
+      "furniture",
+      "upholstery",
+      "herringbone",
+      "cloth-simulation"
+    ],
+    "description": "Contract lobby sofa, 2.1 x 0.92 x 0.84 m: square track arms, two back cushions and two navy throw pillows inflated with Blender's cloth simulation (crowned faces, pinched seams, natural wrinkles, no two alike), two firm foam seat cushions worn into a slight sitting hollow, a walnut plinth on short feet. Upholstery is Poly Haven's poly_wool_herringbone (CC0) at its real 27 cm repeat; the frame is never dead flat. About 30k triangles. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/sofa.py). Meters, Y up, origin at floor center, front faces +Z.",
+    "uses": [
+      "ph-hotel-herringbone-color",
+      "ph-hotel-herringbone-normal",
+      "ph-hotel-herringbone-roughness"
+    ],
+    "made": {
+      "method": "procedural",
+      "ai": "none",
+      "tool": "Blender 4.0 cloth simulation + bmesh, scripted"
+    }
+  },
+  {
+    "id": "hotel-tv-remote",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-tv-remote.glb",
+    "title": "Hotel TV remote · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "remote",
+      "tv",
+      "pick-up"
+    ],
+    "description": "Hotel TV remote, 0.18 m: rounded black body with a printed button face (power, number pad, volume and channel rockers, arrows, 'please do not remove'), IR window at the power end. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z."
+  },
+  {
+    "id": "acg-lobby-carpet-color",
+    "file": "acg/acg-lobby-carpet-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet001 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "carpet",
+      "color"
+    ],
+    "description": "Carpet001 color map, 1K, from https://ambientcg.com/a/Carpet001. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-carpet-normal",
+    "file": "acg/acg-lobby-carpet-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet001 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "carpet",
+      "normal"
+    ],
+    "description": "Carpet001 normal map, 1K, from https://ambientcg.com/a/Carpet001. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-carpet-roughness",
+    "file": "acg/acg-lobby-carpet-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet001 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "carpet",
+      "roughness"
+    ],
+    "description": "Carpet001 roughness map, 1K, from https://ambientcg.com/a/Carpet001. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-corridor-color",
+    "file": "acg/acg-lobby-corridor-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet006 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "corridor",
+      "color"
+    ],
+    "description": "Carpet006 color map, 1K, from https://ambientcg.com/a/Carpet006. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-corridor-normal",
+    "file": "acg/acg-lobby-corridor-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet006 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "corridor",
+      "normal"
+    ],
+    "description": "Carpet006 normal map, 1K, from https://ambientcg.com/a/Carpet006. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-corridor-roughness",
+    "file": "acg/acg-lobby-corridor-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet006 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "corridor",
+      "roughness"
+    ],
+    "description": "Carpet006 roughness map, 1K, from https://ambientcg.com/a/Carpet006. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-linen-color",
+    "file": "haven/ph-hotel-linen-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel linen color",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "linen",
+      "color"
+    ],
+    "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), color map (1K). sRGB base color. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-linen-normal",
+    "file": "haven/ph-hotel-linen-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel linen normal",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "linen",
+      "normal"
+    ],
+    "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-linen-roughness",
+    "file": "haven/ph-hotel-linen-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel linen roughness",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "linen",
+      "roughness"
+    ],
+    "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "hotel-impact-foley",
+    "file": "../projects/roadside-inn/assets/impact-foley.json",
+    "type": "asset",
+    "mime": "application/json",
+    "title": "Kenney · impact sounds for things landing (wood, ceramic, plastic, metal, soft)",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "tags": [
+      "sound",
+      "impact",
+      "foley",
+      "physics",
+      "cc0",
+      "kenney"
+    ],
+    "description": "11 original Kenney CC0 Impact Sounds clips (impactGeneric_light_000, impactGeneric_light_001, impactMetal_light_000, impactPlank_medium_000, impactPlate_light_000, impactPlate_light_001, impactSoft_heavy_000, impactSoft_medium_000, impactWood_heavy_000, impactWood_light_000, impactWood_medium_000). JSON clips map of embedded Ogg data URLs, played by the Heartland Inn when props land, scaled by impact energy. Source https://kenney.nl/assets/impact-sounds; acquired from the receptron/mulmocast-media mirror (per-file sha256 in projects/roadside-inn/assets/impact-foley.provenance.json). Unmodified audio."
+  },
+  {
+    "id": "hotel-map-mural",
+    "title": "Ozark Highlands map mural",
+    "description": "Printed vinyl wallcovering with an original illustrated regional map. Built by blender/art.py and blender/prints.mjs.",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-map-mural.glb",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "wall-art",
+      "cc0"
+    ]
+  },
+  {
+    "id": "hotel-wall-art",
+    "title": "Heartland Inn framed art",
+    "description": "Framed geometric prints and landscapes with named art nodes for placement. Built by blender/art.py and blender/prints.mjs.",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-wall-art.glb",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "wall-art",
+      "cc0"
+    ]
   }
 ]

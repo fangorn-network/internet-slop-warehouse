@@ -1,0 +1,49 @@
+[
+ {
+  "id": "hotel-sectional",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-sectional.glb",
+  "title": "Hotel lobby sectional \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "blender",
+   "cc0",
+   "formula-blue",
+   "furniture",
+   "hotel",
+   "lobby",
+   "original",
+   "realistic",
+   "seating",
+   "sectional",
+   "sofa"
+  ],
+  "description": "L-shaped modular sectional: light-grey woven upholstery (herringbone weave, Poly Haven CC0), firm foam seats worn into a hollow, cloth-simulated back cushions, navy and cobalt down-blend throw pillows inflated in Blender's cloth sim with dog-eared corners, a chop crease and a forward slump, settled against the cushions by a collision test so nothing interpenetrates; brushed square legs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/sofa.py). Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-coffee-station",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-coffee-station.glb",
+  "title": "Hotel coffee station \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "airpot",
+   "blender",
+   "breakfast",
+   "cc0",
+   "coffee",
+   "counter",
+   "cups",
+   "hotel",
+   "labels",
+   "lobby",
+   "original",
+   "realistic"
+  ],
+  "description": "Self-serve coffee bar, 3.2 m: oak and white credenza, three thermal servers on brew stands, hot water tower, oak cup caddy, condiment organizer, creamer cups, stir sticks, napkins, cookies. Cookies, creamer bottles and the tea box are separate take_* nodes, for games to lift out as pick-up-able props. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z. The condiment organizer is built from 8 mm boards: a hollow packet tray with sugar standing in five bins, an open cubby box with napkins and wrapped stirrers, creamer bottles on top; creamer cups rest in their bowl without overlapping."
+ }
+]

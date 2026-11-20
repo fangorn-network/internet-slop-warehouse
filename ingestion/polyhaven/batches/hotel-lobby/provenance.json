@@ -7,7 +7,7 @@
     "license": "CC0-1.0",
     "licenseUrl": "https://polyhaven.com/license",
     "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
-    "acquiredAt": "2026-11-19T21:05:02.142Z",
+    "acquiredAt": "2026-11-19T23:19:46.591Z",
     "resources": [
       {
         "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/coffee_table_round_01/coffee_table_round_01_1k.gltf",
@@ -99,6 +99,129 @@
       "img_version": "637507a6",
       "download_count": 28320,
       "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/coffee_table_round_01.png?width=256&height=256&format=webp&v=637507a6"
+    }
+  },
+  {
+    "id": "ph-potted-plant-02",
+    "upstreamId": "potted_plant_02",
+    "creator": "Rico Cilliers",
+    "source": "https://polyhaven.com/a/potted_plant_02",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-19T23:19:49.812Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/potted_plant_02/potted_plant_02_1k.gltf",
+        "bytes": 6653,
+        "sha256": "c533dcce0d1aa4379eb7db04601a04983f8df2422b28578de922655a416e64a9",
+        "upstreamMd5": "9999d7e6c51018a85551840e1bdae656"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/potted_plant_02/potted_plant_02.bin",
+        "bytes": 1852244,
+        "sha256": "9c9812482c78a59789ed32fa842b4cbd9365e09c900c31ebb998e5efe627fe97",
+        "upstreamMd5": "cdbd4619b2596c9c469ad34676085fa8"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_pot_nor_gl_1k.jpg",
+        "bytes": 108343,
+        "sha256": "981a68721c8b7b9ac26b96d0210334599d5e8f529362f505082c071a0a58e86c",
+        "upstreamMd5": "fbb44ccc1c6564b2837b79a11ed45d58"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_pot_diff_1k.jpg",
+        "bytes": 155244,
+        "sha256": "684949bf24821d7e951d46915366b5a388d2e4ccaaa9d5284e718c83604705e9",
+        "upstreamMd5": "97e149c93eb0d962e491d4c82d3ce477"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_pot_rough_1k.jpg",
+        "bytes": 114886,
+        "sha256": "4e92ad8ee0f098050785d9a025e2c5a7d55bc7a7f7e1916cc7627fc7824a938f",
+        "upstreamMd5": "68ed80fa32791fb0e81df61a75de40b4"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_leaves_nor_gl_1k.jpg",
+        "bytes": 127232,
+        "sha256": "e0fe090ff7a511729c9bbe59df7288b400430fdab178529443dec75e0f06007d",
+        "upstreamMd5": "2420d5c0ab87426f5318a5e91d1ea3bb"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_leaves_diff_1k.jpg",
+        "bytes": 167700,
+        "sha256": "3643dce6e6c0a9f40129bd837ec1a11802e8f43ea43cb29e58219d82e0ac632b",
+        "upstreamMd5": "e8a026bd7bfa6497729d855c59da03ce"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/potted_plant_02/potted_plant_02_leaves_rough_1k.jpg",
+        "bytes": 102396,
+        "sha256": "ac8959f70c0e91e77f3cd6fd3f73578b8aed64ac6c33fc34ac027a4e88276960",
+        "upstreamMd5": "ba934a78cc6496d934c014eb8a33af37"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-potted-plant-02.glb",
+      "bytes": 2632208,
+      "sha256": "f6fe38b4915102caf75251a552fd64389fab40f5faa9efbc6b99b56208a458b5",
+      "meshes": 3,
+      "materials": 2,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "date_published": 1628208000,
+      "sponsors": [
+        "78546118"
+      ],
+      "name": "Potted Plant 02",
+      "categories": [
+        "decorative",
+        "plants",
+        "potted plants",
+        "nature"
+      ],
+      "type": 2,
+      "authors": {
+        "Rico Cilliers": "All"
+      },
+      "tags": [
+        "potplant",
+        "plant",
+        "pot",
+        "vase",
+        "medium",
+        "leaf",
+        "green",
+        "terracotta"
+      ],
+      "max_resolution": [
+        8192,
+        8192
+      ],
+      "polycount": 69806,
+      "texel_density": 10185.839275915265,
+      "dimensions": [
+        701.1570334434509,
+        657.3865860700607,
+        841.1787391305552
+      ],
+      "files_hash": "155661c96a28b9eb143e866daeb41f5a076d6677",
+      "description": "Free 8K model. Realistic terracotta pot with weathered rim, textured soil, and variegated green, heart-shaped leaves with pronounced veins.",
+      "category_id": "3dde8a0d-8ee9-5e81-85c4-3251ec4a5d88",
+      "category": "Nature/Plants/Potted Plants",
+      "attributes": {
+        "condition": [
+          "weathered"
+        ],
+        "material": [
+          "ceramic"
+        ]
+      },
+      "img_version": "24e1bc4c",
+      "download_count": 110871,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/potted_plant_02.png?width=256&height=256&format=webp&v=24e1bc4c"
     }
   }
 ]

@@ -1,0 +1,161 @@
+[
+ {
+  "id": "hotel-coffee-station",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-coffee-station.glb",
+  "title": "Hotel coffee station \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "labels",
+   "coffee",
+   "breakfast",
+   "counter",
+   "airpot",
+   "cups"
+  ],
+  "description": "Self-serve hotel coffee bar, 3.2 m: an oak-door, white solid-surface credenza with a quartz top; three black thermal servers on brew stands with drip grates and sight gauges (coffee, dark roast, decaf); a hot water tower; an oak cup caddy with nested printed cups, lids and sleeves; an oak condiment organizer with sugar packets and two creamer bottles; creamer cups, stir sticks, tea, napkins and a basket of wrapped cookies. Counter surface at 0.94 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-snack-vending",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-snack-vending.glb",
+  "title": "Hotel snack vending \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "labels",
+   "vending",
+   "snacks",
+   "chips",
+   "candy",
+   "machine"
+  ],
+  "description": "Glass-front snack machine, 0.98 x 0.86 x 1.85 m: six trays of spiral coils loaded three deep with printed chip bags, candy and granola bars, cookies and crackers; price strips, keypad, tap-to-pay reader, lit lit LCD display (\"MAKE SELECTION\"), delivery bin, branded header. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-coffee-board",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-coffee-board.glb",
+  "title": "Hotel coffee bar pegboard \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "coffee",
+   "sign",
+   "pegboard",
+   "wall"
+  ],
+  "description": "Black merchandising pegboard for behind a coffee bar, 3.1 x 1.4 m in an oak frame: a printed slogan and today's roasts. Origin at the wall's floor line, face +Z, board centered 1.62 m up. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-waste-cabinet",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-waste-cabinet.glb",
+  "title": "Hotel built-in waste station \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "trash",
+   "recycling",
+   "cabinet",
+   "millwork",
+   "coffee"
+  ],
+  "description": "Built-in trash and recycling cabinet, 0.9 x 0.62 x 0.94 m, matching the coffee credenza: two openings in the quartz top with steel grommets over lined bins, trash and recycle plates on the oak doors, a napkin and a cup lid caught at the rims. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-waste-bin",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-waste-bin.glb",
+  "title": "Hotel lobby wastebasket \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "trash",
+   "bin",
+   "wastebasket"
+  ],
+  "description": "Lobby wastebasket, 0.32 x 0.32 x 0.62 m: oak-laminate box, open top with a brushed steel rim, a black liner folded over the rim and sagging unevenly. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-desk-items",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-desk-items.glb",
+  "title": "Front desk clutter (staffed) \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "front-desk",
+   "reception",
+   "props",
+   "bell",
+   "key-card"
+  ],
+  "description": "Working clutter for a staffed check-in pod, laid out for a 1.08 m counter top (origin at the pod's floor center, guests at +Z): a call bell, a bowl of apples, a Wi-Fi tent card, a registration card with a pen, key-card sleeves and blank key cards, pens in a cup, a potted succulent, a mug, a stapler and a sticky note. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ },
+ {
+  "id": "hotel-desk-closed",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-desk-closed.glb",
+  "title": "Front desk clutter (closed pod) \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "front-desk",
+   "reception",
+   "props",
+   "phone"
+  ],
+  "description": "Props for an unattended check-in pod, for a 1.08 m counter top (origin at the pod's floor center, guests at +Z): a 'please see next agent' tent card, pens, a stack of registration cards and a desk phone with a lit line button. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ }
+]

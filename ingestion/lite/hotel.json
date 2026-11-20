@@ -1,8 +1,8 @@
 [
   {"id": "ph-potted-plant-01", "triangles": 6000},
   {"id": "ph-potted-plant-04", "triangles": 4000},
+  {"id": "ph-potted-plant-02", "triangles": 8000},
   {"id": "hotel-king-bed", "triangles": 16000},
-  {"id": "hotel-snack-vending", "triangles": 6000, "dropNormals": true},
   {"id": "ph-desk-lamp-arm-01", "triangles": 4000},
   {"id": "ph-bar-chair-round-01", "triangles": 3000, "dropNormals": true, "smooth": true},
   {"id": "g3-semi-truck", "triangles": 5000},

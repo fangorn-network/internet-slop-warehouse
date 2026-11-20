@@ -1,0 +1,20 @@
+[
+  {
+    "id": "hotel-sectional",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibxyx45jhasvjsscggzv7zaoxxyb5fmfp5uggxifz56mainbzlbnq",
+    "src": "bafybeie4d6oexaooetoir5si4g3sjn36lgw7un2pnbrl5fhgghimsrirki",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeie4d6oexaooetoir5si4g3sjn36lgw7un2pnbrl5fhgghimsrirki",
+    "txHash": "0xa880be9920196e398ee74c11311fb6f24026c1026e918abb221cb06f182622f4"
+  },
+  {
+    "id": "hotel-coffee-station",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidpe74cnzjdqtoyryexv7tynzgzmxbhqgl2r5evmer2orphe6znnm",
+    "src": "bafybeihyz5icnk3dtn5wsveyoqrhkayyutvxbmtdp6cydfnvh7e3rp4toi",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihyz5icnk3dtn5wsveyoqrhkayyutvxbmtdp6cydfnvh7e3rp4toi",
+    "txHash": "0xa880be9920196e398ee74c11311fb6f24026c1026e918abb221cb06f182622f4"
+  }
+]

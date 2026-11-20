@@ -1,0 +1,98 @@
+[
+  {
+    "id": "acg-lobby-carpet-color",
+    "source": "https://ambientcg.com/a/Carpet001",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Carpet001_1K-JPG.zip",
+      "size": 9014518
+    },
+    "archiveSha256": "f06d551e40d4d4d31a84df310bad2a1ec70753cd330342c7d8bcff3587fccbd1",
+    "sha256": "603b24064bfbee2f8ac03903592be397f485a793ab6359630641ce9a446ac3dd",
+    "bytes": 1501861,
+    "acquiredAt": "2026-11-20T17:39:37.375Z"
+  },
+  {
+    "id": "acg-lobby-carpet-normal",
+    "source": "https://ambientcg.com/a/Carpet001",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Carpet001_1K-JPG.zip",
+      "size": 9014518
+    },
+    "archiveSha256": "f06d551e40d4d4d31a84df310bad2a1ec70753cd330342c7d8bcff3587fccbd1",
+    "sha256": "0cec36dbf2cfb24f16c82834c0bd8fd9a81f6ed686bb4e7ed1a5dc5239522a3c",
+    "bytes": 2392714,
+    "acquiredAt": "2026-11-20T17:39:37.427Z"
+  },
+  {
+    "id": "acg-lobby-carpet-roughness",
+    "source": "https://ambientcg.com/a/Carpet001",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Carpet001_1K-JPG.zip",
+      "size": 9014518
+    },
+    "archiveSha256": "f06d551e40d4d4d31a84df310bad2a1ec70753cd330342c7d8bcff3587fccbd1",
+    "sha256": "f1311c8096b3f75bca3f427bb38fef74ffff74c52809b448137a2869096eb324",
+    "bytes": 642512,
+    "acquiredAt": "2026-11-20T17:39:37.470Z"
+  },
+  {
+    "id": "acg-lobby-corridor-color",
+    "source": "https://ambientcg.com/a/Carpet006",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Carpet006_1K-JPG.zip",
+      "size": 10895650
+    },
+    "archiveSha256": "c432e15f1a90c6e530fbc4db6684c083936699b04d6eff623814e02757c12132",
+    "sha256": "9d6b63c7059beab120f95ecfb7727e61bf0d68ed1c7e2d2508c5d85b474dcf16",
+    "bytes": 1995436,
+    "acquiredAt": "2026-11-20T17:39:38.578Z"
+  },
+  {
+    "id": "acg-lobby-corridor-normal",
+    "source": "https://ambientcg.com/a/Carpet006",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Carpet006_1K-JPG.zip",
+      "size": 10895650
+    },
+    "archiveSha256": "c432e15f1a90c6e530fbc4db6684c083936699b04d6eff623814e02757c12132",
+    "sha256": "fb0d50fe291ed9614f76e39bcc0a517f1b9bdff314a76aacde38291a90e84391",
+    "bytes": 2554930,
+    "acquiredAt": "2026-11-20T17:39:38.610Z"
+  },
+  {
+    "id": "acg-lobby-corridor-roughness",
+    "source": "https://ambientcg.com/a/Carpet006",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Carpet006_1K-JPG.zip",
+      "size": 10895650
+    },
+    "archiveSha256": "c432e15f1a90c6e530fbc4db6684c083936699b04d6eff623814e02757c12132",
+    "sha256": "c3f60aebc747cf788f1bf2e84040cf3c38e27a4c4b07d7377fd698da87606f3c",
+    "bytes": 556148,
+    "acquiredAt": "2026-11-20T17:39:38.637Z"
+  }
+]

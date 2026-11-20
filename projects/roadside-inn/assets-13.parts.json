@@ -1,0 +1,28 @@
+[
+ {
+  "id": "hotel-market-cooler",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-market-cooler.glb",
+  "title": "Hotel market cooler \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "labels",
+   "market",
+   "refrigerator",
+   "cooler",
+   "drinks",
+   "glass-door",
+   "bottles",
+   "cans"
+  ],
+  "description": "Two-door glass merchandiser, 1.35 x 0.72 x 2.05 m, stocked like a hotel lobby market: spring water, sports drinks, energy cans, colas and lemon-lime in 20 oz bottles, orange and root beer cans, juices, sweet tea, pint milk cartons and cold brew, faced two to four deep, each with a printed wrap label (cans show theirs between aluminium ends; coloured drinks are opaque so rows sort cleanly); LED-lit shelves, price rail, lit header. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/props.py); printed labels drawn by projects/roadside-inn/blender/labels.mjs, every brand invented. Meters, Y up, origin at floor center, front faces +Z."
+ }
+]

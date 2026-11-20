@@ -343,5 +343,20 @@
     ],
     "mb": 0.91,
     "srcMb": 4.11
+  },
+  {
+    "id": "ph-potted-plant-02",
+    "dest": "parts/lite/ph-potted-plant-02-lite.glb",
+    "before": 69806,
+    "after": 7953,
+    "error": 0.016,
+    "texturePx": 1024,
+    "size": [
+      0.701,
+      0.84,
+      0.655
+    ],
+    "mb": 1.08,
+    "srcMb": 2.63
   }
 ]

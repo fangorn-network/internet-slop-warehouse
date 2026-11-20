@@ -38,6 +38,15 @@
   .grid button small { display: block; color: #5b6470; }
   #loading .bar { height: 6px; background: #d9d3c6; border-radius: 3px; overflow: hidden; margin-top: 14px; }
   #loading .bar i { display: block; height: 100%; width: 0; background: #1d4f8f; transition: width .2s; }
+  .card.reading { width: min(720px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; background: #f1ecdf; }
+  .paper { font: 15px/1.45 Georgia, 'Times New Roman', serif; color: #1c1b19; }
+  .paper .mast { font: 700 30px/1.1 'Old English Text MT', 'UnifrakturMaguntia', Georgia, serif; text-align: center; border-bottom: 3px double #1c1b19; padding-bottom: 6px; }
+  .paper .dateline { font: 12px system-ui; letter-spacing: .08em; text-transform: uppercase; text-align: center; border-bottom: 1px solid #1c1b19; padding: 4px 0; margin-bottom: 10px; color: #3b3a36; }
+  .paper h3 { font: 700 21px/1.2 Georgia, serif; margin: 12px 0 4px; } .paper h4 { font: 700 15px Georgia, serif; margin: 10px 0 2px; text-transform: uppercase; letter-spacing: .05em; }
+  .paper p { margin: 4px 0; text-align: justify; hyphens: auto; } .paper .by { font-style: italic; font-size: 13px; color: #55534d; }
+  .paper .ads { columns: 2 220px; column-rule: 1px solid #b9b2a2; font-size: 13px; } .paper .ads p { break-inside: avoid; margin-bottom: 8px; }
+  .paper .wx { width: 100%; border-collapse: collapse; text-align: center; font-size: 14px; margin: 6px 0; } .paper .wx th, .paper .wx td { border: 1px solid #b9b2a2; padding: 4px; }
+  .turn { margin-top: 6px; }
   .credits { font-size: 12px; color: #5b6470; margin-top: 14px; }
   #touch { display: none; }
   @media (pointer: coarse) {
@@ -60,7 +69,7 @@
   <div id="say" role="status" aria-live="polite"></div>
   <div id="where"></div>
   <div id="touch"><div id="stick" aria-label="Move"><i></i></div><button id="useBtn" aria-label="Interact">E</button></div>
-  <div id="keys">WASD move · mouse look · E interact · Shift walk faster · T day/dusk · M mute · Esc release mouse</div>
+  <div id="keys">WASD move · mouse look · E interact · Q throw · Shift walk faster · T day/dusk · M mute · Esc release mouse</div>
 </div>
 <div class="overlay" id="loading"><div class="card"><div class="sub">Exit 127 · Interstate 44 · Missouri</div><h1>Heartland Inn Express</h1><p>Unloading the car…</p><div class="bar"><i id="progress"></i></div></div></div>
 <div class="overlay" id="start" hidden><div class="card">
@@ -68,7 +77,7 @@
   <h1>Heartland Inn Express</h1>
   <p>Seven hours on the interstate. The sun is going down behind the truck stop and the pole sign just flickered on.</p>
   <p>Check in at the front desk, then find your room. Take your time. Nothing is going to happen.</p>
-  <button id="begin">Walk in</button>
+  <button id="continue" hidden>Continue</button> <button id="begin">Walk in</button>
   <div class="credits">Furniture, plants, lamps, textures and sky: Poly Haven (CC0). People: Microsoft Rocketbox / Avatar Studio (MIT). Cars, shower and cardio equipment: Grab3D (CC0). Footsteps: Kenney (CC0). Building, fixtures and code: original, CC0.</div>
 </div></div>
 <div class="overlay" id="panel" hidden><div class="card" id="panelCard"></div></div>

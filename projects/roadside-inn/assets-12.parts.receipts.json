@@ -1,0 +1,65 @@
+[
+  {
+    "id": "hotel-coffee-station",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidat4abctito3mudurdofjthidkuf63qbaftayw64biybrtgz2z6y",
+    "src": "bafybeiagtuqndun7yq3rqc7nw5zk46nhm46n7diwcl3obman6jnzv3q4ju",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiagtuqndun7yq3rqc7nw5zk46nhm46n7diwcl3obman6jnzv3q4ju",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  },
+  {
+    "id": "hotel-snack-vending",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreih44vkf3vtgsyhbxgnjsbjoeqnlz3pnj6mfzbyro4brodvotbasvi",
+    "src": "bafybeiddc5ixc3fvnlxzh5hq2mcnymgycq5qmnpjen3hjfh2otjuv5vqwq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiddc5ixc3fvnlxzh5hq2mcnymgycq5qmnpjen3hjfh2otjuv5vqwq",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  },
+  {
+    "id": "hotel-coffee-board",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreied5yk7slhjo2xecdhteo3xfce6qu2egnymtn7mwom4v7lvhuvv7i",
+    "src": "bafybeievkiywhqgtu6plw75lwamare3mtjaauux3orcr5uru2qre2cltia",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeievkiywhqgtu6plw75lwamare3mtjaauux3orcr5uru2qre2cltia",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  },
+  {
+    "id": "hotel-waste-cabinet",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiczm4cvji4rdqyskvt47adzqowz3rqdx7p457mhyepyrhan5aqshy",
+    "src": "bafybeigfzrk3jzkrwke2ksjqwhom5tufd44g7piihvpnwk3aeuy2f5qaiu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeigfzrk3jzkrwke2ksjqwhom5tufd44g7piihvpnwk3aeuy2f5qaiu",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  },
+  {
+    "id": "hotel-waste-bin",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiclffaaspwx5v3p5ubl6rdt5unknliw5aqsle57lbrifwr3qsvre4",
+    "src": "bafybeibbxikenq7mrjwrissxxpjbxo6vvy5qnsojpp6n4jjxyx3v6fjzky",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeibbxikenq7mrjwrissxxpjbxo6vvy5qnsojpp6n4jjxyx3v6fjzky",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  },
+  {
+    "id": "hotel-desk-items",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreicwgeiswivdo2bjmqpxn7tmv2t3hycbm7d5fvayibb6jl2wusqofa",
+    "src": "bafybeici4jtptlosqa55ctk5ftgx4xcoec5vr7htb4fssvfzhwvu53iu7q",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeici4jtptlosqa55ctk5ftgx4xcoec5vr7htb4fssvfzhwvu53iu7q",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  },
+  {
+    "id": "hotel-desk-closed",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreigkeko7mgp6c4xkr6ecplkwhbx2dceq4h6titshar4w22t6cht57y",
+    "src": "bafybeifqs3lsbenf3pfjgzp4j5xl4vxmroudujl37v5jeo3j7qtkmmrspq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeifqs3lsbenf3pfjgzp4j5xl4vxmroudujl37v5jeo3j7qtkmmrspq",
+    "txHash": "0x473098dcece68414634c5d59bf75b66ecc8cac2f96c4dbaa01fe37ed7700f355"
+  }
+]

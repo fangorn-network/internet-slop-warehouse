@@ -12,7 +12,7 @@
     },
     "bytes": 721641,
     "sha256": "c112a8fb107d8600a2974af2f9fa9b595c491a33a59982e22706e9650990bf8f",
-    "acquiredAt": "2026-11-19T21:04:58.850Z"
+    "acquiredAt": "2026-11-20T18:19:31.875Z"
   },
   {
     "id": "ph-hotel-oak-normal",
@@ -27,7 +27,7 @@
     },
     "bytes": 515725,
     "sha256": "ec501e1c76269cabc1648ab0e3f38db1b062ffef7ff4ce037fdc369383afd005",
-    "acquiredAt": "2026-11-19T21:04:59.511Z"
+    "acquiredAt": "2026-11-20T18:19:31.879Z"
   },
   {
     "id": "ph-hotel-oak-roughness",
@@ -42,6 +42,141 @@
     },
     "bytes": 560815,
     "sha256": "1d48d21a8497d83d4148e4378bf6891e052c98b58cdce1f79003bcc24a3aff8f",
-    "acquiredAt": "2026-11-19T21:05:00.082Z"
+    "acquiredAt": "2026-11-20T18:19:31.906Z"
+  },
+  {
+    "id": "ph-hotel-herringbone-color",
+    "source": "https://polyhaven.com/a/poly_wool_herringbone",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_diff_1k.jpg",
+      "md5": "5c0981092ba0129d5951720ea23d50c2",
+      "size": 942966
+    },
+    "bytes": 942966,
+    "sha256": "fd889a46f617efd331e522e36b8ad2548e16e1cb018c001872f17537d7666af5",
+    "acquiredAt": "2026-11-20T18:19:32.156Z"
+  },
+  {
+    "id": "ph-hotel-herringbone-normal",
+    "source": "https://polyhaven.com/a/poly_wool_herringbone",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_nor_gl_1k.jpg",
+      "md5": "a6371d03b033a1c20e1c2758136ac757",
+      "size": 1045151
+    },
+    "bytes": 1045151,
+    "sha256": "314ac7c1b7c101a48106e05199bfdb24e33671e58a6ccb334249b441d8e8ac98",
+    "acquiredAt": "2026-11-20T18:19:32.228Z"
+  },
+  {
+    "id": "ph-hotel-herringbone-roughness",
+    "source": "https://polyhaven.com/a/poly_wool_herringbone",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/poly_wool_herringbone/poly_wool_herringbone_rough_1k.jpg",
+      "md5": "9f85f667517ee9c7f3cc85214058a7d8",
+      "size": 857426
+    },
+    "bytes": 857426,
+    "sha256": "028b4fb92c322a31b5374171f62f43af2cfd6a012748be175fd44dbf1109903c",
+    "acquiredAt": "2026-11-20T18:19:32.259Z"
+  },
+  {
+    "id": "ph-hotel-linen-color",
+    "source": "https://polyhaven.com/a/rough_linen",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_diff_1k.jpg",
+      "md5": "663db789fb075462b685c1f740e58930",
+      "size": 835801
+    },
+    "bytes": 835801,
+    "sha256": "04897d7611d7390ddf5b2c6f7273f448dfc48341fdbd1f4f207fa30b331d7f57",
+    "acquiredAt": "2026-11-20T18:19:32.432Z"
+  },
+  {
+    "id": "ph-hotel-linen-normal",
+    "source": "https://polyhaven.com/a/rough_linen",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_nor_gl_1k.jpg",
+      "md5": "3350269a2e9c472aa406bd3cc1eaf2c8",
+      "size": 916843
+    },
+    "bytes": 916843,
+    "sha256": "e2402166d1a489f7414814e69e1836ab672aa24e30bec2d41fea356f81687e53",
+    "acquiredAt": "2026-11-20T18:19:32.438Z"
+  },
+  {
+    "id": "ph-hotel-linen-roughness",
+    "source": "https://polyhaven.com/a/rough_linen",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rough_linen/rough_linen_rough_1k.jpg",
+      "md5": "a380b24cc43cff88c39510305ebf0020",
+      "size": 1083725
+    },
+    "bytes": 1083725,
+    "sha256": "734ad6718841a6e296aacaa6e9ee2e1686eed5f62bb8d71c915c5605e162bcb4",
+    "acquiredAt": "2026-11-20T18:19:32.493Z"
+  },
+  {
+    "id": "ph-hotel-melange-color",
+    "source": "https://polyhaven.com/a/jogging_melange",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jogging_melange/jogging_melange_diff_1k.jpg",
+      "md5": "012f098e40be72711c76a1821c21475a",
+      "size": 827909
+    },
+    "bytes": 827909,
+    "sha256": "d957b85205d1b639c50017f751865d117f510ca2d791b4c6c2b034d62a084d41",
+    "acquiredAt": "2026-11-20T18:19:33.283Z"
+  },
+  {
+    "id": "ph-hotel-melange-normal",
+    "source": "https://polyhaven.com/a/jogging_melange",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jogging_melange/jogging_melange_nor_gl_1k.jpg",
+      "md5": "ecf228c9bbb9d56477c419c52e110cff",
+      "size": 962458
+    },
+    "bytes": 962458,
+    "sha256": "8e327a661fc1a335e35005f87bceaf7ae9b2138e47a34a1a6bd552f6c2639d2c",
+    "acquiredAt": "2026-11-20T18:19:33.380Z"
+  },
+  {
+    "id": "ph-hotel-melange-roughness",
+    "source": "https://polyhaven.com/a/jogging_melange",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "colormass, Rico Cilliers",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/jogging_melange/jogging_melange_rough_1k.jpg",
+      "md5": "c8ae9f2f8da8343dbe7802d016f71425",
+      "size": 922612
+    },
+    "bytes": 922612,
+    "sha256": "276dfbc1d609b7e850c933ad3ecc9f1763c97581f01b227a72de0c25e151fc9c",
+    "acquiredAt": "2026-11-20T18:19:33.470Z"
   }
 ]

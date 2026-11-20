@@ -5,7 +5,7 @@
     "id": "physics-world",
     "kind": "rule",
     "title": "Physics world (Rapier)",
-    "description": "Rigid-body physics and walking characters for any three.js object, on the Rapier engine (WebAssembly, Apache-2.0). createWorld() steps at a fixed 60 Hz; attach(object) gives it a dynamic, fixed, kinematic or platform body whose shape comes from the object itself: a box around it, a ball, a convex hull of a GLB's vertices, or exact triangles for level geometry. character() is a capsule that walks, slides along walls, climbs steps and slopes, shoves loose things and rides moving floors. Dynamic bodies can be grabbed and thrown. Collisions report impact speed for sounds, raycasts find what's in front of you. Units are metres: size models from their measured size. Rapier loads with the first world, so a game whose physics can't load still runs. The game maps @dimforge/rapier3d-compat@0.21.0 in its import map.",
+    "description": "Rigid-body physics and walking characters for any three.js object, on the Rapier engine (WebAssembly, Apache-2.0). createWorld() steps at a fixed 60 Hz; attach(object) gives it a dynamic, fixed, kinematic or platform body whose shape comes from the object itself: a box around it, a ball, an upright cylinder (round tables), a convex hull of a GLB's vertices, or exact triangles for level geometry. character() is a capsule that walks, slides along walls, climbs steps and slopes, shoves loose things and rides moving floors. Dynamic bodies can be grabbed and thrown. Collisions report impact speed for sounds, raycasts find what's in front of you. Units are metres: size models from their measured size. Rapier loads with the first world, so a game whose physics can't load still runs. The game maps @dimforge/rapier3d-compat@0.21.0 in its import map.",
     "tags": [
       "character-controller",
       "collision",
@@ -30,17 +30,17 @@
     "exports": [
       {
         "name": "createWorld",
-        "signature": "createWorld({ gravity, step, maxSteps }) → Promise<{ update(dt), raycast(origin, direction, far), dispose(), raw, rapier }>",
+        "signature": "createWorld({ gravity, step, maxSteps }) \u2192 Promise<{ update(dt), raycast(origin, direction, far), dispose(), raw, rapier }>",
         "does": "starts Rapier and a world; update(dt) steps at a fixed rate then moves every attached object"
       },
       {
         "name": "attach",
-        "signature": "attach(object, opts) → { update(), dispose(), body, collider, impulse([x,y,z]), velocity([x,y,z]?), grab(), release([x,y,z]?) }",
+        "signature": "attach(object, opts) \u2192 { update(), dispose(), body, collider, impulse([x,y,z]), velocity([x,y,z]?), grab(), release([x,y,z]?) }",
         "does": "gives an object a rigid body and a collider shaped from its meshes"
       },
       {
         "name": "character",
-        "signature": "character(world, { position, radius, height, step, slope, snap, push, mass }) → { walk(vx, vz), jump(speed), ride(dy), teleport([x,y,z]), ignore(collider), unignore(collider), position, grounded, dispose() }",
+        "signature": "character(world, { position, radius, height, step, slope, snap, push, mass }) \u2192 { walk(vx, vz), jump(speed), ride(dy), teleport([x,y,z]), ignore(collider), unignore(collider), position, grounded, dispose() }",
         "does": "a walking capsule (feet at position) moved by Rapier's character controller inside the fixed steps"
       }
     ],
@@ -67,13 +67,13 @@
         "name": "mass",
         "type": "kg",
         "default": "from density",
-        "does": "the body's mass; otherwise density × volume"
+        "does": "the body's mass; otherwise density \u00d7 volume"
       },
       {
         "name": "density",
         "type": "number",
         "default": 1,
-        "does": "mass = density × volume in m³; what matters is the ratio between bodies (a ball at 9 knocks over crates at 0.6)"
+        "does": "mass = density \u00d7 volume in m\u00b3; what matters is the ratio between bodies (a ball at 9 knocks over crates at 0.6)"
       },
       {
         "name": "friction",
@@ -85,13 +85,13 @@
         "name": "restitution",
         "type": "number",
         "default": 0.1,
-        "does": "how much it bounces (0–1)"
+        "does": "how much it bounces (0\u20131)"
       },
       {
         "name": "damping",
         "type": "number",
         "default": 0,
-        "does": "slows spinning; 0.5–2 lets a hull resting on uneven legs (a chair) settle and sleep instead of rocking"
+        "does": "slows spinning; 0.5\u20132 lets a hull resting on uneven legs (a chair) settle and sleep instead of rocking"
       },
       {
         "name": "ccd",

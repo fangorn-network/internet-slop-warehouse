@@ -1,0 +1,110 @@
+[
+  {
+    "id": "acg-lobby-carpet-color",
+    "file": "acg/acg-lobby-carpet-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet001 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "carpet",
+      "color"
+    ],
+    "description": "Carpet001 color map, 1K, from https://ambientcg.com/a/Carpet001. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-carpet-normal",
+    "file": "acg/acg-lobby-carpet-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet001 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "carpet",
+      "normal"
+    ],
+    "description": "Carpet001 normal map, 1K, from https://ambientcg.com/a/Carpet001. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-carpet-roughness",
+    "file": "acg/acg-lobby-carpet-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet001 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "carpet",
+      "roughness"
+    ],
+    "description": "Carpet001 roughness map, 1K, from https://ambientcg.com/a/Carpet001. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-corridor-color",
+    "file": "acg/acg-lobby-corridor-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet006 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "corridor",
+      "color"
+    ],
+    "description": "Carpet006 color map, 1K, from https://ambientcg.com/a/Carpet006. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-corridor-normal",
+    "file": "acg/acg-lobby-corridor-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet006 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "corridor",
+      "normal"
+    ],
+    "description": "Carpet006 normal map, 1K, from https://ambientcg.com/a/Carpet006. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-lobby-corridor-roughness",
+    "file": "acg/acg-lobby-corridor-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Carpet006 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "lobby",
+      "corridor",
+      "roughness"
+    ],
+    "description": "Carpet006 roughness map, 1K, from https://ambientcg.com/a/Carpet006. Linear roughness. CC0-1.0."
+  }
+]

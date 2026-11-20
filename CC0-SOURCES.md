@@ -26,6 +26,19 @@ During this research, the web reader could not access `/api/assets`, and develop
 | Poly Haven | Scanned props, PBR textures, HDRI lighting | https://polyhaven.com/license confirms CC0. https://github.com/Poly-Haven/Public-API documents the discovery API. API use requires an identifying user-agent or Referer; content surfaced through the live API requires visible source credit. See https://github.com/Poly-Haven/Public-API/blob/master/ToS.md . Prefer available glTF downloads; bundle external buffers and textures into GLB. |
 | ambientCG | Ground, stone, wood and other reusable materials | https://docs.ambientcg.com/license/ confirms downloadable assets and material previews are CC0. https://docs.ambientcg.com/api/v3/assets/ documents metadata and download discovery, including `include=downloads`. Start with modest texture resolutions for browser games. |
 
+### Hugging Face (checked 2026-11-19)
+
+- `codepawl/smithsonian-3d-glb`: 3,451 Smithsonian Open Access scans, CC0, web/LOD/collision tiers. These are museum objects (fossils, shells, period furniture), nothing modern-interior.
+- `codepawl/objaverse-clean-glb`: 6,015 models, but only 39 are CC0. They are statues and specimens; the rest are CC BY.
+- `allenai/objaverse` (all 798k, streamed metadata): 14 CC0 objects match lobby terms (vending, coffee, bins, phones, people). The only useful one is an old telephone.
+- `codepawl/quaternius-glb`: CC0 low-poly packs with rigged characters. They are stylised, a step down from the Rocketbox staff.
+- There are no realistic CC0 human models on HF. For hotel props, procedural Blender (`projects/roadside-inn/blender/`) remains the path.
+
+### Wikimedia Commons, explicitly CC0 (checked 2026-11-20)
+
+- Landscape photographs for the Heartland Inn wall art: four Buffalo National River (Arkansas Ozarks) photos by Brandonrush, CC0 (Carver Landing 001/002, Steel Creek Campground 001/002). Sources, hashes and handling in `projects/roadside-inn/blender/photos/provenance.json`. Commons search for Ozark/Missouri landscapes found few CC0 files; most "public domain" hits are scanned LOC maps and letters.
+- Poly Haven `jogging_melange` (CC0) joined the hotel-lobby surfaces batch as the heathered base colour of the lobby sofas.
+
 ## Pack-specific candidates
 
 - KayKit Dungeon Pack: https://kaylousberg.itch.io/kaykit-dungeon-pack explicitly advertises CC0 and glTF. Free and paid tiers coexist: verify the exact archive and included license. Current changelog notes split glTF/bin files, so preserve or embed dependencies.

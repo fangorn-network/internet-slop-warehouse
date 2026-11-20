@@ -12,6 +12,9 @@ const json = async url => (await fetch(url, { headers: UA, signal: AbortSignal.t
 // [upstream id, short name, what it is]
 const textures = [
   ['laminate_floor_02', 'oak', 'Light oak commercial laminate plank (lobby floor, oak veneers)'],
+  ['poly_wool_herringbone', 'herringbone', 'Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa)'],
+  ['rough_linen', 'linen', 'Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns)'],
+  ['jogging_melange', 'melange', 'Grey melange (heathered) textile, about 27 cm a tile (base colour of the light-grey sectional and lobby sofa, under the herringbone weave)'],
 ];
 const ROLES = ['color', 'normal', 'roughness'];
 const pick = (files, role) => {

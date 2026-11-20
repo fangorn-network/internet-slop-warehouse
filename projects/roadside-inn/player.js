@@ -17,7 +17,7 @@ export const RADIUS = 0.28, EYE = 1.62, STEP = 0.45;
 export async function createPlayer(scene, world, { sound }) {
   const player = { x: world.spawn.x, y: 0, z: world.spawn.z, vy: 0, pos: new T.Vector3(), stride: 0 };
   let phys = null;
-  try { phys = await createPhysics(scene, world, { spawn: world.spawn, radius: RADIUS, height: 1.75, step: STEP }); }
+  try { phys = await createPhysics(scene, world, { spawn: world.spawn, radius: RADIUS, height: 1.75, step: STEP, sound }); }
   catch (e) { console.warn('physics off, walking the old way:', e.message); }
   const synced = { x: player.x, y: player.y, z: player.z };   // where physics last put the player
 

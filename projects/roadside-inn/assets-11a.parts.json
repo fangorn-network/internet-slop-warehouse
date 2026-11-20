@@ -1,0 +1,30 @@
+[
+ {
+  "id": "ph-potted-plant-02",
+  "file": "haven/ph-potted-plant-02.glb",
+  "type": "asset",
+  "title": "Potted Plant 02",
+  "mime": "model/gltf-binary",
+  "license": "CC0-1.0",
+  "author": "Rico Cilliers",
+  "tags": [
+   "model",
+   "gltf",
+   "realistic",
+   "pbr",
+   "decorative",
+   "plants",
+   "potted plants",
+   "nature",
+   "potplant",
+   "plant",
+   "pot",
+   "vase",
+   "medium",
+   "leaf",
+   "green",
+   "terracotta"
+  ],
+  "description": "Potted Plant 02 from Poly Haven, by Rico Cilliers. Self-contained GLB with 1K textures. Upstream polygon count: 69806; 3 meshes. Source: https://polyhaven.com/a/potted_plant_02. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
+ }
+]

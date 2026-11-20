@@ -108,11 +108,11 @@ def apply_all(o):
 
 
 def preview(path, distance=4.0, height=1.6, target=(0, 0, 0.5), yaw=35, samples=96):
-    """Cycles studio render lit by the hotel-room HDRI: a quick look at the asset before it goes into the game."""
+    """Cycles studio render lit by the hotel's day sky: a quick look at the asset before it goes into the game."""
     scene = bpy.context.scene
     world = bpy.data.worlds.new('preview'); scene.world = world; world.use_nodes = True
     env = world.node_tree.nodes.new('ShaderNodeTexEnvironment')
-    env.image = bpy.data.images.load(os.path.join(HAVEN, 'ph-hotel-room-hdri.hdr'))
+    env.image = bpy.data.images.load(os.path.join(HAVEN, 'ph-hotel-farm-sky.hdr'))
     world.node_tree.links.new(env.outputs['Color'], world.node_tree.nodes['Background'].inputs['Color'])
     bpy.ops.mesh.primitive_plane_add(size=12, location=(0, 0, 0)); floor = bpy.context.object
     floor.data.materials.append(material('floor', color=(0.35, 0.33, 0.3), roughness=0.9)); floor.name = '__floor'

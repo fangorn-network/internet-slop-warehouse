@@ -1,0 +1,120 @@
+[
+ {
+  "id": "ph-hotel-herringbone-color",
+  "file": "haven/ph-hotel-herringbone-color.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "Hotel herringbone color",
+  "author": "colormass, Rico Cilliers",
+  "license": "CC0-1.0",
+  "tags": [
+   "polyhaven",
+   "hotel",
+   "lobby",
+   "realistic",
+   "texture",
+   "pbr",
+   "herringbone",
+   "color"
+  ],
+  "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), color map (1K). sRGB base color. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+ },
+ {
+  "id": "ph-hotel-herringbone-normal",
+  "file": "haven/ph-hotel-herringbone-normal.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "Hotel herringbone normal",
+  "author": "colormass, Rico Cilliers",
+  "license": "CC0-1.0",
+  "tags": [
+   "polyhaven",
+   "hotel",
+   "lobby",
+   "realistic",
+   "texture",
+   "pbr",
+   "herringbone",
+   "normal"
+  ],
+  "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+ },
+ {
+  "id": "ph-hotel-herringbone-roughness",
+  "file": "haven/ph-hotel-herringbone-roughness.jpg",
+  "type": "asset",
+  "mime": "image/jpeg",
+  "title": "Hotel herringbone roughness",
+  "author": "colormass, Rico Cilliers",
+  "license": "CC0-1.0",
+  "tags": [
+   "polyhaven",
+   "hotel",
+   "lobby",
+   "realistic",
+   "texture",
+   "pbr",
+   "herringbone",
+   "roughness"
+  ],
+  "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+ },
+ {
+  "id": "hotel-lobby-sofa-2",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-lobby-sofa-2.glb",
+  "title": "Hotel lobby sofa, cloth-simulated \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse; upholstery texture by Poly Haven",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "lobby",
+   "sofa",
+   "couch",
+   "seating",
+   "furniture",
+   "upholstery",
+   "herringbone",
+   "cloth-simulation"
+  ],
+  "description": "Contract lobby sofa, 2.1 x 0.92 x 0.84 m: square track arms, two back cushions and two navy throw pillows inflated with Blender's cloth simulation (crowned faces, pinched seams, natural wrinkles, no two alike), two firm foam seat cushions worn into a slight sitting hollow, a walnut plinth on short feet. Upholstery is Poly Haven's poly_wool_herringbone (CC0) at its real 27 cm repeat; the frame is never dead flat. About 30k triangles. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/sofa.py). Meters, Y up, origin at floor center, front faces +Z.",
+  "uses": [
+   "ph-hotel-herringbone-color",
+   "ph-hotel-herringbone-normal",
+   "ph-hotel-herringbone-roughness"
+  ],
+  "made": {
+   "method": "procedural",
+   "ai": "none",
+   "tool": "Blender 4.0 cloth simulation + bmesh, scripted"
+  }
+ },
+ {
+  "id": "hotel-sectional",
+  "type": "asset",
+  "file": "../projects/roadside-inn/assets/hotel-sectional.glb",
+  "title": "Hotel lobby sectional \u00b7 original Blender model",
+  "mime": "model/gltf-binary",
+  "author": "the internet slop warehouse",
+  "license": "CC0-1.0",
+  "tags": [
+   "hotel",
+   "furniture",
+   "realistic",
+   "blender",
+   "original",
+   "cc0",
+   "formula-blue",
+   "lobby",
+   "sofa",
+   "sectional",
+   "seating"
+  ],
+  "description": "L-shaped modular sectional, 2.7 m with a 1.65 m chaise: charcoal-gray woven fabric, navy and cobalt throw pillows, brushed square legs. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lobby.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven oak/cotton maps (CC0). Throw pillows lean on the back cushions\u2019 raked faces rather than into them."
+ }
+]

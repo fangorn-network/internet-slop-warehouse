@@ -204,29 +204,6 @@ def front_desk(m):
     bell = cyl('bell', 0.05, 0.035, (-0.6, -0.25, 1.125), m['brass'], verts=32); cyl('bell_button', 0.008, 0.02, (-0.6, -0.25, 1.15), m['brass'])
 
 
-def snack_vending(m):
-    """Glass-front snack machine: spiral coils with packages, keypad, coin slot, delivery bin."""
-    cab = box('cabinet', (0.98, 0.86, 1.85), (0, 0, 0.925), m['black'])
-    carve(cab, box('cavity', (0.66, 0.42, 1.34), (-0.13, -0.24, 1.12), None))   # the lit product bay behind the glass
-    box('window', (0.64, 0.01, 1.32), (-0.13, -0.432, 1.12), material('vend_glass', color=(0.6, 0.7, 0.75), roughness=0.02, alpha=0.18))
-    box('interior', (0.66, 0.02, 1.34), (-0.13, -0.035, 1.12), material('vend_back', color=(0.85, 0.85, 0.82), roughness=0.6))
-    colors = [(0.82, 0.12, 0.1), (0.95, 0.7, 0.05), (0.15, 0.4, 0.8), (0.2, 0.6, 0.25), (0.9, 0.42, 0.08), (0.48, 0.22, 0.6)]
-    for row in range(6):
-        box(f'tray{row}', (0.62, 0.36, 0.008), (-0.13, -0.24, 0.52 + row * 0.215), m['steel'])
-        for i in range(5):
-            x = -0.4 + i * 0.135
-            pkg = box(f'pkg{row}_{i}', (0.1, 0.05, 0.15), (x, -0.36, 0.6 + row * 0.215), material(f'pk{row}{i}', color=colors[(row * 2 + i) % 6], roughness=0.35), bevel=0.012)
-            bpy.ops.mesh.primitive_torus_add(major_radius=0.045, minor_radius=0.003, location=(x, -0.3, 0.57 + row * 0.215), rotation=(R(90), 0, 0))
-            coil = bpy.context.object; coil.scale = (1, 1, 3.5); coil.data.materials.append(m['steel'])
-    box('keypad_panel', (0.22, 0.01, 0.5), (0.36, -0.432, 1.2), m['charcoal'])
-    for r in range(4):
-        for c in range(3):
-            box('key', (0.045, 0.01, 0.03), (0.3 + c * 0.06, -0.44, 1.05 + r * 0.06), m['steel'], bevel=0.003)
-    box('display', (0.16, 0.008, 0.05), (0.36, -0.44, 1.36), m['led'])
-    box('coin', (0.03, 0.01, 0.08), (0.36, -0.44, 1.45), m['steel'])
-    box('bin', (0.62, 0.03, 0.17), (-0.13, -0.43, 0.24), m['charcoal'], bevel=0.01)
-    box('header', (0.98, 0.01, 0.16), (0, -0.432, 1.75), material('vend_red', color=(0.75, 0.06, 0.08), roughness=0.4))
-
 
 def drum_pendant(m):
     """Large drum pendant: dark fabric drum, white diffuser underneath, ceiling canopy and cable (1 m tall overall)."""
@@ -279,27 +256,6 @@ def accent_chair(m, color):
             leg = cyl('leg', 0.022, 0.32, (x, y, 0.15), m['walnut'], verts=12, r2=0.014)
             leg.rotation_euler = (math.radians(8 if y > 0 else -8), math.radians(-6 if x < 0 else 6), 0)
 
-
-def coffee_station(m):
-    """Coffee counter (front -Y): three airpot dispensers, cup stacks, condiment caddy, pastry tray."""
-    L = 3.2
-    box('base', (L, 0.62, 0.88), (0, 0, 0.44), m['charcoal'], bevel=0.006)
-    box('top', (L + 0.04, 0.68, 0.04), (0, 0, 0.9), m['quartz'], bevel=0.006)
-    for i, x in enumerate((-1.1, -0.72, -0.34)):
-        cyl(f'airpot{i}', 0.09, 0.36, (x, 0.08, 1.1), m['steel'], bevel=0.004)
-        cyl(f'lid{i}', 0.075, 0.05, (x, 0.08, 1.305), m['black'])
-        box(f'pump{i}', (0.05, 0.08, 0.04), (x, -0.02, 1.27), m['black'], bevel=0.008)
-        box(f'label{i}', (0.08, 0.004, 0.05), (x, -0.012, 1.14), material(f'lab{i}', color=[(0.05, 0.05, 0.05), (0.45, 0.05, 0.03), (0.1, 0.25, 0.05)][i], roughness=0.5))
-    for j in range(3):
-        for k in range(7):
-            cyl(f'cup{j}_{k}', 0.042, 0.11, (0.08 + j * 0.1, 0.0, 0.975 + k * 0.022), material('cup', color=(0.93, 0.91, 0.86), roughness=0.6), r2=0.034, verts=16)
-    box('caddy', (0.42, 0.24, 0.12), (0.62, 0.05, 0.98), m['walnut'], bevel=0.008)
-    for k in range(10):
-        box(f'packet{k}', (0.03, 0.05, 0.07), (0.45 + (k % 5) * 0.08, 0.0 + (k // 5) * 0.08, 1.04), material(f'pk{k%3}', color=[(0.85, 0.75, 0.55), (0.3, 0.45, 0.8), (0.9, 0.9, 0.88)][k % 3]))
-    box('tray', (0.5, 0.34, 0.03), (1.2, 0.0, 0.935), material('tray_wood', color=(0.55, 0.38, 0.2), roughness=0.7), bevel=0.008)
-    for k in range(5):
-        p = cyl(f'muffin{k}', 0.045, 0.06, (1.04 + k * 0.08, 0.0, 0.98), material('muffin', color=(0.55, 0.3, 0.1), roughness=0.85), r2=0.05, verts=16)
-    box('dome', (0.5, 0.34, 0.15), (1.2, 0.0, 1.03), material('dome', color=(0.85, 0.9, 0.92), roughness=0.05, alpha=0.25), bevel=0.05, segments=4)
 
 
 def breakfast_bar(m):
@@ -517,25 +473,6 @@ def floor_lamp(m):
     cyl('bulb', 0.035, 0.07, (0, 0, 1.5), m['led'])
 
 
-def snake_plant(m):
-    """Tall snake plant in a matte planter: tapering, twisted leaf blades."""
-    cyl('planter', 0.2, 0.42, (0, 0, 0.21), material('planter', color=(0.12, 0.12, 0.12), roughness=0.85), r2=0.16, verts=32, bevel=0.01)
-    cyl('soil', 0.18, 0.02, (0, 0, 0.41), material('soil', color=(0.12, 0.08, 0.05), roughness=1), verts=32)
-    leafm = material('sansevieria', color=(0.08, 0.2, 0.06), roughness=0.5)
-    for k in range(14):
-        a = k * 2.4; r = 0.03 + (k % 4) * 0.035; h = 0.55 + (k * 37 % 10) * 0.05
-        bpy.ops.mesh.primitive_plane_add(size=1, location=(math.cos(a) * r, math.sin(a) * r, 0.42 + h / 2))
-        leaf = bpy.context.object; leaf.name = f'blade{k}'; leaf.scale = (0.06, 1, h); leaf.rotation_euler = (math.radians(90), 0, a)
-        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
-        bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.subdivide(number_cuts=6); bpy.ops.object.mode_set(mode='OBJECT')
-        for v in leaf.data.vertices:
-            t = v.co.z / h + 0.5
-            v.co.x *= (1 - t) * 1.2 + 0.05                     # taper to a point
-            v.co.y += math.sin(t * 3) * 0.02
-        leaf.rotation_euler = (math.radians(90 + (k % 3 - 1) * 8), math.radians((k % 5 - 2) * 4), a)
-        leaf.modifiers.new('solid', 'SOLIDIFY').thickness = 0.006
-        leaf.data.materials.append(leafm); smooth(leaf)
-
 
 def centerpiece(m):
     """Lobby centerpiece: round walnut pedestal table, glass vase, a big arrangement of flowers and greens."""
@@ -583,13 +520,11 @@ ASSETS = {
     'hotel-toilet': (toilet, dict(distance=1.6, height=1.1, target=(0, 0, 0.4))),
     'hotel-tub-shower': (tub_shower, dict(distance=3.2, height=1.6, target=(0, 0, 0.9))),
     'hotel-front-desk': (front_desk, dict(distance=5.5, height=1.8, target=(0, 0, 0.8))),
-    'hotel-snack-vending': (snack_vending, dict(distance=2.8, height=1.4, target=(0, 0, 1.0))),
     'hotel-drum-pendant': (drum_pendant, dict(distance=2.2, height=0.4, target=(0, 0, 0.4))),
     'hotel-luggage-cart': (luggage_cart, dict(distance=3.0, height=1.4, target=(0, 0, 1.0))),
     'hotel-lobby-sofa': (lobby_sofa, dict(distance=3.4, height=1.3, target=(0, 0, 0.45))),
     'hotel-accent-chair-green': (lambda m: accent_chair(m, (0.1, 0.19, 0.035)), dict(distance=1.9, height=1.1, target=(0, 0, 0.45))),
     'hotel-accent-chair-mustard': (lambda m: accent_chair(m, (0.5, 0.26, 0.025)), dict(distance=1.9, height=1.1, target=(0, 0, 0.45))),
-    'hotel-coffee-station': (coffee_station, dict(distance=3.6, height=1.6, target=(0, 0, 0.9))),
     'hotel-breakfast-bar': (breakfast_bar, dict(distance=3.8, height=1.7, target=(0, 0, 0.95))),
     'hotel-ice-machine': (ice_machine, dict(distance=2.2, height=1.3, target=(0, 0, 0.9))),
     'hotel-ice-bucket': (ice_bucket, dict(distance=0.8, height=0.5, target=(0, 0, 0.1))),
@@ -603,7 +538,6 @@ ASSETS = {
     'hotel-room-door': (room_door, dict(distance=3.0, height=1.4, target=(0, 0, 1.1))),
     'hotel-shelving-unit': (shelving_unit, dict(distance=3.0, height=1.4, target=(0, 0, 1.0))),
     'hotel-floor-lamp': (floor_lamp, dict(distance=2.6, height=1.3, target=(0, 0, 0.9))),
-    'hotel-snake-plant': (snake_plant, dict(distance=2.0, height=1.0, target=(0, 0, 0.6))),
     'hotel-centerpiece': (centerpiece, dict(distance=2.6, height=1.6, target=(0, 0, 0.9))),
     'hotel-lattice-pendant': (lattice_pendant, dict(distance=2.6, height=0.6, target=(0, 0, 0.6))),
 }

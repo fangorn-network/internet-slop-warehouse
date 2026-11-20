@@ -58,5 +58,185 @@
       "roughness"
     ],
     "description": "Light oak commercial laminate plank (lobby floor, oak veneers), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/laminate_floor_02, by Dario Barresi, Charlotte Baglioni. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-herringbone-color",
+    "file": "haven/ph-hotel-herringbone-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel herringbone color",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "herringbone",
+      "color"
+    ],
+    "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), color map (1K). sRGB base color. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-herringbone-normal",
+    "file": "haven/ph-hotel-herringbone-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel herringbone normal",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "herringbone",
+      "normal"
+    ],
+    "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-herringbone-roughness",
+    "file": "haven/ph-hotel-herringbone-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel herringbone roughness",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "herringbone",
+      "roughness"
+    ],
+    "description": "Grey poly-wool herringbone upholstery, about 27 cm a tile (lobby sofa), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/poly_wool_herringbone, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-linen-color",
+    "file": "haven/ph-hotel-linen-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel linen color",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "linen",
+      "color"
+    ],
+    "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), color map (1K). sRGB base color. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-linen-normal",
+    "file": "haven/ph-hotel-linen-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel linen normal",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "linen",
+      "normal"
+    ],
+    "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-linen-roughness",
+    "file": "haven/ph-hotel-linen-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel linen roughness",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "linen",
+      "roughness"
+    ],
+    "description": "Rough linen weave, about 27 cm a tile (vinyl wallcovering in the corridors, fabric-wrapped lobby columns), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/rough_linen, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-melange-color",
+    "file": "haven/ph-hotel-melange-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel melange color",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "melange",
+      "color"
+    ],
+    "description": "Grey melange (heathered) textile, about 27 cm a tile (base colour of the light-grey sectional and lobby sofa, under the herringbone weave), color map (1K). sRGB base color. Source https://polyhaven.com/a/jogging_melange, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-melange-normal",
+    "file": "haven/ph-hotel-melange-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel melange normal",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "melange",
+      "normal"
+    ],
+    "description": "Grey melange (heathered) textile, about 27 cm a tile (base colour of the light-grey sectional and lobby sofa, under the herringbone weave), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/jogging_melange, by colormass, Rico Cilliers. CC0-1.0."
+  },
+  {
+    "id": "ph-hotel-melange-roughness",
+    "file": "haven/ph-hotel-melange-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Hotel melange roughness",
+    "author": "colormass, Rico Cilliers",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "realistic",
+      "texture",
+      "pbr",
+      "melange",
+      "roughness"
+    ],
+    "description": "Grey melange (heathered) textile, about 27 cm a tile (base colour of the light-grey sectional and lobby sofa, under the herringbone weave), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/jogging_melange, by colormass, Rico Cilliers. CC0-1.0."
   }
 ]

@@ -16,6 +16,17 @@ test("a crate falls and rests on the floor", async () => {
     expect(crate.position.y).toBeCloseTo(0.2, 1);
 });
 
+test("a remote set on a round table (a cylinder) stays on top", async () => {
+    const world = await createWorld();
+    attach(block(20, 1, 20, 0, -0.5, 0), { world, body: "fixed" });
+    const top = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.42, 48)); top.position.set(0, 0.21, 0); top.updateMatrixWorld();
+    attach(top, { world, shape: "cylinder", density: 0.6 });
+    const remote = block(0.05, 0.018, 0.18, 0.1, 0.6, 0);
+    attach(remote, { world, mass: 0.05 });
+    run(world, 3);
+    expect(remote.position.y).toBeCloseTo(0.42 + 0.009, 2);
+});
+
 test("the walker stops at a wall, climbs a step, not a ledge", async () => {
     const world = await createWorld();
     attach(block(40, 1, 40, 0, -0.5, 0), { world, body: "fixed" });
@@ -83,4 +94,62 @@ test("after any teleport the walker walks at full speed", async () => {
         expect(me.position.z - z).toBeGreaterThan(1.2);
         me.walk(0, 0);
     }
+});
+
+test("the walker still shoves furniture at real weight (a 16 kg armchair)", async () => {
+    const world = await createWorld();
+    attach(block(40, 1, 40, 0, -0.5, 0), { world, body: "fixed" });
+    const chair = block(0.8, 0.8, 0.8, 1.2, 0.4, 0);
+    attach(chair, { world, mass: 16, friction: 0.7, damping: 1 });
+    const me = character(world, { position: [0, 0, 0] });
+    run(world, 0.3);
+    me.walk(1.5, 0); run(world, 2);
+    expect(chair.position.x).toBeGreaterThan(1.6);
+});
+
+test("a table lamp (weight in its base) rides a shoved side table instead of rocking off", async () => {
+    const world = await createWorld();
+    attach(block(20, 1, 20, 0, -0.5, 0), { world, body: "fixed" });
+    const table = block(0.5, 0.5, 0.5, 0, 0.25, 0);
+    attach(table, { world, mass: 6, friction: 0.7, damping: 1 });
+    run(world, 1);
+    // base, body, stem and a wide shade: its hull is mostly shade, so the hull alone puts the weight up in the air
+    const lamp = new THREE.Group();
+    for (const [r0, r1, h, y] of [[0.085, 0.085, 0.03, 0.015], [0.07, 0.07, 0.24, 0.15], [0.008, 0.008, 0.16, 0.35], [0.17, 0.19, 0.24, 0.47]]) { const m = new THREE.Mesh(new THREE.CylinderGeometry(r0, r1, h, 24)); m.position.y = y; lamp.add(m); }
+    lamp.position.set(0, 0.502, 0); lamp.updateMatrixWorld(true);
+    attach(lamp, { world, shape: "hull", mass: 1.8, centerOfMass: [0, 0.08, 0], friction: 0.9, damping: 1 });
+    run(world, 2);                                                            // resting: it stays put
+    expect(Math.hypot(lamp.position.x, lamp.position.z)).toBeLessThan(0.01);
+    const R = world.rapier, hand = world.raw.createRigidBody(R.RigidBodyDesc.kinematicVelocityBased().setTranslation(0, 0.3, -0.28));
+    world.raw.createCollider(R.ColliderDesc.cuboid(0.08, 0.05, 0.02), hand);
+    let t = 0;
+    run(world, 3, () => { t += 1 / 60; hand.setLinvel({ x: 0, y: 0, z: table.position.z < 0.06 ? 0.2 * Math.min(1, t / 0.6) : 0 }, true); });
+    expect(table.position.z).toBeGreaterThan(0.05);
+    expect(lamp.position.y).toBeGreaterThan(0.49);
+    expect(Math.abs(lamp.position.z - table.position.z)).toBeLessThan(0.02);
+});
+
+test("a contact reports how fast things met, not what's left after the bounce", async () => {
+    const world = await createWorld();
+    attach(block(20, 1, 20, 0, -0.5, 0), { world, body: "fixed" });
+    const hits = [];
+    attach(block(0.1, 0.1, 0.1, 0, 1.3, 0), { world, onContact: ({ speed }) => hits.push(speed) });   // drops 1.25 m: ~5 m/s
+    run(world, 1.5);
+    expect(hits[0]).toBeGreaterThan(4.5);
+    expect(hits[0]).toBeLessThan(5.3);
+});
+
+test("settle: a can rolling on its side stops short, as rolling resistance would stop it", async () => {
+    const roll = async (opts) => {
+        const world = await createWorld();
+        attach(block(40, 1, 40, 0, -0.5, 0), { world, body: "fixed" });
+        const can = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.4, 48)); can.rotation.x = Math.PI / 2; can.position.set(0, 0.1, 0); can.updateMatrixWorld();
+        const b = attach(can, { world, shape: "hull", mass: 2, ...opts });
+        b.body.setLinvel({ x: 0.25, y: 0, z: 0 }, true); b.body.setAngvel({ x: 0, y: 0, z: -2.5 }, true);
+        run(world, 6);
+        return { x: can.position.x, asleep: b.body.isSleeping() };
+    };
+    const free = await roll({}), settled = await roll({ settle: 5 });
+    expect(settled.asleep).toBe(true);
+    expect(settled.x).toBeLessThan(free.x * 0.7);   // stops in a shorter roll than it would on Rapier's frictionless rolling
 });

@@ -35,16 +35,18 @@ export async function createWorld({ gravity = [0, -9.81, 0], step = 1 / 60, maxS
             for (; carry >= step; carry -= step) {
                 for (const b of bodies) if (b.kinematic) b.push();
                 for (const c of characters) c.step(step);
+                // contact speed is how fast they met: velocities from before the step (after it, the solver has stopped them)
+                for (const b of bodies) if (b.onContact) b.before = v3(b.body.linvel());
                 raw.step(events);
                 events.drainCollisionEvents((h1, h2, started) => {
                     if (!started) return;
-                    const a = byCollider.get(h1), b = byCollider.get(h2);
-                    const speed = a && b ? v3(a.body.linvel()).sub(v3(b.body.linvel())).length() : v3((a ?? b).body.linvel()).length();
+                    const a = byCollider.get(h1), b = byCollider.get(h2), was = (x) => x.before ?? v3(x.body.linvel());
+                    const speed = a && b ? was(a).sub(was(b)).length() : was(a ?? b).length();
                     a?.onContact?.({ other: b?.object ?? null, speed });
                     b?.onContact?.({ other: a?.object ?? null, speed });
                 });
             }
-            for (const b of bodies) b.update();
+            for (const b of bodies) b.update(dt);
         },
         /** The first attached object along a ray → { object, point, normal, distance }, or null. */
         raycast(origin, direction, far = 100) {
@@ -84,9 +86,10 @@ function collider(object, shape) {
     const desc = shape === "ball" ? D.ball(Math.max(size.x, size.y, size.z) / 2)
         : shape === "hull" ? D.convexHull(points)
         : shape === "mesh" ? D.trimesh(points, indices)
+        : shape === "cylinder" ? D.cylinder(size.y / 2, Math.max(size.x, size.z) / 2)
         : D.cuboid(Math.max(size.x / 2, 0.005), Math.max(size.y / 2, 0.005), Math.max(size.z / 2, 0.005));
     if (!desc) throw new Error(`physics: couldn't build a ${shape} for ${object.name || "object"}`);
-    return shape === "hull" || shape === "mesh" ? desc : desc.setTranslation(mid.x, mid.y, mid.z);
+    return { desc: shape === "hull" || shape === "mesh" ? desc : desc.setTranslation(mid.x, mid.y, mid.z), size, offset: shape === "hull" || shape === "mesh" ? new THREE.Vector3() : mid };
 }
 
 /**
@@ -94,27 +97,53 @@ function collider(object, shape) {
  * body: dynamic (falls, collides), fixed (floors, walls), kinematic (you move the object; it pushes dynamic ones),
  * platform (you move the object, a floor characters walk on and ride(): an elevator. Rapier's character controller
  * barely walks on kinematic bodies, so a platform is a fixed body that jumps to the object each step).
- * shape: box (default), ball, hull (convex hull of its vertices: GLBs) or mesh (exact triangles: fixed bodies only).
+ * shape: box (default), ball, cylinder (upright: a round table), hull (convex hull of its vertices: GLBs) or mesh
+ * (exact triangles: fixed bodies only). Small things set down on a big hull (a lathed round table top, hundreds of
+ * vertices) sink slowly into it: give surfaces a box or cylinder.
+ * mass is in kg (or density, kg/m³, of the whole shape). centerOfMass [x, y, z], in the object's frame, overrides where
+ * the shape puts it: a table lamp's hull is mostly shade, but its weight is in the base (with mass only).
+ * settle: rolling resistance. Rapier has none, so a stool on its side (two round rims) rolls and rocks for ever and never
+ * sleeps; with settle (≈ 5), once it's slow (under 0.3 m/s and 1.5 rad/s) it is damped that hard, and still creeping
+ * (under 8 cm/s, 0.5 rad/s) for half a second it is put to sleep: static friction.
  */
-export function attach(object, { world, body = "dynamic", shape = "box", mass, density = 1, friction = 0.6, restitution = 0.1, damping = 0, ccd = false, onContact } = {}) {
+export function attach(object, { world, body = "dynamic", shape = "box", mass, centerOfMass, density = 1, friction = 0.6, restitution = 0.1, damping = 0, settle = 0, ccd = false, onContact } = {}) {
     if (!world) throw new Error("physics: attach needs { world } from createWorld()");
     if (shape === "mesh" && body === "dynamic") throw new Error("physics: a dynamic body can't be a mesh; use hull");
     const R = RAPIER, desc = body === "fixed" || body === "platform" ? R.RigidBodyDesc.fixed() : body === "kinematic" ? R.RigidBodyDesc.kinematicPositionBased() : R.RigidBodyDesc.dynamic();
     const p = object.getWorldPosition(new THREE.Vector3()), q = object.getWorldQuaternion(new THREE.Quaternion());
     // damping slows spinning: a hull resting on uneven legs (a chair) otherwise rocks forever and never sleeps.
     const rb = world.raw.createRigidBody(desc.setTranslation(p.x, p.y, p.z).setRotation(q).setCcdEnabled(ccd).setAngularDamping(damping));
-    const cd = collider(object, shape).setFriction(friction).setRestitution(restitution);
-    if (mass !== undefined) cd.setMass(mass); else cd.setDensity(density);
+    const { desc: cd, size, offset } = collider(object, shape);
+    cd.setFriction(friction).setRestitution(restitution);
+    if (mass !== undefined && centerOfMass) {   // inertia of a solid box its size: close enough for a prop
+        const [x, y, z] = [size.x, size.y, size.z].map((v) => v * v * mass / 12), c = new THREE.Vector3(...centerOfMass).sub(offset);
+        cd.setMassProperties(mass, c, { x: y + z, y: x + z, z: x + y }, { x: 0, y: 0, z: 0, w: 1 });
+    } else if (mass !== undefined) cd.setMass(mass); else cd.setDensity(density);
     if (onContact) cd.setActiveEvents(R.ActiveEvents.COLLISION_EVENTS);
     const col = world.raw.createCollider(cd, rb);
     const self = {
         object, body: rb, collider: col, onContact, kinematic: body === "kinematic" || body === "platform",
         // dynamic: the body moves the object; kinematic: the object moves the body (push() runs before each step)
-        update() { if (self.kinematic || body === "fixed" || body === "platform") return; const t = rb.translation(), r = rb.rotation(); object.position.set(t.x, t.y, t.z); object.quaternion.set(r.x, r.y, r.z, r.w); },
+        update(dt = 1 / 60) {
+            if (self.kinematic || body === "fixed" || body === "platform") return;
+            const t = rb.translation(), r = rb.rotation(); object.position.set(t.x, t.y, t.z); object.quaternion.set(r.x, r.y, r.z, r.w);
+            if (!settle || rb.isSleeping()) return;
+            const v = rb.linvel(), w = rb.angvel(), slow = Math.hypot(v.x, v.y, v.z) < 0.3 && Math.hypot(w.x, w.y, w.z) < 1.5;
+            if (slow !== !!self.slow) { self.slow = slow; rb.setAngularDamping(slow ? settle : damping); rb.setLinearDamping(slow ? settle / 2 : 0); }
+            // Static friction: still creeping a centimetre or two a second after half a second (a hull lying across the seam
+            // of two floor boxes gets pushed sideways by their edges), it has stopped. Real things don't creep.
+            self.quiet = Math.hypot(v.x, v.y, v.z) < 0.08 && Math.hypot(w.x, w.y, w.z) < 0.5 ? (self.quiet ?? 0) + dt : 0;
+            if (self.quiet > 0.5) {   // unless something that moves is touching it (a hand, the walker, a woken neighbour): that's a push
+                self.quiet = 0;
+                let pushed = false;
+                world.raw.contactPairsWith(col, (c) => { const o = c.parent(); pushed ||= !!o && !o.isFixed() && !o.isSleeping(); });
+                if (!pushed) rb.sleep();
+            }
+        },
         /** Hold a dynamic body: until release(), it follows the object wherever you put it, and still pushes things. */
         grab() { if (body !== "dynamic") return; self.kinematic = true; rb.setBodyType(R.RigidBodyType.KinematicPositionBased, true); },
         /** Let go, optionally throwing it at velocity [x, y, z]. */
-        release(v) { if (!self.kinematic || body !== "dynamic") return; self.kinematic = false; rb.setBodyType(R.RigidBodyType.Dynamic, true); if (v) self.velocity(v); },
+        release(v) { if (!self.kinematic || body !== "dynamic") return; self.kinematic = false; rb.setBodyType(R.RigidBodyType.Dynamic, true); self.slow = false; rb.setAngularDamping(damping); rb.setLinearDamping(0); if (v) self.velocity(v); },
         push() {
             object.getWorldPosition(p); object.getWorldQuaternion(q);
             if (body === "platform") { rb.setTranslation(p, true); rb.setRotation(q, true); } else { rb.setNextKinematicTranslation(p); rb.setNextKinematicRotation(q); }

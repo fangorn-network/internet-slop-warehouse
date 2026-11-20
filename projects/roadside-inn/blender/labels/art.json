@@ -1,0 +1,206 @@
+[
+  {
+    "name": "lobby",
+    "w": 1,
+    "h": 0.75,
+    "outer": [
+      1.2,
+      0.9
+    ],
+    "frame": "black",
+    "mat": 0,
+    "window": [
+      1.156,
+      0.856
+    ],
+    "image": "art-lobby.jpg",
+    "source": "photos/carver-landing-001.jpg"
+  },
+  {
+    "name": "corr0",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "white",
+    "mat": 0.07,
+    "window": [
+      0.616,
+      0.416
+    ],
+    "image": "art-corr0.jpg",
+    "source": "prints.mjs lattice"
+  },
+  {
+    "name": "corr1",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "black",
+    "mat": 0,
+    "window": [
+      0.756,
+      0.556
+    ],
+    "image": "art-corr1.jpg",
+    "source": "photos/steel-creek-001.jpg"
+  },
+  {
+    "name": "corr2",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "white",
+    "mat": 0.07,
+    "window": [
+      0.616,
+      0.416
+    ],
+    "image": "art-corr2.jpg",
+    "source": "prints.mjs arcs"
+  },
+  {
+    "name": "corr3",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "black",
+    "mat": 0.07,
+    "window": [
+      0.616,
+      0.416
+    ],
+    "image": "art-corr3.jpg",
+    "source": "prints.mjs contours"
+  },
+  {
+    "name": "corr4",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "white",
+    "mat": 0.07,
+    "window": [
+      0.616,
+      0.416
+    ],
+    "image": "art-corr4.jpg",
+    "source": "prints.mjs ridges"
+  },
+  {
+    "name": "corr5",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "black",
+    "mat": 0,
+    "window": [
+      0.756,
+      0.556
+    ],
+    "image": "art-corr5.jpg",
+    "source": "photos/steel-creek-002.jpg"
+  },
+  {
+    "name": "corr6",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "white",
+    "mat": 0.07,
+    "window": [
+      0.616,
+      0.416
+    ],
+    "image": "art-corr6.jpg",
+    "source": "prints.mjs bars"
+  },
+  {
+    "name": "corr7",
+    "w": 0.8,
+    "h": 0.6,
+    "outer": [
+      0.8,
+      0.6
+    ],
+    "frame": "black",
+    "mat": 0.07,
+    "window": [
+      0.616,
+      0.416
+    ],
+    "image": "art-corr7.jpg",
+    "source": "prints.mjs circles"
+  },
+  {
+    "name": "head",
+    "w": 1.45,
+    "h": 0.58,
+    "outer": [
+      1.45,
+      0.5
+    ],
+    "frame": "white",
+    "mat": 0.05,
+    "window": [
+      1.306,
+      0.356
+    ],
+    "image": "art-head.jpg",
+    "source": "prints.mjs ridges"
+  },
+  {
+    "name": "tv",
+    "w": 1.05,
+    "h": 0.42,
+    "outer": [
+      1.05,
+      0.42
+    ],
+    "frame": "black",
+    "mat": 0,
+    "window": [
+      1.006,
+      0.376
+    ],
+    "image": "art-tv.jpg",
+    "source": "photos/carver-landing-002.jpg"
+  },
+  {
+    "name": "entry",
+    "w": 0.45,
+    "h": 0.6,
+    "outer": [
+      0.45,
+      0.6
+    ],
+    "frame": "white",
+    "mat": 0.06,
+    "window": [
+      0.286,
+      0.436
+    ],
+    "image": "art-entry.jpg",
+    "source": "prints.mjs quilt"
+  }
+]

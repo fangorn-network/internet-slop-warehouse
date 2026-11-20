@@ -13,7 +13,8 @@ const here = import.meta.dirname, repo = resolve(here, '../..');
 export async function receipts() {
   const pins = {}, publishers = {};
   async function walk(dir) {
-    for (const e of await readdir(dir, { withFileTypes: true })) {
+    // Natural order, so a later batch's receipt wins (assets-11 after assets-6; plain readdir put 6 last).
+    for (const e of (await readdir(dir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true }))) {
       if (e.name === 'node_modules' || e.name.startsWith('.')) continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) await walk(p);
@@ -28,7 +29,7 @@ export async function receipts() {
 const inn = (f) => resolve(here, f);
 export const PART_MODULES = {
   [inn('input.js')]: ['heartland-hotel', { attach: 'attachInput' }],
-  [inn('assets.js')]: ['heartland-hotel', { loadLibrary: 'loadLibrary', PART_IDS: 'PART_IDS' }],
+  [inn('assets.js')]: ['heartland-hotel', { loadLibrary: 'loadLibrary', PART_IDS: 'PART_IDS', captureEnv: 'captureEnv' }],
   [inn('world.js')]: ['heartland-hotel', { buildWorld: 'buildWorld', FLOOR2: 'FLOOR2' }],
   [inn('sound.js')]: ['heartland-hotel', { createSound: 'createSound' }],
   [inn('quality.js')]: ['heartland-hotel', { quality: 'quality' }],
@@ -84,6 +85,7 @@ export async function buildHotelPart() {
       { name: 'loadLibrary', signature: 'loadLibrary(onProgress, { skies, people, stream }) → Promise<lib>', does: 'Load the hotel’s models, surfaces, skies and people' },
       { name: 'buildWorld', signature: 'buildWorld(scene, lib, game, { outside, people, station }) → world', does: 'Build the hotel and its surroundings; world.zones and world.sees feed zone-culling' },
       { name: 'createPlayer', signature: 'createPlayer(scene, world, { sound }) → Promise<{ player, physics, move(dt, controls, camera), use(), zone() }>', does: 'The first-person player: physics when Rapier loads, a walker otherwise' },
+      { name: 'captureEnv', signature: 'captureEnv(renderer, scene, at: Vector3) → Texture', does: 'Reflections of the hotel itself seen from a point (a 256 px PMREM cube): set it as scene.environment indoors' },
       { name: 'createSound', signature: 'createSound(foley) → sound', does: 'Footsteps, ambience and effects' },
       { name: 'attachInput', signature: 'attachInput(canvas, { onUse, onInspect, onMenu }) → controls', does: 'Keyboard, mouse look and touch controls' },
       { name: 'quality', signature: '{ economy, fps, pixelRatio, lights }', does: 'The phone profile: 30 fps, pixel ratio 1, four lights' },

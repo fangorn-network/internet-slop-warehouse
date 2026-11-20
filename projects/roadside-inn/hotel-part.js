@@ -8,12 +8,12 @@
 // - the engine, for games that are the hotel: loadLibrary, buildWorld, createPlayer, createSound, attachInput, quality.
 // - the stage, for games told in scenes: createDream (one post pass: dream look, fades, peephole, eyelids),
 //   createDirector (named acts with fades), createSoundscape (placed sounds and loops), createReel/pickScenes (scenes spliced into a reel).
-import { loadLibrary, PART_IDS } from './assets.js';
+import { loadLibrary, PART_IDS, captureEnv } from './assets.js';
 import { buildWorld, FLOOR2 } from './world.js';
 
 // package.mjs prepends `globalThis.__HOTEL_PINS__ = { id: url }` to the bundle; a game's own pins win.
 globalThis.WAREHOUSE_PARTS = { ...globalThis.__HOTEL_PINS__, ...globalThis.WAREHOUSE_PARTS };
-export { PART_IDS, FLOOR2, loadLibrary, buildWorld };
+export { PART_IDS, FLOOR2, loadLibrary, buildWorld, captureEnv };
 export { attach as attachInput } from './input.js';
 export { createSound } from './sound.js';
 export { quality } from './quality.js';
