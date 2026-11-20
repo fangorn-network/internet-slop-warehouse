@@ -168,8 +168,8 @@ function use() {
   if (busy) return;
   // Carrying something, E still works on what you look at (the TV, with its remote in hand); with nothing in view it
   // puts the thing down. Q or right-click throws it.
-  if (focus) return focus.use();
   if (phys?.holding === 'newspaper') return readPaper();
+  if (focus) return focus.use();
   if (phys?.held) return phys.drop();
   walker.use();
 }
@@ -353,8 +353,9 @@ function frame(now = performance.now()) {
   focus = started && !panelOpen && !busy ? pick() : null;
   const carrying = started && !panelOpen && phys?.holding;
   $('prompt').style.display = focus || carrying ? 'block' : 'none';
-  if (focus) $('prompt').innerHTML = `<kbd>E</kbd>${focus.label()}`;
-  else if (carrying) $('prompt').innerHTML = carrying === 'newspaper' ? '<kbd>E</kbd>Read the paper · <kbd>Q</kbd>Throw' : `<kbd>E</kbd>Put down the ${carrying} · <kbd>Q</kbd>Throw`;
+  if (carrying === 'newspaper') $('prompt').innerHTML = '<kbd>E</kbd>Read the paper · <kbd>Q</kbd>Throw';
+  else if (focus) $('prompt').innerHTML = `<kbd>E</kbd>${focus.label()}`;
+  else if (carrying) $('prompt').innerHTML = `<kbd>E</kbd>Put down the ${carrying} · <kbd>Q</kbd>Throw`;
   if (sayTimer > 0 && (sayTimer -= dt) <= 0) $('say').classList.remove('on');
   const zone = currentZone();
   if (LOW && (detailClock -= dt) <= 0) {

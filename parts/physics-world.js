@@ -104,7 +104,7 @@ function collider(object, shape) {
  * the shape puts it: a table lamp's hull is mostly shade, but its weight is in the base (with mass only).
  * settle: rolling resistance. Rapier has none, so a stool on its side (two round rims) rolls and rocks for ever and never
  * sleeps; with settle (≈ 5), once it's slow (under 0.3 m/s and 1.5 rad/s) it is damped that hard, and still creeping
- * (under 8 cm/s, 0.5 rad/s) for half a second it is put to sleep: static friction.
+ * (under 15 cm/s, 0.5 rad/s) for half a second it is put to sleep: static friction.
  */
 export function attach(object, { world, body = "dynamic", shape = "box", mass, centerOfMass, density = 1, friction = 0.6, restitution = 0.1, damping = 0, settle = 0, ccd = false, onContact } = {}) {
     if (!world) throw new Error("physics: attach needs { world } from createWorld()");
@@ -132,12 +132,16 @@ export function attach(object, { world, body = "dynamic", shape = "box", mass, c
             if (slow !== !!self.slow) { self.slow = slow; rb.setAngularDamping(slow ? settle : damping); rb.setLinearDamping(slow ? settle / 2 : 0); }
             // Static friction: still creeping a centimetre or two a second after half a second (a hull lying across the seam
             // of two floor boxes gets pushed sideways by their edges), it has stopped. Real things don't creep.
-            self.quiet = Math.hypot(v.x, v.y, v.z) < 0.08 && Math.hypot(w.x, w.y, w.z) < 0.5 ? (self.quiet ?? 0) + dt : 0;
+            self.quiet = Math.hypot(v.x, v.y, v.z) < 0.15 && Math.hypot(w.x, w.y, w.z) < 0.5 ? (self.quiet ?? 0) + dt : 0;
             if (self.quiet > 0.5) {   // unless something that moves is touching it (a hand, the walker, a woken neighbour): that's a push
                 self.quiet = 0;
-                let pushed = false;
-                world.raw.contactPairsWith(col, (c) => { const o = c.parent(); pushed ||= !!o && !o.isFixed() && !o.isSleeping(); });
-                if (!pushed) rb.sleep();
+                let supported = false, pushed = false;
+                world.raw.contactPairsWith(col, (c) => {
+                    const other = c.parent();
+                    if (!other || other.isFixed() || other.isSleeping()) supported = true;
+                    else pushed = true;
+                });
+                if (supported && !pushed) rb.sleep();
             }
         },
         /** Hold a dynamic body: until release(), it follows the object wherever you put it, and still pushes things. */

@@ -12,7 +12,8 @@ benchmarks/cache/
 reddit/
 
 # Heartland Inn realism line: third-party reference photos (studied, never shipped), agents' scratch screenshots
-projects/roadside-inn/blender/photos/
+projects/roadside-inn/blender/photos/*
+!projects/roadside-inn/blender/photos/provenance.json
 __pycache__/
 artifacts/roadside-inn/cast/
 artifacts/roadside-inn/god/

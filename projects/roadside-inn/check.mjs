@@ -292,7 +292,7 @@ if (mode === 'physics') try {
   g.stoolHeld = await take('hotel-bar-stool', [-2.2, -4.6, 1.5]);
   await page.evaluate(() => { __inn.teleport(-2.2, 0, 3.0, 0, 0.9); }); await page.waitForTimeout(800);
   await page.keyboard.press('q'); await page.waitForTimeout(1500);
-  await rested(90000).catch(() => {});
+  await page.waitForFunction(() => __it.b?.body.isSleeping(), null, { timeout: 30000, polling: 250 }).catch(() => {});
   g.stool = await page.evaluate(async () => { const T = await import('/node_modules/three/build/three.module.js'); const w = __it.b.body.angvel(); const v = __it.b.body.linvel(), touch = []; __inn.physics.world.raw.contactPairsWith(__it.b.collider, c => touch.push([c.parent()?.bodyType(), __inn.physics.world.byCollider.get(c.handle)?.object.name ?? c.handle])); return { v: +Math.hypot(v.x, v.y, v.z).toFixed(3), quiet: __it.b.quiet, slow: __it.b.slow, touch, asleep: __it.b.body.isSleeping(), spin: +Math.hypot(w.x, w.y, w.z).toFixed(3), up: +new T.Vector3(0, 1, 0).applyQuaternion(__it.o.quaternion).y.toFixed(2), at: __it.o.position.toArray().map(v => +v.toFixed(2)) }; });
   await page.waitForTimeout(3000); g.stoolLater = await at();
   assert.ok(g.stoolHeld === 'bar stool' && g.stool.spin < 0.05 && Math.hypot(g.stoolLater[0] - g.stool.at[0], g.stoolLater[2] - g.stool.at[2]) < 0.01, 'a thrown bar stool settles and stays still instead of rocking for ever');

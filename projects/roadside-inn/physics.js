@@ -100,7 +100,11 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
     const small = l.size < 0.45;
     l.mid = mid;
     // only the top one of a pile: what's under something else stays put until what's on it is taken
-    world.interact.push({ pos: at, r: small ? 0.85 : 1.3, precise: small, when: () => !held && loose.includes(l) && !l.riders?.some(r => !r.b && r.on === l), label: () => `Pick up the ${name(l.o)}`, use: () => grab(l) });
+    const stack = l.o.userData.loose.stack;
+    const covered = () => stack
+      ? loose.some(r => !r.b && r.o.userData.loose.stack === stack && r.o.position.y > l.o.position.y)
+      : l.riders?.some(r => !r.b && r.on === l);
+    world.interact.push({ pos: at, r: small ? 0.85 : 1.3, precise: small, when: () => !held && loose.includes(l) && ((stack && l.b) || !covered()), label: () => `Pick up the ${name(l.o)}`, use: () => grab(l) });
   }
 
   function attachLoose() {

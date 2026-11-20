@@ -70,8 +70,8 @@ export function buildLivedIn(ctx) {
     // The morning papers: five separate copies, each one you can take and read (main.js), squared
     // up the way they come off the bundle, each a few millimetres off the last. Before, one "stack" model, taken as a lump.
     const off = seeded(31);
-    for (let i = 0; i < 5; i++) loose(add(lib.model('hotel-newspaper', { origin: true }), 2.35 + (off() - 0.5) * 0.02, 1.0 + i * 0.0062, -5.4 + (off() - 0.5) * 0.02, 0.2 + (off() - 0.5) * 0.06), { rest: true }).userData.edition = 'today';
-    loose(add(lib.model('hotel-newspaper', { origin: true }), 2.37, 1.0 + 5 * 0.0062, -5.41, 1.1), { rest: true }).userData.edition = 'yesterday';   // yesterday's, left crosswise on top
+    for (let i = 0; i < 5; i++) loose(add(lib.model('hotel-newspaper', { origin: true }), 2.35 + (off() - 0.5) * 0.02, 1.0 + i * 0.0062, -5.4 + (off() - 0.5) * 0.02, 0.2 + (off() - 0.5) * 0.06), { rest: true, stack: 'lobby-newspapers' }).userData.edition = 'today';
+    loose(add(lib.model('hotel-newspaper', { origin: true }), 2.37, 1.0 + 5 * 0.0062, -5.41, 1.1), { rest: true, stack: 'lobby-newspapers' }).userData.edition = 'yesterday';   // yesterday's, left crosswise on top
     const black = F.mat('#141414', { roughness: 0.55 }), white = F.mat('#e9e9e6', { roughness: 0.4 });
     for (const [list, m] of [[cords, black], [whiteCords, white]]) if (list.length) { const mesh = new T.Mesh(mergeGeometries(list), m); mesh.name = 'Cords'; scene.add(mesh); }
   }
