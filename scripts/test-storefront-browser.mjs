@@ -23,6 +23,11 @@ const sign = row(other, "sign", "asset", {
 });
 sign.cid = update.cid;
 const glb = Buffer.from("676c54460200000018000000040000004a534f4e7b7d2020", "hex");
+const largeCatalog = [
+    ...Array.from({ length: 100000 }, (_, i) => row(publisher, `Asset ${i}`, "asset", { author: "Internet Slop Warehouse" })),
+    ...Array.from({ length: 1000 }, (_, i) =>
+        row(i < 40 ? ("0x" + (i + 100).toString(16).padStart(40, "0")) : publisher, `Game ${i}`, "game", { author: "Internet Slop Warehouse" })),
+];
 let mode = "compatible";
 const server = createServer(async (req, res) => {
     const path = new URL(req.url, "http://localhost").pathname;
@@ -31,11 +36,25 @@ const server = createServer(async (req, res) => {
         const head = structuredClone(sign);
         if (mode === "incompatible") head.payload.publicModel.contract = "sign-v2";
         res.setHeader("Content-Type", "application/json");
-        return res.end(JSON.stringify({ root: mode, gateway: base, records: [game, head, row(other, "Another game", "game", {})] }));
+        return res.end(JSON.stringify({ root: mode, gateway: base, records: mode === "large" ? largeCatalog : [
+            game, head, row(other, "Slot test", "game", { title: "Another game", src: game.payload.src, author: "Internet Slop Warehouse" }),
+            row(publisher.replace(/x/, "X"), "alternate-case", "asset", { author: "Internet Slop Warehouse" }),
+        ] }));
     }
     if (path === "/api.json") return res.end("{}");
     if (path === "/ipfs/" + game.payload.src) {
-        return res.end(JSON.stringify({ html: '<main></main><script>document.querySelector("main").textContent=Object.values(WAREHOUSE_PARTS).map(p=>p.cid).join(" ")</script>' }));
+        return res.end(JSON.stringify({ html: `<main></main><output></output><button>Save</button><script>
+            document.querySelector("main").textContent = Object.values(window.WAREHOUSE_PARTS ?? {}).map(p => p.cid).join(" ");
+            const show = () => document.querySelector("output").textContent = localStorage.getItem("name") ?? "empty";
+            document.querySelector("button").onclick = () => {
+                localStorage.setItem("name", "</" + "script><arbitrary text>");
+                localStorage.extra = "key enumeration";
+                if (!Object.keys(localStorage).includes("extra") || localStorage.length !== 2) throw new Error("Storage keys");
+                delete localStorage.extra;
+                show();
+            };
+            show();
+        </script>` }));
     }
     if (path === "/ipfs/" + baseline.src || (path === "/ipfs/" + update.src && mode !== "missing")) return res.end(glb);
     if (path === "/" || /^\/[a-z-]+\.(js|css)$/.test(path)) {
@@ -68,33 +87,70 @@ try {
     const home = new URL(base);
     home.searchParams.set("api", base);
     await page.goto(home.href);
+    await page.locator("#browse-publishers").click();
+    await page.getByRole("heading", { name: "Publishers", exact: true }).waitFor();
+    assert.equal(await page.locator("#publisher-list tr").count(), 2);
+    assert.equal(await page.locator("#publisher-list a").allTextContents().then(addresses => new Set(addresses).size), 2);
     const storefront = page.locator(`#publisher-list a[href*="${publisher}"]`);
     await storefront.click();
-    await page.getByRole("heading", { name: "Test storefront" }).waitFor();
-    assert.equal(await page.locator("#repo-head").textContent(), "Head " + cid("g"));
+    await page.getByRole("heading", { name: "Publisher inventory" }).waitFor();
+    await page.getByText("Head " + cid("g"), { exact: true }).waitFor();
+    assert.equal(await page.locator("#storefront-address").textContent(), publisher);
     assert.equal(await page.locator("#grid .card").count(), 1);
     assert.equal(await page.locator("#explorer-link").getAttribute("href"), `https://fangorn.network/#/data/${publisher}/${repo}`);
     const url = page.url();
-    const slotTest = page.getByRole("button", { name: /Slot test/ });
+    const slotTest = page.locator("#grid").getByRole("button", { name: /Slot test/ });
     const lock = page.frameLocator("#frame").locator("main");
     const expectVersions = (moving) => page.waitForFunction(
         expected => document.querySelector("#frame").getAttribute("srcdoc")?.includes(expected), moving);
     await slotTest.click();
     await expectVersions(update.cid);
     assert.equal(await lock.textContent(), baseline.cid + " " + update.cid);
+    const frame = page.frameLocator("#frame");
+    const stored = "</script><arbitrary text>";
+    await frame.getByRole("button", { name: "Save" }).click();
+    await page.waitForFunction(value => Object.values(localStorage).some(entry => entry.includes(value)), stored);
     mode = "incompatible";
     await page.getByRole("button", { name: "Restart", exact: true }).click();
     await expectVersions(update.cid);
     assert.equal(await lock.textContent(), baseline.cid + " " + update.cid);
+    assert.equal(await frame.locator("output").textContent(), stored);
     for (const state of ["incompatible", "missing"]) {
         mode = state;
         await page.goto(url);
         await slotTest.click();
         await lock.waitFor();
         assert.equal(await lock.textContent(), baseline.cid + " " + baseline.cid);
+        assert.equal(await frame.locator("output").textContent(), stored);
     }
+    await page.goto(home.href);
+    await page.locator("#play-next-list").getByRole("button", { name: /Another game/ }).waitFor();
+    assert.equal(await page.locator("#play-next-list").getByRole("button", { name: /Slot test/ }).count(), 0);
+    await page.locator("#play-next-list").getByRole("button", { name: /Another game/ }).click();
+    assert.equal(await frame.locator("output").textContent(), "empty");
+    await page.locator("#down").click();
+    assert.equal(await page.locator("#down").getAttribute("aria-pressed"), "true");
+    await page.goto(home.href);
+    await page.locator("#grid").getByRole("button", { name: /Another game/ }).click();
+    assert.equal(await page.locator("#down").getAttribute("aria-pressed"), "true");
+    mode = "large";
+    await page.goto(home.href + "#publishers");
+    await page.getByText("1–24 of 41 publishers", { exact: true }).waitFor();
+    assert.equal(await page.locator("#publisher-list tr").count(), 24);
+    assert.equal(await page.locator("#publisher-list tr").first().locator("td").nth(2).textContent(), "100,000");
+    await page.locator("#publisher-next").click();
+    assert.equal(await page.locator("#publisher-list tr").count(), 17);
+    await page.locator("#publisher-search").fill(publisher.toUpperCase());
+    assert.equal(await page.locator("#publisher-list tr").count(), 1);
+    await storefront.click();
+    await page.getByText("1–24 of 960 results", { exact: true }).waitFor();
+    await page.getByRole("button", { name: /Assets.*100000/ }).click();
+    await page.getByText("1–24 of 100,000 results", { exact: true }).waitFor();
+    await page.locator("#inventory-next").click();
+    assert.equal(await page.locator("#inventory-range").textContent(), "25–48 of 100,000 results");
+    assert.equal(await page.locator("#grid .card").count(), 24);
     assert.deepEqual(errors, []);
-    console.log("Publisher routing, scoped inventory, repo head, pinned and following slots, restart and fallback passed.");
+    console.log("Publisher routing, large catalog paging, dependency fallback, and isolated game saves passed.");
 } finally {
     await browser?.close();
     await new Promise(resolve => server.close(resolve));

@@ -12,7 +12,7 @@ NETWORK=baseSepolia node publish.js games/cubes.html --parent cube   # a remix, 
 NETWORK=baseSepolia node seed.js                                     # the warehouse's seed parts (parts/parts.json)
 NETWORK=baseSepolia node mine.js                                     # what you've published, from the chain
 NETWORK=baseSepolia node index.js app.baseSepolia.json               # follow, index, publish the view
-python3 -m http.server -d site 8080                                  # or host site/ anywhere
+python3 scripts/serve-warehouse.py                                      # or host site/ anywhere
 ```
 
 On the sandbox (`npm run sandbox` in westmarch), leave out `NETWORK` (`AS=bob` publishes as bob), and use `app.json`. Point the page at another Worker (a local `wrangler dev`, say) with `?api=<url>`.
@@ -192,5 +192,24 @@ Games that opt in can include `payload.modelSlots` in the existing MCP `publish`
 Game code loads the resolved model, for example `loader.load(window.WAREHOUSE_PARTS["sign"].url, onLoad)`. The player resolves once at launch and keeps the same model CIDs on Restart. If a public head doesn't declare the expected contract or its GLB header is unavailable, the player probes the baseline. This slice checks publisher identity, the declared contract and the GLB header. It does not certify geometry compatibility, synchronize separate co-op clients, or grant access to encrypted files. Paid licenses, entitlements, and commercial release enrollment are tracked in the [licensing plan](LICENSING-PLAN.md).
 
 ```sh
-PLAYWRIGHT_MODULE=projects/roadside-inn/.validation/node_modules/playwright-core/index.mjs node scripts/test-storefront-browser.mjs
+PLAYWRIGHT_MODULE=../projects/roadside-inn/.validation/node_modules/playwright-core/index.mjs node scripts/test-storefront-browser.mjs
 ```
+
+## Browser game saves
+
+Games opened in the Warehouse player can use `localStorage.getItem`, `setItem`,
+`removeItem`, and `clear` for local progress. The player bridges these calls
+to browser storage scoped to the index endpoint, publisher, repo, and game ID.
+Restarts and updated versions of the same game share those saves. Each game gets
+256 KiB of serialized save data. Saves stay on this browser and site origin.
+If browser storage is unavailable, saves can survive a player restart in the
+current page but are lost when the page reloads.
+
+## Game discovery
+
+The Games tab has genre filters and Top rated, Unplayed, and alphabetical views.
+Play Next ranks unplayed titles using overlap with games you liked or disliked,
+then community votes. You can launch a suggestion from the Games tab or the
+player. Play history and personal reactions are scoped to the current Warehouse
+index and browser. Community vote totals still come from the Warehouse vote
+endpoint when available.

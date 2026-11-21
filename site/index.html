@@ -40,7 +40,7 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
 <main>
   <header class="masthead">
     <a class="wordmark" href="./" aria-label="The internet slop warehouse home"><span class="logo" aria-hidden="true">S/W</span><span>SLOP WAREHOUSE<small>INTERNET DIVISION</small></span></a>
-    <nav aria-label="Main navigation"><a href="#inventory">Play games ↘</a><a id="browse-publishers" href="#publishers">Publishers</a><a id="loading-dock-link" href="#loading-dock">Bring your agent ↗</a></nav>
+    <nav aria-label="Main navigation"><a id="browse-games" href="#inventory">Play games ↘</a><a id="browse-publishers" href="#publishers">Publishers</a><a id="loading-dock-link" href="#loading-dock">Bring your agent ↗</a></nav>
     <span class="stock-status" id="status" role="status">Receiving inventory…</span>
   </header>
   <section class="hero" aria-labelledby="warehouse-title">
@@ -64,13 +64,23 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
       <p class="lede">Paste this into a terminal to connect Claude Code, then ask it to remix a game or build with the parts here. To publish back to the warehouse, <a id="connect" href="https://fangorn.network/#/connect">connect once</a> with email sign-in. Your work stays signed by your wallet; the parts it uses keep their credit.</p>
     </div>
   </details>
-  <section id="publishers" class="publisher-directory" aria-labelledby="publishers-title">
-    <h2 id="publishers-title">Publishers</h2><div id="publisher-list"></div>
+  <section id="publishers" class="publisher-directory" hidden aria-labelledby="publishers-title">
+    <header class="directory-heading">
+      <h1 id="publishers-title">Publishers</h1>
+      <label class="publisher-search"><span>Find by wallet address</span><input id="publisher-search" type="search" spellcheck="false" autocomplete="off"></label>
+    </header>
+    <table class="publisher-table">
+      <thead><tr><th scope="col">Wallet address</th><th scope="col">Games</th><th scope="col">Assets</th><th scope="col">Other parts</th></tr></thead>
+      <tbody id="publisher-list"></tbody>
+    </table>
+    <p id="publisher-empty" hidden>No publishers match that address.</p>
+    <div class="list-pagination" id="publisher-pagination" aria-label="Publisher pages">
+      <span id="publisher-range" role="status"></span><button id="publisher-prev" type="button">Previous</button><button id="publisher-next" type="button">Next</button>
+    </div>
   </section>
-  <section id="storefront" class="publisher-directory" hidden aria-labelledby="storefront-title">
+  <section id="storefront" class="publisher-directory publisher-storefront" hidden aria-labelledby="storefront-title">
     <a id="all-publishers">← All publishers</a>
-    <h1 id="storefront-title">Publisher</h1>
-    <p id="storefront-description" hidden></p>
+    <h1 id="storefront-title">Publisher inventory</h1>
     <code id="storefront-address"></code>
     <div class="publisher-repo"><a id="explorer-link">View repo on Fangorn ↗</a><span id="repo-head" role="status"></span></div>
   </section>
@@ -85,10 +95,21 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
     <div class="category-bar">
       <span class="category-label" id="category-label">Browse by category</span>
       <div id="categories" role="group" aria-labelledby="category-label"></div>
+      <label id="game-sort-label">Sort games
+        <select id="game-sort"><option value="top">Top rated</option><option value="unplayed">Unplayed</option><option value="title">Title A–Z</option></select>
+      </label>
       <button id="clear-filters" hidden>Clear filters</button>
     </div>
+    <p id="vote-status" class="vote-status" role="status" hidden></p>
     <div id="grid"></div>
+    <div class="list-pagination" id="inventory-pagination" aria-label="Inventory pages" hidden>
+      <span id="inventory-range" role="status"></span><button id="inventory-prev" type="button">Previous</button><button id="inventory-next" type="button">Next</button>
+    </div>
   </section>
+    <section id="play-next" class="play-next" aria-labelledby="play-next-title" hidden>
+      <h3 id="play-next-title">Play next</h3>
+      <div id="play-next-list"></div>
+    </section>
   <footer class="footer"><span><strong>Internet slop warehouse</strong> / built from shared parts</span><span>One person's slop is another person's game.</span></footer>
 </main>
 <dialog id="player" aria-labelledby="title">
@@ -99,6 +120,7 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
       <button id="up" class="vote" data-v="1" aria-pressed="false" title="Like this">▲ <span>0</span></button>
       <button id="down" class="vote" data-v="-1" aria-pressed="false" title="Dislike this">▼ <span>0</span></button>
       <button id="share" title="Copy a link to this part">Copy link</button>
+      <button id="next-game" hidden>Play next</button>
       <button id="restart" hidden title="Start this game again">Restart</button>
       <button id="expand" hidden aria-pressed="false" title="Fill the browser window">Expand</button>
       <button id="fullscreen" hidden aria-pressed="false" title="Enter fullscreen">Fullscreen</button>
@@ -126,52 +148,104 @@ import { graph, weighGame, dish, glyph } from "./specimen.js";
 // and played from storage.
 import { explorerURL, publisherRepo, publisherURL, selectedPublisher } from "./publishers.js";
 import { resolveDependencies } from "./dependencies.js";
+import { gameSaves } from "./game-saves.js";
+import { gameHistory, playNext } from "./game-discovery.js";
+
+const saves = gameSaves();
 
 const api = westmarch(new URLSearchParams(location.search).get("api") ?? document.querySelector('meta[name="westmarch-api"]').content);
 const $ = (id) => document.getElementById(id);
+const historyOfGames = gameHistory(api.base);
 let view = { records: [] }, G = graph(view);
 const short = (a) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 const key = (r) => `${r.publisher}/${r.id}`;
 
+const PAGE_SIZE = 24;
+const numberFormat = new Intl.NumberFormat();
 let publisher = selectedPublisher(new URL(location.href));
+let directory = location.hash === "#publishers" && !publisher;
+let publisherPage = 0, inventoryPage = 0;
+let publisherRows = [], recordsByPublisher = new Map();
 let requestedPublisher;
 let repoInfo = null;
 let repoStatus = "";
-const browsing = () => publisher ? view.records.filter(r => r.publisher.toLowerCase() === publisher) : view.records;
+const browsing = () => publisher ? (recordsByPublisher.get(publisher) ?? []) : view.records;
 const storefrontURL = address => publisherURL(location.href, address);
+
+function indexPublishers(records) {
+    recordsByPublisher = new Map();
+    for (const row of records) {
+        const address = row.publisher.toLowerCase();
+        if (!/^0x[0-9a-f]{40}$/.test(address)) continue;
+        if (!recordsByPublisher.has(address)) recordsByPublisher.set(address, []);
+        recordsByPublisher.get(address).push(row);
+    }
+    publisherRows = [...recordsByPublisher].map(([address, rows]) => {
+        let games = 0, assets = 0;
+        for (const row of rows) {
+            if (row.type === "game") games++;
+            if (row.type === "asset") assets++;
+        }
+        return { address, games, assets, other: rows.length - games - assets };
+    }).sort((a, b) => b.games - a.games || b.assets - a.assets || a.address.localeCompare(b.address));
+}
+
+function pageOf(items, requestedPage, prefix, noun) {
+    const last = Math.max(0, Math.ceil(items.length / PAGE_SIZE) - 1);
+    const page = Math.max(0, Math.min(requestedPage, last));
+    const start = page * PAGE_SIZE;
+    const end = Math.min(start + PAGE_SIZE, items.length);
+    $(prefix + "-pagination").hidden = prefix === "inventory" && last === 0;
+    $(prefix + "-prev").disabled = page === 0;
+    $(prefix + "-next").disabled = page === last;
+    const number = value => numberFormat.format(value);
+    $(prefix + "-range").textContent = items.length
+        ? `${number(start + 1)}–${number(end)} of ${number(items.length)} ${noun}`
+        : `0 ${noun}`;
+    return { page, start, rows: items.slice(start, end) };
+}
 
 function renderPublishers() {
     $("storefront").hidden = !publisher;
-    $("publishers").hidden = Boolean(publisher);
-    for (const section of document.querySelectorAll(".hero, .hazard, .loading-dock")) section.hidden = Boolean(publisher);
+    $("publishers").hidden = !directory;
+    $("inventory").hidden = directory;
+    for (const section of document.querySelectorAll(".hero, .hazard, .loading-dock")) section.hidden = Boolean(publisher) || directory;
     $("browse-publishers").href = storefrontURL(null);
-    $("loading-dock-link").hidden = Boolean(publisher);
+    const gamesURL = new URL(storefrontURL(null));
+    gamesURL.hash = "inventory";
+    $("browse-games").href = gamesURL.href;
+    $("loading-dock-link").hidden = Boolean(publisher) || directory;
     if (publisher) {
         $("all-publishers").href = storefrontURL(null);
         $("explorer-link").href = explorerURL(publisher);
-        $("storefront-title").textContent = repoInfo?.name || browsing().find(r => r.payload.author)?.payload.author || short(publisher);
         $("storefront-address").textContent = publisher;
-        $("storefront-description").textContent = repoInfo?.description || "";
-        $("storefront-description").hidden = !repoInfo?.description;
         $("repo-head").textContent = repoInfo?.head ? `Head ${repoInfo.head}` : repoStatus;
-        return;
     }
-    const groups = new Map();
-    for (const r of view.records) {
-        if (!/^0x[0-9a-f]{40}$/i.test(r.publisher)) continue;
-        const addr = r.publisher.toLowerCase();
-        const entry = groups.get(addr) ?? { count: 0 };
-        entry.name ||= r.payload.author;
-        entry.count++;
-        groups.set(addr, entry);
-    }
-    $("publisher-list").replaceChildren(...Array.from(groups, ([addr, entry]) => {
-        const a = document.createElement("a");
-        a.href = storefrontURL(addr);
-        a.textContent = `${entry.name || short(addr)} · ${entry.count}`;
-        return a;
+    if (directory) renderDirectory();
+}
+
+function renderDirectory() {
+    const query = $("publisher-search").value.trim().toLowerCase();
+    const matches = query ? publisherRows.filter(row => row.address.includes(query)) : publisherRows;
+    const result = pageOf(matches, publisherPage, "publisher", "publishers");
+    publisherPage = result.page;
+    $("publisher-empty").hidden = matches.length > 0 || (!view.root && !query);
+    $("publisher-list").replaceChildren(...result.rows.map(({ address, games, assets, other }) => {
+        const row = document.createElement("tr");
+        const link = document.createElement("a");
+        link.href = storefrontURL(address);
+        link.textContent = address;
+        row.insertCell().append(link);
+        for (const count of [games, assets, other]) row.insertCell().textContent = numberFormat.format(count);
+        return row;
     }));
 }
+
+$("publisher-search").oninput = () => { publisherPage = 0; renderDirectory(); };
+$("publisher-prev").onclick = () => { publisherPage--; renderDirectory(); };
+$("publisher-next").onclick = () => { publisherPage++; renderDirectory(); };
+$("inventory-prev").onclick = () => { inventoryPage--; render(); $("inventory-title").scrollIntoView(); };
+$("inventory-next").onclick = () => { inventoryPage++; render(); $("inventory-title").scrollIntoView(); };
 
 async function loadPublisher() {
     if (!publisher || publisher === requestedPublisher) return;
@@ -197,10 +271,18 @@ let kind = "game";
 let category = "all";
 // Likes/dislikes: this page's own Worker (worker/votes.js), not the westmarch API. Off the warehouse's own host, they just don't show.
 let votes = { tally: {}, mine: {} };
+let voteStatus = "loading";
 const vkey = (r) => key(r).toLowerCase();
 const tally = (r) => votes.tally[vkey(r)] ?? [0, 0];
 const score = (r) => tally(r)[0] - tally(r)[1];
+const myVote = r => (r.type === "game" ? historyOfGames.entry(r).vote : undefined) ?? votes.mine[vkey(r)] ?? 0;
+const discoveryHistory = { entry: game => ({ ...historyOfGames.entry(game), vote: myVote(game) }) };
 async function vote(r, v) {
+    if (r.type === "game") {
+        historyOfGames.vote(r, v);
+        showVotes();
+        render();
+    }
     try {
         const res = await fetch("./api/votes", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ part: vkey(r), v }) });
         if (res.ok) votes = await res.json(), showVotes(), render();
@@ -208,15 +290,16 @@ async function vote(r, v) {
 }
 function showVotes() {
     if (!currentPart) return;
-    const [up, down] = tally(currentPart), mine = votes.mine[vkey(currentPart)] ?? 0;
+    if (gameHTML) $("next-game").hidden = !nextGame();
+    const [up, down] = tally(currentPart), mine = myVote(currentPart);
     $("up").querySelector("span").textContent = up; $("down").querySelector("span").textContent = down;
     $("up").setAttribute("aria-pressed", mine === 1); $("down").setAttribute("aria-pressed", mine === -1);
 }
 for (const b of document.querySelectorAll(".vote")) b.onclick = () => {
     const v = Number(b.dataset.v);
-    if (currentPart) vote(currentPart, votes.mine[vkey(currentPart)] === v ? 0 : v); // pressing it again takes it back
+    if (currentPart) vote(currentPart, myVote(currentPart) === v ? 0 : v); // pressing it again takes it back
 };
-const by = (r) => r.payload.author ?? short(r.publisher);
+const by = (r) => short(r.publisher.toLowerCase());
 $("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${api.base}/mcp`;
 api.manifest().then((m) => {
     $("install").textContent = `claude mcp add --transport http internet-slop-warehouse ${m.mcp}`;
@@ -240,6 +323,7 @@ $("clear-filters").onclick = () => {
     $("q").value = "";
     clearTimeout(typing);
     semantic = { q: "", ids: null };
+    inventoryPage = 0;
     render();
 };
 
@@ -258,7 +342,7 @@ function renderCategories() {
         badge.className = "count";
         badge.textContent = count;
         button.append(badge);
-        button.onclick = () => { category = id; render(); };
+        button.onclick = () => { category = id; inventoryPage = 0; render(); };
         return button;
     }));
     if (focused) [...$("categories").children].find(b => b.dataset.category === focused)?.focus();
@@ -268,7 +352,22 @@ function renderCategories() {
 function rank(q) {
     const games = kind === "reused" ? reused()
         : browsing().filter((r) => r.type === kind && (category === "all" || categoriesFor(r).includes(category)));
-    if (kind === "game") games.sort((a, b) => score(b) - score(a) || tally(b)[0] - tally(a)[0]); // most liked first (stable: ties keep view order)
+    if (kind === "game") {
+        const sort = $("game-sort").value;
+        if (sort === "unplayed") {
+            return rankGames(games.filter(r => !historyOfGames.entry(r).played && myVote(r) !== -1), q, sort);
+        }
+        return rankGames(games, q, sort);
+    }
+    return searchRecords(games, q);
+}
+function rankGames(games, q, sort) {
+    const byTitle = (a, b) => a.payload.title.localeCompare(b.payload.title);
+    return searchRecords(games, q).sort(sort === "top" && voteStatus === "ready"
+        ? (a, b) => score(b) - score(a) || tally(b)[0] - tally(a)[0] || byTitle(a, b)
+        : byTitle);
+}
+function searchRecords(games, q) {
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     if (!words.length) return games;
     if (!publisher && semantic.ids && semantic.q === q && semantic.kind === kind) return semantic.ids.map((k) => games.find((g) => key(g) === k)).filter(Boolean);
@@ -325,16 +424,41 @@ function stockGlyph(r) {
         : '<path d="M19 28h62l13 43-8 9H70L59 66H41L30 80H14l-8-9Z" fill="currentColor" opacity=".18" stroke="currentColor" stroke-width="3"/><path d="M24 42v21m-10-10h21" stroke="currentColor" stroke-width="5"/><circle cx="72" cy="45" r="5" fill="currentColor"/><circle cx="82" cy="58" r="5" fill="currentColor"/>';
     return `<svg viewBox="0 0 100 100" aria-hidden="true">${shapes}</svg>`;
 }
+function renderPlayNext() {
+    const show = !publisher && kind === "game" && category === "all" && !$("q").value.trim();
+    const picks = show ? playNext(view.records.filter(row => row.type === "game"), discoveryHistory, tally) : [];
+    $("play-next").hidden = picks.length === 0;
+    $("play-next-list").replaceChildren(...picks.map(({ game, reason }) => {
+        const button = document.createElement("button");
+        const title = document.createElement("strong");
+        const details = document.createElement("span");
+        title.textContent = game.payload.title;
+        details.textContent = reason;
+        button.append(title, details);
+        button.onclick = () => play(game);
+        return button;
+    }));
+}
+$("game-sort").onchange = () => { inventoryPage = 0; render(); };
 function render() {
+    if (directory) return;
     delete document.body.dataset.tracing; // whatever was traced is about to be replaced
     renderCategories();
-    const hits = rank($("q").value);
+    $("game-sort-label").hidden = kind !== "game";
+    renderPlayNext();
+    const top = kind === "game" && $("game-sort").value === "top";
+    $("vote-status").hidden = !top || voteStatus === "ready";
+    $("vote-status").textContent = voteStatus === "loading"
+        ? "Loading community votes…" : "Community votes unavailable. Showing titles A–Z.";
+    const hits = top && voteStatus === "loading" ? [] : rank($("q").value);
     for (const type of ["game", "asset", "logic", "skill", "source"]) $("count-" + type).textContent = String(browsing().filter(r => r.type === type).length).padStart(2, "0");
     $("count-reused").textContent = String(reused().length).padStart(2, "0");
-    if (kind === "reused") return renderBoard(hits);
+    const result = pageOf(hits, inventoryPage, "inventory", "results");
+    inventoryPage = result.page;
+    if (kind === "reused") return renderBoard(result.rows, hits.length, result.start, hits[0]);
     const noun = kind === "logic" ? "logic parts" : kind === "source" ? "source file" + (hits.length === 1 ? "" : "s") : kind + (hits.length === 1 ? "" : "s");
     $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} ${noun} ${$("q").value.trim() ? "found" : "in this bin"}`;
-    $("grid").replaceChildren(...hits.map((r) => {
+    $("grid").replaceChildren(...result.rows.map((r) => {
         const b = document.createElement("button");
         b.className = "card";
         b.innerHTML = `<span class="card-topline"><span class="stock-number"></span><span class="stock-type"></span></span><span class="card-preview">${stockGlyph(r)}<span class="preview-label"></span><span class="preview-code" aria-hidden="true"></span></span><span class="card-body"><h2></h2><p class="d"></p><span class="tags"></span><span class="meta"></span></span><span class="card-footer"><span class="open-label"></span><span class="license-label"></span></span>`;
@@ -359,7 +483,7 @@ function render() {
         b.onclick = () => play(r);
         return b;
     }));
-    if (!hits.length) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${browsing().some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
+    if (!hits.length && !(top && voteStatus === "loading")) $("grid").innerHTML = `<p class="empty"><strong>Nothing in this bin.</strong>${browsing().some((r) => r.type === kind) ? "Try another category or search, or clear filters to browse everything." : "Fresh stock hasn't landed on this shelf yet."}</p>`;
 }
 
 // A game card's preview is its specimen: dark matter (its own code) and every part it carries. Weighed when it
@@ -381,14 +505,14 @@ const specimens = new IntersectionObserver((entries) => {
 }, { rootMargin: "300px" });
 
 // The leaderboard: what the most games carry. A dish's parts and these rows trace each other on hover.
-function renderBoard(hits) {
-    $("stock-count").textContent = `${String(hits.length).padStart(2, "0")} parts carried by games ${$("q").value.trim() ? "found" : "· most reused first"}`;
-    const most = hits.length ? G.hosts.get(key(hits[0])).size : 1;
+function renderBoard(hits, total, start, first) {
+    $("stock-count").textContent = `${String(total).padStart(2, "0")} parts carried by games ${$("q").value.trim() ? "found" : "· most reused first"}`;
+    const most = first ? G.hosts.get(key(first)).size : 1;
     const board = document.createElement("ol");
     board.className = "board";
     board.append(...hits.map((r, i) => {
         const n = G.hosts.get(key(r)).size, pubs = publishersOf(r), li = document.createElement("li");
-        li.innerHTML = `<button data-k="${key(r).replace(/"/g, "")}"><span class="rank">${String(i + 1).padStart(2, "0")}</span>${glyph(r)}<span class="t"><strong></strong><small></small><span class="meter" style="width:${(n / most) * 100}%"></span></span><b>${n}</b></button>`;
+        li.innerHTML = `<button data-k="${key(r).replace(/"/g, "")}"><span class="rank">${String(start + i + 1).padStart(2, "0")}</span>${glyph(r)}<span class="t"><strong></strong><small></small><span class="meter" style="width:${(n / most) * 100}%"></span></span><b>${n}</b></button>`;
         li.querySelector("strong").textContent = r.payload.title;
         li.querySelector("small").textContent = `${LABELS[r.type]?.[0] ?? r.payload.mime ?? "asset"} · ${by(r)} · in ${n} game${n === 1 ? "" : "s"} by ${pubs} publisher${pubs === 1 ? "" : "s"}`;
         li.querySelector("button").onclick = () => play(r);
@@ -436,7 +560,7 @@ function setPartURL(r) {
     if (url.href !== location.href) history.pushState(null, "", url);
 }
 function followPartURL() {
-    const target = new URL(location.href).searchParams.get("part");
+    const target = directory ? null : new URL(location.href).searchParams.get("part");
     if (!target) { if ($("player").open) $("player").close(); return; }
     const r = browsing().find(r => key(r) === target);
     if (!r) {
@@ -447,13 +571,17 @@ function followPartURL() {
     if (key(currentPart ?? { publisher: "", id: "" }) === target && $("player").open) return;
     kind = r.type;
     category = "all";
+    inventoryPage = 0;
     for (const b of document.querySelectorAll(".kinds button")) b.setAttribute("aria-pressed", b.dataset.kind === kind);
     render(); play(r);
 }
 window.addEventListener("popstate", () => {
     const next = selectedPublisher(new URL(location.href));
-    if (next !== publisher) {
+    const nextDirectory = location.hash === "#publishers" && !next;
+    if (next !== publisher || nextDirectory !== directory) {
         publisher = next;
+        directory = nextDirectory;
+        inventoryPage = 0;
         requestedPublisher = undefined;
         repoInfo = null;
         renderPublishers();
@@ -479,12 +607,14 @@ $("share").onclick = async () => {
     $("share-status").hidden = false;
 };
 function showFrame(html, focus = false, dependencies = null) {
+    saves.disconnect();
     // Replace the browsing context so restart/close always stop the old game, including its audio.
     const frame = $("frame").cloneNode(false);
     // The sandboxed game can't see this page's address; hand it in, so games can make links back here (co-op invites: ?room=).
     const escapeScript = value => JSON.stringify(value).replaceAll("<", "\\u003c");
+    const storage = focus && currentPart?.type === "game" ? saves.connect(frame, api.base, currentPart, escapeScript) : "";
     const slots = dependencies ? `window.WAREHOUSE_PARTS=${escapeScript(dependencies)};` : "";
-    const here = `<script>window.WAREHOUSE_URL=${escapeScript(location.href)};${slots}<\/script>`;
+    const here = `<script>window.WAREHOUSE_URL=${escapeScript(location.href)};${storage}${slots}<\/script>`;
     frame.srcdoc = /<head(\s[^>]*)?>/i.test(html) ? html.replace(/<head(\s[^>]*)?>/i, (m) => m + here) : here + html;
     if (focus) frame.addEventListener("load", () => { if ($("player").open && currentPart?.type === "game") frame.focus(); }, { once: true });
     $("frame").replaceWith(frame);
@@ -507,6 +637,7 @@ async function play(r) {
     $("player").classList.toggle("playing", game);
     for (const id of ["restart", "expand", "fullscreen", "player-hint"]) $(id).hidden = !game;
     $("restart").disabled = true;
+    $("next-game").hidden = true;
     $("frame").title = r.payload.title;
     if (!game) {
         showFrame("");
@@ -526,6 +657,9 @@ async function play(r) {
             if (request !== playerRequest || !$("player").open) return;
             gameDependencies = dependencies;
             gameHTML = html; showFrame(html, true, gameDependencies);
+            historyOfGames.played(r);
+            render();
+            $("next-game").hidden = !nextGame();
         } catch {
             if (request !== playerRequest || !$("player").open) return;
             showFrame(`<body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;color:#c66;font:14px system-ui">Couldn't load this game. Use Restart to try again.</body>`);
@@ -605,6 +739,13 @@ document.addEventListener("fullscreenchange", () => {
     if (!full) setExpanded(false);
     $("expand").disabled = full;
 });
+function nextGame() {
+    return playNext(browsing().filter(r => r.type === "game"), discoveryHistory, tally, 1)[0]?.game;
+}
+$("next-game").onclick = () => {
+    const game = nextGame();
+    if (game) play(game);
+};
 $("restart").onclick = () => {
     if (gameHTML) { showFrame(gameHTML, true, gameDependencies); }
     else if (currentPart) play(currentPart);
@@ -628,6 +769,7 @@ window.addEventListener('resize', syncPlayerViewport);
 window.visualViewport?.addEventListener('resize', syncPlayerViewport);
 let typing;
 $("q").oninput = () => {
+    inventoryPage = 0;
     render();
     clearTimeout(typing);
     const q = $("q").value;
@@ -642,20 +784,30 @@ $("q").oninput = () => {
 };
 
 async function loadVotes() {
+    const previousStatus = voteStatus;
+    let changed = false;
     try {
-        const res = await fetch("./api/votes");
-        if (!res.ok) return;
-        const text = await res.text();
-        if (text === JSON.stringify(votes)) return;
-        votes = JSON.parse(text); showVotes(); render();
-    } catch {}
+        const res = await fetch("./api/votes", { signal: AbortSignal.timeout(5000) });
+        if (!res.ok) throw new Error("Vote request failed");
+        const next = await res.json();
+        if (!next?.tally || !next?.mine) throw new Error("Invalid vote data");
+        changed = JSON.stringify(next) !== JSON.stringify(votes);
+        votes = next;
+        voteStatus = "ready";
+    } catch {
+        if (voteStatus !== "ready") voteStatus = "unavailable";
+    }
+    if (changed || voteStatus !== previousStatus) {
+        showVotes();
+        render();
+    }
 }
 async function load() {
     loadVotes();
     try {
         const next = await api.view();
         if (next.root != null && next.root === view.root) return;
-        view = next; G = graph(view); renderPublishers(); render();
+        view = next; indexPublishers(view.records); G = graph(view); renderPublishers(); render();
         $("status").textContent = `${view.records.length} parts in stock`;
         followPartURL();
     } catch (e) { $("status").textContent = `couldn't read the view: ${e.message}`; }

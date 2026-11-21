@@ -22,10 +22,41 @@ dialog.is-expanded{width:var(--player-width,100vw);height:var(--player-height,10
 
 .category-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:-5px 0 24px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.category-label{font:10px var(--mono);text-transform:uppercase;color:var(--muted)}#categories{display:flex;flex-wrap:wrap;gap:8px;flex:1}#categories button,#clear-filters{font:11px/1.4 var(--mono);min-height:38px;padding:8px 11px;border:1px solid #596049;background:#272d22;color:var(--fg)}#categories button:hover{border-color:var(--accent)}#categories button[aria-pressed=true]{border-color:var(--accent);background:var(--mark);color:var(--accent)}#categories .count{opacity:.65;margin-left:5px}#clear-filters{background:transparent;text-decoration:underline;color:var(--accent)}@media(max-width:650px){.category-label{width:100%}#categories{flex-basis:100%}#categories button{min-height:44px}}
 
-.publisher-directory { padding: clamp(1rem, 4vw, 3rem) 0; border-bottom: 1px solid currentColor; }
-.publisher-directory[hidden], .hero[hidden], .hazard[hidden], .loading-dock[hidden] { display: none; }
-.publisher-directory h1, .publisher-directory h2 { margin: .5em 0; }
+.publisher-directory { padding: clamp(1.4rem, 4vw, 3rem) 0; }
+.directory-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem; margin-bottom: 1.5rem; }
+.publisher-directory h1 { font-size: clamp(2.6rem, 6vw, 5.25rem); line-height: .95; margin: 0; }
+.publisher-search { display: grid; gap: .35rem; width: min(100%, 23rem); color: var(--muted); font: 12px var(--mono); }
+.publisher-search input { border: 1px solid var(--line); background: #12170f; }
+.publisher-table { width: 100%; border-collapse: collapse; table-layout: fixed; font: 13px var(--mono); }
+.publisher-table th, .publisher-table td { text-align: right; border-bottom: 1px solid var(--line); padding: .7rem .5rem; }
+.publisher-table th { font-size: 11px; color: var(--muted); }
+.publisher-table th:first-child, .publisher-table td:first-child { text-align: left; width: 61%; }
+.publisher-table tbody tr:hover { background: var(--mark); }
+.publisher-table a { display: block; overflow-wrap: anywhere; text-decoration: none; }
+.publisher-table a:hover { color: var(--accent); text-decoration: underline; }
+.publisher-storefront { border-bottom: 1px solid var(--line); }
+.publisher-storefront h1 { margin: 1.25rem 0 .65rem; }
 .publisher-directory code, #repo-head { overflow-wrap: anywhere; }
-#publisher-list, .publisher-repo { display: flex; flex-wrap: wrap; align-items: baseline; gap: .8rem 1.4rem; }
-#publisher-list a { padding: .45rem .7rem; border: 1px solid currentColor; }
-.publisher-repo { margin-top: 1rem; }
+.publisher-repo, .list-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; margin-top: 1rem; font: 12px var(--mono); }
+.publisher-repo { justify-content: space-between; color: var(--muted); }
+.list-pagination span { margin-right: auto; color: var(--muted); }
+.list-pagination button { padding: .55rem .75rem; border: 1px solid var(--line); background: var(--mark); color: var(--fg); font: inherit; }
+.list-pagination button:disabled { opacity: .5; cursor: default; }
+@media (max-width: 550px) {
+    .publisher-table { font-size: 11px; }
+    .publisher-table td, .publisher-table th { padding: .65rem .25rem; }
+    .publisher-table th:first-child, .publisher-table td:first-child { width: 55%; }
+}
+
+.play-next { margin: 0 0 1.5rem; padding: 1rem; border: 1px solid var(--line); background: #242a20; }
+.play-next h3 { margin: 0 0 .75rem; font: 900 24px Impact, 'Arial Narrow', sans-serif; text-transform: uppercase; }
+#play-next-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .6rem; }
+#play-next-list button { display: grid; gap: .3rem; padding: .85rem; text-align: left; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+#play-next-list button:hover { border-color: var(--accent); }
+#play-next-list strong { overflow-wrap: anywhere; }
+#play-next-list span { color: var(--muted); font: 11px var(--mono); }
+#game-sort-label { display: flex; align-items: center; gap: .5rem; color: var(--muted); font: 11px var(--mono); }
+#game-sort { padding: .4rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); }
+@media (max-width: 650px) { #player-shell #next-game { flex: 1.5; } }
+
+.vote-status { color: var(--muted); font: 12px var(--mono); }
