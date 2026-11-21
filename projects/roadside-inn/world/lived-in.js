@@ -223,11 +223,11 @@ const LIQUIDS = {
 };
 const TONE = {   // the sheet's middle and its thin edge
   coffee: ['rgba(46,24,10,0.9)', 'rgba(128,76,36,0.5)'],
-  milk: ['rgba(246,243,236,0.95)', 'rgba(214,218,220,0.5)'],   // thin milk goes faintly blue-grey and see-through
+  milk: ['rgba(238,235,228,0.8)', 'rgba(200,206,210,0.25)'],   // thin milk goes faintly blue-grey and see-through
 };
 const LOOK = {   // hard floor / carpet: tint, opacity, roughness (soaked into carpet: no sheen, darker, fainter)
   coffee: { hard: ['#ffffff', 1, 0.04], soft: ['#5a4a40', 0.55, 1] },
-  milk: { hard: ['#ffffff', 1, 0.1], soft: ['#cfcac2', 0.4, 1] },   // milk: lower surface tension, thinner and wider
+  milk: { hard: ['#e6e2da', 0.85, 0.04], soft: ['#cfcac2', 0.4, 1] },   // milk: lower surface tension, thinner and wider
 };
 export function buildSpills(ctx) {
   const { scene, game, updaters, carpetAreas, lvt } = ctx;
