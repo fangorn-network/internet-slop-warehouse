@@ -326,3 +326,11 @@ environments. Each entry: the symptom a player sees, the cause, the fix. Newest 
   scale: 406 x 203 mm blocks in running bond, 10 mm tooled joints as a normal map, semi-gloss (roughness 0.55).
   Lit by surface-mounted LED wraparounds on the walls rather than hidden cans, with fire-code floor ID signs
   (floor, stair, exit direction) on the stair side of each door.
+
+## Residents going wild (2026-11-21, lead)
+
+- **Procedural turns must start from a known pose each frame.** Breath, gaze and posture turns are applied on top of
+  what the mixer wrote. Bones the clips don't drive (or have stopped driving: frozen idle, seated) kept last frame's
+  turn, so turns piled up, quaternions drifted off unit length and limbs scaled: arms growing and shrinking, a seated
+  guest folding through the sofa, one stretching across the screen. Fix: people.js restores every bone's bind pose
+  before mixer.update. Probe: max |q| - 1 over all bones stays 0 for 20 s.
