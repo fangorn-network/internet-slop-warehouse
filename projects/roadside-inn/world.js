@@ -129,6 +129,23 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     return new T.MeshStandardMaterial({ color: '#faf8f3', roughness: 1, map: tex(col, true), normalMap: tex(nrm), normalScale: new T.Vector2(0.6, 0.6) });
   }
 
+  // Painted CMU: 0.4 x 0.2 m blocks in running bond with concave tooled joints (10 mm), under semi-gloss paint. One
+  // 0.8 x 0.4 m tile (2 courses) at 2 mm a pixel; the joints are a normal map plus a faint shade in the colour.
+  function blockWall() {
+    const W = 400, H = 200, J = 5, nrm = new Uint8Array(W * H * 4), col = new Uint8Array(W * H * 4), rnd = seeded(8);
+    const grain = Array.from({ length: W * H }, () => rnd());
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const row = y < H / 2 ? 0 : 1, xb = (x + row * W / 4) % (W / 2), yb = y % (H / 2);
+      const dx = xb < J ? -(J - xb) / J : xb > W / 2 - J ? (xb - (W / 2 - J)) / J : 0;
+      const dy = yb < J ? -(J - yb) / J : yb > H / 2 - J ? (yb - (H / 2 - J)) / J : 0;
+      const i = (y * W + x) * 4, g = (grain[y * W + x] - 0.5) * 0.25;   // block face pits, softened by paint
+      nrm.set([128 + (dx + g * 0.3) * 90, 128 - (dy + g * 0.3) * 90, 230, 255], i);
+      const c = 238 - (dx || dy ? 14 : 0) + g * 10; col.set([c, c, c, 255], i);
+    }
+    const tex = (data, srgb) => { const t = new T.DataTexture(data, W, H); t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(1 / 0.8, 1 / 0.4); t.generateMipmaps = true; t.minFilter = T.LinearMipmapLinearFilter; t.magFilter = T.LinearFilter; t.anisotropy = 4; if (srgb) t.colorSpace = T.SRGBColorSpace; t.needsUpdate = true; return t; };
+    return new T.MeshStandardMaterial({ color: '#e6e2d8', roughness: 0.55, map: tex(col, true), normalMap: tex(nrm), normalScale: new T.Vector2(0.8, 0.8) });
+  }
+
   // Hotel art (blender/art.py, prints.mjs): framed CC0 photographs of the Buffalo River Ozarks and a geometric series in
   // navy, cobalt, grey and mustard. One model holds every piece (art_<name>, top-centre anchored, facing +z); a call
   // takes the set for its size and the piece for its motif. w x h is the framed size (the lobby photo is 1.2 x 0.9).
@@ -482,8 +499,30 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
       const len = Math.hypot(zB - zA, y1 - y0), r = F.cyl(0.025, 0.025, len, rail, 0, 0, 0, scene, 8);
       r.position.set(x, (y0 + y1) / 2, (zA + zB) / 2); r.rotation.x = Math.atan2(zB - zA, y1 - y0);
     }
-    light(10.7, 2.8, -5, '#f6f3ea', 7, 7);
-    light(10.7, 6.0, -5, '#f6f3ea', 6, 7);
+    // Stair tower finish (B9): painted concrete block, 8 x 16 in (203 x 406 mm) running bond with tooled joints, as in
+    // every limited-service stair tower. Thin liners inside the tower, so the walls' other faces (passage, shaft) keep theirs.
+    const block = blockWall();
+    for (const [y0, h, doorHole] of [[0, FLOOR2, door(9.55, 10.7, 2.2)], [FLOOR2, CEIL, door(10.8, 11.95, 2.2)]]) {
+      wall('z', 9.58, -8.42, -1.08, y0, h, block, { t: 0.01, collide: false });
+      wall('z', 11.92, -8.42, -1.08, y0, h, block, { t: 0.01, collide: false });
+      wall('x', -8.42, 9.58, 11.92, y0, h, block, { t: 0.01, collide: false });
+      wall('x', -1.08, 9.58, 11.92, y0, h, block, { t: 0.01, collide: false, holes: [doorHole] });
+    }
+    // Light: surface-mounted LED wraparounds (a white housing, an opal lens) on the walls, where stair towers have them.
+    const housing = F.mat('#e9e8e4', { roughness: 0.5 }), lens = F.glow('#fff8ee', 1.6);
+    for (const [x, y, z, along] of [[10.75, 3.85, -8.36, 'x'], [9.64, 2.35, -1.7, 'z'], [11.3, FLOOR2 + 2.55, -1.14, 'x']]) {
+      const [w, d] = along === 'x' ? [1.2, 0.1] : [0.1, 1.2];
+      F.box(w, 0.09, d, housing, x, y, z, scene);
+      F.box(along === 'x' ? 1.16 : 0.07, 0.012, along === 'x' ? 0.07 : 1.16, lens, x, y - 0.006, z, scene);
+    }
+    light(10.75, 3.7, -7.9, '#f6f3ea', 7, 7);   // landing
+    light(9.8, 2.25, -1.7, '#f6f3ea', 5, 6);     // stair foot
+    light(11.3, FLOOR2 + 2.45, -1.4, '#f6f3ea', 5, 6);   // stair top
+    // Floor identification signs on the stair side of each door (fire code: floor, stair and exit direction).
+    for (const [txt, x, y] of [['1\nSTAIR A\nEXIT TO LOBBY', 11.3, 1.5], ['2\nSTAIR A\nDOWN TO EXIT', 10.15, FLOOR2 + 1.5]]) {
+      const id = F.sign(txt, { w: 0.3, h: 0.3, bg: '#24303f', font: 'bold 44px system-ui, sans-serif' });
+      id.position.set(x, y, -1.095); id.rotation.y = Math.PI; scene.add(id);
+    }
     const exit = F.sign('EXIT', { w: 0.4, h: 0.16, bg: '#b3141a', font: 'bold 110px system-ui, sans-serif', emissive: 1.5 });
     exit.position.set(10.1, 2.5, -0.895); scene.add(exit);
     const exit2 = exit.clone(); exit2.position.set(11.4, FLOOR2 + 2.5, -0.895); scene.add(exit2);
@@ -498,9 +537,10 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   zone('lobby', -12, 6.5, -1, 3, -9, 9);
   zone('pool', -24, -12, -1, 5, -9, 9);
   zone('gym', 13.5, 18, -1, 3, -9, -1);
-  zone('corridor', 6.5, 30, -1, 3, -9, 9);
+  // stairs and elevator before the corridor they sit in: player.zone() takes the first match (the landing read CORRIDOR)
   zone('stairs', 9.5, 12, -1, 6.5, -8.5, -1);
   zone('elevator', 6.5, 9, -1, 6.5, -4.5, -1);
+  zone('corridor', 6.5, 30, -1, 3, -9, 9);
   zone('room', R.x0, R.x1, 3, 6.5, R.z0, R.z1);
   zone('corridor', -12, 30, 3, 6.5, -9, 9); zones.at(-1).id = 'upstairs'; // its own zone for culling (zone-culling)
 

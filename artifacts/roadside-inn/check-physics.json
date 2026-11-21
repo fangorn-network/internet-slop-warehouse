@@ -1,68 +1,45 @@
 {
   "flow": {
     "physics": {
-      "loose": 35,
-      "pinned": 4
+      "loose": 70,
+      "pinned": 3
     },
-    "chairFrom": [
-      4.6,
-      0,
-      4.15
-    ],
-    "chairWalk": {
-      "x": 4.75,
-      "y": 0,
-      "z": 3.9
-    },
-    "chairTo": [
-      4.42,
-      0.01,
-      4.5
-    ],
-    "walker": {
-      "p": [
-        4.75,
+    "lampBefore": {
+      "table": [
+        -10.262,
         0,
-        3.9
+        0.436
       ],
-      "hits": [
-        {
-          "n": [
-            0.39,
-            0,
-            -0.92
-          ],
-          "at": [
-            4.42,
-            0.01,
-            4.5
-          ],
-          "type": 0
-        }
+      "lamp": [
+        -10.25,
+        0.502,
+        0.45
       ]
     },
-    "signFrom": [
-      -15.4,
-      0,
-      -4
-    ],
-    "pickPrompt": "EPick up the wet floor sign",
-    "held": "ph-wetfloorsign-01",
-    "throwPrompt": "EThrow the wet floor sign",
-    "signTo": [
-      -15.72,
-      0,
-      -8.42
-    ]
+    "lampAfter": {
+      "table": [
+        -10.262,
+        0,
+        0.497
+      ],
+      "lamp": [
+        -9.715,
+        0.08,
+        0.223
+      ]
+    },
+    "failed": "a nudged table stays upright and the lamp rides along on it, not floating where it was"
   },
-  "errors": [],
+  "errors": [
+    "physics: a nudged table stays upright and the lamp rides along on it, not floating where it was"
+  ],
   "shots": 0,
   "stats": {
-    "colliders": 426,
-    "interact": 88,
-    "drawCalls": 357,
-    "textures": 169,
-    "programs": 59,
-    "triangles": 595404
+    "colliders": 428,
+    "interact": 129,
+    "drawCalls": 1,
+    "textures": 303,
+    "programs": 42,
+    "triangles": 12
   }
 }

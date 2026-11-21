@@ -105,6 +105,18 @@ environments. Each entry: the symptom a player sees, the cause, the fix. Newest 
 - **A plug is a property, not a lamp type.** `pluggable(obj, { tether, glow, light })` gives anything a cord, plug, glow
   and a light that follows it; every free outlet offers itself to whichever plug is in reach (the one in your hand
   first). Outlets on floor 2 need their own floor height for the cord's tail.
+- **Static friction.** Lying across the seam of two floor boxes, a hull is nudged sideways by their edges and crept
+  7 cm in 3 s even with rolling resistance. Under 15 cm/s for half a second, touching only fixed or sleeping things, it is
+  put to sleep and stays parked: woken again with nothing moving against it, it goes straight back to sleep.
+- **A support is under you, not beside you.** A paper put down next to the pile became the bottom paper's "support"
+  (its top was within 4 cm of the paper's bottom) and, still settling, dragged the whole pile awake. A support's top must
+  be at or just below the item's bottom, and the support itself below it.
+- **Doors dwell on presence, not a clock.** Upstairs the car held its doors 4 s; a slow walker (or a loaded test
+  machine) arrived to closed doors. Someone in the doorway or in the car with nothing called holds them; "Close" shuts
+  them on a rider, never on the doorway; closing on someone, they reopen.
+- **Serve the physics engine with the game.** Rapier from a CDN timed out (ERR_TIMED_OUT) and held the page; the dev
+  page now loads it from node_modules (the packaged build rewrites the import map), and createWorld gives up after 30 s so
+  the game falls back to walking without physics instead of hanging.
 - **A button that lights needs its own material.** The hall call buttons shared one cached `F.glow` material (at 0.1,
   never changed), and the car's buttons shared the cabin's steel: nothing could light alone. Clone per button; a floor
   stays lit from the press until the car arrives, door open/close light while pressed.
@@ -309,3 +321,8 @@ environments. Each entry: the symptom a player sees, the cause, the fix. Newest 
   glittered around each downlight. A humid link corridor gets painted gypsum anyway.
 - **A door plate can end up inside the wall.** openableDoor hangs its number plate 11 cm in front of the leaf. In a
   28 cm reveal the plate sits inside the wall, so use a wall sign beside the door instead.
+- **A stair tower is painted block, not lobby plaster.** Stair A's walls had the same warm-white plaster as the lobby,
+  so it read as a hallway with steps in it. Fix (B9): thin liners inside the tower with painted CMU drawn at true
+  scale: 406 x 203 mm blocks in running bond, 10 mm tooled joints as a normal map, semi-gloss (roughness 0.55).
+  Lit by surface-mounted LED wraparounds on the walls rather than hidden cans, with fire-code floor ID signs
+  (floor, stair, exit direction) on the stair side of each door.

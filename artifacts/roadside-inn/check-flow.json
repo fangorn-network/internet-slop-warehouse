@@ -12,7 +12,7 @@
     },
     "doorPrompt": "ETap key card",
     "inRoom": {
-      "z": 3.61,
+      "z": 3.71,
       "where": "Room 212"
     },
     "bedPrompt": "ELie down",
@@ -20,9 +20,9 @@
     "wafflePrompt": "EMake a waffle",
     "waffle": true,
     "landing": {
-      "x": 10.1,
+      "x": 10.11,
       "y": 1.6,
-      "z": -7.73
+      "z": -7.75
     },
     "stairsTop": {
       "x": 11.4,
@@ -33,11 +33,11 @@
   "errors": [],
   "shots": 0,
   "stats": {
-    "colliders": 426,
-    "interact": 88,
-    "drawCalls": 0,
-    "textures": 0,
-    "programs": 0,
-    "triangles": 0
+    "colliders": 428,
+    "interact": 129,
+    "drawCalls": 1,
+    "textures": 304,
+    "programs": 42,
+    "triangles": 12
   }
 }

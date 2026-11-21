@@ -16,13 +16,14 @@
 import * as THREE from "three";
 
 // Rapier loads when the first world is made, not with this module: if it can't load (offline, a blocked CDN), the
-// game's page still runs and only createWorld() rejects, so a game can fall back to walking without physics.
+// game's page still runs and only createWorld() rejects, so a game can fall back to walking without physics. A CDN that
+// hangs (ERR_TIMED_OUT) gives up after 30 s instead of holding the game's loading screen for ever.
 let RAPIER, ready;
 const v3 = (v) => new THREE.Vector3(v.x, v.y, v.z);
 
 /** A physics world → { update(dt), raycast(origin, direction, far), dispose(), raw, rapier }. */
 export async function createWorld({ gravity = [0, -9.81, 0], step = 1 / 60, maxSteps = 5 } = {}) {
-    await (ready ??= import("@dimforge/rapier3d-compat").then(async (m) => { RAPIER = m.default; await RAPIER.init(); }).catch((e) => { ready = null; throw e; }));
+    await (ready ??= Promise.race([import("@dimforge/rapier3d-compat"), new Promise((_, no) => setTimeout(() => no(new Error("Rapier took over 30 s to load")), 30000))]).then(async (m) => { RAPIER = m.default; await RAPIER.init(); }).catch((e) => { ready = null; throw e; }));
     const raw = new RAPIER.World({ x: gravity[0], y: gravity[1], z: gravity[2] }), events = new RAPIER.EventQueue(true);
     raw.timestep = step;
     const bodies = new Set(), byCollider = new Map(), characters = new Set();
@@ -129,31 +130,30 @@ export function attach(object, { world, body = "dynamic", shape = "box", mass, c
             const t = rb.translation(), r = rb.rotation(); object.position.set(t.x, t.y, t.z); object.quaternion.set(r.x, r.y, r.z, r.w);
             if (!settle || rb.isSleeping()) return;
             const v = rb.linvel(), w = rb.angvel(), slow = Math.hypot(v.x, v.y, v.z) < 0.3 && Math.hypot(w.x, w.y, w.z) < 1.5;
+            const contacts = () => { let supported = false, pushed = false; world.raw.contactPairsWith(col, (c) => { const o = c.parent(); if (!o || o.isFixed() || o.isSleeping()) supported = true; else pushed = true; }); return { supported, pushed }; };
+            // Parked (put to sleep below) and woken again with nothing moving against it: the solver nudged it awake at a floor
+            // seam. Back to sleep, or it creeps on a few centimetres each time (a stool across a lobby seam crept 7 cm in 3 s).
+            if (self.parked) { if (slow && !contacts().pushed) { rb.setLinvel({ x: 0, y: 0, z: 0 }, false); rb.setAngvel({ x: 0, y: 0, z: 0 }, false); rb.sleep(); return; } self.parked = false; }
             if (slow !== !!self.slow) { self.slow = slow; rb.setAngularDamping(slow ? settle : damping); rb.setLinearDamping(slow ? settle / 2 : 0); }
             // Static friction: still creeping a centimetre or two a second after half a second (a hull lying across the seam
             // of two floor boxes gets pushed sideways by their edges), it has stopped. Real things don't creep.
             self.quiet = Math.hypot(v.x, v.y, v.z) < 0.15 && Math.hypot(w.x, w.y, w.z) < 0.5 ? (self.quiet ?? 0) + dt : 0;
             if (self.quiet > 0.5) {   // unless something that moves is touching it (a hand, the walker, a woken neighbour): that's a push
                 self.quiet = 0;
-                let supported = false, pushed = false;
-                world.raw.contactPairsWith(col, (c) => {
-                    const other = c.parent();
-                    if (!other || other.isFixed() || other.isSleeping()) supported = true;
-                    else pushed = true;
-                });
-                if (supported && !pushed) rb.sleep();
+                const { supported, pushed } = contacts();
+                if (supported && !pushed) { self.parked = true; rb.sleep(); }
             }
         },
         /** Hold a dynamic body: until release(), it follows the object wherever you put it, and still pushes things. */
         grab() { if (body !== "dynamic") return; self.kinematic = true; rb.setBodyType(R.RigidBodyType.KinematicPositionBased, true); },
         /** Let go, optionally throwing it at velocity [x, y, z]. */
-        release(v) { if (!self.kinematic || body !== "dynamic") return; self.kinematic = false; rb.setBodyType(R.RigidBodyType.Dynamic, true); self.slow = false; rb.setAngularDamping(damping); rb.setLinearDamping(0); if (v) self.velocity(v); },
+        release(v) { if (!self.kinematic || body !== "dynamic") return; self.kinematic = false; rb.setBodyType(R.RigidBodyType.Dynamic, true); self.slow = false; self.parked = false; rb.setAngularDamping(damping); rb.setLinearDamping(0); if (v) self.velocity(v); },
         push() {
             object.getWorldPosition(p); object.getWorldQuaternion(q);
             if (body === "platform") { rb.setTranslation(p, true); rb.setRotation(q, true); } else { rb.setNextKinematicTranslation(p); rb.setNextKinematicRotation(q); }
         },
-        impulse([x, y, z]) { rb.applyImpulse({ x, y, z }, true); },
-        velocity(v) { if (v) rb.setLinvel({ x: v[0], y: v[1], z: v[2] }, true); const l = rb.linvel(); return [l.x, l.y, l.z]; },
+        impulse([x, y, z]) { self.parked = false; rb.applyImpulse({ x, y, z }, true); },
+        velocity(v) { if (v) self.parked = false, rb.setLinvel({ x: v[0], y: v[1], z: v[2] }, true); const l = rb.linvel(); return [l.x, l.y, l.z]; },
         dispose() { world.bodies.delete(self); world.byCollider.delete(col.handle); world.raw.removeRigidBody(rb); },
     };
     world.bodies.add(self); world.byCollider.set(col.handle, self);

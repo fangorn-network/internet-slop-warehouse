@@ -212,9 +212,15 @@ def bar_stool(m):
         for y in (-1, 1):
             base, top = (x * 0.2, y * 0.2, 0.0), (x * 0.155, y * 0.155, 0.69)
             taper_leg('leg', 0.013, 0.019, 0.7, base, top, stain()); legs.append((base, top))
-    for (x0, y0, z), (x1, y1, _) in ((( -0.185, -0.185, 0.26), (0.185, -0.185, 0)), ((-0.185, 0.185, 0.26), (0.185, 0.185, 0)), ((-0.185, -0.185, 0.3), (-0.185, 0.185, 0)), ((0.185, -0.185, 0.3), (0.185, 0.185, 0))):
-        taper_leg('rung', 0.009, 0.009, math.hypot(x1 - x0, y1 - y0), (x0, y0, z), (x1, y1, z), stain())
-    box('kick_plate', (0.36, 0.03, 0.004), (0, -0.19, 0.27), m['brushed'], bevel=0.0015)
+    # footrest ~33 cm under the seat top (0.78): front and back rungs at 0.45, side rungs staggered at 0.42; the legs
+    # splay, so each rung sits where its legs are at that height
+    at = lambda z: 0.2 - 0.045 * z / 0.69
+    for z, side in ((0.45, False), (0.42, True)):
+        a = at(z)
+        for k in (-1, 1):
+            p0, p1 = ((k * a, -a, z), (k * a, a, z)) if side else ((-a, k * a, z), (a, k * a, z))
+            taper_leg('rung', 0.009, 0.009, 2 * a, p0, p1, stain())
+    box('kick_plate', (2 * at(0.45) - 0.02, 0.03, 0.004), (0, -at(0.45) - 0.004, 0.45 + 0.011), m['brushed'], bevel=0.0015)
     for x in (-1, 1):
         for y in (-1, 1):
             cyl('glide', 0.014, 0.008, (x * 0.2, y * 0.2, 0.004), m['black'], verts=12)

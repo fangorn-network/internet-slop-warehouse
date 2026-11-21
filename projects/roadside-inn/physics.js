@@ -137,7 +137,7 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
       if (l.b || l.on) continue;
       lb.setFromObject(l.o).getCenter(lc);
       let top = -Infinity;
-      for (const s of loose) if (s !== l && (sb.setFromObject(s.o), lc.x > sb.min.x && lc.x < sb.max.x && lc.z > sb.min.z && lc.z < sb.max.z && Math.abs(sb.max.y - lb.min.y) < 0.04 && sb.max.y > top)) { top = sb.max.y; l.on = s; }
+      for (const s of loose) if (s !== l && (sb.setFromObject(s.o), lc.x > sb.min.x && lc.x < sb.max.x && lc.z > sb.min.z && lc.z < sb.max.z && sb.max.y - lb.min.y < 0.01 && lb.min.y - sb.max.y < 0.04 && sb.min.y < lb.min.y - 0.001 && sb.max.y > top)) { top = sb.max.y; l.on = s; }   // under it: a paper dropped beside the pile doesn't become the bottom one's support
       if (l.on) {
         (l.on.riders ??= []).push(l); l.on.o.updateMatrixWorld(); l.o.updateMatrixWorld(); l.from = l.on.o.position.clone(); l.rel = l.on.o.matrixWorld.clone().invert().multiply(l.o.matrixWorld); }   // where it sits, in its support's frame
     }

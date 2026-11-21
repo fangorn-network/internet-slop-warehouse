@@ -110,7 +110,7 @@ const SITTERS = [
   // back top ~0.9): pelvis slid forward and rolled back into the cushions, settled to one side, knees apart, one foot out,
   // an arm along the sofa back, the other hand in his lap, head tipped toward the TV.
   { id: 'rb-marcus-formal', tint: '#41506b', who: 'A salesman winding down with the news', hips: [2.36, 0.47, 6.55], yaw: Math.PI / 2, sink: 0.035,
-    recline: 0.26, roll: 0.06, tilt: 0.08, ahead: [0.52, 0.34], spread: 0.14,
+    recline: 0.4, roll: 0.08, tilt: 0.1, ahead: [0.56, 0.36], spread: 0.2,
     hands: [[1.98, 0.93, 7.15]], gaze: [6.36, 1.6, 6.4] },
   // At the communal table on a bar stool (seat 0.79), ankles over the stool's front bar (0.26), leaning on her forearms,
   // hands on the oak top (1.05), eyes on her phone.

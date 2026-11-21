@@ -74,7 +74,7 @@ const LOOKS = {
 let timeOfDay = 'dusk';
 function applySky(name) {
   const look = LOOKS[name], sky = lib.skies[name];
-  timeOfDay = name;
+  timeOfDay = name; game.timeOfDay = name;   // residents' routines (intent.js) read it
   scene.background = sky; scene.environment = sky.env;
   scene.backgroundIntensity = look.bg; scene.environmentIntensity = look.env;
   sun.color.set(look.sun); sun.intensity = look.sunI; hemi.intensity = look.hemi;

@@ -1,24 +1,19 @@
 {
   "flow": {
-    "deskPrompt": "ECheck in",
-    "key": true,
-    "callPrompt": "ECall elevator",
-    "panelPrompt": "EPress 2",
-    "rodeTo": 3.2,
     "failed": "page.waitForFunction: Timeout 30000ms exceeded.",
     "state": {
-      "y": 3.2,
-      "target": 3.2,
+      "y": 0,
+      "target": 0,
       "doors": 0,
       "open": false,
-      "timer": -0.02039999999851201,
+      "timer": 0,
       "moving": false,
-      "floor": 1,
+      "floor": 0,
       "queue": null,
       "p": [
-        7.9,
-        3.19994234885803,
-        -2.522500001266599
+        -8.4,
+        2.048865854753501e-9,
+        -1.6
       ]
     }
   },

@@ -74,14 +74,22 @@ export function buildElevator(ctx) {
     } });
     interact.push({ pos: at(carButtons.close, carButtons.close.z), r: 2.2, precise: true, when: inCar, dynamicY: () => state.y + 0.95, label: () => 'Close doors', use: () => {
       game.sound.click(); state.pressed.close = 0.6;
-      if (state.open && !state.moving) state.timer = 0;   // closes now, unless someone stands in the doorway (the safety edge)
+      if (state.open && !state.moving) { state.timer = 0; state.closeNow = true; }   // closes now, with you inside, unless someone stands in the doorway (the safety edge)
     } });
     updaters.push((dt, t, player) => {
       const target = state.open ? 1 : 0;
       state.doors += Math.sign(target - state.doors) * Math.min(Math.abs(target - state.doors), dt * 1.2);
       // Don't close on someone standing in the doorway.
       const inDoorway = Math.abs(player.y - state.floor * FLOOR2) < 1 && player.x > ELEV.x0 - 0.1 && player.x < ELEV.x1 + 0.1 && player.z > -1.4 && player.z < -0.6;
-      if (state.open && !state.moving) { state.timer -= dt; if (state.timer < 0 && !inDoorway) state.open = false; }
+      // Dwell by presence, not a clock: someone in the doorway, or in the car with nowhere called, holds the doors open
+      // (close shuts them on a car-rider, never on the doorway); they close 2 s after the entrance is clear. Before, a
+      // fixed 4 s meant a slow walker (or a loaded test machine) arrived upstairs to closed doors.
+      const here = !state.moving && Math.abs(player.y - state.floor * FLOOR2) < 1 && player.x > ELEV.x0 - 0.1 && player.x < ELEV.x1 + 0.1;
+      const inCar = here && player.z < -1.05 && player.z > -4.4;
+      if (state.open && !state.moving) {
+        if (inDoorway || (inCar && !state.closeNow && state.queue === null)) state.timer = Math.max(state.timer, 2);
+        state.timer -= dt; if (state.timer < 0 && !inDoorway) { state.open = false; state.closeNow = false; }
+      } else if (!state.moving && state.doors > 0.02 && inDoorway) { state.open = true; state.timer = 2; }   // the safety edge: closing on someone, it reopens
       if (state.queue !== null && state.doors <= 0.001 && !state.moving) { state.moving = true; state.target = state.queue * FLOOR2; state.queue = null; game.sound.hum(true); }
       if (state.moving) {
         state.y += Math.sign(state.target - state.y) * Math.min(Math.abs(state.target - state.y), 1.0 * dt);

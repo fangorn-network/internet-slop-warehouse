@@ -8,7 +8,7 @@ const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? new URL('./.v
 const mode = process.argv[2];
 const root = resolve(import.meta.dirname, '../..'), out = resolve(root, process.env.INN_OUT ?? 'artifacts/roadside-inn');   // INN_OUT: a separate folder when several runs share the machine
 await mkdir(out, { recursive: true });
-const types = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.jpg': 'image/jpeg', '.png': 'image/png' };
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.jpg': 'image/jpeg', '.png': 'image/png' };
 const server = createServer(async (req, res) => {
   const file = resolve(root, '.' + decodeURIComponent(new URL(req.url, 'http://x').pathname));
   if (relative(root, file).startsWith('..')) return res.writeHead(403).end();
@@ -34,6 +34,8 @@ if (mode === 'flow' || mode === 'mobile' || mode === 'physics' || mode === 'peop
 const errors = [];
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', e => errors.push(String(e)));
+// "Failed to load resource" console errors carry no URL: name what failed (and why) beside them.
+page.on('requestfailed', r => errors.push(`request failed: ${r.url()} (${r.failure()?.errorText})`));
 if (mode !== 'mobile') {
   await page.goto(`http://localhost:${port}/projects/roadside-inn/index.html${process.env.FULL ? '' : '?quality=low'}`);
   await page.waitForFunction(() => globalThis.__inn, null, { timeout: 180000 });
@@ -212,7 +214,7 @@ if (mode === 'physics') try {
   flow.tablePrompt = await press('side table'); await page.waitForTimeout(2500);
   flow.lampFell = await page.evaluate(() => { const l = __inn.physics.loose.find(x => x.o.name === 'hotel-table-lamp' && x.o.position.x < -8).o, t = __inn.physics.held.o; return { lampY: +l.position.y.toFixed(2), fromTable: +l.position.distanceTo(t.position).toFixed(2) }; });
   await page.keyboard.press('e'); await page.waitForTimeout(1500);   // put the table down
-  assert.ok(flow.lampFell.fromTable > 0.6, 'picking up the side table should leave its lamp behind, not carry it');
+  assert.ok(flow.lampFell.fromTable > 0.5 && flow.lampFell.lampY < 0.2, 'picking up the side table should leave its lamp behind, not carry it');
   flow.throwSpeeds = await page.evaluate(async () => { const { throwSpeed } = await import('/projects/roadside-inn/physics.js'); return [0.15, 1.1, 6, 16].map(kg => +throwSpeed(kg).toFixed(2)); });
   assert.ok(flow.throwSpeeds[0] === flow.throwSpeeds[1] && flow.throwSpeeds[2] < flow.throwSpeeds[1] * 0.65 && flow.throwSpeeds[3] < flow.throwSpeeds[2], 'heavy things are thrown slower than a remote or a sign');
   flow.lampPrompt = await page.evaluate(() => { const l = __inn.physics.loose.find(x => x.o.name === 'hotel-table-lamp' && x.o.position.x < -8); __inn.teleport(l.o.position.x + 0.8, 0, l.o.position.z, Math.PI / 2, -0.9); return l.o.userData.loose.tether.at ? 'plugged' : 'unplugged'; });
@@ -308,7 +310,7 @@ if (mode === 'physics') try {
   await page.click('#putDown'); await page.waitForTimeout(800);
   g.afterRead = await page.evaluate(() => ({ held: __inn.physics.holding, panel: !document.getElementById('panel').hidden, below: __inn.physics.loose.filter(l => l.o.name === 'hotel-newspaper' && Math.hypot(l.o.position.x - 2.35, l.o.position.z + 5.4) < 0.1).map(l => +l.o.position.y.toFixed(3)).sort() }));
   assert.ok(g.pile.n >= 6 && g.pile.offered === 1 && g.paperHeld === 'newspaper', 'the newspaper pile is separate papers, and only the top one is offered');
-  assert.ok(/Courier-Ledger/.test(g.front) && /I-44/.test(g.front) && /HELP WANTED/.test(g.classifieds), 'a newspaper in hand opens to readable pages: local news, then on to the classifieds');
+  assert.ok(/Courier-Ledger/.test(g.front) && /Section A: Local/.test(g.front) && /Classifieds/.test(g.classifieds) && /FOR SALE/.test(g.classifieds), 'a newspaper in hand opens to readable pages: local news, then on to the classifieds');
   assert.ok(g.afterRead.held === null && !g.afterRead.panel && g.afterRead.below.length === g.pile.n - 1 && g.afterRead.below.every((y, i) => Math.abs(y - g.pile.ys[i]) < 0.002), 'put down from the reader, and the papers under it never moved');
   // B7: the car's buttons light when pressed (a floor until the car gets there), door open and close work.
   await page.evaluate(() => __inn.teleport(7.75, 0, -2.9, 0, 0)); await page.waitForTimeout(800);
@@ -318,10 +320,12 @@ if (mode === 'physics') try {
   g.pressed = await button('Press 2');
   await page.waitForFunction(() => __inn.world.elevator.floor === 1 && !__inn.world.elevator.moving, null, { timeout: 240000 });
   g.arrived = await page.evaluate(() => __inn.world.elevator.lights());
+  await page.waitForTimeout(6000); g.heldOpen = await page.evaluate(() => ({ doors: +__inn.world.elevator.doors.toFixed(2), y: +__inn.player.y.toFixed(2) }));   // still in the car: they wait for you
   g.hallCall = await button('Call elevator');
   assert.ok(g.opened.open && g.opened.lights.car.open, 'door open opens the doors and lights');
   assert.ok(!g.closed.open && g.closed.lights.car.close, 'door close shuts them now and lights');
   assert.ok(g.pressed.lights.car[2] && !g.arrived.car[2] && g.hallCall.lights.call[0], 'a floor button stays lit until the car arrives; a hall call button lights');
+  assert.ok(g.heldOpen.y > 3 && g.heldOpen.doors > 0.9, 'arrived with you in the car, the doors stay open until you leave (no fixed 4 s dwell)');
   // Floor lamps have plugs too: unplug one in the lobby, carry it up to room 212 and plug it in by the bed: it lights.
   await page.evaluate(() => __inn.teleport(-11.3, 0, 3.35, Math.PI / 2, -0.85)); await page.waitForTimeout(1200);
   g.unplug = await press('Unplug the floor lamp'); await page.waitForTimeout(300);
@@ -379,7 +383,7 @@ if (mode === 'people') try {
       const below = pt => new T.Raycaster(pt.clone().setY(pt.y + 0.02), new T.Vector3(0, -1, 0), 0, 3).intersectObjects(meshes, false)[0]?.point.y ?? 0;
       const seat = below(hip), feet = B.feet.map(f => f.getWorldPosition(V())), knees = B.knees.map(k => k.getWorldPosition(V())), hands = B.hands.map(h => h.getWorldPosition(V()));
       const toe = new T.Vector3(0, 0, 1).applyQuaternion(p.root.quaternion);
-      const thighMid = [0, 1].map(i => B.thighs[i].getWorldPosition(V()).lerp(knees[i], 0.5));
+      const thighMid = [0, 1].map(i => B.thighs[i].getWorldPosition(V()).lerp(knees[i], 0.3));   // the part over the seat (a bar stool is 36 cm across)
       return {
         at: hip.toArray().map(v => +v.toFixed(2)), hipOverSeat: +(hip.y - seat).toFixed(3),
         feetOverSupport: feet.map(f => +(f.y - Math.max(below(f), below(f.clone().addScaledVector(toe, 0.07)))).toFixed(3)),   // under the ankle or the ball of the foot (a stool's ring is thin)
