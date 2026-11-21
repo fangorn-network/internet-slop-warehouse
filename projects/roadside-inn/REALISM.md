@@ -412,3 +412,7 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Never put a decal on something that moves, or past an edge.** Milk landed on a bar-stool seat and hung in the air
   past it. Loose props are skipped (the liquid runs to the floor below); on counters the sheet shrinks until four rim
   points find the same top.
+- **White on white disappears; a puck is not a lid.** A torn sugar packet in counter white and 1 mm grains vanished at
+  arm's length; packets are a shade warmer than the counter and grains catch a little emission so they glint. A
+  cylinder lid read as a hockey puck: use the lid's real profile (lathe, double-sided). Coffee rings in a dull
+  brown-grey read as grime; keep them warm.

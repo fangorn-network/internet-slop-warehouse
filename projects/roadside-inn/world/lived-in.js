@@ -9,7 +9,7 @@ import { economy } from '../quality.js';
 
 export function buildLivedIn(ctx) {
   const {
-    scene, lib, add, seeded, loose, cordGeometry, socket,
+    scene, lib, add, seeded, loose, cordGeometry, socket, dm,
     plugMat, R,
   } = ctx;
   // ---------- proof of life: outlets and cords, things guests left behind ----------
@@ -98,7 +98,7 @@ export function buildLivedIn(ctx) {
     for (const z of [-1.18, 1.18]) scuffs.push(onWall(0.3, 0.14, 6.413, 0.24, z, -Math.PI / 2), onWall(0.22, 0.1, 6.413, 0.33, z + (z > 0 ? 0.12 : -0.12), -Math.PI / 2));
     merged(scuffs, decalMat(scuffTex, 0.85), 'Scuffs');
     // coffee rings and a couple of drips by the dispensers (counter top 0.94; grates at x 2.0-2.6, z -8.6)
-    const ringTex = canvasTex(128, (g, S) => { g.strokeStyle = 'rgba(92,52,24,0.55)'; g.lineWidth = 3; g.beginPath(); g.arc(S / 2, S / 2, S * 0.36, 0.2, Math.PI * 1.85); g.stroke(); g.fillStyle = 'rgba(92,52,24,0.12)'; g.beginPath(); g.arc(S / 2, S / 2, S * 0.36, 0, Math.PI * 2); g.fill(); });
+    const ringTex = canvasTex(128, (g, S) => { g.strokeStyle = 'rgba(112,58,20,0.6)'; g.lineWidth = 3; g.beginPath(); g.arc(S / 2, S / 2, S * 0.36, 0.2, Math.PI * 1.85); g.stroke(); g.fillStyle = 'rgba(112,58,20,0.14)'; g.beginPath(); g.arc(S / 2, S / 2, S * 0.36, 0, Math.PI * 2); g.fill(); });
     const rings = [[2.3, -8.43, 0.085], [2.75, -8.38, 0.08], [3.05, -8.47, 0.07], [2.1, -8.36, 0.05], [2.92, -8.42, 0.04]].map(([x, z, d]) => flat(d, d, x, 0.9412, z, r() * 6));
     merged(rings, decalMat(ringTex, 0.9), 'Coffee rings');
     // and what the last guest left on it: a used stir stick and two sugar packets that missed the cubby (counter top about 0.941, where the rings sit).
@@ -106,6 +106,30 @@ export function buildLivedIn(ctx) {
     const stick = F.box(0.14, 0.0015, 0.005, F.mat('#d9c39a', { roughness: 0.8 }), 3.42, 0.9412, -8.36, scene); stick.rotation.y = 0.42; stick.name = 'Stir stick';
     const stain = F.box(0.035, 0.0003, 0.0055, F.mat('#6b4426', { roughness: 0.6 }), 3.42 - 0.052 * Math.cos(0.42), 0.9427, -8.36 + 0.052 * Math.sin(0.42), scene); stain.rotation.y = 0.42;   // the wet end
     for (const [x, z, ry, c] of [[3.6, -8.33, 0.9, '#f2b8c6'], [3.53, -8.43, -0.3, '#9cc6ea']]) { const k = F.box(0.05, 0.003, 0.034, F.mat(c, { roughness: 0.7 }), x, 0.9412, z, scene); k.rotation.y = ry; k.name = 'Sugar packet'; }
+    // The rest of a 10 p.m. coffee bar (station at x 3.4, z -8.6; counter top 0.941; Blender (bx, by) -> (3.4 + bx, -8.6 - by)):
+    // a sugar packet torn open with its strip beside it and the grains it shed fanning toward the edge, a lid that missed
+    // its cup and one on the floor, a crumpled napkin, coffee standing in the drip grates and drips in front of the taps.
+    const TOP = 0.9412, q = seeded(77);
+    const torn = F.box(0.038, 0.0025, 0.034, F.mat('#e2dccd', { roughness: 0.75 }), 4.08, TOP, -8.37, scene); torn.rotation.y = 0.35; torn.name = 'Torn sugar packet';
+    const strip = F.box(0.012, 0.002, 0.034, F.mat('#e2dccd', { roughness: 0.75 }), 4.15, TOP, -8.32, scene); strip.rotation.y = 1.4; strip.name = 'Packet strip';
+    { const n = economy ? 120 : 260, grain = new T.InstancedMesh(new T.BoxGeometry(0.0014, 0.0011, 0.0014), new T.MeshStandardMaterial({ color: '#ffffff', roughness: 0.2, emissive: '#ffffff', emissiveIntensity: 0.15 }), n), col = new T.Color();
+      for (let i = 0; i < n; i++) {   // most within a hand's width of the tear, a thin tail toward the counter edge
+        const far = q() < 0.25, a = (q() - 0.5) * 2.4 + (far ? 1.4 : 0), d = far ? 0.04 + q() * 0.12 : Math.sqrt(q()) * 0.05;
+        dm.position.set(4.1 + Math.cos(a) * d, TOP + 0.0005, -8.36 + Math.sin(a) * d * 0.7 + (far ? 0.02 : 0)); dm.rotation.set(q() * 3, q() * 3, q() * 3); const k = 0.7 + q() * 0.8; dm.scale.set(k, k, k); dm.updateMatrix();
+        grain.setMatrixAt(i, dm.matrix); grain.setColorAt(i, col.set(q() < 0.12 ? '#c9a46a' : '#ffffff'));   // a few raw-sugar grains from the bin next door
+      }
+      grain.name = 'Spilt sugar'; scene.add(grain); }
+    const lidMat = F.mat('#1c1c1e', { roughness: 0.35, side: T.DoubleSide }), lidGeo = new T.LatheGeometry([[0, 0.012], [0.03, 0.012], [0.034, 0.0105], [0.039, 0.007], [0.043, 0.0065], [0.0435, 0.002], [0.042, 0]].map(([x, y]) => new T.Vector2(x, y)), 28);   // the dome lid's profile (sip ridge, rim), as in props.py
+    { const l = new T.Mesh(lidGeo, lidMat); l.position.set(3.72, TOP, -8.33); l.name = 'Cup lid'; scene.add(l); }
+    { const l = new T.Mesh(lidGeo, lidMat); l.position.set(2.95, 0.0102, -8.02); l.rotation.set(0.05, 0, 0.04); l.name = 'Cup lid (floor)'; scene.add(l); }   // dropped, resting on its rim lip
+    { const g = new T.IcosahedronGeometry(0.028, 2), p = g.attributes.position, v = new T.Vector3();
+      for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); const k = 0.7 + 0.5 * Math.abs(Math.sin(v.x * 157 + v.y * 311 + v.z * 113)); p.setXYZ(i, v.x * k, v.y * k * 0.55, v.z * k); }
+      g.computeVertexNormals(); const nap = new T.Mesh(g, F.mat('#efeee9', { roughness: 0.95 })); nap.position.set(4.5, TOP + 0.013, -8.34); nap.name = 'Crumpled napkin'; scene.add(nap); }
+    // coffee standing in the drip grates (between the slots) and drips on the counter under each tap
+    const filmTex = canvasTex(128, blotches(41, 30, '58,30,12', 0.5, 8, 26));
+    merged([2.02, 2.32, 2.62].map(x => flat(0.16, 0.19, x, 0.9505, -8.62, 0)), decalMat(filmTex, 0.85), 'Drip-grate coffee');
+    const dripTex = canvasTex(128, blotches(43, 7, '70,38,16', 0.7, 3, 9));
+    merged([2.02, 2.32, 2.62].map((x, i) => flat(0.07, 0.07, x + (q() - 0.5) * 0.02, TOP, -8.47 + i * 0.006, q() * 6)), decalMat(dripTex, 0.9), 'Tap drips');
   }
 }
 
