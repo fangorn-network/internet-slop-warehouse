@@ -5,7 +5,7 @@ import * as T from 'three';
 import * as F from './fixtures.js';
 import { buildLamps } from './world/lamps.js';
 import { buildLobby } from './world/lobby.js';
-import { buildLivedIn, buildFloorShade, buildCoveBase } from './world/lived-in.js';
+import { buildLivedIn, buildFloorShade, buildCoveBase, buildSpills } from './world/lived-in.js';
 import { buildPool } from './world/pool.js';
 import { buildGym } from './world/gym.js';
 import { buildCorridors } from './world/corridors.js';
@@ -630,7 +630,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // the building's helpers and materials, plus what each zone adds for those after it.
   const ctx = {
     scene, lib, game, updaters, add, loose, cordGeometry, interact, lightAnchors, unboxed,
-    takeables, solid, light, statics, drywall, charcoal, downlight, lvt, regionalMap, painting, mbox, dm,
+    carpetAreas, takeables, solid, light, statics, drywall, charcoal, downlight, lvt, regionalMap, painting, mbox, dm,
     seeded, poolTile, slab, wall, openableDoor, storefrontDoor, instances, south2, north2, floorAt, ELEV,
     placeWindow, R, people, outside, station, colliders, zones, trees, outdoor, lawn,
     concrete, equipDoor,
@@ -649,7 +649,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   buildStaff(ctx);
   buildEntranceDoors(ctx);
   buildOutside(ctx);
-  buildCoveBase(ctx);
+  buildCoveBase(ctx); buildSpills(ctx);
   buildFloorShade(ctx);   // last: painted from everything static that stands on the floor
   const { breakfast, elevator, room, clerk, walkers, carLamps } = ctx;
   // Dusk: lot lights carry the outside; day: they're off.
@@ -681,5 +681,5 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     'travel stop': ['outside'],
     outside: ['lobby', 'pool', 'travel stop', 'pool corridor'],
   };
-  return { setTimeOfDay, lightVisible, in212, walkers, clerk, colliders, surfaces, interact, updaters, lightAnchors, zones, sees, elevator, room, spawn: { x: 4.4, z: 17.0, yaw: 0.6 } };
+  return { spill: ctx.spill, setTimeOfDay, lightVisible, in212, walkers, clerk, colliders, surfaces, interact, updaters, lightAnchors, zones, sees, elevator, room, spawn: { x: 4.4, z: 17.0, yaw: 0.6 } };
 }

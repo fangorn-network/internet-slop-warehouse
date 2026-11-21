@@ -121,6 +121,8 @@ export function createSound(foley) {
     ice() { for (let i = 0; i < 18; i++) burst(0.05, 0.18, 2500 + Math.random() * 2500, 'bandpass', 0.3 + i * 0.07 + Math.random() * 0.05); tone(90, 1.5, 0.05, 'sawtooth'); },
     water() { burst(1.8, 0.12, 1500, 'bandpass'); },
     pour() { burst(1.4, 0.1, 900, 'bandpass'); },
+    // liquid hitting the floor: a broad slap (100-200 ms), then a short trickle of drops. level 0..1 by impact speed
+    splash(level = 0.6) { burst(0.16, 0.4 * level, 1200, 'lowpass'); burst(0.12, 0.2 * level, 3200, 'bandpass', 0.01); for (let i = 0; i < 5; i++) burst(0.03, 0.05 * level, 2000 + Math.random() * 3000, 'bandpass', 0.18 + i * 0.07 + Math.random() * 0.05); },
     bell() { tone(2637, 1.5, 0.1); tone(3520, 1.2, 0.04); },
     vend() { tone(120, 0.6, 0.06, 'sawtooth'); burst(0.2, 0.6, 180, 'lowpass', 1.1); },
     hum(on) { fade(beds.motor, on ? 0.03 : 0); },

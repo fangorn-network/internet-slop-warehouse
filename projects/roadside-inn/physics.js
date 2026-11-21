@@ -87,9 +87,10 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   // Landing, bumping, being knocked over: sound.js scales it by the hit's energy and how far away you are.
   let eye = null;   // the camera, from the last update
   // and the residents hear it too (world.onImpact, set by main.js: game.hear turns heads toward a loud enough landing)
-  const heard = (o, kg) => (sound?.impact || world.onImpact) && (({ speed }) => {
+  const heard = (o, kg) => (sound?.impact || world.onImpact || world.spill) && (({ speed }) => {
     sound?.impact?.(made(o.name), kg(), speed, eye ? eye.position.distanceTo(o.position) : 0);
     world.onImpact?.(o.getWorldPosition(new T.Vector3()), 0.5 * kg() * speed * speed);
+    world.spill?.(o, speed, eye?.position);   // a cup or creamer that lands hard leaves a puddle (lived-in.js)
   });
 
   // Carrying: E on a small loose prop picks it up; E again throws it the way you're looking. Each carriable prop gets

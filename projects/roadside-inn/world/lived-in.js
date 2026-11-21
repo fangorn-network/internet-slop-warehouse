@@ -179,3 +179,89 @@ export function buildCoveBase({ scene, statics }) {
   const cove = new T.Mesh(mergeGeometries(geos), F.mat('#3b3835', { roughness: 0.55 })); cove.name = 'Cove base'; cove.receiveShadow = true;
   scene.add(cove); statics.push(cove);
 }
+
+// Spills. A container with liquid in it that lands hard enough leaves a puddle where it lands: a thin glossy sheet on
+// hard floors and counters (wet sheen against the matte LVT is what reads as liquid), a matte dark patch that wicks
+// wider on carpet. The sheet runs ahead in the direction it was thrown, with fingers and satellite drops. No fluid sim.
+// physics.js calls world.spill(object, speed, eye) on every landing of a loose prop.
+// ponytail: puddles aren't saved and never dry; no steam, no slosh while carried, no droplet arcs. Add with a fill model.
+const LIQUIDS = {
+  'hotel-coffee-cup': { kind: 'coffee', ml: 150, min: 1.6 },   // the half-finished cups guests left; the lid pops off
+  mug: { kind: 'coffee', ml: 200, min: 1.6 },                  // the clerk's
+  creamer: { kind: 'milk', ml: 250, min: 4 },                  // a capped bottle: only a hard hit pops the flip cap
+};
+const TONE = {   // the sheet's middle and its thin edge
+  coffee: ['rgba(46,24,10,0.9)', 'rgba(128,76,36,0.5)'],
+  milk: ['rgba(246,243,236,0.95)', 'rgba(214,218,220,0.5)'],   // thin milk goes faintly blue-grey and see-through
+};
+const LOOK = {   // hard floor / carpet: tint, opacity, roughness (soaked into carpet: no sheen, darker, fainter)
+  coffee: { hard: ['#ffffff', 1, 0.04], soft: ['#5a4a40', 0.55, 1] },
+  milk: { hard: ['#ffffff', 1, 0.1], soft: ['#cfcac2', 0.4, 1] },   // milk: lower surface tension, thinner and wider
+};
+export function buildSpills(ctx) {
+  const { scene, game, updaters, carpetAreas, lvt } = ctx;
+  const shapes = {}, puddles = [], ray = new T.Raycaster(), down = new T.Vector3(0, -1, 0);
+  // One authored-by-code splash: a main sheet pushed forward (+x of the texture), lobed edge, fingers, satellites.
+  const shape = (seed, kind) => shapes[seed + kind] ??= (() => {
+    const S = 256, c = document.createElement('canvas'); c.width = c.height = S; const g = c.getContext('2d'), r = mulberry(seed);
+    const lobe = [1, 2, 3, 5, 7].map(k => [k, r() * 6.3, (0.18 / k) * (0.5 + r())]);
+    const rad = a => 1 + lobe.reduce((s, [k, ph, amp]) => s + amp * Math.sin(k * a + ph), 0);
+    const blob = (cx, cy, R, stretch) => { g.beginPath(); for (let i = 0; i <= 64; i++) { const a = i / 64 * Math.PI * 2, q = R * rad(a) * (Math.cos(a) > 0 ? stretch : 1); g.lineTo(cx + Math.cos(a) * q, cy + Math.sin(a) * q * 0.8); } g.fill(); return g; };
+    const [mid, edge] = TONE[kind], fill = g.createRadialGradient(S * 0.42, S / 2, 0, S * 0.42, S / 2, S * 0.3);
+    fill.addColorStop(0, mid); fill.addColorStop(0.6, mid); fill.addColorStop(1, edge);   // thick in the middle, a thin film at the edge
+    g.fillStyle = fill; g.strokeStyle = edge;
+    blob(S * 0.4, S / 2, S * 0.2, 1.35);
+    g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,0.28)'; g.stroke();   // the meniscus catches the light: a bright hairline round the edge reads as wet
+    g.fillStyle = mid; for (let i = 0; i < 4; i++) { const a = (r() - 0.5) * 1.1, L = S * (0.1 + r() * 0.12); g.beginPath(); g.ellipse(S * 0.5 + Math.cos(a) * L * 0.6, S / 2 + Math.sin(a) * L * 0.6, L * 0.6, 2 + r() * 4, a, 0, Math.PI * 2); g.fill(); }   // fingers run ahead
+    for (let i = 0; i < 16; i++) { const a = (r() - 0.5) * 1.8, d = S * (0.26 + r() * r() * 0.22); g.beginPath(); g.ellipse(S * 0.4 + Math.cos(a) * d, S / 2 + Math.sin(a) * d, 1 + r() * r() * 5, 1 + r() * 2.5, a, 0, Math.PI * 2); g.fill(); }   // satellites fly ahead, stretched along their path
+    const t = new T.CanvasTexture(c); t.colorSpace = T.SRGBColorSpace; return t;
+  })();
+  // The first upward face under a point, skipping the thrown thing itself, people, overlays and loose props (a puddle on a
+  // stool seat would hang in the air once the stool moves: the liquid runs off it to the floor instead).
+  const hitBelow = (p, skip) => {
+    ray.set(new T.Vector3(p.x, p.y + 0.25, p.z), down); ray.far = 3;
+    for (const h of ray.intersectObjects(scene.children, true)) {
+      let bad = h.object.isSkinnedMesh || !h.face || [].concat(h.object.material).some(m => m.transparent);
+      for (let q = h.object; q && !bad; q = q.parent) if (q === skip || q.userData.loose) bad = true;
+      if (bad) continue;
+      if (h.face.normal.clone().transformDirection(h.object.matrixWorld).y > 0.8) return h.point;
+    }
+    return null;
+  };
+  // Where it lands and how big it may be: on a counter or table the sheet must not hang past the edge, so shrink it until
+  // four points round its rim find the same top (on the floor it always fits).
+  const landing = (o, size) => {
+    const at = hitBelow(o.getWorldPosition(new T.Vector3()), o); if (!at) return null;
+    if (at.y < 0.1) return { at, size };
+    for (const k of [0.8, 0.5, 0.3]) {
+      const r = size * k * 0.4;
+      if ([[r, 0], [-r, 0], [0, r], [0, -r]].every(([dx, dz]) => { const q = hitBelow(new T.Vector3(at.x + dx, at.y, at.z + dz), o); return q && Math.abs(q.y - at.y) < 0.01; })) return { at, size: size * k };
+    }
+    return null;
+  };
+  ctx.spill = (o, speed, eye) => {
+    const L = LIQUIDS[o.name]; if (!L || speed < L.min || o.userData.spilt) return;
+    const land = landing(o, Math.sqrt(L.ml / 150) * (L.kind === 'milk' ? 1.0 : 0.85)); if (!land) return;
+    const { at } = land; o.userData.spilt = true;
+    const soft = at.y < 0.1 && carpetAreas.some(([x0, x1, z0, z1]) => at.x > x0 && at.x < x1 && at.z > z0 && at.z < z1);
+    const [color, opacity, roughness] = LOOK[L.kind][soft ? 'soft' : 'hard'], size = land.size * (soft ? 0.7 : 1);
+    const mat = new T.MeshStandardMaterial({ color, map: shape(puddles.length % 3 + 1, L.kind), transparent: true, opacity, roughness, metalness: 0, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -6, polygonOffsetUnits: -6 });
+    // the wet sheen is the room reflected in it: the same captured interior the floor has (main.js tags materials once, at load)
+    if (!soft) Object.assign(mat, { envMap: lvt.envMap, envMapIntensity: (lvt.envMapIntensity ?? 1) * 3 });
+    const m = new T.Mesh(new T.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), mat);
+    const dir = eye ? Math.atan2(at.x - eye.x, at.z - eye.z) : Math.random() * 6.3;   // thrown away from the thrower
+    m.position.copy(at).y += 0.0015; m.rotation.y = dir - Math.PI / 2; m.name = `Spilt ${L.kind}`; m.renderOrder = 2;
+    scene.add(m); puddles.push({ m, t: 0, size, soft });
+    if (puddles.length > 12) { const old = puddles.shift(); scene.remove(old.m); old.m.geometry.dispose(); old.m.material.dispose(); }
+    game.sound?.splash?.(Math.min(1, speed / 6));
+  };
+  updaters.push(dt => {
+    for (const p of puddles) {
+      if (p.t > 2.5) continue;
+      p.t += dt;
+      const grow = 1 - (1 - Math.min(1, p.t / 0.45)) ** 3, wick = p.soft ? 1 + 0.45 * Math.min(1, Math.max(0, p.t - 0.45) / 2) : 1;
+      const k = p.size * (0.15 + 0.85 * grow) * wick; p.m.scale.set(k, 1, k);
+    }
+  });
+}
+function mulberry(a) { return () => { a |= 0; a = a + 0x6d2b79f5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }

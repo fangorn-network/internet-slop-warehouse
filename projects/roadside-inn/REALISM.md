@@ -404,3 +404,11 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   run: their wheels drew dark blocks in the middle of the lobby floor.
 - **Walls need a base.** A painted wall meeting LVT bare is the most CG junction in the room. `buildCoveBase` puts a
   4-inch rubber cove on every wall piece face looking into the lobby (from the wall boxes, so glass and millwork get none).
+- **Spills are decals with a cause, not a fluid sim.** A coffee cup, the clerk's mug or a creamer bottle (only a hard
+  hit pops its cap) that lands hard leaves one puddle where it first hits, running ahead of the throw. What makes it
+  read as liquid and not paint: a thick dark middle fading to a thin see-through edge, a bright hairline meniscus at the
+  rim, and low roughness with the room reflected in it (the interior env map must be copied on: materials made after
+  load miss main.js's tagging). On carpet it soaks instead: matte, darker, and it wicks ~45 % wider over 2 s.
+- **Never put a decal on something that moves, or past an edge.** Milk landed on a bar-stool seat and hung in the air
+  past it. Loose props are skipped (the liquid runs to the floor below); on counters the sheet shrinks until four rim
+  points find the same top.
