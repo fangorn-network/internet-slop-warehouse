@@ -13383,5 +13383,30 @@
       "wall-art",
       "cc0"
     ]
+  },
+  {
+    "id": "ph-fire-alarm",
+    "file": "haven/ph-fire-alarm.glb",
+    "type": "asset",
+    "title": "Fire Alarm",
+    "mime": "model/gltf-binary",
+    "license": "CC0-1.0",
+    "author": "Slinc",
+    "tags": [
+      "model",
+      "gltf",
+      "realistic",
+      "pbr",
+      "collection: project_lighthouse",
+      "industrial",
+      "office",
+      "wall decoration",
+      "alarm",
+      "emergency",
+      "red",
+      "safety",
+      "firefighting"
+    ],
+    "description": "Fire Alarm from Poly Haven, by Slinc. Self-contained GLB with 1K textures. Upstream polygon count: 2705; 2 meshes. Source: https://polyhaven.com/a/fire_alarm. CC0-1.0. Original scale and pivots preserved; use a bounding box when positioning."
   }
 ]
