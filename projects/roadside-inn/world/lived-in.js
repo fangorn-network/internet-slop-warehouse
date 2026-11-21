@@ -8,31 +8,15 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 export function buildLivedIn(ctx) {
   const {
-    scene, lib, game, interact, add, seeded, loose, cordGeometry, sockets, PLUG,
-    plugMat, plugs, R,
+    scene, lib, add, seeded, loose, cordGeometry, socket,
+    plugMat, R,
   } = ctx;
   // ---------- proof of life: outlets and cords, things guests left behind ----------
   {
     const cords = [], whiteCords = [];
     const cord = (pts, list = cords) => list.push(cordGeometry(pts));
-    // A wall outlet (receptacles 0.3 m up, facing out of the wall) and a plug in its lower socket.
-    // Each one's lower socket goes in `sockets`; plugged = an appliance's cord is in it for good.
-    // Any free one takes any plug (lamps.js pluggable) whose lamp is within its cord's reach: the one in your hand first,
-    // else the nearest.
-    const socket = (o, used, wall, y = 0) => {
-      o.updateWorldMatrix(true, false);
-      const at = o.localToWorld(PLUG.clone()), n = wall ? new T.Vector3(0, 0, 1).transformDirection(o.matrixWorld).setY(0) : null;
-      const tail = wall ? [[at.x + n.x * 0.15, y + 0.016, at.z + n.z * 0.15], [at.x + n.x * 0.017, y + 0.05, at.z + n.z * 0.017], [at.x + n.x * 0.017, y + 0.27, at.z + n.z * 0.017]] : [[at.x, y + 0.02, at.z]];
-      const s = { o, at, tail, used };
-      sockets.push(s);
-      if (used) return;
-      const p = new T.Vector3(), reach = l => l.lamp.getWorldPosition(p).distanceTo(at);
-      const near = () => plugs.filter(l => !l.socket && reach(l) < l.tether.length - 0.1).sort((a, b) => (game.holding?.() === b.noun) - (game.holding?.() === a.noun) || reach(a) - reach(b))[0];
-      const inIt = () => plugs.find(l => l.socket === s);
-      interact.push({ pos: at, r: 0.9, precise: true, when: () => s.used ? !!inIt() : !!near(),
-        label: () => s.used ? `Unplug the ${inIt()?.noun ?? 'lamp'}` : `Plug in the ${near()?.noun ?? 'lamp'}`,
-        use: () => { const l = inIt(); if (l) l.unplug(); else { near()?.plugInto(s); game.sound?.click?.(); } } });
-    };
+    // A wall outlet (receptacles 0.3 m up, facing out of the wall) and a plug in its lower socket; socket() (lamps.js)
+    // makes it something a cord plugs into.
     const outlet = (x, z, ry, plugged = true, y = 0) => {
       const o = add(lib.model('hotel-outlet', { origin: true }), x, y, z, ry);
       if (plugged) { const p = F.box(0.034, 0.03, 0.026, plugMat, 0, 0.266, 0.013); o.add(p); }

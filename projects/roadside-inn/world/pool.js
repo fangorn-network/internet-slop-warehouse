@@ -7,7 +7,7 @@ import * as F from '../fixtures.js';
 
 export function buildPool(ctx) {
   const {
-    scene, lib, game, interact, updaters, add, loose, solid, light, poolTile, slab, wall, openableDoor, equipDoor,
+    scene, lib, game, interact, updaters, add, loose, solid, light, poolTile, slab, wall, openableDoor, storefrontDoor, equipDoor,
   } = ctx;
   // ---------- pool wing ----------
   {
@@ -55,8 +55,7 @@ export function buildPool(ctx) {
   // ---------- pool corridor doors and signs (briefs/natasha-pool-plan.md) ----------
   // Key-card glass door from the pool corridor (reader on the corridor side, push from the pool), like the lobby's.
   {
-    const d = openableDoor('POOL'); d.group.position.set(-13.15, 0, -9); d.group.rotation.y = Math.PI; scene.add(d.group);
-    d.group.getObjectByName('leaf').material = F.mat('#b9cfd8', { transparent: true, opacity: 0.35, roughness: 0.05 });
+    const d = storefrontDoor(1.0, 0.18, -1); d.group.position.set(-13.15, 0, -9); d.group.rotation.y = Math.PI; scene.add(d.group);   // aluminium storefront (L7)
     const st = { open: false, angle: 0, timer: 0 };
     solid(-13.65, -12.65, 0, 2.2, -9.08, -8.92, () => st.angle < 1.1);
     interact.push({ pos: new T.Vector3(-13.15, 1.2, -9.5), r: 1.4, when: p => p.z < -9, label: () => game.has('key card') ? 'Pool door (tap key)' : 'Pool door',

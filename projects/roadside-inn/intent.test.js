@@ -34,3 +34,9 @@ test("needs choose, beats split, and a met need gives way", () => {
   expect(m.state.needs.coffee.level).toBe(0);
   expect(m.state.doing).toBe("idle");
 });
+
+test("a sitter's activity is posture and attention beats in place, no walking", () => {
+  const gene = { activities: { tv: { steps: [["posture", "tv"], ["attend", "tv"], ["wait", 60]] }, phone: { steps: [["posture", "phone"], ["attend", "phone"], ["wait", 20]] } } };
+  const s = mind(gene, world).start("phone", [2, 0.5, 6]);
+  expect(s).toEqual([{ p: [2, 0.5, 6], wait: 20, posture: "phone", attend: "phone" }]);
+});

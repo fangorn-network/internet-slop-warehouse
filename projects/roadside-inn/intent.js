@@ -34,6 +34,13 @@
 //        | ['wait', min, max?]                     // stay a while (seconds, random in range) where they are
 //        | ['pose', 'cup' | 'sit' | null]          // a body pose from the character part
 //        | ['hold', true | false]                  // carrying their prop (a cup) or not
+//        | ['posture', name]                       // a named posture of theirs (a sitter: 'tv', 'phone'); the body
+//                                                  //   blends to it (body.js / people.js), it doesn't snap
+//        | ['attend', thingId | null]              // what their eyes are on while doing it (resident.things below)
+//
+// Seated residents (v1, 2026-11-21) add: seat: { hips: [x, y, z], yaw, sink }, postures: { [name]: sit options },
+// things: { [id]: { at?: [x, y, z], prop?: modelId, kind: 'tv' | 'phone' | 'screen' | 'work' } }, and manner (body.js:
+// notice / civil / engage / linger distances and times). Their activities use posture / attend / wait, no 'go'.
 //
 // REACTIONS (W2 design, data only): reacts = { [event]: { mood?: 'startled' | 'annoyed' | 'amused', do: Step[] | 'flinch'
 // | 'step-away' | 'leave', say?: string[], cooldown?: s } }, events being 'player-near', 'player-stares', 'hit' (a thrown
@@ -41,6 +48,7 @@
 // reaction interrupts the current activity, then the runner picks again (a startled guest may 'leave' to their room).
 
 const rand = (a, b = a) => a + Math.random() * (b - a);
+const BEAT = { pose: 'pose', hold: 'cup', posture: 'posture', attend: 'attend' };   // step → the stop field it sets
 
 /** Shortest node path (Dijkstra over straight edges) from the node nearest `from` to node `to`: [x, y, z][]. */
 export function route(world, from, to) {
@@ -84,9 +92,9 @@ export function mind(resident, world) {
         stops.push({ p: pl.p, wait: 0, face: pl.face, hide: pl.hide });
         here = pl.p;
       } else if (op === 'wait') last().wait += rand(a, b ?? a);
-      else if (op === 'pose' || op === 'hold') {   // after a wait, a change is a new beat at the same spot (pours, then holds the cup)
+      else if (op in BEAT) {   // after a wait, a change is a new beat at the same spot (pours, then holds the cup)
         let s = last(); if (s.wait > 0) { s = { p: here, wait: 0 }; stops.push(s); }
-        s[op === 'pose' ? 'pose' : 'cup'] = a;
+        s[BEAT[op]] = a;
       }
     }
     return stops;

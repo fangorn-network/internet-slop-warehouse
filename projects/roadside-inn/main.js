@@ -7,7 +7,6 @@ import { createSound } from './sound.js';
 import { quality } from './quality.js';
 import { createPlayer, EYE } from './player.js';
 import { attach as zoneCulling } from '../../parts/zone-culling.js';
-import { newspaperPage, newspaperPages } from './newspaper.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('world');
@@ -42,7 +41,7 @@ addEventListener('resize', resize); resize();
 const bag = [];
 let wallet = 725, goal = '', sayTimer = 0, busy = false, started = false, panelOpen = false;
 const game = {
-  tvs: [], traffic: [],
+  tvs: [], traffic: [], flags: {},   // flags: what happened, for the save (slept: the bed is unmade)
   has: item => bag.includes(item),
   give(item) { bag.push(item); renderPocket(); },
   take(item) { const i = bag.indexOf(item); if (i >= 0) bag.splice(i, 1); renderPocket(); },
@@ -131,6 +130,7 @@ const detailPosition = new T.Vector3();
 // The player (player.js, shared with Late Checkout): physics when Rapier loads, the old walker when it doesn't.
 const walker = await createPlayer(scene, world, { sound }), phys = walker.physics;
 game.holding = () => phys?.holding ?? null;   // world.js asks, e.g. the TV wants its remote in your hand
+game.held = () => phys?.held?.o ?? null; game.physics = phys; game.camera = () => camera;   // world/reading.js, world/handling.js, lamps.js
 // Compile every shader now (both reflection maps share a size, so later swaps never recompile).
 await renderer.compileAsync(scene, camera);
 $('loading').hidden = true; $('start').hidden = false;
@@ -139,7 +139,7 @@ renderPocket();
 
 // ---------- player ----------
 const player = walker.player, currentZone = walker.zone;
-const controls = attachInput(canvas, { onUse: use, onInspect: () => (phys?.held && started && !panelOpen ? phys.throw() : use()), onMenu: closePanel });
+const controls = attachInput(canvas, { onUse: use, onInspect: () => (started && !panelOpen && game.reading?.back()) || (phys?.held && started && !panelOpen ? phys.throw() : use()), onMenu: closePanel });
 controls.setLook(world.spawn.yaw, 0);
 
 // ---------- interaction ----------
@@ -154,7 +154,9 @@ function pick() {
     const eyeY = camera.position.y;
     if (Math.abs(to.y - eyeY) > 1.7) continue;
     to.sub(camera.position);
-    const d = to.length();
+    // Reach: you bend for what's below you (about 0.9 m: a hand reaches the floor at your feet), so a remote on the floor
+    // half a metre ahead is as near as one on a table. Before, measured from the eye, nothing on the floor was in reach.
+    const d = Math.hypot(to.x, to.z, to.y < 0 ? Math.max(0, -to.y - 0.9) : to.y);
     if (d > it.r + 0.6) continue;
     const facing = to.normalize().dot(view);
     if (facing < (it.precise ? 0.95 : 0.55)) continue;   // precise: small pickups need a direct look
@@ -168,7 +170,7 @@ function use() {
   if (busy) return;
   // Carrying something, E still works on what you look at (the TV, with its remote in hand); with nothing in view it
   // puts the thing down. Q or right-click throws it.
-  if (phys?.holding === 'newspaper') return readPaper();
+  if (game.reading?.use()) return;   // a paper or brochure in hand opens there (world/reading.js)
   if (focus) return focus.use();
   if (phys?.held) return phys.drop();
   walker.use();
@@ -224,17 +226,6 @@ function vend(kind = 'snacks') {
     setTimeout(() => { game.give(name.toLowerCase()); game.say(kind === 'drinks' ? `A ${name.toLowerCase()} thunks down into the tray. Ice cold.` : `The coil turns… and the ${name.toLowerCase()} drops. Victory.`); }, 1200);
   });
 }
-// ---------- reading the paper ----------
-// With a newspaper in hand, E opens it: its pages (newspaper.js), turned with the buttons; fold it up and you still hold it.
-function readPaper(page = 0) {
-  const edition = phys.held.o.userData.edition ?? 'today', n = newspaperPages(edition);
-  openPanel(`${newspaperPage(edition, page)}<div class="turn"><button class="ghost" id="prevPage">‹ Page</button> <button class="ghost" id="nextPage">Page ›</button>
-    <button id="closePanel">Fold it up</button> <button class="ghost" id="putDown">Put it down</button></div>`, 'reading');
-  sound.paper?.();
-  $('prevPage').onclick = () => readPaper((page + n - 1) % n);
-  $('nextPage').onclick = () => readPaper((page + 1) % n);
-  $('putDown').onclick = () => { closePanel(); phys.drop(); };
-}
 function openPanel(html, kind = '') {
   panelOpen = true; $('panelCard').innerHTML = html; $('panelCard').className = 'card ' + kind; $('panel').hidden = false; controls.clear();
   document.exitPointerLock?.();
@@ -255,7 +246,7 @@ function sleep() {
     <p class="sub">${minutes} minute${minutes === 1 ? '' : 's'} at the Heartland Inn</p>
     ${timeOfDay === 'dusk' ? '<button id="morning">Sleep until morning</button> ' : ''}<button id="closePanel" class="${timeOfDay === 'dusk' ? 'ghost' : ''}">Keep exploring</button>`);
   $('morning')?.addEventListener('click', () => {
-    closePanel(); applySky('day'); captureInterior();
+    closePanel(); applySky('day'); captureInterior(); game.flags.slept = true;   // the bed is slept in now (world/handling.js)
     game.say('7:12 AM. The PTAC clicks off. Somewhere below, a waffle maker beeps.', 5);
     setGoal('Morning. Hot breakfast is on in the lobby until 9:30 — waffles, eggs, the works.');
   });
@@ -273,7 +264,7 @@ const store = {
 };
 function save() {
   if (!started) return false;
-  return store.set({ v: 1, bag: [...bag], wallet, goal, timeOfDay, player: [player.x, player.y, player.z, controls.input.yaw, controls.input.pitch].map(v => +v.toFixed(3)), props: phys?.snapshot?.(), plugs: game.plugs?.save?.() });
+  return store.set({ v: 1, bag: [...bag], wallet, goal, timeOfDay, player: [player.x, player.y, player.z, controls.input.yaw, controls.input.pitch].map(v => +v.toFixed(3)), props: phys?.snapshot?.(), plugs: game.plugs?.save?.(), flags: game.flags });
 }
 function load(s) {
   if (!s || s.v !== 1) return false;
@@ -285,6 +276,7 @@ function load(s) {
   if (Number.isFinite(x)) Object.assign(player, { x, y, z, vy: 0 }), controls.setLook(yaw, pitch);
   phys?.restore?.(s.props ?? {});
   game.plugs?.load?.(s.plugs);
+  Object.assign(game.flags, s.flags);
   renderPocket();
   return true;
 }
@@ -297,7 +289,7 @@ const saved = store.get();
 if (saved?.v === 1) { $('continue').hidden = false; $('begin').textContent = 'New game'; $('begin').classList.add('ghost'); }
 async function begin(resume) {
   $('start').hidden = true;
-  if (resume) load(saved); else store.clear();
+  if (resume) load(saved); else { store.clear(); game.arrive?.(); }   // you walk in pulling your carry-on (world/handling.js)
   started = true;
   await sound.start();
   controls.lock();
@@ -342,7 +334,7 @@ function frame(now = performance.now()) {
 
   const dt = Math.min(clock.getDelta(), 0.05);
   elapsed += dt;
-  if (started && !panelOpen) walker.move(dt, controls, camera); else { camera.position.set(player.x, player.y + EYE, player.z); camera.rotation.set(controls.input.pitch, controls.input.yaw, 0); player.pos.set(player.x, player.y + 1, player.z); }
+  if (started && !panelOpen) walker.move(dt, controls, camera); else { camera.position.set(player.x, player.y + (player.eye ?? EYE), player.z); camera.rotation.set(controls.input.pitch, controls.input.yaw, 0); player.pos.set(player.x, player.y + 1, player.z); }
   for (const u of world.updaters) u(dt, elapsed, player);
   sun.position.set(player.x, 0, player.z).add(sunOffset); sun.target.position.set(player.x, 0, player.z);
   lightClock -= dt;
@@ -352,8 +344,9 @@ function frame(now = performance.now()) {
   }
   focus = started && !panelOpen && !busy ? pick() : null;
   const carrying = started && !panelOpen && phys?.holding;
-  $('prompt').style.display = focus || carrying ? 'block' : 'none';
-  if (carrying === 'newspaper') $('prompt').innerHTML = '<kbd>E</kbd>Read the paper · <kbd>Q</kbd>Throw';
+  $('prompt').style.display = focus || carrying || (started && !panelOpen && game.cordHeld?.()) ? 'block' : 'none';
+  const reading = started && !panelOpen && game.reading?.prompt();
+  if (reading) $('prompt').innerHTML = reading;
   else if (focus) $('prompt').innerHTML = `<kbd>E</kbd>${focus.label()}`;
   else if (carrying) $('prompt').innerHTML = `<kbd>E</kbd>Put down the ${carrying} · <kbd>Q</kbd>Throw`;
   if (sayTimer > 0 && (sayTimer -= dt) <= 0) $('say').classList.remove('on');
@@ -371,16 +364,17 @@ function frame(now = performance.now()) {
   }
   if ((tagClock -= dt) <= 0) { tagClock = 2; tagInterior(); }
   // Reflections come from a photo of a lit room: in a dark 212 they would light it like a lamp nobody can switch off.
-  const dark = zone?.name === 'room' && !world.room.lit();
+  // Per light cell (R9): the bathroom is dark when its own light is off, whatever the bedroom's lamps do.
+  const dark = zone?.name === 'room' && !(world.room.litAt ? world.room.litAt(camera.position) : world.room.lit());
   // The open door lets the hall in: reflections relax toward normal as it opens (they are global, and the hall needs them).
   const door = Math.min(1, world.room.angle / 1.2), darkEnv = (timeOfDay === 'day' && world.room.drapes > 0.5 ? 0.35 : 0.06) * (1 - door) + 0.5 * door;
   // The building's materials carry their own map; only 212's dim in the dark.
   const roomEnv = LOOKS[timeOfDay].envIndoor * (dark ? darkEnv : 1);
   for (const m of roomMats) m.envMapIntensity = roomEnv;
-  hemi.intensity = LOOKS[timeOfDay].hemi * (dark ? 0.2 + 0.5 * door : 1);
+  hemi.intensity = LOOKS[timeOfDay].hemi * (dark ? 0.05 + 0.5 * door : 1);
   // Eye adaptation: after a while in a dark room your eyes open up, and a lit hallway glares.
   adapt += ((dark ? 1 : 0) - adapt) * Math.min(1, dt / (dark ? 4 : 1.2));
-  renderer.toneMappingExposure = LOOKS[timeOfDay].exposure * (1 + 0.7 * adapt);
+  renderer.toneMappingExposure = LOOKS[timeOfDay].exposure * (1 + 0.3 * adapt);   // a screen can't adapt the way eyes do: at x1.7 lights-off read as dim, not dark (R9)
   // Without shadow maps (phones) the sun would shine straight through walls: indoors, it doesn't shine at all.
   sun.intensity = LOW && zone ? 0 : LOOKS[timeOfDay].sunI;
   $('where').textContent = zone ? (zone.name === 'room' ? 'Room 212' : zone.name) + (player.y > 2.5 && zone.name !== 'room' ? ' · floor 2' : '') : 'outside';
@@ -391,4 +385,4 @@ function frame(now = performance.now()) {
 frame();
 
 // Test hook: teleport and inspect state from automated browser checks.
-globalThis.__inn = { zones, player, world, game, physics: phys, camera, controls, renderer, scene, quality, people: lib.people, teleport(x, y, z, yaw = 0, pitch = 0) { Object.assign(player, { x, y, z, vy: 0 }); controls.setLook(yaw, pitch); }, begin: () => $('begin').click(), FLOOR2, save, load, store, readPaper };
+globalThis.__inn = { zones, player, world, game, physics: phys, camera, controls, renderer, scene, quality, people: lib.people, teleport(x, y, z, yaw = 0, pitch = 0) { Object.assign(player, { x, y, z, vy: 0 }); controls.setLook(yaw, pitch); }, begin: () => $('begin').click(), FLOOR2, save, load, store };

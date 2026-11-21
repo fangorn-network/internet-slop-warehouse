@@ -7,7 +7,7 @@ import * as F from '../fixtures.js';
 
 export function buildEntranceDoors(ctx) {
   const {
-    scene, game, interact, updaters, solid, openableDoor, walkers,
+    scene, game, interact, updaters, solid, openableDoor, storefrontDoor, walkers,
   } = ctx;
   // ---------- automatic entrance doors ----------
   {
@@ -35,8 +35,7 @@ export function buildEntranceDoors(ctx) {
   }
   // Pool door: needs the key card, swings into the pool room.
   {
-    const d = openableDoor('POOL'); d.group.position.set(-12, 0, -2.4); d.group.rotation.y = Math.PI / 2; scene.add(d.group);
-    d.group.getObjectByName('leaf').material = F.mat('#b9cfd8', { transparent: true, opacity: 0.35, roughness: 0.05 });   // glass pool door
+    const d = storefrontDoor(1.2, 0.085); d.group.position.set(-12, 0, -2.4); d.group.rotation.y = Math.PI / 2; scene.add(d.group);   // aluminium storefront, glazed (Natasha, L7)
     const st = { open: false, angle: 0, timer: 0 };
     solid(-12.1, -11.9, 0, 2.2, -3, -1.8, () => st.angle < 1.1);
     interact.push({ pos: new T.Vector3(-11.6, 1.2, -2.4), r: 1.4, when: p => p.x > -12, label: () => game.has('key card') ? 'Pool door (tap key)' : 'Pool door', use: () => openPool() });

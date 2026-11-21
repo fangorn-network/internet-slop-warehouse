@@ -82,9 +82,12 @@ ASSETS = {
     'hotel-lounge-chair-navy': (lounge_chair, dict(distance=1.9, height=1.1, target=(0, 0, 0.45))),
 }
 
+KEEP = ('take_', 'drawer_', 'door_', 'btn_', 'node_', 'outlet_', 'usb_', 'fridge_door')   # interactive nodes the game finds by name
+
+
 def take_root(o):
     while o is not None:
-        if o.name.startswith('take_'):
+        if o.name.startswith(KEEP):
             return o
         o = o.parent
     return None
@@ -94,7 +97,7 @@ def merge():
     """Join every mesh that shares a material: the cooler's 250 bottles become a handful of draw calls in three.js.
     Things you can pick up (objects named take_<noun>, with their parts parented to them) stay separate: each is
     joined into one mesh of its own, which the game lifts out as a loose prop."""
-    for root in [o for o in bpy.context.scene.objects if o.type == 'MESH' and o.name.startswith('take_')]:
+    for root in [o for o in bpy.context.scene.objects if o.type == 'MESH' and o.name.startswith(KEEP)]:
         parts = [root] + [c for c in root.children_recursive if c.type == 'MESH']
         for o in parts:
             bpy.context.view_layer.objects.active = o

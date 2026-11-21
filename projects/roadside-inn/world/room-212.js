@@ -68,7 +68,12 @@ export function buildRoom212(ctx) {
       use: () => { dnd.visible = !dnd.visible; game.sound.click(); game.say(dnd.visible ? 'Sign out. Housekeeping will knock anyway, just softer.' : 'Sign back inside.'); } });
 
     // Bathroom: vanity, toilet, tub/shower.
-    const vanity = add(lib.model('hotel-vanity', { origin: true }), 15.0, y, 1.38); solid(14.3, 15.7, y, y + 1, 1.05, 1.65);
+    // Bathroom (x 13.9..16.5, z 1..4.1), entered from the hall at z 2.8..3.6. Re-laid (R17): the shower's door opened
+    // south, straight onto the toilet. Now the shower stands in the far (NE) corner opening west toward the bathroom
+    // door, the toilet moves to the SE corner (centre 0.45 m off the side wall, ADA 604.2) with the paper holder on that
+    // wall, and the vanity slides west to make room. The towel bar hangs beside the shower door, the towel shelf under the sink.
+    const VX = 14.75;
+    const vanity = add(lib.model('hotel-vanity', { origin: true }), VX, y, 1.38); solid(VX - 0.7, VX + 0.7, y, y + 1, 1.05, 1.65);
     // A real mirror: the environment map would show a photo of some other hotel room. Rendered only while you're in 212.
     {
       const old = vanity.getObjectByName('mirror');
@@ -80,14 +85,24 @@ export function buildRoom212(ctx) {
       scene.add(mirror);
       updaters.push((dt, t, player) => { mirror.visible = player.y > 2.5 && player.x > R.x0 && player.x < R.x1 && player.z > R.z0 && player.z < R.z1; });
     }
-    add(lib.model('hotel-toilet', { origin: true, rotate: -Math.PI / 2 }), 16.15, y, 2.2); solid(15.72, 16.4, y, y + 0.8, 1.95, 2.45);
-    const shower = add(lib.model('g3-shower-cabin', { height: 2.1, rotate: Math.PI }), 15.86, y + 0.02, 3.49); shower.name = 'Textured shower enclosure';
-    solid(15.36, 16.36, y, y + 2.1, 2.99, 3.99);
+    add(lib.model('hotel-toilet', { origin: true, rotate: -Math.PI / 2 }), 16.15, y, 1.53); solid(15.72, 16.4, y, y + 0.8, 1.28, 1.78);
+    const shower = add(lib.model('g3-shower-cabin', { height: 2.1, rotate: -Math.PI / 2 }), 15.9, y + 0.02, 3.55); shower.name = 'Textured shower enclosure';
+    solid(15.43, 16.38, y, y + 2.1, 3.08, 4.02);
+    // Victor's bathroom pieces (briefs/natasha-2026-11-21.md), placed once their GLBs are in assets.js.
+    const fit = (id, x, yy, z, ry = 0) => { if (!lib.models.has(id)) return null; const o = add(lib.model(id, { origin: true }), x, yy, z, ry); o.userData.onWall = true; return o; };
+    fit('hotel-towel-bar', 15.0, y + 1.2, 4.03, Math.PI);             // north wall, beside the shower door, bar at 48 in
+    fit('hotel-towel-shelf', VX, y + 0.22, 1.07);                       // under the sink, on the back wall
+    fit('hotel-toilet-paper', 15.67, y + 0.66, 1.07);                   // side wall, 8 in ahead of the bowl (ADA 604.7)
+    fit('hotel-bath-amenities', 16.36, y + 1.25, 3.55, -Math.PI / 2);   // inside the shower, on its back wall
     const bathLight = { pos: new T.Vector3(15.2, y + 2.94, 2.5), color: new T.Color('#fff1e0'), intensity: 4.5, distance: 5 };   // just above the ceiling face, so it lights the room and not the ceiling (at 2.5 m it blew out the ceiling and tile)
     lightAnchors.push(bathLight);
     interact.push({ pos: new T.Vector3(13.95, y + 1.3, 2.4), r: 1.2, label: () => `Bathroom light ${st.bath ? 'off' : 'on'}`, use: () => { st.setBath(!st.bath); game.sound.click(); } });
-    st.setBath = on => { st.bath = on; bathLight.intensity = on ? 4.5 : 0; };
-    interact.push({ pos: new T.Vector3(15.0, y + 1.0, 1.6), r: 1.0, label: () => 'Wash your hands', use: () => { game.sound.water(); game.say('Hot water takes a while, then arrives all at once.'); } });
+    // Doorway spills (R9): light reaching the other cell through the bathroom doorway, which has no door.
+    const bathSpill = { pos: new T.Vector3(13.7, y + 2.0, 3.2), color: new T.Color('#fff1e0'), intensity: 1.2, distance: 3.2 };   // bedroom side
+    const bedSpill = { pos: new T.Vector3(14.1, y + 2.0, 3.2), color: new T.Color('#ffe2bd'), intensity: 0.5, distance: 2.4 };     // bathroom side
+    lightAnchors.push(bathSpill, bedSpill);
+    st.setBath = on => { st.bath = on; bathLight.intensity = on ? 4.5 : 0; bathSpill.intensity = on ? 1.2 : 0; };
+    interact.push({ pos: new T.Vector3(VX, y + 1.0, 1.6), r: 1.0, label: () => 'Wash your hands', use: () => { game.sound.water(); game.say('Hot water takes a while, then arrives all at once.'); } });
 
     // Closet with luggage bench and the ice bucket.
     add(lib.model('hotel-closet', { origin: true, rotate: Math.PI / 2 }), R.x0 + 0.31, y, 2.7); solid(R.x0, R.x0 + 0.78, y, y + 2.03, 2.18, 3.22);
@@ -121,9 +136,10 @@ export function buildRoom212(ctx) {
     const bedLights = [5.05, 8.15].map(z => ({ pos: new T.Vector3(R.x1 - 0.4, y + 1.1, z), color: new T.Color('#ffe0b5'), intensity: 1.8, distance: 4.5 }));
     const roomLight = { pos: new T.Vector3(14.2, y + 2.94, 6.5), color: new T.Color('#ffe9d0'), intensity: 3.5, distance: 7 };   // just above the ceiling face: no hotspot
     lightAnchors.push(...bedLights, roomLight);
-    const setLamps = on => { st.lamps = on; lamps.forEach(l => (l.userData.shade.material.emissiveIntensity = on ? 0.8 : 0)); bedLights.forEach(b => (b.intensity = on ? 1.8 : 0)); roomLight.intensity = on ? 3.5 : 0; };
+    const setLamps = on => { st.lamps = on; lamps.forEach(l => (l.userData.shade.material.emissiveIntensity = on ? 0.8 : 0)); bedLights.forEach(b => (b.intensity = on ? 1.8 : 0)); roomLight.intensity = on ? 3.5 : 0; bedSpill.intensity = st.lamps || st.desk ? 0.5 : 0; };
     setLamps(true);
     st.setLamps = setLamps;
+    st.parts = { lamps, bedLights, roomLight, roomBright: roomLight.intensity || 3.5, y };   // God's hook: world/handling.js gives each lamp its own switch (R4)
     interact.push({ pos: new T.Vector3(R.x1 - 0.3, y + 0.9, 5.05), r: 1.3, label: () => `Lamps ${st.lamps ? 'off' : 'on'}`, use: () => { setLamps(!st.lamps); game.sound.click(); } });
     interact.push({ pos: new T.Vector3(R.x1 - 1.4, y + 0.6, 6.6), r: 1.6, label: () => 'Lie down', use: () => game.event('sleep') });
     // Credenza + TV on the west wall, desk by the window, armchair, PTAC, window with drapes.
@@ -145,7 +161,7 @@ export function buildRoom212(ctx) {
     const deskBulb = { pos: new T.Vector3(deskLamp.position.x, y + 1.25, 8.0), color: new T.Color('#ffe0b0'), intensity: 1.8, distance: 3.5 };
     lightAnchors.push(deskBulb);
     let deskLampOn = true;
-    st.setDesk = on => { deskLampOn = st.desk = on; deskBulb.intensity = on ? 1.8 : 0; lampMaterials.forEach(m => m.emissiveIntensity = on ? 0.6 : 0); };
+    st.setDesk = on => { deskLampOn = st.desk = on; deskBulb.intensity = on ? 1.8 : 0; lampMaterials.forEach(m => m.emissiveIntensity = on ? 0.6 : 0); bedSpill.intensity = st.lamps || st.desk ? 0.5 : 0; };
     const lampMaterials = [];
     deskLamp.traverse(n => { if (n.isMesh) {
       n.material = n.material.clone();
@@ -155,7 +171,7 @@ export function buildRoom212(ctx) {
       st.setDesk(!deskLampOn); game.sound.click();
     } }); solid(R.x0, R.x0 + 0.71, y, y + 0.81, 7.72, 8.83);
     add(lib.model('ph-modern-arm-chair-01', { height: 0.88 }), R.x0 + 1.15, y, 8.1, -Math.PI / 2);
-    add(lib.model('hotel-accent-chair-mustard', { origin: true }), R.x1 - 1.27, y, 8.3, -Math.PI / 2); solid(14.8, 15.66, y, y + 0.8, 7.89, 8.71);   // clear of nightstand and drapes   // window corner, clear of the nightstand
+    // One chair, at the desk: the accent chair by the far nightstand made two (R3).
     add(lib.model('hotel-ptac', { origin: true, rotate: Math.PI }), 14.25, y, 8.82); solid(13.7, 14.8, y, y + 0.6, 8.6, 9);
     const roomWindow = placeWindow(14.25, y + 0.75, 8.95, 1.6, 1.5, Math.PI);
     interact.push({ pos: new T.Vector3(14.25, y + 1.4, 8.6), r: 1.5, label: () => st.drapes > 0.5 ? 'Close curtains' : 'Open curtains', use: () => { st.drapes = st.drapes > 0.5 ? 0 : 1; game.sound.swish(); } });
@@ -168,7 +184,7 @@ export function buildRoom212(ctx) {
     // Check actual imported mesh bounds, rather than assuming the model's origin is its back edge.
     // Cabinets, the toilet, the headboard and the PTAC all protruded into structural walls.
     for (const prop of scene.children) {
-      if (!prop.userData.hotelProp || prop.name === 'hotel-room-door' || prop.position.y < y || prop.position.x < R.x0 || prop.position.x > R.x1 || prop.position.z < R.z0 || prop.position.z > R.z1) continue;
+      if (!prop.userData.hotelProp || prop.userData.onWall || prop.name === 'hotel-room-door' || prop.position.y < y || prop.position.x < R.x0 || prop.position.x > R.x1 || prop.position.z < R.z0 || prop.position.z > R.z1) continue;
       prop.updateMatrixWorld(true);
       const box = new T.Box3().setFromObject(prop);
       const bounds = { x0: R.x0 + 0.1, x1: R.x1 - 0.12, z0: R.z0 + 0.1, z1: R.z1 - 0.14 };

@@ -73,7 +73,7 @@ export function buildLobby(ctx) {
     add(regionalMap(), 6.43, 0, 2.65, -Math.PI / 2);   // map mural, z 1.10..4.20, y 0.12..2.93 (blender/art.py)
   }
   add(lib.model('hotel-sectional', { origin: true }), 2.2, 0, 6.4, Math.PI / 2); solid(1.72, 2.68, 0, 0.85, 4.97, 7.83); solid(2.68, 3.38, 0, 0.6, 4.97, 5.92);
-  loose(add(lib.model('ph-coffee-table-round-01', { height: 0.42 }), 4.25, 0, 6.7), { density: 0.6, shape: 'cylinder' });   // a hull this round sinks what's set on it (physics-world)
+  loose(add(lib.model('ph-coffee-table-round-01', { height: 0.42 }), 4.25, 0.01, 6.7), { density: 0.6, shape: 'cylinder' });   // on the carpet's top (y 0.01), as the floor collider now is   // a hull this round sinks what's set on it (physics-world)
   loose(recolor(add(lib.model('hotel-lounge-chair-navy', { origin: true }), 4.9, 0, 8.15, -2.7), MUSTARD), { density: 0.5 });
   loose(recolor(add(lib.model('hotel-lounge-chair-navy', { origin: true }), 4.6, 0, 4.15, -0.5), HEATHER), { density: 0.5 });
   tableLamp(2.25, 8.4, [2.0, 8.75]);   // cord to the floor box behind the sectional

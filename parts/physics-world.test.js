@@ -153,3 +153,18 @@ test("settle: a can rolling on its side stops short, as rolling resistance would
     expect(settled.asleep).toBe(true);
     expect(settled.x).toBeLessThan(free.x * 0.7);   // stops in a shorter roll than it would on Rapier's frictionless rolling
 });
+
+test("resize: a crouching walker fits under a low beam and can't stand up beneath it", async () => {
+    const world = await createWorld();
+    attach(block(20, 1, 20, 0, -0.5, 0), { world, body: "fixed" });
+    attach(block(1, 0.2, 4, 2, 1.4, 0), { world, body: "fixed" });   // underside 1.3 m up
+    const me = character(world, { position: [0, 0, 0], radius: 0.28, height: 1.75 });
+    run(world, 0.5);
+    me.walk(1, 0); run(world, 2.5); me.walk(0, 0); run(world, 0.2);
+    expect(me.position.x).toBeLessThan(1.3);   // standing, the beam stops it
+    expect(me.resize(1.1)).toBe(true);
+    me.walk(1, 0); run(world, 1.5); me.walk(0, 0); run(world, 0.2);
+    expect(me.position.x).toBeGreaterThan(1.8);   // crouched, it goes under
+    expect(me.resize(1.75)).toBe(false);   // no headroom: stays crouched
+    expect(me.position.y).toBeCloseTo(0, 1);
+});

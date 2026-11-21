@@ -144,7 +144,7 @@ def export(path, name):
             o.parent = root
     os.makedirs(os.path.dirname(path), exist_ok=True)
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', export_apply=True, export_yup=True,
-                              export_image_format='JPEG', export_jpeg_quality=88)
+                              export_image_format='JPEG', export_jpeg_quality=88, export_extras=True)
     tris = sum(len(p.vertices) - 2 for o in meshes for p in o.data.polygons)
     print(f'EXPORTED {path} meshes={len(meshes)} tris~{tris}')
 

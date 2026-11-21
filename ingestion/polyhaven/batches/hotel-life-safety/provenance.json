@@ -1,0 +1,106 @@
+[
+  {
+    "id": "ph-fire-alarm",
+    "upstreamId": "fire_alarm",
+    "creator": "Slinc",
+    "source": "https://polyhaven.com/a/fire_alarm",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "licenseEvidenceSha256": "d6eb4c64b847ee38970cc6ae43923ef39449bd320d69ef647550a2d1c8398db7",
+    "acquiredAt": "2026-11-21T16:18:57.626Z",
+    "resources": [
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/fire_alarm/fire_alarm_1k.gltf",
+        "bytes": 4264,
+        "sha256": "4a924f45a0f23036a938e06a251677f9654f39507f0e13d06cc4a0b05c83b959",
+        "upstreamMd5": "d4a586d6eaeb2f3aa74f4914a70153ee"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/fire_alarm/fire_alarm.bin",
+        "bytes": 112072,
+        "sha256": "f65b6fe5ed53c248497fe833ac66d5b8c452e28db4b02b8d1b67109fcc2ce132",
+        "upstreamMd5": "517104e2e304785ae0425efb479bca80"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fire_alarm/fire_alarm_nor_gl_1k.jpg",
+        "bytes": 642044,
+        "sha256": "45aa3e47120decf5a28e81a2586e3a4c8d6cdb10ba5ceed66d905de74fe1dbb7",
+        "upstreamMd5": "45faa21f22b249704acf2ca86d17461d"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fire_alarm/fire_alarm_diff_1k.jpg",
+        "bytes": 540983,
+        "sha256": "fc0558110922f7f5ae83e488b913857b576946a33ef46c89886f7c6de722e660",
+        "upstreamMd5": "43ddc895bc8eadfc583f0ded6ed4567f"
+      },
+      {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/fire_alarm/fire_alarm_arm_1k.jpg",
+        "bytes": 650243,
+        "sha256": "b98f4fe9f190b74581cdff5a9e075d42cd48c16c5f9aba321c5dfe8ce93058a7",
+        "upstreamMd5": "d1f8f0db345f229194be811413ca4c5f"
+      }
+    ],
+    "output": {
+      "file": "haven/ph-fire-alarm.glb",
+      "bytes": 1947980,
+      "sha256": "fdba0fd687256a7da7d143e1e53304043de3928903589258dbd7ae237d44321f",
+      "meshes": 2,
+      "materials": 1,
+      "animations": [],
+      "requiredExtensions": []
+    },
+    "transformation": "Pack upstream 1K glTF buffers and images into GLB; geometry/materials unchanged.",
+    "metadata": {
+      "type": 2,
+      "name": "Fire Alarm",
+      "categories": [
+        "collection: project_lighthouse",
+        "industrial",
+        "office",
+        "wall decoration"
+      ],
+      "tags": [
+        "alarm",
+        "emergency",
+        "red",
+        "safety",
+        "firefighting"
+      ],
+      "description": "Free 4K model of a red fire alarm pull station with raised lettering, metal key lock, and realistic wear: scuffs, chips, and grime for a used look.",
+      "authors": {
+        "Slinc": "All"
+      },
+      "donated": true,
+      "max_resolution": [
+        4096,
+        4096
+      ],
+      "polycount": 2705,
+      "files_hash": "6b0ddd79634cb983d93b7a29f3c0b96aeeaf9c4e",
+      "texel_density": 14856.57077937987,
+      "dimensions": [
+        99.44874793291092,
+        26.374715380370617,
+        143.64254474639893
+      ],
+      "date_published": 1781913600,
+      "category_id": "63c978b5-4c95-544b-864b-64dbd89ba09a",
+      "category": "Industrial & Infrastructure/Traffic & Safety/Hydrants & Fire Safety",
+      "collections": [
+        "project_lighthouse"
+      ],
+      "attributes": {
+        "condition": [
+          "worn"
+        ],
+        "material": [
+          "plastic",
+          "metal"
+        ]
+      },
+      "img_version": "55c0a10d",
+      "download_count": 1737,
+      "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/fire_alarm.png?width=256&height=256&format=webp&v=55c0a10d"
+    }
+  }
+]

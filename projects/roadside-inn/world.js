@@ -11,6 +11,9 @@ import { buildGym } from './world/gym.js';
 import { buildCorridors } from './world/corridors.js';
 import { buildElevator } from './world/elevator.js';
 import { buildRoom212 } from './world/room-212.js';
+import { buildLifeSafety } from './world/life-safety.js';
+import { buildReading } from './world/reading.js';
+import { buildHandling } from './world/handling.js';
 import { buildTvs } from './world/tvs.js';
 import { buildStaff } from './world/staff.js';
 import { buildEntranceDoors } from './world/entrance-doors.js';
@@ -70,14 +73,17 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   const trim = F.mat('#e6e2d8', { roughness: 0.6 });
   const stone = lib.surface('stone-facade', { repeat: [0.5, 0.5] });
   const parquet = lib.surface('parquet', { repeat: [0.4, 0.4], grade: 'saturate(20%) brightness(1.3) contrast(0.95)', color: '#a9b8c9' });   // cool blue-grey herringbone
+  // Carpet pile scatters light and shows no sheen: drawn as physical materials with specular off (the corridor's
+  // checker tiles read as shiny vinyl under the env reflection and the downlights' highlights, H1).
+  const matte = m => new T.MeshPhysicalMaterial({ map: m.map, normalMap: m.normalMap, normalScale: m.normalScale, color: m.color, roughness: 1, specularIntensity: 0 });
   const carpet = patternedCarpet();
   // Lobby seating areas: ambientCG Carpet001, a striated loop pile, cooled to the blue-grey of the Formula Blue lobbies;
   // about 1 m a tile (stripes 15-30 cm apart, so they survive mipmapping at standing distance). Contrast lifted so the striation reads from standing height.
-  const lobbyCarpet = lib.surface('lobby-carpet', { repeat: [1, 1], color: '#b4c6e8', grade: 'contrast(2.1)' });
+  const lobbyCarpet = matte(lib.surface('lobby-carpet', { repeat: [1, 1], color: '#b4c6e8', grade: 'contrast(2.1)' }));
   // Walk paths (entry, desk, elevators, pantry): grey-washed wood-look plank (Poly Haven laminate as LVT).
   const lvt = lib.surface('oak', { repeat: [0.45, 0.45], grade: 'saturate(10%) brightness(1.12) contrast(0.9)', color: '#dedbd6', roughness: 0.9 });
   // Guest rooms: the same striated loop pile in charcoal grey (the old canvas stripe read as wooden planks).
-  const roomCarpet = lib.surface('lobby-carpet', { repeat: [1, 1], color: '#c3c5c9', grade: 'contrast(1.8)' });
+  const roomCarpet = matte(lib.surface('lobby-carpet', { repeat: [1, 1], color: '#c3c5c9', grade: 'contrast(1.8)' }));
   const tile = lib.surface('bath-tile', { repeat: [1.2, 0.8], color: '#e6dccb' });             // pool deck: beige rectangular tile
   const bathFloor = lib.surface('bath-tile', { repeat: [1.6, 1.6], color: '#9a9fa6' });     // bathroom: grey porcelain
   const poolTile = lib.surface('pool-tile', { repeat: [1, 1], color: '#a9dcec' });
@@ -97,7 +103,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // Corridor carpet: navy patterned cut pile (ambientCG Carpet006, CC0), about 0.3 m a square, softened toward grey so
   // the pattern reads without shouting.
   function patternedCarpet() {
-    return lib.surface('corridor', { repeat: [0.55, 0.55], color: '#c0cadc', grade: 'contrast(0.45) brightness(1.35) saturate(85%)', roughness: 1 });
+    return matte(lib.surface('corridor', { repeat: [0.55, 0.55], color: '#c0cadc', grade: 'contrast(0.45) brightness(1.35) saturate(85%)', roughness: 1 }));
   }
 
   // Popcorn (sprayed acoustic) ceiling, drawn at true scale: one 0.5 m tile at ~1 mm a pixel, lumps 1-4 mm across in
@@ -155,9 +161,45 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     const art = lib.model('hotel-wall-art', { origin: true }); art.name = 'Framed artwork';
     const pick = art.getObjectByName('art_' + names[motif % names.length]);
     for (const c of [...pick.parent.children]) if (c !== pick) pick.parent.remove(c);
+    if (PHOTOS[pick.name]) pick.traverse(n => { if (n.isMesh && /^print/.test(n.material.name)) { n.material = n.material.clone(); n.material.map = PHOTOS[pick.name].tex ??= serigraph(n, PHOTOS[pick.name]); n.material.color.set('#ffffff'); } });
     if (!set) art.scale.set(w / 0.8, h / 0.6, 1);   // ponytail: an unlisted size stretches a 0.8 x 0.6 piece; add a set in prints.mjs ART for it
     art.position.set(x, y, z); art.rotation.y = ry; scene.add(art);
     return art;
+  }
+
+  // The photographic prints (real Ozark photos) broke the rendered world: a real place shown inside a made one (R1).
+  // Their frames now hold screen-printed landscapes drawn here: flat layered ridges in the hotel's navy, cobalt, grey
+  // and mustard, a paper grain and a pixel of misregistration between the inks, as limited-edition prints have.
+  const PHOTOS = { art_lobby: { seed: 11, sun: 0.72, river: true }, art_corr1: { seed: 23, sun: 0.3 }, art_corr5: { seed: 37, river: true }, art_tv: { seed: 51, sun: 0.62 } };
+  function serigraph(mesh, { seed, sun, river }) {
+    const box = new T.Box3().setFromBufferAttribute(mesh.geometry.attributes.position), size = box.getSize(new T.Vector3());
+    const W = 1536, H = Math.round(W * size.y / size.x), rnd = seeded(seed * 7919);
+    const tex = F.canvasTexture(W, H, (g) => {
+      const sky = g.createLinearGradient(0, 0, 0, H * 0.6); sky.addColorStop(0, '#e9ebee'); sky.addColorStop(1, '#f3eee4');
+      g.fillStyle = sky; g.fillRect(0, 0, W, H);
+      if (sun !== undefined) { g.fillStyle = '#d6a23c'; g.beginPath(); g.arc(W * sun, H * 0.33, H * 0.09, 0, 7); g.fill(); }
+      const inks = ['#c9d0da', '#9fb0c6', '#6f86a6', '#3d5a86', '#22385e', '#162540'];
+      inks.forEach((ink, i) => {
+        const base = H * (0.38 + i * 0.1), amp = H * (0.07 - i * 0.006), ph = [rnd() * 6.3, rnd() * 6.3, rnd() * 6.3], dx = (rnd() - 0.5) * 3;
+        g.fillStyle = ink; g.beginPath(); g.moveTo(0, H);
+        for (let x = 0; x <= W; x += 4) {
+          const u = x / W;
+          g.lineTo(x + dx, base - amp * (Math.sin(u * 3.1 + ph[0]) * 0.6 + Math.sin(u * 7.3 + ph[1]) * 0.28 + Math.sin(u * 17 + ph[2]) * 0.12));
+        }
+        g.lineTo(W, H); g.fill();
+        if (river && i === 3) {   // a pale river winding through the valley floor, in the paper's colour
+          g.strokeStyle = '#e4e2dc'; g.lineCap = 'round';
+          g.lineWidth = H * 0.025; g.beginPath();
+          for (let k = 0; k <= 40; k++) { const t = k / 40; g.lineTo(W * (0.15 + 0.7 * t + 0.08 * Math.sin(t * 9 + seed)), H * (0.72 + 0.26 * t * t)); }
+          g.stroke();
+        }
+      });
+      const img = g.getImageData(0, 0, W, H), d = img.data;   // paper tooth: fine grain, a little stronger in the ink
+      for (let i = 0; i < d.length; i += 4) { const n = (rnd() - 0.5) * 14; d[i] += n; d[i + 1] += n; d[i + 2] += n; }
+      g.putImageData(img, 0, 0);
+    });
+    tex.flipY = mesh.material.map ? mesh.material.map.flipY : false;
+    return tex;
   }
 
   // Original area-rug designs on Poly Haven wool pile: 'leaves' (round lobby rug), 'stripes' (lounge).
@@ -274,6 +316,44 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     led.material = F.glow('#ff3b30', 0);
     const plate = F.sign(label, { w: 0.2, h: 0.12, bg: '#24303f', font: 'bold 150px system-ui, sans-serif' });
     plate.position.set(0.78, 1.5, 0.11); group.add(plate);
+    return { group, leaf, led };
+  }
+  // Pool doors are commercial storefront, not guest-room doors (L7: a wood room door with a peephole and a number plate
+  // reading POOL, in a painted casing). A 44 x 114 mm dark-bronze aluminium frame fills the opening; a narrow-stile
+  // glazed leaf (54 mm stiles and top rail, 254 mm kick rail) hangs on offset pivots, with a ladder pull on the side it
+  // swings toward, a push bar and a parallel-arm closer on the other (pool doors self-close and latch), and a card
+  // reader on the wall beside it (readerSide -1: by the hinge, where the latch side has no wall). Same contract as openableDoor: origin on the floor at the opening's centre, hinge
+  // at -x, leaf.rotation.y opens it toward -z. face: how far the wall's +z face is from the frame's centre.
+  function storefrontDoor(width, face, readerSide = 1, height = 2.15, depth = 0.114) {
+    const group = new T.Group(), alu = F.mat('#3b3a38', { metalness: 0.7, roughness: 0.4 }), steel = F.mat('#b8bec4', { metalness: 0.9, roughness: 0.3 });
+    const fw = 0.044, gap = 0.003;
+    for (const s of [-1, 1]) F.box(fw, height, depth, alu, s * (width / 2 - fw / 2), 0, 0, group);
+    F.box(width, fw, depth, alu, 0, height - fw, 0, group);
+    const lw = width - 2 * fw - 2 * gap, lh = height - fw - 0.012, st = 0.054, kick = 0.254, ld = 0.044;
+    const leaf = new T.Group(); leaf.name = 'door_leaf'; leaf.position.set(-width / 2 + fw + gap, 0.009, 0); group.add(leaf);
+    F.box(st, lh, ld, alu, st / 2, 0, 0, leaf); F.box(st, lh, ld, alu, lw - st / 2, 0, 0, leaf);
+    F.box(lw - 2 * st, st, ld, alu, lw / 2, lh - st, 0, leaf); F.box(lw - 2 * st, kick, ld, alu, lw / 2, 0, 0, leaf);
+    const glass = F.box(lw - 2 * st, lh - st - kick, 0.01, F.mat('#b9cfd8', { transparent: true, opacity: 0.28, roughness: 0.04, metalness: 0.2, depthWrite: false }), lw / 2, kick, 0, leaf); glass.name = 'glass';
+    // ladder pull (swing side, -z): a 25 mm tube 600 mm long on two standoffs
+    const px = lw - 0.1, pz = -ld / 2 - 0.065;
+    F.cyl(0.0125, 0.0125, 0.6, steel, px, 0.75, pz, leaf, 12);
+    for (const yy of [0.82, 1.28]) { const o = F.cyl(0.008, 0.008, 0.065, steel, px, yy, pz / 2 - ld / 4, leaf, 8); o.rotation.x = Math.PI / 2; o.position.y = yy; }
+    // push bar (+z) across the glass at 1.05 m
+    const bar = F.cyl(0.0125, 0.0125, lw - 0.25, steel, lw / 2 + 0.03, 0, ld / 2 + 0.05, leaf, 12); bar.rotation.z = Math.PI / 2; bar.position.y = 1.05;
+    for (const xx of [0.17, lw - 0.11]) { const o = F.cyl(0.008, 0.008, 0.05, steel, xx, 0, ld / 2 + 0.025, leaf, 8); o.rotation.x = Math.PI / 2; o.position.y = 1.05; }
+    // parallel-arm closer on the push side: body on the top rail, arm to the head
+    F.box(0.27, 0.055, 0.045, alu, lw * 0.3, lh - 0.06, ld / 2 + 0.024, leaf);
+    F.box(0.22, 0.012, 0.02, alu, lw * 0.3 - 0.2, height - fw - 0.03 - 0.009, ld / 2 + 0.03, leaf);
+    // card reader by the latch, on the push side's wall: a mullion reader with a printed face and a status LED
+    const reader = new T.Group(); reader.position.set(readerSide * (width / 2 + 0.14), 1.0, face); group.add(reader);
+    F.box(0.048, 0.152, 0.022, F.mat('#1f2226', { roughness: 0.5 }), 0, 0, 0.011, reader);
+    const print = F.canvasTexture(96, 304, (g, w, h) => {
+      g.fillStyle = '#1f2226'; g.fillRect(0, 0, w, h);
+      g.strokeStyle = '#8d949b'; g.lineWidth = 5; for (const r of [20, 32, 44]) { g.beginPath(); g.arc(w / 2, h * 0.58, r, -2.3, -0.84); g.stroke(); }
+      g.fillStyle = '#8d949b'; g.fillRect(w / 2 - 18, h * 0.6, 36, 52);
+    });
+    const faceM = new T.Mesh(new T.PlaneGeometry(0.044, 0.148), new T.MeshStandardMaterial({ map: print, roughness: 0.35 })); faceM.position.z = 0.0225; reader.add(faceM);
+    const led = new T.Mesh(new T.CircleGeometry(0.0035, 12), F.glow('#ff3b30', 0.6)); led.position.set(0, 0.058, 0.023); reader.add(led);
     return { group, leaf, led };
   }
   // One InstancedMesh per mesh of a model, each placement a Matrix4 (model origin kept, bottom on the ground).
@@ -474,7 +554,8 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   floorAt(-12, 30, -1, 1, FLOOR2, 'corridor 2');
   floorAt(10.8, 12, -2, -1, FLOOR2, 'stair top');
   floorAt(6, 9, 1, 4, FLOOR2, 'ice alcove');
-  floorAt(R.x0, R.x1, R.z0, R.z1, FLOOR2, 'room 212');
+  floorAt(R.x0, R.x1, R.z0, R.z1, FLOOR2 + 0.012, 'room 212');   // the carpet's top, not the slab's: things set down rest on it, not 12 mm into it
+  floorAt(-12, 6.5, -9, 9, 0.01, 'lobby');                        // the lobby floor's top (L3: the coffee table's foot sank 1 cm into the carpet)
   // Switchback stair: flight A climbs north, landing, flight B climbs south to floor 2.
   floorAt(9.5, 10.7, -6.5, -2, (x, z) => (-2 - z) / 4.5 * 1.6, 'stair A');
   floorAt(9.5, 12, -8.5, -6.5, 1.6, 'landing');
@@ -523,9 +604,10 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
       const id = F.sign(txt, { w: 0.3, h: 0.3, bg: '#24303f', font: 'bold 44px system-ui, sans-serif' });
       id.position.set(x, y, -1.095); id.rotation.y = Math.PI; scene.add(id);
     }
+    if (!lib.models.has('hotel-exit-sign')) {   // until Victor's exit/emergency combo lands (world/life-safety.js places it)
     const exit = F.sign('EXIT', { w: 0.4, h: 0.16, bg: '#b3141a', font: 'bold 110px system-ui, sans-serif', emissive: 1.5 });
     exit.position.set(10.1, 2.5, -0.895); scene.add(exit);
-    const exit2 = exit.clone(); exit2.position.set(11.4, FLOOR2 + 2.5, -0.895); scene.add(exit2);
+    const exit2 = exit.clone(); exit2.position.set(11.4, FLOOR2 + 2.5, -0.895); scene.add(exit2); }
     const fl = F.sign('STAIR A\nFLOORS 1–2', { w: 0.4, h: 0.28, bg: '#24303f', font: 'bold 52px system-ui, sans-serif' });
     fl.position.set(9.3, 1.5, -0.895); scene.add(fl);
   }
@@ -549,7 +631,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   const ctx = {
     scene, lib, game, updaters, add, loose, cordGeometry, interact, lightAnchors, unboxed,
     takeables, solid, light, statics, drywall, charcoal, downlight, lvt, regionalMap, painting, mbox, dm,
-    seeded, poolTile, slab, wall, openableDoor, instances, south2, north2, floorAt, ELEV,
+    seeded, poolTile, slab, wall, openableDoor, storefrontDoor, instances, south2, north2, floorAt, ELEV,
     placeWindow, R, people, outside, station, colliders, zones, trees, outdoor, lawn,
     concrete, equipDoor,
   };
@@ -562,6 +644,8 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   buildElevator(ctx);
   buildTvs(ctx);       // before room 212: its set is a tvSet too
   buildRoom212(ctx);
+  buildLifeSafety(ctx);
+  buildReading(ctx); buildHandling(ctx);   // God: papers and brochures open in hand; the carry-on, openables, 212's switches
   buildStaff(ctx);
   buildEntranceDoors(ctx);
   buildOutside(ctx);
@@ -572,7 +656,13 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   // Light cells: point lights cast no shadows, so a corridor light 2 m from room 212 would light it through the wall.
   // A light counts only inside its own cell (room 212 or the rest of the building), unless 212's door is open; lot lights always count.
   const in212 = p => p.y > FLOOR2 - 0.5 && p.y < FLOOR2 + CEIL + 0.5 && p.x > R.x0 && p.x < R.x1 && p.z > R.z0 && p.z < R.z1;
-  const lightVisible = (a, eye) => a.outdoor || in212(a.pos) === in212(eye) || room.angle > 0.25;
+  // Light cells: the pooled point lights cast no shadows, so a lamp lights every wall within its range. 212's bedroom
+  // and bathroom are separate cells (R9: the bedroom lamps lit the dark bathroom through its wall, and the bathroom
+  // light the bedroom); what crosses a doorway is a dimmer spill anchor on the far side (room-212.js). The corridor and
+  // the bedroom see each other only while the entry door is open.
+  const cell = p => !in212(p) ? 0 : p.x > 13.9 && p.z < 4.1 ? 2 : 1;
+  const lightVisible = (a, eye) => { if (a.outdoor) return true; const ca = cell(a.pos), ce = cell(eye); return ca === ce || (room.angle > 0.25 && ca + ce === 1); };
+  room.litAt = p => cell(p) === 2 ? room.bath : room.lamps || room.desk;
   // What each zone can see through doors, glass and windows, for zone culling (parts/zone-culling.js): from the lobby
   // there's no drawing room 212, upstairs or the travel stop's shelves.
   const sees = {

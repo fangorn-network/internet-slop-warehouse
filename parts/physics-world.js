@@ -165,6 +165,7 @@ export function attach(object, { world, body = "dynamic", shape = "box", mass, c
  * fixed steps → { walk(vx, vz), jump(speed), ride(dy), teleport([x, y, z]), position, grounded, body, dispose() }.
  * It slides along walls, climbs steps up to `step` and slopes up to `slope` radians, and shoves dynamic bodies.
  * walk() sets the horizontal velocity in m/s until changed; ride(dy) carries it with a moving floor (an elevator).
+ * resize(h) changes the capsule's height with the feet where they are (crouch, stand up); growing needs headroom.
  */
 // Interaction groups are (membership << 16) | filter. Carried things are only in group 2; the walker's queries skip group 2.
 const CARRIED = (0x0002 << 16) | 0xffff, WALKER = (0xffff << 16) | 0xfffd;
@@ -174,7 +175,8 @@ export function character(world, { position = [0, 0, 0], radius = 0.3, height = 
     // capsule inside the floor barely walks. So the capsule floats GAP above the feet it reports.
     // Placed (spawned, teleported) a centimetre higher still, it drops and the controller settles it at exactly GAP;
     // placed at exactly GAP, rounding sometimes puts it a hair inside, where it crawls.
-    const R = RAPIER, half = Math.max(0.01, height / 2 - radius), GAP = 0.02, up = height / 2 + GAP, DROP = 0.01;
+    const R = RAPIER, GAP = 0.02, DROP = 0.01;
+    let half = Math.max(0.01, height / 2 - radius), up = height / 2 + GAP;
     const rb = world.raw.createRigidBody(R.RigidBodyDesc.kinematicPositionBased().setTranslation(position[0], position[1] + up + DROP, position[2]));
     const col = world.raw.createCollider(R.ColliderDesc.capsule(half, radius), rb);
     const ctl = world.raw.createCharacterController(GAP);
@@ -194,6 +196,17 @@ export function character(world, { position = [0, 0, 0], radius = 0.3, height = 
         walk(x, z) { vx = x; vz = z; },
         jump(speed) { if (self.grounded) { vy = speed; self.grounded = false; } },
         ride(dy) { lift += dy; },
+        /** Make the capsule `h` tall, feet where they are. Growing (standing up) under a table or a low ceiling: false,
+         *  and it stays as it was. */
+        resize(h) {
+            const next = Math.max(0.01, h / 2 - radius);
+            if (Math.abs(next - half) < 1e-4) return true;
+            const feet = at.y - up;
+            if (next > half && world.raw.intersectionWithShape({ x: at.x, y: feet + h / 2 + GAP, z: at.z }, { x: 0, y: 0, z: 0, w: 1 }, new R.Capsule(next, radius * 0.95), R.QueryFilterFlags.EXCLUDE_SENSORS, WALKER, col)) return false;
+            half = next; up = h / 2 + GAP; at.y = feet + up; col.setHalfHeight(half);
+            rb.setTranslation(at, true); rb.setNextKinematicTranslation(at);
+            return true;
+        },
         teleport([x, y, z]) { at.x = x; at.y = y + up + DROP; at.z = z; vy = 0; lift = 0; rb.setTranslation(at, true); rb.setNextKinematicTranslation(at); self.position.set(x, y, z); },
         step(dt) {
             // Standing: no down force. Snap-to-ground holds it on slopes and stairs; pushing down sinks the capsule into

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "hotel-elevator-car",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifeuxy3lbe6dx64xtvfmtzsdjghp4lkl3b47rrf5h4z4hf7mohdpm",
+    "src": "bafybeia7whtoqm7wasuh2eicllwaoxqprmekravoxqtjqmmycdtffdg5qa",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeia7whtoqm7wasuh2eicllwaoxqprmekravoxqtjqmmycdtffdg5qa",
+    "txHash": "0xe77d1e821fc29366a48bb59f51c390bdb90efe95a40ddafc359480e4f022208c"
+  },
+  {
+    "id": "hotel-nightstand",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreic4wmhs2r6bdugtximhnnh5xiimgqe7gnhj5jhrpv7du5e62sp2qu",
+    "src": "bafybeibpwbc564uozgps4cga7gb3oca4untmm6aitwfbb57ffbbpxffkpq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeibpwbc564uozgps4cga7gb3oca4untmm6aitwfbb57ffbbpxffkpq",
+    "txHash": "0xe77d1e821fc29366a48bb59f51c390bdb90efe95a40ddafc359480e4f022208c"
+  },
+  {
+    "id": "hotel-table-lamp",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiae2caeewkimk4en5d4xuihtq65pjea4pgczwztlh5ibmjpud2kei",
+    "src": "bafybeihccuccm72glmn3dl53nplgztey4hzjv2nsicgye4gnrlwaanai5u",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihccuccm72glmn3dl53nplgztey4hzjv2nsicgye4gnrlwaanai5u",
+    "txHash": "0xe77d1e821fc29366a48bb59f51c390bdb90efe95a40ddafc359480e4f022208c"
+  }
+]

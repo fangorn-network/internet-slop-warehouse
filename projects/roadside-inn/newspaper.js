@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: CC0-1.0
-// The local paper you can pick up in the lobby and read (main.js opens it). Invented: the town, the paper and everyone
-// in it. It agrees with the rest of the inn: the storms the TV weather promises, the I-44 work by exit 127, the fair.
+// The local paper you can pick up in the lobby and read: it opens in your hands (world/reading.js), one sheet folded in
+// half, four pages: the front (local news), inside the weather and the classifieds, and the back page. Invented: the
+// town, the paper and everyone in it. It agrees with the rest of the inn: the storms the TV weather promises, the I-44
+// work by exit 127, the fair, tonight's ballgame on channel 4.
 const MASTHEAD = 'The Harlow Springs Courier-Ledger';
 const EDITIONS = {
   today: {
@@ -48,6 +50,16 @@ const EDITIONS = {
         <p><b>WANTED.</b> Old crocks and butter churns. Cash paid. Will come to you.</p>
         <p><b>HELP WANTED.</b> Breakfast attendant, 5:30-10 a.m. Must like waffles. Same hotel as above.</p>
         </div>`],
+      ['Back page', `
+        <h3>Tonight on TV</h3>
+        <p><b>6:00</b> KY3 News · <b>6:30</b> Wheel of Fortune · <b>7:00</b> Cardinals at Royals (Bally Sports Midwest)
+        · <b>10:00</b> KY3 News at Ten · <b>10:35</b> Late-night movie: “The Long Haul” (1958)</p>
+        <h4>Heartland Inn Express · Exit 127</h4>
+        <p>Hot breakfast 6 to 9:30. Indoor pool and hot tub. Truck and trailer parking. Free Wi-Fi. Ask about our
+        Heartland Rewards: every tenth night free.</p>
+        <h4>Harlow Springs Church Directory</h4>
+        <p>First Methodist, 9 and 11 a.m. · Grace Baptist, 10:30 a.m. · St. Agnes Catholic, Sat 5 p.m., Sun 8:30 a.m. ·
+        Cowboy Church at the sale barn, Thursday 7 p.m.</p>`],
     ],
   },
   yesterday: {
@@ -81,13 +93,69 @@ const EDITIONS = {
         <p><b>FOR SALE.</b> Upright piano, needs tuning, you move. $100.</p>
         <p><b>CHURCH SUPPER.</b> Sunday 5 p.m., First Methodist. Ham and beans, cornbread, pie. Donations welcome.</p>
         </div>`],
+      ['Back page', `
+        <h3>Tonight on TV</h3>
+        <p><b>6:00</b> KY3 News · <b>7:00</b> Hornets Football Replay (Channel 12) · <b>8:00</b> Antiques on the Road ·
+        <b>10:00</b> KY3 News at Ten</p>
+        <h4>Gas prices</h4>
+        <p>Route 66 Travel Stop $2.89 · Casey's on Route V $2.94 · Harlow Springs Co-op diesel $3.41.</p>
+        <h4>Harlow Springs Church Directory</h4>
+        <p>First Methodist, 9 and 11 a.m. · Grace Baptist, 10:30 a.m. · St. Agnes Catholic, Sat 5 p.m., Sun 8:30 a.m.</p>`],
     ],
   },
 };
 
-/** The paper as one HTML page: masthead, its section tabs, page `i` of edition `key`. */
-export function newspaperPage(key = 'today', i = 0) {
-  const e = EDITIONS[key] ?? EDITIONS.today, n = e.pages.length, [section, body] = e.pages[(i + n) % n];
-  return `<div class="paper"><div class="mast">${MASTHEAD}</div><div class="dateline">${e.date} · Section ${String.fromCharCode(65 + ((i + n) % n))}: ${section}</div>${body}</div>`;
+// Each page's text as blocks: headlines, bylines, paragraphs (a bold lead-in kept), weather table rows.
+const strip = h => h.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const blocks = html => [...html.matchAll(/<(h3|h4|p|tr)([^>]*)>([\s\S]*?)<\/\1>/g)].map(([, tag, attr, inner]) => tag === 'tr'
+  ? { tag, cells: [...inner.matchAll(/<t[hd]>([\s\S]*?)<\/t[hd]>/g)].map(m => strip(m[1])) }
+  : { tag: /by/.test(attr) ? 'by' : tag, lead: tag === 'p' ? strip(inner.match(/^\s*<b>([\s\S]*?)<\/b>/)?.[1] ?? '') : '', text: strip(inner) });
+const edition = key => EDITIONS[key] ?? EDITIONS.today;
+export const newspaperPages = key => edition(key).pages.length;
+/** Page `i`'s words, plain (for checks and screen readers). */
+export function newspaperText(key = 'today', i = 0) {
+  const e = edition(key), [section, body] = e.pages[i];
+  return [i === 0 ? MASTHEAD : '', e.date, section, strip(body.replace(/<\/(h3|h4|p|td|th)>/g, ' '))].filter(Boolean).join(' · ');
 }
-export const newspaperPages = key => (EDITIONS[key] ?? EDITIONS.today).pages.length;
+/**
+ * Draw page `i` of edition `key` on a canvas context (w × h, a broadsheet page is 0.3 × 0.5 m): masthead on the front,
+ * a folio line on the others, then the stories in two columns, set big enough to read in your hands on a laptop screen.
+ */
+export function drawNewspaperPage(g, w, h, key = 'today', i = 0) {
+  const e = edition(key), [section, body] = e.pages[i], m = 46, gap = 34, col = (w - 2 * m - gap) / 2, ink = '#1c1b19';
+  g.fillStyle = '#efe9da'; g.fillRect(0, 0, w, h);
+  g.fillStyle = ink; g.textBaseline = 'alphabetic'; g.textAlign = 'center';
+  let top;
+  if (i === 0) {
+    g.font = '700 74px "Old English Text MT", UnifrakturMaguntia, Georgia, serif';
+    g.fillText(MASTHEAD.replace(/^The /, ''), w / 2, m + 70, w - 2 * m);
+    g.fillRect(m, m + 96, w - 2 * m, 4); g.fillRect(m, m + 104, w - 2 * m, 1.5);
+    g.font = '22px system-ui, sans-serif'; g.fillText(`${e.date.toUpperCase()} · ${section.toUpperCase()}`, w / 2, m + 134);
+    g.fillRect(m, m + 148, w - 2 * m, 1.5); top = m + 196;
+  } else {
+    g.font = '22px system-ui, sans-serif'; g.textAlign = i % 2 ? 'left' : 'right';
+    g.fillText(`${i + 1}  ·  ${MASTHEAD.toUpperCase()}  ·  ${section.toUpperCase()}`, i % 2 ? m : w - m, m + 24);
+    g.fillRect(m, m + 38, w - 2 * m, 2); top = m + 86;
+  }
+  g.textAlign = 'left';
+  let c = 0, y = top;
+  const x = () => m + c * (col + gap), room = lh => { if (y + lh <= h - m) return true; if (c === 1) return false; c = 1; y = top; return true; };
+  const say = (text, font, lh, lead = '') => {
+    const words = text.split(' '); let line = '', first = true;
+    const out = l => { if (!room(lh)) return false; let px = x(); if (first && lead) { g.font = '700 ' + font; g.fillText(lead, px, y); px += g.measureText(lead + ' ').width; } g.font = font; g.fillText(first && lead ? l.slice(lead.length).trimStart() : l, px, y); y += lh; first = false; return true; };
+    g.font = font;
+    for (const word of words) { const next = line ? line + ' ' + word : word; if (g.measureText(next).width > col && line) { if (!out(line)) return; line = word; } else line = next; }
+    if (line) out(line);
+  };
+  const rows = [];
+  for (const b of blocks(body)) {
+    if (b.tag === 'tr') { rows.push(b.cells); continue; }
+    if (rows.length) { rows[0].forEach((day, k) => say(`${day}: ${rows.slice(1).map(r => r[k]).join(', ')}.`, '30px Georgia, serif', 38, `${day}:`)); rows.length = 0; y += 14; }
+    if (b.tag === 'h3') { y += 12; say(b.text, '700 42px Georgia, serif', 48); y += 6; }
+    else if (b.tag === 'h4') { y += 10; say(b.text.toUpperCase(), '700 28px Georgia, serif', 36); }
+    else if (b.tag === 'by') say(b.text, 'italic 24px Georgia, serif', 32);
+    else { say(b.text, '29px Georgia, serif', 37, b.lead); y += 10; }
+  }
+  if (rows.length) rows[0].forEach((day, k) => say(`${day}: ${rows.slice(1).map(r => r[k]).join(', ')}.`, '30px Georgia, serif', 38, `${day}:`));
+  g.fillRect(m + col + gap / 2 - 0.75, top - 10, 1.5, h - m - top);   // column rule
+}

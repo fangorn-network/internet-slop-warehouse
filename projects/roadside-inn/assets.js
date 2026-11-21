@@ -37,7 +37,7 @@ const MODELS = [
   'ph-modern-coffee-table-01', 'ph-side-table-01', 'ph-modern-ceiling-lamp-01', 'ph-potted-plant-01',
   'ph-potted-plant-04', 'ph-round-wooden-table-01',
   'ph-wetfloorsign-01', 'ph-lifebuoy', 'ph-wall-clock',
-  'ph-shrub-03', 'ph-korean-fire-extinguisher-01',
+  'ph-shrub-03', 'ph-korean-fire-extinguisher-01', 'ph-fire-alarm',   // fire_alarm: pull stations (world/life-safety.js)
   'municipal-water-tower', 'ph-desk-lamp-arm-01',
   // original Blender furniture (blender/bed.py, blender/furniture.py)
   ...['king-bed', 'headboard', 'nightstand', 'table-lamp', 'credenza-tv', 'desk', 'closet', 'microfridge', 'ptac', 'vanity', 'toilet', 'snack-vending', 'luggage-cart', 'lobby-sofa', 'accent-chair-mustard',

@@ -20,14 +20,17 @@ const KG = {
   'hotel-table-lamp': { kg: 1.8, low: 0.08 }, 'hotel-tv-remote': 0.15, 'hotel-coffee-cup': 0.3, 'hotel-newspaper': 0.2,
   'hotel-floor-lamp': { kg: 6, low: 0.05 },   // a weighted iron base under a brass pole and a shade
   cookie: 0.04, creamer: 0.5, 'tea box': 0.3, pen: 0.01, 'tent card': 0.02, apple: 0.2, 'key card': 0.005, mug: 0.35,
-  'registration card': 0.005, stapler: 0.25,
+  'registration card': 0.005, stapler: 0.25, brochure: 0.02, 'hotel-roller-bag': { kg: 4.5, low: 0.2 }, bible: 0.6,
 };
+// How a thing sits in your hand, turned from "its +Z away from you": the remote's IR window is its -Z end, so it pointed
+// back at you (R12).
+const HOLD_YAW = { 'hotel-tv-remote': Math.PI };
 // What they're made of, for the sound they make when they land (sound.js impact). Unlisted: plastic.
 const MADE = {
   wood: ['ph-side-table-01', 'ph-coffee-table-round-01', 'ph-modern-coffee-table-01', 'hotel-bar-stool', 'cookie', 'tea box'],
   ceramic: ['hotel-table-lamp', 'mug', 'ph-potted-plant-04'], metal: ['hotel-luggage-cart', 'stapler', 'hotel-floor-lamp'],
-  soft: ['hotel-lounge-chair-navy', 'ph-modern-arm-chair-01', 'hotel-task-chair', 'hotel-coffee-cup', 'apple', 'creamer'],
-  paper: ['hotel-newspaper', 'tent card', 'registration card'],
+  soft: ['hotel-roller-bag', 'hotel-lounge-chair-navy', 'ph-modern-arm-chair-01', 'hotel-task-chair', 'hotel-coffee-cup', 'apple', 'creamer'],
+  paper: ['hotel-newspaper', 'brochure', 'bible', 'tent card', 'registration card'],
 };
 const made = n => Object.keys(MADE).find(k => MADE[k].includes(n)) ?? 'plastic';
 // How fast you can throw something, m/s: a remote or a sign leaves the hand at 5.5, a 6 kg side table at about 3.
@@ -99,12 +102,13 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
     // small things want you close and looking right at them, or an apple on the counter steals the desk's "Check in"
     const small = l.size < 0.45;
     l.mid = mid;
-    // only the top one of a pile: what's under something else stays put until what's on it is taken
+    // only the top one of a pile: what's under something else stays put until what's on it is taken; nothing shut in a
+    // drawer (loose.reachable, world/handling.js)
     const stack = l.o.userData.loose.stack;
     const covered = () => stack
       ? loose.some(r => !r.b && r.o.userData.loose.stack === stack && r.o.position.y > l.o.position.y)
       : l.riders?.some(r => !r.b && r.on === l);
-    world.interact.push({ pos: at, r: small ? 0.85 : 1.3, precise: small, when: () => !held && loose.includes(l) && ((stack && l.b) || !covered()), label: () => `Pick up the ${name(l.o)}`, use: () => grab(l) });
+    world.interact.push({ pos: at, r: small ? 0.85 : 1.3, precise: small, when: () => !held && loose.includes(l) && ((stack && l.b) || !covered()) && (l.o.userData.loose.reachable?.() ?? true), label: () => `Pick up the ${name(l.o)}`, use: () => grab(l) });
   }
 
   function attachLoose() {
@@ -145,8 +149,8 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   const speed = b => { const v = b.body.linvel(); return Math.hypot(v.x, v.y, v.z); };
   // Small things grip what they rest on (felt pads, rubber feet, a cup's damp ring): their friction wins over the
   // surface's, so a table stopping short under them doesn't leave them sliding.
-  const grip = b => { b.collider.setFrictionCombineRule(R.CoefficientCombineRule.Max); return b; };
-  const wake = l => { if (!l.b) l.b = grip(attach(l.o, { world: pw, shape: l.spec.shape, mass: l.spec.mass ?? 0.1, centerOfMass: l.spec.centerOfMass, friction: 0.9, damping: 1, settle: 5, onContact: heard(l.o, () => l.b.body.mass()) })); };
+  const GRIP = 0.9, grip = b => { b.collider.setFrictionCombineRule(R.CoefficientCombineRule.Max); return b; };
+  const wake = l => { if (!l.b) l.b = grip(attach(l.o, { world: pw, shape: l.spec.shape, mass: l.spec.mass ?? 0.1, centerOfMass: l.spec.centerOfMass, friction: GRIP, damping: 1, settle: 5, onContact: heard(l.o, () => l.b.body.mass()) })); };
   attachLoose();
 
   world.interact.push({ pos: new T.Vector3(), r: 2, heldEntry: true, when: () => !!held, label: () => held ? `Throw the ${name(held.o)}` : 'Throw', use: () => throwHeld() });   // pos follows the held prop
@@ -158,6 +162,10 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   }
   function throwHeld(speed = 5.5, up = 1.2, put = false) {
     const l = held; held = null;
+    if (l.o.userData.loose.hold === 'roll') {   // stood up on its wheels and feet where it was, handle pushed down
+      const yaw = Math.atan2(l.o.position.x - hold.x, l.o.position.z - hold.z); telescope(l, 0); l.trail = null;
+      if (put) { l.o.quaternion.setFromAxisAngle(new T.Vector3(0, 1, 0), yaw); l.o.position.y = me.position.y + 0.005; l.b.body.setNextKinematicTranslation(l.o.position); l.b.body.setNextKinematicRotation(l.o.quaternion); l.b.body.setTranslation(l.o.position, true); l.b.body.setRotation(l.o.quaternion, true); l.b.release([0, 0, 0]); setTimeout(() => me.unignore(l.b.collider), 400); return; }
+    }
     eye?.getWorldDirection(ahead);
     const k = put ? 1 : throwSpeed(l.b.body.mass()) / 5.5;
     l.b.release(ahead.clone().multiplyScalar(speed * k).add(new T.Vector3(0, up * k, 0)).toArray());
@@ -165,6 +173,35 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   }
   // Put it down: let go just ahead of you with a little forward drift, so it lands where you were looking.
   const drop = () => held && throwHeld(0.6, 0.2, true);
+
+  // A roller bag in hand rolls behind you on its wheels by its handle, like a trailer: the axle follows the hand at the
+  // handle's length, so it swings round behind you as you turn and tilts back toward your hand. The handle (a node named
+  // /handle/) telescopes out while you pull it and back in when you set it down. Cast: `grip` is where the hand goes.
+  const hold = new T.Vector3(), axle = new T.Vector3(), fl = new T.Vector3(), rt = new T.Vector3(), yAx = new T.Vector3(), zAx = new T.Vector3(), xAx = new T.Vector3(), basis = new T.Matrix4();
+  function roll(l, camera, feet) {
+    const r = l.o.userData.loose.roll;   // { wheel: [x, y, z] axle in the bag's frame, handle: hold height when extended }
+    camera.getWorldDirection(fl).setY(0).normalize(); rt.set(-fl.z, 0, fl.x);
+    hold.copy(feet).addScaledVector(rt, 0.26).addScaledVector(fl, -0.08).setY(feet.y + Math.max(0.55, 0.8 - 0.35 * (1.62 - camera.position.y + feet.y) / 0.62));
+    const reach = Math.hypot(r.handle - r.wheel[1], 0.01);
+    if (!l.trail || l.trail.distanceTo(hold) > 2) l.trail = hold.clone().addScaledVector(fl, -0.6);
+    const dx = l.trail.x - hold.x, dz = l.trail.z - hold.z, flat = Math.hypot(dx, dz) || 1, h = hold.y - feet.y - r.wheel[1], run = Math.sqrt(Math.max(0.01, reach * reach - h * h));
+    axle.set(hold.x + dx / flat * run, feet.y + r.wheel[1], hold.z + dz / flat * run);
+    // never through a wall: a fixed thing between you and the bag stops it short
+    to.subVectors(axle, hold).setY(0); const far = to.length();
+    const hit = far > 0.01 && pw.raw.castRay(new R.Ray({ x: hold.x, y: feet.y + 0.15, z: hold.z }, to.divideScalar(far)), far + 0.2, true, R.QueryFilterFlags.EXCLUDE_DYNAMIC | R.QueryFilterFlags.EXCLUDE_SENSORS, undefined, me.collider);
+    if (hit) axle.set(hold.x + to.x * Math.max(0.15, (hit.timeOfImpact ?? hit.toi) - 0.2), axle.y, hold.z + to.z * Math.max(0.15, (hit.timeOfImpact ?? hit.toi) - 0.2));
+    l.trail.copy(axle);
+    yAx.subVectors(hold, axle).normalize(); zAx.set(axle.x - hold.x, 0, axle.z - hold.z).normalize(); zAx.addScaledVector(yAx, -zAx.dot(yAx)).normalize(); xAx.crossVectors(yAx, zAx);
+    basis.makeBasis(xAx, yAx, zAx); l.o.quaternion.setFromRotationMatrix(basis);
+    l.o.position.copy(axle).sub(new T.Vector3(...r.wheel).applyQuaternion(l.o.quaternion));
+    telescope(l, 1);
+    throwEntry.pos.copy(hold);
+  }
+  const telescope = (l, out) => { const n = l.handle ??= (() => { let h = null; l.o.traverse(c => { if (!h && /handle/i.test(c.name)) h = c; }); return h ? { n: h, y: h.position.y } : false; })(); if (n) n.n.position.y = n.y + out * (l.o.userData.loose.roll.extend ?? 0.42); };
+  // Pulling something by a cord: a rope from a loose prop to a point you move (the plug in your hand).
+  const hand = pw.raw.createRigidBody(R.RigidBodyDesc.kinematicPositionBased());
+  let leash = null;
+  const down = new T.Vector3(0, -1, 0);
 
   let attachClock = 0;
   return {
@@ -176,6 +213,23 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
     throw: () => held && throwHeld(),
     /** Let go of what's held, gently, just ahead. */
     drop,
+    /** Where the hand holds a rolled bag's handle (world space), or null: for the player's body (Cast). */
+    get grip() { return held?.o.userData.loose.hold === 'roll' ? hold : null; },
+    /** Pull loose object `o` by a rope `length` long from the point `at` (a Vector3 you keep moving), e.g. a lamp by
+     *  the plug in your hand; leash(null) lets go. Taut, it drags the thing (and pulls a lamp off its table). */
+    leash(o, at, length) {
+      if (leash && leash.l.o === o && leash.length === length) { leash.at = at; return; }
+      if (leash?.joint) pw.raw.removeImpulseJoint(leash.joint, true);
+      leash = null;
+      const l = o && loose.find(l => l.o === o);
+      if (l) { hand.setTranslation(at, true); leash = { l, at, length, joint: null }; }
+    },
+    /** Height of whatever is under (x, y, z) within `far` metres, ignoring the walker and `skip` (an object), or null. */
+    ground(x, y, z, far = 1.5, skip = null) {
+      const b = skip && loose.find(l => l.o === skip)?.b?.body;
+      const hit = pw.raw.castRay(new R.Ray({ x, y, z }, down), far, true, R.QueryFilterFlags.EXCLUDE_SENSORS, undefined, me.collider, b ?? undefined);
+      return hit ? y - (hit.timeOfImpact ?? hit.toi) : null;
+    },
     /** What's held, as a word ("remote", "coffee cup"), or null. */
     get holding() { return held ? name(held.o) : null; },
     /** Where every moved prop is, for a save: { moved: { id: [x, y, z, qx, qy, qz, qw] }, held: id | null }. */
@@ -214,13 +268,14 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
           m.last = off;
         }
       }
-      if (held) {
+      if (held?.o.userData.loose.hold === 'roll') roll(held, camera, feet);
+      else if (held) {
         camera.getWorldDirection(ahead);
         // big props at arm's length; small ones in hand, low and to the right
         const small = held.size < 0.45;
         held.o.position.copy(camera.position).addScaledVector(ahead, small ? 0.42 : 0.95).add(new T.Vector3(0, (small ? -0.24 : -0.3) - held.mid, 0));   // its middle there, not its foot: a floor lamp's shade stayed in the ceiling
         if (small) held.o.position.add(new T.Vector3(-ahead.z, 0, ahead.x).normalize().multiplyScalar(0.16));
-        held.o.rotation.set(0, Math.atan2(ahead.x, ahead.z), 0);
+        held.o.rotation.set(0, Math.atan2(ahead.x, ahead.z) + (HOLD_YAW[held.o.name] ?? 0), 0);
         // Never inside a wall: held at arm's length against one, it was let go of inside (or past) it, and a remote
         // thrown at the lobby's west wall flew through into the pool hall. Hold it short of anything fixed in between.
         to.subVectors(held.o.position, camera.position);
@@ -241,11 +296,19 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
           l.rope = t.at && { at: t.at, joint: pw.raw.createImpulseJoint(R.JointData.rope(t.length, { x: 0, y: 0, z: 0 }, { x: t.at.x, y: t.at.y, z: t.at.z }), l.b.body, fixed, true) };
         }
       }
+      if (leash) {
+        if (!leash.l.b && leash.l.o.position.distanceTo(leash.at) > leash.length) wake(leash.l);   // taut: it comes off its table
+        if (leash.l.b && !leash.joint) leash.joint = pw.raw.createImpulseJoint(R.JointData.rope(leash.length, { x: 0, y: 0.02, z: 0 }, { x: 0, y: 0, z: 0 }), leash.l.b.body, hand, true);
+        hand.setNextKinematicTranslation(leash.at);
+        if (leash.joint && leash.l.o.position.distanceTo(leash.at) > leash.length * 0.98) leash.l.b.body.wakeUp();
+      }
       pw.update(dt);
       // What rests on a moved prop rides along on it, as a plain model in the prop's frame, the way a lamp on felt pads
       // rides a table you slide. It only gets a body (and falls, slides or topples by physics) when a person would see it
-      // come loose: the prop lifted out from under it, tipped past 5 degrees, or jolted harder than 0.4 g. Woken on any
-      // movement, a slow (headless) frame let the table slip 2-4 cm under the lamp before it caught up.
+      // come loose: the prop lifted out from under it, tipped past 5 degrees, or jolted harder than friction can hold (GRIP g:
+      // the friction resting things get, see grip()). Woken on any movement, a slow (headless) frame let the table slip 2-4
+      // cm under the lamp before it caught up; woken at 0.4 g, a table stopping on its own floor friction (0.6 g) woke the
+      // lamp and the solver then let the table slide on under it.
       for (const l of loose) {
         const s = l.on;
         if (!s || l.b) continue;
@@ -254,8 +317,8 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
         if (s.o.position.distanceToSquared(l.from) > 4e-6 || (s.b && speed(s.b) > 0.03)) {
           s.o.updateMatrixWorld(); s.o.matrixWorld.clone().multiply(l.rel).decompose(l.o.position, l.o.quaternion, l.o.scale); l.o.updateMatrixWorld();
           l.from.copy(s.o.position);
-          const jolt = Math.hypot(v.x - was.x, v.y - was.y, v.z - was.z) / Math.max(dt, 1e-3) > 0.4 * 9.81, tipped = up.set(0, 1, 0).applyQuaternion(s.o.quaternion).y < Math.cos(5 * Math.PI / 180);
-          if (jolt || tipped) { wake(l); l.b.body.setLinvel(was, true); }
+          const jolt = Math.hypot(v.x - was.x, v.y - was.y, v.z - was.z) / Math.max(dt, 1e-3) > GRIP * 0.95 * 9.81, tipped = up.set(0, 1, 0).applyQuaternion(s.o.quaternion).y < Math.cos(5 * Math.PI / 180);
+          if (jolt || tipped) { wake(l); l.woke = { jolt, tipped, a: +(Math.hypot(v.x - was.x, v.y - was.y, v.z - was.z) / Math.max(dt, 1e-3)).toFixed(2), dt }; l.b.body.setLinvel(was, true); }
         }
       }
       for (const l of loose) if (l.on?.v && !l.b) l.on.v.copy(l.on.b ? l.on.b.body.linvel() : still);   // for the next frame's jolt

@@ -104,22 +104,41 @@ const RESIDENTS = [
     says: { near: '“Ice machine works, it just sounds like a car crash.”' } },
 ];
 
-/** Seated guests: who, and where (seat surface measured from the furniture's mesh; see REALISM.md, People). */
+/** Seated guests, as intent data too (seat surface measured from the furniture's mesh; see REALISM.md, People). Their
+ *  activities change posture and what they look at; body.js keeps them still in between (GAIT-AND-POSE.md). */
 const SITTERS = [
-  // Lounging on the sectional's main run like a tired traveller (seat 0.47, back-cushion face x 2.10, front edge 2.68,
-  // back top ~0.9): pelvis slid forward and rolled back into the cushions, settled to one side, knees apart, one foot out,
-  // an arm along the sofa back, the other hand in his lap, head tipped toward the TV.
-  { id: 'rb-marcus-formal', tint: '#41506b', who: 'A salesman winding down with the news', hips: [2.36, 0.47, 6.55], yaw: Math.PI / 2, sink: 0.035,
-    recline: 0.4, roll: 0.08, tilt: 0.1, ahead: [0.56, 0.36], spread: 0.2,
-    hands: [[1.98, 0.93, 7.15]], gaze: [6.36, 1.6, 6.4] },
+  // Gene on the sectional's main run (seat 0.47, back-cushion face x 2.10, front edge 2.68, back top ~0.9). Watching the
+  // TV: pelvis slid forward and rolled back into the cushions, settled to one side, knees apart, one foot out, right arm
+  // along the sofa back, phone loose in his left hand in his lap. Checking the phone: sits up a little, both hands
+  // bring it up to his chest, head down to it.
+  { id: 'gene', model: 'rb-marcus-formal', tint: '#41506b', start: 'watch-tv',
+    who: 'Gene, 58, sells commercial flooring across three states', why: 'Checked in early; the room was too quiet, so he watches the late news down here',
+    seat: { hips: [2.36, 0.47, 6.55], yaw: Math.PI / 2, sink: 0.035 },
+    postures: {
+      tv: { recline: 0.4, roll: 0.08, tilt: 0.1, ahead: [0.56, 0.36], spread: 0.2, hands: [[1.98, 0.93, 7.15]] },
+      phone: { recline: 0.3, roll: 0.03, tilt: 0, ahead: [0.5, 0.42], spread: 0.16, hands: [[2.6, 0.8, 6.5], [2.6, 0.8, 6.6]] },
+    },
+    things: { tv: { at: [6.36, 1.6, 6.4], kind: 'tv' }, phone: { prop: 'hotel-phone', kind: 'phone' } },
+    activities: {
+      'watch-tv': { weight: 1.2, steps: [['posture', 'tv'], ['attend', 'tv'], ['wait', 70, 160]] },
+      'check-phone': { weight: 0.7, steps: [['posture', 'phone'], ['attend', 'phone'], ['wait', 20, 50]] },
+    } },
   // At the communal table on a bar stool (seat 0.79), ankles over the stool's front bar (0.26), leaning on her forearms,
-  // hands on the oak top (1.05), eyes on her phone.
-  { id: 'rb-emma-casual', tint: '#8a3b5c', who: 'A nurse between shifts with her phone', hips: [-2.1, 0.79, -4.62], yaw: Math.PI, sink: 0.005, lean: 0.22, tilt: -0.05,
-    feet: [[-2.0, 0.345, -4.82], [-2.2, 0.345, -4.82]], hands: [[-1.96, 1.09, -5.02], [-2.24, 1.09, -5.02]], gaze: [-2.1, 1.06, -5.1] },
-  // At a business-center PC on a task chair (seat 0.52, x 5.2-5.5): leaning in a little, forearms forward, left hand on
-  // the keyboard, right on the mouse (desk 0.76, edge 5.75), eyes on the monitor.
-  { id: 'rb-andre-casual', tint: '#2f3a2f', who: 'A rep printing tomorrow’s boarding pass', hips: [5.33, 0.52, -3.55], yaw: Math.PI / 2, sink: 0.015, lean: 0.38,
-    hands: [[5.79, 0.795, -3.64], [5.81, 0.79, -3.33]], gaze: [6.15, 1.05, -3.55] },
+  // hands on the oak top (1.05), eyes on her phone on the table.
+  { id: 'nurse', model: 'rb-emma-casual', tint: '#8a3b5c', start: 'scroll',
+    who: 'A nurse between shifts with her phone', why: 'Killing the hour before her night shift at the county hospital',
+    seat: { hips: [-2.1, 0.79, -4.62], yaw: Math.PI, sink: 0.005 },
+    postures: { lean: { lean: 0.22, tilt: -0.05, feet: [[-2.0, 0.345, -4.82], [-2.2, 0.345, -4.82]], hands: [[-1.96, 1.09, -5.02], [-2.24, 1.09, -5.02]] } },
+    things: { phone: { at: [-2.1, 1.06, -5.1], kind: 'phone' } },
+    activities: { scroll: { steps: [['posture', 'lean'], ['attend', 'phone'], ['wait', 60, 200]] } } },
+  // At a business-center PC on a task chair (seat 0.52, x 5.2-5.5): leaning in a little, left hand on the keyboard,
+  // right on the mouse (desk 0.76, edge 5.75), eyes on the monitor.
+  { id: 'rep', model: 'rb-andre-casual', tint: '#2f3a2f', start: 'print',
+    who: 'A rep printing tomorrow’s boarding pass', why: 'The airline app won’t load the pass and the gate agent wants paper',
+    seat: { hips: [5.33, 0.52, -3.55], yaw: Math.PI / 2, sink: 0.015 },
+    postures: { type: { lean: 0.38, hands: [[5.79, 0.795, -3.64], [5.81, 0.79, -3.33]] } },
+    things: { screen: { at: [6.15, 1.05, -3.55], kind: 'screen' } },
+    activities: { print: { steps: [['posture', 'type'], ['attend', 'screen'], ['wait', 60, 200]] } } },
 ];
 return { HOTEL, RESIDENTS, SITTERS };
 }
@@ -133,10 +152,12 @@ export function buildStaff(ctx) {
   // ---------- staff and guests ----------
   let clerk = null;
   if (people) {
-  clerk = lib.person('rb-sophia-formal', { tint: '#1d4f8f' });
+  // on duty: anyone who comes up to the desk gets looked at straight away (a guest doesn't stand there unnoticed)
+  clerk = lib.person('rb-sophia-formal', { tint: '#1d4f8f', manner: { engage: 3.2, linger: 0.3, share: 0.85 } });
   // Between the two pods, not behind the right one's monitor: from where a guest stands she was a forehead over a screen.
   add(clerk.root, -8.65, 0, -3.95, 0); solid(-8.9, -8.4, 0, 1.7, -4.2, -3.7);   // Dana is solid when you come round behind the desk
   clerk.lookAt(eye);   // she looks up at whoever comes to the desk
+  clerk.attend({ at: new T.Vector3(-8.05, 1.2, -3.3), kind: 'screen' });   // between guests: the right pod's monitor
   updaters.push(dt => clerk.update(dt));
   interact.push({ pos: new T.Vector3(-7.9, 1.2, -2.4), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
   const ringBell = { pos: new T.Vector3(-7.05, 1.15, -2.65), r: 0.5, label: () => 'Ring the bell', use: () => { game.sound.bell(); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } };
@@ -152,28 +173,56 @@ export function buildStaff(ctx) {
     const p = lib.person(r.model, { tint: r.tint });
     scene.add(p.root);
     const m = mind(r, HOTEL), start = HOTEL.places[r.start];
-    const w = { p, r, mind: m, stops: [], i: 0, at: null, wait: 0, speed: r.speed ?? 1.0, v: 0, yaw: start.face ?? 0, say: r.says?.near, said: 0, holding: false, cup: null, cart: null, hidden: false };
+    const w = { p, r, mind: m, stops: [], i: 0, at: null, wait: 0, speed: r.speed ?? 1.0, v: 0, yaw: start.face ?? 0, say: r.says?.near, said: 0, task: { at: new T.Vector3(), kind: 'path' }, holding: false, cup: null, cart: null, hidden: false };
     p.root.position.set(...start.p); p.root.rotation.y = w.yaw;
     w.stops = toStops(m.next(start.p, phase()));
     p.lookAt(eye);
     walkers.push(w);
     return w;
   }
-  // Seated: the rig bent into a sitting pose over Idle, feet and hands placed by IK (people.js), the hip joints on the
-  // seat. Solid, so the chair under them (a loose stool or task chair inside the box) is pinned by physics.js.
-  const sitters = [];
-  function sitter({ id, tint, hips: [x, seatY, z], yaw, sink = 0.02, gaze, who, ...style }) {
-    const p = lib.person(id, { tint });
-    const v3 = l => l?.map(h => new T.Vector3(...h));
-    p.pose('sit', { ...style, hands: v3(style.hands), feet: v3(style.feet) });
-    // they watch what they're doing (the TV, the screen, a phone) and look up at you when you come close
-    p.look = new T.Vector3(); p.gaze = gaze ? new T.Vector3(...gaze) : null; p.lookAt(p.look);
+  // Seated: the rig bent into a sitting pose (people.js), feet and hands placed by IK, the hip joints on the seat. A mind
+  // (intent.js) picks what they do (watch the TV, check the phone); each beat sets a posture and what their eyes are on.
+  // Solid, so the chair under them (a loose stool or task chair inside the box) is pinned by physics.js.
+  const sitters = [], seated = [];
+  const v3 = l => l?.map(h => new T.Vector3(...h));
+  function sitter(r) {
+    const { hips: [x, seatY, z], yaw, sink = 0.02 } = r.seat;
+    const p = lib.person(r.model, { tint: r.tint, manner: r.manner });
+    const postures = Object.fromEntries(Object.entries(r.postures).map(([k, o]) => [k, { ...o, hands: v3(o.hands), feet: v3(o.feet) }]));
+    p.pose('sit', Object.values(postures)[0]);
     // hip joints ~9 cm over the sitting surface (ANSUR seated hip-joint height), less what the cushion gives
     add(p.root, x, seatY + 0.09 * p.root.scale.y - sink - p.hipJoint, z, yaw);
-    p.root.userData.who = who;
+    p.root.userData.who = r.who;
     solid(x - 0.3, x + 0.3, 0, seatY + 0.8, z - 0.3, z + 0.3);
-    sitters.push(p);
+    // what they look at: a fixed point (the TV, a screen) or a prop in their hands (the phone)
+    const things = {};
+    for (const [k, t] of Object.entries(r.things ?? {})) {
+      things[k] = { at: t.at ? new T.Vector3(...t.at) : new T.Vector3(), kind: t.kind };
+      if (t.prop) { const o = new T.Group(), m = lib.model(t.prop, { origin: true }); m.rotation.x = Math.PI / 2; o.add(m); scene.add(o); things[k].prop = o; }   // screen (+y) toward +z, then o.lookAt the face
+    }
+    const s = { p, r, postures, things, mind: mind({ ...r, activities: r.activities }, HOTEL), stops: [], i: 0, wait: 0, at: [x, seatY, z] };
+    s.stops = s.mind.start(r.start, s.at);
+    p.lookAt(eye);
+    sitters.push(p); seated.push(s);
     return p;
+  }
+  function seatedTick(s, dt) {
+    const { p, things } = s;
+    if ((s.wait -= dt) <= 0) {
+      if (s.i >= s.stops.length) { s.stops = s.mind.next(s.at, phase()); s.i = 0; }
+      const st = s.stops[s.i++];
+      if (st.posture && s.postures[st.posture]) p.pose('sit', s.postures[st.posture]);
+      if ('attend' in st) p.attend(things[st.attend] ?? null);
+      s.wait = st.wait || 1;
+    }
+    p.update(dt);
+    // a prop in hand follows the hands (both, when both hold it; else the lap hand) and faces the eyes
+    for (const t of Object.values(things)) if (t.prop) {
+      const B = p.bones, sit = p.sitting, both = (sit?.hands?.length ?? 0) >= 2;
+      const at = both ? B.hands[0].getWorldPosition(t.at).add(B.hands[1].getWorldPosition(d)).multiplyScalar(0.5) : B.hands[0].getWorldPosition(t.at);
+      t.at.y += both ? 0.03 : 0.02;
+      t.prop.position.copy(at); t.prop.lookAt(B.head.getWorldPosition(d));
+    }
   }
   if (people) {
     for (const r of RESIDENTS) {
@@ -185,13 +234,15 @@ export function buildStaff(ctx) {
       if (r.cup) { w.cup = lib.model('hotel-coffee-cup', { origin: true }); w.cup.visible = false; scene.add(w.cup); }
     }
     for (const s of SITTERS) sitter(s);
+    // a noise (a thrown thing landing): everyone within earshot on that floor turns to it (God's physics calls this)
+    game.hear = (at, joules = 1) => { for (const p of [clerk, ...walkers.filter(w => !w.hidden).map(w => w.p), ...sitters]) if (p && joules > 0.3 && Math.abs(p.root.position.y - at.y) < 2 && p.root.position.distanceTo(at) < 4 + 3 * Math.sqrt(joules)) p.hear(at); };
   }
 
   const fwd = new T.Vector3(), toward = new T.Vector3(), rel = new T.Vector3(), d = new T.Vector3();
   const near = (a, b) => Math.abs(a.y - b.y) < 1.5;   // same floor
   updaters.push((dt, t, player) => {
     eye.set(player.x, player.y + 1.6, player.z);
-    for (const p of sitters) { p.look.copy(p.gaze && p.root.position.distanceTo(player.pos) > 3 ? p.gaze : eye); p.update(dt); }
+    for (const s of seated) seatedTick(s, dt);
     // who's where this frame: bodies and carts everyone steers round
     const obstacles = [{ pos: player.pos, r: BODY, player: true }];
     for (const w of walkers) if (!w.hidden) { obstacles.push({ pos: w.p.root.position, r: BODY, w }); if (w.cart) obstacles.push({ pos: w.cartAt, r: CART, w }); }
@@ -256,6 +307,15 @@ export function buildStaff(ctx) {
         if (gap < min && gap > 1e-4) pos.addScaledVector(d, (min - gap) / gap * (o.player || o.pos === o.w?.cartAt ? 1 : 0.5));
       }
       p.root.rotation.y = w.yaw;
+      // eyes: on the way ahead while walking (the head leads the turns), on what they're doing when stopped
+      const goal = w.wait > 0 ? null : w.stops[w.i];
+      if (goal) {
+        const next = rel.copy(goal.p).sub(pos).setY(0).length() < 1.5 && w.stops[w.i + 1] ? w.stops[w.i + 1].p : goal.p;
+        w.task.at.copy(next).sub(pos).setY(0); const n = w.task.at.length();
+        if (n > 1e-3) w.task.at.multiplyScalar(Math.min(n, 3.5) / n);
+        w.task.at.add(pos).setY(pos.y + 1.0); w.task.kind = 'path';
+      } else { const f = w.at?.face ?? w.yaw; w.task.at.set(pos.x + Math.sin(f) * 0.9, pos.y + 1.0, pos.z + Math.cos(f) * 0.9); w.task.kind = 'work'; }
+      p.attend(w.task);
       if (w.v > 0.05) { p.play('Walk'); p.pace(w.v); } else p.play('Idle');
       p.update(dt);
       if (w.cup) {

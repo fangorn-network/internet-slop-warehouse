@@ -7,6 +7,9 @@ import * as T from 'three';
 import { createPhysics } from './physics.js';
 
 export const RADIUS = 0.28, EYE = 1.62, STEP = 0.45;
+// Crouching (C): eyes at knee-bent height, a short capsule that fits under things, half speed and no running. It eases
+// down and up over about a quarter second, and you can't stand up under something lower than you.
+export const CROUCH = { eye: 1.0, height: 1.15, speed: 0.75 };
 
 /**
  * → { player, physics, move(dt, controls, camera), use(), zone() }
@@ -15,7 +18,7 @@ export const RADIUS = 0.28, EYE = 1.62, STEP = 0.45;
  * zone(): the world zone the player stands in.
  */
 export async function createPlayer(scene, world, { sound }) {
-  const player = { x: world.spawn.x, y: 0, z: world.spawn.z, vy: 0, pos: new T.Vector3(), stride: 0 };
+  const player = { x: world.spawn.x, y: 0, z: world.spawn.z, vy: 0, pos: new T.Vector3(), stride: 0, crouch: 0, eye: EYE };   // crouch: 0 standing … 1 down
   let phys = null;
   try { phys = await createPhysics(scene, world, { spawn: world.spawn, radius: RADIUS, height: 1.75, step: STEP, sound }); }
   catch (e) { console.warn('physics off, walking the old way:', e.message); }
@@ -23,7 +26,7 @@ export async function createPlayer(scene, world, { sound }) {
 
   // The walker without physics: push out of the world's boxes, stand on the highest floor within a step.
   function collide(axis, delta) {
-    const lo = player.y + 0.3, hi = player.y + 1.75;
+    const lo = player.y + 0.3, hi = player.y + (player.crouch > 0.5 ? CROUCH.height : 1.75);
     for (const c of world.colliders) {
       if (c.on && !c.on()) continue;
       if (c.y1 <= lo || c.y0 >= hi) continue;
@@ -48,7 +51,13 @@ export async function createPlayer(scene, world, { sound }) {
 
   function move(dt, controls, camera) {
     const input = controls.input;
-    const len = Math.hypot(input.x, input.z), speed = input.run ? 2.9 : 1.55;
+    // Crouch: the capsule shrinks at once (so you fit under the table you're ducking towards) and grows back only with
+    // headroom; the eye follows over ~0.25 s.
+    const down = input.crouch || (phys && player.crouch > 0 && !phys.me.resize(1.75));
+    if (phys && down) phys.me.resize(CROUCH.height);
+    player.crouch = Math.max(0, Math.min(1, player.crouch + (down ? 1 : -1) * dt * 4));
+    player.eye = EYE + (CROUCH.eye - EYE) * player.crouch * player.crouch * (3 - 2 * player.crouch);
+    const run = input.run && !down, len = Math.hypot(input.x, input.z), speed = down ? CROUCH.speed : run ? 2.9 : 1.55;
     const dx = len ? input.x / Math.max(1, len) * speed * dt : 0, dz = len ? input.z / Math.max(1, len) * speed * dt : 0;
     let moved;
     if (phys) {
@@ -68,10 +77,10 @@ export async function createPlayer(scene, world, { sound }) {
       moved = Math.hypot(dx, dz);
     }
     player.stride += moved;
-    if (player.stride > (input.run ? 0.95 : 0.72)) { player.stride = 0; const z = zone()?.name; sound.step(z === 'room' || z === 'corridor'); }
-    player.pos.set(player.x, player.y + 1.0, player.z);
-    const bob = len ? Math.sin(performance.now() / (input.run ? 120 : 170)) * 0.018 : 0;
-    camera.position.set(player.x, player.y + EYE + bob, player.z);
+    if (player.stride > (down ? 0.5 : run ? 0.95 : 0.72)) { player.stride = 0; const z = zone()?.name; if (!down) sound.step(z === 'room' || z === 'corridor'); }   // crouched, you creep: no footfalls
+    player.pos.set(player.x, player.y + 1.0 - 0.4 * player.crouch, player.z);
+    const bob = len ? Math.sin(performance.now() / (run ? 120 : down ? 230 : 170)) * (down ? 0.008 : 0.018) : 0;
+    camera.position.set(player.x, player.y + player.eye + bob, player.z);
     camera.rotation.set(input.pitch, input.yaw, 0);
   }
 

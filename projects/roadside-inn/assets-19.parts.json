@@ -1,0 +1,60 @@
+[
+  {
+    "id": "hotel-elevator-car",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-elevator-car.glb",
+    "title": "Hotel elevator car · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "elevator",
+      "car"
+    ],
+    "description": "Elevator car interior 2.3 x 3.3 m (door side +Z): brushed steel walls, walnut rear panel, handrails, ceiling light, button panel. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center. Poly Haven walnut/cotton maps (CC0). 2026-11-21: real car operating panel (floor 1/2, door open/close, alarm, emergency stop, fire service key switch, phone, braille), ceiling downlight fixture, terrazzo floor."
+  },
+  {
+    "id": "hotel-nightstand",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-nightstand.glb",
+    "title": "Hotel nightstand · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "nightstand"
+    ],
+    "description": "Walnut nightstand with drawer, steel pull and open shelf; 0.52 x 0.42 x 0.56 m. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0). 2026-11-21: drawer as a separate node that opens, two outlets plus USB-A and USB-C in the top, a Bible inside."
+  },
+  {
+    "id": "hotel-table-lamp",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-table-lamp.glb",
+    "title": "Hotel table lamp · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "table",
+      "lamp"
+    ],
+    "description": "Bedside table lamp: ceramic body, steel stem, open linen drum shade (material \"lampshade\" for emissive glow). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0). 2026-11-21: fabric-textured shade, base and shade in distinct materials."
+  }
+]

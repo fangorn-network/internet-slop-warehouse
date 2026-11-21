@@ -146,6 +146,11 @@ if (!mode || mode === 'flow') try {
   await face(8.2, 0, 0.2, 8.75, -0.9); flow.callPrompt = await press('Call elevator');
   await page.waitForTimeout(2500);
   await face(7.9, 0, -2.6, 8.85, -1.45); await page.waitForTimeout(300);
+  // the car's buttons are precise targets: look straight at "Press 2" on the real panel
+  await page.evaluate(() => { const T = __inn.T ?? globalThis.THREE, it = __inn.world.interact.find(i => i.precise && /^Press 2/.test(i.label())), c = __inn.camera ?? __inn.game.camera();
+    const p = it.pos.clone(); if (it.dynamicY) p.y = it.dynamicY(); const d = p.sub(c.position);
+    __inn.controls.setLook(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z))); });
+  await page.waitForTimeout(300);
   flow.panelPrompt = await press('Press 2');
   await page.waitForFunction(() => __inn.world.elevator.floor === 1 && __inn.world.elevator.doors > 0.95, null, { timeout: 240000 });
   flow.rodeTo = await page.evaluate(() => +__inn.player.y.toFixed(2));
@@ -360,7 +365,8 @@ if (mode === 'people') try {
     const W = __inn.world.walkers, outfit = p => { let c = null; p.root.traverse(n => { if (n.isMesh && /Outfit/.test(n.name)) c = n.material.color.getHexString(); }); return c; };
     const andre = [W[1], W[2]].map(w => w.p), emmas = [W[0], W[4]].map(w => outfit(w.p));
     for (const p of andre) { p.play('Walk'); p.play('Idle'); }
-    const phases = andre.map(p => p.clip.time);
+    let apart = 0; for (let k = 0; k < 30; k++) { for (const p of andre) p.update(0.1); apart += Math.abs(andre[0].breath - andre[1].breath) / 30; }   // they don't breathe in step
+    const phases = [0, apart];
     const p = W[3].p; p.play('Walk'); p.pace(0.6); const slow = p.clip.rate; p.pace(1.2); const fast = p.clip.rate;
     const hipZ = () => p.root.worldToLocal(p.bones.hips.getWorldPosition(new __T.Vector3())).z * p.root.scale.z;
     const zs = []; for (let k = 0; k <= 12; k++) { p.update(0.1); zs.push(hipZ()); }   // through the cross-fade and a cycle
@@ -370,7 +376,7 @@ if (mode === 'people') try {
   const P = flow.people;
   assert.ok(P.emmas[0] && P.emmas[1] && P.emmas[0] !== P.emmas[1], 'two guests on one model wear different colours (the tint reaches Outfit_original)');
   assert.ok(Math.abs(P.phases[0] - P.phases[1]) > 0.05, 'two people on one model idle out of step');
-  assert.ok(P.gait.every(g => g > 0.7 && g < 1.8) && Math.abs(P.slow / P.fast - 0.5) < 0.02, 'the walk cycle runs at the walker\'s speed (no skating feet)');
+  assert.ok(P.gait.every(g => g > 0.7 && g < 1.8) && Math.abs(P.slow / P.fast - Math.SQRT1_2) < 0.02, 'the walk cycle\'s cadence follows the walk ratio (half the speed: 0.71x the cadence and a shorter step, not slow motion)');
   assert.ok(P.hipTravel < 0.25, 'the walk cycle walks on the spot: the hips stay over the body through a cycle and the Idle/Walk cross-fades (no walk-teleport)');
   // Sitters, measured from the bones against the furniture's own mesh (from the lobby, so its zone is shown).
   await page.evaluate(() => __inn.teleport(1, 0, -1, 0, 0)); await frames(5);
@@ -451,14 +457,71 @@ if (mode === 'people') try {
   assert.ok(flow.watched.shown && !flow.away.shown, 'the trucker waits at his door while you watch and goes in once you\'ve gone');
   // Dana looks up at a guest at the desk, and from where they stand her face isn't behind the monitor.
   await page.evaluate(() => __inn.teleport(-8.4, 0, -1.6, 0, 0)); await frames(30);
+  const danaLooks = await page.evaluate(() => new Promise(r => { let n = 0, sum = 0; const f = () => { sum += __inn.people[0].looking; if (++n < 90) requestAnimationFrame(f); else r(sum / n); }; f(); }));   // she looks at you most of the time, glancing at her screen
   flow.dana = await page.evaluate(() => {
     const T = __T, d = __inn.people[0], head = d.bones.head.getWorldPosition(new T.Vector3()), eye = new T.Vector3(-8.4, 1.62, -1.6);
     const near = []; __inn.scene.traverse(o => { if (o.isMesh && o.visible && !o.isInstancedMesh) { const b = new T.Box3().setFromObject(o); if (b.distanceToPoint(new T.Vector3(-8, 1.2, -3)) < 1.5) near.push(o); } });
     const hit = new T.Raycaster(eye, head.clone().sub(eye).normalize(), 0.1, eye.distanceTo(head) + 0.2).intersectObjects(near, false)[0];
     let mine = false; for (let o = hit?.object; o; o = o.parent) if (o === d.root) mine = true;
-    return { looking: +d.looking.toFixed(2), seen: !hit || mine, first: hit?.object.name ?? null };
+    return { seen: !hit || mine, first: hit?.object.name ?? null };
   });
+  flow.dana.looking = +danaLooks.toFixed(2);
   assert.ok(flow.dana.looking > 0.5 && flow.dana.seen, 'Dana looks at a guest at the desk and her face is in view, not behind the monitor');
+  // ---- Cast 2026-11-21: stillness punctuated by discrete, motivated events (GAIT-AND-POSE.md, body.js) ----
+  // Alone (you far away), seated people and Dana hold still: the head moves (> 5 deg/s) only in short gaze shifts, the
+  // hips don't rock. Before this round the heads moved 38-69 % of the time (a standing idle under a seated pose).
+  await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(20);
+  flow.still = await page.evaluate(() => {
+    const T = __T, ppl = __inn.people.filter(p => p.posed === 'sit').concat([__inn.people[0]]), dt = 1 / 30;
+    return ppl.map(p => {
+      const fw = () => new T.Vector3(0, 0, 1).applyQuaternion(p.bones.head.getWorldQuaternion(new T.Quaternion())), hip = () => p.bones.hips.getWorldPosition(new T.Vector3());
+      let prev = fw(), moving = 0, h0 = hip(), hmax = 0; const seen = {};
+      for (let i = 0; i < 900; i++) { p.update(dt); const f = fw(); if (prev.angleTo(f) / dt > 5 * Math.PI / 180) moving++; prev = f; hmax = Math.max(hmax, hip().distanceTo(h0)); seen[p.focus.id] = (seen[p.focus.id] ?? 0) + 1 / 900; }
+      return { who: p.root.userData.who ?? 'Dana', moving: +(moving / 900).toFixed(3), hips: +hmax.toFixed(3), task: +(seen.task ?? 0).toFixed(2) };
+    });
+  });
+  assert.ok(flow.still.every(s => s.moving < 0.25), 'people at rest hold still: the head moves only in brief gaze shifts (< 25 % of the time)');
+  assert.ok(flow.still.slice(0, 3).every(s => s.hips < 0.012), 'seated people don\'t rock: hips still within a centimetre (no standing idle under a seated pose)');
+  assert.ok(flow.still.every(s => s.task > 0.55), 'people look at what they\'re doing most of the time (the TV, the phone, the screen, the monitor), not at nothing');
+  // Gene (the sofa) notices you: come and stand by the sofa and he looks at you; a thrown thing landing behind him turns
+  // his head to it (head first, within a few tenths of a second), his eyes ahead of his head.
+  await page.evaluate(() => __inn.teleport(3.2, 0, 5.2, -0.6, 0)); await frames(5);
+  flow.gene = await page.evaluate(() => { const g = __inn.world.sitters[0]; let looked = 0; for (let i = 0; i < 240; i++) { g.update(1 / 30); looked += g.focus.id === 'social' ? 1 / 240 : 0; } return { looked: +looked.toFixed(2) }; });
+  await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(5);
+  flow.gene.noise = await page.evaluate(() => {
+    const T = __T, g = __inn.world.sitters[0], at = new T.Vector3(3.0, 0.05, 4.4); __inn.game.hear(at, 20);   // a thing landing off to his left, behind the coffee table
+    let t = 0; while (g.focus.id !== 'noise' && t < 1) { g.update(1 / 60); t += 1 / 60; }
+    const eye0 = g.gazeState.eye, head0 = Math.abs(g.gazeState.head[0]); for (let i = 0; i < 40; i++) g.update(1 / 60);
+    return { after: +t.toFixed(2), lead: g.focus.lead, eye0: +eye0.toFixed(2), eye1: +g.gazeState.eye.toFixed(2), head0: +head0.toFixed(2), head1: +Math.abs(g.gazeState.head[0]).toFixed(2) };
+  });
+  assert.ok(flow.gene.looked > 0.35, 'the sofa guest looks at you when you come and stand by him');
+  assert.ok(flow.gene.noise.after < 0.4 && flow.gene.noise.lead === 'head' && flow.gene.noise.head1 > flow.gene.noise.head0 + 0.2 && flow.gene.noise.eye1 < flow.gene.noise.eye0, 'a noise turns the sofa guest\'s head to it within 0.4 s; the eyes get there first and re-centre as the head arrives');
+  // He changes posture when he changes what he's doing (TV → phone): smoothly over ~2 s, and his hands end on the phone.
+  flow.gene.posture = await page.evaluate(async () => {
+    const T = __T, g = __inn.world.sitters[0], o = (await import('/projects/roadside-inn/world/staff.js')).castData().SITTERS[0].postures.phone;
+    const hands = o.hands.map(h => new T.Vector3(...h)), gap = () => Math.max(...g.bones.hands.map(h => Math.min(...hands.map(t => t.distanceTo(h.getWorldPosition(new T.Vector3())))))), start = gap();
+    g.pose('sit', { ...o, hands }); for (let i = 0; i < 15; i++) g.update(1 / 30); const mid = gap();
+    for (let i = 0; i < 90; i++) g.update(1 / 30); return { start: +start.toFixed(3), mid: +mid.toFixed(3), end: +gap().toFixed(3) };
+  });
+  assert.ok(flow.gene.posture.mid > 0.1 * flow.gene.posture.start && flow.gene.posture.mid < flow.gene.posture.start && flow.gene.posture.end < 0.08, 'a posture change blends over a couple of seconds (no snap) and lands the hands on the phone');
+  // Standing: two held stances from the authored idle, the hips over one foot then the other; weight shifts are rare.
+  flow.stance = await page.evaluate(() => { const d = __inn.people[0]; return { stances: d.stances.map(t => +t.toFixed(2)), hold: +d.stanceState.left.toFixed(1) }; });
+  assert.ok(flow.stance.stances.length === 2 && flow.stance.stances[0] !== flow.stance.stances[1], 'standing people hold one of two contrapposto stances, not a looping idle');
+  // A slow walker (0.6 m/s) steps at the cadence of a slow walk and doesn't skate: the planted foot stays put.
+  flow.slowWalk = await page.evaluate(() => {
+    const T = __T, w = __inn.world.walkers[1], p = w.p, pos = p.root.position.clone(), dt = 1 / 60, v = 0.6;
+    p.play('Walk'); p.pace(v); for (let i = 0; i < 30; i++) p.update(dt);
+    let worst = 0, n = 0, slide = 0; const was = p.bones.feet.map(f => f.getWorldPosition(new T.Vector3()));
+    for (let i = 0; i < 120; i++) {
+      p.root.position.z += v * dt * Math.cos(p.root.rotation.y); p.root.position.x += v * dt * Math.sin(p.root.rotation.y); p.update(dt);
+      const now = p.bones.feet.map(f => f.getWorldPosition(new T.Vector3())), low = now[0].y < now[1].y ? 0 : 1;
+      if (Math.abs(now[0].y - now[1].y) > 0.03) { const sp = Math.hypot(now[low].x - was[low].x, now[low].z - was[low].z) / dt; slide += sp; n++; worst = Math.max(worst, sp); }
+      was.forEach((x, k) => x.copy(now[k]));
+    }
+    p.root.position.copy(pos);
+    return { rate: +p.clip.rate.toFixed(3), cadence: +(120 / 1.2 * p.clip.rate).toFixed(0), plantedSpeed: +(slide / Math.max(1, n)).toFixed(3) };
+  });
+  assert.ok(flow.slowWalk.plantedSpeed < 0.2, 'a slow walker\'s planted foot doesn\'t skate (shorter steps, not just slower ones)');
   // The walk graph and places run clear of solid furniture and walls (people walk the hotel, not through it).
   flow.graph = await page.evaluate(async () => {
     const { HOTEL } = (await import('/projects/roadside-inn/world/staff.js')).castData(), C = __inn.world.colliders.filter(c => !c.loose), bad = [];
