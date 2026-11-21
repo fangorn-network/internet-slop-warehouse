@@ -1,0 +1,25 @@
+[
+  {
+    "id": "hotel-desk-items",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-desk-items.glb",
+    "title": "Front desk clutter (staffed) · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "lobby",
+      "front-desk",
+      "reception",
+      "props",
+      "bell",
+      "key-card"
+    ],
+    "description": "Staffed check-in pod clutter for a 1.08 m top (origin at the pod's floor center, guests at +Z): key-card encoder with a card in it, thermal receipt printer with a receipt curling out, card terminal on a swivel stand, call bell, lathed apples in a bowl, Wi-Fi tent card, registration card, key-card sleeves, ballpoints in a steel cup, succulent, mug, stapler, sticky note. Pick-up-able items are take_* nodes. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/). Meters, Y up, origin at floor center, front faces +Z. 2026-11-21: Dana’s keyboard (legends toward the staff side) and mouse in front of the monitor; their touch spots (where hands go, what a key sounds like) are in projects/roadside-inn/affords.js."
+  }
+]

@@ -178,17 +178,8 @@ function use() {
 }
 
 // ---------- front desk ----------
-// Dana turns to you at a person's pace (at most 3 rad/s, as walkers turn), not in one frame; her head already looks.
-let danaYaw = null;
-world.updaters.push(dt => {
-  if (danaYaw === null || !world.clerk) return;
-  const r = world.clerk.root.rotation, d = Math.atan2(Math.sin(danaYaw - r.y), Math.cos(danaYaw - r.y));
-  r.y += Math.sign(d) * Math.min(Math.abs(d), 3 * dt);
-  if (Math.abs(d) < 1e-3) danaYaw = null;
-});
 function checkIn(clerk) {
   if (busy) return;
-  danaYaw = Math.atan2(player.x - clerk.root.position.x, player.z - clerk.root.position.z);
   if (game.has('key card')) {
     const lines = ['“Everything okay with the room? Holler if you need anything.”', '“Breakfast starts at six. The waffle maker is a little temperamental.”', '“Ice machine’s on two, right across from the elevator.”', '“Quiet night. Truckers mostly, and a youth softball team on the first floor. Sorry in advance.”'];
     clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 1800);

@@ -37,6 +37,8 @@
 //        | ['posture', name]                       // a named posture of theirs (a sitter: 'tv', 'phone'); the body
 //                                                  //   blends to it (body.js / people.js), it doesn't snap
 //        | ['attend', thingId | null]              // what their eyes are on while doing it (resident.things below)
+//        | ['use', kind]                           // use the nearest thing of that kind where they stand (affords.js:
+//                                                  //   a keyboard brings its mouse and screen; hands, keys, clicks, eyes)
 //
 // Seated residents (v1, 2026-11-21) add: seat: { hips: [x, y, z], yaw, sink }, postures: { [name]: sit options },
 // things: { [id]: { at?: [x, y, z], prop?: modelId, kind: 'tv' | 'phone' | 'screen' | 'work' } }, and manner (body.js:
@@ -48,7 +50,7 @@
 // reaction interrupts the current activity, then the runner picks again (a startled guest may 'leave' to their room).
 
 const rand = (a, b = a) => a + Math.random() * (b - a);
-const BEAT = { pose: 'pose', hold: 'cup', posture: 'posture', attend: 'attend' };   // step → the stop field it sets
+const BEAT = { pose: 'pose', hold: 'cup', posture: 'posture', attend: 'attend', use: 'use' };   // step → the stop field it sets
 
 /** Shortest node path (Dijkstra over straight edges) from the node nearest `from` to node `to`: [x, y, z][]. */
 export function route(world, from, to) {

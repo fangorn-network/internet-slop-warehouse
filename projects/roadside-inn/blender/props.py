@@ -736,7 +736,10 @@ def desk_items(m):
     sb = box('stapler_base', (0.04, 0.15, 0.012), (0.56, 0.32, T + 0.006), m['black'], bevel=0.004)
     sa = box('stapler_arm', (0.036, 0.14, 0.022), (0.56, 0.315, T + 0.026), m['black'], bevel=0.008); sa.rotation_euler = (R(2), 0, 0)
     bpy.context.view_layer.update(); take(sb, 'stapler', [sa])
-    carton('sticky', 0.06, 0.06, 0.0006, L('sticky'), lob, (0.0, 0.3, T), (0, 0, R(12)), side_rect=(L('sticky')[0],) * 2 + (L('sticky')[0] + 0.001,) * 2, top_rect=L('sticky'))
+    # her keyboard and mouse, staff side in front of the monitor (affords.js: where hands go, what a key sounds like)
+    keyboard(atlas('print'), (-0.25, 0.27, T), R(183))   # legends toward her (staff at +Y)
+    mouse(m, (0.02, 0.28, T + 0.003), R(174))
+    carton('sticky', 0.06, 0.06, 0.0006, L('sticky'), lob, (0.0, 0.05, T), (0, 0, R(12)), side_rect=(L('sticky')[0],) * 2 + (L('sticky')[0] + 0.001,) * 2, top_rect=L('sticky'))
 
 
 def desk_closed(m):

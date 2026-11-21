@@ -61,7 +61,7 @@ export function buildLobby(ctx) {
 
   // Open business center in the semi-private corner by the corridor.
   add(lib.model('hotel-business-center', { origin: true }), 6.1, 0, -3.0, -Math.PI / 2); solid(5.75, 6.5, 0, 1.1, -3.98, -2.02);
-  for (const z of [-3.55, -2.85]) loose(add(lib.model('hotel-task-chair', { origin: true }), 5.35, 0, z, Math.PI / 2 + (z + 3.2) * 0.4), { density: 0.4 });
+  for (const [x, z] of [[5.5, -3.55], [5.35, -2.85]]) loose(add(lib.model('hotel-task-chair', { origin: true }), x, 0, z, Math.PI / 2 + (z + 3.2) * 0.4), { density: 0.4 });
   { const s = F.sign('BUSINESS CENTER', { w: 1.1, h: 0.18, bg: '#13264a', font: 'bold 54px system-ui, sans-serif' }); s.rotation.y = -Math.PI / 2; s.position.set(6.42, 2.3, -3.0); scene.add(s); }
 
   // Great room (SE): the TV on a navy panelled wall, an oversized regional map, a gray-and-navy sectional.

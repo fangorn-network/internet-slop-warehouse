@@ -108,6 +108,10 @@ export function createSound(foley) {
     ding() { tone(1318, 1.2, 0.12); tone(1046, 1.4, 0.1, 'sine', 1, 0.25); },
     beep(ok) { ok ? (tone(1760, 0.08, 0.08, 'square'), tone(2093, 0.12, 0.08, 'square', 1, 0.1)) : tone(330, 0.35, 0.08, 'square'); if (ok) burst(0.1, 0.08, 400, 'lowpass', 0.25); },
     click() { burst(0.03, 0.15, 3000); },
+    // A key going down on a compact keyboard: a short plasticky tick (the space bar lower and duller). vol from the
+    // caller (affords.js touches, scaled for distance).
+    key(vol = 0.05, space = false) { burst(space ? 0.05 : 0.025, vol, space ? 900 : 2600 + Math.random() * 1800, 'bandpass'); burst(0.015, vol * 0.6, 5000, 'highpass', 0.005); },
+    mouse(vol = 0.04) { burst(0.012, vol, 4200, 'bandpass'); burst(0.012, vol * 0.7, 3600, 'bandpass', 0.07); },
     knock() { for (let i = 0; i < 3; i++) burst(0.08, 0.5, 220, 'lowpass', i * 0.22); },
     thud() { burst(0.25, 0.5, 120, 'lowpass'); tone(70, 0.2, 0.15, 'sine', 0.6); },
     slide() { burst(1.0, 0.06, 500, 'bandpass'); tone(160, 0.9, 0.02, 'sawtooth', 1.3); },

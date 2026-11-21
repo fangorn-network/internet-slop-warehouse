@@ -140,7 +140,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const fingers = [0, 1].map(i => FINGERS.map(n => [1, 2, 3].map(k => bone(new RegExp(`${i ? 'Right' : 'Left'}Hand${n}${k}$`)))));
   const palmSign = [1, 1], curlSign = [1, 1];
   // radians at the base, middle and tip joints of each finger (the thumb takes half)
-  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7], hang: [0.2, 0.35, 0.25] };
+  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], mouse: [0.3, 0.4, 0.3], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7], hang: [0.2, 0.35, 0.25] };
   function handFrame(i) {
     const f0 = fingers[i], mid = f0[2][0], ix = f0[1][0], pk = f0[4][0];
     if (!B.hands[i] || !mid || !ix || !pk) return null;
@@ -175,6 +175,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   function spring(x, v, goal, w, dt) { const a = w * w * (goal - x) - 2 * w * v; v += a * dt; return [x + v * dt, v]; }
 
   let reach = null, reachGiven = [false, false], tipUp = 0, held = null;
+  const taps = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];   // a finger pressing a key or a button, 1 down → 0 up
   function update(dt) {
     since += dt;
     // standing: hold a stance; now and then shift the weight to the other leg (two copies of the idle, both frozen)
@@ -183,6 +184,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       if (pose === 'sit') idle.time = seatFrame;
       else if (since > 0.35) { const s = stand.tick(dt); idle.time = stances[s.from]; shiftTo.time = stances[s.to]; idle.setEffectiveWeight(1 - s.w); shiftTo.setEffectiveWeight(s.w); }
     }
+    for (const t of taps) for (let n = 0; n < 5; n++) t[n] = Math.max(0, t[n] - dt * 10);   // down and up in ~0.1 s
     for (const [b, q, p, k] of bind) { b.quaternion.copy(q); b.position.copy(p); b.scale.copy(k); }
     mixer.update(dt);
     if (current === 'Idle') { const w = Math.min(1, idle.getEffectiveWeight() + shiftTo.getEffectiveWeight()); for (const [b, q] of calm) b.quaternion.slerp(q, w); }
@@ -268,12 +270,14 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       for (let i = 0; i < 2; i++) {
         if (!reach[i]) { curlHand(i, CURL.hang); continue; }   // a hand with nothing to hold hangs
         ik(B.arms[i], B.forearms[i], B.hands[i], reach[i]);
-        const grip = reachGiven[i] ? (held && pose !== 'sit' ? held.grip : sit.grip ?? 'table') : 'rest';
+        const g = held && pose !== 'sit' ? held.grip : sit.grip ?? 'table', grip = reachGiven[i] ? (Array.isArray(g) ? g[i] : g) : 'rest';   // one grip, or [left, right]
         if (grip === 'phone') {   // palms up and in, toward the phone held between them at the chest
           const inward = B.hips.getWorldPosition(new T.Vector3()).sub(B.hands[i].getWorldPosition(_v)).setY(0).normalize();
           orientHand(i, inward.add(UP).sub(fwd().multiplyScalar(0.3)));
         } else orientHand(i, _w.set(0, -1, 0));
         curlHand(i, CURL[grip] ?? CURL.table);
+        const F = taps[i].some(t => t > 0) && handFrame(i);
+        if (F) taps[i].forEach((t, n) => { if (t > 0 && fingers[i][n][0]) axisTurn(fingers[i][n][0], F.a, curlSign[i] * 0.45 * t); });
       }
       reach = null;
     } else for (let i = 0; i < 2; i++) curlHand(i, CURL.hang);   // free hands: a relaxed hand is never flat
@@ -348,6 +352,8 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     attend(t) { task = t; },
     /** Standing, hands on [left, right] world points (Vector3s, may move; null for a free hand), e.g. a cart's handle; null lets go. */
     hold(points, grip = 'handle') { held = points ? { points, grip } : null; },
+    /** A finger presses (0 thumb .. 4 pinky) on the hand that's holding something: a key, a mouse button. */
+    tap(hand, finger) { taps[hand][finger] = 1; },
     /** A noise at a world point (a Vector3): they turn to it, head first, after a moment. */
     hear(v) { heard = v.toArray ? v.toArray() : v; },
     /** 'sit', 'cup' or null. Sitting takes { floor: world y the feet rest on, ahead: m from hip to ankle (or [left, right]),

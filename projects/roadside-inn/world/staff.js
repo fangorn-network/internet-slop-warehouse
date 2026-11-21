@@ -8,6 +8,7 @@
 import * as T from 'three';
 import { FLOOR2 } from '../world.js';
 import { mind } from '../intent.js';
+import { findSpots, nearest, standAt, workstation } from '../affords.js';
 
 const TURN = 3;              // rad/s: people turn, they don't snap round
 const ACCEL = 1.2, DECEL = 1.6;   // m/s²: a step or two to get going, and to stop
@@ -102,6 +103,16 @@ const RESIDENTS = [
       'stretch-legs': { weight: 0.5, steps: [['go', 'door-N-12'], ['wait', 3, 6], ['go', 'room-207'], ['wait', 30, 60]] },
     },
     says: { near: '“Ice machine works, it just sounds like a car crash.”' } },
+  // Dana works the desk: between guests she's at her pod's keyboard (affords.js: where her hands go and the clack come
+  // from the keyboard, not from her); anyone coming up to the desk, she steps to the gap between the pods to serve them.
+  // Her places are found from the pod's spots when the world is built (buildStaff).
+  { id: 'dana', model: 'rb-sophia-formal', tint: '#1d4f8f', speed: 0.8, start: 'desk-keys', manner: { engage: 3.2, linger: 0.3, share: 0.85 },
+    who: 'Dana, night desk clerk', why: 'Checking in late arrivals, answering the phone, keeping the night audit going',
+    serves: { at: [-7.9, 0, -2.4], r: 3.0, place: 'desk-serve' },
+    activities: {
+      audit: { weight: 1.2, steps: [['go', 'desk-keys'], ['use', 'keyboard'], ['wait', 40, 110]] },
+      'look-up': { weight: 0.4, steps: [['go', 'desk-serve'], ['wait', 6, 14]] },   // stretches, looks out over the lobby
+    } },
 ];
 
 /** Seated guests, as intent data too (seat surface measured from the furniture's mesh; see REALISM.md, People). Their
@@ -132,12 +143,12 @@ const SITTERS = [
     postures: { lean: { lean: 0.34, tilt: -0.05, feet: [[-2.0, 0.53, -4.72], [-2.2, 0.53, -4.72]], hands: [[-1.97, 1.08, -4.97], [-2.23, 1.08, -4.97]] } },   // wrists just over the table's near edge (z -4.95, top 1.05): within reach
     things: { phone: { at: [-2.1, 1.06, -5.1], kind: 'phone' } },
     activities: { scroll: { steps: [['posture', 'lean'], ['attend', 'phone'], ['wait', 60, 200]] } } },
-  // At a business-center PC on a task chair (seat 0.52, x 5.2-5.5): leaning in a little, left hand on the keyboard,
+  // At a business-center PC on a task chair pulled in to the desk (seat 0.52, centre x 5.5): leaning in a little, left hand on the keyboard,
   // right on the mouse (desk 0.76, edge 5.75), eyes on the monitor.
   { id: 'rep', model: 'rb-andre-casual', tint: '#2f3a2f', start: 'print',
     who: 'A rep printing tomorrow’s boarding pass', why: 'The airline app won’t load the pass and the gate agent wants paper',
-    seat: { hips: [5.33, 0.52, -3.55], yaw: Math.PI / 2, sink: 0.015 },
-    postures: { type: { lean: 0.38, grip: 'keyboard', hands: [[5.79, 0.795, -3.64], [5.81, 0.79, -3.33]] } },
+    seat: { hips: [5.5, 0.52, -3.55], yaw: Math.PI / 2, sink: 0.015 },
+    postures: { type: { lean: 0.38, use: 'keyboard' } },   // hands, grip, keys and clicks from the workstation (affords.js)
     things: { screen: { at: [6.15, 1.05, -3.55], kind: 'screen' } },
     activities: { print: { steps: [['posture', 'type'], ['attend', 'screen'], ['wait', 60, 200]] } } },
 ];
@@ -151,19 +162,7 @@ export function buildStaff(ctx) {
   const eye = new T.Vector3();   // the player's eyes: what people glance at
   const { HOTEL, RESIDENTS, SITTERS } = castData();
   // ---------- staff and guests ----------
-  let clerk = null;
-  if (people) {
-  // on duty: anyone who comes up to the desk gets looked at straight away (a guest doesn't stand there unnoticed)
-  clerk = lib.person('rb-sophia-formal', { tint: '#1d4f8f', manner: { engage: 3.2, linger: 0.3, share: 0.85 } });
-  // Between the two pods, not behind the right one's monitor: from where a guest stands she was a forehead over a screen.
-  add(clerk.root, -8.65, 0, -3.95, 0); solid(-8.9, -8.4, 0, 1.7, -4.2, -3.7);   // Dana is solid when you come round behind the desk
-  clerk.lookAt(eye);   // she looks up at whoever comes to the desk
-  clerk.attend({ at: new T.Vector3(-8.05, 1.2, -3.3), kind: 'screen' });   // between guests: the right pod's monitor
-  updaters.push(dt => clerk.update(dt));
-  interact.push({ pos: new T.Vector3(-7.9, 1.2, -2.4), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
-  const ringBell = { pos: new T.Vector3(-7.05, 1.15, -2.65), r: 0.5, label: () => 'Ring the bell', use: () => { game.sound.bell(); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } };
-  interact.push(ringBell);
-  }
+  let clerk = null, spots = [];
 
   // A walker follows a route of stops ({ p: Vector3, wait, face, pose, cup, hide, pass }); a resident's mind hands it
   // the next route when one is done. `at` is the stop it is standing at (waiting), `i` the stop it is heading for next.
@@ -171,7 +170,7 @@ export function buildStaff(ctx) {
   const phase = () => game.timeOfDay ?? 'dusk';   // ponytail: main.js doesn't publish the time of day yet; dusk until it does
   const toStops = list => list.map(s => ({ ...s, p: new T.Vector3(...s.p) }));
   function walker(r) {
-    const p = lib.person(r.model, { tint: r.tint });
+    const p = lib.person(r.model, { tint: r.tint, manner: r.manner });
     scene.add(p.root);
     const m = mind(r, HOTEL), start = HOTEL.places[r.start];
     const w = { p, r, mind: m, stops: [], i: 0, at: null, wait: 0, speed: r.speed ?? 1.0, v: 0, yaw: start.face ?? 0, say: r.says?.near, said: 0, task: { at: new T.Vector3(), kind: 'path' }, holding: false, cup: null, cart: null, hidden: false };
@@ -190,6 +189,13 @@ export function buildStaff(ctx) {
     const { hips: [x, seatY, z], yaw, sink = 0.02 } = r.seat;
     const p = lib.person(r.model, { tint: r.tint, manner: r.manner });
     const postures = Object.fromEntries(Object.entries(r.postures).map(([k, o]) => [k, { ...o, hands: v3(o.hands), feet: v3(o.feet) }]));
+    // a posture that uses something (a keyboard): the hands and the grip come from the thing (affords.js)
+    let ws = null, screen = null;
+    for (const o of Object.values(postures)) if (o.use) {
+      const kb = nearest(spots, o.use, new T.Vector3(x, seatY + 0.3, z)); if (!kb) continue;
+      ws = workstation(kb, nearest(spots, 'mouse', kb.pos, kb)); screen = nearest(spots, 'screen', kb.pos, kb);
+      o.hands = ws.hands; o.grip = ['keyboard', 'keyboard'];
+    }
     p.pose('sit', Object.values(postures)[0]);
     // hip joints ~9 cm over the sitting surface (ANSUR seated hip-joint height), less what the cushion gives
     add(p.root, x, seatY + 0.09 * p.root.scale.y - sink - p.hipJoint, z, yaw);
@@ -201,7 +207,8 @@ export function buildStaff(ctx) {
       things[k] = { at: t.at ? new T.Vector3(...t.at) : new T.Vector3(), kind: t.kind };
       if (t.prop) { const o = new T.Group(), m = lib.model(t.prop, { origin: true }); m.rotation.x = Math.PI / 2; o.add(m); scene.add(o); things[k].prop = o; }   // screen (+y) toward +z, then o.lookAt the face
     }
-    const s = { p, r, postures, things, mind: mind({ ...r, activities: r.activities }, HOTEL), stops: [], i: 0, wait: 0, at: [x, seatY, z] };
+    if (screen && things.screen) things.screen.at.copy(screen.pos);
+    const s = { p, r, postures, things, ws, mind: mind({ ...r, activities: r.activities }, HOTEL), stops: [], i: 0, wait: 0, at: [x, seatY, z] };
     s.stops = s.mind.start(r.start, s.at);
     p.lookAt(eye);
     sitters.push(p); seated.push(s);
@@ -212,10 +219,11 @@ export function buildStaff(ctx) {
     if ((s.wait -= dt) <= 0) {
       if (s.i >= s.stops.length) { s.stops = s.mind.next(s.at, phase()); s.i = 0; }
       const st = s.stops[s.i++];
-      if (st.posture && s.postures[st.posture]) p.pose('sit', s.postures[st.posture]);
+      if (st.posture && s.postures[st.posture]) { p.pose('sit', s.postures[st.posture]); s.using = s.postures[st.posture].use ? s.ws : null; }
       if ('attend' in st) p.attend(things[st.attend] ?? null);
       s.wait = st.wait || 1;
     }
+    if (s.using) { for (const t of s.using.update(dt)) { p.tap(t.hand, t.finger); touchSound(t, t.at); } p.sitting.grip[1] = s.using.mousing ? 'mouse' : 'keyboard'; }
     p.update(dt);
     // a prop in hand follows the hands (both, when both hold it; else the lap hand) and faces the eyes
     for (const t of Object.values(things)) if (t.prop) {
@@ -226,6 +234,12 @@ export function buildStaff(ctx) {
     }
   }
   if (people) {
+    // what things offer (affords.js): every keyboard, mouse and screen in the building, found on the placed models
+    spots = findSpots(scene); const podKeys = nearest(spots, 'keyboard', new T.Vector3(-7.9, 1.1, -3.3));
+    if (podKeys) HOTEL.places['desk-keys'] = { ...standAt(podKeys, 0.3), node: 'desk' };
+    HOTEL.places['desk-serve'] = { p: [-8.65, 0, -3.95], node: 'desk', face: 0 };
+    HOTEL.nodes.desk = [-8.3, 0, -3.85];
+    ctx.spots = spots;
     for (const r of RESIDENTS) {
       const w = walker(r);
       if (r.cart) {
@@ -233,12 +247,28 @@ export function buildStaff(ctx) {
         w.cartAt = w.p.root.position.clone().add(new T.Vector3(Math.sin(w.yaw), 0, Math.cos(w.yaw)).multiplyScalar(1.2));
       }
       if (r.cup) { w.cup = lib.model('hotel-coffee-cup', { origin: true }); w.cup.visible = false; scene.add(w.cup); }
+      if (r.id === 'dana') {
+        clerk = w.p;
+        // solid where she stands (you can come round behind the desk, but not through her)
+        for (const k of ['desk-serve', 'desk-keys']) { const [x, , z] = HOTEL.places[k].p; solid(x - 0.25, x + 0.25, 0, 1.7, z - 0.25, z + 0.25, () => pos2(w).distanceTo(new T.Vector3(x, 0, z)) < 0.4); }
+        interact.push({ pos: new T.Vector3(-7.9, 1.2, -2.4), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
+        interact.push({ pos: new T.Vector3(-7.05, 1.15, -2.65), r: 0.5, label: () => 'Ring the bell', use: () => { game.sound.bell(); game.hear?.(new T.Vector3(-7.05, 1.15, -2.65), 2); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } });
+      }
     }
     for (const s of SITTERS) sitter(s);
     // a noise (a thrown thing landing): everyone within earshot on that floor turns to it (God's physics calls this)
-    game.hear = (at, joules = 1) => { for (const p of [clerk, ...walkers.filter(w => !w.hidden).map(w => w.p), ...sitters]) if (p && joules > 0.3 && Math.abs(p.root.position.y - at.y) < 2 && p.root.position.distanceTo(at) < 4 + 3 * Math.sqrt(joules)) p.hear(at); };
+    game.hear = (at, joules = 1) => { for (const p of [...walkers.filter(w => !w.hidden).map(w => w.p), ...sitters]) if (p && joules > 0.3 && Math.abs(p.root.position.y - at.y) < 2 && p.root.position.distanceTo(at) < 4 + 3 * Math.sqrt(joules)) p.hear(at); };
   }
 
+  const pos2 = w => w.p.root.position;
+  // using something where they stand (a keyboard, with its mouse and screen beside it): hands, keys and eyes from it
+  function startUse(w, kind) {
+    const kb = nearest(spots, kind, rel.copy(pos2(w)).setY(pos2(w).y + 1)); if (!kb) return;
+    w.ws = workstation(kb, nearest(spots, 'mouse', kb.pos, kb)); w.screen = nearest(spots, 'screen', kb.pos, kb); w.grips = ['keyboard', 'keyboard'];
+  }
+  function stopUse(w) { if (!w.ws) return; w.ws = null; w.screen = null; w.p.hold(null); }
+  // a touch on something (a key, a mouse button): its sound, quieter with distance from your ears
+  const touchSound = (t, at) => { const d = at.distanceTo(eye), v = 1 / (1 + (d / 1.2) ** 2); if (v > 0.03) t.kind === 'mouse' ? game.sound.mouse?.(0.05 * v) : game.sound.key?.(0.06 * v, t.space); };
   const fwd = new T.Vector3(), toward = new T.Vector3(), rel = new T.Vector3(), d = new T.Vector3();
   const near = (a, b) => Math.abs(a.y - b.y) < 1.5;   // same floor
   updaters.push((dt, t, player) => {
@@ -250,15 +280,23 @@ export function buildStaff(ctx) {
     for (const w of walkers) {
       const { p } = w, pos = p.root.position;
       w.mind.tick(dt);
+      if (w.r.serves) {   // someone at the desk: drop what she's doing, step over and serve them; when they go, back to it
+        const sv = w.r.serves, d2 = Math.hypot(player.pos.x - sv.at[0], player.pos.z - sv.at[2]), close = near(player.pos, pos) && d2 < sv.r + (w.serving ? 0.8 : 0);
+        if (close && !w.serving) { const pl = HOTEL.places[sv.place]; w.serving = true; stopUse(w); w.stops = toStops([{ p: pl.p, wait: 1e9, face: pl.face }]); w.i = 0; w.wait = 0; }
+        else if (!close && w.serving) { w.serving = false; w.wait = 0; w.stops = []; w.i = 0; }
+      }
       const seen = near(player.pos, pos) && player.pos.distanceTo(pos) < 7;   // ponytail: distance, not gaze; a wall between still counts as seen
       let heading = w.yaw, want = 0;
       if (w.wait > 0) {
         if (w.at.face !== undefined) heading = w.at.face;
+        if (w.serving) heading = Math.atan2(player.pos.x - pos.x, player.pos.z - pos.z);
+        if (w.ws) { for (const t of w.ws.update(dt)) { p.tap(t.hand, t.finger); touchSound(t, t.at); } w.grips[1] = w.ws.mousing ? 'mouse' : 'keyboard'; p.hold(w.ws.hands, w.grips); }
         if (w.at.hide && !w.hidden && !seen) w.hidden = true;   // through the door once nobody's looking
         w.wait -= dt;
         if (w.wait <= 0 && w.hidden && seen) w.wait = 0.5;    // and back out the same way
         if (w.wait <= 0) w.hidden = false;
       } else {
+        if (w.ws) stopUse(w);
         if (w.i >= w.stops.length) { w.stops = toStops(w.mind.next(pos.toArray(), phase())); w.i = 0; }
         const stop = w.stops[w.i];
         toward.copy(stop.p).sub(pos); toward.y = 0;
@@ -267,6 +305,7 @@ export function buildStaff(ctx) {
           w.at = stop; w.i++;
           w.wait = stop.wait ?? 0;
           if (stop.cup !== undefined) w.holding = stop.cup;
+          if (stop.use) startUse(w, stop.use);
           if (stop.pose !== undefined) p.pose(stop.pose);
           else if (!stop.pass || w.holding) p.pose(w.holding ? 'cup' : null);
         } else {
@@ -317,9 +356,10 @@ export function buildStaff(ctx) {
         w.task.at.copy(next).sub(pos).setY(0); const n = w.task.at.length();
         if (n > 1e-3) w.task.at.multiplyScalar(Math.min(n, 3.5) / n);
         w.task.at.add(pos).setY(pos.y + 1.0); w.task.kind = 'path';
-      } else { const f = w.at?.face ?? w.yaw; w.task.at.set(pos.x + Math.sin(f) * 0.9, pos.y + 1.0, pos.z + Math.cos(f) * 0.9); w.task.kind = 'work'; }
+      } else if (w.ws && w.screen) { w.task.at.copy(w.screen.pos); w.task.kind = 'screen'; }
+      else { const f = w.at?.face ?? w.yaw; w.task.at.set(pos.x + Math.sin(f) * 0.9, pos.y + 1.0, pos.z + Math.cos(f) * 0.9); w.task.kind = 'work'; }
       p.attend(w.task);
-      if (w.v > 0.05) { p.play('Walk'); p.pace(w.v); } else p.play('Idle');
+      if (w.v > 0.05) { p.play('Walk'); p.pace(w.v); } else if (p.clip.name === 'Walk') p.play('Idle');   // a Wave or Talk plays out
       p.update(dt);
       if (w.cup) {
         w.cup.visible = !!w.holding && p.root.visible;
