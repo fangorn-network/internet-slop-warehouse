@@ -182,3 +182,15 @@ node scripts/test-escape-from-night-audit.mjs /tmp/efna
 node publish-batch.js parts/procgen.parts.json --local /tmp/procgen-preview
 npx vitest run parts/worldgen.test.js
 ```
+
+## Publisher storefronts and public model slots
+
+Open **Publishers** in the catalog or follow the author link in a part's player. A storefront uses `?publisher=0x…`, filters the Warehouse index to that address, and shows the Warehouse repo head from Fangorn's explorer registry. The repo link opens its history on Fangorn. The inventory and registry head are independent index snapshots.
+
+Games that opt in can include `payload.modelSlots` in the existing MCP `publish` record. Each entry has a slot `name`, `mode` (`pin` or `follow`), the model's `publisher`, `repo`, and `id`, and a `baseline` with its exact record `cid` and file `src`. A following slot also specifies a `contract` string. The model publisher opts in using `payload.publicModel: { channel: "stable", contract: "example-v1" }` on its current public GLB record. Leave `modelSlots` out of the MCP `pin` array so the baseline retains the exact supplied CIDs. Keep `uses` for attribution.
+
+Game code loads the resolved model, for example `loader.load(window.WAREHOUSE_PARTS["sign"].url, onLoad)`. The player resolves once at launch and keeps the same model CIDs on Restart. If a public head doesn't declare the expected contract or its GLB header is unavailable, the player probes the baseline. This slice checks publisher identity, the declared contract and the GLB header. It does not certify geometry compatibility, synchronize separate co-op clients, or grant access to encrypted files. Paid licenses, entitlements, and commercial release enrollment are tracked in the [licensing plan](LICENSING-PLAN.md).
+
+```sh
+PLAYWRIGHT_MODULE=projects/roadside-inn/.validation/node_modules/playwright-core/index.mjs node scripts/test-storefront-browser.mjs
+```

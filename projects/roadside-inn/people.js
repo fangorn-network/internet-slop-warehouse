@@ -41,6 +41,10 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   };
   inPlace(source.animations);
   const mixer = new T.AnimationMixer(body);
+  // Every bone's bind pose, put back at the start of each frame: the procedural turns (breath, gaze, posture) are applied
+  // on top of what the mixer wrote, so a bone the clips don't drive (or one they've stopped driving) would otherwise
+  // pile turns up frame on frame, drift off unit length and stretch the limb.
+  const bind = []; body.traverse(b => { if (b.isBone) bind.push([b, b.quaternion.clone(), b.position.clone(), b.scale.clone()]); });
   const actions = new Map(source.animations.map(clip => [clip.name, mixer.clipAction(clip)]));
   const local = o => root.worldToLocal(o.getWorldPosition(_v)).multiplyScalar(root.scale.y);   // metres, body frame
 
@@ -134,6 +138,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       if (pose === 'sit') idle.time = seatFrame;
       else if (since > 0.35) { const s = stand.tick(dt); idle.time = stances[s.from]; shiftTo.time = stances[s.to]; idle.setEffectiveWeight(1 - s.w); shiftTo.setEffectiveWeight(s.w); }
     }
+    for (const [b, q, p, k] of bind) { b.quaternion.copy(q); b.position.copy(p); b.scale.copy(k); }
     mixer.update(dt);
     if (current === 'Idle') { const w = Math.min(1, idle.getEffectiveWeight() + shiftTo.getEffectiveWeight()); for (const [b, q] of calm) b.quaternion.slerp(q, w); }
     // walking: a slower walk is a shorter step as well as a slower one; swing the limbs less far from standing

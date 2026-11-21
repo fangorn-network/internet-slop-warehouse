@@ -115,7 +115,7 @@ const SITTERS = [
     who: 'Gene, 58, sells commercial flooring across three states', why: 'Checked in early; the room was too quiet, so he watches the late news down here',
     seat: { hips: [2.36, 0.47, 6.55], yaw: Math.PI / 2, sink: 0.035 },
     postures: {
-      tv: { recline: 0.4, roll: 0.08, tilt: 0.1, ahead: [0.56, 0.36], spread: 0.2, hands: [[1.98, 0.93, 7.15]] },
+      tv: { recline: 0.4, roll: 0.08, tilt: 0.1, ahead: [0.56, 0.36], spread: 0.2 },   // hands rest on the thighs (people.js default); the arm along the sofa back reached behind the cushions
       phone: { recline: 0.3, roll: 0.03, tilt: 0, ahead: [0.5, 0.42], spread: 0.16, hands: [[2.6, 0.8, 6.5], [2.6, 0.8, 6.6]] },
     },
     things: { tv: { at: [6.36, 1.6, 6.4], kind: 'tv' }, phone: { prop: 'hotel-phone', kind: 'phone' } },
