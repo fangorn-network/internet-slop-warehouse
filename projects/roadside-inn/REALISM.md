@@ -368,3 +368,15 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   the gaze turns.
 - **A check on randomness needs a long enough window.** "Two people breathe out of step" over 3 s failed 2.7 % of the
   time by chance; over 30 s, never (2000 seeded trials).
+- **Hands need a wrist and fingers, not just a reach.** Two-bone IK only puts the wrist on the target; the palm faced
+  wherever the chain left it (up, on the keyboard) and the fingers stayed splayed from the bind pose. Fix: after IK,
+  turn the hand so the palm faces what it rests on (down on a desk, table or thigh; up and in around a phone) with the
+  fingers continuing the forearm, then curl the fingers per grip (people.js CURL). Palm and curl directions are
+  measured from the rig once (bone axes differ between rigs).
+- **Dead eyes are matte eyes.** The eyeballs are painted into the head atlas and took the skin's roughness, so they
+  never caught a highlight. The vertices weighted to the eye bones give their UV island (u 0.207-0.320, v 0.875-0.989
+  on every Rocketbox head here); the shader makes it glossy there. Eyes also turn at most 15 degrees: past that the
+  head turns, as people do; at 25 they parked in the corners (side-eye).
+- **Casual looks are slow, startles are quick.** Head spring 6 rad/s for looking about, 14 for a noise.
+- **Carts don't dodge.** In a corridor the pusher only eases over and keeps rolling; the person on foot keeps to the
+  wall and slows.
