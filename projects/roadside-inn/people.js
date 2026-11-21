@@ -82,6 +82,9 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   // frame (facing ahead) and turn only to what the person looks at.
   idle.time = 0; mixer.update(0);
   const calm = [B.neck, B.head].filter(Boolean).map(b => [b, b.quaternion.clone()]);
+  // The per-frame reset (below) goes back to this standing frame, not the bind pose: the bind pose is a T-pose, so an arm
+  // no clip was driving (after a Wave or Talk ends) stood out straight.
+  for (const e of bind) { e[1].copy(e[0].quaternion); e[2].copy(e[0].position); e[3].copy(e[0].scale); }
   idle.stop();
 
   const rng = Math.random, att = attention(manner, rng), breath = breather(rng), blinks = blinker(rng), drift = sway(rng);
