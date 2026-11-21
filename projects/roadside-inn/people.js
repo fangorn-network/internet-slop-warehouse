@@ -260,12 +260,13 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       for (let i = 0; i < 2; i++) ik(B.thighs[i], B.knees[i], B.feet[i], now.feet[i]);
       reach = now.hands; reachGiven = sides(sit.hands).map(Boolean);
     } else breathe();
-    if (held && pose !== 'sit') { reach = held.points; reachGiven = [true, true]; }   // standing, both hands on something (a cart's handle)
+    if (held && pose !== 'sit') { reach = held.points; reachGiven = held.points.map(Boolean); }   // standing, both hands on something (a cart's handle)
     if (pose === 'cup') { axisTurn(B.arms[1], right().clone(), -0.2); axisTurn(B.forearms[1], right().clone(), -1.35); }
     gaze(dt);
     // hands last: on these rigs the collarbones hang off the neck, so the head turning moves the shoulders
     if (reach) {
       for (let i = 0; i < 2; i++) {
+        if (!reach[i]) { curlHand(i, CURL.hang); continue; }   // a hand with nothing to hold hangs
         ik(B.arms[i], B.forearms[i], B.hands[i], reach[i]);
         const grip = reachGiven[i] ? (held && pose !== 'sit' ? held.grip : sit.grip ?? 'table') : 'rest';
         if (grip === 'phone') {   // palms up and in, toward the phone held between them at the chest
@@ -345,7 +346,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     lookAt(v) { target = v; if (v) lastTarget.copy(v); },
     /** What they're doing, for the eyes: { at: Vector3 (may move), kind: 'tv' | 'phone' | 'screen' | 'work' | 'path' } or null. */
     attend(t) { task = t; },
-    /** Standing, both hands on [left, right] world points (Vector3s, may move), e.g. a cart's handle bar; null lets go. */
+    /** Standing, hands on [left, right] world points (Vector3s, may move; null for a free hand), e.g. a cart's handle; null lets go. */
     hold(points, grip = 'handle') { held = points ? { points, grip } : null; },
     /** A noise at a world point (a Vector3): they turn to it, head first, after a moment. */
     hear(v) { heard = v.toArray ? v.toArray() : v; },

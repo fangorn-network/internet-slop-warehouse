@@ -332,13 +332,18 @@ export function buildStaff(ctx) {
         if (w.v > 0.02) { if (d.dot(fwd) > 0) d.lerp(fwd, Math.min(1, 2.5 * dt * w.v)).normalize(); w.cartAt.copy(pos).addScaledVector(d, 1.2); }
         w.cartAt.y = pos.y;
         w.cart.position.copy(w.cartAt); w.cart.rotation.y = Math.atan2(d.x, d.z) - Math.PI / 2;   // cart +X (bag end) away from her
-        // pushing, both hands on the handle bar (about 1 m up, 0.45 m in front of her, hands 0.4 m apart); pulling it
-        // behind her or stopped at a room, she lets go
+        // pushing, both hands on the handle bar (about 1 m up, 0.45 m in front of her, hands 0.4 m apart); stopped at a
+        // room, she lets go
         if (w.v > 0.05 && d.dot(fwd) > 0.3) {
           w.grip ??= [new T.Vector3(), new T.Vector3()];
           const c = rel.copy(pos).addScaledVector(d, 0.45); c.y = pos.y + 0.98;
           w.grip[0].set(d.z, 0, -d.x).multiplyScalar(0.2).add(c); w.grip[1].set(-d.z, 0, d.x).multiplyScalar(0.2).add(c);   // left, right
           w.p.hold(w.grip);
+        } else if (w.v > 0.05 && d.dot(fwd) < -0.3) {
+          // pulling it behind her: the right hand reaches back to the handle, the left swings free
+          w.grip ??= [new T.Vector3(), new T.Vector3()];
+          w.grip[1].set(-fwd.z, 0, fwd.x).multiplyScalar(0.17).add(pos).addScaledVector(d, 0.38); w.grip[1].y = pos.y + 0.92;
+          w.p.hold([null, w.grip[1]]);
         } else w.p.hold(null);
       }
       if (w.say && p.root.visible && player.pos.distanceTo(pos) < 2.2 && t - w.said > 40) { w.said = t; game.say(w.say); }
