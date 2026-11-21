@@ -5,6 +5,7 @@
 import * as T from 'three';
 import * as F from '../fixtures.js';
 import { CEIL } from '../world.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 export function buildLobby(ctx) {
   const {
@@ -190,6 +191,49 @@ export function buildLobby(ctx) {
       spots.forEach(([x, z], i) => { dm.position.set(x, CEIL - 0.004, z); dm.rotation.set(Math.PI / 2, 0, 0); dm.scale.set(1, 1, 1); dm.updateMatrix(); can.setMatrixAt(i, dm.matrix); });
       scene.add(can);
     }
+    // Ceiling services: what every real lay-in or drywall ceiling carries and ours didn't. Square 4-way supply diffusers
+    // (stepped louvre rings) each with the grey smudge halo the air stream leaves on the paint; two egg-crate returns;
+    // pendant sprinklers in chrome escutcheons; smoked dome cameras over the desk, the doors and the market. Instanced:
+    // about 10 draw calls for all of it.
+    {
+      const at = (geo, x, y, z) => geo.clone().translate(x, y, z), Y = CEIL;
+      const frame = (s, w, h, y) => [[s, h, w, 0, (s - w) / 2], [s, h, w, 0, -(s - w) / 2], [w, h, s - 2 * w, (s - w) / 2, 0], [w, h, s - 2 * w, -(s - w) / 2, 0]].map(([a, b, c, x, z]) => new T.BoxGeometry(a, b, c).translate(x, y, z));
+      const face = mergeGeometries([...frame(0.6, 0.04, 0.012, -0.006), ...[1, 2, 3].flatMap(k => frame(0.6 - k * 0.12, 0.034, 0.004, -0.012 - k * 0.007)), new T.BoxGeometry(0.17, 0.004, 0.17).translate(0, -0.036, 0)]);
+      const throat = new T.PlaneGeometry(0.53, 0.53).rotateX(Math.PI / 2).translate(0, -0.004, 0);
+      const diffusers = [];
+      for (const x of [-9.9, -6.3, -2.7, 0.9, 4.5]) for (const z of [-6.9, -3.3, 0.3, 3.9, 7.5]) {
+        const k = Math.round((x + 9.9) / 3.6) + Math.round((z + 6.9) / 3.6);
+        if (k % 2 || (x > 1.3 && x < 5.9 && z > 4.3 && z < 8.5) || (x < -5 && z < -5)) continue;   // a checkerboard, clear of the coffer and the office
+        diffusers.push([x, z]);
+      }
+      const inst = (geo, mat, list, y = Y) => { const m = new T.InstancedMesh(geo, mat, list.length); list.forEach(([x, z], i) => { dm.position.set(x, y, z); dm.rotation.set(0, 0, 0); dm.scale.set(1, 1, 1); dm.updateMatrix(); m.setMatrixAt(i, dm.matrix); }); scene.add(m); return m; };
+      inst(face, F.mat('#eeede8', { roughness: 0.45 }), diffusers).name = 'Supply diffusers';
+      inst(throat, F.mat('#5a5b5e', { roughness: 0.9 }), diffusers).name = 'Diffuser throats';
+      // the smudge: darkest hard against the frame, fading out over ~25 cm, streaky along the four throws
+      const halo = document.createElement('canvas'); halo.width = halo.height = 256; { const g = halo.getContext('2d'), S = 256, inner = S * 0.25, r = mulberry(5);
+        for (let i = 0; i < 900; i++) { const side = i % 4, t = r() * 2 - 1, d = r() ** 2.2 * (S / 2 - inner), a = 0.05 * (1 - d / (S / 2 - inner));
+          const along = S / 2 + t * inner * 1.05, out = S / 2 + (inner + d) * (side < 2 ? 1 : -1);
+          g.fillStyle = `rgba(70,68,66,${a})`; side % 2 ? g.fillRect(out - 1, along - 6, 2, 12) : g.fillRect(along - 6, out - 1, 12, 2); } }
+      const haloTex = new T.CanvasTexture(halo); haloTex.colorSpace = T.SRGBColorSpace;
+      const haloGeo = mergeGeometries(diffusers.map(([x, z]) => new T.PlaneGeometry(1.2, 1.2).rotateX(Math.PI / 2).translate(x, Y - 0.002, z)));
+      const halos = new T.Mesh(haloGeo, new T.MeshStandardMaterial({ map: haloTex, transparent: true, depthWrite: false, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
+      halos.name = 'Diffuser smudge'; halos.renderOrder = 1; scene.add(halos);
+      // egg-crate returns: a dark grid behind a white frame
+      const grid = document.createElement('canvas'); grid.width = grid.height = 128; { const g = grid.getContext('2d'); g.fillStyle = '#1e1f21'; g.fillRect(0, 0, 128, 128); g.fillStyle = '#d9d8d3'; for (let i = 0; i < 128; i += 4) { g.fillRect(i, 0, 1, 128); g.fillRect(0, i, 128, 1); } }
+      const gridTex = new T.CanvasTexture(grid); gridTex.colorSpace = T.SRGBColorSpace;
+      const returns = [[-0.9, -1.5], [-8.1, 1.2]];
+      inst(new T.PlaneGeometry(0.56, 0.56).rotateX(Math.PI / 2), new T.MeshStandardMaterial({ map: gridTex, roughness: 0.8 }), returns, Y - 0.003).name = 'Return grilles';
+      inst(mergeGeometries(frame(0.6, 0.025, 0.01, -0.005)), F.mat('#eeede8', { roughness: 0.45 }), returns).name = 'Return frames';
+      // pendant sprinklers on a ~3.6 m grid (NFPA 13 light hazard spacing), offset from the cans
+      const sprink = mergeGeometries([new T.CylinderGeometry(0.03, 0.032, 0.006, 20).translate(0, -0.003, 0), new T.CylinderGeometry(0.007, 0.009, 0.03, 8).translate(0, -0.02, 0), new T.CylinderGeometry(0.014, 0.014, 0.002, 12).translate(0, -0.036, 0)]);
+      const heads = []; for (let x = -9.9; x < 6; x += 3.6) for (let z = -5.1; z < 9; z += 3.6) if (!(x > 1.3 && x < 5.9 && z > 4.3 && z < 8.5) && !(x < -5 && z < -5)) heads.push([x + 0.9, z]);
+      inst(sprink, F.mat('#c9c7c2', { roughness: 0.25, metalness: 0.9 }), heads).name = 'Sprinklers';
+      // smoked dome cameras: over the desk, the doors and the market
+      const dome = mergeGeometries([new T.CylinderGeometry(0.075, 0.075, 0.018, 24).translate(0, -0.009, 0)]), lens = new T.SphereGeometry(0.06, 20, 10, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2).translate(0, -0.018, 0);
+      const cams = [[-8.2, -1.6], [-2.6, 7.2], [-3.9, -6.2]];
+      inst(dome, F.mat('#efeee9', { roughness: 0.5 }), cams).name = 'Camera bases';
+      inst(lens, new T.MeshStandardMaterial({ color: '#141518', roughness: 0.08, metalness: 0.2 }), cams).name = 'Camera domes';
+    }
     // Black merchandising pegboard in an oak frame behind the coffee bar.
     add(lib.model('hotel-coffee-board', { origin: true }), 3.4, 0, -8.87);
     painting(-11.895, 1.8, -0.6, Math.PI / 2, 1.0, 0.75, 0);
@@ -201,3 +245,4 @@ export function buildLobby(ctx) {
   }
   Object.assign(ctx, { lobbyTV, loungeTV, breakfast });
 }
+function mulberry(a) { return () => { a |= 0; a = a + 0x6d2b79f5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }

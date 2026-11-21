@@ -416,3 +416,7 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   arm's length; packets are a shade warmer than the counter and grains catch a little emission so they glint. A
   cylinder lid read as a hockey puck: use the lid's real profile (lathe, double-sided). Coffee rings in a dull
   brown-grey read as grime; keep them warm.
+- **A blank ceiling is 40 % of the entry view.** Real ones carry services: 4-way supply diffusers with the grey smudge
+  halo their air throw leaves on the paint, egg-crate returns, pendant sprinklers on a ~3.6 m grid, dome cameras over
+  the desk, doors and market (lobby.js, instanced, ~10 draw calls). The diffuser throat must be mid-grey, not black: black
+  rings read as a graphic, not a void with light in it.
