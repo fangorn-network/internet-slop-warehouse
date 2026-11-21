@@ -161,6 +161,13 @@ export function buildFloorShade({ scene, colliders, updaters }) {
     if (w * d > 6 || Math.max(w, d) > 4) return;   // merged geometry (walls, trees, the lot) spans everything: walls come from colliders below
     feet.push([box.min.x, box.min.z, box.max.x, box.max.z, Math.min(1, box.max.y - box.min.y)]);
   });
+  // Tracked-in soil: 80 % of a lobby's dirt comes in on shoes. The mat (z 7.5-8.7) takes most; what's left fades along
+  // the walk to the desk and the pantry over the first ~4 m, as fine grit, never as blotches.
+  { const r = mulberry(19);
+    for (let i = 0; i < (economy ? 900 : 2200); i++) {
+      const t = r() ** 1.8, toDesk = r() < 0.6, z = 7.4 - t * 4.5, x = -2 + (toDesk ? -1.2 : 0.6) * t * (7.4 - z) / 4.5 * 2 + (r() - 0.5) * (1.4 - t * 0.5);
+      g.fillStyle = `rgba(88,74,58,${0.05 + 0.12 * (1 - t) * r()})`; g.fillRect((x - X0) * PX, (z - Z0) * PX, 1 + r() * 1.5, 1 + r() * 1.5);
+    } }
   // walls and columns: the tall colliders (the low ones include invisible gap closers, which must cast nothing)
   for (const c of colliders) if (!c.loose && c.y0 < 0.1 && c.y1 > 1.5 && c.x1 > X0 && c.x0 < X1 && c.z1 > Z0 && c.z0 < Z1) feet.push([c.x0, c.z0, c.x1, c.z1, 1]);
   // A blurred rect via the canvas shadow (filter: blur() isn't in older Safari): draw it off-canvas, its shadow lands in place.

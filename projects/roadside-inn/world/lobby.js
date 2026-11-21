@@ -101,7 +101,7 @@ export function buildLobby(ctx) {
   // Brochure rack and luggage cart near the entrance; a walk-off mat inside the doors.
   add(lib.model('hotel-brochure-rack', { origin: true }), -4.6, 0, 1.2, Math.PI / 2); solid(-4.78, -4.42, 0, 1.45, 1.02, 1.38);
   loose(add(lib.model('hotel-luggage-cart', { origin: true }), -5.0, 0, 6.3, 0.3), { density: 0.35 }); solid(-5.6, -4.4, 0, 2, -0.4 + 6.3, 0.4 + 6.3); unboxed();
-  add(lib.model('hotel-entry-mat', { origin: true }), -2, 0.006, 8.1);
+  add(lib.model('hotel-entry-mat', { origin: true }), -1.97, 0.006, 8.08, 0.03);   // kicked a little off square by the doors' traffic
   light(-2, DOWN, 1.5, cool, 10 * THROW, 9);
 
   // Pantry (NE): coffee counter, vending, cooler, bar tables.
