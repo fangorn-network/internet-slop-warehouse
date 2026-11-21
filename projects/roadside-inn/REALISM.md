@@ -380,3 +380,13 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Casual looks are slow, startles are quick.** Head spring 6 rad/s for looking about, 14 for a noise.
 - **Carts don't dodge.** In a corridor the pusher only eases over and keeps rolling; the person on foot keeps to the
   wall and slows.
+
+## Things say how they're used (2026-11-21)
+- Seen: the rep's hands floated 20 cm short of his keyboard (hand points typed in by hand, guessed); Dana stood still and
+  waved, with no keyboard on her pod at all.
+- Cause: every touch was hand-placed per person; nothing tied a hand to the object it was meant to be on.
+- Fix: `affords.js`. A model part lists its touch spots in its own frame (keyboard, mouse, screen); a kind says where wrists
+  go, the grip, the motion (typing bursts, mousing) and the sound per touch. People only say `['use', 'keyboard']`. Dana is
+  now a resident (intent.js) who types at her pod and steps to the gap to serve whoever comes up.
+- Next: more kinds (door handle, coffee pot lever, ice-machine button, chair seat, bed, cart handle), spots authored in
+  Blender as empties and carried in the part record, so new objects work without code.
