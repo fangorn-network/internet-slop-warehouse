@@ -86,7 +86,11 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   const pinned = [];
   // Landing, bumping, being knocked over: sound.js scales it by the hit's energy and how far away you are.
   let eye = null;   // the camera, from the last update
-  const heard = (o, kg) => sound?.impact && (({ speed }) => sound.impact(made(o.name), kg(), speed, eye ? eye.position.distanceTo(o.position) : 0));
+  // and the residents hear it too (world.onImpact, set by main.js: game.hear turns heads toward a loud enough landing)
+  const heard = (o, kg) => (sound?.impact || world.onImpact) && (({ speed }) => {
+    sound?.impact?.(made(o.name), kg(), speed, eye ? eye.position.distanceTo(o.position) : 0);
+    world.onImpact?.(o.getWorldPosition(new T.Vector3()), 0.5 * kg() * speed * speed);
+  });
 
   // Carrying: E on a small loose prop picks it up; E again throws it the way you're looking. Each carriable prop gets
   // its prompt when it's attached, so props streamed in after the first frame (Late Checkout) can be picked up too.

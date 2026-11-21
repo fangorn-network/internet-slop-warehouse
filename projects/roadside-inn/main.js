@@ -131,6 +131,7 @@ const detailPosition = new T.Vector3();
 const walker = await createPlayer(scene, world, { sound }), phys = walker.physics;
 game.holding = () => phys?.holding ?? null;   // world.js asks, e.g. the TV wants its remote in your hand
 game.held = () => phys?.held?.o ?? null; game.physics = phys; game.camera = () => camera;   // world/reading.js, world/handling.js, lamps.js
+world.onImpact = (at, joules) => game.hear?.(at, joules);   // physics.js: a landing loud enough turns heads (world/staff.js)
 // Compile every shader now (both reflection maps share a size, so later swaps never recompile).
 await renderer.compileAsync(scene, camera);
 $('loading').hidden = true; $('start').hidden = false;

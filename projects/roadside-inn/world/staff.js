@@ -288,7 +288,9 @@ export function buildStaff(ctx) {
             else {
               // bear away from their side; two people meeting head on both keep right
               const s = !o.player && Math.abs(side) < 0.15 ? -1 : side > 0 ? 1 : -1;
-              heading += s * 0.7 * (1 - ahead / reach); want *= 0.8;
+              // a cart can't dodge: its pusher only eases over; whoever's on foot keeps to the wall and all but stops for it
+              const yields = !w.cart && !!o.w?.cart;
+              heading += s * (w.cart ? 0.3 : yields ? 0.6 : 0.7) * (1 - ahead / reach); want *= yields ? 0.4 : w.cart ? 0.95 : 0.8;
             }
           }
           want = Math.min(want, dist / Math.max(dt, 1e-3));
