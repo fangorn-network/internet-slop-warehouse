@@ -140,7 +140,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const fingers = [0, 1].map(i => FINGERS.map(n => [1, 2, 3].map(k => bone(new RegExp(`${i ? 'Right' : 'Left'}Hand${n}${k}$`)))));
   const palmSign = [1, 1], curlSign = [1, 1];
   // radians at the base, middle and tip joints of each finger (the thumb takes half)
-  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], phone: [0.75, 0.95, 0.6] };
+  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7] };
   function handFrame(i) {
     const f0 = fingers[i], mid = f0[2][0], ix = f0[1][0], pk = f0[4][0];
     if (!B.hands[i] || !mid || !ix || !pk) return null;
@@ -174,7 +174,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const shrugSign = [1, -1];
   function spring(x, v, goal, w, dt) { const a = w * w * (goal - x) - 2 * w * v; v += a * dt; return [x + v * dt, v]; }
 
-  let reach = null, reachGiven = [false, false], tipUp = 0;
+  let reach = null, reachGiven = [false, false], tipUp = 0, held = null;
   function update(dt) {
     since += dt;
     // standing: hold a stance; now and then shift the weight to the other leg (two copies of the idle, both frozen)
@@ -260,13 +260,14 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       for (let i = 0; i < 2; i++) ik(B.thighs[i], B.knees[i], B.feet[i], now.feet[i]);
       reach = now.hands; reachGiven = sides(sit.hands).map(Boolean);
     } else breathe();
+    if (held && pose !== 'sit') { reach = held.points; reachGiven = [true, true]; }   // standing, both hands on something (a cart's handle)
     if (pose === 'cup') { axisTurn(B.arms[1], right().clone(), -0.2); axisTurn(B.forearms[1], right().clone(), -1.35); }
     gaze(dt);
     // hands last: on these rigs the collarbones hang off the neck, so the head turning moves the shoulders
     if (reach) {
       for (let i = 0; i < 2; i++) {
         ik(B.arms[i], B.forearms[i], B.hands[i], reach[i]);
-        const grip = reachGiven[i] ? sit.grip ?? 'table' : 'rest';
+        const grip = reachGiven[i] ? (held && pose !== 'sit' ? held.grip : sit.grip ?? 'table') : 'rest';
         if (grip === 'phone') {   // palms up and in, toward the phone held between them at the chest
           const inward = B.hips.getWorldPosition(new T.Vector3()).sub(B.hands[i].getWorldPosition(_v)).setY(0).normalize();
           orientHand(i, inward.add(UP).sub(fwd().multiplyScalar(0.3)));
@@ -344,6 +345,8 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     lookAt(v) { target = v; if (v) lastTarget.copy(v); },
     /** What they're doing, for the eyes: { at: Vector3 (may move), kind: 'tv' | 'phone' | 'screen' | 'work' | 'path' } or null. */
     attend(t) { task = t; },
+    /** Standing, both hands on [left, right] world points (Vector3s, may move), e.g. a cart's handle bar; null lets go. */
+    hold(points, grip = 'handle') { held = points ? { points, grip } : null; },
     /** A noise at a world point (a Vector3): they turn to it, head first, after a moment. */
     hear(v) { heard = v.toArray ? v.toArray() : v; },
     /** 'sit', 'cup' or null. Sitting takes { floor: world y the feet rest on, ahead: m from hip to ankle (or [left, right]),
