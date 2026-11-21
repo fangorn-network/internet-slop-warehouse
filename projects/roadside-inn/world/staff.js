@@ -123,12 +123,13 @@ const SITTERS = [
       'watch-tv': { weight: 1.2, steps: [['posture', 'tv'], ['attend', 'tv'], ['wait', 70, 160]] },
       'check-phone': { weight: 0.7, steps: [['posture', 'phone'], ['attend', 'phone'], ['wait', 20, 50]] },
     } },
-  // At the communal table on a bar stool (seat 0.79), ankles over the stool's front bar (0.26), leaning on her forearms,
+  // At the communal table on a bar stool (seat 0.79), balls of her feet on the stool's front rail (measured: top 0.46 at
+  // z -4.78, x -2.25..-1.95; there is no ring at 0.26), leaning on her forearms,
   // hands on the oak top (1.05), eyes on her phone on the table.
   { id: 'nurse', model: 'rb-emma-casual', tint: '#8a3b5c', start: 'scroll',
     who: 'A nurse between shifts with her phone', why: 'Killing the hour before her night shift at the county hospital',
     seat: { hips: [-2.1, 0.79, -4.62], yaw: Math.PI, sink: 0.005 },
-    postures: { lean: { lean: 0.22, tilt: -0.05, feet: [[-2.0, 0.345, -4.82], [-2.2, 0.345, -4.82]], hands: [[-1.96, 1.09, -5.02], [-2.24, 1.09, -5.02]] } },
+    postures: { lean: { lean: 0.34, tilt: -0.05, feet: [[-2.0, 0.53, -4.72], [-2.2, 0.53, -4.72]], hands: [[-1.97, 1.08, -4.97], [-2.23, 1.08, -4.97]] } },   // wrists just over the table's near edge (z -4.95, top 1.05): within reach
     things: { phone: { at: [-2.1, 1.06, -5.1], kind: 'phone' } },
     activities: { scroll: { steps: [['posture', 'lean'], ['attend', 'phone'], ['wait', 60, 200]] } } },
   // At a business-center PC on a task chair (seat 0.52, x 5.2-5.5): leaning in a little, left hand on the keyboard,

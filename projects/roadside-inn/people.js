@@ -130,6 +130,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const shrugSign = [1, -1];
   function spring(x, v, goal, w, dt) { const a = w * w * (goal - x) - 2 * w * v; v += a * dt; return [x + v * dt, v]; }
 
+  let reach = null;
   function update(dt) {
     since += dt;
     // standing: hold a stance; now and then shift the weight to the other leg (two copies of the idle, both frozen)
@@ -212,10 +213,12 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       const now = targets(sit), was = sitFrom && targets(sitFrom);
       if (was) for (const k of ['feet', 'hands']) now[k] = now[k].map((p, i) => was[k][i].clone().lerp(p, e));
       for (let i = 0; i < 2; i++) ik(B.thighs[i], B.knees[i], B.feet[i], now.feet[i]);
-      for (let i = 0; i < 2; i++) ik(B.arms[i], B.forearms[i], B.hands[i], now.hands[i]);
+      reach = now.hands;
     } else breathe();
     if (pose === 'cup') { axisTurn(B.arms[1], right().clone(), -0.2); axisTurn(B.forearms[1], right().clone(), -1.35); }
     gaze(dt);
+    // hands last: on these rigs the collarbones hang off the neck, so the head turning moves the shoulders
+    if (reach) { for (let i = 0; i < 2; i++) ik(B.arms[i], B.forearms[i], B.hands[i], reach[i]); reach = null; }
     // blinks: ~17/min, fewer watching a screen, often one with a big gaze shift (body.js blinker)
     const c = blinks.tick(dt, { screen: focus.id === 'task' && /tv|screen|phone/.test(task?.kind ?? ''), shift: G.shift });
     if (c > 0) for (const b of B.lids) b.quaternion.multiply(_q.setFromAxisAngle(LID, BLINK * c));   // in the lid bone's own frame

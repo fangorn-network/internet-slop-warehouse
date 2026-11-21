@@ -365,7 +365,7 @@ if (mode === 'people') try {
     const W = __inn.world.walkers, outfit = p => { let c = null; p.root.traverse(n => { if (n.isMesh && /Outfit/.test(n.name)) c = n.material.color.getHexString(); }); return c; };
     const andre = [W[1], W[2]].map(w => w.p), emmas = [W[0], W[4]].map(w => outfit(w.p));
     for (const p of andre) { p.play('Walk'); p.play('Idle'); }
-    let apart = 0; for (let k = 0; k < 30; k++) { for (const p of andre) p.update(0.1); apart += Math.abs(andre[0].breath - andre[1].breath) / 30; }   // they don't breathe in step
+    let apart = 0; for (let k = 0; k < 300; k++) { for (const p of andre) p.update(0.1); apart += Math.abs(andre[0].breath - andre[1].breath) / 300; }   // they don't breathe in step
     const phases = [0, apart];
     const p = W[3].p; p.play('Walk'); p.pace(0.6); const slow = p.clip.rate; p.pace(1.2); const fast = p.clip.rate;
     const hipZ = () => p.root.worldToLocal(p.bones.hips.getWorldPosition(new __T.Vector3())).z * p.root.scale.z;
@@ -411,6 +411,65 @@ if (mode === 'people') try {
   assert.ok(S.every(s => s.thighOverSeat > 0.02), 'thighs lie along the seat, not through it');
   assert.ok(S.every(s => s.handToSurface.every((y, i) => (y > 0 && y < 0.15) || s.handToTarget[i] < 0.08)), 'hands rest on the lap, a keyboard, the table or the sofa back, not held out in the air');
   assert.ok(P.pinned.includes('hotel-bar-stool') && P.pinned.includes('hotel-task-chair'), 'the stool and chair under seated guests stay put');
+  // ---- Cast 2026-11-21: stillness punctuated by discrete, motivated events (GAIT-AND-POSE.md, body.js) ----
+  // Alone (you far away), seated people and Dana hold still: the head moves (> 5 deg/s) only in short gaze shifts, the
+  // hips don't rock. Before this round the heads moved 38-69 % of the time (a standing idle under a seated pose).
+  await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(20);
+  flow.still = await page.evaluate(() => {
+    const T = __T, ppl = __inn.people.filter(p => p.posed === 'sit').concat([__inn.people[0]]), dt = 1 / 30;
+    return ppl.map(p => {
+      const fw = () => new T.Vector3(0, 0, 1).applyQuaternion(p.bones.head.getWorldQuaternion(new T.Quaternion())), hip = () => p.bones.hips.getWorldPosition(new T.Vector3());
+      let prev = fw(), moving = 0, h0 = hip(), hmax = 0; const seen = {};
+      for (let i = 0; i < 900; i++) { p.update(dt); const f = fw(); if (prev.angleTo(f) / dt > 5 * Math.PI / 180) moving++; prev = f; hmax = Math.max(hmax, hip().distanceTo(h0)); seen[p.focus.id] = (seen[p.focus.id] ?? 0) + 1 / 900; }
+      return { who: p.root.userData.who ?? 'Dana', moving: +(moving / 900).toFixed(3), hips: +hmax.toFixed(3), task: +(seen.task ?? 0).toFixed(2) };
+    });
+  });
+  assert.ok(flow.still.every(s => s.moving < 0.25), 'people at rest hold still: the head moves only in brief gaze shifts (< 25 % of the time)');
+  assert.ok(flow.still.slice(0, 3).every(s => s.hips < 0.012), 'seated people don\'t rock: hips still within a centimetre (no standing idle under a seated pose)');
+  assert.ok(flow.still.every(s => s.task > 0.55), 'people look at what they\'re doing most of the time (the TV, the phone, the screen, the monitor), not at nothing');
+  // Gene (the sofa) notices you: come and stand by the sofa and he looks at you; a thrown thing landing behind him turns
+  // his head to it (head first, within a few tenths of a second), his eyes ahead of his head.
+  await page.evaluate(() => __inn.teleport(3.2, 0, 5.2, -0.6, 0)); await frames(5);
+  flow.gene = await page.evaluate(() => { const g = __inn.people.filter(p => p.posed === 'sit')[0]; let looked = 0; for (let i = 0; i < 240; i++) { g.update(1 / 30); looked += g.focus.id === 'social' ? 1 / 240 : 0; } return { looked: +looked.toFixed(2) }; });
+  await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(5);
+  flow.gene.noise = await page.evaluate(() => {
+    const T = __T, g = __inn.people.filter(p => p.posed === 'sit')[0], at = new T.Vector3(3.0, 0.05, 4.4); __inn.game.hear(at, 20);   // a thing landing off to his left, behind the coffee table
+    let t = 0; while (g.focus.id !== 'noise' && t < 1) { g.update(1 / 60); t += 1 / 60; }
+    const eye0 = g.gazeState.eye, head0 = Math.abs(g.gazeState.head[0]); for (let i = 0; i < 40; i++) g.update(1 / 60);
+    return { after: +t.toFixed(2), lead: g.focus.lead, eye0: +eye0.toFixed(2), eye1: +g.gazeState.eye.toFixed(2), head0: +head0.toFixed(2), head1: +Math.abs(g.gazeState.head[0]).toFixed(2) };
+  });
+  assert.ok(flow.gene.looked > 0.35, 'the sofa guest looks at you when you come and stand by him');
+  assert.ok(flow.gene.noise.after < 0.4 && flow.gene.noise.lead === 'head' && flow.gene.noise.head1 > flow.gene.noise.head0 + 0.2 && flow.gene.noise.eye1 < flow.gene.noise.eye0, 'a noise turns the sofa guest\'s head to it within 0.4 s; the eyes get there first and re-centre as the head arrives');
+  // He changes posture when he changes what he's doing (TV → phone): smoothly over ~2 s, and his hands end on the phone.
+  flow.gene.posture = await page.evaluate(async () => {
+    const T = __T, g = __inn.people.filter(p => p.posed === 'sit')[0], o = (await import('/projects/roadside-inn/world/staff.js')).castData().SITTERS[0].postures.phone;
+    const hands = o.hands.map(h => new T.Vector3(...h)), gap = () => Math.max(...g.bones.hands.map(h => Math.min(...hands.map(t => t.distanceTo(h.getWorldPosition(new T.Vector3())))))), start = gap();
+    g.pose('sit', { ...o, hands }); for (let i = 0; i < 15; i++) g.update(1 / 30); const mid = gap();
+    for (let i = 0; i < 90; i++) g.update(1 / 30); return { start: +start.toFixed(3), mid: +mid.toFixed(3), end: +gap().toFixed(3) };
+  });
+  assert.ok(flow.gene.posture.mid > 0.1 * flow.gene.posture.start && flow.gene.posture.mid < flow.gene.posture.start && flow.gene.posture.end < 0.08, 'a posture change blends over a couple of seconds (no snap) and lands the hands on the phone');
+  // Standing: two held stances from the authored idle, the hips over one foot then the other; weight shifts are rare.
+  flow.stance = await page.evaluate(() => { const d = __inn.people[0]; return { stances: d.stances.map(t => +t.toFixed(2)), hold: +d.stanceState.left.toFixed(1) }; });
+  assert.ok(flow.stance.stances.length === 2 && flow.stance.stances[0] !== flow.stance.stances[1], 'standing people hold one of two contrapposto stances, not a looping idle');
+  // A slow walker (0.6 m/s) steps at the cadence of a slow walk and doesn't skate: the planted foot stays put.
+  flow.slowWalk = await page.evaluate(() => {
+    const T = __T, w = __inn.world.walkers[1], p = w.p, pos = p.root.position.clone(), dt = 1 / 60, v = 0.6;
+    p.play('Walk'); p.pace(v); for (let i = 0; i < 30; i++) p.update(dt);
+    let worst = 0, n = 0, slide = 0; const was = p.bones.feet.map(f => f.getWorldPosition(new T.Vector3()));
+    for (let i = 0; i < 120; i++) {
+      p.root.position.z += v * dt * Math.cos(p.root.rotation.y); p.root.position.x += v * dt * Math.sin(p.root.rotation.y); p.update(dt);
+      const now = p.bones.feet.map(f => f.getWorldPosition(new T.Vector3())), low = now[0].y < now[1].y ? 0 : 1;
+      if (Math.abs(now[0].y - now[1].y) > 0.03) { const sp = Math.hypot(now[low].x - was[low].x, now[low].z - was[low].z) / dt; slide += sp; n++; worst = Math.max(worst, sp); }
+      was.forEach((x, k) => x.copy(now[k]));
+    }
+    p.root.position.copy(pos);
+    return { rate: +p.clip.rate.toFixed(3), cadence: +(120 / 1.2 * p.clip.rate).toFixed(0), plantedSpeed: +(slide / Math.max(1, n)).toFixed(3) };
+  });
+  assert.ok(flow.slowWalk.plantedSpeed < 0.2, 'a slow walker\'s planted foot doesn\'t skate (shorter steps, not just slower ones)');
+  // No bone drifts: procedural turns are applied on top of each frame's pose, never accumulated (REALISM, residents going
+  // wild). 20 s of everyone going about their business; every bone quaternion stays unit length and every scale 1.
+  flow.drift = await page.evaluate(() => { let q = 0, k = 0; for (let i = 0; i < 600; i++) for (const p of __inn.people) { p.update(1 / 30); if (i % 30 === 29) p.root.traverse(b => { if (b.isBone) { q = Math.max(q, Math.abs(b.quaternion.length() - 1)); k = Math.max(k, Math.abs(b.scale.x - 1), Math.abs(b.scale.y - 1)); } }); } return { q: +q.toExponential(2), scale: +k.toExponential(2) }; });
+  assert.ok(flow.drift.q < 1e-3 && flow.drift.scale < 1e-3, 'no bone drifts over 20 s: quaternions stay unit length, scales stay 1');
   // Turning: a walker facing away from where it's going turns at most 3 rad/s, on the spot, not in one frame.
   await page.evaluate(() => { const w = __inn.world.walkers[0], at = w.p.root.position; w.hidden = false; w.wait = 0; w.v = 0; w.stops = __stops([{ p: [at.x + 3, at.y, at.z], wait: 2 }]); w.i = 0; w.yaw = -Math.PI / 2; globalThis.__turn = { w, y0: w.yaw, at: at.clone() }; });
   await frames(2);
@@ -467,61 +526,6 @@ if (mode === 'people') try {
   });
   flow.dana.looking = +danaLooks.toFixed(2);
   assert.ok(flow.dana.looking > 0.5 && flow.dana.seen, 'Dana looks at a guest at the desk and her face is in view, not behind the monitor');
-  // ---- Cast 2026-11-21: stillness punctuated by discrete, motivated events (GAIT-AND-POSE.md, body.js) ----
-  // Alone (you far away), seated people and Dana hold still: the head moves (> 5 deg/s) only in short gaze shifts, the
-  // hips don't rock. Before this round the heads moved 38-69 % of the time (a standing idle under a seated pose).
-  await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(20);
-  flow.still = await page.evaluate(() => {
-    const T = __T, ppl = __inn.people.filter(p => p.posed === 'sit').concat([__inn.people[0]]), dt = 1 / 30;
-    return ppl.map(p => {
-      const fw = () => new T.Vector3(0, 0, 1).applyQuaternion(p.bones.head.getWorldQuaternion(new T.Quaternion())), hip = () => p.bones.hips.getWorldPosition(new T.Vector3());
-      let prev = fw(), moving = 0, h0 = hip(), hmax = 0; const seen = {};
-      for (let i = 0; i < 900; i++) { p.update(dt); const f = fw(); if (prev.angleTo(f) / dt > 5 * Math.PI / 180) moving++; prev = f; hmax = Math.max(hmax, hip().distanceTo(h0)); seen[p.focus.id] = (seen[p.focus.id] ?? 0) + 1 / 900; }
-      return { who: p.root.userData.who ?? 'Dana', moving: +(moving / 900).toFixed(3), hips: +hmax.toFixed(3), task: +(seen.task ?? 0).toFixed(2) };
-    });
-  });
-  assert.ok(flow.still.every(s => s.moving < 0.25), 'people at rest hold still: the head moves only in brief gaze shifts (< 25 % of the time)');
-  assert.ok(flow.still.slice(0, 3).every(s => s.hips < 0.012), 'seated people don\'t rock: hips still within a centimetre (no standing idle under a seated pose)');
-  assert.ok(flow.still.every(s => s.task > 0.55), 'people look at what they\'re doing most of the time (the TV, the phone, the screen, the monitor), not at nothing');
-  // Gene (the sofa) notices you: come and stand by the sofa and he looks at you; a thrown thing landing behind him turns
-  // his head to it (head first, within a few tenths of a second), his eyes ahead of his head.
-  await page.evaluate(() => __inn.teleport(3.2, 0, 5.2, -0.6, 0)); await frames(5);
-  flow.gene = await page.evaluate(() => { const g = __inn.world.sitters[0]; let looked = 0; for (let i = 0; i < 240; i++) { g.update(1 / 30); looked += g.focus.id === 'social' ? 1 / 240 : 0; } return { looked: +looked.toFixed(2) }; });
-  await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(5);
-  flow.gene.noise = await page.evaluate(() => {
-    const T = __T, g = __inn.world.sitters[0], at = new T.Vector3(3.0, 0.05, 4.4); __inn.game.hear(at, 20);   // a thing landing off to his left, behind the coffee table
-    let t = 0; while (g.focus.id !== 'noise' && t < 1) { g.update(1 / 60); t += 1 / 60; }
-    const eye0 = g.gazeState.eye, head0 = Math.abs(g.gazeState.head[0]); for (let i = 0; i < 40; i++) g.update(1 / 60);
-    return { after: +t.toFixed(2), lead: g.focus.lead, eye0: +eye0.toFixed(2), eye1: +g.gazeState.eye.toFixed(2), head0: +head0.toFixed(2), head1: +Math.abs(g.gazeState.head[0]).toFixed(2) };
-  });
-  assert.ok(flow.gene.looked > 0.35, 'the sofa guest looks at you when you come and stand by him');
-  assert.ok(flow.gene.noise.after < 0.4 && flow.gene.noise.lead === 'head' && flow.gene.noise.head1 > flow.gene.noise.head0 + 0.2 && flow.gene.noise.eye1 < flow.gene.noise.eye0, 'a noise turns the sofa guest\'s head to it within 0.4 s; the eyes get there first and re-centre as the head arrives');
-  // He changes posture when he changes what he's doing (TV → phone): smoothly over ~2 s, and his hands end on the phone.
-  flow.gene.posture = await page.evaluate(async () => {
-    const T = __T, g = __inn.world.sitters[0], o = (await import('/projects/roadside-inn/world/staff.js')).castData().SITTERS[0].postures.phone;
-    const hands = o.hands.map(h => new T.Vector3(...h)), gap = () => Math.max(...g.bones.hands.map(h => Math.min(...hands.map(t => t.distanceTo(h.getWorldPosition(new T.Vector3())))))), start = gap();
-    g.pose('sit', { ...o, hands }); for (let i = 0; i < 15; i++) g.update(1 / 30); const mid = gap();
-    for (let i = 0; i < 90; i++) g.update(1 / 30); return { start: +start.toFixed(3), mid: +mid.toFixed(3), end: +gap().toFixed(3) };
-  });
-  assert.ok(flow.gene.posture.mid > 0.1 * flow.gene.posture.start && flow.gene.posture.mid < flow.gene.posture.start && flow.gene.posture.end < 0.08, 'a posture change blends over a couple of seconds (no snap) and lands the hands on the phone');
-  // Standing: two held stances from the authored idle, the hips over one foot then the other; weight shifts are rare.
-  flow.stance = await page.evaluate(() => { const d = __inn.people[0]; return { stances: d.stances.map(t => +t.toFixed(2)), hold: +d.stanceState.left.toFixed(1) }; });
-  assert.ok(flow.stance.stances.length === 2 && flow.stance.stances[0] !== flow.stance.stances[1], 'standing people hold one of two contrapposto stances, not a looping idle');
-  // A slow walker (0.6 m/s) steps at the cadence of a slow walk and doesn't skate: the planted foot stays put.
-  flow.slowWalk = await page.evaluate(() => {
-    const T = __T, w = __inn.world.walkers[1], p = w.p, pos = p.root.position.clone(), dt = 1 / 60, v = 0.6;
-    p.play('Walk'); p.pace(v); for (let i = 0; i < 30; i++) p.update(dt);
-    let worst = 0, n = 0, slide = 0; const was = p.bones.feet.map(f => f.getWorldPosition(new T.Vector3()));
-    for (let i = 0; i < 120; i++) {
-      p.root.position.z += v * dt * Math.cos(p.root.rotation.y); p.root.position.x += v * dt * Math.sin(p.root.rotation.y); p.update(dt);
-      const now = p.bones.feet.map(f => f.getWorldPosition(new T.Vector3())), low = now[0].y < now[1].y ? 0 : 1;
-      if (Math.abs(now[0].y - now[1].y) > 0.03) { const sp = Math.hypot(now[low].x - was[low].x, now[low].z - was[low].z) / dt; slide += sp; n++; worst = Math.max(worst, sp); }
-      was.forEach((x, k) => x.copy(now[k]));
-    }
-    p.root.position.copy(pos);
-    return { rate: +p.clip.rate.toFixed(3), cadence: +(120 / 1.2 * p.clip.rate).toFixed(0), plantedSpeed: +(slide / Math.max(1, n)).toFixed(3) };
-  });
-  assert.ok(flow.slowWalk.plantedSpeed < 0.2, 'a slow walker\'s planted foot doesn\'t skate (shorter steps, not just slower ones)');
   // The walk graph and places run clear of solid furniture and walls (people walk the hotel, not through it).
   flow.graph = await page.evaluate(async () => {
     const { HOTEL } = (await import('/projects/roadside-inn/world/staff.js')).castData(), C = __inn.world.colliders.filter(c => !c.loose), bad = [];

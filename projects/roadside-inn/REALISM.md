@@ -334,3 +334,37 @@ environments. Each entry: the symptom a player sees, the cause, the fix. Newest 
   turn, so turns piled up, quaternions drifted off unit length and limbs scaled: arms growing and shrinking, a seated
   guest folding through the sofa, one stretching across the screen. Fix: people.js restores every bone's bind pose
   before mixer.update. Probe: max |q| - 1 over all bones stays 0 for 20 s.
+
+## Cast (2026-11-21)
+
+Study: `GAIT-AND-POSE.md`; rules as data + logic in `body.js` (CC0, no rig or renderer: a reusable "behaviour" part
+with `intent.js`), applied to the Rocketbox rigs by `people.js`.
+
+- **Doll-like = continuous motion without reasons.** Measure it: share of time the head turns > 5 deg/s with nobody
+  around. Real people at rest: well under 25 % (still, then a 0.2-0.6 s gaze shift). Ours were 38-69 %.
+- **Never play a standing idle under a seated pose.** The idle's hip sway (6-11 deg) rocked the whole seated torso and
+  IK dragged the hands after it: the sofa guy's "wily shifting". Seated people breathe; that's all, until they change
+  posture because they changed what they're doing (an intent beat: TV → phone), blended over ~2 s minimum-jerk.
+- **A looping idle is a metronome.** Hold a stance instead (two frames of the authored idle where the hips are over
+  each foot: contrapposto), shift weight now and then (lognormal hold, median 22 s; ~1 s shift). Only frames with both
+  feet where they are, or the blend slides the feet. The idle's head also looks about by itself (+-25-35 deg): hold the
+  neck and head at a straight-ahead frame and let the gaze system turn them.
+- **Gaze is fixations on things.** Give everyone real targets (TV, phone, screen, the path ahead, the counter) and
+  pick one at a time with lognormal durations (TV looks median 7 s: attentional inertia); look away at nothing
+  sometimes. Eyes jump first (the rig has eye bones), the head follows over ~0.3 s for what's beyond ~10 deg, the
+  torso only past the head's range; the eyes re-centre as the head arrives. A sound turns the head first.
+- **Notice people like people.** Glance at someone entering ~7 m in view; don't stare at someone passing close (civil
+  inattention); someone who stops beside you (< 2.2 m, 1.5 s) gets looked at, alternating with what you were doing.
+  A clerk on duty engages at 3.2 m after 0.3 s and looks at the guest ~85 % of the time.
+- **Slow walkers aren't slow motion.** Time-scaling the clip by v / clip speed keeps the stride and puts everything in
+  cadence (50 steps/min at 0.6 m/s). Keep the walk ratio (step / cadence) constant: cadence ∝ sqrt(v), and scale the
+  limbs' swing about the standing pose by step / clip step, then re-ground the lowest foot. Feet don't skate.
+- **Measure the furniture, not the comment.** The nurse's feet were "on the stool's ring at 0.26": there is no ring; the
+  front rail tops out at 0.46 m (z -4.78). Ray-cast the stool mesh before placing feet.
+- **Procedural layers start from a known pose every frame** (lead's fix, above): with frozen or seated poses nothing
+  else resets the bones. check.mjs people probes |q| - 1 and bone scale over 20 s.
+- **Know the rig's hierarchy before ordering layers.** On these Rocketbox rigs the collarbones are children of the
+  *neck*, so every head turn moved the shoulders and pulled IK'd hands 10-12 cm off the table. Arm IK runs last, after
+  the gaze turns.
+- **A check on randomness needs a long enough window.** "Two people breathe out of step" over 3 s failed 2.7 % of the
+  time by chance; over 30 s, never (2000 seeded trials).

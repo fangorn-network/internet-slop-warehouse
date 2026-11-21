@@ -155,6 +155,26 @@ Reference: Perry & Burnfield, *Gait Analysis* (textbook); Inman, *Human Walking*
 - Arm swing uses the clip's pattern scaled, not speed-dependent phase (thorax/pelvis phase change at speed).
 - Reactions (flinch, step away from a thrown chair) are W2: the noise orienting is their first stage.
 
+## 9. Result (measured 2026-11-21, `check.mjs people` and a scratch probe)
+
+| Measure | Before | After |
+|---|---|---|
+| Head moving > 5 deg/s, share of time, alone (sofa / stool / PC / Dana) | 41 / 69 / 38 / 62 % | 0 / 0 / 5 / 5-7 % (only during gaze shifts) |
+| Seated hips excursion over 20-30 s | 2.0-2.2 cm | 0 |
+| Dana hips excursion (standing) | 2.6 cm, continuous | 2.2 cm, in discrete weight shifts (stance hold ~21 s) |
+| Share of time on the task (TV, phone, screen, monitor) | n/a (fixed point) | 75-100 %, look-aways of ~1.6 s |
+| Sofa guest looking at you when you stand by him | turret-like whenever < 3 m | 52 % of the time, alternating with the TV |
+| Noise behind/beside him | ignored | head turns within 0.2 s, head-led; eyes 0.54 rad ahead, re-centre to 0.26 as the head arrives |
+| Posture change (TV → phone) | snap | ~2 s minimum-jerk, hands end on the phone (0 cm) |
+| Slow walker 0.6 m/s cadence / planted-foot speed | ~55 steps/min / n.a. | 78 steps/min / 0.07 m/s |
+| Bone drift over 20 s (max abs(|q| - 1), scale) | grew (lead's bug) | 2.7e-7, 0 |
+
+Conclusion: the doll quality came from motion without reasons, not from the mocap. Freezing the authored poses and
+adding only physiological motion plus motivated, discrete events (gaze fixations on real things, weight shifts,
+posture changes tied to activities) removes it. What still separates them from real people is in section 8, and:
+no hand/finger life (a phone held with stiff fingers), no reaction choreography beyond orienting, and walkers who
+never look at each other (only at the path, the counter and the player).
+
 ## Sources
 
 - Duarte M, Zatsiorsky VM (1999). Patterns of center of pressure migration during prolonged unconstrained standing.
