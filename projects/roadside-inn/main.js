@@ -109,7 +109,7 @@ function tagInterior() {                // idempotent; streamed props are tagged
     tagged.add(o); tagBox.getCenter(tagMid);
     if (tagMid.x < BUILDING.x0 || tagMid.x > BUILDING.x1 || tagMid.z < BUILDING.z0 || tagMid.z > BUILDING.z1 || tagMid.y > BUILDING.y1) return;
     for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
-      if (!m || !('envMap' in m)) continue;
+      if (!m || !('envMap' in m) || m.userData.noEnv) continue;   // noEnv: overlays that must not pick up reflections (lived-in.js floor shade)
       m.envMap = interiorTex; m.envMapIntensity = LOOKS[timeOfDay].envIndoor; m.needsUpdate = true;
       interiorMats.add(m); if (world.in212?.(tagMid)) roomMats.add(m);
     }

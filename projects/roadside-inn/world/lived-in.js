@@ -5,6 +5,7 @@
 import * as T from 'three';
 import * as F from '../fixtures.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { economy } from '../quality.js';
 
 export function buildLivedIn(ctx) {
   const {
@@ -106,4 +107,75 @@ export function buildLivedIn(ctx) {
     const stain = F.box(0.035, 0.0003, 0.0055, F.mat('#6b4426', { roughness: 0.6 }), 3.42 - 0.052 * Math.cos(0.42), 0.9427, -8.36 + 0.052 * Math.sin(0.42), scene); stain.rotation.y = 0.42;   // the wet end
     for (const [x, z, ry, c] of [[3.6, -8.33, 0.9, '#f2b8c6'], [3.53, -8.43, -0.3, '#9cc6ea']]) { const k = F.box(0.05, 0.003, 0.034, F.mat(c, { roughness: 0.7 }), x, 0.9412, z, scene); k.rotation.y = ry; k.name = 'Sugar packet'; }
   }
+}
+
+// Contact shade and grime on the floor-1 floor, painted once from what actually stands on it. Where a thing meets the
+// floor, light is blocked and the mop doesn't reach: a tight warm-dark line at every foot, base and wall, and a wide soft
+// falloff by height. Phones have no shadow maps, so without this everything there floats. Called last (world.js), when
+// everything static is in the scene. One canvas, one multiply-blended plane: one draw call, ~0.4 MB on phones.
+// ponytail: statics only; loose chairs and stools rely on shadow maps (desktop). Add blob shadows if phones need them.
+export function buildFloorShade({ scene, colliders, updaters }) {
+  const X0 = -12, X1 = 9.5, Z0 = -9, Z1 = 9, PX = economy ? 24 : 48;   // lobby, elevator alcove, corridor mouth; px per m
+  const W = Math.round((X1 - X0) * PX), H = Math.round((Z1 - Z0) * PX);
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, W, H);
+  const tex = new T.CanvasTexture(c); tex.colorSpace = T.SRGBColorSpace;
+  // Painted on the first frame, not here: the highway's cars are still parked at the origin until their updaters run.
+  let painted = false;
+  updaters.push(() => { if (painted) return; painted = true; paint(); tex.needsUpdate = true; });
+  function paint() {
+  const box = new T.Box3(), world = new T.Matrix4(), feet = [];
+  scene.traverse(n => {
+    if (!n.isMesh || n.isSkinnedMesh || [].concat(n.material).some(m => m.transparent)) return;
+    for (let p = n; p; p = p.parent) if (p.userData.loose || !p.visible || /elevator/.test(p.name)) return;   // movable things (the car too) carry no baked shade
+    // world box from the local chain: frozen statics (matrixWorldAutoUpdate off) still hold an identity matrixWorld here
+    world.identity(); for (let p = n; p; p = p.parent) { if (p.matrixAutoUpdate) p.updateMatrix(); world.premultiply(p.matrix); }
+    if (n.isInstancedMesh) n.computeBoundingBox(); else n.geometry.boundingBox ?? n.geometry.computeBoundingBox();
+    box.copy(n.isInstancedMesh ? n.boundingBox : n.geometry.boundingBox).applyMatrix4(world);
+    if (box.min.y > 0.06 || box.min.y < -0.05 || box.max.y < 0.04 || box.max.x < X0 || box.min.x > X1 || box.max.z < Z0 || box.min.z > Z1) return;
+    const w = box.max.x - box.min.x, d = box.max.z - box.min.z;
+    if (w * d > 6 || Math.max(w, d) > 4) return;   // merged geometry (walls, trees, the lot) spans everything: walls come from colliders below
+    feet.push([box.min.x, box.min.z, box.max.x, box.max.z, Math.min(1, box.max.y - box.min.y)]);
+  });
+  // walls and columns: the tall colliders (the low ones include invisible gap closers, which must cast nothing)
+  for (const c of colliders) if (!c.loose && c.y0 < 0.1 && c.y1 > 1.5 && c.x1 > X0 && c.x0 < X1 && c.z1 > Z0 && c.z0 < Z1) feet.push([c.x0, c.z0, c.x1, c.z1, 1]);
+  // A blurred rect via the canvas shadow (filter: blur() isn't in older Safari): draw it off-canvas, its shadow lands in place.
+  g.fillStyle = '#000';
+  // Small things (pots, bins, legs) get an ellipse: a square shade under a round pot reads as a bug. Walls and casework keep the rect.
+  const shade = ([x0, z0, x1, z1], sigma, rgba) => {
+    g.shadowColor = rgba; g.shadowBlur = sigma * PX * 2; g.shadowOffsetX = W * 2;
+    const w = Math.max(1, (x1 - x0) * PX), h = Math.max(1, (z1 - z0) * PX), x = (x0 - X0) * PX - W * 2, y = (z0 - Z0) * PX;
+    if (x1 - x0 < 1.2 && z1 - z0 < 1.2) { g.beginPath(); g.ellipse(x + w / 2, y + h / 2, w * 0.4, h * 0.4, 0, 0, Math.PI * 2); g.fill(); } else g.fillRect(x, y, w, h);
+  };
+  for (const f of feet) shade(f, 0.1 + 0.18 * f[4], `rgba(70,58,44,${0.12 + 0.14 * f[4]})`);   // occlusion: taller things block more sky
+  for (const f of feet) shade(f, 0.02, 'rgba(52,42,32,0.4)');                                  // the contact line, and grime the mop misses
+  }
+  const mat = new T.MeshBasicMaterial({ map: tex, blending: T.MultiplyBlending, transparent: true, depthWrite: false, toneMapped: false, fog: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 });
+  mat.userData.noEnv = true;   // main.js tagInterior: a reflection map on a multiply overlay blacks out the floor
+  const plane = new T.Mesh(new T.PlaneGeometry(X1 - X0, Z1 - Z0).rotateX(-Math.PI / 2), mat);
+  plane.position.set((X0 + X1) / 2, 0.0112, (Z0 + Z1) / 2); plane.name = 'Floor shade'; plane.renderOrder = 1; plane.receiveShadow = false; plane.castShadow = false;
+  scene.add(plane);
+  return plane;
+}
+
+// 4-inch rubber cove base on every painted wall run in the lobby (no real commercial wall meets the floor bare). Built
+// from the wall pieces themselves (statics: boxes whose bottom is on the floor), a strip on each face that looks into the
+// lobby; glass and millwork aren't wall pieces, so they get none. One merged mesh, one draw call.
+export function buildCoveBase({ scene, statics }) {
+  const X0 = -12, X1 = 9.5, Z0 = -9, Z1 = 9, H = 0.1, T_ = 0.004, inside = (x, z) => x > X0 && x < X1 && z > Z0 && z < Z1;
+  const geos = [];
+  for (const m of statics) {
+    const p = m.geometry?.parameters; if (!m.isMesh || m.isInstancedMesh || !p?.width || !p.depth) continue;
+    const { x, y, z } = m.position, bottom = y - p.height / 2;
+    if (Math.abs(bottom) > 0.02 || p.height < 0.5 || Math.min(p.width, p.depth) > 0.2 || Math.max(p.width, p.depth) < 0.1 || m.rotation.y) continue;
+    const alongX = p.width > p.depth, len = alongX ? p.width : p.depth, half = (alongX ? p.depth : p.width) / 2 + T_ / 2;
+    for (const s of [-1, 1]) {
+      const fx = alongX ? x : x + s * half, fz = alongX ? z + s * half : z;
+      if (!inside(fx, fz)) continue;
+      geos.push((alongX ? new T.BoxGeometry(len, H, T_) : new T.BoxGeometry(T_, H, len)).translate(fx, 0.01 + H / 2, fz));
+    }
+  }
+  if (!geos.length) return;
+  const cove = new T.Mesh(mergeGeometries(geos), F.mat('#3b3835', { roughness: 0.55 })); cove.name = 'Cove base'; cove.receiveShadow = true;
+  scene.add(cove); statics.push(cove);
 }

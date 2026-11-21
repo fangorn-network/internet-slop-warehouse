@@ -390,3 +390,17 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   now a resident (intent.js) who types at her pod and steps to the gap to serve whoever comes up.
 - Next: more kinds (door handle, coffee pot lever, ice-machine button, chair seat, bed, cart handle), spots authored in
   Blender as empties and carried in the part record, so new objects work without code.
+
+## Lobby engineering (2026-11-21)
+- **Things float without contact shade.** Seen: columns, pods, bins and walls met the floor with no darkening; on phones
+  (no shadow maps) everything floated. Cause: point lights cast no shadows, and nothing stood in for ambient occlusion.
+  Fix: `buildFloorShade` (lived-in.js) paints one canvas from what stands on the floor (mesh boxes under 6 m², plus the
+  tall colliders for walls): a wide soft falloff by height and a tight warm-dark contact line, multiplied over the floor.
+  One draw call. Round things get an ellipse (a square shade under a pot reads as a bug); invisible gap closers are low
+  colliders and are skipped.
+- **A multiply overlay must not get a reflection map.** main.js tags every interior material with the captured env; on
+  a MeshBasicMaterial with multiply blending that turned the whole floor black. `material.userData.noEnv` opts out.
+- **Paint from the first frame, not at build.** At build time the highway cars sit at the origin until their updaters
+  run: their wheels drew dark blocks in the middle of the lobby floor.
+- **Walls need a base.** A painted wall meeting LVT bare is the most CG junction in the room. `buildCoveBase` puts a
+  4-inch rubber cove on every wall piece face looking into the lobby (from the wall boxes, so glass and millwork get none).
