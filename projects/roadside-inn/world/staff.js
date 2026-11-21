@@ -116,7 +116,7 @@ const SITTERS = [
     seat: { hips: [2.36, 0.47, 6.55], yaw: Math.PI / 2, sink: 0.035 },
     postures: {
       tv: { recline: 0.4, roll: 0.08, tilt: 0.1, ahead: [0.56, 0.36], spread: 0.2 },   // hands rest on the thighs (people.js default); the arm along the sofa back reached behind the cushions
-      phone: { recline: 0.3, roll: 0.03, tilt: 0, ahead: [0.5, 0.42], spread: 0.16, hands: [[2.6, 0.8, 6.5], [2.6, 0.8, 6.6]] },
+      phone: { recline: 0.3, roll: 0.03, tilt: 0, grip: 'phone', ahead: [0.5, 0.42], spread: 0.16, hands: [[2.6, 0.8, 6.5], [2.6, 0.8, 6.6]] },
     },
     things: { tv: { at: [6.36, 1.6, 6.4], kind: 'tv' }, phone: { prop: 'hotel-phone', kind: 'phone' } },
     activities: {
@@ -137,7 +137,7 @@ const SITTERS = [
   { id: 'rep', model: 'rb-andre-casual', tint: '#2f3a2f', start: 'print',
     who: 'A rep printing tomorrow’s boarding pass', why: 'The airline app won’t load the pass and the gate agent wants paper',
     seat: { hips: [5.33, 0.52, -3.55], yaw: Math.PI / 2, sink: 0.015 },
-    postures: { type: { lean: 0.38, hands: [[5.79, 0.795, -3.64], [5.81, 0.79, -3.33]] } },
+    postures: { type: { lean: 0.38, grip: 'keyboard', hands: [[5.79, 0.795, -3.64], [5.81, 0.79, -3.33]] } },
     things: { screen: { at: [6.15, 1.05, -3.55], kind: 'screen' } },
     activities: { print: { steps: [['posture', 'type'], ['attend', 'screen'], ['wait', 60, 200]] } } },
 ];

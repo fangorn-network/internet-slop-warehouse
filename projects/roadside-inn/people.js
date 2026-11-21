@@ -124,6 +124,39 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     turn(a, new T.Quaternion().setFromUnitVectors(_c.sub(_a).normalize(), _t.copy(t).sub(_a).normalize()));
   }
 
+  // Hands. IK only puts the wrist somewhere; left alone the palm faces wherever the arm chain leaves it (up, for a
+  // typist) and the fingers stay splayed as in the bind pose. After IK: turn the wrist so the palm faces what it rests
+  // on (down on a desk, a table or a thigh; toward the phone when holding one), fingers carrying on from the forearm,
+  // then curl the fingers for the grip. palmSign / curlSign are measured from the rig once (rigs differ in bone axes).
+  const FINGERS = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
+  const fingers = [0, 1].map(i => FINGERS.map(n => [1, 2, 3].map(k => bone(new RegExp(`${i ? 'Right' : 'Left'}Hand${n}${k}$`)))));
+  const palmSign = [1, 1], curlSign = [1, 1];
+  // radians at the base, middle and tip joints of each finger (the thumb takes half)
+  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], phone: [0.75, 0.95, 0.6] };
+  function handFrame(i) {
+    const f0 = fingers[i], mid = f0[2][0], ix = f0[1][0], pk = f0[4][0];
+    if (!B.hands[i] || !mid || !ix || !pk) return null;
+    const h = B.hands[i].getWorldPosition(new T.Vector3());
+    const f = mid.getWorldPosition(new T.Vector3()).sub(h).normalize();
+    const a = ix.getWorldPosition(new T.Vector3()).sub(pk.getWorldPosition(new T.Vector3()));
+    a.addScaledVector(f, -a.dot(f)).normalize();
+    return { h, f, a, n: new T.Vector3().crossVectors(f, a).multiplyScalar(palmSign[i]) };
+  }
+  function orientHand(i, nWant) {
+    const F = handFrame(i); if (!F) return;
+    // fingers continue the forearm, laid into the plane the palm faces
+    const fore = F.h.clone().sub(B.forearms[i].getWorldPosition(new T.Vector3())).normalize();
+    const n2 = nWant.clone().normalize(); let f2 = fore.addScaledVector(n2, -fore.dot(n2));
+    if (f2.lengthSq() < 0.05) f2 = fwd().addScaledVector(n2, -fwd().dot(n2));
+    f2.normalize();
+    const basis = (f, n) => new T.Matrix4().makeBasis(f, n, new T.Vector3().crossVectors(f, n));
+    const q = new T.Quaternion().setFromRotationMatrix(basis(f2, n2).multiply(basis(F.f, F.n).transpose()));
+    turn(B.hands[i], q);
+  }
+  function curlHand(i, c) {
+    const F = handFrame(i); if (!F) return;
+    for (let n = 0; n < 5; n++) fingers[i][n].forEach((b, k) => { if (b && (n || k)) axisTurn(b, F.a, curlSign[i] * c[k] * (n ? 1 : 0.5)); });
+  }
   // what they look at: the person they'd notice (the player), what they're doing, a noise just heard
   let target = null, task = null, heard = null, socialSpeed = 0;
   const lastTarget = new T.Vector3();
@@ -133,7 +166,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const shrugSign = [1, -1];
   function spring(x, v, goal, w, dt) { const a = w * w * (goal - x) - 2 * w * v; v += a * dt; return [x + v * dt, v]; }
 
-  let reach = null;
+  let reach = null, reachGiven = [false, false];
   function update(dt) {
     since += dt;
     // standing: hold a stance; now and then shift the weight to the other leg (two copies of the idle, both frozen)
@@ -207,7 +240,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
           if (!hand) {
             const knee = B.knees[i].getWorldPosition(new T.Vector3());
             const mid = hip.clone().add(B.thighs[1 - i].getWorldPosition(new T.Vector3())).multiplyScalar(0.5);
-            hand = hip.clone().lerp(knee, 0.62).addScaledVector(up, 0.075 * s).lerp(mid.setY(hip.y), 0.12);   // on the top of the thigh, a little inboard
+            hand = hip.clone().lerp(knee, 0.42).addScaledVector(up, 0.07 * s).lerp(mid.setY(hip.y), 0.12);   // on the top of the thigh, a little inboard
           }
           hands.push(hand);
         }
@@ -216,12 +249,23 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       const now = targets(sit), was = sitFrom && targets(sitFrom);
       if (was) for (const k of ['feet', 'hands']) now[k] = now[k].map((p, i) => was[k][i].clone().lerp(p, e));
       for (let i = 0; i < 2; i++) ik(B.thighs[i], B.knees[i], B.feet[i], now.feet[i]);
-      reach = now.hands;
+      reach = now.hands; reachGiven = sides(sit.hands).map(Boolean);
     } else breathe();
     if (pose === 'cup') { axisTurn(B.arms[1], right().clone(), -0.2); axisTurn(B.forearms[1], right().clone(), -1.35); }
     gaze(dt);
     // hands last: on these rigs the collarbones hang off the neck, so the head turning moves the shoulders
-    if (reach) { for (let i = 0; i < 2; i++) ik(B.arms[i], B.forearms[i], B.hands[i], reach[i]); reach = null; }
+    if (reach) {
+      for (let i = 0; i < 2; i++) {
+        ik(B.arms[i], B.forearms[i], B.hands[i], reach[i]);
+        const grip = reachGiven[i] ? sit.grip ?? 'table' : 'rest';
+        if (grip === 'phone') {   // palms up and in, toward the phone held between them at the chest
+          const inward = B.hips.getWorldPosition(new T.Vector3()).sub(B.hands[i].getWorldPosition(_v)).setY(0).normalize();
+          orientHand(i, inward.add(UP).sub(fwd().multiplyScalar(0.3)));
+        } else orientHand(i, _w.set(0, -1, 0));
+        curlHand(i, CURL[grip] ?? CURL.table);
+      }
+      reach = null;
+    }
     // blinks: ~17/min, fewer watching a screen, often one with a big gaze shift (body.js blinker)
     const c = blinks.tick(dt, { screen: focus.id === 'task' && /tv|screen|phone/.test(task?.kind ?? ''), shift: G.shift });
     if (c > 0) for (const b of B.lids) b.quaternion.multiply(_q.setFromAxisAngle(LID, BLINK * c));   // in the lid bone's own frame
@@ -273,6 +317,15 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const thighLen = B.thighs[0] && B.knees[0] ? B.thighs[0].getWorldPosition(_v).distanceTo(B.knees[0].getWorldPosition(_w)) / root.scale.y : 0.4;
   // which way each collarbone turns to lift its arm (rigs differ in bone axes)
   B.shoulders.forEach((b, i) => { if (!b || !B.arms[i]) return; const y0 = B.arms[i].getWorldPosition(_v).y; axisTurn(b, fwd(), 0.1); shrugSign[i] = B.arms[i].getWorldPosition(_v).y > y0 ? 1 : -1; axisTurn(b, fwd(), -0.1); });
+  // which way each palm faces (toward the thigh, standing) and which way the fingers curl into it, for this rig
+  for (let i = 0; i < 2; i++) {
+    const F = handFrame(i); if (!F) continue;
+    const toMid = B.hips.getWorldPosition(new T.Vector3()).sub(F.h).setY(0);
+    if (F.n.dot(toMid) < 0) palmSign[i] = -1;
+    const n = F.n.multiplyScalar(palmSign[i]), j = fingers[i][1][0], tip = fingers[i][1][2]; if (!j || !tip) continue;
+    const t0 = tip.getWorldPosition(new T.Vector3()); axisTurn(j, F.a, 0.3); const t1 = tip.getWorldPosition(new T.Vector3()); axisTurn(j, F.a, -0.3);
+    curlSign[i] = t1.sub(t0).dot(n) >= 0 ? 1 : -1;
+  }
   return {
     root, play, update, bones: B, gait, hipHeight, hipJoint, stances,
     /** Walking speed, m/s: the Walk clip runs at the cadence and the limbs swing at the step length that speed implies. */

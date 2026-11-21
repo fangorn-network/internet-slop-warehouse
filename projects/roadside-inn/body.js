@@ -25,10 +25,10 @@ const D = Math.PI / 180;
 export const STUDY = {
   breath: { perMin: [12, 16], cv: 0.12, inhale: 0.4, chest: 0.5 * D, shoulder: 0.7 * D },
   sway: { m: 0.006, hz: [0.12, 0.31] },
-  stand: { hold: [22, 0.6], min: 8, max: 90, shift: [0.8, 1.4] },
-  sit: { shift: 2.0 },
+  stand: { hold: [22, 0.6], min: 8, max: 90, shift: [1.4, 2.2] },
+  sit: { shift: 3.5 },
   blink: { perMin: 17, screenPerMin: 7, dur: 0.15, shiftOver: 25 * D, shiftP: 0.6 },
-  gaze: { eyeMax: 25 * D, eyeFree: 10 * D, headYaw: 70 * D, headPitch: [-40 * D, 25 * D], pitchFree: 8 * D, torsoYaw: 30 * D, omega: 11, omegaSound: 16, latency: [0.15, 0.3] },
+  gaze: { eyeMax: 25 * D, eyeFree: 10 * D, headYaw: 70 * D, headPitch: [-40 * D, 25 * D], pitchFree: 8 * D, torsoYaw: 30 * D, omega: 6, omegaSound: 10, latency: [0.15, 0.3] },
   look: { tv: [7, 1.0], phone: [6, 0.8], screen: [5, 0.8], work: [4, 0.8], path: [2, 0.5], glance: [1.0, 0.4], social: [2.6, 0.5], away: [1.6, 0.5], noise: [2.2, 0.4] },
   interest: { tv: 0.8, phone: 0.85, screen: 0.85, work: 0.75, path: 0.75 },
   social: { notice: 7, civil: 2.5, engage: 2.2, linger: 1.5, share: 0.5, view: 100 * D },
