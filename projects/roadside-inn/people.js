@@ -24,6 +24,14 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     // half-strength tint recolours them and keeps the weave, so two guests on one model aren't twins.
     if (tint && /Outfit/.test(n.name)) n.material.color.set('#ffffff').lerp(new T.Color(tint), 0.55);
     if (/Hair/.test(n.name)) { n.material.transparent = false; n.material.alphaTest = 0.45; n.material.side = T.DoubleSide; }
+    // Wet eyes. The eyeballs are painted into the head atlas and share the skin's roughness, so they never catch a
+    // highlight and read dead. Both eyes use one UV island (u 0.207-0.320, v 0.875-0.989 on every Rocketbox head here,
+    // found from the vertices weighted to the eye bones): make it glossy there, under the lids, nothing added on top.
+    if (/_head$/.test(n.material.name) && n.material.map) {
+      n.material.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <roughnessmap_fragment>',
+        '#include <roughnessmap_fragment>\n  if (vMapUv.x > 0.207 && vMapUv.x < 0.320 && vMapUv.y > 0.875 && vMapUv.y < 0.989) roughnessFactor = 0.1;'); };
+      n.material.customProgramCacheKey = () => 'wet-eyes';
+    }
   });
   const bounds = new T.Box3().setFromObject(body);
   body.position.y -= bounds.min.y;
@@ -166,7 +174,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const shrugSign = [1, -1];
   function spring(x, v, goal, w, dt) { const a = w * w * (goal - x) - 2 * w * v; v += a * dt; return [x + v * dt, v]; }
 
-  let reach = null, reachGiven = [false, false];
+  let reach = null, reachGiven = [false, false], tipUp = 0;
   function update(dt) {
     since += dt;
     // standing: hold a stance; now and then shift the weight to the other leg (two copies of the idle, both frozen)
@@ -219,6 +227,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       if (lean) axisTurn(B.spine, r, lean);          // leaning in to a desk or table
       if (roll) axisTurn(B.spine, f, roll);          // settled to one side
       const nod = lean * 0.6 - recline * 0.7;        // eyes back toward level
+      tipUp = 0.3 * recline - 0.4 * lean;            // what the neck leaves of it: the head's tilt up, for the gaze
       if (nod) axisTurn(B.neck, r, -nod);
       if (tilt) axisTurn(B.head, f, tilt);
       breathe();
@@ -283,7 +292,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     const to = focus.at ? new T.Vector3(...focus.at).sub(head) : null;
     if (to && to.lengthSq() > 1e-4) {
       const l = to.clone().applyQuaternion(root.quaternion.clone().invert());
-      yaw = Math.atan2(l.x, l.z); pitch = Math.atan2(to.y, Math.hypot(to.x, to.z));
+      yaw = Math.atan2(l.x, l.z); pitch = Math.atan2(to.y, Math.hypot(to.x, to.z)) - (pose === 'sit' ? tipUp : 0);
       if (Math.abs(yaw) > 2.6) yaw = 0;   // right behind: they don't wring their neck round
     }
     G.shift = focus.changed && to ? G.dir.angleTo(to.clone().normalize()) : 0;
@@ -301,7 +310,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
       const mid = B.eyes.reduce((m, e) => m.add(e.getWorldPosition(_v)), new T.Vector3()).multiplyScalar(1 / B.eyes.length);
       const want = new T.Vector3(...focus.at).sub(mid).normalize(), ang = g.angleTo(want);
       const q = new T.Quaternion().setFromUnitVectors(g, want);
-      if (ang > STUDY.gaze.eyeMax + 0.1) q.slerp(_q.identity(), 1 - (STUDY.gaze.eyeMax + 0.1) / ang);
+      if (ang > STUDY.gaze.eyeMax + 0.1) q.slerp(new T.Quaternion(), 1 - (STUDY.gaze.eyeMax + 0.1) / ang);
       for (const e of B.eyes) turn(e, q);
       G.eye = Math.min(ang, STUDY.gaze.eyeMax + 0.1);
     }
@@ -310,6 +319,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
 
   play('Idle'); mixer.update(0);
   root.updateMatrixWorld(true);
+  // each eye's forward in its own bone frame, standing at rest facing +z (rigs differ in bone axes)
   const hipHeight = B.hips ? B.hips.getWorldPosition(_v).y : height * 0.53;   // standing, root at the origin: where a seat must meet
   // the hip joints (thigh bones) and ankles above the floor, standing, in the body's own units (x root.scale = metres)
   const hipJoint = B.thighs[0] ? B.thighs[0].getWorldPosition(_v).y : hipHeight;

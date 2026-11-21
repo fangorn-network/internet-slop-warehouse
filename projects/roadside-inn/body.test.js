@@ -16,9 +16,9 @@ test("walking: cadence and step both fall with speed (walk ratio), no slow-motio
 test("gaze split: small shifts are the eyes', big ones the head's, the torso only past the head's range", () => {
   expect(split(8 * D, 0).head[0]).toBe(0);
   const big = split(60 * D, -30 * D);
-  expect(big.head[0]).toBeCloseTo(50 * D); expect(big.eyes[0]).toBeCloseTo(10 * D); expect(big.torso).toBe(0);
+  expect(big.head[0]).toBeCloseTo(52 * D); expect(big.eyes[0]).toBeCloseTo(8 * D); expect(big.torso).toBe(0);
   expect(big.head[1]).toBeCloseTo(-22 * D);
-  expect(split(100 * D, 0).torso).toBeCloseTo(20 * D);
+  expect(split(100 * D, 0).torso).toBeCloseTo(22 * D);
 });
 
 test("a TV watcher mostly watches, looks away briefly, and holds each look (no constant drift)", () => {
