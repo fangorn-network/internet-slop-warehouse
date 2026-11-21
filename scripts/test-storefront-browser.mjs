@@ -18,6 +18,14 @@ const game = row(publisher, "Slot test", "game", {
     src: cid("f"),
     modelSlots: [{ name: "fixed", mode: "pin", ...shared }, { name: "moving", mode: "follow", ...shared }],
 });
+const unity = row(other, "unity", "game", { title: "Unity probe", runtime: "unity-web", src: cid("h") });
+unity.cid = cid("i");
+game.payload.gameLinks = [
+    { name: "unity-latest", label: "Launch Unity", mode: "follow", publisher: other, repo, id: unity.id,
+        baseline: { cid: cid("j"), src: cid("k") } },
+    { name: "unity-pinned", label: "Launch pinned", mode: "pin", publisher: other, repo, id: unity.id,
+        baseline: { cid: cid("j"), src: cid("k") } },
+];
 const sign = row(other, "sign", "asset", {
     src: update.src, mime: "model/gltf-binary", publicModel: { channel: "stable", contract },
 });
@@ -37,11 +45,24 @@ const server = createServer(async (req, res) => {
         if (mode === "incompatible") head.payload.publicModel.contract = "sign-v2";
         res.setHeader("Content-Type", "application/json");
         return res.end(JSON.stringify({ root: mode, gateway: base, records: mode === "large" ? largeCatalog : [
-            game, head, row(other, "Slot test", "game", { title: "Another game", src: game.payload.src, author: "Internet Slop Warehouse" }),
+            game, head, ...(mode === "portals" ? [unity] : []), row(other, "Slot test", "game", { title: "Another game", src: game.payload.src, author: "Internet Slop Warehouse" }),
             row(publisher.replace(/x/, "X"), "alternate-case", "asset", { author: "Internet Slop Warehouse" }),
         ] }));
     }
     if (path === "/api.json") return res.end("{}");
+    if (path === "/ipfs/" + unity.payload.src) {
+        return res.end(JSON.stringify({ unityWeb: { version: 1, loader: cid("l"), data: cid("m"), framework: cid("n"), wasm: cid("o") } }));
+    }
+    if (path === "/ipfs/" + cid("k")) return res.end(JSON.stringify({ html: "<main>Pinned Unity predecessor</main>" }));
+    if (path === "/ipfs/" + cid("l")) {
+        res.setHeader("Content-Type", "text/javascript");
+        return res.end(`async function createUnityInstance(canvas, config, progress) {
+            if (!config.codeUrl.endsWith("${cid("o")}") || !config.dataUrl.endsWith("${cid("m")}") ||
+                !config.frameworkUrl.endsWith("${cid("n")}")) throw Error("Unexpected build manifest");
+            progress(1);
+            canvas.dataset.loaded = "true";
+        }`);
+    }
     if (path === "/ipfs/" + game.payload.src) {
         return res.end(JSON.stringify({ html: `<main></main><output></output><button>Save</button><script>
             document.querySelector("main").textContent = Object.values(window.WAREHOUSE_PARTS ?? {}).map(p => p.cid).join(" ");
@@ -133,6 +154,22 @@ try {
     await page.goto(home.href);
     await page.locator("#grid").getByRole("button", { name: /Another game/ }).click();
     assert.equal(await page.locator("#down").getAttribute("aria-pressed"), "true");
+    mode = "portals";
+    await page.goto(url);
+    await slotTest.click();
+    await page.locator("#credits summary").click();
+    await page.getByRole("button", { name: "Launch Unity" }).click();
+    await frame.locator("canvas[data-loaded=true]").waitFor();
+    assert.equal(new URL(page.url()).searchParams.get("game-link"), "unity-latest");
+    await page.reload();
+    await frame.locator("canvas[data-loaded=true]").waitFor();
+    await page.goto(url);
+    await slotTest.click();
+    await page.locator("#credits summary").click();
+    await page.getByRole("button", { name: "Launch pinned" }).click();
+    await frame.getByText("Pinned Unity predecessor", { exact: true }).waitFor();
+    assert.equal(await page.locator("#by").textContent(), "Linked snapshot");
+    assert.equal(await page.locator("#up").isVisible(), false);
     mode = "large";
     await page.goto(home.href + "#publishers");
     await page.getByText("1–24 of 41 publishers", { exact: true }).waitFor();
@@ -150,7 +187,7 @@ try {
     assert.equal(await page.locator("#inventory-range").textContent(), "25–48 of 100,000 results");
     assert.equal(await page.locator("#grid .card").count(), 24);
     assert.deepEqual(errors, []);
-    console.log("Publisher routing, large catalog paging, dependency fallback, and isolated game saves passed.");
+    console.log("Storefront, discovery, saves, pinned and following game links, and Unity loader contract passed.");
 } finally {
     await browser?.close();
     await new Promise(resolve => server.close(resolve));

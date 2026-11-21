@@ -9,6 +9,7 @@ export function selectedPublisher(url) {
 export function publisherURL(url, publisher) {
     const link = new URL(url);
     link.searchParams.delete("part");
+    link.searchParams.delete("game-link");
     link.searchParams.delete("room");
     if (publisher) link.searchParams.set("publisher", publisher.toLowerCase());
     else link.searchParams.delete("publisher");

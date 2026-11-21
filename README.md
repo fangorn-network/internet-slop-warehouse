@@ -2,6 +2,8 @@
 
 Browser games (three.js mostly) built from shared parts: games, assets and logic. Each part is published to Fangorn by its author, in their own `internet-slop-warehouse` repo. An indexer ([westmarch](https://github.com/fangorn-network/westmarch)) follows that repo across every publisher, including publishers it has never heard of. It runs as a stock westmarch Worker at **https://internet-slop-warehouse-sepolia.fangorn.network** (deployed from the `ops` repo), and the page ([site/](site/)) is plain files that read its API, served at **https://internet-slop-warehouse.quickbeam.workers.dev** by a small Worker ([wrangler.json](wrangler.json), `npm run deploy`) that also keeps likes/dislikes. The page can be hosted anywhere; off that Worker, votes just don't show.
 
+**Publishing your first game?** Open the [getting-started skill](site/skills/warehouse-getting-started/SKILL.md) or find it in the site's Loading Dock. A single HTML file is enough. The guide also covers game links and Unity Web exports.
+
 Needs Node 22.13+ and `npm install` (westmarch comes from npm, `^0.3.1`).
 
 On Base Sepolia, as your fangorn CLI identity (`~/.fangorn/config.json`):

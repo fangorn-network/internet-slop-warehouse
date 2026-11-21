@@ -60,6 +60,7 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
   <details class="loading-dock" id="loading-dock">
     <summary><span class="dock-heading"><b>LOADING DOCK 01</b><span>Your agent has a forklift. Give it the keys.</span></span><span class="dock-action">Get connected</span></summary>
     <div class="dock-content">
+      <p class="lede"><a href="./skills/warehouse-getting-started/SKILL.md">Getting started with publishing</a> · Agent skill for HTML games, remixes, and Unity Web exports.</p>
       <div class="install"><code id="install"></code><button id="copy">Copy</button></div>
       <p class="lede">Paste this into a terminal to connect Claude Code, then ask it to remix a game or build with the parts here. To publish back to the warehouse, <a id="connect" href="https://fangorn.network/#/connect">connect once</a> with email sign-in. Your work stays signed by your wallet; the parts it uses keep their credit.</p>
     </div>
@@ -134,7 +135,7 @@ svg [data-k].lit{stroke:#fff;stroke-width:2.5}
   <!-- The game is someone else's HTML: an opaque origin, scripts only. It can't reach this page, its storage or cookies. -->
   <iframe id="frame" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen; clipboard-write" allowfullscreen title="game"></iframe>
   <div id="view" hidden></div>
-  <details class="credits" id="credits"><summary>Parts &amp; credits</summary><div class="lineage" id="lineage"></div></details>
+  <details class="credits" id="credits"><summary>Parts &amp; credits</summary><div class="lineage" id="lineage"></div><div class="lineage" id="game-links"></div></details>
  </div>
 </dialog>
 <script type="module">
@@ -148,6 +149,7 @@ import { graph, weighGame, dish, glyph } from "./specimen.js";
 // and played from storage.
 import { explorerURL, publisherRepo, publisherURL, selectedPublisher } from "./publishers.js";
 import { resolveDependencies } from "./dependencies.js";
+import { gameDocument, gameLinks, resolveGameLink } from "./game-runtime.js";
 import { gameSaves } from "./game-saves.js";
 import { gameHistory, playNext } from "./game-discovery.js";
 
@@ -467,7 +469,8 @@ function render() {
         const hash = [...r.id].reduce((n, c) => n + c.charCodeAt(0), 0);
         b.style.setProperty("--stock-color", palette[hash % palette.length]);
         b.querySelector(".stock-number").textContent = `STOCK / ${number}`;
-        b.querySelector(".stock-type").textContent = LABELS[r.type]?.[0] ?? "Raw material";
+        const runtime = r.payload.runtime === "unity-web" ? "Unity Web" : "Browser game";
+        b.querySelector(".stock-type").textContent = r.type === "game" ? runtime : LABELS[r.type]?.[0] ?? "Raw material";
         b.querySelector(".preview-label").textContent = LABELS[r.type]?.[1] ?? r.payload.mime?.split("/")[1]?.toUpperCase() ?? "ASSET";
         b.querySelector(".preview-code").textContent = `SW—${number}`;
         b.querySelector("h2").textContent = r.payload.title;
@@ -537,30 +540,32 @@ document.addEventListener("pointerover", (ev) => {
     for (const b of document.querySelectorAll("#grid .card")) if (b.game && G.hosts.get(k)?.has(key(b.game))) b.classList.add("host");
 });
 
-let playerRequest = 0, currentPart = null, gameHTML = null, gameDependencies = null;
+let playerRequest = 0, currentPart = null, gameHTML = null, gameDependencies = null, activeLink = null;
 // Links name a publisher and part, so identical IDs from different publishers stay distinct.
-function partURL(r) {
+function partURL(r, link = activeLink) {
     const url = new URL(location.href);
-    if (publisher && r.publisher.toLowerCase() !== publisher) url.searchParams.delete("publisher");
-    url.searchParams.set("part", key(r));
+    const source = link?.source ?? r;
+    if (source && publisher && source.publisher.toLowerCase() !== publisher) url.searchParams.delete("publisher");
+    if (source) url.searchParams.set("part", key(source));
+    else url.searchParams.delete("part");
+    if (link) url.searchParams.set("game-link", link.name);
+    else url.searchParams.delete("game-link");
     return url;
 }
-function setPartURL(r) {
-    const url = new URL(location.href);
-    if (r && publisher && r.publisher.toLowerCase() !== publisher) {
+function setPartURL(r, link = null) {
+    const url = partURL(r, link);
+    if (publisher && !url.searchParams.has("publisher")) {
         publisher = null;
         requestedPublisher = undefined;
         repoInfo = null;
-        url.searchParams.delete("publisher");
         renderPublishers();
         render();
     }
-    if (r) url.searchParams.set("part", key(r));
-    else url.searchParams.delete("part");
     if (url.href !== location.href) history.pushState(null, "", url);
 }
 function followPartURL() {
-    const target = directory ? null : new URL(location.href).searchParams.get("part");
+    const params = new URL(location.href).searchParams;
+    const target = directory ? null : params.get("part");
     if (!target) { if ($("player").open) $("player").close(); return; }
     const r = browsing().find(r => key(r) === target);
     if (!r) {
@@ -568,7 +573,17 @@ function followPartURL() {
         $("status").textContent = "This shared part is not in the warehouse yet. Browse below or try again later.";
         return;
     }
-    if (key(currentPart ?? { publisher: "", id: "" }) === target && $("player").open) return;
+    const linkName = params.get("game-link");
+    if ($("player").open && (linkName
+        ? activeLink && key(activeLink.source) === target && activeLink.name === linkName
+        : !activeLink && currentPart && key(currentPart) === target)) return;
+    if (linkName) {
+        const link = gameLinks(r).find(candidate => candidate.name === linkName);
+        if (link) return openGameLink(r, link);
+        $("status").textContent = "This game link is unavailable.";
+        if ($("player").open) $("player").close();
+        return;
+    }
     kind = r.type;
     category = "all";
     inventoryPage = 0;
@@ -612,24 +627,40 @@ function showFrame(html, focus = false, dependencies = null) {
     const frame = $("frame").cloneNode(false);
     // The sandboxed game can't see this page's address; hand it in, so games can make links back here (co-op invites: ?room=).
     const escapeScript = value => JSON.stringify(value).replaceAll("<", "\\u003c");
-    const storage = focus && currentPart?.type === "game" ? saves.connect(frame, api.base, currentPart, escapeScript) : "";
+    const saveRecord = currentPart?.linkedSnapshot && activeLink
+        ? { ...activeLink.source, id: JSON.stringify([activeLink.source.id, activeLink.name, currentPart.cid]) }
+        : currentPart;
+    const storage = focus && saveRecord?.type === "game" ? saves.connect(frame, api.base, saveRecord, escapeScript) : "";
     const slots = dependencies ? `window.WAREHOUSE_PARTS=${escapeScript(dependencies)};` : "";
     const here = `<script>window.WAREHOUSE_URL=${escapeScript(location.href)};${storage}${slots}<\/script>`;
     frame.srcdoc = /<head(\s[^>]*)?>/i.test(html) ? html.replace(/<head(\s[^>]*)?>/i, (m) => m + here) : here + html;
     if (focus) frame.addEventListener("load", () => { if ($("player").open && currentPart?.type === "game") frame.focus(); }, { once: true });
     $("frame").replaceWith(frame);
 }
-async function play(r) {
+function openGameLink(source, link) {
+    const target = resolveGameLink(link, view.records);
+    if (target) return play(target, { source, name: link.name });
+    const message = "This game link requires access through the target game.";
+    const status = $($("player").open ? "player-message" : "status");
+    status.textContent = message;
+    status.hidden = false;
+}
+
+async function play(r, link = null) {
     const request = ++playerRequest;
+    activeLink = link;
     currentPart = r; gameHTML = null; gameDependencies = null;
-    setPartURL(r);
+    setPartURL(r, link);
+    $("game-links").replaceChildren();
     $("share-status").hidden = true; $("share-link").hidden = true;
     $("credits").open = false; $("player-message").hidden = true;
     $("title").textContent = r.payload.title;
     const author = document.createElement("a");
     author.href = storefrontURL(r.publisher);
     author.textContent = by(r);
-    $("by").replaceChildren("by ", author);
+    if (r.linkedSnapshot) $("by").textContent = "Linked snapshot";
+    else $("by").replaceChildren("by ", author);
+    $("up").hidden = $("down").hidden = Boolean(r.linkedSnapshot);
     showVotes();
     if (!$("player").open) $("player").showModal(); // open now: the source can take a moment to come from storage
     const url = fileURL(view.gateway, r), game = r.type === "game";
@@ -650,14 +681,13 @@ async function play(r) {
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error("Game download failed");
-            const { html } = await response.json();
-            if (typeof html !== "string") throw new Error("Missing game HTML");
+            const html = gameDocument(await response.json(), view.gateway);
             if (request !== playerRequest || !$("player").open) return;
             const dependencies = await resolveDependencies(r.payload.modelSlots, view.records, view.gateway);
             if (request !== playerRequest || !$("player").open) return;
             gameDependencies = dependencies;
             gameHTML = html; showFrame(html, true, gameDependencies);
-            historyOfGames.played(r);
+            if (!r.linkedSnapshot) historyOfGames.played(r);
             render();
             $("next-game").hidden = !nextGame();
         } catch {
@@ -701,7 +731,17 @@ async function play(r) {
         div.append(a, post);
         return div;
     }));
-    $("credits").hidden = !links.length;
+    if (request !== playerRequest || !$("player").open) return;
+    const portals = r.type === "game" ? gameLinks(r) : [];
+    $("game-links").replaceChildren(...portals.map(link => {
+        const row = document.createElement("div");
+        const button = document.createElement("button");
+        button.textContent = link.label;
+        button.onclick = () => openGameLink(r, link);
+        row.append(button, link.mode === "follow" ? " · Latest game version" : " · Pinned game version");
+        return row;
+    }));
+    $("credits").hidden = !links.length && !portals.length;
 }
 function setImmersive(active) {
     $("player-shell").classList.toggle("is-immersive", active);
@@ -748,12 +788,12 @@ $("next-game").onclick = () => {
 };
 $("restart").onclick = () => {
     if (gameHTML) { showFrame(gameHTML, true, gameDependencies); }
-    else if (currentPart) play(currentPart);
+    else if (currentPart) play(currentPart, activeLink);
 };
 $("close").onclick = () => { setPartURL(null); $("player").close(); };
 $("player").addEventListener("cancel", () => setPartURL(null));
 $("player").addEventListener("close", () => {
-    ++playerRequest; currentPart = null; gameHTML = null; gameDependencies = null;
+    ++playerRequest; currentPart = null; gameHTML = null; gameDependencies = null; activeLink = null;
     showFrame(""); $("view").replaceChildren();
     document.body.classList.remove("player-open"); setImmersive(false); setExpanded(false);
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});

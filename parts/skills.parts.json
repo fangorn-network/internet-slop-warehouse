@@ -1,5 +1,22 @@
 [
   {
+    "file": "../site/skills/warehouse-getting-started/SKILL.md",
+    "type": "skill",
+    "id": "warehouse-getting-started",
+    "title": "Getting started with Warehouse publishing",
+    "description": "Publish a first browser game or update it through the Warehouse MCP. Start with one HTML file. Add remix credits, game links, or a Unity Web export when needed.",
+    "tags": [
+      "skill",
+      "getting-started",
+      "publishing",
+      "mcp",
+      "three.js",
+      "unity-web"
+    ],
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0"
+  },
+  {
     "file": "skills/warehouse-game/SKILL.md",
     "type": "skill",
     "id": "warehouse-game-skill",

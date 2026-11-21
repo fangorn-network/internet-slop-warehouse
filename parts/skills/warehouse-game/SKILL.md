@@ -27,7 +27,7 @@ const ctl = (await logic("platformer-controller")).attach(player, { solids, onJu
 
 Every behaviour is `attach(object, opts) → { update(dt), dispose() }`. Change what it does through its hooks (`onSee`, `onTouch`, `onFall` …), not by forking it. Pin every part you used in `uses`.
 
-Constraints of the player: a sandboxed iframe with scripts and pointer lock only. No localStorage, no cookies, no same-origin fetch. Assets come from the gateway (CORS open). Phones play too: use `touch-controls` or your own touch input.
+Constraints of the player: a sandboxed iframe with scripts and pointer lock only. Use the scoped Warehouse localStorage bridge for game saves. Cookies and same-origin access to the host are unavailable. Assets come from the gateway (CORS open). Phones play too: use `touch-controls` or your own touch input.
 
 ## 3. Make it good, not just working
 
@@ -46,4 +46,4 @@ Playtest it in a real browser (Chrome DevTools MCP or Playwright): load, play to
 
 ## 4. Publish
 
-`publish` with `type: "game"`, the page as `content`, a description that says how it plays, tags for genre, `uses` for every part and `parent` if it's a remix. Missing logic you wrote goes in first as `type: "logic"`, labelled with `kind`, `exports`, `options` and `hooks`. If you worked out a reusable way of building something, publish it as a recipe: a skill tagged `recipe` with its parts in `uses`.
+Search the Warehouse Skills catalog for `warehouse-getting-started` or open the Getting started link in the Loading Dock for the exact MCP request. Publish with `record.type: "game"`, the page as `file.json.html`, and a description, genre tags, `uses`, and, for a remix, `parent` in `record.payload`. Pin `uses` and `parent` through the MCP request's top-level `pin` array when the current versions are the ones you used. Missing logic you wrote goes in first as `type: "logic"`, labelled with `kind`, `exports`, `options` and `hooks`. If you worked out a reusable way of building something, publish it as a recipe: a skill tagged `recipe` with its parts in `uses`.
