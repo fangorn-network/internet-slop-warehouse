@@ -140,7 +140,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const fingers = [0, 1].map(i => FINGERS.map(n => [1, 2, 3].map(k => bone(new RegExp(`${i ? 'Right' : 'Left'}Hand${n}${k}$`)))));
   const palmSign = [1, 1], curlSign = [1, 1];
   // radians at the base, middle and tip joints of each finger (the thumb takes half)
-  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7] };
+  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7], hang: [0.2, 0.35, 0.25] };
   function handFrame(i) {
     const f0 = fingers[i], mid = f0[2][0], ix = f0[1][0], pk = f0[4][0];
     if (!B.hands[i] || !mid || !ix || !pk) return null;
@@ -275,7 +275,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
         curlHand(i, CURL[grip] ?? CURL.table);
       }
       reach = null;
-    }
+    } else for (let i = 0; i < 2; i++) curlHand(i, CURL.hang);   // free hands: a relaxed hand is never flat
     // blinks: ~17/min, fewer watching a screen, often one with a big gaze shift (body.js blinker)
     const c = blinks.tick(dt, { screen: focus.id === 'task' && /tv|screen|phone/.test(task?.kind ?? ''), shift: G.shift });
     if (c > 0) for (const b of B.lids) b.quaternion.multiply(_q.setFromAxisAngle(LID, BLINK * c));   // in the lid bone's own frame
