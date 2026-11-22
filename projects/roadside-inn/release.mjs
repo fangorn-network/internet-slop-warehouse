@@ -29,7 +29,7 @@ export async function receipts() {
 const inn = (f) => resolve(here, f);
 export const PART_MODULES = {
   [inn('input.js')]: ['heartland-hotel', { attach: 'attachInput' }],
-  [inn('assets.js')]: ['heartland-hotel', { loadLibrary: 'loadLibrary', PART_IDS: 'PART_IDS', captureEnv: 'captureEnv' }],
+  [inn('assets.js')]: ['heartland-hotel', { loadLibrary: 'loadLibrary', PART_IDS: 'PART_IDS', captureEnv: 'captureEnv', mergeStatic: 'mergeStatic', mergeSceneMeshes: 'mergeSceneMeshes', mergeAcross: 'mergeAcross' }],
   [inn('world.js')]: ['heartland-hotel', { buildWorld: 'buildWorld', FLOOR2: 'FLOOR2' }],
   [inn('sound.js')]: ['heartland-hotel', { createSound: 'createSound' }],
   [inn('quality.js')]: ['heartland-hotel', { quality: 'quality' }],

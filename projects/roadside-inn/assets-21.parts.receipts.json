@@ -1,0 +1,74 @@
+[
+  {
+    "id": "hotel-bar-stool-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreicevs5xpk54423u7shhlogusn5xcczrvnq4unfhxn75wzdlrzeztq",
+    "src": "bafkreidjsew2tynp7eyelzngl3f6mhseeirrspi6z4cfeqnmxw76qmimuq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidjsew2tynp7eyelzngl3f6mhseeirrspi6z4cfeqnmxw76qmimuq",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-task-chair-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibyqoopa2hdrzbaktewlzpt5vgkbokyvtfsn5a3nfxic7n4ye4swu",
+    "src": "bafybeibp74zml7rcffby2tplkj2bo46ncuiq6efyhpkryvk4tfkglwrrfm",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeibp74zml7rcffby2tplkj2bo46ncuiq6efyhpkryvk4tfkglwrrfm",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-market-cooler-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidgeg3vovsc6y2zhxg37gogeeawks4sspcirjmn3va7xilyr2znme",
+    "src": "bafybeihbgehwrt2ykyr6puo53k22balzj4jahtiookb5j4rcdblrjn2nvy",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihbgehwrt2ykyr6puo53k22balzj4jahtiookb5j4rcdblrjn2nvy",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-desk-closed-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidvvhigzrfnwu2dpwhxs43hd3pjzuah4xoeiezihxtce7jj3wth7m",
+    "src": "bafybeihoad2t4c5zs6jms4auima6xgzzbgsgu6724qybtdt3xp624cgmeu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihoad2t4c5zs6jms4auima6xgzzbgsgu6724qybtdt3xp624cgmeu",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-snack-vending-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreibb6junmmectsu3uavhj3kbevc4spc7glae3v5gm3yf6faquwcugy",
+    "src": "bafybeihpumiqjimmmihe2mulq3nhh2rv3gsrizqyeuwgtkjm36evpjs3ze",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihpumiqjimmmihe2mulq3nhh2rv3gsrizqyeuwgtkjm36evpjs3ze",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-sectional-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifumrtnaso4dazj2rk7c7ff5sejdporhpqzfernx2qykeea3b7htu",
+    "src": "bafybeihqpxgm4kkvnv2ppwp2plejipn3qgw6lt3nm3kugdzxbbbuiinlmu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeihqpxgm4kkvnv2ppwp2plejipn3qgw6lt3nm3kugdzxbbbuiinlmu",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-lobby-sofa-2-mobile",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidryyj6k6grxxqnx6u4lwcwk6mio3gy734mwrjm6dzno6x6vf4fja",
+    "src": "bafybeibep5fjuc3nwgizahbat3lwh4es7k5zo7sm62ayzqxx6qkvzznmwy",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeibep5fjuc3nwgizahbat3lwh4es7k5zo7sm62ayzqxx6qkvzznmwy",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  },
+  {
+    "id": "hotel-extinguisher-cabinet",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiax7n7f76dfqbrwjlsubdkz7jr2nulecepqtu5ea6kysl3lenwoau",
+    "src": "bafkreichz7wj2f3mcylzvbm63vkhfzb4b3my7wqryb563n3ayg7hwv7ba4",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreichz7wj2f3mcylzvbm63vkhfzb4b3my7wqryb563n3ayg7hwv7ba4",
+    "txHash": "0xaa0fae544b757c2687ff7237fc9816c49232256e2692714da0390ecb4404186f"
+  }
+]
