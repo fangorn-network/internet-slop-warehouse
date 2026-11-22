@@ -443,3 +443,9 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   parked cars and street furniture flatten even their textured parts on phones, coloured by the texture's mean texel (a
   tyre's tread is a few pixels through the lobby glass); brochures are two draw calls, not six (edges drawn with the
   back). Flat geometry for instancing is normalised to position+normal+colour first, or mergeGeometries refuses it.
+- **Triangles: decimate the soft things, never the boxes.** A bar stool was 10k triangles, 9k of them its two foam
+  cushions; the sectional 42k. `blender/mobile_lod.py` writes `<id>-mobile.glb` with meshes over 2500 triangles
+  decimated to ~30 % (custom normals cleared, smooth by angle 40°) and textures at 512 px; carton/print clutter is left
+  alone (collapsing a 12-triangle box wrecks it). assets.js loads them on phones (MOBILE_LOD). Seven props: 1.86 M
+  -> 0.62 M triangles in source, the lobby entrance view 676k -> 533k. Careful with suffixes: a rename loop over
+  `*-phone.glb` also caught `hotel-phone.glb` (the phone on the table).

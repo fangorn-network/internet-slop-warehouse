@@ -28,7 +28,10 @@ const here = p => typeof location === 'undefined' ? p : new URL(p, import.meta.u
 // Heavy models load as their lite versions (ingestion/lite: simplified, 1K textures), published as <id>-lite. The game
 // still names them by the original id. 2.5 M triangles in the lobby were mostly these (lean-scenes skill).
 export const LITE = new Set(['ph-potted-plant-01', 'ph-potted-plant-02', 'ph-potted-plant-04', 'hotel-king-bed', 'ph-desk-lamp-arm-01', 'ph-bar-chair-round-01', 'g3-semi-truck', 'g3-1990s-suv', 'g3-1990s-station-wagon', 'g3-1990s-sedan', 'g3-1990s-hatchback', 'g3-1990s-pickup-truck', 'g3-1990s-minivan', 'g3-utility-pole', 'g3-dumpster', 'g3-fire-hydrant', 'g3-grocery-shelf', 'g3-end-cap-display', 'g3-coffee-machine', 'g3-soda-fountain', 'g3-upright-freezer', 'g3-freezer-chest', 'g3-vending-machine']); // = ingestion/lite/hotel.json
-const file = id => LITE.has(id) ? `${id}-lite` : id;
+// Phones load decimated variants of the densest props (blender/mobile_lod.py: upholstery, cables, bottle lathes at ~30 %,
+// textures 512 px), published as <id>-mobile. Same names and nodes, so nothing else changes.
+export const MOBILE_LOD = new Set(['hotel-bar-stool', 'hotel-task-chair', 'hotel-market-cooler', 'hotel-desk-closed', 'hotel-snack-vending', 'hotel-sectional', 'hotel-lobby-sofa-2']);
+const file = id => economy && MOBILE_LOD.has(id) ? `${id}-mobile` : LITE.has(id) ? `${id}-lite` : id;
 export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here(local[id] ?? (id.endsWith('-lite') ? `../../parts/lite/${id}.glb` : null) ?? (id.startsWith('hotel-') ? `./assets/${id}.glb` : null) ?? (id.startsWith('g3-') ? `../../parts/grab3d/${id}.glb` : id.startsWith('acg-') ? `../../parts/acg/${id}.jpg` : `../../parts/haven/${id}.${ext}`));
 
 const MODELS = [
@@ -62,8 +65,8 @@ const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color
 const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling', corridor: 'acg-lobby-corridor', 'lobby-carpet': 'acg-lobby-carpet' }; // Maira's Dream; ambientCG (corridor: Carpet006, lobby-carpet: Carpet001)
 const SKIES = { dusk: 'ph-hotel-dusk-sky', day: 'ph-hotel-farm-sky' };   // indoor reflections are captured from the hotel itself (captureEnv)
 // Every warehouse part this game loads (package.mjs pins these).
-export const PART_IDS = [...MODELS.map(file), ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => `ph-hotel-${k}-${r}`)),
-  ...Object.values(STORE).flatMap(id => ['color', 'normal', 'roughness'].map(r => `${id}-${r}`)), ...Object.values(SKIES), 'kenney-thrift-foley', 'hotel-impact-foley'];
+export const PART_IDS = [...new Set([...MODELS.map(file), ...Object.entries(SURFACES).flatMap(([k, roles]) => roles.map(r => `ph-hotel-${k}-${r}`)),
+  ...Object.values(STORE).flatMap(id => ['color', 'normal', 'roughness'].map(r => `${id}-${r}`)), ...Object.values(SKIES), 'kenney-thrift-foley', 'hotel-impact-foley', ...[...MOBILE_LOD].map(id => `${id}-mobile`)])];
 
 // opts.skies: the three HDRs (the hotel game's sky and reflections); opts.people: the Rocketbox staff and guests.
 // Hosts that bring their own sky and no staff (the heartland-hotel part) skip both: ~4 models and 3 HDRs less to hold.
