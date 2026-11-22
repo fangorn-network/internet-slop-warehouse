@@ -429,10 +429,19 @@ def creamer_cup(name, key, mat, ink, loc, rot=(0, 0, 0), segs=10):
     return o
 
 
-def settle(active, passive, frames=140):
+def settle(active, passive, frames=140, floor=0.002):
     """Drop active objects onto passive ones with Blender rigid bodies (convex hulls, tight margins) and keep where
     they come to rest: a real heap, not a stack of balanced towers."""
+    import mathutils
     scene = bpy.context.scene
+    bpy.context.view_layer.update()
+    starts = {o.name: o.matrix_world.copy() for o in active}
+    pads = []
+    for o in passive:                                # thin triangle-soup floors let small things tunnel: put a thick pad under each
+        bb = [o.matrix_world @ mathutils.Vector(c) for c in o.bound_box]
+        x0, x1 = min(v.x for v in bb), max(v.x for v in bb); y0, y1 = min(v.y for v in bb), max(v.y for v in bb); z0 = min(v.z for v in bb)
+        pads.append(box('__pad', (x1 - x0, y1 - y0, 0.2), ((x0 + x1) / 2, (y0 + y1) / 2, z0 + floor - 0.1)))
+    passive = list(passive) + pads
     bpy.ops.rigidbody.world_add()
     w = scene.rigidbody_world; w.substeps_per_frame = 40; w.solver_iterations = 40
     w.point_cache.frame_start, w.point_cache.frame_end = 1, frames
@@ -449,6 +458,12 @@ def settle(active, passive, frames=140):
         bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
         bpy.ops.rigidbody.object_remove(); o.matrix_world = mw
     bpy.ops.rigidbody.world_remove(); scene.frame_set(1)
+    for p in pads:
+        bpy.data.objects.remove(p)
+    lo = min(min((o.matrix_world @ mathutils.Vector(c)).z for c in o.bound_box) for o in passive[:len(passive) - len(pads)])
+    for o in active:                                 # anything that still escaped goes back where it started
+        if o.matrix_world.translation.z < lo - 0.01 or o.matrix_world.translation.length > 50:
+            print('SETTLE escaped', o.name); o.matrix_world = starts[o.name]
 
 
 def at_pivot(o, piv):
@@ -762,7 +777,7 @@ def quartz_top(W, D):
     for _ in range(5):                                # dried drips: small soft blots
         cx, cy = rnd.uniform(-0.7, 0.4), rnd.uniform(-0.3, 0.05)
         stain = np.maximum(stain, 0.5 * np.exp(-(np.hypot(X - cx, (Y - cy) * 1.6) / 0.004) ** 2))
-    col *= 1 - stain[..., None] * np.array([0.30, 0.45, 0.60])
+    col *= 1 - stain[..., None] * np.array([0.20, 0.32, 0.45])
     rough += 0.18 * stain
     grit = np.zeros((h, w))
     for _ in range(900):

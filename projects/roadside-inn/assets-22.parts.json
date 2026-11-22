@@ -111,5 +111,25 @@
       "window"
     ],
     "description": "Two lined pinch-pleated blackout drape panels and a voile sheer on ceiling tracks behind a painted pelmet box, 2.6 m wide, 2.85 m drop. Panels authored open (gathered) with a closed shape key; sun-faded leading edges, a grab crease and a frayed hem corner. Face fabric ambientCG Fabric031, sheer Fabric032 (CC0). Hook nodes open_drapes_left, open_drapes_right, open_sheer, grab_left, grab_right. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-tub-shower",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-tub-shower.glb",
+    "title": "Hotel tub shower \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "furniture",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "tub",
+      "shower"
+    ],
+    "description": "Alcove bathtub with chrome shower set, grab bars, curved rod and folded curtain. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/furniture.py). Meters, Y up, origin at floor center, front faces +Z. Poly Haven walnut/cotton maps (CC0)."
   }
 ]

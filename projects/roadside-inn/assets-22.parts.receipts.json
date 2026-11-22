@@ -1,0 +1,56 @@
+[
+  {
+    "id": "hotel-room-wastebasket",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreib4uhcuemkpfwamxpfsn45lrxz2w7vzplimfvyltmfki3plw4y2im",
+    "src": "bafkreidkvjk4czuii54mz5dbqqaxtjz3dv4cscl6amcrfkrmmnd4cpmm2y",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidkvjk4czuii54mz5dbqqaxtjz3dv4cscl6amcrfkrmmnd4cpmm2y",
+    "txHash": "0xc3b86f28bba3e6fb2b706eae1ea9106199194876b4e9fbc53bd76a05eb600934"
+  },
+  {
+    "id": "hotel-tp-holder",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreieo2n7t6rqhmds7ho3p2voffyt6aiywtqtxqpf4yuymfk3yzttukm",
+    "src": "bafkreidil6hr2ngfyhrthpaahtwfdx5pci6dnw245jpybcjq4xxm4ci3xq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidil6hr2ngfyhrthpaahtwfdx5pci6dnw245jpybcjq4xxm4ci3xq",
+    "txHash": "0xc3b86f28bba3e6fb2b706eae1ea9106199194876b4e9fbc53bd76a05eb600934"
+  },
+  {
+    "id": "hotel-towel-bar-towels",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreihcelbx6kd3i7eidc7nptdlwwi4jez6iqvv75ed7blpmcokfoh7uu",
+    "src": "bafybeidml2cxqbznyzrlgc2f5pkd6rp3w2v5sfcpvorxt7grhvuhh3rbiu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeidml2cxqbznyzrlgc2f5pkd6rp3w2v5sfcpvorxt7grhvuhh3rbiu",
+    "txHash": "0xc3b86f28bba3e6fb2b706eae1ea9106199194876b4e9fbc53bd76a05eb600934"
+  },
+  {
+    "id": "hotel-swing-arm-sconce",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidxiu76wraufiqtxunzktaizlyqaxaedvm6xqch7j3lk4qkep6bdu",
+    "src": "bafybeid2roa4j6daxixwqqnquneldiwrp42hi3xusx2dpr4ho3e2dzkb2u",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeid2roa4j6daxixwqqnquneldiwrp42hi3xusx2dpr4ho3e2dzkb2u",
+    "txHash": "0xc3b86f28bba3e6fb2b706eae1ea9106199194876b4e9fbc53bd76a05eb600934"
+  },
+  {
+    "id": "hotel-blackout-drapes",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreie4aagjygcype4tpmwxnwyytfs5d6fv7zixctaaxd2j6sgva6ydxy",
+    "src": "bafybeifrjqeussth3agieedrrhluwzbjiaz2ahkh2ga3kuq7axoqktupoq",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeifrjqeussth3agieedrrhluwzbjiaz2ahkh2ga3kuq7axoqktupoq",
+    "txHash": "0xc3b86f28bba3e6fb2b706eae1ea9106199194876b4e9fbc53bd76a05eb600934"
+  },
+  {
+    "id": "hotel-tub-shower",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreiggzjcj3gwb4s74wx25y4v6aep2des23imel3fw5e2ymld22vcq24",
+    "src": "bafybeiashnetojjxbjgxzyoax7mbz6gz7inofdrniwaxon4vaujdiknnbi",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeiashnetojjxbjgxzyoax7mbz6gz7inofdrniwaxon4vaujdiknnbi",
+    "txHash": "0xc3b86f28bba3e6fb2b706eae1ea9106199194876b4e9fbc53bd76a05eb600934"
+  }
+]

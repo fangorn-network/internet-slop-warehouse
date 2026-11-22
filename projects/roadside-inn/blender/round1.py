@@ -647,7 +647,8 @@ def pleat_sheet(name, flat_w, drop, z_top, n_folds, spacing_open, spacing_closed
                     sgn = 1 if k % 2 == 0 else -1
                     # below the stiff pleat header the folds round out and vary fold to fold
                     A = A0 * (0.75 + 0.25 * min(1, v * 8)) * (fa[k] ** min(1, v * 4)) * (1 + 0.15 * math.sin(k * 1.7 + ph[1] + v * 3) * v)
-                    x = (k + t) * s * (1 + 0.07 * v + 0.04 * v * math.sin(k * 0.9 + ph[2]))
+                    g = 1 - ((k + t) / n_folds) ** 4                     # flare fades out: the leading edge hangs plumb
+                    x = (k + t) * s * (1 + g * (0.07 * v + 0.04 * v * math.sin(k * 0.9 + ph[2])))
                     y = y0 + sgn * A * math.sin(math.pi * t)
                     zz = z
                     zc = z - (z_top - drop + 1.15)
@@ -704,9 +705,10 @@ def drapes(m):
     panels = {}
     for side, dir_ in (('left', 1), ('right', -1)):
         ox = -dir_ * TW / 2 + dir_ * 0.02
-        p = pleat_sheet(f'open_drapes_{side}', 1.5, drop, zt, 12, 0.45 / 12, 1.30 / 12, 0.05, 0.0, 3 if side == 'left' else 9,
+        reach = TW / 2 - 0.02 - 0.01                              # closed: leading edge 1 cm short of centre = 2 cm slit
+        p = pleat_sheet(f'open_drapes_{side}', 1.5, drop, zt, 12, 0.45 / 12, reach / 12, 0.05, 0.0, 3 if side == 'left' else 9,
                         face, dir_, lead_fade=0.10, crease=True)
-        back = pleat_sheet(f'drape_backing_{side}', 1.5, drop, zt, 12, 0.45 / 12, 1.30 / 12, 0.05, 0.0,
+        back = pleat_sheet(f'drape_backing_{side}', 1.5, drop, zt, 12, 0.45 / 12, reach / 12, 0.05, 0.0,
                            3 if side == 'left' else 9, white, dir_, crease=True)
         for kb in back.data.shape_keys.key_blocks:                # the lining: 4 mm behind the face, toward the wall
             for d in kb.data:
@@ -728,6 +730,7 @@ def drapes(m):
             fr.parent = p; fr.location = (0, 0, 0)
         g = empty(f'grab_{side}', (ox + dir_ * 0.45, -0.02, zt - drop + 1.15))
         under(g, p)
+        g['closed_offset'] = [dir_ * (reach - 0.45), 0.0, 0.0]   # three.js: add offset * morph weight (local x) to follow
         panels[side] = p
     sh = pleat_sheet('open_sheer', 5.2, drop - 0.005, zt, 26, 0.5 / 26, 2.56 / 26, 0.02, 0.085, 21, sheer, 1, cols_per=4, rows=20)
     sh.location = (-TW / 2 + 0.02, 0, 0)

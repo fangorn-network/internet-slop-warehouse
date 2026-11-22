@@ -13610,5 +13610,427 @@
       "us"
     ],
     "description": "A semi-recessed fire extinguisher cabinet as US hotels have them: white steel trim 72 mm proud of the wall, clear acrylic door with vertical red FIRE EXTINGUISHER lettering and a chrome pull, a white tub, and a red 10 lb ABC extinguisher inside (black valve and lever, gauge, hose, instruction label, yellow inspection tag). Origin at the wall face, bottom centre; front faces +Z. Mount the bottom about 0.85 m up. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lifesafety.py)."
+  },
+  {
+    "id": "hotel-room-wastebasket",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-room-wastebasket.glb",
+    "title": "Guest-room wastebasket · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bathroom",
+      "bedroom",
+      "bin",
+      "blender",
+      "cc0",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "wastebasket"
+    ],
+    "description": "Hotel guest-room wastebasket, 27 x 20 x 30 cm (13 qt): one-piece moulded charcoal polypropylene with a 2.5 mm wall, slight taper and rolled rim, pale scuffs low on the sides and a dust line inside; a translucent white liner folded unevenly over the rim. Hook node bin_opening. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-tp-holder",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-tp-holder.glb",
+    "title": "Hooded toilet-tissue holder with roll and spare · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bathroom",
+      "blender",
+      "cc0",
+      "chrome",
+      "fixture",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "toilet-paper"
+    ],
+    "description": "Surface-mount chrome hooded single-roll tissue holder (water spots on the hood), a quilt-embossed roll on a spring roller with its tail folded to a housekeeping V point, and a banded spare roll as a second root for the toilet tank. Hook nodes take_roll, roll_tail, take_roll_spare. Print invented, no brand. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-towel-bar-towels",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-towel-bar-towels.glb",
+    "title": "Towel bar with two bath towels · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bathroom",
+      "blender",
+      "cc0",
+      "fixture",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "terry",
+      "towel",
+      "towel-bar"
+    ],
+    "description": "24 in brushed stainless towel bar on two standoff posts with round flanges, two white terry bath towels folded in thirds and hung doubled, dobby bands near the hems, hems uneven. Terry relief from ambientCG Fabric020 (CC0). Hook nodes take_towel, take_towel001, hang_point. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-swing-arm-sconce",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-swing-arm-sconce.glb",
+    "title": "Swing-arm reading sconce · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bedroom",
+      "blender",
+      "cc0",
+      "hotel",
+      "lamp",
+      "lighting",
+      "original",
+      "realistic",
+      "room-212",
+      "sconce",
+      "wall-lamp"
+    ],
+    "description": "Hardwired swing-arm reading sconce: rounded brushed-nickel wall plate with a white rocker, swivel knuckle, two-section arm resting a few degrees low, white linen drum shade on a spider with a diffuser disc. Hook nodes arm_pivot, light_point, switch. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-blackout-drapes",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-blackout-drapes.glb",
+    "title": "Blackout drapes on a pelmet track · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bedroom",
+      "blender",
+      "cc0",
+      "curtains",
+      "drapes",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "textile",
+      "window"
+    ],
+    "description": "Two lined pinch-pleated blackout drape panels and a voile sheer on ceiling tracks behind a painted pelmet box, 2.6 m wide, 2.85 m drop. Panels authored open (gathered) with a closed shape key; sun-faded leading edges, a grab crease and a frayed hem corner. Face fabric ambientCG Fabric031, sheer Fabric032 (CC0). Hook nodes open_drapes_left, open_drapes_right, open_sheer, grab_left, grab_right. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-coffee-tower",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-tower.glb",
+    "title": "Thermal coffee dispenser tower (COFFEE / DECAF) · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "dispenser",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic",
+      "thermal",
+      "tower"
+    ],
+    "description": "Insulated thermal coffee tower on its stand (1.5 gal Luxus-type): black stand and drip tray with slotted grille, cylindrical body with a printed wrap band, level window, domed lid and handle, faucet with a push-down lever. Nodes band (COFFEE, dark blue) and band_decaf (DECAF, light blue): keep one. Hooks fill_spout, fill_point, lever (origin on pivot). Origin base underside centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-cup-rack",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-cup-rack.glb",
+    "title": "Angled wood cup rack with paper hot cups · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "cup-rack",
+      "cups",
+      "hotel",
+      "lobby",
+      "oak",
+      "original",
+      "realistic"
+    ],
+    "description": "Blond-oak angled rack, two tiers of two slots leaning 20 degrees, four stacks of 12 oz printed paper hot cups mouth up (one shorter, one top crushed). take_cup..take_cup003 are the top cups (origin at base), stack_0..stack_3 the rest. Origin bottom centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-lid-bin",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-lid-bin.glb",
+    "title": "Bin of white domed cup lids · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "hotel",
+      "lid-stack",
+      "lids",
+      "lobby",
+      "original",
+      "realistic"
+    ],
+    "description": "Black PP bin 16 x 12 x 9 cm with two nested stacks of white domed sip lids (9.0 and 8.7 cm) standing on edge, one lid upside down on top. take_lid, take_lid001 and stack_0, stack_1. Origin bottom centre. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-condiment-riser",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-condiment-riser.glb",
+    "title": "Three-tier wood condiment riser · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "caddy",
+      "cc0",
+      "coffee",
+      "condiments",
+      "creamer",
+      "hotel",
+      "lobby",
+      "oak",
+      "original",
+      "realistic",
+      "sweetener"
+    ],
+    "description": "Blond-oak 3-tier riser: two creamer pump bottles (take_creamer_pump*, pump_point*), four orange/blue bins of sweetener packets (take_sugar_packet*) and portion creamers (take_creamer*), flattened kraft sleeves in a slot (take_sleeve), napkins with a clump pulled out (take_napkin), lid-bin space at bottom left. Origin bottom centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-hot-water-box",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-hot-water-box.glb",
+    "title": "Hot-water dispenser with push-back lever · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "dispenser",
+      "hot-water",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic"
+    ],
+    "description": "Black hot-water box with chrome bezel, printed HOT WATER panel, push-back lever with an orange HOT flag, spout with limescale, red ready lamp, fill lid, drip tray with water spots. Hooks fill_spout, fill_point, lever (origin on pivot), cord_exit (back bottom). Origin bottom centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-stirrer-tumbler",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-stirrer-tumbler.glb",
+    "title": "Stir straws in a glass, wicker basket of creamer cups · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "caddy",
+      "cc0",
+      "coffee",
+      "creamer",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic",
+      "stirrers",
+      "wicker"
+    ],
+    "description": "Thick-based clear tumbler with ~44 white stir straws fanned in three rings (take_stirrer pulled up), three on the counter; separate root node basket (offset -0.35, 0, +0.2) with a wicker basket heaped with 30 foil-lidded creamer thimbles settled by rigid-body sim (take_creamer_cup on top). Origin tumbler bottom centre. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-luggage-cart-brass",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-luggage-cart-brass.glb",
+    "title": "Brass birdcage luggage cart · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "brass",
+      "cart",
+      "cc0",
+      "hotel",
+      "lobby",
+      "luggage",
+      "luggage-cart",
+      "original",
+      "realistic"
+    ],
+    "description": "Brass birdcage bellman's luggage cart, 112 x 62 x 188 cm: two 1.5 in brass arched side frames leaning into a cast crown hub with finial and garment bar, push bars at both ends with cast tee sleeves, flared base ferrules, carpeted deck (ambientCG Fabric026, worn pale in the middle) in a brass skirt with a grey rubber wrap-around bumper (scuffed), 2 fixed 8 in cushion wheels and 2 swivel 5 in casters (one turned sideways). Brass is metal PBR with a generated wear map: hand-polished at grab height, tarnished and rougher low down and at the joints, fingerprint smudges. Hooks: grab, deck, caster_l, caster_r. Built by projects/roadside-inn/blender/luggage.py. Original CC0."
+  },
+  {
+    "id": "hotel-luggage-cart-brass-mobile",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-luggage-cart-brass-mobile.glb",
+    "title": "Brass birdcage luggage cart (phone LOD) · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "brass",
+      "cart",
+      "cc0",
+      "hotel",
+      "lobby",
+      "lod",
+      "luggage",
+      "luggage-cart",
+      "mobile",
+      "original",
+      "realistic"
+    ],
+    "description": "Phone level of detail of hotel-luggage-cart-brass: the same model with dense meshes decimated to about 30 % and textures at most 512 px; names, materials and hook nodes unchanged. Built by projects/roadside-inn/blender/mobile_lod.py from hotel-luggage-cart-brass. Original CC0."
+  },
+  {
+    "id": "hotel-roller-bag",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-roller-bag.glb",
+    "title": "Soft-side 22 in carry-on (rollaboard) · original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bag",
+      "blender",
+      "carry-on",
+      "cc0",
+      "hotel",
+      "luggage",
+      "original",
+      "realistic",
+      "roller-bag",
+      "suitcase"
+    ],
+    "description": "Two-wheel soft-side carry-on, 36 x 25 x 57 cm closed: charcoal 1680D ballistic nylon (ambientCG Fabric004) body, expansion gusset and front lid with a zip pocket (creased), black piping on every edge, perimeter and expansion zips with metal pulls, padded top and side handles, blank paper airline tag, moulded wheel housings with 7 cm PU inline wheels, kick plate and front feet (scraped), scuffed corners, two-tube aluminium telescoping handle with grip and release button. Hooks: handle (slides +Y 0.42 m), grab_top, wheel_l, wheel_r. Built by projects/roadside-inn/blender/luggage.py. Original CC0."
+  },
+  {
+    "id": "acg-luggage-nylon-color",
+    "file": "acg/acg-luggage-nylon-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage ballistic nylon (ambientCG Fabric004) · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "color"
+    ],
+    "description": "Fabric004 color map, 1K: 2x2 basket weave, used as 1680D ballistic nylon on the roller bag at a 1.6 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric004. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-nylon-normal",
+    "file": "acg/acg-luggage-nylon-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage ballistic nylon (ambientCG Fabric004) · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "normal"
+    ],
+    "description": "Fabric004 normal map, 1K: 2x2 basket weave, used as 1680D ballistic nylon on the roller bag at a 1.6 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric004. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-nylon-roughness",
+    "file": "acg/acg-luggage-nylon-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage ballistic nylon (ambientCG Fabric004) · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "roughness"
+    ],
+    "description": "Fabric004 roughness map, 1K: 2x2 basket weave, used as 1680D ballistic nylon on the roller bag at a 1.6 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric004. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-color",
+    "file": "acg/acg-luggage-deck-carpet-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage cart deck carpet (ambientCG Fabric026) · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "color"
+    ],
+    "description": "Fabric026 color map, 1K: red rib needle-punch carpet on the bellman cart deck at a 22 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric026. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-normal",
+    "file": "acg/acg-luggage-deck-carpet-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage cart deck carpet (ambientCG Fabric026) · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "normal"
+    ],
+    "description": "Fabric026 normal map, 1K: red rib needle-punch carpet on the bellman cart deck at a 22 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric026. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-roughness",
+    "file": "acg/acg-luggage-deck-carpet-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage cart deck carpet (ambientCG Fabric026) · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "roughness"
+    ],
+    "description": "Fabric026 roughness map, 1K: red rib needle-punch carpet on the bellman cart deck at a 22 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric026. Linear roughness. CC0-1.0."
   }
 ]

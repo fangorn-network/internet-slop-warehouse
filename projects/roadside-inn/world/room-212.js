@@ -202,7 +202,7 @@ export function buildRoom212(ctx) {
     const drapes = onWall(put('hotel-blackout-drapes', 14.25, y + CEIL, 8.45, Math.PI));
     const panels = []; drapes.traverse(n => { if (n.morphTargetDictionary?.closed !== undefined) panels.push(n); });
     interact.push({ pos: new T.Vector3(14.25, y + 1.4, 8.3), r: 1.5, label: () => st.drapes > 0.5 ? 'Close curtains' : 'Open curtains', use: () => { st.drapes = st.drapes > 0.5 ? 0 : 1; game.sound.swish(); } });
-    updaters.push(dt => panels.forEach(n => { const i = n.morphTargetDictionary.closed, v = n.morphTargetInfluences; v[i] += ((st.drapes > 0.5 ? 0 : 1) - v[i]) * Math.min(1, dt * 3); }));
+    updaters.push(dt => panels.forEach(n => { const i = n.morphTargetDictionary.closed, v = n.morphTargetInfluences; const to = st.drapes > 0.5 ? 0 : 1; v[i] += (to - v[i]) * Math.min(1, dt * 3); if (Math.abs(to - v[i]) < 0.01) v[i] = to; }));   // snap the tail: the ease alone never shut them (an 8 cm gap)
     const roomTV = tvSet(cred.screen, 'room');
     st.tv = roomTV;
     // A little welcome card on the desk.

@@ -132,7 +132,6 @@ export function buildLobby(ctx) {
   // The coffee counter, bare, with its waste hole (kinds.js counter-bin); everything on it is its own thing with a kind,
   // so the sequence is take a cup at the rack → fill it at a tower → lid, sleeve, sugar, creamer at the riser and lid bin.
   const station = put('hotel-coffee-station', 3.4, 0, -8.6); solid(1.8, 5, 0, 1, -8.95, -8.25);
-  station.getObjectByName('take_cookie002')?.removeFromParent();   // ponytail: exported 83 m below the counter (Victor to fix); drop this line when re-exported
   takeables(station);
   scene.attach(station.getObjectByName('wicker_weave'));   // the cookie basket is a thing on the counter, not part of it (else lint sees nothing standing on the top)
   const TOP = 0.94, BACK = -8.72;   // counter top; the line the pieces stand on, clear of the backer board
@@ -143,7 +142,7 @@ export function buildLobby(ctx) {
   put('hotel-hot-water-box', 3.9, TOP, -8.75, 0);
   put('hotel-condiment-riser', 4.25, TOP, BACK, 0);
   put('hotel-lid-bin', 4.58, TOP, -8.75, 0);
-  // ponytail: hotel-stirrer-tumbler waits for a re-export (its creamer basket's mesh reaches 79 m below the counter)
+  put('hotel-stirrer-tumbler', 2.35, TOP, -8.55, 0);   // stirrers by the cups; its creamer basket sits in front of the rack
   add(lib.model('hotel-snack-vending', { origin: true, rotate: -Math.PI / 2 }), 6.0, 0, -6.6); solid(5.5, 6.5, 0, 2, -7.1, -6.1);
   add(lib.model('g3-vending-machine', { rotate: -Math.PI / 2, height: 1.85 }), 6.03, 0, -5.4); solid(5.55, 6.5, 0, 2, -5.88, -4.92);
   for (const [x, z] of [[2.5, -5.3]]) {

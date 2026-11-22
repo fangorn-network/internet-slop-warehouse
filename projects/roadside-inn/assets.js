@@ -53,7 +53,7 @@ const MODELS = [
   ...['extinguisher-cabinet', 'outlet', 'brochure-rack', 'newspaper', 'newspaper-stack', 'coffee-cup', 'phone', 'entry-mat', 'coffee-board', 'waste-cabinet', 'waste-bin', 'desk-items', 'desk-closed', 'lobby-sofa-2', 'tv-remote', 'map-mural', 'wall-art'].map(s => 'hotel-' + s), 'ph-potted-plant-02',
   ...['1990s-sedan', '1990s-suv', '1990s-pickup-truck', '1990s-minivan', '1990s-station-wagon', '1990s-hatchback', 'semi-truck', 'dumpster', 'utility-pole', 'street-light', 'vending-machine', 'fire-hydrant', 'traffic-cone', 'bollard', 'guard-rail'].map(s => 'g3-' + s),
   // set pipeline round 1 (briefs/round-1.md): room 212, its bath, the coffee counter's pieces, the lobby cart and carry-on
-  ...['room-wastebasket', 'tp-holder', 'towel-bar-towels', 'swing-arm-sconce', 'blackout-drapes', 'coffee-tower', 'cup-rack', 'lid-bin',
+  ...['room-wastebasket', 'tp-holder', 'towel-bar-towels', 'swing-arm-sconce', 'blackout-drapes', 'coffee-tower', 'cup-rack', 'lid-bin', 'stirrer-tumbler',
     'condiment-riser', 'hot-water-box', 'luggage-cart-brass', 'roller-bag'].map(s => 'hotel-' + s),
   ...STATION_PARTS,   // the travel stop across the interstate (station.js)
 ];

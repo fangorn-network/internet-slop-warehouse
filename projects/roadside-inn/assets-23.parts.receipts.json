@@ -1,0 +1,74 @@
+[
+  {
+    "id": "hotel-coffee-station",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreieezvz66g6rs2x5he52cdgroz2yy2ydpk54ugk3cwwtvgl2lwmiey",
+    "src": "bafybeialpzjbvd63vch3sknv2dahacvl4ppb3lrf7b6b3su3etmkmv5cwu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeialpzjbvd63vch3sknv2dahacvl4ppb3lrf7b6b3su3etmkmv5cwu",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-coffee-tower",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreignj77qqqs5ofs6ycfcijeitaoz7r7ziechdrxwsr2auor2khdi6e",
+    "src": "bafybeib2jmzv7uj36dtjq32jagbfd32yt2rv5nudh3b3u2skuchcndctua",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeib2jmzv7uj36dtjq32jagbfd32yt2rv5nudh3b3u2skuchcndctua",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-cup-rack",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreifx7ugffxidomizzxic7ocplxdl4uhy5vcyyuh6h5znaqhiea7p34",
+    "src": "bafybeieb4yqxbv3v3l2v5tcoet6gcn47r3tpbrhojklehfsj5ezjttzi3a",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeieb4yqxbv3v3l2v5tcoet6gcn47r3tpbrhojklehfsj5ezjttzi3a",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-lid-bin",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreihbwgjrzerlomfneba24yc3sohyygwa3lezjdu5k5m56ioqzgv7yy",
+    "src": "bafkreiby6qcotttg4kutlkxmnwlndxbvj4ppknln5qnhlezcaaod2pan5u",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreiby6qcotttg4kutlkxmnwlndxbvj4ppknln5qnhlezcaaod2pan5u",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-condiment-riser",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidiaki3pqgm3cdxagfw6xzzoqyufc362t6fxcqknqrezhgwelveue",
+    "src": "bafybeigm6okpwnvavteqid3jv573ncnf6a3lmrkbio55tn4qo442qvi7gu",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeigm6okpwnvavteqid3jv573ncnf6a3lmrkbio55tn4qo442qvi7gu",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-hot-water-box",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreidwhf4otmaa77hlydfybu4djzqmc2dkhhuwzkiohlew65ykaumkfy",
+    "src": "bafkreidzc5ot5couzbp34ulekvpvhgecmci6fsle6kijxnyjiqihow6aya",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreidzc5ot5couzbp34ulekvpvhgecmci6fsle6kijxnyjiqihow6aya",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-stirrer-tumbler",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreicd6jhwatmxvcjkozuqao23reof5gmqjphf5jma47jnyv4alva2lq",
+    "src": "bafybeidxe6loxx77abeynl7httgmmbt63nkogz26dljbuolb632g4kyzqe",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafybeidxe6loxx77abeynl7httgmmbt63nkogz26dljbuolb632g4kyzqe",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  },
+  {
+    "id": "hotel-coffee-cup",
+    "publisher": "0x7b16387C5A8c514880E48bcacd52782FCF9Da936",
+    "network": "baseSepolia",
+    "cid": "bafyreif7cbvpnmz5pud6jqxjdqx27e34piwlgow6hjpgjbskvpofd3mkg4",
+    "src": "bafkreifhg3upv6d4ivch6j2murd6gokpyhxvcdo6cmqbxg3gmouv2guqua",
+    "url": "https://ipfs-test.fangorn.network/ipfs/bafkreifhg3upv6d4ivch6j2murd6gokpyhxvcdo6cmqbxg3gmouv2guqua",
+    "txHash": "0x338d33b30dae97fdbc32532bdef76e39be34fe25e5c8f7a468afa71266c91979"
+  }
+]
