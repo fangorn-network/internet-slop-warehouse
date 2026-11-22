@@ -146,6 +146,7 @@ scene.traverse(o => { if (o.userData.hotelProp) detailProps.push(o); });
 // Loose props (anything you can pick up or knock over) are drawn from everywhere by zone culling, since they can move.
 // Phones hide each one when its current zone can't be seen from the camera's, or when it's too small to read at its
 // distance (6 m + 25 m per metre of size: a pen past ~9 m is two pixels). The held one is always near. The housekeeping cart moves too (staff.js).
+const residents = [];   // filled once the people are in the scene (see the detail pass below)
 const looseProps = scene.children.filter(o => o.userData.loose || o.name === 'hotel-housekeeping-cart').map(o => { const s = new T.Box3().setFromObject(o).getSize(new T.Vector3()); return { o, far: Math.min(26, 6 + 25 * Math.max(s.x, s.y, s.z)) }; });
 let detailClock = 0, tagClock = 2;
 const detailPosition = new T.Vector3();
@@ -367,6 +368,7 @@ function frame(now = performance.now()) {
   const zone = currentZone();
   if (LOW && (detailClock -= dt) <= 0) {
     detailClock = 0.25;
+    if (!residents.length) scene.traverse(o => { if (o.userData.hotelResident) residents.push(o); });
     // Small furniture in other wings cannot be seen through opaque walls. Keep large landmarks.
     const distance = zone ? 26 : 130;
     for (const prop of detailProps) {
@@ -380,6 +382,13 @@ function frame(now = performance.now()) {
       o.getWorldPosition(detailPosition);
       const show = (!seen || seen.has(zones.zoneAt(detailPosition))) && detailPosition.distanceTo(camera.position) < far;
       if (o.visible !== show) o.visible = show;
+    }
+    // People in zones you can't see: hidden by render layer, since staff.js owns their `visible` (and their animation
+    // keeps running, so nothing pops when they come back into view).
+    for (const r of residents) {
+      r.getWorldPosition(detailPosition);
+      const mask = !seen || seen.has(zones.zoneAt(detailPosition)) ? 1 : 0;
+      if (r.userData.layerMask !== mask) { r.userData.layerMask = mask; r.traverse(n => { n.layers.mask = mask; }); }
     }
   }
   if ((tagClock -= dt) <= 0) { tagClock = 2; tagInterior(); }

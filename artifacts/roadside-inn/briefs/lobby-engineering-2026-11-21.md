@@ -120,3 +120,40 @@ Use splats at most for one distant exterior backdrop on desktop.
 9. **Breakfast area:** stays visible at night, closed (a closed-state variant, not `visible = false`).
 
 **Not doing:** fluid simulation, runtime SSAO on phones, splats for props.
+
+## 4. Phone performance pass (phase 3)
+
+Measured at the phone tier (`?quality=low`: economy, no shadows), `renderer.info` for one frame. The views are
+check.mjs's lobby positions. Screenshots: `artifacts/roadside-inn/perf/before/` and `perf/after/`, same viewpoints, and
+they look the same (the TV picture changes on its own). The target was ≤ 400 draw calls and ≤ 500 k triangles in view.
+
+| View | Draw calls before → after | Triangles before → after |
+|---|---|---|
+| Entrance (looking in) | 1853 → **490** | 1.66 M → **515 k** |
+| Desk | 897 → **278** | 1.09 M → **308 k** |
+| Coffee bar | 527 → **147** | 705 k → **177 k** |
+| Great room | 1506 → **378** | 1.59 M → **463 k** |
+| Business center | 1271 → **317** | 1.40 M → **372 k** |
+
+Textures loaded: 358 → 323. Shader programs: 97 → 94.
+
+The entrance is the worst case and still over target, by 90 draw calls and 15 k triangles. From there you see the whole
+lobby plus the north lot through the breakfast windows. What's left is a long tail of 1-3 calls per object, six
+residents, and the cars through the glass.
+
+What did it, in order of effect:
+1. **Transmission off** (the clock glass and the pole insulators): three re-rendered every opaque object into a
+   transmission target. That alone halved the frame.
+2. **Instancing per 32 m cell**: the lot's InstancedMeshes had one bounding sphere that held the camera, so frustum
+   culling never dropped them.
+3. **Loose props and the housekeeping cart culled by zone and size** on phones. Small statics that touch a wall are
+   pinned to their centre's zone, because zone culling drew them from everywhere. Residents in unseen zones are hidden
+   by render layer.
+4. **Merging**: each prop by material (loose ones too), the building's small meshes per 8 m cell, props across each
+   other per cell on phones, and phone-only flat-colour materials collapsed into shared vertex-colour ones. Parked cars
+   flatten even their textured parts, coloured by the texture's mean texel. Brochures are 2 calls, not 6. The elevator
+   car is hidden behind shut doors.
+5. **`-mobile` LOD GLBs** for the seven densest props (`blender/mobile_lod.py`, `assets-21.parts.json`).
+
+Publish note: `assets-21.parts.json` (the seven `-mobile` GLBs) has to be published with the release, because
+`PART_IDS` now includes them.
