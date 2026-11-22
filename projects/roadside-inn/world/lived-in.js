@@ -189,6 +189,24 @@ export function buildFloorShade({ scene, colliders, updaters }) {
   return plane;
 }
 
+// The cold light a lit cooler and the vending machines throw onto the floor in front of them: what you notice about
+// them at night. A soft additive pool (one draw call for all three), no light source (phones have four lights).
+export function buildApplianceSpill({ scene }) {
+  const tex = F.canvasTexture(128, 128, (g, W) => {   // an ellipse that is dark at every edge but the machine's: no hard-edged rectangle on the floor
+    g.fillStyle = '#000'; g.fillRect(0, 0, W, W); g.setTransform(1.7, 0, 0, 1, 0, 0);
+    const gr = g.createRadialGradient(0, W / 2, 0, 0, W / 2, W * 0.47); gr.addColorStop(0, '#fff'); gr.addColorStop(0.4, 'rgba(255,255,255,0.4)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, W, W); });
+  // [x of the machine face, z centre, width along it, which way it faces (+1: +x)]
+  const geos = [[-4.17, -8.15, 1.3, 1], [5.5, -6.6, 0.9, -1], [5.55, -5.4, 0.9, -1]].map(([x, z, w, dir]) => {
+    const d = 1.3, g = new T.PlaneGeometry(d, w).rotateX(-Math.PI / 2);
+    if (dir < 0) g.rotateY(Math.PI);
+    return g.translate(x + dir * d / 2, 0.0118, z);
+  });
+  const mat = new T.MeshBasicMaterial({ map: tex, color: '#3c4a5c', blending: T.AdditiveBlending, transparent: true, depthWrite: false, fog: false, polygonOffset: true, polygonOffsetFactor: -5, polygonOffsetUnits: -5 });
+  mat.userData.noEnv = true;
+  const m = new T.Mesh(mergeGeometries(geos), mat); m.name = 'Appliance light spill'; m.renderOrder = 1; scene.add(m);
+}
+
 // 4-inch rubber cove base on every painted wall run in the lobby (no real commercial wall meets the floor bare). Built
 // from the wall pieces themselves (statics: boxes whose bottom is on the floor), a strip on each face that looks into the
 // lobby; glass and millwork aren't wall pieces, so they get none. One merged mesh, one draw call.

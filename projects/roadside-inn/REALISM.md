@@ -463,3 +463,9 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   CAUTION DOOR decals on both faces of both slider leaves at 1.27 m (A156.10).
 - **Closed, not gone.** The breakfast bar was hidden at night; real ones stand there with lids down, cereal in the
   dispensers and the food and juice put away. Only food/batter/juice nodes hide, and those names are kept out of merging.
+- **Glass smudges are haze, not hands.** Drawn palms with finger dots read as cartoon footprints. Smeared ovals at odd
+  angles where palms land (0.9-1.5 m, toward the meeting edge), a scatter of fingertip dots, a faint wipe arc, low
+  alpha. A mirrored (scale.x -1) plane flips its winding and gets culled: make it double-sided.
+- **Lit appliances throw light on the floor.** A soft cold additive pool in front of the cooler and vending machines,
+  no light source (phones have four). Make the pool fade to nothing at every edge except the machine's, or it's a
+  bright rectangle on the floor.

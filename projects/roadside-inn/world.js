@@ -6,7 +6,7 @@ import { flatParts } from './assets.js';
 import * as F from './fixtures.js';
 import { buildLamps } from './world/lamps.js';
 import { buildLobby } from './world/lobby.js';
-import { buildLivedIn, buildFloorShade, buildCoveBase, buildSpills } from './world/lived-in.js';
+import { buildLivedIn, buildFloorShade, buildCoveBase, buildSpills, buildApplianceSpill } from './world/lived-in.js';
 import { buildPool } from './world/pool.js';
 import { buildGym } from './world/gym.js';
 import { buildCorridors } from './world/corridors.js';
@@ -658,7 +658,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   buildStaff(ctx);
   buildEntranceDoors(ctx);
   buildOutside(ctx);
-  buildCoveBase(ctx); buildSpills(ctx);
+  buildCoveBase(ctx); buildSpills(ctx); buildApplianceSpill(ctx);
   buildFloorShade(ctx);   // last: painted from everything static that stands on the floor
   const { breakfast, elevator, room, clerk, walkers, carLamps } = ctx;
   // Dusk: lot lights carry the outside; day: they're off.

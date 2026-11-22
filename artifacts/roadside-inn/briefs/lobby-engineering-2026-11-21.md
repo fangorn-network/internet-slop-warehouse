@@ -129,11 +129,14 @@ they look the same (the TV picture changes on its own). The target was ≤ 400 d
 
 | View | Draw calls before → after | Triangles before → after |
 |---|---|---|
-| Entrance (looking in) | 1853 → **490** | 1.66 M → **515 k** |
-| Desk | 897 → **278** | 1.09 M → **308 k** |
-| Coffee bar | 527 → **147** | 705 k → **177 k** |
-| Great room | 1506 → **378** | 1.59 M → **463 k** |
-| Business center | 1271 → **317** | 1.40 M → **372 k** |
+| Entrance (looking in) | 1853 → **490** (512 after phase 4) | 1.66 M → **515 k** (523 k) |
+| Desk | 897 → **278** (294) | 1.09 M → **308 k** (311 k) |
+| Coffee bar | 527 → **147** (150) | 705 k → **177 k** (171 k) |
+| Great room | 1506 → **378** (382) | 1.59 M → **463 k** (456 k) |
+| Business center | 1271 → **317** (323) | 1.40 M → **372 k** (366 k) |
+
+The numbers in brackets are after the phase-4 additions: the breakfast bar stays visible at night, plus the
+extinguisher cabinets, the notice and the door decals.
 
 Textures loaded: 358 → 323. Shader programs: 97 → 94.
 
