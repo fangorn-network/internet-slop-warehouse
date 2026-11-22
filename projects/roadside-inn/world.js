@@ -662,7 +662,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
   buildFloorShade(ctx);   // last: painted from everything static that stands on the floor
   const { breakfast, elevator, room, clerk, walkers, carLamps } = ctx;
   // Dusk: lot lights carry the outside; day: they're off.
-  const setTimeOfDay = name => { outdoor.forEach(a => (a.intensity = name === 'dusk' ? a.base : 0)); breakfast.group.visible = name === 'day'; if (carLamps) carLamps.visible = name === 'dusk'; };
+  const setTimeOfDay = name => { outdoor.forEach(a => (a.intensity = name === 'dusk' ? a.base : 0)); breakfast.setOpen(name === 'day'); if (carLamps) carLamps.visible = name === 'dusk'; };
 
   // Light cells: point lights cast no shadows, so a corridor light 2 m from room 212 would light it through the wall.
   // A light counts only inside its own cell (room 212 or the rest of the building), unless 212's door is open; lot lights always count.

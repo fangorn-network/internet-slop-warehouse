@@ -449,3 +449,17 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   alone (collapsing a 12-triangle box wrecks it). assets.js loads them on phones (MOBILE_LOD). Seven props: 1.86 M
   -> 0.62 M triangles in source, the lobby entrance view 676k -> 533k. Careful with suffixes: a rename loop over
   `*-phone.glb` also caught `hotel-phone.glb` (the phone on the table).
+
+## Things a real lobby must show (2026-11-21)
+- **Stepped solid shapes read as missing texture.** The map mural's public land was solid navy section-grid cells: from
+  the sofa, black pixel blocks. Now a darker blue tone at half opacity with soft irregular edges (prints.mjs), as
+  wayfinding murals shade it.
+- **A Korean extinguisher in a Missouri hotel** is a tell anyone who has worked in one spots. `hotel-extinguisher-cabinet`
+  (blender/lifesafety.py): semi-recessed white cabinet, acrylic door with the red vertical lettering, a 10 lb ABC unit with
+  gauge, hose and a yellow inspection tag. The "recess" is faked: a white tub back panel just in front of the wall face,
+  so the wall never has to be cut. Replaced everywhere; two added in the lobby. Check what a wall already carries before
+  hanging something (the first spot was on the map mural).
+- **Paper the law requires:** the innkeeper's notice (RSMo 419.010) framed on the slat wall at the desk; AUTOMATIC
+  CAUTION DOOR decals on both faces of both slider leaves at 1.27 m (A156.10).
+- **Closed, not gone.** The breakfast bar was hidden at night; real ones stand there with lids down, cereal in the
+  dispensers and the food and juice put away. Only food/batter/juice nodes hide, and those names are kept out of merging.

@@ -13,11 +13,23 @@ export function buildEntranceDoors(ctx) {
   {
     const doorGlass = F.mat('#b9cfd8', { transparent: true, opacity: 0.28, roughness: 0.04, metalness: 0.2 });
     const frameM = F.mat('#2e3136', { metalness: 0.6, roughness: 0.35 });
+    // the round vinyl decal every automatic slider carries: white disc, red ring, red lettering
+    const caution = F.canvasTexture(256, 256, (g, W) => {
+      g.clearRect(0, 0, W, W); g.fillStyle = '#ffffff'; g.beginPath(); g.arc(W / 2, W / 2, W / 2 - 2, 0, 7); g.fill();
+      g.strokeStyle = '#c8102e'; g.lineWidth = 14; g.beginPath(); g.arc(W / 2, W / 2, W / 2 - 12, 0, 7); g.stroke();
+      g.fillStyle = '#c8102e'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.font = 'bold 34px system-ui, sans-serif'; g.fillText('AUTOMATIC', W / 2, W * 0.32);
+      g.font = 'bold 50px system-ui, sans-serif'; g.fillText('CAUTION', W / 2, W / 2);
+      g.font = 'bold 34px system-ui, sans-serif'; g.fillText('DOOR', W / 2, W * 0.68);
+    });
+    const cautionMat = new T.MeshStandardMaterial({ map: caution, transparent: true, alphaTest: 0.5, roughness: 0.6, polygonOffset: true, polygonOffsetFactor: -2 });
     const leaves = [0, 1].map(i => {
       const g = new T.Group();
       F.box(1.5, 2.5, 0.04, doorGlass, 0, 0, 0, g);
       for (const x of [-0.73, 0.73]) F.box(0.04, 2.5, 0.06, frameM, x, 0, 0, g);
       F.box(1.5, 0.08, 0.06, frameM, 0, 0, 0, g); F.box(1.5, 0.08, 0.06, frameM, 0, 2.42, 0, g);
+      // ANSI/BHMA A156.10: AUTOMATIC CAUTION DOOR on both faces, centred about 50 in (1.27 m) up
+      for (const side of [1, -1]) { const d = new T.Mesh(new T.PlaneGeometry(0.2, 0.2), cautionMat); d.position.set(0, 1.27, side * 0.0215); if (side < 0) d.rotation.y = Math.PI; g.add(d); }
       g.position.set(-2.75 + i * 1.5, 0, 9); scene.add(g); return g;
     });
     F.box(3.4, 0.25, 0.3, frameM, -2, 2.55, 9, scene);

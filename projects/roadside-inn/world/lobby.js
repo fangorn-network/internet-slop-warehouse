@@ -48,6 +48,26 @@ export function buildLobby(ctx) {
     F.box(2.1, 0.012, 0.06, F.glow('#9cc0ff', 2.2), -9.9, 2.40, -4.86, scene);        // wall-washer above the logo
   }
   const lobbyTV = F.flatTV(1.4); add(lobbyTV.group, -7.2, 2.1, -4.87);
+  // The innkeeper's notice Missouri wants posted at the registration desk (RSMo 419.010: valuables left with the desk;
+  // not liable for what isn't). A letter-size sheet in a thin black frame on the slat wall, where the clerk can point.
+  {
+    const paper = F.canvasTexture(510, 660, (g, W, H) => {
+      g.fillStyle = '#f7f5ef'; g.fillRect(0, 0, W, H); g.fillStyle = '#1b1b1b'; g.textAlign = 'center';
+      g.font = 'bold 40px Georgia, serif'; g.fillText('NOTICE TO GUESTS', W / 2, 80);
+      g.fillRect(60, 102, W - 120, 3);
+      g.font = '24px Georgia, serif'; g.textAlign = 'left';
+      const text = 'A safe is provided at the front desk for the keeping of money, jewelry, documents and other valuables of guests. The management will not be responsible for any loss of valuables not deposited with the front desk for safekeeping, except as provided by law.';
+      let y = 160, line = '';
+      for (const w of text.split(' ')) { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > W - 110) { g.fillText(line, 55, y); y += 34; line = w; } else line = t; }
+      g.fillText(line, 55, y);
+      g.font = 'italic 20px Georgia, serif'; g.textAlign = 'center'; g.fillText('Section 419.010, Revised Statutes of Missouri', W / 2, H - 120);
+      g.font = 'bold 22px system-ui, sans-serif'; g.fillText('HEARTLAND INN EXPRESS · MANAGEMENT', W / 2, H - 70);
+    });
+    const notice = new T.Group(); notice.name = 'Innkeeper notice';
+    F.box(0.235, 0.297, 0.012, F.mat('#151515', { roughness: 0.4 }), 0, 0, 0, notice);
+    const sheet = new T.Mesh(new T.PlaneGeometry(0.216, 0.279), new T.MeshStandardMaterial({ map: paper, roughness: 0.8 })); sheet.position.set(0, 0.1485, 0.0065); notice.add(sheet);
+    notice.position.set(-5.75, 1.3, -4.881); scene.add(notice);
+  }
 
   // Sundry market in the alcove on the office's east face, right beside the pods for the clerk to watch.
   add(lib.model('hotel-market-cooler', { origin: true }), -4.56, 0, -8.15, Math.PI / 2); solid(-5, -4.17, 0, 2.1, -8.85, -7.45);
@@ -98,6 +118,10 @@ export function buildLobby(ctx) {
   light(-10.15, 1.2, 0.85, '#ffd2a0', 5, 3.2);
   tableLamp(-10.25, 0.45, [-11.875, 0.15], lightAnchors.at(-1));
 
+  // Fire extinguisher cabinets (NFPA 10: one within 75 ft of travel, top under 5 ft): the east wall just
+  // north of the corridor mouth (the map mural fills the wall south of it) and the west wall by the reading chairs. Semi-recessed, so they stand 7 cm proud (blender/lifesafety.py).
+  add(lib.model('hotel-extinguisher-cabinet', { origin: true }), 6.42, 0.85, -1.6, -Math.PI / 2);
+  add(lib.model('hotel-extinguisher-cabinet', { origin: true }), -11.905, 0.85, -1.9, Math.PI / 2);
   // Brochure rack and luggage cart near the entrance; a walk-off mat inside the doors.
   add(lib.model('hotel-brochure-rack', { origin: true }), -4.6, 0, 1.2, Math.PI / 2); solid(-4.78, -4.42, 0, 1.45, 1.02, 1.38);
   loose(add(lib.model('hotel-luggage-cart', { origin: true }), -5.0, 0, 6.3, 0.3), { density: 0.35 }); solid(-5.6, -4.4, 0, 2, -0.4 + 6.3, 0.4 + 6.3); unboxed();
@@ -121,12 +145,17 @@ export function buildLobby(ctx) {
 
   // Hot breakfast (mornings only) along the north windows.
   const bm = add(lib.model('hotel-breakfast-bar', { origin: true }), -2.2, 0, -8.5);
-  const breakfast = { group: bm, waffleLight: bm.getObjectByName('waffle_light') }; solid(-3.95, -0.45, 0, 1, -8.9, -8.12);
-  breakfast.group.visible = false;
+  // Closed at night, not gone: the bar, the chafers with their lids down, the cereal dispensers and the plates stay; the
+  // food, the waffle batter and the juice are put away (the tanks drained) until 6.
+  const putAway = []; bm.traverse(n => { if (/^(food|batter|tank)\d/.test(n.name)) putAway.push(n); });
+  const breakfast = { group: bm, waffleLight: bm.getObjectByName('waffle_light'), open: false,
+    setOpen(v) { breakfast.open = v; for (const n of putAway) n.visible = v; } };
+  solid(-3.95, -0.45, 0, 1, -8.9, -8.12);
+  breakfast.setOpen(false);
   const breakfastSign = F.sign('Hot Breakfast · 6:00 – 9:30 AM', { w: 1.8, h: 0.22, bg: '#2e4057', font: '600 44px system-ui, sans-serif' });
   breakfastSign.position.set(-2.2, 2.45, -8.865); scene.add(breakfastSign);
   let waffleBusy = false;
-  interact.push({ pos: new T.Vector3(-2.1, 1.1, -7.9), r: 1.3, when: () => breakfast.group.visible, label: () => game.has('waffle') ? 'Waffle maker' : 'Make a waffle',
+  interact.push({ pos: new T.Vector3(-2.1, 1.1, -7.9), r: 1.3, when: () => breakfast.open, label: () => game.has('waffle') ? 'Waffle maker' : 'Make a waffle',
     use: () => {
       if (waffleBusy) return game.say('It’s cooking. Don’t open it early. Everyone opens it early.');
       if (game.has('waffle')) return game.say('One waffle per guest is the honor system. You honor it.');
@@ -134,9 +163,9 @@ export function buildLobby(ctx) {
       game.say('Batter in, lid closed, flip. The timer counts down from two minutes. You wait.');
       setTimeout(() => { waffleBusy = false; game.sound.hum(false); game.sound.beep(true); breakfast.waffleLight.material = F.glow('#57ff9a', 0.6); game.give('waffle'); game.say('A golden waffle, shaped like Missouri. It’s the state, not the… yes, the state.'); }, 7000);
     } });
-  interact.push({ pos: new T.Vector3(-3.3, 1.1, -7.9), r: 1.1, when: () => breakfast.group.visible, label: () => 'Eggs & sausage',
+  interact.push({ pos: new T.Vector3(-3.3, 1.1, -7.9), r: 1.1, when: () => breakfast.open, label: () => 'Eggs & sausage',
     use: () => { if (game.has('breakfast plate')) return game.say('Your plate is already a structural achievement.'); game.give('breakfast plate'); game.say('Powdered eggs, two sausage links, a biscuit you didn’t mean to take.'); } });
-  interact.push({ pos: new T.Vector3(-0.8, 1.2, -7.9), r: 1.1, when: () => breakfast.group.visible, label: () => 'Orange juice',
+  interact.push({ pos: new T.Vector3(-0.8, 1.2, -7.9), r: 1.1, when: () => breakfast.open, label: () => 'Orange juice',
     use: () => { game.sound.pour(); game.give('orange juice'); game.say('“Orange drink.” Close enough.'); } });
 
   // ---------- lobby atmosphere ----------

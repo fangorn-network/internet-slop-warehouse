@@ -81,7 +81,7 @@ export function buildPool(ctx) {
     s.position.set(cx, 1.55, -9.215); s.rotation.y = Math.PI; scene.add(s);
     interact.push({ pos: new T.Vector3(cx, 1.2, -9.5), r: 1.2, label: () => 'Pool equipment room', use: () => game.say('Locked. Behind it a pump hums, and the door smells of chlorine.') });
   }
-  add(lib.model('ph-korean-fire-extinguisher-01', { height: 0.6 }), 1.5, 0.9, -10.82);   // on the walkway's north wall, like the corridors'
+  add(lib.model('hotel-extinguisher-cabinet', { origin: true }), 1.5, 0.85, -10.9);   // on the walkway's north wall face, like the corridors'
 
   function waterSurface(w, d, strength, color = '#4fb6d4') {
     const size = 128, data = new Uint8Array(size * size * 4);

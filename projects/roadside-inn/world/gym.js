@@ -29,7 +29,7 @@ export function buildGym(ctx) {
   const gymTV = F.flatTV(1.1); add(gymTV.group, 17.85, 2.1, -5, -Math.PI / 2);
   const gymSign = F.sign('FITNESS CENTER\n5 AM – 11 PM · Room key required', { w: 1.2, h: 0.36, bg: '#24303f', font: 'bold 44px system-ui, sans-serif' });
   gymSign.position.set(15.2, 2.75, -0.885); scene.add(gymSign);
-  add(lib.model('ph-korean-fire-extinguisher-01', { height: 0.6 }), 13.66, 0.9, -1.15);
+  add(lib.model('hotel-extinguisher-cabinet', { origin: true }), 13.57, 0.85, -1.4, Math.PI / 2);   // on the west wall face, by the door
   light(15.75, 2.6, -5, '#f4f8ff', 10, 8);
   // Gym door: glass, key card from the corridor, push from inside.
   {

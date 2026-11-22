@@ -99,17 +99,11 @@ function mural(W = 4096, H = 3713) {
   s += `<g fill="none" stroke="#e8f1fb" stroke-width="3" opacity="0.18" stroke-dasharray="26 12">${grid}</g>`;
   // navy land: Mark Twain forest tracts, the army post, a state forest, a wildlife area
   const tracts = [[0.64, 0.74, 0.08, 0.13], [0.46, 0.84, 0.06, 0.1], [0.83, 0.62, 0.08, 0.1], [0.2, 0.95, 0.1, 0.06], [0.74, 0.93, 0.07, 0.06], [0.92, 0.84, 0.06, 0.08], [0.33, 0.86, 0.04, 0.06]];
-  // public land follows the survey: each tract is a cluster of section-grid cells, so its edges step at right angles
-  const cell = 0.03;
-  for (const [cx, cy, rx, ry] of tracts) {
-    let cells = '';
-    for (let u = cx - rx; u < cx + rx; u += cell) for (let v = cy - ry; v < cy + ry; v += cell) {
-      const e = ((u - cx) / rx) ** 2 + ((v - cy) / ry) ** 2;
-      if (e < 0.5 + rnd() * 0.7) cells += `<rect x="${(u * W - 1).toFixed(0)}" y="${(v * H - 1).toFixed(0)}" width="${(cell * W + 2).toFixed(0)}" height="${(cell * H + 2).toFixed(0)}"/>`;
-    }
-    s += `<g fill="#13264a">${cells}</g>`;
-  }
-  s += `<path d="M${0.47 * W} ${0.53 * H} L${0.545 * W} ${0.52 * H} L${0.55 * W} ${0.61 * H} L${0.5 * W} ${0.635 * H} L${0.465 * W} ${0.6 * H}Z" fill="#13264a"/>`;
+  // Public land as a tone, not a solid: a darker blue at part opacity with softly irregular edges. (It was drawn as
+  // stepped section-grid cells in solid navy: at standing distance the steps read as black pixel blocks, a missing
+  // texture, not as forest. Real wayfinding murals shade public land a step darker than the field.)
+  for (const [cx, cy, rx, ry] of tracts) s += `<path d="${blob(cx, cy, rx, ry, W, H, rnd, 26, 0.22)}" fill="#163f86" opacity="0.5"/>`;
+  s += `<path d="${blob(0.505, 0.575, 0.04, 0.05, W, H, rnd, 18, 0.18)}" fill="#163f86" opacity="0.5"/>`;   // the army post
   // local roads: many faint white hairlines (the street-grid look of the reference)
   let local = '';
   for (let i = 0; i < 260; i++) {

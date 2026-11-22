@@ -178,5 +178,27 @@
       "upholstery"
     ],
     "description": "Phone level of detail of hotel-lobby-sofa-2: the same model with its dense smooth meshes (upholstery, cables, bottle lathes) decimated to about 30 % and textures at most 512 px; names, materials and take_ nodes unchanged. Built by projects/roadside-inn/blender/mobile_lod.py from hotel-lobby-sofa-2. Original CC0."
+  },
+  {
+    "id": "hotel-extinguisher-cabinet",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-extinguisher-cabinet.glb",
+    "title": "Fire extinguisher cabinet (US, semi-recessed) \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "hotel",
+      "realistic",
+      "blender",
+      "original",
+      "cc0",
+      "life-safety",
+      "fire-extinguisher",
+      "cabinet",
+      "wall",
+      "us"
+    ],
+    "description": "A semi-recessed fire extinguisher cabinet as US hotels have them: white steel trim 72 mm proud of the wall, clear acrylic door with vertical red FIRE EXTINGUISHER lettering and a chrome pull, a white tub, and a red 10 lb ABC extinguisher inside (black valve and lever, gauge, hose, instruction label, yellow inspection tag). Origin at the wall face, bottom centre; front faces +Z. Mount the bottom about 0.85 m up. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/lifesafety.py)."
   }
 ]

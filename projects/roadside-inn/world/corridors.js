@@ -25,7 +25,7 @@ export function buildCorridors(ctx) {
   // Anchors sit just above the ceiling face, where the downlights are: the ceiling faces away from them. 25 cm below it they burned a hotspot into it.
   for (const x of [10, 22]) light(x, CEIL + 0.01, 0, '#ffe7c7', 7, 8);
   for (const x of [-8, 2, 10, 20, 27]) light(x, FLOOR2 + CEIL + 0.01, 0, '#ffe7c7', 7, 8);
-  for (const [x, y] of [[20, 0], [-4, FLOOR2], [24, FLOOR2]]) add(lib.model('ph-korean-fire-extinguisher-01', { height: 0.6 }), x, y + 0.9, -0.85);
+  for (const [x, y] of [[20, 0], [-4, FLOOR2], [24, FLOOR2]]) add(lib.model('hotel-extinguisher-cabinet', { origin: true }), x, y + 0.85, -0.93);   // US semi-recessed cabinets (blender/lifesafety.py) on the corridor's north wall face
   // Directory signs on the south corridor wall, read by someone stepping out of the elevator (facing +z:
   // their left is east, their right is west). Placed on clear wall between the linen/staff door and room 212/102.
   const directory = F.sign('← 209–218        201–208 →', { w: 1.3, h: 0.2, bg: '#24303f', font: 'bold 44px system-ui, sans-serif' });

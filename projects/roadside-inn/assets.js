@@ -41,7 +41,7 @@ const MODELS = [
   'ph-modern-coffee-table-01', 'ph-side-table-01', 'ph-modern-ceiling-lamp-01', 'ph-potted-plant-01',
   'ph-potted-plant-04', 'ph-round-wooden-table-01',
   'ph-wetfloorsign-01', 'ph-lifebuoy', 'ph-wall-clock',
-  'ph-shrub-03', 'ph-korean-fire-extinguisher-01', 'ph-fire-alarm',   // fire_alarm: pull stations (world/life-safety.js)
+  'ph-shrub-03', 'ph-fire-alarm',   // fire_alarm: pull stations (world/life-safety.js)
   'municipal-water-tower', 'ph-desk-lamp-arm-01',
   // original Blender furniture (blender/bed.py, blender/furniture.py)
   ...['king-bed', 'headboard', 'nightstand', 'table-lamp', 'credenza-tv', 'desk', 'closet', 'microfridge', 'ptac', 'vanity', 'toilet', 'snack-vending', 'luggage-cart', 'lobby-sofa', 'accent-chair-mustard',
@@ -50,7 +50,7 @@ const MODELS = [
   // Formula Blue lobby (blender/lobby.py) and a Poly Haven stone-top coffee table
   ...['checkin-pod', 'sectional', 'lounge-chair-navy', 'communal-table', 'bar-stool', 'market-cooler', 'market-shelf', 'business-center', 'task-chair'].map(s => 'hotel-' + s), 'ph-coffee-table-round-01',
   // lived-in props with printed labels (blender/props.py, labels.mjs) and a second Poly Haven plant
-  ...['outlet', 'brochure-rack', 'newspaper', 'newspaper-stack', 'coffee-cup', 'phone', 'entry-mat', 'coffee-board', 'waste-cabinet', 'waste-bin', 'desk-items', 'desk-closed', 'lobby-sofa-2', 'tv-remote', 'map-mural', 'wall-art'].map(s => 'hotel-' + s), 'ph-potted-plant-02',
+  ...['extinguisher-cabinet', 'outlet', 'brochure-rack', 'newspaper', 'newspaper-stack', 'coffee-cup', 'phone', 'entry-mat', 'coffee-board', 'waste-cabinet', 'waste-bin', 'desk-items', 'desk-closed', 'lobby-sofa-2', 'tv-remote', 'map-mural', 'wall-art'].map(s => 'hotel-' + s), 'ph-potted-plant-02',
   ...['1990s-sedan', '1990s-suv', '1990s-pickup-truck', '1990s-minivan', '1990s-station-wagon', '1990s-hatchback', 'semi-truck', 'dumpster', 'utility-pole', 'street-light', 'vending-machine', 'fire-hydrant', 'traffic-cone', 'bollard', 'guard-rail'].map(s => 'g3-' + s),
   ...STATION_PARTS,   // the travel stop across the interstate (station.js)
 ];
@@ -58,7 +58,7 @@ const MODELS = [
 // clearance pass measures every prop). With stream: true these load after the first frame, nearest first.
 export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-02', 'ph-potted-plant-04', 'hotel-brochure-rack', 'hotel-newspaper', 'hotel-newspaper-stack', 'hotel-coffee-cup', 'ph-round-wooden-table-01',
   'ph-lifebuoy', 'ph-wetfloorsign-01', 'ph-wall-clock', 'ph-ottoman-01', 'ph-modern-coffee-table-01',
-  'ph-korean-fire-extinguisher-01', 'municipal-water-tower', 'g3-treadmill', 'g3-exercise-bike', 'g3-dumpster',
+  'hotel-extinguisher-cabinet', 'municipal-water-tower', 'g3-treadmill', 'g3-exercise-bike', 'g3-dumpster',
   ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'floor-lamp', 'luggage-cart', 'housekeeping-cart', 'bar-stool', 'task-chair', 'market-shelf', 'business-center'].map(s => 'hotel-' + s), 'ph-coffee-table-round-01', ...STATION_PARTS]);
 const PBR = ['color', 'normal', 'roughness'];
 const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, oak: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR, linen: PBR };
@@ -272,7 +272,7 @@ export function captureEnv(renderer, scene, at, { bounces = 2, intensity = 1 } =
 // code moves or finds by name (doors, leaves, drawers, sockets, screens, buttons, lights), loose and moving props,
 // skinned people, and mirrored parts (their winding would flip). Returns how many meshes it removed.
 // ponytail: name-based guard. A new animated part needs a name matching KEEP (or userData.moves on its model).
-const KEEP = /^(un)?made|open_|socket|take_|door|leaf|drawer|lid|handle|hinge|screen|tv_|button|btn|led|light|glow|shade|mirror|rail|display|ceiling/i;
+const KEEP = /^(un)?made|^(food|batter|tank)\d|open_|socket|take_|door|leaf|drawer|lid|handle|hinge|screen|tv_|button|btn|led|light|glow|shade|mirror|rail|display|ceiling/i;
 const SKIP_MODEL = /elevator|cart|bag|semi-truck|sedan|suv|wagon|hatchback|pickup|minivan/i;   // things that move as a whole or by part
 // Phones also collapse flat-colour materials (no maps, no glow, opaque) into a few shared vertex-colour ones, keyed by
 // glossy/matte and metal/not: a cooler's 14 coloured caps and plastics become 2-3 draw calls.
@@ -368,9 +368,9 @@ export function flatParts(parts, ok = () => true, mapped = false) {
 // Phones: merge across props too. Props share materials (the print atlases, oak, quartz, the flat-colour set), so per 8 m
 // cell every static prop's mesh of one material becomes one mesh: the coffee station, its waste cabinet and pegboard
 // share oak, quartz, charcoal and the lobby print. The emptied groups stay (affordances and saves use their frames).
-// Skips props code shows or hides as a whole (breakfast, the ice bucket, staff cups, the beds) and anything zone-pinned
+// Skips props code shows or hides as a whole (the ice bucket, staff cups, the beds) and anything zone-pinned
 // to a different zone than its neighbours (each cell is also keyed by zone).
-const WHOLE = /breakfast|ice-bucket|coffee-cup|king-bed|unmade|newspaper|elevator|cart|door/i;
+const WHOLE = /ice-bucket|coffee-cup|king-bed|unmade|newspaper|elevator|cart|door/i;
 export function mergeAcross(scene) {
   if (!economy) return 0;
   const buckets = new Map(), p = new T.Vector3(), box = new T.Box3();
