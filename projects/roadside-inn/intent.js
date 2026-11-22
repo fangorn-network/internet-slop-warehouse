@@ -44,10 +44,24 @@
 // things: { [id]: { at?: [x, y, z], prop?: modelId, kind: 'tv' | 'phone' | 'screen' | 'work' } }, and manner (body.js:
 // notice / civil / engage / linger distances and times). Their activities use posture / attend / wait, no 'go'.
 //
-// REACTIONS (W2 design, data only): reacts = { [event]: { mood?: 'startled' | 'annoyed' | 'amused', do: Step[] | 'flinch'
-// | 'step-away' | 'leave', say?: string[], cooldown?: s } }, events being 'player-near', 'player-stares', 'hit' (a thrown
-// thing touched them: kg, m/s), 'near-miss' (landed within 1.5 m), 'noise' (an impact over N joules within earshot). A
-// reaction interrupts the current activity, then the runner picks again (a startled guest may 'leave' to their room).
+// REACTIONS (v1, 2026-11-21; runs in world/staff.js). What a resident does when something happens to them:
+//   reacts = { [event]: Level | Level[], cooldown?: s }   // a list escalates: the nth time it happens, the nth level
+//                                                         //   (the last one repeats); cooldown (default 1.5 s) swallows
+//                                                         //   repeats of one event (a prop rolling against them)
+//   Level = { mood?: 'startled' | 'annoyed' | 'angry',    // how they feel about you from now on (moods only go up;
+//                                                         //   anyone startled or worse stops their friendly greeting)
+//             do?: 'flinch' | 'guard' | 'step-away' | 'leave' | 'call-police' | Step[],
+//                                                         //   flinch: head to it, hands up a moment; guard: turn to face
+//                                                         //   you, hands up, hold; step-away: guard, then walk a couple of
+//                                                         //   metres off; leave: go to resident.home and stay there a
+//                                                         //   long while; call-police: go to place `phone` and dial; a
+//                                                         //   Step list: an ad-hoc activity (intent steps, above)
+//             say?: string[],                             // one at random (plain lines, the way they'd really say it)
+//             flag?: string,                              // a lasting consequence the game reads and saves (game.flags)
+//             phone?: placeId }                           // where call-police goes
+//   events: 'hit' (a thrown thing touched them: kg, m/s), 'near-miss' (one landed within 1.5 m), later 'player-near',
+//   'player-stares', 'noise'. A reaction interrupts the current activity; when it's done the runner picks again.
+//   resident.home: placeId they retreat to (their room, their car).
 
 const rand = (a, b = a) => a + Math.random() * (b - a);
 const BEAT = { pose: 'pose', hold: 'cup', posture: 'posture', attend: 'attend', use: 'use' };   // step → the stop field it sets
@@ -66,6 +80,21 @@ export function route(world, from, to) {
   if (dist[to] === undefined) return [];
   const path = []; for (let n = to; n !== undefined; n = prev[n]) path.unshift(P[n]);
   return path;
+}
+
+/**
+ * Pick a reaction: `memory` is the resident's own record ({} to start; kept between calls), `event` { type, ... }, `t`
+ * seconds now. Returns the Level to act out (with `say` picked, `n` how many times so far) or null (no reacts for it,
+ * or still in its cooldown).
+ */
+export function reaction(resident, memory, event, t) {
+  const r = resident.reacts?.[event.type]; if (!r) return null;
+  const levels = Array.isArray(r) ? r : [r], m = memory[event.type] ??= { n: 0, last: -Infinity };
+  if (t - m.last < (resident.reacts.cooldown ?? 1.5)) return null;
+  const lv = levels[Math.min(m.n, levels.length - 1)]; m.n++; m.last = t;
+  const RANK = { startled: 1, annoyed: 2, angry: 3 };
+  if ((RANK[lv.mood] ?? 0) > (RANK[memory.mood] ?? 0)) memory.mood = lv.mood;
+  return { ...lv, n: m.n, say: lv.say?.length ? lv.say[Math.floor(Math.random() * lv.say.length)] : null };
 }
 
 /**
@@ -111,7 +140,10 @@ export function mind(resident, world) {
       st.last = st.doing; st.doing = choose(phase);
       return compile(st.doing, at);
     },
-    /** Start a named activity now (tests, scripted beats). */
-    start(name, at) { st.last = st.doing; st.doing = name; return compile(name, at); },
+    /** Start a named activity now (tests, scripted beats); or an ad-hoc one: steps instead of a name (a reaction). */
+    start(name, at) {
+      if (Array.isArray(name)) { resident.activities['(react)'] = { steps: name }; name = '(react)'; }
+      st.last = st.doing; st.doing = name; return compile(name, at);
+    },
   };
 }

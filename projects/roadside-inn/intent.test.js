@@ -40,3 +40,17 @@ test("a sitter's activity is posture and attention beats in place, no walking", 
   const s = mind(gene, world).start("phone", [2, 0.5, 6]);
   expect(s).toEqual([{ p: [2, 0.5, 6], wait: 20, posture: "phone", attend: "phone" }]);
 });
+
+test("reactions escalate per event, respect the cooldown, and moods only go up", async () => {
+  const { reaction } = await import("./intent.js");
+  const dana = { reacts: { cooldown: 2, hit: [{ mood: "startled", do: "flinch", say: ["Whoa!"] }, { mood: "annoyed", do: "guard" }, { mood: "angry", do: "call-police", flag: "policeCalled" }], "near-miss": { mood: "startled", do: "flinch" } } };
+  const mem = {};
+  expect(reaction(dana, mem, { type: "hit" }, 0)).toMatchObject({ do: "flinch", say: "Whoa!", n: 1 });
+  expect(reaction(dana, mem, { type: "hit" }, 1)).toBeNull();   // same throw still rolling against her
+  expect(reaction(dana, mem, { type: "hit" }, 3)).toMatchObject({ do: "guard", say: null });
+  expect(reaction(dana, mem, { type: "near-miss" }, 3.5)).toMatchObject({ do: "flinch" });
+  expect(mem.mood).toBe("annoyed");   // a near miss after a hit doesn't calm her down
+  expect(reaction(dana, mem, { type: "hit" }, 6)).toMatchObject({ do: "call-police", flag: "policeCalled" });
+  expect(reaction(dana, mem, { type: "hit" }, 9)).toMatchObject({ do: "call-police" });   // the last level repeats
+  expect(reaction({}, {}, { type: "hit" }, 0)).toBeNull();
+});

@@ -1,0 +1,302 @@
+{
+  "flow": {
+    "people": {
+      "emmas": [
+        "c5cacf",
+        "b7c1ba"
+      ],
+      "phases": [
+        0,
+        0.3849651002777743
+      ],
+      "gait": [
+        1.18,
+        0.99,
+        0.99,
+        0.99,
+        1.18,
+        1.18
+      ],
+      "slow": 0.7767031768942743,
+      "fast": 1.0984241667021517,
+      "hipTravel": 0.056,
+      "pinned": [
+        "hotel-bar-stool",
+        "ph-potted-plant-04",
+        "ph-modern-coffee-table-01",
+        "hotel-task-chair",
+        "hotel-bar-stool"
+      ]
+    },
+    "sitting": [
+      {
+        "at": [
+          2.36,
+          0.52,
+          6.55
+        ],
+        "hipOverSeat": 0.057,
+        "feetOverSupport": [
+          0.089,
+          0.089
+        ],
+        "thighOverSeat": 0.024,
+        "handReach": 0.15,
+        "handToSurface": [
+          -0.018,
+          0.184
+        ],
+        "handToTarget": [
+          null,
+          null
+        ]
+      },
+      {
+        "at": [
+          -2.09,
+          0.87,
+          -4.61
+        ],
+        "hipOverSeat": 0.08,
+        "feetOverSupport": [
+          0.067,
+          0.067
+        ],
+        "thighOverSeat": 0.054,
+        "handReach": 0.381,
+        "handToSurface": [
+          0.03,
+          0.03
+        ],
+        "handToTarget": [
+          0,
+          0
+        ]
+      },
+      {
+        "at": [
+          5.5,
+          0.59,
+          -3.55
+        ],
+        "hipOverSeat": 0.065,
+        "feetOverSupport": [
+          0.089,
+          0.089
+        ],
+        "thighOverSeat": 0.031,
+        "handReach": 0.395,
+        "handToSurface": [
+          0.035,
+          0.035
+        ],
+        "handToTarget": [
+          0,
+          0
+        ]
+      }
+    ],
+    "still": [
+      {
+        "who": "Gene, 58, sells commercial flooring across three states",
+        "moving": 0,
+        "hips": 0,
+        "task": 1
+      },
+      {
+        "who": "A nurse between shifts with her phone",
+        "moving": 0,
+        "hips": 0,
+        "task": 1
+      },
+      {
+        "who": "A rep printing tomorrow’s boarding pass",
+        "moving": 0,
+        "hips": 0,
+        "task": 0.97
+      },
+      {
+        "who": "Dana",
+        "moving": 0.094,
+        "hips": 0.01,
+        "task": 0.81
+      }
+    ],
+    "gene": {
+      "looked": 0.72,
+      "noise": {
+        "after": 0.17,
+        "lead": "head",
+        "eye0": 0.36,
+        "eye1": 0.16,
+        "head0": 0.36,
+        "head1": 1.05
+      },
+      "posture": {
+        "start": 0.207,
+        "mid": 0.203,
+        "end": 0.002
+      }
+    },
+    "stance": {
+      "stances": [
+        4.85,
+        7.77
+      ],
+      "hold": 21.2
+    },
+    "slowWalk": {
+      "rate": 0.778,
+      "cadence": 78,
+      "plantedSpeed": 0.083
+    },
+    "drift": {
+      "q": 0.00000115,
+      "scale": 0.00000173
+    },
+    "turn": {
+      "turned": 0.11,
+      "moved": 0
+    },
+    "start": 0.04,
+    "avoid": {
+      "z": -2.903,
+      "yaw": -0.223
+    },
+    "meet": {
+      "gap": 0.92,
+      "cart": 0.85,
+      "zMax": 0.67,
+      "maria": 3.3,
+      "beth": -5.1
+    },
+    "failed": "two people meeting in the corridor keep right and pass without touching each other or the cart, inside the walls",
+    "checkinTyping": {
+      "at": "desk-keys",
+      "fix": "fix",
+      "eyesOn": 0,
+      "toYou": 1.6,
+      "handsToKeys": 0.01,
+      "handY": [
+        1.114,
+        1.114
+      ],
+      "keys": 4,
+      "card": false,
+      "foot": [
+        -7.92,
+        0,
+        -3.54
+      ]
+    },
+    "checkinLook": {
+      "at": "desk-keys",
+      "fix": "fix",
+      "eyesOn": 1.6,
+      "toYou": 0,
+      "handsToKeys": 0,
+      "handY": [
+        1.115,
+        1.115
+      ],
+      "keys": 7,
+      "card": false,
+      "foot": [
+        -7.92,
+        0,
+        -3.54
+      ]
+    },
+    "checkinKey": {
+      "at": "desk-serve",
+      "fix": "fix",
+      "eyesOn": null,
+      "toYou": 0,
+      "handsToKeys": null,
+      "handY": [
+        0.923,
+        1.226
+      ],
+      "keys": 39,
+      "card": true,
+      "foot": [
+        -8.67,
+        0,
+        -3.93
+      ]
+    },
+    "hit1": {
+      "do": "flinch",
+      "t": 0.43,
+      "mood": "startled",
+      "said": "“Hey! Watch it, buddy.”",
+      "handY": 1.36,
+      "propVz": 1.1,
+      "yaw": 0,
+      "greet": null,
+      "going": null
+    },
+    "hit2": {
+      "do": "guard",
+      "t": 1.6,
+      "mood": "annoyed",
+      "said": "“I’m not playin’ with you. Knock it off.”",
+      "handY": 1.2,
+      "propVz": 0,
+      "yaw": 0,
+      "greet": null,
+      "going": null
+    },
+    "hit3": {
+      "do": null,
+      "t": null,
+      "mood": "angry",
+      "said": "“Unbelievable. I gotta be up at four.”",
+      "handY": 0.83,
+      "propVz": 0,
+      "yaw": 0,
+      "greet": null,
+      "going": true
+    },
+    "nearMiss": {
+      "n": 1,
+      "prop": {
+        "x": 1.899586796760559,
+        "y": 0.01627619005739689,
+        "z": 1.0000414848327637
+      },
+      "v": {
+        "x": -0.006866306532174349,
+        "y": 0.044438306242227554,
+        "z": 0.003367613535374403
+      }
+    },
+    "police": {
+      "flag": true,
+      "at": [
+        -9.81,
+        0,
+        -3.76
+      ],
+      "hand": [
+        -9.82,
+        1.2,
+        -3.36
+      ],
+      "said": "Dana: “No. Don’t come back here.”"
+    }
+  },
+  "lint": null,
+  "errors": [
+    "people: two people meeting in the corridor keep right and pass without touching each other or the cart, inside the walls"
+  ],
+  "shots": 0,
+  "stats": {
+    "colliders": 476,
+    "interact": 187,
+    "drawCalls": 237,
+    "textures": 340,
+    "programs": 99,
+    "triangles": 235273
+  }
+}

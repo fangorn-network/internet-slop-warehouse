@@ -140,7 +140,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
   const fingers = [0, 1].map(i => FINGERS.map(n => [1, 2, 3].map(k => bone(new RegExp(`${i ? 'Right' : 'Left'}Hand${n}${k}$`)))));
   const palmSign = [1, 1], curlSign = [1, 1];
   // radians at the base, middle and tip joints of each finger (the thumb takes half)
-  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], mouse: [0.3, 0.4, 0.3], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7], hang: [0.2, 0.35, 0.25] };
+  const CURL = { rest: [0.22, 0.35, 0.25], table: [0.2, 0.35, 0.3], keyboard: [0.25, 0.5, 0.4], mouse: [0.3, 0.4, 0.3], phone: [0.75, 0.95, 0.6], handle: [0.95, 1.05, 0.7], hang: [0.2, 0.35, 0.25], guard: [0.3, 0.45, 0.35] };
   function handFrame(i) {
     const f0 = fingers[i], mid = f0[2][0], ix = f0[1][0], pk = f0[4][0];
     if (!B.hands[i] || !mid || !ix || !pk) return null;
@@ -166,7 +166,7 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     for (let n = 0; n < 5; n++) fingers[i][n].forEach((b, k) => { if (b && (n || k)) axisTurn(b, F.a, curlSign[i] * c[k] * (n ? 1 : 0.5)); });
   }
   // what they look at: the person they'd notice (the player), what they're doing, a noise just heard
-  let target = null, task = null, heard = null, socialSpeed = 0;
+  let target = null, task = null, heard = null, socialSpeed = 0, fixed = null;
   const lastTarget = new T.Vector3();
   // gaze state: head yaw/pitch and torso yaw as critically damped springs (eyes jump, the head follows)
   const G = { hy: 0, hp: 0, ty: 0, vy: 0, vp: 0, vt: 0, first: true, dir: new T.Vector3(0, 0, 1) };
@@ -274,7 +274,8 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
         if (grip === 'phone') {   // palms up and in, toward the phone held between them at the chest
           const inward = B.hips.getWorldPosition(new T.Vector3()).sub(B.hands[i].getWorldPosition(_v)).setY(0).normalize();
           orientHand(i, inward.add(UP).sub(fwd().multiplyScalar(0.3)));
-        } else orientHand(i, _w.set(0, -1, 0));
+        } else if (grip === 'guard') orientHand(i, fwd().add(UP.clone().multiplyScalar(0.3)));   // hands up, palms out toward what's coming
+        else orientHand(i, _w.set(0, -1, 0));
         curlHand(i, CURL[grip] ?? CURL.table);
         const F = taps[i].some(t => t > 0) && handFrame(i);
         if (F) taps[i].forEach((t, n) => { if (t > 0 && fingers[i][n][0]) axisTurn(fingers[i][n][0], F.a, curlSign[i] * 0.45 * t); });
@@ -292,7 +293,8 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     if (!B.head) return;
     const head = B.head.getWorldPosition(new T.Vector3()), f = fwd(), facing = Math.atan2(f.x, f.z);
     if (target) { socialSpeed += ((dt > 0 ? target.distanceTo(lastTarget) / dt : 0) - socialSpeed) * Math.min(1, dt * 4); lastTarget.copy(target); }
-    focus = att.tick(dt, { head: head.toArray(), facing, task: task ? { at: task.at.toArray(), kind: task.kind } : null, social: target ? { at: target.toArray(), speed: socialSpeed } : null, noise: heard });
+    if (fixed) focus = { id: 'fix', at: fixed.toArray(), lead: 'eyes', changed: focus.id !== 'fix' };   // a scripted look (a reaction, a check-in beat)
+    else focus = att.tick(dt, { head: head.toArray(), facing, task: task ? { at: task.at.toArray(), kind: task.kind } : null, social: target ? { at: target.toArray(), speed: socialSpeed } : null, noise: heard });
     heard = null;
     let yaw = 0, pitch = 0;
     const to = focus.at ? new T.Vector3(...focus.at).sub(head) : null;
@@ -350,6 +352,8 @@ export function createPerson(source, { height = 1.72, tint, manner } = {}) {
     lookAt(v) { target = v; if (v) lastTarget.copy(v); },
     /** What they're doing, for the eyes: { at: Vector3 (may move), kind: 'tv' | 'phone' | 'screen' | 'work' | 'path' } or null. */
     attend(t) { task = t; },
+    /** Look at this (a Vector3, may move) whatever attention would pick, until fix(null): scripted beats, reactions. */
+    fix(v) { fixed = v; },
     /** Standing, hands on [left, right] world points (Vector3s, may move; null for a free hand), e.g. a cart's handle; null lets go. */
     hold(points, grip = 'handle') { held = points ? { points, grip } : null; },
     /** A finger presses (0 thumb .. 4 pinky) on the hand that's holding something: a key, a mouse button. */

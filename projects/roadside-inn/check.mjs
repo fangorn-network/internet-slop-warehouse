@@ -416,7 +416,7 @@ if (mode === 'people') try {
   // hips don't rock. Before this round the heads moved 38-69 % of the time (a standing idle under a seated pose).
   await page.evaluate(() => __inn.teleport(-3, 0, 12, 0, 0)); await frames(20);
   flow.still = await page.evaluate(() => {
-    const T = __T, ppl = __inn.people.filter(p => p.posed === 'sit').concat([__inn.people[0]]), dt = 1 / 30;
+    const T = __T, ppl = __inn.people.filter(p => p.posed === 'sit').concat([__inn.world.clerk]), dt = 1 / 30;
     return ppl.map(p => {
       const fw = () => new T.Vector3(0, 0, 1).applyQuaternion(p.bones.head.getWorldQuaternion(new T.Quaternion())), hip = () => p.bones.hips.getWorldPosition(new T.Vector3());
       let prev = fw(), moving = 0, h0 = hip(), hmax = 0; const seen = {};
@@ -537,6 +537,79 @@ if (mode === 'people') try {
   });
   assert.deepEqual(flow.graph, [], 'the walk graph and places are clear of solid furniture and walls');
 } catch (e) { flow.failed = e.message.split('\n')[0]; errors.push('people: ' + flow.failed); }
+// Check-in and reactions: their own try, so they run (and report) whatever happened above.
+if (mode === 'people') try {
+  const frames = n => page.evaluate(n => new Promise(r => { const f = () => (n-- > 0 ? requestAnimationFrame(f) : r()); f(); }), n);
+  // ---- Dana really checks you in (main.js checkIn → game.danaBeat): to her keyboard, typing with her eyes on the screen,
+  // a look up at you when she talks, your card off the counter, the key handed over from the counter gap ----
+  await page.evaluate(() => { __inn.teleport(-8.4, 0, -1.6, 0, -0.12); __sounds = []; });
+  await page.waitForFunction(() => __inn.world.walkers.find(w => w.r.id === 'dana').serving, null, { timeout: 20000 });
+  await page.evaluate(() => __inn.game.checkIn(__inn.world.clerk));
+  const danaNow = () => page.evaluate(() => { const T = __T, w = __inn.world.walkers.find(w => w.r.id === 'dana'), p = w.p, h = p.bones.hands.map(b => b.getWorldPosition(new T.Vector3()));
+    const tgt = w.ws?.hands; return { at: w.deskAt, fix: p.focus.id, eyesOn: p.focus.at && w.screen ? +new T.Vector3(...p.focus.at).distanceTo(w.screen.pos).toFixed(2) : null, toYou: p.focus.at ? +new T.Vector3(...p.focus.at).distanceTo(new T.Vector3(__inn.player.x, __inn.player.y + 1.6, __inn.player.z)).toFixed(2) : null,
+      handsToKeys: tgt ? +Math.max(...h.map((x, i) => x.distanceTo(tgt[i]))).toFixed(3) : null, handY: h.map(x => +x.y.toFixed(3)), keys: __sounds.filter(x => x[0] === 'key').length, card: w.keyCard.visible, foot: p.root.position.toArray().map(v => +v.toFixed(2)) }; });
+  await page.waitForFunction(() => { const w = __inn.world.walkers.find(w => w.r.id === 'dana'); return w.desk?.type && w.desk.eyes === 'screen' && w.ws && w.wait > 0; }, null, { timeout: 20000 });
+  await page.evaluate(() => { __sounds = []; }); await page.waitForFunction(() => __sounds.filter(x => x[0] === 'key').length >= 4, null, { timeout: 10000 }).catch(() => {}); flow.checkinTyping = await danaNow();
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-checkin-typing.png`, timeout: 180000 });
+  await page.waitForFunction(() => { const w = __inn.world.walkers.find(w => w.r.id === 'dana'); return w.desk?.eyes === 'guest' && w.deskAt === 'desk-keys' && w.wait > 0; }, null, { timeout: 20000 });
+  await frames(20); flow.checkinLook = await danaNow();
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-checkin-look.png`, timeout: 180000 });
+  await page.waitForFunction(() => __inn.world.walkers.find(w => w.r.id === 'dana').keyCard.visible, null, { timeout: 40000 });
+  flow.checkinKey = await danaNow();
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-checkin-key.png`, timeout: 180000 });
+  await page.waitForFunction(() => __inn.game.has('key card'), null, { timeout: 20000 });
+  const C = flow.checkinTyping;
+  assert.ok(C.at === 'desk-keys' && C.handsToKeys < 0.05 && C.keys >= 4 && C.fix === 'fix' && C.eyesOn < 0.05 && Math.min(...C.handY) > 1.09, 'checking you in, Dana types at her keyboard (hands on the keys, above the desk, keys clacking) with her eyes on the screen');
+  assert.ok(flow.checkinLook.toYou < 0.05 && flow.checkinLook.handsToKeys < 0.05, 'she looks up at you when she talks, hands still on the keys');
+  assert.ok(flow.checkinKey.at === 'desk-serve' && flow.checkinKey.card, 'she comes back to the counter and holds the key card out to you');
+  // ---- Reactions (intent.js reacts, world/staff.js thrown): a thrown thing that hits someone bounces off them, and they
+  // react: startled (flinch, hands up), then annoyed (turn to face you, guard), then they leave; Dana calls the police ----
+  await page.evaluate(() => {
+    const lobby = l => { const q = l.o.getWorldPosition(new __T.Vector3()); return q.y < 2 && q.x > -12 && q.x < 8 && q.z > -8 && q.z < 9; }, l = __inn.physics.loose.find(l => l.carry && lobby(l) && !l.o.userData.loose.roll && !l.o.userData.loose.tether && (l.b ? l.b.body.mass() : 1) < 1.5);
+    globalThis.__shot = (x, y, z, v) => { __inn.physics.wake(l); const b = l.b.body; b.setTranslation({ x, y, z }, true); b.setLinvel({ x: v[0], y: v[1], z: v[2] }, true); b.setAngvel({ x: 0, y: 0, z: 0 }, true); return b; };
+    globalThis.__park = (w, x, z, yaw) => { w.hidden = false; w.v = 0; w.re = null; w.p.root.position.set(x, 0, z); w.yaw = yaw; w.stops = __stops([{ p: [x, 0, z], wait: 60 }]); w.i = 1; w.at = w.stops[0]; w.wait = 60; };
+    __park(__inn.world.walkers[3], 0.6, -1.2, 0); __inn.teleport(0.6, 0, 1.6, 0, -0.1);
+  });
+  await frames(10);
+  const hit = who => page.evaluate(i => { const w = __inn.world.walkers[i], q = w.p.root.position; globalThis.__b = __shot(q.x, 1.25, q.z + 0.9, [0, 0.4, -5.5]); return true; }, who);
+  const reState = who => page.evaluate(i => { const T = __T, w = __inn.world.walkers[i], p = w.p, y = p.bones.hands.map(b => b.getWorldPosition(new T.Vector3()).y), v = __b.linvel();
+    return { do: w.re?.lv.do ?? null, t: w.re ? +w.re.t.toFixed(2) : null, mood: w.mem.mood ?? null, said: document.getElementById('say').textContent, handY: +Math.min(...y).toFixed(2), propVz: +v.z.toFixed(2), yaw: +w.yaw.toFixed(2), greet: w.say ?? null, going: w.stops.at(-1)?.hide ?? null }; }, who);
+  await hit(3); await page.waitForFunction(() => __inn.world.walkers[3].re?.t > 0.4, null, { timeout: 10000 });
+  flow.hit1 = await reState(3);
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-hit-flinch.png`, timeout: 180000 });
+  await page.waitForFunction(() => !__inn.world.walkers[3].re, null, { timeout: 10000 }); await page.waitForTimeout(600);
+  await page.evaluate(() => { const w = __inn.world.walkers[3]; w.yaw = Math.PI; w.p.root.rotation.y = Math.PI; });   // turned away from you this time
+  await hit(3); await page.waitForFunction(() => __inn.world.walkers[3].re?.t > 1.6, null, { timeout: 10000 });
+  flow.hit2 = await reState(3);
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-hit-guard.png`, timeout: 180000 });
+  await page.waitForFunction(() => !__inn.world.walkers[3].re, null, { timeout: 10000 }); await page.waitForTimeout(600);
+  await hit(3); await page.waitForFunction(() => __inn.world.walkers[3].re, null, { timeout: 10000 }); await page.waitForFunction(() => !__inn.world.walkers[3].re, null, { timeout: 10000 });
+  flow.hit3 = await reState(3);
+  assert.ok(flow.hit1.do === 'flinch' && flow.hit1.mood === 'startled' && /“/.test(flow.hit1.said) && flow.hit1.handY > 1.05 && flow.hit1.propVz > -1.5, 'a thrown thing that hits a guest bounces off him; he flinches, hands up, and says something');
+  assert.ok(flow.hit2.do === 'guard' && flow.hit2.mood === 'annoyed' && Math.abs(flow.hit2.yaw) < 0.4 && flow.hit2.handY > 1.0 && flow.hit2.greet === null, 'hit again, he turns to face you with his hands up, annoyed, and stops being friendly');
+  assert.ok(flow.hit3.mood === 'angry' && flow.hit3.going === true, 'a third time, he leaves for his room');
+  // a near miss: something landing a metre from Beth (brought down to the lobby) startles her
+  await page.evaluate(() => { const w = __inn.world.walkers[4]; __park(w, 1.0, 1.2, Math.PI); __inn.teleport(0.6, 0, 1.6, 0, -0.1); });
+  await frames(5); await page.evaluate(() => { globalThis.__b = __shot(1.9, 0.6, 1.0, [0, -3, 0]); });
+  await page.waitForFunction(() => __inn.world.walkers[4].mem['near-miss'], null, { timeout: 10000 }).catch(() => {});
+  flow.nearMiss = await page.evaluate(() => ({ n: __inn.world.walkers[4].mem['near-miss']?.n ?? 0, prop: __b.translation(), v: __b.linvel() }));
+  assert.ok(flow.nearMiss.n === 1, 'a thrown thing landing within 1.5 m of a guest startles them');
+  // Dana: hit three times, she calls the police from the desk phone; it sticks (a saved flag) and she won't check you in
+  await page.evaluate(() => { __inn.teleport(-8.4, 0, -1.8, 0, -0.1); });
+  await page.waitForTimeout(1500);
+  for (let k = 0; k < 3; k++) {
+    await page.evaluate(() => { const q = __inn.world.walkers.find(w => w.r.id === 'dana').p.root.position; globalThis.__b = __shot(q.x, 1.3, q.z + 0.8, [0, 0.3, -5]); });
+    await page.waitForFunction(k => __inn.world.walkers.find(w => w.r.id === 'dana').mem.hit?.n > k, k, { timeout: 10000 });
+    if (k === 0) { await page.waitForFunction(() => __inn.world.walkers.find(w => w.r.id === 'dana').re?.t > 0.4, null, { timeout: 5000 }); await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-dana-flinch.png`, timeout: 180000 }); }
+    await page.waitForFunction(() => !__inn.world.walkers.find(w => w.r.id === 'dana').re, null, { timeout: 10000 }); await page.waitForTimeout(400);
+  }
+  await page.waitForFunction(() => __inn.world.walkers.find(w => w.r.id === 'dana').police?.taps >= 5, null, { timeout: 20000 });
+  await page.evaluate(() => __inn.teleport(-9.4, 0, -1.7, 0.3, -0.15)); await frames(10);
+  await page.evaluate(() => __inn.forceRender()); await page.screenshot({ path: `${out}/people-dana-police.png`, timeout: 180000 });
+  flow.police = await page.evaluate(() => { const T = __T, w = __inn.world.walkers.find(w => w.r.id === 'dana'), h = w.p.bones.hands[1].getWorldPosition(new T.Vector3()); __inn.game.checkIn(__inn.world.clerk); return { flag: __inn.game.flags.policeCalled, at: w.p.root.position.toArray().map(v => +v.toFixed(2)), hand: h.toArray().map(v => +v.toFixed(2)), said: document.getElementById('say').textContent }; });
+  assert.ok(flow.police.flag === true && Math.hypot(flow.police.at[0] + 9.8, flow.police.at[2] + 3.78) < 0.15 && flow.police.hand[1] > 1.1 && /Dana: “/.test(flow.police.said), 'hit a third time, Dana calls the police from the desk phone (game.flags.policeCalled) and won\'t serve you');
+} catch (e) { flow.reactFailed = e.message.split('\n')[0]; errors.push('people (check-in, reactions): ' + flow.reactFailed); }
+
 if (mode === 'mobile' || !mode) {
   const phone = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
   phone.on('pageerror', e => errors.push('mobile: ' + e));

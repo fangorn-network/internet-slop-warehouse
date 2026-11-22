@@ -119,17 +119,21 @@ function aimLights(pos) {
   const ranked = world.lightAnchors.filter(a => a.intensity > 0 && (!world.lightVisible || world.lightVisible(a, pos))).map(a => [a, a.pos.distanceToSquared(pos)]).sort((p, q) => p[1] - q[1]);
   lamps.forEach((l, i) => { const a = ranked[i]?.[0]; l.intensity = a ? a.intensity : 0; if (a) { l.position.copy(a.pos); l.color.copy(a.color); l.distance = a.distance; } });
 }
-const tagBox = new T.Box3(), tagMid = new T.Vector3();
+const tagBox = new T.Box3(), tagMid = new T.Vector3(), ROOM_MID = new T.Vector3(14.25, FLOOR2 + 1.5, 5);   // room 212's middle
 function tagInterior() {                // idempotent; streamed props are tagged when they arrive
   scene.traverse(o => {
     if (!o.isMesh || tagged.has(o)) return;
     tagBox.setFromObject(o); if (tagBox.isEmpty()) return;
     tagged.add(o); tagBox.getCenter(tagMid);
     if (tagMid.x < BUILDING.x0 || tagMid.x > BUILDING.x1 || tagMid.z < BUILDING.z0 || tagMid.z > BUILDING.z1 || tagMid.y > BUILDING.y1) return;
+    // In 212 if any of it is (a wall running past the room has its middle outside, and kept the lobby's reflections in
+    // the dark room: a glowing wall). Such a mesh gets its own material, so dimming it doesn't dim the corridor's.
+    const in212 = !!world.in212?.(tagBox.clampPoint(ROOM_MID, tagMid)), whole = in212 && world.in212(tagBox.getCenter(tagMid));
+    if (in212 && !whole && !Array.isArray(o.material) && o.material && 'envMap' in o.material) o.material = o.material.clone();
     for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
       if (!m || !('envMap' in m) || m.userData.noEnv) continue;   // noEnv: overlays that must not pick up reflections (lived-in.js floor shade)
       m.envMap = interiorTex; m.envMapIntensity = LOOKS[timeOfDay].envIndoor; m.needsUpdate = true;
-      interiorMats.add(m); if (world.in212?.(tagMid)) roomMats.add(m);
+      interiorMats.add(m); if (in212) roomMats.add(m);
     }
   });
 }
@@ -203,28 +207,45 @@ function use() {
 // ---------- front desk ----------
 function checkIn(clerk) {
   if (busy) return;
+  if (game.flags.policeCalled) {   // you threw things at her and she called it in (world/staff.js reactions)
+    const lines = ['“I don’t have anything to say to you. They’re on their way.”', '“Please just wait outside.”', '“No. Don’t come back here.”'];
+    return game.say('Dana: ' + lines[Math.floor(Math.random() * lines.length)]);
+  }
   if (game.has('key card')) {
     const lines = ['“Everything okay with the room? Holler if you need anything.”', '“Breakfast starts at six. The waffle maker is a little temperamental.”', '“Ice machine’s on two, right across from the elevator.”', '“Quiet night. Truckers mostly, and a youth softball team on the first floor. Sorry in advance.”'];
     clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 1800);
     return game.say('Dana: ' + lines[Math.floor(Math.random() * lines.length)]);
   }
   busy = true;
+  // She really does it: steps to her keyboard and types the reservation up, eyes on the screen; looks up at you when she
+  // talks or needs something, takes your card off the counter, makes the key and brings it back over. Each beat:
+  // [seconds from the last, where she is and what she does (game.danaBeat, world/staff.js), clip, line].
+  const S = 'desk-serve', K = 'desk-keys';
   const script = [
-    ['Wave', 'Dana: “Evening! Welcome to the Heartland Inn. Checking in?”'],
-    ['Interact', 'Dana: “Let me pull that up… there you are. One king, non-smoking, two nights.”'],
-    ['Idle', 'Dana: “Can I see an ID and the card you booked with? …Perfect, thank you.”'],
-    ['Interact', 'Dana: “You’re in 212, second floor. Elevator’s just down the hall past the lounge, stairs right beside it.”'],
-    ['Idle', 'Dana: “Breakfast is six to nine-thirty. Pool and hot tub are open till ten, and the coffee is always on.”'],
-    ['Wave', 'Dana: “Here’s your key. Have a good night!”'],
+    [0, { at: S, eyes: 'guest' }, 'Wave', '“Evening! Welcome to the Heartland Inn. Checking in?”'],
+    [3.2, { at: K, type: true, eyes: 'screen' }, null, '“Let me pull that up…”'],
+    [3.6, { at: K, type: false, eyes: 'guest' }, 'Talk', '“There you are. One king, non-smoking, two nights.”'],
+    [2.6, { at: K, type: true, eyes: 'screen' }],
+    [2.0, { at: K, type: false, eyes: 'guest' }, 'Talk', '“Can I see an ID and the card you booked with?”'],
+    [2.4, { at: S, eyes: 'card', hand: 'card' }],
+    [2.2, { at: S, eyes: 'guest' }, null, '“…Perfect, thank you.”'],
+    [1.4, { at: K, type: true, eyes: 'screen' }, null, '“And I’ll just make you a key here.”'],
+    [3.4, { at: K, type: true, eyes: 'guest' }, null, '“You’re in 212, second floor. Elevator’s just down the hall past the lounge, stairs right beside it.”'],
+    [3.4, { at: K, type: true, eyes: 'screen' }],
+    [1.6, { at: K, type: false, eyes: 'guest' }, 'Talk', '“Breakfast is six to nine-thirty. Pool and hot tub are open till ten, and the coffee is always on.”'],
+    [3.6, { at: S, eyes: 'guest', hand: 'key' }, null, '“Here’s your key. Have a good night!”'],
   ];
-  script.forEach(([anim, text], i) => setTimeout(() => {
-    clerk.play(anim); game.say(text, 3.6);
-    if (i === script.length - 1) {
+  let at = 0;
+  script.forEach(([dt, beat, anim, text], i) => setTimeout(() => {
+    if (game.flags.policeCalled) { game.danaBeat?.(null); busy = false; return; }
+    game.danaBeat?.(beat); if (anim) clerk.play(anim); if (text) game.say('Dana: ' + text, 3.6);
+    if (anim === 'Talk') setTimeout(() => clerk.play('Idle'), 2000);
+    if (i === script.length - 1) setTimeout(() => {
       game.give('key card'); sound.beep(true);
       setGoal('Find room 212 on the second floor. The elevator and stairs are past the lounge, down the east hallway.');
-      setTimeout(() => { clerk.play('Idle'); busy = false; }, 1500);
-    }
-  }, i * 3700));
+      setTimeout(() => { game.danaBeat?.(null); clerk.play('Idle'); busy = false; }, 1000);
+    }, 2200);   // you take it from her hand
+  }, (at += dt) * 1000));
 }
 
 // ---------- vending ----------

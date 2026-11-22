@@ -7,7 +7,7 @@
 // when two meet head on), never overlapping anyone, and only going out of sight through a door when nobody's watching.
 import * as T from 'three';
 import { FLOOR2 } from '../world.js';
-import { mind } from '../intent.js';
+import { mind, reaction } from '../intent.js';
 import { findSpots, nearest, standAt, workstation } from '../affords.js';
 
 const TURN = 3;              // rad/s: people turn, they don't snap round
@@ -72,10 +72,17 @@ const RESIDENTS = [
       restock: { need: 'linen', weight: 1.4, steps: [['go', 'linen'], ['wait', 15, 30]], satisfies: { linen: 1 } },
       'check-list': { weight: 0.5, steps: [['wait', 6, 12]] },   // stops by the cart, checks the board
     },
-    says: { near: '“Evening! Need extra towels? I’ve got plenty.”' } },
+    says: { near: '“Evening! Need extra towels? I’ve got plenty.”' }, home: 'linen',
+    reacts: { hit: [
+      { mood: 'startled', do: 'flinch', say: ['“Oh! Careful, honey.”', '“Ow — hey.”'] },
+      { mood: 'annoyed', do: 'step-away', say: ['“Please don’t do that. I’m working.”', '“Okay, stop. That’s not funny.”'] },
+      { mood: 'angry', do: 'leave', say: ['“I’m telling Dana.”'] }],
+      'near-miss': { mood: 'startled', do: 'flinch', say: ['“Oh, my goodness.”'] } } },
   { id: 'deck-guest', model: 'rb-andre-casual', speed: 0.6, start: 'deck-s',
     who: 'A guest in a hotel robe', why: 'Drying off between swims, walking the deck to stay warm',
-    activities: { laps: { steps: [['go', 'deck-n'], ['wait', 4, 8], ['go', 'deck-s'], ['wait', 4, 8]] } } },
+    activities: { laps: { steps: [['go', 'deck-n'], ['wait', 4, 8], ['go', 'deck-s'], ['wait', 4, 8]] } },
+    reacts: { hit: [{ mood: 'startled', do: 'flinch', say: ['“Hey!”'] }, { mood: 'annoyed', do: 'step-away', say: ['“Come on, man. Knock it off.”', '“Really?”'] }],
+      'near-miss': { mood: 'startled', do: 'flinch' } } },
   { id: 'dale', model: 'rb-andre-casual', tint: '#a23b2a', speed: 1.0, start: 'car',
     who: 'Dale, driving to his sister’s in Omaha', why: 'Can’t sleep; keeps going out to smoke and check on the car',
     needs: { smoke: { level: 0.6, rate: 1 / 150 } },
@@ -84,7 +91,12 @@ const RESIDENTS = [
       'check-car': { weight: 0.8, steps: [['go', 'car'], ['wait', 15, 35]] },
       'look-at-road': { weight: 0.5, steps: [['go', 'lot-view'], ['wait', 10, 20]] },
     },
-    says: { near: '“Long drive?”' } },
+    says: { near: '“Long drive?”' }, home: 'car',
+    reacts: { hit: [
+      { mood: 'startled', do: 'flinch', say: ['“Whoa — hey!”', '“The heck was that?”'] },
+      { mood: 'annoyed', do: 'guard', say: ['“Real mature, bud.”', '“Do that again. See what happens.”'] },
+      { mood: 'angry', do: 'leave', say: ['“Nope. I’m done with this place.”'] }],
+      'near-miss': { mood: 'startled', do: 'flinch', say: ['“Jeez.”'] } } },
   { id: 'ray', model: 'rb-marcus-formal', tint: '#6b4e2e', speed: 1.05, cup: true, start: 'room-106',
     who: 'Ray, 52, long-haul driver on the I-80 run, two nights a month here',
     why: 'Off the clock for ten hours before a 5 a.m. pickup in Lincoln; drinks too much coffee to sleep',
@@ -94,7 +106,12 @@ const RESIDENTS = [
       vending: { need: 'snack', weight: 1.1, steps: [['go', 'vending'], ['wait', 8, 14], ['go', 'room-106'], ['wait', 30, 60]], satisfies: { snack: 1 } },
       'check-rig': { weight: 0.6, steps: [['go', 'front-window'], ['wait', 12, 25]] },   // eyes his truck in the lot
     },
-    says: { near: '“Coffee’s better than the truck stop. Barely. You headed east or west?”' } },
+    says: { near: '“Coffee’s better than the truck stop. Barely. You headed east or west?”' }, home: 'room-106',
+    reacts: { hit: [
+      { mood: 'startled', do: 'flinch', say: ['“Hey! Watch it, buddy.”', '“What the hell, man?”'] },
+      { mood: 'annoyed', do: 'guard', say: ['“You do that one more time, we’re gonna have a problem.”', '“I’m not playin’ with you. Knock it off.”'] },
+      { mood: 'angry', do: 'leave', say: ['“Unbelievable. I gotta be up at four.”'] }],
+      'near-miss': { mood: 'startled', do: 'flinch', say: ['“Easy.”'] } } },
   { id: 'beth', model: 'rb-emma-casual', tint: '#3d6b4f', speed: 0.9, start: 'room-207',
     who: 'Beth, in town for her niece’s graduation', why: 'Up late on the phone; fills the ice bucket every hour',
     needs: { ice: { level: 0.7, rate: 1 / 160 } },
@@ -102,7 +119,12 @@ const RESIDENTS = [
       ice: { need: 'ice', weight: 1.2, steps: [['go', 'ice'], ['wait', 5, 9], ['go', 'room-207'], ['wait', 45, 120]], satisfies: { ice: 1 } },
       'stretch-legs': { weight: 0.5, steps: [['go', 'door-N-12'], ['wait', 3, 6], ['go', 'room-207'], ['wait', 30, 60]] },
     },
-    says: { near: '“Ice machine works, it just sounds like a car crash.”' } },
+    says: { near: '“Ice machine works, it just sounds like a car crash.”' }, home: 'room-207',
+    reacts: { hit: [
+      { mood: 'startled', do: 'flinch', say: ['“Ow! Excuse me?”', '“Oh my gosh — what?”'] },
+      { mood: 'annoyed', do: 'step-away', say: ['“Okay, seriously, stop it.”', '“What is wrong with you?”'] },
+      { mood: 'angry', do: 'leave', say: ['“I’m calling the front desk.”'] }],
+      'near-miss': { mood: 'startled', do: 'flinch', say: ['“Jeez!”'] } } },
   // Dana works the desk: between guests she's at her pod's keyboard (affords.js: where her hands go and the clack come
   // from the keyboard, not from her); anyone coming up to the desk, she steps to the gap between the pods to serve them.
   // Her places are found from the pod's spots when the world is built (buildStaff).
@@ -112,7 +134,14 @@ const RESIDENTS = [
     activities: {
       audit: { weight: 1.2, steps: [['go', 'desk-keys'], ['use', 'keyboard'], ['wait', 40, 110]] },
       'look-up': { weight: 0.4, steps: [['go', 'desk-serve'], ['wait', 6, 14]] },   // stretches, looks out over the lobby
-    } },
+    },
+    // a night clerk alone with a guest throwing things: startled, then firm, then the police (a lasting flag)
+    reacts: { hit: [
+      { mood: 'startled', do: 'flinch', say: ['“Oh! Hey —”', '“Whoa. Watch it.”', '“Jeez! Careful.”'] },
+      { mood: 'annoyed', do: 'guard', say: ['“Okay, that’s enough. Knock it off.”', '“Hey. I’m serious. Quit throwing stuff.”'] },
+      { mood: 'angry', do: 'call-police', phone: 'desk-phone', flag: 'policeCalled', say: ['“Alright. I’m calling the police.”', '“That’s it. I’m calling the cops.”'] }],
+      'near-miss': { mood: 'startled', do: 'flinch', say: ['“Hey! What was that?”', '“You scared me half to death.”'] } },
+    call: '“Hi, yeah, this is Dana at the Heartland Inn, out by the highway. I’ve got a guest throwing things at people in the lobby… No, I’m okay. Can you just send somebody out? …Thank you.”' },
 ];
 
 /** Seated guests, as intent data too (seat surface measured from the furniture's mesh; see REALISM.md, People). Their
@@ -133,7 +162,8 @@ const SITTERS = [
     activities: {
       'watch-tv': { weight: 1.2, steps: [['posture', 'tv'], ['attend', 'tv'], ['wait', 70, 160]] },
       'check-phone': { weight: 0.7, steps: [['posture', 'phone'], ['attend', 'phone'], ['wait', 20, 50]] },
-    } },
+    },
+    reacts: { hit: [{ mood: 'startled', do: 'flinch', say: ['“Hey! Easy, pal.”'] }, { mood: 'annoyed', do: 'flinch', say: ['“Alright, you’ve had your fun. Cut it out.”'] }], 'near-miss': { mood: 'startled', do: 'flinch' } } },
   // At the communal table on a bar stool (seat 0.79), balls of her feet on the stool's front rail (measured: top 0.46 at
   // z -4.78, x -2.25..-1.95; there is no ring at 0.26), leaning on her forearms,
   // hands on the oak top (1.05), eyes on her phone on the table.
@@ -142,7 +172,8 @@ const SITTERS = [
     seat: { hips: [-2.1, 0.79, -4.62], yaw: Math.PI, sink: 0.005 },
     postures: { lean: { lean: 0.34, tilt: -0.05, feet: [[-2.0, 0.53, -4.72], [-2.2, 0.53, -4.72]], hands: [[-1.97, 1.08, -4.97], [-2.23, 1.08, -4.97]] } },   // wrists just over the table's near edge (z -4.95, top 1.05): within reach
     things: { phone: { at: [-2.1, 1.06, -5.1], kind: 'phone' } },
-    activities: { scroll: { steps: [['posture', 'lean'], ['attend', 'phone'], ['wait', 60, 200]] } } },
+    activities: { scroll: { steps: [['posture', 'lean'], ['attend', 'phone'], ['wait', 60, 200]] } },
+    reacts: { hit: [{ mood: 'startled', do: 'flinch', say: ['“Ow! Seriously?”'] }, { mood: 'annoyed', do: 'flinch', say: ['“Can you not? Thanks.”'] }], 'near-miss': { mood: 'startled', do: 'flinch' } } },
   // At a business-center PC on a task chair pulled in to the desk (seat 0.52, centre x 5.5): leaning in a little, left hand on the keyboard,
   // right on the mouse (desk 0.76, edge 5.75), eyes on the monitor.
   { id: 'rep', model: 'rb-andre-casual', tint: '#2f3a2f', start: 'print',
@@ -150,14 +181,15 @@ const SITTERS = [
     seat: { hips: [5.5, 0.52, -3.55], yaw: Math.PI / 2, sink: 0.015 },
     postures: { type: { lean: 0.38, use: 'keyboard' } },   // hands, grip, keys and clicks from the workstation (affords.js)
     things: { screen: { at: [6.15, 1.05, -3.55], kind: 'screen' } },
-    activities: { print: { steps: [['posture', 'type'], ['attend', 'screen'], ['wait', 60, 200]] } } },
+    activities: { print: { steps: [['posture', 'type'], ['attend', 'screen'], ['wait', 60, 200]] } },
+    reacts: { hit: [{ mood: 'startled', do: 'flinch', say: ['“Whoa — okay.”'] }, { mood: 'annoyed', do: 'flinch', say: ['“Dude. I’m trying to print something.”'] }], 'near-miss': { mood: 'startled', do: 'flinch' } } },
 ];
 return { HOTEL, RESIDENTS, SITTERS };
 }
 
 export function buildStaff(ctx) {
   const {
-    scene, lib, game, people, interact, updaters, add, solid,
+    scene, lib, game, people, interact, updaters, add, solid, colliders,
   } = ctx;
   const eye = new T.Vector3();   // the player's eyes: what people glance at
   const { HOTEL, RESIDENTS, SITTERS } = castData();
@@ -173,7 +205,7 @@ export function buildStaff(ctx) {
     const p = lib.person(r.model, { tint: r.tint, manner: r.manner });
     scene.add(p.root);
     const m = mind(r, HOTEL), start = HOTEL.places[r.start];
-    const w = { p, r, mind: m, stops: [], i: 0, at: null, wait: 0, speed: r.speed ?? 1.0, v: 0, yaw: start.face ?? 0, say: r.says?.near, said: 0, task: { at: new T.Vector3(), kind: 'path' }, holding: false, cup: null, cart: null, hidden: false };
+    const w = { p, r, mind: m, stops: [], i: 0, at: null, wait: 0, speed: r.speed ?? 1.0, v: 0, yaw: start.face ?? 0, say: r.says?.near, said: 0, task: { at: new T.Vector3(), kind: 'path' }, holding: false, cup: null, cart: null, hidden: false, mem: {}, re: null, k: 0, pts: null, restL: [new T.Vector3(-0.2, 0.82, 0.03), new T.Vector3(0.2, 0.82, 0.03)] };
     p.root.position.set(...start.p); p.root.rotation.y = w.yaw;
     w.stops = toStops(m.next(start.p, phase()));
     p.lookAt(eye);
@@ -208,7 +240,7 @@ export function buildStaff(ctx) {
       if (t.prop) { const o = new T.Group(), m = lib.model(t.prop, { origin: true }); m.rotation.x = Math.PI / 2; o.add(m); scene.add(o); things[k].prop = o; }   // screen (+y) toward +z, then o.lookAt the face
     }
     if (screen && things.screen) things.screen.at.copy(screen.pos);
-    const s = { p, r, postures, things, ws, mind: mind({ ...r, activities: r.activities }, HOTEL), stops: [], i: 0, wait: 0, at: [x, seatY, z] };
+    const s = { p, r, mem: {}, postures, things, ws, mind: mind({ ...r, activities: r.activities }, HOTEL), stops: [], i: 0, wait: 0, at: [x, seatY, z] };
     s.stops = s.mind.start(r.start, s.at);
     p.lookAt(eye);
     sitters.push(p); seated.push(s);
@@ -239,6 +271,7 @@ export function buildStaff(ctx) {
     if (podKeys) HOTEL.places['desk-keys'] = { ...standAt(podKeys, 0.3), node: 'desk' };
     HOTEL.places['desk-serve'] = { p: [-8.65, 0, -3.95], node: 'desk', face: 0 };
     HOTEL.nodes.desk = [-8.3, 0, -3.85];
+    HOTEL.places['desk-phone'] = { p: [-9.8, 0, -3.78], node: 'desk', face: 0 };   // behind the closed pod, at its desk phone
     ctx.spots = spots;
     for (const r of RESIDENTS) {
       const w = walker(r);
@@ -250,8 +283,12 @@ export function buildStaff(ctx) {
       if (r.id === 'dana') {
         clerk = w.p;
         // solid where she stands (you can come round behind the desk, but not through her)
-        for (const k of ['desk-serve', 'desk-keys']) { const [x, , z] = HOTEL.places[k].p; solid(x - 0.25, x + 0.25, 0, 1.7, z - 0.25, z + 0.25, () => pos2(w).distanceTo(new T.Vector3(x, 0, z)) < 0.4); }
-        interact.push({ pos: new T.Vector3(-7.9, 1.2, -2.4), r: 2.0, label: () => game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
+        for (const k of ['desk-serve', 'desk-keys', 'desk-phone']) { const [x, , z] = HOTEL.places[k].p; solid(x - 0.25, x + 0.25, 0, 1.7, z - 0.25, z + 0.25, () => pos2(w).distanceTo(new T.Vector3(x, 0, z)) < 0.4); }
+        interact.push({ pos: new T.Vector3(-7.9, 1.2, -2.4), r: 2.0, label: () => game.flags.policeCalled ? 'Talk to Dana' : game.has('key card') ? 'Talk to Dana' : 'Check in', use: () => game.checkIn(clerk) });
+        // the check-in, beat by beat (main.js checkIn): where she stands, whether she types, what her eyes and right hand
+        // are on. { at: 'desk-keys' | 'desk-serve', type, eyes: 'screen' | 'guest' | 'card', hand: 'card' | 'key' } or null
+        game.danaBeat = b => { w.desk = b; if (!b) { w.deskAt = null; w.serving = false; w.p.fix(null); } };
+        w.keyCard = new T.Mesh(new T.BoxGeometry(0.054, 0.0008, 0.086), new T.MeshStandardMaterial({ color: '#dfe3e8', roughness: 0.4 })); w.keyCard.visible = false; scene.add(w.keyCard);
         interact.push({ pos: new T.Vector3(-7.05, 1.15, -2.65), r: 0.5, label: () => 'Ring the bell', use: () => { game.sound.bell(); game.hear?.(new T.Vector3(-7.05, 1.15, -2.65), 2); clerk.play('Wave'); setTimeout(() => clerk.play('Idle'), 2000); } });
       }
     }
@@ -266,31 +303,134 @@ export function buildStaff(ctx) {
     const kb = nearest(spots, kind, rel.copy(pos2(w)).setY(pos2(w).y + 1)); if (!kb) return;
     w.ws = workstation(kb, nearest(spots, 'mouse', kb.pos, kb)); w.screen = nearest(spots, 'screen', kb.pos, kb); w.grips = ['keyboard', 'keyboard'];
   }
-  function stopUse(w) { if (!w.ws) return; w.ws = null; w.screen = null; w.p.hold(null); }
+  function stopUse(w) { if (!w.ws) return; w.ws = null; w.screen = null; }   // hands() eases them off the keys
   // a touch on something (a key, a mouse button): its sound, quieter with distance from your ears
   const touchSound = (t, at) => { const d = at.distanceTo(eye), v = 1 / (1 + (d / 1.2) ** 2); if (v > 0.03) t.kind === 'mouse' ? game.sound.mouse?.(0.05 * v) : game.sound.key?.(0.06 * v, t.space); };
   const fwd = new T.Vector3(), toward = new T.Vector3(), rel = new T.Vector3(), d = new T.Vector3();
+
+  // ---------- hands: one smoothed pair of targets per walker, so nothing snaps (keys → guard → rest) ----------
+  const restW = [new T.Vector3(), new T.Vector3()], hv = new T.Vector3();
+  function hands(w, dt, want, grip, rate = 6) {
+    const { p } = w, B = p.bones;
+    if (!w.restOk) { w.restOk = true; for (let i = 0; i < 2; i++) p.root.worldToLocal(B.hands[i].getWorldPosition(w.restL[i])); }
+    w.cur ??= [new T.Vector3(), new T.Vector3()];
+    let off = 0;
+    for (let i = 0; i < 2; i++) {
+      restW[i].copy(w.restL[i]).applyMatrix4(p.root.matrixWorld);
+      if (!w.held) w.cur[i].copy(restW[i]);
+      w.cur[i].lerp(want?.[i] ?? restW[i], Math.min(1, dt * rate));
+      off = Math.max(off, w.cur[i].distanceTo(restW[i]));
+    }
+    if (want) w.handGrip = grip;
+    if (want || off > 0.015) { p.hold(w.cur, w.handGrip); w.held = true; } else if (w.held) { p.hold(null); w.held = false; }
+  }
+  // hanging hands at rest, in the body's frame: where they come back to (caught standing still, not held)
+  const keepRest = w => { if (!w.held && w.v < 0.05 && w.p.clip.name === 'Idle') for (let i = 0; i < 2; i++) w.p.root.worldToLocal(w.p.bones.hands[i].getWorldPosition(w.restL[i])); };
+
+  // ---------- reactions (intent.js reacts): a thrown thing hits someone, or lands close ----------
+  const PHONE = new T.Vector3(-9.8, 1.17, -3.3), CARD = new T.Vector3(-8.72, 1.23, -3.42), KEYOUT = new T.Vector3(-8.66, 1.25, -3.44);   // the closed pod's desk phone keypad; the counter in the gap
+  const sayAs = (r, line, sec = 3.5) => line && game.say((r.id === 'dana' ? 'Dana: ' : '') + line, sec);
+  const clearAt = (x, y, z) => !(colliders ?? []).some(c => !c.loose && !c.on && x > c.x0 - 0.3 && x < c.x1 + 0.3 && z > c.z0 - 0.3 && z < c.z1 + 0.3 && y + 1.5 > c.y0 && y + 0.2 < c.y1);
+  const DUR = { flinch: 1.0, guard: 3.0, 'step-away': 2.0, leave: 1.6, 'call-police': 1.4 };
+  function react(who, ev, t) {
+    const lv = reaction(who.r, who.mem, ev, t); if (!lv) return null;
+    who.p.hear(ev.at); sayAs(who.r, lv.say);
+    if (lv.flag) game.flags[lv.flag] = true;   // lasting: saved with the game (main.js save), read by the desk
+    if (who.mem.mood) who.say = null;          // no cheery greeting from someone you just hit
+    if (!who.r.seat) { stopUse(who); who.re = { lv, t: 0, at: ev.at.clone(), dur: DUR[lv.do] ?? 1.0, gp: [new T.Vector3(), new T.Vector3()] }; }
+    return lv;
+  }
+  function endReact(w, player) {
+    const { lv } = w.re, pos = w.p.root.position; w.re = null; w.p.fix(null);
+    const you = Math.atan2(player.pos.x - pos.x, player.pos.z - pos.z), redo = steps => { w.stops = toStops(w.mind.start(steps, pos.toArray())); w.i = 0; w.wait = 0; };
+    if (lv.do === 'step-away') {   // a couple of metres off from you, somewhere clear, then turn back to keep an eye on you
+      const ax = pos.x - player.pos.x, az = pos.z - player.pos.z, n = Math.hypot(ax, az) || 1;
+      for (const a of [0, 0.6, -0.6, 1.2, -1.2]) {
+        const dx = (ax * Math.cos(a) - az * Math.sin(a)) / n, dz = (ax * Math.sin(a) + az * Math.cos(a)) / n;
+        if ([0.9, 1.8].every(k => clearAt(pos.x + dx * k, pos.y, pos.z + dz * k))) { w.stops = toStops([{ p: [pos.x + dx * 1.8, pos.y, pos.z + dz * 1.8], wait: 3 + Math.random() * 3, face: you }]); w.i = 0; w.wait = 0; return; }
+      }
+    } else if (lv.do === 'leave' && w.r.home) redo([['go', w.r.home], ['wait', 150, 300]]);
+    else if (lv.do === 'call-police') { w.police = 'going'; redo([['go', lv.phone], ['wait', 1e6]]); }
+    else if (Array.isArray(lv.do)) redo(lv.do);
+    // flinch, guard: back to what they were doing, where they were in it
+  }
+  const hitAt = new T.Vector3();
+  function thrown(t, player) {   // physics.js props are bodies, people aren't: test each flying prop against each body
+    const phys = game.physics; if (!phys?.loose) return;
+    const who = [...walkers.filter(w => !w.hidden), ...seated];
+    for (const l of phys.loose) {
+      if (!l.b || l === phys.held) { l.fly = null; continue; }
+      const v = l.b.body.linvel(), sp = Math.hypot(v.x, v.y, v.z);
+      if (sp > 2.5 && !l.fly) l.fly = new Set();   // only a throw gets going this fast (a shove doesn't)
+      if (!l.fly) continue;
+      const at = l.o.getWorldPosition(hitAt);
+      for (const x of who) {
+        if (l.fly.has(x) || sp < 1) continue;
+        const c = x.r.seat ? null : x.p.root.position, inBody = c ? Math.hypot(at.x - c.x, at.z - c.z) < 0.32 && at.y > c.y + 0.1 && at.y < c.y + 1.8
+          : Math.hypot(at.x - x.at[0], at.z - x.at[2]) < 0.4 && at.y > x.at[1] - 0.45 && at.y < x.at[1] + 0.85;
+        if (!inBody) continue;
+        l.fly.add(x); const kg = l.b.body.mass();
+        game.sound.impact?.('soft', kg, sp, at.distanceTo(eye));
+        l.b.body.setLinvel({ x: -v.x * 0.2, y: Math.min(v.y, 0) * 0.3, z: -v.z * 0.2 }, true);   // it bounces off them, it doesn't fly through
+        react(x, { type: 'hit', kg, speed: sp, at: at.clone() }, t);
+      }
+      if (sp < 0.3) {   // landed: anyone it didn't hit within 1.5 m had a near miss
+        for (const x of who) { if (l.fly.has(x)) continue; const c = x.r.seat ? new T.Vector3(...x.at) : x.p.root.position; if (Math.abs(c.y - at.y) < 1.8 && Math.hypot(at.x - c.x, at.z - c.z) < 1.5) react(x, { type: 'near-miss', at: at.clone() }, t); }
+        l.fly = null;
+      }
+    }
+  }
   const near = (a, b) => Math.abs(a.y - b.y) < 1.5;   // same floor
   updaters.push((dt, t, player) => {
     eye.set(player.x, player.y + 1.6, player.z);
     for (const s of seated) seatedTick(s, dt);
+    thrown(t, player);
     // who's where this frame: bodies and carts everyone steers round
     const obstacles = [{ pos: player.pos, r: BODY, player: true }];
     for (const w of walkers) if (!w.hidden) { obstacles.push({ pos: w.p.root.position, r: BODY, w }); if (w.cart) obstacles.push({ pos: w.cartAt, r: CART, w }); }
     for (const w of walkers) {
       const { p } = w, pos = p.root.position;
       w.mind.tick(dt);
-      if (w.r.serves) {   // someone at the desk: drop what she's doing, step over and serve them; when they go, back to it
+      let hw = null, hg = 'rest', hr = 6;   // what the hands go to this frame (hands() below)
+      if (w.r.serves && !w.re && !w.police && !game.flags.policeCalled) {   // someone at the desk: drop what she's doing, step over and serve them; when they go, back to it
         const sv = w.r.serves, d2 = Math.hypot(player.pos.x - sv.at[0], player.pos.z - sv.at[2]), close = near(player.pos, pos) && d2 < sv.r + (w.serving ? 0.8 : 0);
         if (close && !w.serving) { const pl = HOTEL.places[sv.place]; w.serving = true; stopUse(w); w.stops = toStops([{ p: pl.p, wait: 1e9, face: pl.face }]); w.i = 0; w.wait = 0; }
         else if (!close && w.serving) { w.serving = false; w.wait = 0; w.stops = []; w.i = 0; }
+        // checking someone in (main.js checkIn → game.danaBeat): to the keyboard and back to the counter, beat by beat
+        if (w.serving && w.desk && w.deskAt !== w.desk.at) { const pl = HOTEL.places[w.desk.at]; w.deskAt = w.desk.at; stopUse(w); w.stops = toStops([{ p: pl.p, wait: 1e9, face: pl.face }]); w.i = 0; w.wait = 0; }
+        if (w.serving && w.desk) {
+          const e = w.desk.eyes; p.fix(e === 'screen' ? w.screen?.pos ?? CARD : e === 'guest' ? eye : e === 'card' ? CARD : null);
+          if (w.desk.hand && w.deskAt === 'desk-serve' && w.wait > 0) { hw = [null, w.desk.hand === 'key' ? KEYOUT : CARD]; hg = w.desk.hand === 'key' ? 'keyboard' : 'table'; }
+        }
       }
       const seen = near(player.pos, pos) && player.pos.distanceTo(pos) < 7;   // ponytail: distance, not gaze; a wall between still counts as seen
       let heading = w.yaw, want = 0;
-      if (w.wait > 0) {
+      if (w.re) {   // reacting: a beat, then the hands come up (and, unless it's a flinch, they turn to face you)
+        const re = w.re, L = re.lv.do; re.t += dt;
+        if (L !== 'flinch' && re.t > 0.3) heading = Math.atan2(player.pos.x - pos.x, player.pos.z - pos.z);
+        if (re.t > 0.12) p.fix(re.t < 0.7 ? re.at : L === 'flinch' ? null : eye);
+        if (re.t > 0.15 && re.t < re.dur - (L === 'flinch' ? 0.5 : 0.7)) {
+          const f = rel.set(Math.sin(w.yaw), 0, Math.cos(w.yaw)), fl = L === 'flinch', y = pos.y + (fl ? 1.36 : 1.2), ah = fl ? 0.26 : 0.3, sp = fl ? 0.1 : 0.14;
+          re.gp[0].set(pos.x + f.x * ah + f.z * sp, y, pos.z + f.z * ah - f.x * sp); re.gp[1].set(pos.x + f.x * ah - f.z * sp, y, pos.z + f.z * ah + f.x * sp);   // left (+x when facing +z), right
+          hw = re.gp; hg = 'guard'; hr = fl ? 16 : 8;
+        }
+        if (re.t >= re.dur) endReact(w, player);
+      } else if (w.wait > 0) {
         if (w.at.face !== undefined) heading = w.at.face;
-        if (w.serving) heading = Math.atan2(player.pos.x - pos.x, player.pos.z - pos.z);
-        if (w.ws) { for (const t of w.ws.update(dt)) { p.tap(t.hand, t.finger); touchSound(t, t.at); } w.grips[1] = w.ws.mousing ? 'mouse' : 'keyboard'; p.hold(w.ws.hands, w.grips); }
+        if (w.serving && w.deskAt !== 'desk-keys') heading = Math.atan2(player.pos.x - pos.x, player.pos.z - pos.z);
+        if (!w.ws && (w.at.use || (w.serving && w.deskAt === 'desk-keys' && w.desk))) startUse(w, w.at.use ?? 'keyboard');   // back to it after a reaction
+        if (w.ws) {
+          if (!w.desk || w.desk.type) for (const t of w.ws.update(dt)) { p.tap(t.hand, t.finger); touchSound(t, t.at); }   // between beats her hands rest on the keys
+          w.grips[1] = w.ws.mousing ? 'mouse' : 'keyboard'; hw = w.ws.hands; hg = w.grips;
+        }
+        if (w.police === 'going' && w.at === w.stops.at(-1)) w.police = { t: 0, taps: 0, next: 1.2 };
+        if (w.police?.t !== undefined) {   // at the desk phone: dials the non-emergency line on the keypad, talks on speaker
+          const c = w.police; c.t += dt;
+          if (c.t > 0.5 && c.t < 4.4) { hw = [null, PHONE]; hg = 'keyboard'; if (c.t >= c.next && c.taps < 10) { p.tap(1, 1); touchSound({ kind: 'keyboard' }, PHONE); c.taps++; c.next = c.t + 0.22 + Math.random() * 0.15; } }
+          p.fix(c.t < 6 || Math.floor(c.t / 3.5) % 3 ? PHONE : eye);   // eyes on the phone, a look over at you now and then
+          if (c.t > 4.8 && !c.said) { c.said = true; game.say('Dana, on the phone: ' + w.r.call, 9); }
+          if (c.t > 15) { w.police = 'done'; p.fix(null); w.wait = 0; }
+        }
         if (w.at.hide && !w.hidden && !seen) w.hidden = true;   // through the door once nobody's looking
         w.wait -= dt;
         if (w.wait <= 0 && w.hidden && seen) w.wait = 0.5;    // and back out the same way
@@ -360,7 +500,13 @@ export function buildStaff(ctx) {
       else { const f = w.at?.face ?? w.yaw; w.task.at.set(pos.x + Math.sin(f) * 0.9, pos.y + 1.0, pos.z + Math.cos(f) * 0.9); w.task.kind = 'work'; }
       p.attend(w.task);
       if (w.v > 0.05) { p.play('Walk'); p.pace(w.v); } else if (p.clip.name === 'Walk') p.play('Idle');   // a Wave or Talk plays out
+      if (!w.cart || hw || w.held) hands(w, dt, hw, hg, hr);
       p.update(dt);
+      keepRest(w);
+      if (w.keyCard) {   // the key card she hands over, between her fingers
+        w.keyCard.visible = w.desk?.hand === 'key' && w.held && w.cur[1].distanceTo(KEYOUT) < 0.1;
+        if (w.keyCard.visible) { p.bones.hands[1].getWorldPosition(w.keyCard.position).addScaledVector(rel.set(Math.sin(w.yaw), 0, Math.cos(w.yaw)), 0.08); w.keyCard.position.y -= 0.01; w.keyCard.rotation.set(0, w.yaw, 0); }
+      }
       if (w.cup) {
         w.cup.visible = !!w.holding && p.root.visible;
         if (w.cup.visible) { p.bones.hand.getWorldPosition(w.cup.position); w.cup.position.y -= 0.07; w.cup.position.addScaledVector(fwd, 0.03); w.cup.rotation.set(0, w.yaw, 0); }
@@ -374,7 +520,7 @@ export function buildStaff(ctx) {
         w.cart.position.copy(w.cartAt); w.cart.rotation.y = Math.atan2(d.x, d.z) - Math.PI / 2;   // cart +X (bag end) away from her
         // pushing, both hands on the handle bar (about 1 m up, 0.45 m in front of her, hands 0.4 m apart); stopped at a
         // room, she lets go
-        if (w.v > 0.05 && d.dot(fwd) > 0.3) {
+        if (w.re || w.held) { /* reacting: hands() has them */ } else if (w.v > 0.05 && d.dot(fwd) > 0.3) {
           w.grip ??= [new T.Vector3(), new T.Vector3()];
           const c = rel.copy(pos).addScaledVector(d, 0.45); c.y = pos.y + 0.98;
           w.grip[0].set(d.z, 0, -d.x).multiplyScalar(0.2).add(c); w.grip[1].set(-d.z, 0, d.x).multiplyScalar(0.2).add(c);   // left, right
