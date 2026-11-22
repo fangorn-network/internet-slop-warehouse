@@ -1,0 +1,547 @@
+{
+ "p-entrance": {
+  "calls": 1853,
+  "tris": 1659596,
+  "programs": 97,
+  "textures": 358,
+  "texMB": 411,
+  "top": [
+   [
+    "Mesh",
+    514
+   ],
+   [
+    "Group",
+    277
+   ],
+   [
+    "brochure",
+    96
+   ],
+   [
+    "hotel-bar-stool",
+    88
+   ],
+   [
+    "hotel-dumbbell-rack",
+    80
+   ],
+   [
+    "Textured hotel resident",
+    54
+   ],
+   [
+    "hotel-market-cooler",
+    48
+   ],
+   [
+    "hotel-coffee-station",
+    40
+   ],
+   [
+    "hotel-checkin-pod",
+    40
+   ],
+   [
+    "hotel-desk-items",
+    38
+   ],
+   [
+    "pen",
+    32
+   ],
+   [
+    "hotel-room-door",
+    28
+   ],
+   [
+    "hotel-business-center",
+    28
+   ],
+   [
+    "hotel-desk-closed",
+    26
+   ],
+   [
+    "hotel-outlet",
+    24
+   ],
+   [
+    "hotel-waste-cabinet",
+    24
+   ],
+   [
+    "ph-wall-clock",
+    22
+   ],
+   [
+    "hotel-snack-vending",
+    20
+   ],
+   [
+    "hotel-waste-bin",
+    20
+   ],
+   [
+    "apple",
+    20
+   ],
+   [
+    "cookie",
+    18
+   ],
+   [
+    "hotel-communal-table",
+    18
+   ],
+   [
+    "hotel-task-chair",
+    16
+   ],
+   [
+    "g3-vending-machine",
+    15
+   ],
+   [
+    "hotel-table-lamp",
+    12
+   ]
+  ]
+ },
+ "p-desk": {
+  "calls": 897,
+  "tris": 1089470,
+  "programs": 97,
+  "textures": 358,
+  "texMB": 411,
+  "top": [
+   [
+    "Mesh",
+    332
+   ],
+   [
+    "Group",
+    93
+   ],
+   [
+    "Textured hotel resident",
+    54
+   ],
+   [
+    "hotel-market-cooler",
+    48
+   ],
+   [
+    "hotel-desk-items",
+    38
+   ],
+   [
+    "hotel-room-door",
+    28
+   ],
+   [
+    "hotel-checkin-pod",
+    28
+   ],
+   [
+    "hotel-bar-stool",
+    26
+   ],
+   [
+    "hotel-desk-closed",
+    24
+   ],
+   [
+    "pen",
+    20
+   ],
+   [
+    "apple",
+    20
+   ],
+   [
+    "hotel-communal-table",
+    18
+   ],
+   [
+    "ph-wall-clock",
+    16
+   ],
+   [
+    "hotel-waste-cabinet",
+    14
+   ],
+   [
+    "hotel-market-shelf",
+    12
+   ],
+   [
+    "hotel-outlet",
+    12
+   ],
+   [
+    "hotel-waste-bin",
+    10
+   ],
+   [
+    "ph-potted-plant-01",
+    8
+   ],
+   [
+    "hotel-coffee-station",
+    8
+   ],
+   [
+    "g3-traffic-cone",
+    8
+   ],
+   [
+    "ph-potted-plant-02",
+    6
+   ],
+   [
+    "Line",
+    6
+   ],
+   [
+    "ph-korean-fire-extinguisher-01",
+    5
+   ],
+   [
+    "hotel-coffee-board",
+    4
+   ],
+   [
+    "mug",
+    4
+   ]
+  ]
+ },
+ "p-coffee": {
+  "calls": 527,
+  "tris": 704914,
+  "programs": 97,
+  "textures": 358,
+  "texMB": 411,
+  "top": [
+   [
+    "Mesh",
+    310
+   ],
+   [
+    "Textured hotel resident",
+    54
+   ],
+   [
+    "hotel-coffee-station",
+    40
+   ],
+   [
+    "hotel-waste-cabinet",
+    20
+   ],
+   [
+    "cookie",
+    18
+   ],
+   [
+    "Group",
+    16
+   ],
+   [
+    "creamer",
+    12
+   ],
+   [
+    "Line",
+    6
+   ],
+   [
+    "ph-korean-fire-extinguisher-01",
+    5
+   ],
+   [
+    "hotel-coffee-board",
+    4
+   ],
+   [
+    "Sign: THE PANTRY",
+    4
+   ],
+   [
+    "Sugar packet",
+    4
+   ],
+   [
+    "tea box",
+    2
+   ],
+   [
+    "g3-dumpster",
+    2
+   ],
+   [
+    "Supply diffusers",
+    2
+   ],
+   [
+    "Diffuser throats",
+    2
+   ],
+   [
+    "Sprinklers",
+    2
+   ],
+   [
+    "Stir stick",
+    2
+   ],
+   [
+    "Packet strip",
+    2
+   ],
+   [
+    "Torn sugar packet",
+    2
+   ],
+   [
+    "Spilt sugar",
+    2
+   ],
+   [
+    "Cup lid",
+    2
+   ],
+   [
+    "Cup lid (floor)",
+    2
+   ],
+   [
+    "Crumpled napkin",
+    2
+   ],
+   [
+    "Cove base",
+    2
+   ]
+  ]
+ },
+ "p-great-room": {
+  "calls": 1506,
+  "tris": 1592766,
+  "programs": 97,
+  "textures": 358,
+  "texMB": 411,
+  "top": [
+   [
+    "Mesh",
+    534
+   ],
+   [
+    "Group",
+    346
+   ],
+   [
+    "ph-shrub-03",
+    102
+   ],
+   [
+    "hotel-dumbbell-rack",
+    80
+   ],
+   [
+    "hotel-housekeeping-cart",
+    64
+   ],
+   [
+    "Textured hotel resident",
+    54
+   ],
+   [
+    "hotel-room-door",
+    33
+   ],
+   [
+    "Framed artwork",
+    26
+   ],
+   [
+    "hotel-ptac",
+    16
+   ],
+   [
+    "hotel-closet",
+    14
+   ],
+   [
+    "hotel-table-lamp",
+    12
+   ],
+   [
+    "hotel-tv-remote",
+    12
+   ],
+   [
+    "ph-korean-fire-extinguisher-01",
+    10
+   ],
+   [
+    "hotel-desk",
+    10
+   ],
+   [
+    "hotel-microfridge",
+    10
+   ],
+   [
+    "ph-potted-plant-01",
+    8
+   ],
+   [
+    "hotel-king-bed",
+    8
+   ],
+   [
+    "bible",
+    8
+   ],
+   [
+    "hotel-credenza-tv",
+    8
+   ],
+   [
+    "hotel-sectional",
+    8
+   ],
+   [
+    "hotel-lounge-chair-navy",
+    8
+   ],
+   [
+    "hotel-coffee-cup",
+    6
+   ],
+   [
+    "ph-potted-plant-02",
+    6
+   ],
+   [
+    "Line",
+    6
+   ],
+   [
+    "g3-treadmill",
+    4
+   ]
+  ]
+ },
+ "p-business": {
+  "calls": 1271,
+  "tris": 1396482,
+  "programs": 97,
+  "textures": 358,
+  "texMB": 411,
+  "top": [
+   [
+    "Mesh",
+    430
+   ],
+   [
+    "Group",
+    286
+   ],
+   [
+    "hotel-dumbbell-rack",
+    80
+   ],
+   [
+    "hotel-housekeeping-cart",
+    64
+   ],
+   [
+    "Textured hotel resident",
+    54
+   ],
+   [
+    "ph-shrub-03",
+    52
+   ],
+   [
+    "hotel-room-door",
+    33
+   ],
+   [
+    "Framed artwork",
+    32
+   ],
+   [
+    "hotel-business-center",
+    28
+   ],
+   [
+    "hotel-closet",
+    14
+   ],
+   [
+    "hotel-task-chair",
+    14
+   ],
+   [
+    "ph-korean-fire-extinguisher-01",
+    10
+   ],
+   [
+    "hotel-microfridge",
+    10
+   ],
+   [
+    "hotel-waste-bin",
+    10
+   ],
+   [
+    "hotel-king-bed",
+    8
+   ],
+   [
+    "bible",
+    8
+   ],
+   [
+    "hotel-outlet",
+    6
+   ],
+   [
+    "hotel-coffee-cup",
+    6
+   ],
+   [
+    "hotel-tv-remote",
+    6
+   ],
+   [
+    "Line",
+    6
+   ],
+   [
+    "g3-vending-machine",
+    5
+   ],
+   [
+    "g3-treadmill",
+    4
+   ],
+   [
+    "g3-exercise-bike",
+    4
+   ],
+   [
+    "ph-fire-alarm",
+    4
+   ],
+   [
+    "hotel-nightstand",
+    4
+   ]
+  ]
+ }
+}

@@ -197,6 +197,9 @@ export function budget(root, id = '') {
     if (!n.isMesh) return;
     for (const m of [].concat(n.material)) {
       if (economy && meters < 1.2) for (const k of DETAIL) if (m[k]) { m[k] = null; m.needsUpdate = true; }
+      // Transmission (a clock's glass, a pole's insulators) makes three render every opaque object a second time into a
+      // transmission target whenever one is in view: it doubled the lobby's draw calls. Thin glass reads the same as plain alpha.
+      if (m.transmission > 0) { m.transmission = 0; m.transparent = true; m.opacity = Math.min(m.opacity, 0.2); m.depthWrite = false; m.needsUpdate = true; }
       for (const k in m) { const t = m[k]; if (t?.isTexture && !done.has(t.source)) { done.add(t.source); shrink(t, cap); } }
     }
   });

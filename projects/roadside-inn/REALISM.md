@@ -420,3 +420,9 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   halo their air throw leaves on the paint, egg-crate returns, pendant sprinklers on a ~3.6 m grid, dome cameras over
   the desk, doors and market (lobby.js, instanced, ~10 draw calls). The diffuser throat must be mid-grey, not black: black
   rings read as a graphic, not a void with light in it.
+
+## Phone performance (2026-11-21)
+- **One transmissive material doubles the frame.** The wall clock's glass (and the pole insulators) used
+  KHR_materials_transmission; whenever one is in view three renders every opaque object again into a transmission
+  target. Lobby at the phone tier: 1853 -> 956 draw calls from the entrance, with no visible change. assets.js budget()
+  turns transmission into plain alpha for every model. Check `transmission > 0` before anything else.
