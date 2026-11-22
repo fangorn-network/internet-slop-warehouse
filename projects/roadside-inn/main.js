@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CC0-1.0
 import * as T from 'three';
 import { attach as attachInput } from './input.js';
-import { loadLibrary, captureEnv, mergeStatic, mergeSceneMeshes } from './assets.js';
+import { loadLibrary, captureEnv, mergeStatic, mergeSceneMeshes, mergeAcross } from './assets.js';
 import { buildWorld, FLOOR2 } from './world.js';
 import { createSound } from './sound.js';
 import { quality } from './quality.js';
@@ -107,6 +107,7 @@ console.info('merged meshes away:', mergeStatic(scene), mergeSceneMeshes(scene))
     if (z) o.userData.zone = z.id ?? z.name;
   }
 }
+console.info('merged across props:', mergeAcross(scene));   // phones; after zone pinning (assets.js)
 const zones = zoneCulling(scene, { zones: world.zones, sees: world.sees });
 // One indoor environment for the whole building: reflections and fill light captured once (per time of day) from the
 // lobby's middle, with the lobby's lamps aimed and lit, and set on every material inside the building. They never switch
@@ -144,8 +145,8 @@ const detailProps = [];
 scene.traverse(o => { if (o.userData.hotelProp) detailProps.push(o); });
 // Loose props (anything you can pick up or knock over) are drawn from everywhere by zone culling, since they can move.
 // Phones hide each one when its current zone can't be seen from the camera's, or when it's too small to read at its
-// distance (a pen past ~9 m is two pixels). The held one is always near. The housekeeping cart moves too (staff.js).
-const looseProps = scene.children.filter(o => o.userData.loose || o.name === 'hotel-housekeeping-cart').map(o => { const s = new T.Box3().setFromObject(o).getSize(new T.Vector3()); return { o, far: Math.min(26, 8 + 30 * Math.max(s.x, s.y, s.z)) }; });
+// distance (6 m + 25 m per metre of size: a pen past ~9 m is two pixels). The held one is always near. The housekeeping cart moves too (staff.js).
+const looseProps = scene.children.filter(o => o.userData.loose || o.name === 'hotel-housekeeping-cart').map(o => { const s = new T.Box3().setFromObject(o).getSize(new T.Vector3()); return { o, far: Math.min(26, 6 + 25 * Math.max(s.x, s.y, s.z)) }; });
 let detailClock = 0, tagClock = 2;
 const detailPosition = new T.Vector3();
 // The player (player.js, shared with Late Checkout): physics when Rapier loads, the old walker when it doesn't.

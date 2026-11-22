@@ -434,8 +434,12 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Fixes, none visible:** instance per 32 m cell; on phones, hide loose props (and the moving housekeeping cart) whose
   zone can't be seen or which are too small to read at their distance (8 m + 30 m per metre of size); pin small statics to
   the zone of their centre; hide the car while its doors are shut and you're not in it; merge each prop's meshes by
-  material and, on phones, collapse flat-colour materials into shared vertex-colour ones (roughness in 0.25 steps,
+  material and, on phones, collapse flat-colour materials into shared vertex-colour ones (glossy or matte,
   metal or not); merge the building's small loose meshes per 8 m cell; a brochure's four edges in one group, not four.
 - **Merging breaks what code finds by name or toggles.** Guard by name (doors, leaves, drawers, sockets, screens, lights,
   made/unmade bedding) and skip anything hidden at merge time (the unmade bed is hidden until you sleep; merged, it
   would have shown). Meshes code toggles directly get `userData.keep`.
+- **Phones, second pass:** merge across props per 8 m cell (they share the print atlases, oak, quartz, the flat set);
+  parked cars and street furniture flatten even their textured parts on phones, coloured by the texture's mean texel (a
+  tyre's tread is a few pixels through the lobby glass); brochures are two draw calls, not six (edges drawn with the
+  back). Flat geometry for instancing is normalised to position+normal+colour first, or mergeGeometries refuses it.

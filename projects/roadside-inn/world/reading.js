@@ -99,7 +99,9 @@ export function buildReading(ctx) {
       const t = Math.floor(i / 2), c = i % 2;   // four tiers of two pockets (blender/props.py brochure_rack)
       const o = new T.Group(); o.name = 'brochure';
       const sheet = new T.Mesh(new T.BoxGeometry(PANEL.w, PANEL.h, 0.003), [edge, edge, edge, edge, F.mat('#fff', { map: covers[i], roughness: 0.85 }), F.mat('#fff', { map: backs[i], roughness: 0.85 })]);
-      sheet.geometry.clearGroups(); sheet.geometry.addGroup(0, 24, 0); sheet.geometry.addGroup(24, 6, 4); sheet.geometry.addGroup(30, 6, 5);   // the four edges in one draw call, not four
+      { // two draw calls, not six: the 3 mm edges take the back's paper (cream), drawn with the back; the cover on its own
+        const g = sheet.geometry, ix = g.index.array, re = [...ix.slice(0, 24), ...ix.slice(30, 36), ...ix.slice(24, 30)];
+        g.setIndex(re); g.clearGroups(); g.addGroup(0, 30, 5); g.addGroup(30, 6, 4); }
       sheet.position.y = PANEL.h / 2; o.add(sheet);
       o.position.set(-0.075 + c * 0.15, 0.304 + t * 0.3, 0.0065); o.rotation.x = -14 * Math.PI / 180;
       rack.add(o); scene.attach(o);

@@ -370,7 +370,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     // Phones: a car's flat-colour parts (tyres, rims, hubcaps, trim) share one vertex-colour material (assets.js flatParts).
     const parts = [];
     src.traverse(n => { if (n.isMesh) parts.push({ geometry: n.geometry, material: n.material, matrix: new T.Matrix4().makeTranslation(0, -minY, 0).multiply(n.matrixWorld) }); });
-    for (const n of flatParts(parts, m => !(emissiveHeads && /led|lamp/i.test(m.name)) && !(paints && /body_pbr|paint/.test(m.name)))) {
+    for (const n of flatParts(parts, m => !(emissiveHeads && /led|lamp/i.test(m.name)) && !(paints && /body_pbr|paint/.test(m.name)), true)) {
       const local = n.matrix;
       const material = emissiveHeads && /led|lamp/i.test(n.material.name) ? F.glow('#fff1d6', 3) : n.material;
       for (const idx of cells.values()) {

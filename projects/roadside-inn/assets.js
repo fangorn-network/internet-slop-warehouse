@@ -272,11 +272,11 @@ export function captureEnv(renderer, scene, at, { bounces = 2, intensity = 1 } =
 const KEEP = /^(un)?made|open_|socket|take_|door|leaf|drawer|lid|handle|hinge|screen|tv_|button|btn|led|light|glow|shade|mirror|rail|display|ceiling/i;
 const SKIP_MODEL = /elevator|cart|bag|semi-truck|sedan|suv|wagon|hatchback|pickup|minivan/i;   // things that move as a whole or by part
 // Phones also collapse flat-colour materials (no maps, no glow, opaque) into a few shared vertex-colour ones, keyed by
-// roughness and metalness rounded to a step: a cooler's 14 coloured caps and plastics become 2-3 draw calls.
+// glossy/matte and metal/not: a cooler's 14 coloured caps and plastics become 2-3 draw calls.
 const FLAT = new Map(), MAPS = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap', 'bumpMap', 'lightMap'];
 const flatKey = m => {
   if (!economy || !m.isMeshStandardMaterial || m.isMeshPhysicalMaterial || m.transparent || m.vertexColors || MAPS.some(k => m[k]) || (m.emissive.getHex() && m.emissiveIntensity > 0) || m.userData.noEnv) return null;
-  const r = Math.round(m.roughness * 4) / 4, mt = m.metalness > 0.5 ? 1 : 0;
+  const r = m.roughness < 0.45 ? 0.3 : 0.8, mt = m.metalness > 0.5 ? 1 : 0;   // glossy or matte: at phone resolution the step between is invisible
   return `flat|${r}|${mt}|${m.side}`;
 };
 const flatMaterial = key => FLAT.get(key) ?? FLAT.set(key, (([, r, mt, side]) => new T.MeshStandardMaterial({ name: `flat r${r} m${mt}`, vertexColors: true, roughness: Math.max(0.05, +r), metalness: +mt, side: +side }))(key.split('|'))).get(key);
@@ -346,13 +346,50 @@ export function mergeSceneMeshes(scene) {
 
 // For instancing: [{ geometry, material, matrix }] -> the same list with every flat-colour part (flatKey, where ok(material))
 // baked into one geometry per shared vertex-colour material, in the parts' common frame (matrix = identity). Desktop: unchanged.
-export function flatParts(parts, ok = () => true) {
+// mapped: also flatten textured parts, coloured by their texture's mean (a tyre's tread or a hubcap's print is a few pixels
+// through the lobby windows). Instanced street furniture and parked cars only.
+const meanCache = new WeakMap();
+const meanOf = t => { if (meanCache.has(t)) return meanCache.get(t); let c = new T.Color(1, 1, 1); try { const cv = document.createElement('canvas'); cv.width = cv.height = 1; const g = cv.getContext('2d'); g.drawImage(t.image, 0, 0, 1, 1); const d = g.getImageData(0, 0, 1, 1).data; c = new T.Color().setRGB(d[0] / 255, d[1] / 255, d[2] / 255, T.SRGBColorSpace); } catch { /* keep white */ } meanCache.set(t, c); return c; };
+const asFlat = m => { if (!economy || !m.isMeshStandardMaterial || m.transparent || (m.emissive.getHex() && m.emissiveIntensity > 0)) return null; const f = m.clone(); for (const k of MAPS) f[k] = null; if (m.map) f.color.multiply(meanOf(m.map)); return f; };
+export function flatParts(parts, ok = () => true, mapped = false) {
   const keep = [], byKey = new Map();
-  for (const p of parts) { const k = !p.geometry.attributes.color && ok(p.material) && flatKey(p.material); if (k && p.matrix.determinant() > 0) (byKey.get(k) ?? byKey.set(k, []).get(k)).push(p); else keep.push(p); }
+  for (const p of parts) { if (mapped && ok(p.material) && !flatKey(p.material)) { const f = asFlat(p.material); if (f) p.material = f; } const k = !p.geometry.attributes.color && ok(p.material) && flatKey(p.material); if (k && p.matrix.determinant() > 0) (byKey.get(k) ?? byKey.set(k, []).get(k)).push(p); else keep.push(p); }
   for (const [k, list] of byKey) {
-    const geos = list.map(p => { const q = p.geometry.clone().applyMatrix4(p.matrix), c = p.material.color, n = q.attributes.position.count, a = new Float32Array(n * 3); for (let i = 0; i < n; i++) a.set([c.r, c.g, c.b], i * 3); q.setAttribute('color', new T.BufferAttribute(a, 3)); for (const m of Object.keys(q.morphAttributes)) delete q.morphAttributes[m]; return q; });
+    const geos = list.map(p => { let q = p.geometry.clone().applyMatrix4(p.matrix); if (q.index) q = q.toNonIndexed(); for (const a of Object.keys(q.attributes)) if (a !== 'position' && a !== 'normal') q.deleteAttribute(a); if (!q.attributes.normal) q.computeVertexNormals(); const c = p.material.color, n = q.attributes.position.count, a = new Float32Array(n * 3); for (let i = 0; i < n; i++) a.set([c.r, c.g, c.b], i * 3); q.setAttribute('color', new T.BufferAttribute(a, 3)); for (const m of Object.keys(q.morphAttributes)) delete q.morphAttributes[m]; return q; });
     let merged = null; try { merged = mergeGeometries(geos); } catch { /* attribute sets differ: keep them apart */ }
     if (merged) keep.push({ geometry: merged, material: flatMaterial(k), matrix: new T.Matrix4() }); else keep.push(...list);
   }
   return keep;
+}
+
+// Phones: merge across props too. Props share materials (the print atlases, oak, quartz, the flat-colour set), so per 8 m
+// cell every static prop's mesh of one material becomes one mesh: the coffee station, its waste cabinet and pegboard
+// share oak, quartz, charcoal and the lobby print. The emptied groups stay (affordances and saves use their frames).
+// Skips props code shows or hides as a whole (breakfast, the ice bucket, staff cups, the beds) and anything zone-pinned
+// to a different zone than its neighbours (each cell is also keyed by zone).
+const WHOLE = /breakfast|ice-bucket|coffee-cup|king-bed|unmade|newspaper|elevator|cart|door/i;
+export function mergeAcross(scene) {
+  if (!economy) return 0;
+  const buckets = new Map(), p = new T.Vector3(), box = new T.Box3();
+  const groups = scene.children.filter(o => o.userData.hotelProp && !o.userData.loose && !o.userData.moves && o.visible && !WHOLE.test(o.name) && !SKIP_MODEL.test(o.name));
+  for (const g of groups) {
+    for (const n of [...g.children]) {
+      if (!n.isMesh || n.isInstancedMesh || n.isSkinnedMesh || !n.visible || n.children.length || Array.isArray(n.material) || n.material.transparent || KEEP.test(n.name)) continue;
+      n.updateMatrixWorld(true); if (n.matrixWorld.determinant() < 0) continue;
+      box.setFromObject(n); box.getCenter(p);
+      const a = n.geometry.attributes, key = [n.material.uuid, Object.keys(a).sort().map(k => k + a[k].itemSize).join(), !!n.geometry.index, n.renderOrder, g.userData.zone ?? '', Math.floor(p.x / 8), Math.floor(p.y / 3), Math.floor(p.z / 8)].join('|');
+      (buckets.get(key) ?? buckets.set(key, []).get(key)).push(n);
+    }
+  }
+  let removed = 0;
+  for (const list of buckets.values()) {
+    if (list.length < 2) continue;
+    let merged; try { merged = mergeGeometries(list.map(n => { const q = n.geometry.clone().applyMatrix4(n.matrixWorld); for (const k of Object.keys(q.morphAttributes)) delete q.morphAttributes[k]; return q; })); } catch { continue; }
+    if (!merged) continue;
+    const m = new T.Mesh(merged, list[0].material); m.name = `merged props ${list[0].material.name || ''}`.trim();
+    Object.assign(m, { castShadow: list[0].castShadow, receiveShadow: list[0].receiveShadow, renderOrder: list[0].renderOrder });
+    const zone = list[0].parent.userData.zone; if (zone) m.userData.zone = zone;
+    scene.add(m); for (const n of list) n.removeFromParent(); removed += list.length - 1;
+  }
+  return removed;
 }
