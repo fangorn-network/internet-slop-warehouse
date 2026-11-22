@@ -1,0 +1,164 @@
+[
+  {
+    "id": "acg-room-drape-color",
+    "file": "acg/acg-room-drape-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric031 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "drape",
+      "color"
+    ],
+    "description": "Fabric031 color map, 1K, from https://ambientcg.com/a/Fabric031. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-room-drape-normal",
+    "file": "acg/acg-room-drape-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric031 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "drape",
+      "normal"
+    ],
+    "description": "Fabric031 normal map, 1K, from https://ambientcg.com/a/Fabric031. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-room-drape-roughness",
+    "file": "acg/acg-room-drape-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric031 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "drape",
+      "roughness"
+    ],
+    "description": "Fabric031 roughness map, 1K, from https://ambientcg.com/a/Fabric031. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-room-terry-color",
+    "file": "acg/acg-room-terry-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric020 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "terry",
+      "color"
+    ],
+    "description": "Fabric020 color map, 1K, from https://ambientcg.com/a/Fabric020. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-room-terry-normal",
+    "file": "acg/acg-room-terry-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric020 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "terry",
+      "normal"
+    ],
+    "description": "Fabric020 normal map, 1K, from https://ambientcg.com/a/Fabric020. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-room-terry-roughness",
+    "file": "acg/acg-room-terry-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric020 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "terry",
+      "roughness"
+    ],
+    "description": "Fabric020 roughness map, 1K, from https://ambientcg.com/a/Fabric020. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-room-voile-color",
+    "file": "acg/acg-room-voile-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric032 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "voile",
+      "color"
+    ],
+    "description": "Fabric032 color map, 1K, from https://ambientcg.com/a/Fabric032. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-room-voile-normal",
+    "file": "acg/acg-room-voile-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric032 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "voile",
+      "normal"
+    ],
+    "description": "Fabric032 normal map, 1K, from https://ambientcg.com/a/Fabric032. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-room-voile-roughness",
+    "file": "acg/acg-room-voile-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric032 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "room",
+      "voile",
+      "roughness"
+    ],
+    "description": "Fabric032 roughness map, 1K, from https://ambientcg.com/a/Fabric032. Linear roughness. CC0-1.0."
+  }
+]

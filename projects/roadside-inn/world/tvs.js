@@ -83,7 +83,6 @@ export function buildTvs(ctx) {
   // ---------- vending and coffee ----------
   interact.push({ pos: new T.Vector3(5.4, 1.2, -6.6), r: 1.6, label: () => 'Vending machine', use: () => game.vend() });
   interact.push({ pos: new T.Vector3(5.5, 1.2, -5.4), r: 1.4, label: () => 'Cold drinks', use: () => game.vend('drinks') });
-  interact.push({ pos: new T.Vector3(2.7, 1.1, -8.0), r: 1.6, label: () => game.has('coffee') ? 'Grab a cookie' : 'Pour a coffee',
-    use: () => { if (!game.has('coffee')) { game.sound.pour(); game.give('coffee'); game.say('Decaf, regular, or “bold.” You pick bold. It is lukewarm.'); } else if (!game.has('cookie')) { game.give('cookie'); game.say('A plastic-wrapped chocolate chip cookie. Complimentary.'); } else game.say('Let’s not get greedy.'); } });
+  // coffee: the counter's pieces do it now (cup rack → tower → lid bin; world/lobby.js, kinds.js), cookies are take_cookie takeables
   Object.assign(ctx, { tvSet });
 }

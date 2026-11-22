@@ -1,0 +1,180 @@
+[
+  {
+    "id": "hotel-coffee-station",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-station.glb",
+    "title": "Hotel lobby coffee counter (bare, with waste hole) \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "counter",
+      "hotel",
+      "lobby",
+      "original",
+      "quartz",
+      "realistic",
+      "walnut",
+      "waste-hole"
+    ],
+    "description": "Self-serve coffee counter, 3.23 x 0.66 x 0.94 m, bare: white quartz top (3 cm) with faint coffee rings, sugar grit and a wipe swirl in its gloss, vertical-grain walnut laminate panels, black carcass, scuffed charcoal plinth. A 20 cm waste hole near the right end with a black ABS grommet (stained on the tower side) over the slim bin and liner inside; dried drip trail down the front edge; wicker cookie basket with take_cookie nodes. Hook bin_opening. Origin floor centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-coffee-tower",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-tower.glb",
+    "title": "Thermal coffee dispenser tower (COFFEE / DECAF) \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "dispenser",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic",
+      "thermal",
+      "tower"
+    ],
+    "description": "Insulated thermal coffee tower on its stand (1.5 gal Luxus-type): black stand and drip tray with slotted grille, cylindrical body with a printed wrap band, level window, domed lid and handle, faucet with a push-down lever. Nodes band (COFFEE, dark blue) and band_decaf (DECAF, light blue): keep one. Hooks fill_spout, fill_point, lever (origin on pivot). Origin base underside centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-cup-rack",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-cup-rack.glb",
+    "title": "Angled wood cup rack with paper hot cups \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "cup-rack",
+      "cups",
+      "hotel",
+      "lobby",
+      "oak",
+      "original",
+      "realistic"
+    ],
+    "description": "Blond-oak angled rack, two tiers of two slots leaning 20 degrees, four stacks of 12 oz printed paper hot cups mouth up (one shorter, one top crushed). take_cup..take_cup003 are the top cups (origin at base), stack_0..stack_3 the rest. Origin bottom centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-lid-bin",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-lid-bin.glb",
+    "title": "Bin of white domed cup lids \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "hotel",
+      "lid-stack",
+      "lids",
+      "lobby",
+      "original",
+      "realistic"
+    ],
+    "description": "Black PP bin 16 x 12 x 9 cm with two nested stacks of white domed sip lids (9.0 and 8.7 cm) standing on edge, one lid upside down on top. take_lid, take_lid001 and stack_0, stack_1. Origin bottom centre. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-condiment-riser",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-condiment-riser.glb",
+    "title": "Three-tier wood condiment riser \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "caddy",
+      "cc0",
+      "coffee",
+      "condiments",
+      "creamer",
+      "hotel",
+      "lobby",
+      "oak",
+      "original",
+      "realistic",
+      "sweetener"
+    ],
+    "description": "Blond-oak 3-tier riser: two creamer pump bottles (take_creamer_pump*, pump_point*), four orange/blue bins of sweetener packets (take_sugar_packet*) and portion creamers (take_creamer*), flattened kraft sleeves in a slot (take_sleeve), napkins with a clump pulled out (take_napkin), lid-bin space at bottom left. Origin bottom centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-hot-water-box",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-hot-water-box.glb",
+    "title": "Hot-water dispenser with push-back lever \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "dispenser",
+      "hot-water",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic"
+    ],
+    "description": "Black hot-water box with chrome bezel, printed HOT WATER panel, push-back lever with an orange HOT flag, spout with limescale, red ready lamp, fill lid, drip tray with water spots. Hooks fill_spout, fill_point, lever (origin on pivot), cord_exit (back bottom). Origin bottom centre, front +Z. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-stirrer-tumbler",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-stirrer-tumbler.glb",
+    "title": "Stir straws in a glass, wicker basket of creamer cups \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "caddy",
+      "cc0",
+      "coffee",
+      "creamer",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic",
+      "stirrers",
+      "wicker"
+    ],
+    "description": "Thick-based clear tumbler with ~44 white stir straws fanned in three rings (take_stirrer pulled up), three on the counter; separate root node basket (offset -0.35, 0, +0.2) with a wicker basket heaped with 30 foil-lidded creamer thimbles settled by rigid-body sim (take_creamer_cup on top). Origin tumbler bottom centre. Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  },
+  {
+    "id": "hotel-coffee-cup",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-coffee-cup.glb",
+    "title": "12 oz paper hot cup with lid, sleeve and coffee \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "cc0",
+      "coffee",
+      "coffee-cup",
+      "cup",
+      "hotel",
+      "lobby",
+      "original",
+      "realistic",
+      "takeaway"
+    ],
+    "description": "Printed 12 oz paper hot cup (rolled rim, darker inner wall, recessed foot), origin at base centre. Hideable child nodes: liquid (coffee 1 cm under the rim), sleeve (kraft), lid (white domed sip lid matching hotel-lid-bin). Original CC0, built by script in Blender 4.0 (projects/roadside-inn/blender/coffee.py, labels from coffee-labels.mjs)."
+  }
+]

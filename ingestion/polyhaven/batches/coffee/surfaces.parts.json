@@ -1,0 +1,128 @@
+[
+  {
+    "id": "ph-coffee-oak-color",
+    "file": "haven/ph-coffee-oak-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Coffee station oak color",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "coffee",
+      "realistic",
+      "texture",
+      "pbr",
+      "oak",
+      "color"
+    ],
+    "description": "Blond oak veneer, straight grain (cup rack and condiment riser boards), color map (1K). sRGB base color. Source https://polyhaven.com/a/oak_veneer_01, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-coffee-oak-normal",
+    "file": "haven/ph-coffee-oak-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Coffee station oak normal",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "coffee",
+      "realistic",
+      "texture",
+      "pbr",
+      "oak",
+      "normal"
+    ],
+    "description": "Blond oak veneer, straight grain (cup rack and condiment riser boards), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/oak_veneer_01, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-coffee-oak-roughness",
+    "file": "haven/ph-coffee-oak-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Coffee station oak roughness",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "coffee",
+      "realistic",
+      "texture",
+      "pbr",
+      "oak",
+      "roughness"
+    ],
+    "description": "Blond oak veneer, straight grain (cup rack and condiment riser boards), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/oak_veneer_01, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-coffee-walnut-color",
+    "file": "haven/ph-coffee-walnut-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Coffee station walnut color",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "coffee",
+      "realistic",
+      "texture",
+      "pbr",
+      "walnut",
+      "color"
+    ],
+    "description": "American walnut veneer, vertical grain (coffee counter front panels), color map (1K). sRGB base color. Source https://polyhaven.com/a/american_walnut_veneer, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-coffee-walnut-normal",
+    "file": "haven/ph-coffee-walnut-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Coffee station walnut normal",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "coffee",
+      "realistic",
+      "texture",
+      "pbr",
+      "walnut",
+      "normal"
+    ],
+    "description": "American walnut veneer, vertical grain (coffee counter front panels), normal map (1K). OpenGL +Y tangent-space normal, linear. Source https://polyhaven.com/a/american_walnut_veneer, by Jenelle van Heerden. CC0-1.0."
+  },
+  {
+    "id": "ph-coffee-walnut-roughness",
+    "file": "haven/ph-coffee-walnut-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Coffee station walnut roughness",
+    "author": "Jenelle van Heerden",
+    "license": "CC0-1.0",
+    "tags": [
+      "polyhaven",
+      "hotel",
+      "lobby",
+      "coffee",
+      "realistic",
+      "texture",
+      "pbr",
+      "walnut",
+      "roughness"
+    ],
+    "description": "American walnut veneer, vertical grain (coffee counter front panels), roughness map (1K). Linear roughness. Source https://polyhaven.com/a/american_walnut_veneer, by Jenelle van Heerden. CC0-1.0."
+  }
+]

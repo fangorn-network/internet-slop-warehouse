@@ -37,6 +37,7 @@ export function buildPut(ctx) {
       o.userData.loose = { ...(o.userData.loose ?? {}), tether };
       thing.plug = pluggable(o, { out: opts.out, tether, noun: kind.noun, glow: shadeGlow(o, kind.power.glow), light: anchor, under: () => opts.on ?? null, switchable: !!kind.switch, lit: opts.lit ?? true });
     }
+    if (kind.wallLamp) thing.plug = wallLamp(o, kind, anchor);
     if (kind.bin) thing.bin = bin(o, kind);
     if (kind.stack) stack(o, kind);
     if (kind.dispenser) dispenser(o, kind, id);
@@ -69,28 +70,30 @@ export function buildPut(ctx) {
     stirrer: c => c.contents && !c.lid && ['Stir it', () => { c.stirred = true; }],
     lid: c => !c.lid && ['Put a lid on', o => { c.lid = true; show(o, 'lid', true); game.sound?.click?.(); }],
   };
+  const ALIAS = { sugar_packet: 'sugar', creamer_cup: 'creamer', creamer_pump: 'creamer' };   // Victor's hook names → what's done
   function stack(o, kind) {
     const S = kind.stack; let left = S.count ?? Infinity;
     for (const n of hooks(o, S.hook)) {
-      const at = n.getWorldPosition(new T.Vector3()), what = S.fits ? 'lid' : (n.name.slice(6).replace(/[_\d]+$/, '') || S.item);
+      const at = n.getWorldPosition(new T.Vector3()), raw = n.name.slice(6).replace(/[_\d]+$/, ''), what = S.fits ? 'lid' : (ALIAS[raw] ?? raw) || S.item;
       const act = () => { const c = cupHeld(); return c ? DO[what]?.(c) : null; };
       if (S.item && !S.fits) interact.push({ pos: at, r: 0.8, precise: true, when: () => !held() && left > 0, label: () => `Take a ${S.item}`, use: () => { left--; newCup(); game.sound?.paper?.(); } });
-      else interact.push({ pos: at, r: 0.8, precise: true, when: () => !!act(), label: () => act()[0], use: () => act()?.[1](held()) });
+      else interact.push({ pos: at, r: 0.8, precise: true, when: () => !!act(), label: () => act()?.[0] ?? '', use: () => act()?.[1](held()) });
     }
   }
   // dispenser: holding an empty, unlidded cup, E at the tap fills it over a few seconds (the coffee rises in the cup).
   function dispenser(o, kind, id) {
     const D = kind.dispenser, p = o.getObjectByName(D.point) ?? o, at = p.getWorldPosition(new T.Vector3());
-    const fills = D.fills ?? (/water/.test(id) ? 'hot water' : 'coffee');
+    const fills = D.fills ?? (/water/.test(id) ? 'hot water' : kind.band === 'decaf' ? 'decaf' : 'coffee');
+    o.getObjectByName(kind.band === 'decaf' ? 'band' : 'band_decaf')?.removeFromParent();   // twin label bands (they z-fight): keep one
     let pouring = null;
     interact.push({ pos: at, r: 0.9, precise: true, when: () => { const c = cupHeld(); return !!c && !c.contents && !c.lid && !pouring; }, label: () => `Fill the cup with ${fills}`,
       use: () => { const cup = held(), liquid = cup.getObjectByName('liquid'); pouring = { cup, liquid, t: 0, y: liquid?.position.y ?? 0 }; if (liquid) liquid.visible = true; game.sound?.pour?.(); } });
     updaters.push(dt => {
       if (!pouring) return;
       const P = pouring; P.t = Math.min(1, P.t + dt / D.seconds);
-      if (P.liquid) P.liquid.position.y = P.y - 0.07 * (1 - P.t);   // rises to its modelled level just under the rim
+      if (P.liquid) { P.liquid.position.y = P.y - 0.07 * (1 - P.t); P.liquid.scale.x = P.liquid.scale.z = 1 - 0.22 * (1 - P.t); }   // rises to just under the rim, widening with the cup's taper
       if (held() !== P.cup) { P.cup.userData.cup.contents = P.t > 0.3 ? fills : null; pouring = null; return; }   // walked off mid-pour
-      if (P.t >= 1) { P.cup.userData.cup.contents = fills; if (fills === 'coffee') game.give?.('coffee'); pouring = null; }
+      if (P.t >= 1) { P.cup.userData.cup.contents = fills; if (fills !== 'hot water') game.give?.('coffee'); pouring = null; }
     });
   }
   const putAll = list => list.map(([id, x, y, z, yaw, opts]) => put(id, x, y, z, yaw, opts));
@@ -99,6 +102,18 @@ export function buildPut(ctx) {
   function shadeGlow(o, level) {
     const mats = []; o.traverse(n => { if (n.isMesh && /lampshade|led_warm|bulb|emiss/i.test(n.material.name)) { n.material = n.material.clone(); n.material.emissive.set('#ffcf8a'); mats.push(n.material); } });
     return on => mats.forEach(m => (m.emissiveIntensity = on ? level : 0));
+  }
+
+  // A wall lamp is hardwired: no cord or plug, a switch on its plate, the light where its bulb is (light_point). It
+  // answers to the same { noun, on, lit, setOn, onChange } as a plugged lamp, so room switches treat both alike.
+  function wallLamp(o, kind, anchor) {
+    const glow = shadeGlow(o, 0.6), bulb = o.getObjectByName('light_point'), sw = o.getObjectByName('switch') ?? o, full = anchor?.intensity ?? 0;
+    if (anchor && bulb) bulb.getWorldPosition(anchor.pos);
+    const st = { noun: kind.noun, on: true, get lit() { return st.on; }, onChange: null,
+      setOn(on) { st.on = on; if (anchor) anchor.intensity = on ? full : 0; glow(on); st.onChange?.(); } };
+    st.setOn(true);
+    interact.push({ pos: sw.getWorldPosition(new T.Vector3()), r: 0.8, label: () => `Turn the ${kind.noun} ${st.on ? 'off' : 'on'}`, use: () => { st.setOn(!st.on); game.sound?.click?.(); } });
+    return st;
   }
 
   // A bin: holding something small enough, look at it and E throws it away. It goes in and stays there (visible over

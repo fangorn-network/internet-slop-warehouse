@@ -174,16 +174,70 @@ def tub_shower(m):
     cyl('head', 0.06, 0.03, (-0.62, 0.32, 1.92), m['chrome'], rotation=(R(70), 0, 0))
     for x in (-0.3, 0.3):
         cyl('grab_bar', 0.016, 0.6, (x, 0.37, 1.0), m['chrome'], rotation=(0, R(90), 0))
-    rod = bpy.ops.mesh.primitive_torus_add(major_radius=0.78, minor_radius=0.012, location=(0, 0.0, 1.95))
-    rod = bpy.context.object; rod.name = 'rod'; rod.scale = (1, 0.55, 1); rod.data.materials.append(m['chrome'])
-    bpy.ops.mesh.primitive_plane_add(size=1, location=(0.45, -0.42, 1.24), rotation=(R(90), 0, 0))
-    cur = bpy.context.object; cur.name = 'curtain'; cur.scale = (0.7, 1.42, 1)
-    bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.subdivide(number_cuts=24); bpy.ops.object.mode_set(mode='OBJECT')
-    for v in cur.data.vertices:
-        v.co.z += math.sin(v.co.x * 34) * 0.05                 # folds (local z is world -y after the rotation)
-    sol = cur.modifiers.new('solid', 'SOLIDIFY'); sol.thickness = 0.004
-    cur.data.materials.append(material('curtain', color=(0.97, 0.97, 0.96), roughness=0.95))
+    # curved rod: a 1 in tube on an arc along the open front, flanged to the two end walls (x = +-0.775) at 5 cm
+    # inside the tub's front edge, bowing 15 cm out at the middle (the "crescent" rod every reference shows)
+    zr, ye, yc, xe = 1.95, -0.30, -0.45, 0.775
+    c = (xe ** 2 + ye ** 2 - yc ** 2) / (2 * (ye - yc))           # arc centre (0, c) through both ends and the bow
+    Rr = c - yc
+    a0 = math.atan2(ye - c, xe)
+    arc = lambda a: (Rr * math.cos(a), c + Rr * math.sin(a))
+    angs = [-(math.pi / 2) + (a0 + math.pi / 2) * (1 - 2 * i / 48) for i in range(49)]   # from +x end through -y to -x end
+    pts = [arc(a) for a in angs]
+    curve = bpy.data.curves.new('rod', 'CURVE'); curve.dimensions = '3D'; curve.bevel_depth = 0.0125; curve.bevel_resolution = 3
+    sp = curve.splines.new('POLY'); sp.points.add(len(pts) - 1)
+    for p, (x, y) in zip(sp.points, pts):
+        p.co = (x, y, zr, 1)
+    rod = bpy.data.objects.new('rod', curve); bpy.context.scene.collection.objects.link(rod); curve.materials.append(m['chrome'])
+    bpy.context.view_layer.objects.active = rod
+    for ob in bpy.context.selected_objects:
+        ob.select_set(False)
+    rod.select_set(True); bpy.ops.object.convert(target='MESH'); smooth(rod, 50)
+    for sx in (-1, 1):                                            # wall flanges, 7 cm, on the end walls
+        cyl('rod_flange', 0.035, 0.012, (sx * (xe - 0.006), ye, zr), m['chrome'], verts=32, bevel=0.003, rotation=(0, R(90), 0))
+    # the curtain: pushed to the +x end, gathered in deep folds along the arc, hanging from C-rings on the rod; hem
+    # stops above the tub rim (a liner would hang inside)
+    cur_m = material('curtain', color=(0.95, 0.95, 0.94), roughness=0.9,
+                     maps={'normal': 'acg-room-voile-normal.jpg', 'roughness': 'acg-room-voile-roughness.jpg'}, uv_scale=6)
+    nring, s_end = 10, 0.62                                       # 10 rings over the first 0.62 m of arc from the wall
+    a_of = lambda s: -(math.pi / 2) + (a0 + math.pi / 2) - s / Rr  # arc angle at arc length s from the +x end
+    ztop, zhem = zr - 0.034, 0.56                              # top hem threaded on the ring wire
+    rows, cols = 22, nring * 6
+    verts, faces, uvs = [], [], []
+    for i in range(rows + 1):
+        v = i / rows; z = ztop - (ztop - zhem) * v
+        for j in range(cols + 1):
+            t = j / cols; s = 0.015 + t * s_end
+            a = a_of(s); x, y = arc(a)
+            k = int(t * nring); f = t * nring - k
+            amp = 0.045 * math.sin(math.pi * f) * (1 if k % 2 == 0 else -1) * (0.8 + 0.2 * v) * (0.85 + 0.15 * math.sin(k * 2.1))
+            amp += 0.015 * v * math.sin(t * 9 + 1.3)               # the free part sways off the ring line
+            nx, ny = math.cos(a), math.sin(a)                     # outward normal of the arc
+            verts.append((x + nx * amp, y + ny * amp, z + (0.006 * math.sin(j * 1.7) if i == rows else 0)))
+            uvs.append((t * 1.8, 1 - v))
+    W = cols + 1
+    for i in range(rows):
+        for j in range(cols):
+            faces.append((i * W + j, i * W + j + 1, (i + 1) * W + j + 1, (i + 1) * W + j))
+    me = bpy.data.meshes.new('curtain'); me.from_pydata(verts, [], faces); me.update()
+    ul = me.uv_layers.new(name='UVMap')
+    for p in me.polygons:
+        for li in p.loop_indices:
+            ul.data[li].uv = uvs[me.loops[li].vertex_index]
+    cur = bpy.data.objects.new('curtain', me); bpy.context.scene.collection.objects.link(cur); me.materials.append(cur_m)
+    sol = cur.modifiers.new('solid', 'SOLIDIFY'); sol.thickness = 0.002
     smooth(cur)
+    rings = []
+    for r_ in range(nring):                                       # C-rings: round the rod, through the curtain's top hem
+        s = 0.015 + r_ * s_end / nring
+        a = a_of(s); x, y = arc(a)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.024, minor_radius=0.0022, major_segments=20, minor_segments=6,
+                                         location=(x, y, zr - 0.012), rotation=(R(90), 0, a))
+        ring = bpy.context.object; ring.name = 'curtain_ring'; ring.data.materials.append(m['chrome']); rings.append(ring)
+    for ob in bpy.context.selected_objects:
+        ob.select_set(False)
+    for r_ in rings:
+        r_.select_set(True)
+    bpy.context.view_layer.objects.active = rings[0]; bpy.ops.object.join()
 
 
 def front_desk(m):
@@ -480,8 +534,6 @@ def centerpiece(m):
     cyl('pedestal', 0.09, 0.7, (0, 0, 0.4), m['walnut'], verts=24, r2=0.06)
     cyl('foot', 0.32, 0.05, (0, 0, 0.025), m['walnut'], verts=48, bevel=0.01)
     cyl('vase', 0.1, 0.32, (0, 0, 0.94), material('vase_glass', color=(0.75, 0.82, 0.8), roughness=0.05, alpha=0.4), verts=32, r2=0.13)
-    import random
-    rnd = random.Random(4)
     greens = material('greens', color=(0.08, 0.22, 0.07), roughness=0.6)
     petals = [material(f'petal{i}', color=c, roughness=0.6) for i, c in enumerate(((0.85, 0.82, 0.78), (0.8, 0.25, 0.2), (0.85, 0.6, 0.15), (0.6, 0.3, 0.55)))]
     for k in range(26):

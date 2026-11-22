@@ -1,0 +1,178 @@
+[
+  {
+    "id": "hotel-luggage-cart-brass",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-luggage-cart-brass.glb",
+    "title": "Brass birdcage luggage cart \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "brass",
+      "cart",
+      "cc0",
+      "hotel",
+      "lobby",
+      "luggage",
+      "luggage-cart",
+      "original",
+      "realistic"
+    ],
+    "description": "Brass birdcage bellman's luggage cart, 112 x 62 x 188 cm: two 1.5 in brass arched side frames leaning into a cast crown hub with finial and garment bar, push bars at both ends with cast tee sleeves, flared base ferrules, carpeted deck (ambientCG Fabric026, worn pale in the middle) in a brass skirt with a grey rubber wrap-around bumper (scuffed), 2 fixed 8 in cushion wheels and 2 swivel 5 in casters (one turned sideways). Brass is metal PBR with a generated wear map: hand-polished at grab height, tarnished and rougher low down and at the joints, fingerprint smudges. Hooks: grab, deck, caster_l, caster_r. Built by projects/roadside-inn/blender/luggage.py. Original CC0."
+  },
+  {
+    "id": "hotel-luggage-cart-brass-mobile",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-luggage-cart-brass-mobile.glb",
+    "title": "Brass birdcage luggage cart (phone LOD) \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "blender",
+      "brass",
+      "cart",
+      "cc0",
+      "hotel",
+      "lobby",
+      "lod",
+      "luggage",
+      "luggage-cart",
+      "mobile",
+      "original",
+      "realistic"
+    ],
+    "description": "Phone level of detail of hotel-luggage-cart-brass: the same model with dense meshes decimated to about 30 % and textures at most 512 px; names, materials and hook nodes unchanged. Built by projects/roadside-inn/blender/mobile_lod.py from hotel-luggage-cart-brass. Original CC0."
+  },
+  {
+    "id": "hotel-roller-bag",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-roller-bag.glb",
+    "title": "Soft-side 22 in carry-on (rollaboard) \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bag",
+      "blender",
+      "carry-on",
+      "cc0",
+      "hotel",
+      "luggage",
+      "original",
+      "realistic",
+      "roller-bag",
+      "suitcase"
+    ],
+    "description": "Two-wheel soft-side carry-on, 36 x 25 x 57 cm closed: charcoal 1680D ballistic nylon (ambientCG Fabric004) body, expansion gusset and front lid with a zip pocket (creased), black piping on every edge, perimeter and expansion zips with metal pulls, padded top and side handles, blank paper airline tag, moulded wheel housings with 7 cm PU inline wheels, kick plate and front feet (scraped), scuffed corners, two-tube aluminium telescoping handle with grip and release button. Hooks: handle (slides +Y 0.42 m), grab_top, wheel_l, wheel_r. Built by projects/roadside-inn/blender/luggage.py. Original CC0."
+  },
+  {
+    "id": "acg-luggage-nylon-color",
+    "file": "acg/acg-luggage-nylon-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage ballistic nylon (ambientCG Fabric004) \u00b7 color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "color"
+    ],
+    "description": "Fabric004 color map, 1K: 2x2 basket weave, used as 1680D ballistic nylon on the roller bag at a 1.6 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric004. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-nylon-normal",
+    "file": "acg/acg-luggage-nylon-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage ballistic nylon (ambientCG Fabric004) \u00b7 normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "normal"
+    ],
+    "description": "Fabric004 normal map, 1K: 2x2 basket weave, used as 1680D ballistic nylon on the roller bag at a 1.6 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric004. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-nylon-roughness",
+    "file": "acg/acg-luggage-nylon-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage ballistic nylon (ambientCG Fabric004) \u00b7 roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "roughness"
+    ],
+    "description": "Fabric004 roughness map, 1K: 2x2 basket weave, used as 1680D ballistic nylon on the roller bag at a 1.6 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric004. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-color",
+    "file": "acg/acg-luggage-deck-carpet-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage cart deck carpet (ambientCG Fabric026) \u00b7 color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "color"
+    ],
+    "description": "Fabric026 color map, 1K: red rib needle-punch carpet on the bellman cart deck at a 22 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric026. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-normal",
+    "file": "acg/acg-luggage-deck-carpet-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage cart deck carpet (ambientCG Fabric026) \u00b7 normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "normal"
+    ],
+    "description": "Fabric026 normal map, 1K: red rib needle-punch carpet on the bellman cart deck at a 22 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric026. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-roughness",
+    "file": "acg/acg-luggage-deck-carpet-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "Luggage cart deck carpet (ambientCG Fabric026) \u00b7 roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "roughness"
+    ],
+    "description": "Fabric026 roughness map, 1K: red rib needle-punch carpet on the bellman cart deck at a 22 cm tile (Heartland Inn), from https://ambientcg.com/a/Fabric026. Linear roughness. CC0-1.0."
+  }
+]

@@ -72,6 +72,7 @@ export const KIND_OF = {
   'hotel-condiment-riser': 'caddy',
   'hotel-stirrer-tumbler': 'caddy',
   'hotel-luggage-cart-brass': 'luggage-cart',
+  'hotel-coffee-station': 'counter-bin',
   // 'hotel-roller-bag': 'roller-bag',  // ponytail: map when handling.js places the bag with put(), else lint flags it
 };
 

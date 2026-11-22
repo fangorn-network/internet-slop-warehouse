@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ph-coffee-oak-color",
+    "source": "https://polyhaven.com/a/oak_veneer_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "size": 641756,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_diff_1k.jpg",
+      "md5": "39a99df4e328d62d74f3122722a64a95"
+    },
+    "bytes": 641756,
+    "sha256": "c14681f72f59f17bff568cae7a837641443b607b899f0c279cd64a5638f877a7",
+    "acquiredAt": "2026-11-22T06:49:40.797Z"
+  },
+  {
+    "id": "ph-coffee-oak-normal",
+    "source": "https://polyhaven.com/a/oak_veneer_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "size": 484844,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_nor_gl_1k.jpg",
+      "md5": "d05406f5fdaf51f0d7b115b35d9af1b7"
+    },
+    "bytes": 484844,
+    "sha256": "1297acf7b4476d5ccd83cc8b27be96aa6110f7a9c3a40be0bd767bf81b17db01",
+    "acquiredAt": "2026-11-22T06:49:40.859Z"
+  },
+  {
+    "id": "ph-coffee-oak-roughness",
+    "source": "https://polyhaven.com/a/oak_veneer_01",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "size": 865194,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_rough_1k.jpg",
+      "md5": "a19b44176a078b9ae93314133848c9aa"
+    },
+    "bytes": 865194,
+    "sha256": "ca2af5649b628ef05f196793d68cdca874c12ceb6e9ae566976546d9dd5a2604",
+    "acquiredAt": "2026-11-22T06:49:40.973Z"
+  },
+  {
+    "id": "ph-coffee-walnut-color",
+    "source": "https://polyhaven.com/a/american_walnut_veneer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/american_walnut_veneer/american_walnut_veneer_diff_1k.jpg",
+      "md5": "748b39ed2ba9dce314104055f18837f0",
+      "size": 579182
+    },
+    "bytes": 579182,
+    "sha256": "10d983003bb686db4af3d35d91197fdb6144dcd15d3dcea2ef315600f51b1af5",
+    "acquiredAt": "2026-11-22T06:49:52.652Z"
+  },
+  {
+    "id": "ph-coffee-walnut-normal",
+    "source": "https://polyhaven.com/a/american_walnut_veneer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/american_walnut_veneer/american_walnut_veneer_nor_gl_1k.jpg",
+      "md5": "4bd673f87d8aef1fcce85625d748fa0e",
+      "size": 414945
+    },
+    "bytes": 414945,
+    "sha256": "f54890d8dd352c8668d643adaa0ad66bd5a3b62995198b7dfb518fa59efebca2",
+    "acquiredAt": "2026-11-22T06:49:52.730Z"
+  },
+  {
+    "id": "ph-coffee-walnut-roughness",
+    "source": "https://polyhaven.com/a/american_walnut_veneer",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "creator": "Jenelle van Heerden",
+    "download": {
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/american_walnut_veneer/american_walnut_veneer_rough_1k.jpg",
+      "md5": "d9fa24afc4790122e9ba3c535af8b615",
+      "size": 691712
+    },
+    "bytes": 691712,
+    "sha256": "a13cd23228a4cb1bf0e342b4602d636123699cde61a2ff16bec1ce45a33ac62e",
+    "acquiredAt": "2026-11-22T06:49:52.804Z"
+  }
+]

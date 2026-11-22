@@ -1,0 +1,115 @@
+[
+  {
+    "id": "hotel-room-wastebasket",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-room-wastebasket.glb",
+    "title": "Guest-room wastebasket \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bathroom",
+      "bedroom",
+      "bin",
+      "blender",
+      "cc0",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "wastebasket"
+    ],
+    "description": "Hotel guest-room wastebasket, 27 x 20 x 30 cm (13 qt): one-piece moulded charcoal polypropylene with a 2.5 mm wall, slight taper and rolled rim, pale scuffs low on the sides and a dust line inside; a translucent white liner folded unevenly over the rim. Hook node bin_opening. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-tp-holder",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-tp-holder.glb",
+    "title": "Hooded toilet-tissue holder with roll and spare \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bathroom",
+      "blender",
+      "cc0",
+      "chrome",
+      "fixture",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "toilet-paper"
+    ],
+    "description": "Surface-mount chrome hooded single-roll tissue holder (water spots on the hood), a quilt-embossed roll on a spring roller with its tail folded to a housekeeping V point, and a banded spare roll as a second root for the toilet tank. Hook nodes take_roll, roll_tail, take_roll_spare. Print invented, no brand. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-towel-bar-towels",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-towel-bar-towels.glb",
+    "title": "Towel bar with two bath towels \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bathroom",
+      "blender",
+      "cc0",
+      "fixture",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "terry",
+      "towel",
+      "towel-bar"
+    ],
+    "description": "24 in brushed stainless towel bar on two standoff posts with round flanges, two white terry bath towels folded in thirds and hung doubled, dobby bands near the hems, hems uneven. Terry relief from ambientCG Fabric020 (CC0). Hook nodes take_towel, take_towel001, hang_point. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-swing-arm-sconce",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-swing-arm-sconce.glb",
+    "title": "Swing-arm reading sconce \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bedroom",
+      "blender",
+      "cc0",
+      "hotel",
+      "lamp",
+      "lighting",
+      "original",
+      "realistic",
+      "room-212",
+      "sconce",
+      "wall-lamp"
+    ],
+    "description": "Hardwired swing-arm reading sconce: rounded brushed-nickel wall plate with a white rocker, swivel knuckle, two-section arm resting a few degrees low, white linen drum shade on a spider with a diffuser disc. Hook nodes arm_pivot, light_point, switch. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  },
+  {
+    "id": "hotel-blackout-drapes",
+    "type": "asset",
+    "file": "../projects/roadside-inn/assets/hotel-blackout-drapes.glb",
+    "title": "Blackout drapes on a pelmet track \u00b7 original Blender model",
+    "mime": "model/gltf-binary",
+    "author": "the internet slop warehouse",
+    "license": "CC0-1.0",
+    "tags": [
+      "bedroom",
+      "blender",
+      "cc0",
+      "curtains",
+      "drapes",
+      "hotel",
+      "original",
+      "realistic",
+      "room-212",
+      "textile",
+      "window"
+    ],
+    "description": "Two lined pinch-pleated blackout drape panels and a voile sheer on ceiling tracks behind a painted pelmet box, 2.6 m wide, 2.85 m drop. Panels authored open (gathered) with a closed shape key; sun-faded leading edges, a grab crease and a frayed hem corner. Face fabric ambientCG Fabric031, sheer Fabric032 (CC0). Hook nodes open_drapes_left, open_drapes_right, open_sheer, grab_left, grab_right. Built by projects/roadside-inn/blender/round1.py. Original CC0."
+  }
+]

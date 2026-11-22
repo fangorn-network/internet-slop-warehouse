@@ -30,7 +30,7 @@ const here = p => typeof location === 'undefined' ? p : new URL(p, import.meta.u
 export const LITE = new Set(['ph-potted-plant-01', 'ph-potted-plant-02', 'ph-potted-plant-04', 'hotel-king-bed', 'ph-desk-lamp-arm-01', 'ph-bar-chair-round-01', 'g3-semi-truck', 'g3-1990s-suv', 'g3-1990s-station-wagon', 'g3-1990s-sedan', 'g3-1990s-hatchback', 'g3-1990s-pickup-truck', 'g3-1990s-minivan', 'g3-utility-pole', 'g3-dumpster', 'g3-fire-hydrant', 'g3-grocery-shelf', 'g3-end-cap-display', 'g3-coffee-machine', 'g3-soda-fountain', 'g3-upright-freezer', 'g3-freezer-chest', 'g3-vending-machine']); // = ingestion/lite/hotel.json
 // Phones load decimated variants of the densest props (blender/mobile_lod.py: upholstery, cables, bottle lathes at ~30 %,
 // textures 512 px), published as <id>-mobile. Same names and nodes, so nothing else changes.
-export const MOBILE_LOD = new Set(['hotel-bar-stool', 'hotel-task-chair', 'hotel-market-cooler', 'hotel-desk-closed', 'hotel-snack-vending', 'hotel-sectional', 'hotel-lobby-sofa-2']);
+export const MOBILE_LOD = new Set(['hotel-bar-stool', 'hotel-task-chair', 'hotel-market-cooler', 'hotel-desk-closed', 'hotel-snack-vending', 'hotel-sectional', 'hotel-lobby-sofa-2', 'hotel-luggage-cart-brass']);
 const file = id => economy && MOBILE_LOD.has(id) ? `${id}-mobile` : LITE.has(id) ? `${id}-lite` : id;
 export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here(local[id] ?? (id.endsWith('-lite') ? `../../parts/lite/${id}.glb` : null) ?? (id.startsWith('hotel-') ? `./assets/${id}.glb` : null) ?? (id.startsWith('g3-') ? `../../parts/grab3d/${id}.glb` : id.startsWith('acg-') ? `../../parts/acg/${id}.jpg` : `../../parts/haven/${id}.${ext}`));
 
@@ -44,7 +44,7 @@ const MODELS = [
   'ph-shrub-03', 'ph-fire-alarm',   // fire_alarm: pull stations (world/life-safety.js)
   'municipal-water-tower', 'ph-desk-lamp-arm-01',
   // original Blender furniture (blender/bed.py, blender/furniture.py)
-  ...['king-bed', 'headboard', 'nightstand', 'table-lamp', 'credenza-tv', 'desk', 'closet', 'microfridge', 'ptac', 'vanity', 'toilet', 'snack-vending', 'luggage-cart', 'lobby-sofa', 'accent-chair-mustard',
+  ...['king-bed', 'headboard', 'nightstand', 'table-lamp', 'credenza-tv', 'desk', 'closet', 'microfridge', 'ptac', 'vanity', 'toilet', 'snack-vending', 'lobby-sofa', 'accent-chair-mustard',
     'coffee-station', 'breakfast-bar', 'ice-machine', 'ice-bucket', 'elevator-car', 'dumbbell-rack', 'pool-chaise', 'pool-rail', 'housekeeping-cart', 'room-door',
     'floor-lamp'].map(s => 'hotel-' + s),
   // Formula Blue lobby (blender/lobby.py) and a Poly Haven stone-top coffee table
@@ -52,6 +52,9 @@ const MODELS = [
   // lived-in props with printed labels (blender/props.py, labels.mjs) and a second Poly Haven plant
   ...['extinguisher-cabinet', 'outlet', 'brochure-rack', 'newspaper', 'newspaper-stack', 'coffee-cup', 'phone', 'entry-mat', 'coffee-board', 'waste-cabinet', 'waste-bin', 'desk-items', 'desk-closed', 'lobby-sofa-2', 'tv-remote', 'map-mural', 'wall-art'].map(s => 'hotel-' + s), 'ph-potted-plant-02',
   ...['1990s-sedan', '1990s-suv', '1990s-pickup-truck', '1990s-minivan', '1990s-station-wagon', '1990s-hatchback', 'semi-truck', 'dumpster', 'utility-pole', 'street-light', 'vending-machine', 'fire-hydrant', 'traffic-cone', 'bollard', 'guard-rail'].map(s => 'g3-' + s),
+  // set pipeline round 1 (briefs/round-1.md): room 212, its bath, the coffee counter's pieces, the lobby cart and carry-on
+  ...['room-wastebasket', 'tp-holder', 'towel-bar-towels', 'swing-arm-sconce', 'blackout-drapes', 'coffee-tower', 'cup-rack', 'lid-bin',
+    'condiment-riser', 'hot-water-box', 'luggage-cart-brass', 'roller-bag'].map(s => 'hotel-' + s),
   ...STATION_PARTS,   // the travel stop across the interstate (station.js)
 ];
 // Decorative props nothing inspects after placing them (no traverse, bounds or named parts), outside room 212 (whose
@@ -59,7 +62,7 @@ const MODELS = [
 export const LAZY = new Set(['ph-potted-plant-01', 'ph-potted-plant-02', 'ph-potted-plant-04', 'hotel-brochure-rack', 'hotel-newspaper', 'hotel-newspaper-stack', 'hotel-coffee-cup', 'ph-round-wooden-table-01',
   'ph-lifebuoy', 'ph-wetfloorsign-01', 'ph-wall-clock', 'ph-ottoman-01', 'ph-modern-coffee-table-01',
   'hotel-extinguisher-cabinet', 'municipal-water-tower', 'g3-treadmill', 'g3-exercise-bike', 'g3-dumpster',
-  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'floor-lamp', 'luggage-cart', 'housekeeping-cart', 'bar-stool', 'task-chair', 'market-shelf', 'business-center'].map(s => 'hotel-' + s), 'ph-coffee-table-round-01', ...STATION_PARTS]);
+  ...['pool-chaise', 'pool-rail', 'dumbbell-rack', 'floor-lamp', 'luggage-cart-brass', 'housekeeping-cart', 'bar-stool', 'task-chair', 'market-shelf', 'business-center'].map(s => 'hotel-' + s), 'ph-coffee-table-round-01', ...STATION_PARTS]);
 const PBR = ['color', 'normal', 'roughness'];
 const SURFACES = { parquet: PBR, carpet: PBR, 'stone-facade': PBR, lawn: ['color', 'normal'], 'wall-plaster': ['normal', 'roughness'], walnut: PBR, oak: PBR, 'bath-tile': PBR, 'pool-tile': ['color', 'normal'], 'gym-rubber': PBR, concrete: PBR, linen: PBR };
 const STORE = { asphalt: 'ph-store-asphalt', tile: 'ph-store-floor', ceiling: 'acg-hotel-ceiling', corridor: 'acg-lobby-corridor', 'lobby-carpet': 'acg-lobby-carpet' }; // Maira's Dream; ambientCG (corridor: Carpet006, lobby-carpet: Carpet001)

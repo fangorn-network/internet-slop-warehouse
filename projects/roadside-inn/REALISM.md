@@ -500,3 +500,50 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Bath with no outlet** → GFCI on the side wall at the vanity end, 107 cm up; two duplexes behind the coffee towers at 1 m.
 - **Lint calls a cup on the coffee counter an overlap** → the counter's box includes the towers baked into it (1.53 m), so nothing "stands on" it → bake nothing onto counters: items that do something are their own models with kinds (briefs/hotel-coffee-station.md); the abandoned cup waits for the bare counter.
 - **Baked props can't have behaviour** → a kind attaches to a model, not to a node inside one (the headboard's stub sconces, the counter's towers) → brief anything a guest will use as its own GLB with its hooks.
+
+## Luggage (round 1: brass cart, roller bag)
+
+- **Worn metal needs a map keyed to how it's used.** One brass colour reads as gold paint. Tubes get UV v = height / 2 m,
+  so one generated 256x1024 map does the wear for every tube: polished bright at 0.9-1.15 m (hands), browner and
+  rougher (0.35+) below 0.6 m and at the cast tees/ferrules (their UVs point into the low band), fingerprint whorls as
+  roughness only. Horizontal push bars map their length across the hand band, so the middle shines and the ends tarnish.
+- **Dezincification specks must be tiny.** Big low-frequency rust spots read as orange paint blobs on a planar skirt.
+- **Vertex colour is the cheap wear channel** (glTF COLOR_0 x base colour): pale worn carpet, black bumper scuffs,
+  scraped wheel housings. Every mesh joined into the same draw call needs the attribute (white), or the join fills
+  zeros and three.js multiplies that primitive to black.
+- **Grey rubber is darker than it looks.** Linear 0.27 renders near-white under the sky HDRI; mid-grey tyres are ~0.15.
+- **Cut the soft body before subdividing.** An exact boolean on a subdivided, bevelled, jittered bag body ate the
+  mesh; notch the plain box first (where the wheel housings take the corners), then subdivide and bevel.
+- **Weave scale:** a 2x2 basket weave at 4.5 mm a repeat reads as carbon fibre; 1680D ballistic nylon is ~1.6 mm.
+
+## Round 1 room/bath builds (2026-11-22, Victor: blender/round1.py, tub fix in furniture.py)
+- **Shower rod as a ring overhead** → a torus scaled flat read as a halo over the tub → curved rod = an arc through both end walls (5 cm inside the tub front) bowing 15 cm out, flanged to the walls; the curtain's top hem sits on the C-rings' wire (a 9 mm gap under the rings read as floating), rings at the fold nodes.
+- **Liner through the bin rim** → the liner's over-the-rim row passed under the rolled bead's crown → every liner row must clear the body's profile at that offset; the BVH check (sofa.touching) caught it; check after any profile edit.
+- **Scuffs like chalk** → +0.05-0.13 on a 0.055 charcoal is 2-3x brighter: scuffs on dark plastic are +0.01-0.035 and blurred.
+- **Hooded holder hiding the roll** → a hood swept past 90° closes over the whole roll; real hoods stop near horizontal so the roll's lower half and the tail show. The tail must start on the roll's surface (over the top-front), just proud of its wound flats, or its edge z-fights the roll.
+- **Lining poking through the drape face** → the backing was built with a different drop, so its v-dependent fold amplitudes differed and crossed the face → build lining and face with identical parameters, then offset; apply the same wear (the grab crease) to both.
+- **Organ-pipe drapes** → equal folds read as vertical blinds: per-fold depth 0.7-1.25 fading in below the pleat header, a 7 % flare toward the hem, a slight sway off plumb.
+- **Brushed nickel as mirror chrome** → a water-spot roughness map at base 0.1 overrides "roughness 0.35"; brushed metal needs the brushed-steel maps (acg-hotel-brushed-steel), spots only on polished chrome.
+- **Sun fade can't be a node multiply in glTF** → colour attribute (COLOR_0) multiplies the base map in three.js; meshes sharing that material must all carry the attribute (joined meshes without it go black).
+- **Image.scale() doesn't reach the GLB** → the exporter re-reads the file; save the downscaled copy (labels/r1-512-*.png) and point the image at it.
+
+## Round 1 coffee station (2026-11-22, Victor: blender/coffee.py, coffee-labels.mjs)
+- **Balanced towers of creamers** → dropping each thimble straight down until it touched (no sliding) built columns
+  standing on one cup; a heap needs physics: Blender rigid bodies (convex hulls, margin 0.3 mm, 40 substeps), let it
+  settle 140 frames, keep the transforms (settle() in coffee.py). Same for cookies in a basket, creamers in a bin.
+- **Plank texture on small boards** → ph-hotel-oak is a floor of planks; joints showed as stripes across a 20 cm
+  rack side. Boards want a veneer (Poly Haven oak_veneer_01, 1.83 m a tile) with v along the board's long axis.
+- **Grey "walnut"** → both Poly Haven walnut veneers come out grey-brown; the photo's counter is warm red-brown
+  laminate: a tinted, turned copy (labels/coffee-walnut.jpg) is cheaper than a node tint, which glTF drops.
+- **Two band variants as twin meshes z-fight** → band and band_decaf share geometry; the shot must hide one, and the
+  game must remove one (opts.band). Same atlas, different UV rect: one material, no extra draw call.
+- **Lever built round the pivot, then moved** → setting location on a mesh built off-centre put its middle on the
+  pivot (arm half inside the barrel); shift the mesh by its build location first (at_pivot()).
+- **Lid stacks must nest, not overlap** → nested skirts at 6 mm pitch: each skirt flares 0.5 mm wider than the crown
+  below, so the outer silhouette is a sawtooth of skirt edges; 2 rings a lid keeps the stack under 1k tris.
+- **Liquid that rises in a tapered cup** → a disc moved down 7 cm pokes through the wall (the cup narrows 22 %):
+  scale its x/z with the height, 1 - 0.22 (1 - t).
+- **Tub standing free at one end** → an alcove tub dropped into a room wider than it → a wet wall at the open end (14.66-14.76), tub tight to the outside wall at the spout end.
+- **Drapes clipping through the PTAC** → hung at the wall face, where the PTAC stands 35 cm proud → the track hangs in front of the PTAC (z 8.45), as real rooms with a through-wall unit do.
+- **Sconces on a panel that moves** → the clearance pass shifts the headboard after placement → place the sconces after the pass, on the headboard's own stub sconce plates, then hide the stubs.
+- **Lint sees nothing standing on the coffee counter** → a 7 cm wicker basket in the counter model raises its box top → the basket is detached as its own thing; anything on a counter is its own object.

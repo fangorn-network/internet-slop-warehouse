@@ -56,9 +56,7 @@ export function buildLivedIn(ctx) {
     loose(add(lib.model('hotel-coffee-cup', { origin: true }), -1.15, 1.05, -5.62, 2.1), { rest: true });
     loose(add(lib.model('hotel-coffee-cup', { origin: true }), 4.05, 0.42, 6.5, -0.7), { rest: true });
     loose(add(lib.model('hotel-coffee-cup', { origin: true }), 5.86, 0.763, -2.25, 0.9), { rest: true });
-    // ponytail: the abandoned cup at the coffee counter's end (spec) waits for the bare counter rebuild (briefs/
-    // hotel-coffee-station.md): on today's counter its box (towers baked in, 1.53 m) makes lint call it an overlap.
-    // loose(add(lib.model('hotel-coffee-cup', { origin: true }), 4.78, 0.94, -8.37, 1.3), { rest: true });
+    { const c = loose(add(lib.model('hotel-coffee-cup', { origin: true }), 4.7, 0.943, -8.36, 1.3), { rest: true }); for (const n of ['lid', 'sleeve']) { const m = c.getObjectByName(n); if (m) m.visible = false; } }   // abandoned at the coffee counter's end, no lid, gone cold
     loose(add(lib.model('hotel-newspaper', { origin: true }), 4.4, 0.421, 6.85, 0.35), { rest: true }).userData.edition = 'today';
     loose(add(lib.model('hotel-newspaper', { origin: true }), -8.15, 0.401, 5.45, -1.9), { rest: true }).userData.edition = 'yesterday';
     // The morning papers: five separate copies, each one you can take and read (main.js), squared

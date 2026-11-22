@@ -6,7 +6,7 @@ import * as T from 'three';
 import { economy } from '../quality.js';
 import * as F from '../fixtures.js';
 import { Reflector } from 'three/addons/objects/Reflector.js';
-import { FLOOR2 } from '../world.js';
+import { FLOOR2, CEIL } from '../world.js';
 
 export function buildRoom212(ctx) {
   const {
@@ -106,18 +106,21 @@ export function buildRoom212(ctx) {
     // Tub/shower combo across the far (north) wall, spout and valve at the outside (east) end: what a standard king of
     // this class has (specs/room-king-bath.md); the glass shower cabin was a walk-in, which these rooms don't have.
     // Grab bars are the accessible room's, so they're hidden here.
-    const tub = add(lib.model('hotel-tub-shower', { origin: true, rotate: Math.PI }), 15.57, y, 3.6);
+    const tub = add(lib.model('hotel-tub-shower', { origin: true, rotate: Math.PI }), 15.57, y, 3.64);
     tub.traverse(n => { if (/^grab_bar/.test(n.name)) n.visible = false; });
-    solid(14.77, 16.38, y, y + 0.5, 3.13, 4.04);
+    solid(14.77, 16.38, y, y + 0.5, 3.24, 4.04);
+    // An alcove tub has a wall at both ends: the outside wall at the spout end, a wet wall at the other.
+    const wet = ctx.mbox(0.1, CEIL, 0.81, F.mat('#f3f3f1', { roughness: 0.6 })); wet.position.set(14.71, y + CEIL / 2, 3.645); scene.add(wet);
+    solid(14.66, 14.76, y, y + CEIL, 3.24, 4.05);
     // Victor's bathroom pieces (briefs/natasha-2026-11-21.md), placed once their GLBs are in assets.js.
     const fit = (id, x, yy, z, ry = 0) => { if (!lib.models.has(id)) return null; const o = add(lib.model(id, { origin: true }), x, yy, z, ry); o.userData.onWall = true; return o; };
-    fit('hotel-towel-bar-towels', 16.44, y + 1.15, 1.53, -Math.PI / 2);   // east wall over the toilet tank (briefs/hotel-towel-bar-towels.md)
+    const onWall = o => ((o.userData.onWall = true), o);
+    onWall(put('hotel-towel-bar-towels', 16.44, y + 1.15, 1.53, -Math.PI / 2));   // east wall over the toilet tank, bar at 115 cm
     fit('hotel-towel-shelf', VX, y + 0.22, 1.07);                       // under the sink, on the back wall
-    fit('hotel-tp-holder', 15.67, y + 0.66, 1.06);                      // side wall, 8 in ahead of the bowl (ADA 604.7)
+    const tp = onWall(put('hotel-tp-holder', 15.67, y + 0.66, 1.06));   // side wall, 8 in ahead of the bowl (ADA 604.7)
+    { const spare = tp.getObjectByName('take_roll_spare'); if (spare) { scene.attach(spare); spare.position.set(16.33, y + 0.775, 1.55); } }   // on the tank lid
     fit('hotel-bath-amenities', 16.37, y + 1.3, 3.75, -Math.PI / 2);    // tub end wall, by the shower head
-    // Wastebasket on the floor between the vanity and the toilet; a small one (kinds.js small-bin) until
-    // hotel-room-wastebasket (briefs/) replaces this scaled-down lobby bin.
-    put('hotel-waste-bin', 15.585, y, 1.22, 0, { kind: 'small-bin', model: { origin: true, height: 0.3 } });
+    put('hotel-room-wastebasket', 15.585, y, 1.22, 0);   // on the floor between the vanity and the toilet
     const bathLight = { pos: new T.Vector3(15.2, y + 2.94, 2.5), color: new T.Color('#fff1e0'), intensity: 4.5, distance: 5 };   // just above the ceiling face, so it lights the room and not the ceiling (at 2.5 m it blew out the ceiling and tile)
     lightAnchors.push(bathLight);
     interact.push({ pos: new T.Vector3(13.95, y + 1.3, 2.4), r: 1.2, label: () => `Bathroom light ${st.bath ? 'off' : 'on'}`, use: () => { st.setBath(!st.bath); game.sound.click(); } });
@@ -147,13 +150,13 @@ export function buildRoom212(ctx) {
       use: () => { game.sound.hum(true); setTimeout(() => { game.sound.hum(false); game.sound.beep(true); game.say(game.has('coffee') ? 'Thirty seconds. The lobby coffee is now hot and somehow worse.' : 'You run the microwave for ten seconds, empty. Old habit.'); }, 2500); } });
 
     // Bedroom: headboard wall (east), king bed, nightstands, lamps.
-    add(lib.model('hotel-headboard', { origin: true, rotate: -Math.PI / 2 }), R.x1 - 0.03, y, 6.6);
+    const headboard = add(lib.model('hotel-headboard', { origin: true, rotate: -Math.PI / 2 }), R.x1 - 0.03, y, 6.6);
     add(lib.model('hotel-king-bed', { rotate: -Math.PI / 2 }), R.x1 - 1.18, y, 6.6); solid(R.x1 - 2.52, R.x1 - 0.28, y, y + 0.7, 5.47, 7.73);
-    // Bedside lamps are lamps (kinds.js): each has its cord to the outlet beside its nightstand and its own switch.
+    // Bedside light is the two swing-arm sconces on the headboard panel (placed below, once the panel has settled); the
+    // nightstands keep their outlets free for phones.
     const lamps = [];
     for (const z of [5.05, 8.15]) {
       add(lib.model('hotel-nightstand', { origin: true, rotate: -Math.PI / 2 }), R.x1 - 0.27, y, z); solid(R.x1 - 0.76, R.x1 - 0.28, y, y + 0.6, z - 0.27, z + 0.27);
-      lamps.push(put('hotel-table-lamp', R.x1 - 0.36, y + 0.572, z, 0, { out: [R.x1 - 0.09, z < 6 ? 4.5 : 8.7], noun: 'bedside lamp' }).userData.thing.plug);
       if (z < 6) loose(add(lib.model('hotel-tv-remote', { origin: true }), R.x1 - 0.46, y + 0.573, z + 0.14, 1.9), { rest: true });   // by the bed
     }
     const roomLight = { pos: new T.Vector3(14.2, y + 2.94, 6.5), color: new T.Color('#ffe9d0'), intensity: 3.5, distance: 7 };   // just above the ceiling face: no hotspot
@@ -189,13 +192,17 @@ export function buildRoom212(ctx) {
  solid(R.x0, R.x0 + 0.71, y, y + 0.81, 7.72, 8.83);
     // One chair, at the desk: the accent chair by the far nightstand made two (R3). A swivel task chair on casters, as
     // the spec's rooms have (a lounge armchair was standing in for it).
-    loose(add(lib.model('hotel-task-chair', { origin: true }), R.x0 + 1.05, y, 8.2, -Math.PI / 2 + 0.25), { density: 0.4 });
+    loose(add(lib.model('hotel-task-chair', { origin: true }), R.x0 + 1.05, y, 7.98, -Math.PI / 2 + 0.25), { density: 0.4 });
     // Wastebasket by the desk, on the room side of it (the credenza closes the other).
-    put('hotel-waste-bin', R.x0 + 0.85, y, 7.47, 0, { kind: 'small-bin', model: { origin: true, height: 0.3 } });
+    put('hotel-room-wastebasket', R.x0 + 0.85, y, 7.47, 0);
     add(lib.model('hotel-ptac', { origin: true, rotate: Math.PI }), 14.25, y, 8.82); solid(13.7, 14.8, y, y + 0.6, 8.6, 9);
-    const roomWindow = placeWindow(14.25, y + 0.75, 8.95, 1.6, 1.5, Math.PI);
-    interact.push({ pos: new T.Vector3(14.25, y + 1.4, 8.6), r: 1.5, label: () => st.drapes > 0.5 ? 'Close curtains' : 'Open curtains', use: () => { st.drapes = st.drapes > 0.5 ? 0 : 1; game.sound.swish(); } });
-    updaters.push(dt => roomWindow.drapes.forEach((dr, i) => { const s = dr.scale.x + (((st.drapes > 0.5) ? 1 : 2.7) - dr.scale.x) * Math.min(1, dt * 4); dr.scale.x = s; }));
+    placeWindow(14.25, y + 0.75, 8.95, 1.6, 1.5, Math.PI, { drapes: false });
+    // Blackout drapes and sheer on a ceiling track, hung in front of the PTAC (they'd clip through it at the wall). The
+    // panels close by their 'closed' shape keys.
+    const drapes = onWall(put('hotel-blackout-drapes', 14.25, y + CEIL, 8.45, Math.PI));
+    const panels = []; drapes.traverse(n => { if (n.morphTargetDictionary?.closed !== undefined) panels.push(n); });
+    interact.push({ pos: new T.Vector3(14.25, y + 1.4, 8.3), r: 1.5, label: () => st.drapes > 0.5 ? 'Close curtains' : 'Open curtains', use: () => { st.drapes = st.drapes > 0.5 ? 0 : 1; game.sound.swish(); } });
+    updaters.push(dt => panels.forEach(n => { const i = n.morphTargetDictionary.closed, v = n.morphTargetInfluences; v[i] += ((st.drapes > 0.5 ? 0 : 1) - v[i]) * Math.min(1, dt * 3); }));
     const roomTV = tvSet(cred.screen, 'room');
     st.tv = roomTV;
     // A little welcome card on the desk.
@@ -214,6 +221,13 @@ export function buildRoom212(ctx) {
       if (box.min.y < y + 0.012 && box.min.y > y - 0.1) prop.position.y += y + 0.012 - box.min.y;
       prop.userData.clearanceBounds = bounds;
     }
+    // The sconces go where the headboard's stub sconces were (after the pass above moved the panel); the stubs hide.
+    for (const name of ['sconce_plate', 'sconce_plate001']) {
+      const b = new T.Box3().setFromObject(headboard.getObjectByName(name)), c = b.getCenter(new T.Vector3());
+      const s = put('hotel-swing-arm-sconce', b.max.x, c.y, c.z, -Math.PI / 2); s.userData.onWall = true;
+      const plug = s.userData.thing.plug; plug.onChange = spillLight; lamps.push(plug);
+    }
+    headboard.traverse(n => { if (/^sconce_/.test(n.name)) n.visible = false; });
     return st;
   }
   Object.assign(ctx, { room });

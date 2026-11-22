@@ -1,0 +1,50 @@
+[
+  {
+    "id": "acg-coffee-wicker-color",
+    "source": "https://ambientcg.com/a/Wicker008A",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Wicker008A_1K-JPG.zip",
+      "size": 7023292
+    },
+    "archiveSha256": "ba00f63d135390ddeeca71d79c2de9414cd48b49066cb33a829ce9b3cedddf9e",
+    "sha256": "e66afd6907a5e0407eac8e9d802a17bb9ab8b53f97b1735597d06287227f1d40",
+    "bytes": 1045206,
+    "acquiredAt": "2026-11-22T06:31:33.316Z"
+  },
+  {
+    "id": "acg-coffee-wicker-normal",
+    "source": "https://ambientcg.com/a/Wicker008A",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Wicker008A_1K-JPG.zip",
+      "size": 7023292
+    },
+    "archiveSha256": "ba00f63d135390ddeeca71d79c2de9414cd48b49066cb33a829ce9b3cedddf9e",
+    "sha256": "c40d2269ae2a04fe598ec1580d8a3274ea33ff454e711ba7cc2fdc65dc143630",
+    "bytes": 1562397,
+    "acquiredAt": "2026-11-22T06:31:33.335Z"
+  },
+  {
+    "id": "acg-coffee-wicker-roughness",
+    "source": "https://ambientcg.com/a/Wicker008A",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Wicker008A_1K-JPG.zip",
+      "size": 7023292
+    },
+    "archiveSha256": "ba00f63d135390ddeeca71d79c2de9414cd48b49066cb33a829ce9b3cedddf9e",
+    "sha256": "29ec05457d9849b29357dc721ea6fc6df0a47623e3ac2cb1ecf1abf2a3e0b26e",
+    "bytes": 481124,
+    "acquiredAt": "2026-11-22T06:31:33.351Z"
+  }
+]

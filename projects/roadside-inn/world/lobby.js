@@ -124,12 +124,26 @@ export function buildLobby(ctx) {
   add(lib.model('hotel-extinguisher-cabinet', { origin: true }), -11.905, 0.85, -0.85, Math.PI / 2);   // clear of the pool-corridor door's swing (it overlapped: check.mjs lint)
   // Brochure rack and luggage cart near the entrance; a walk-off mat inside the doors.
   add(lib.model('hotel-brochure-rack', { origin: true }), -4.6, 0, 1.2, Math.PI / 2); solid(-4.78, -4.42, 0, 1.45, 1.02, 1.38);
-  loose(add(lib.model('hotel-luggage-cart', { origin: true }), -5.0, 0, 6.3, 0.3), { density: 0.35 }); solid(-5.6, -4.4, 0, 2, -0.4 + 6.3, 0.4 + 6.3); unboxed();
+  put('hotel-luggage-cart-brass', -5.0, 0, 6.3, 0.3);   // brass birdcage cart, pushed by its grab bar (kinds.js luggage-cart)
   add(lib.model('hotel-entry-mat', { origin: true }), -1.97, 0.006, 8.08, 0.03);   // kicked a little off square by the doors' traffic
   light(-2, DOWN, 1.5, cool, 10 * THROW, 9);
 
   // Pantry (NE): coffee counter, vending, cooler, bar tables.
-  takeables(add(lib.model('hotel-coffee-station', { origin: true }), 3.4, 0, -8.6)); solid(1.8, 5, 0, 1, -8.95, -8.25);
+  // The coffee counter, bare, with its waste hole (kinds.js counter-bin); everything on it is its own thing with a kind,
+  // so the sequence is take a cup at the rack → fill it at a tower → lid, sleeve, sugar, creamer at the riser and lid bin.
+  const station = put('hotel-coffee-station', 3.4, 0, -8.6); solid(1.8, 5, 0, 1, -8.95, -8.25);
+  station.getObjectByName('take_cookie002')?.removeFromParent();   // ponytail: exported 83 m below the counter (Victor to fix); drop this line when re-exported
+  takeables(station);
+  scene.attach(station.getObjectByName('wicker_weave'));   // the cookie basket is a thing on the counter, not part of it (else lint sees nothing standing on the top)
+  const TOP = 0.94, BACK = -8.72;   // counter top; the line the pieces stand on, clear of the backer board
+  put('hotel-cup-rack', 2.0, TOP, BACK, 0);
+  put('hotel-coffee-tower', 2.65, TOP, BACK, 0);
+  put('hotel-coffee-tower', 3.1, TOP, BACK, 0, { band: 'decaf' });
+  put('hotel-coffee-tower', 3.55, TOP, BACK, 0);
+  put('hotel-hot-water-box', 3.9, TOP, -8.75, 0);
+  put('hotel-condiment-riser', 4.25, TOP, BACK, 0);
+  put('hotel-lid-bin', 4.58, TOP, -8.75, 0);
+  // ponytail: hotel-stirrer-tumbler waits for a re-export (its creamer basket's mesh reaches 79 m below the counter)
   add(lib.model('hotel-snack-vending', { origin: true, rotate: -Math.PI / 2 }), 6.0, 0, -6.6); solid(5.5, 6.5, 0, 2, -7.1, -6.1);
   add(lib.model('g3-vending-machine', { rotate: -Math.PI / 2, height: 1.85 }), 6.03, 0, -5.4); solid(5.55, 6.5, 0, 2, -5.88, -4.92);
   for (const [x, z] of [[2.5, -5.3]]) {

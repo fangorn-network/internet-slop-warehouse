@@ -1,0 +1,110 @@
+[
+  {
+    "id": "acg-luggage-nylon-color",
+    "file": "acg/acg-luggage-nylon-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric004 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "color"
+    ],
+    "description": "Fabric004 color map, 1K, from https://ambientcg.com/a/Fabric004. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-nylon-normal",
+    "file": "acg/acg-luggage-nylon-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric004 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "normal"
+    ],
+    "description": "Fabric004 normal map, 1K, from https://ambientcg.com/a/Fabric004. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-nylon-roughness",
+    "file": "acg/acg-luggage-nylon-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric004 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "nylon",
+      "roughness"
+    ],
+    "description": "Fabric004 roughness map, 1K, from https://ambientcg.com/a/Fabric004. Linear roughness. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-color",
+    "file": "acg/acg-luggage-deck-carpet-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric026 · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "color"
+    ],
+    "description": "Fabric026 color map, 1K, from https://ambientcg.com/a/Fabric026. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-normal",
+    "file": "acg/acg-luggage-deck-carpet-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric026 · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "normal"
+    ],
+    "description": "Fabric026 normal map, 1K, from https://ambientcg.com/a/Fabric026. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-luggage-deck-carpet-roughness",
+    "file": "acg/acg-luggage-deck-carpet-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Fabric026 · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "luggage",
+      "deck-carpet",
+      "roughness"
+    ],
+    "description": "Fabric026 roughness map, 1K, from https://ambientcg.com/a/Fabric026. Linear roughness. CC0-1.0."
+  }
+]

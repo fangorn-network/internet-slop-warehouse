@@ -1,0 +1,146 @@
+[
+  {
+    "id": "acg-room-drape-color",
+    "source": "https://ambientcg.com/a/Fabric031",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric031_1K-JPG.zip",
+      "size": 8137817
+    },
+    "archiveSha256": "66a14ac501a3c238be3fca856415fc02a9e6e061478632fb597d14df8d003b92",
+    "sha256": "58366ce5a31c5fac7674536d29f4a56b8ae1281f632e884266ff2b79fac0ac5f",
+    "bytes": 1242422,
+    "acquiredAt": "2026-11-22T06:27:13.335Z"
+  },
+  {
+    "id": "acg-room-drape-normal",
+    "source": "https://ambientcg.com/a/Fabric031",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric031_1K-JPG.zip",
+      "size": 8137817
+    },
+    "archiveSha256": "66a14ac501a3c238be3fca856415fc02a9e6e061478632fb597d14df8d003b92",
+    "sha256": "11f69f20189384f80da6e9a35fbc56bb04931e7dc380cdeb9c93e73e575ccfee",
+    "bytes": 2034341,
+    "acquiredAt": "2026-11-22T06:27:13.363Z"
+  },
+  {
+    "id": "acg-room-drape-roughness",
+    "source": "https://ambientcg.com/a/Fabric031",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric031_1K-JPG.zip",
+      "size": 8137817
+    },
+    "archiveSha256": "66a14ac501a3c238be3fca856415fc02a9e6e061478632fb597d14df8d003b92",
+    "sha256": "e212026e97f325637f2149deb7ade03554a81ebbdcbbabc3ff0b2ca4b7fa7522",
+    "bytes": 468999,
+    "acquiredAt": "2026-11-22T06:27:13.383Z"
+  },
+  {
+    "id": "acg-room-terry-color",
+    "source": "https://ambientcg.com/a/Fabric020",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric020_1K-JPG.zip",
+      "size": 7731804
+    },
+    "archiveSha256": "dce3517be7050d6e15b9576e8fae3737aafd291f13d3e8dbd931ccd8bce7bc99",
+    "sha256": "f32987302b3952ad87af5ccb0fd25f2dfb75608a05e45b86b52fb4c36fdfd3ee",
+    "bytes": 1079327,
+    "acquiredAt": "2026-11-22T06:27:14.390Z"
+  },
+  {
+    "id": "acg-room-terry-normal",
+    "source": "https://ambientcg.com/a/Fabric020",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric020_1K-JPG.zip",
+      "size": 7731804
+    },
+    "archiveSha256": "dce3517be7050d6e15b9576e8fae3737aafd291f13d3e8dbd931ccd8bce7bc99",
+    "sha256": "5c9ac9c9e2b6b2a8af605287126f49ca057bd47364d3eff03b80fc9916b41338",
+    "bytes": 2016179,
+    "acquiredAt": "2026-11-22T06:27:14.421Z"
+  },
+  {
+    "id": "acg-room-terry-roughness",
+    "source": "https://ambientcg.com/a/Fabric020",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric020_1K-JPG.zip",
+      "size": 7731804
+    },
+    "archiveSha256": "dce3517be7050d6e15b9576e8fae3737aafd291f13d3e8dbd931ccd8bce7bc99",
+    "sha256": "d180a8e1f9882ffd61c3437dae878c5fba11672dc62b3dc8fb95e3239ad35dcb",
+    "bytes": 408649,
+    "acquiredAt": "2026-11-22T06:27:14.444Z"
+  },
+  {
+    "id": "acg-room-voile-color",
+    "source": "https://ambientcg.com/a/Fabric032",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric032_1K-JPG.zip",
+      "size": 8884696
+    },
+    "archiveSha256": "d52dff13a089a05cbf53f4790eb7059742eb76c6927f584fdaa483eb0059b6f7",
+    "sha256": "9b8435528e63b4c7948bec000eee5067c41c5de51798a0a2c6563503306f44de",
+    "bytes": 1197725,
+    "acquiredAt": "2026-11-22T06:27:15.475Z"
+  },
+  {
+    "id": "acg-room-voile-normal",
+    "source": "https://ambientcg.com/a/Fabric032",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric032_1K-JPG.zip",
+      "size": 8884696
+    },
+    "archiveSha256": "d52dff13a089a05cbf53f4790eb7059742eb76c6927f584fdaa483eb0059b6f7",
+    "sha256": "c25867f1aa79f64e62f1bab9f162713b590d1c83984b60f7c9cd14c19e6b3961",
+    "bytes": 2524984,
+    "acquiredAt": "2026-11-22T06:27:15.501Z"
+  },
+  {
+    "id": "acg-room-voile-roughness",
+    "source": "https://ambientcg.com/a/Fabric032",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric032_1K-JPG.zip",
+      "size": 8884696
+    },
+    "archiveSha256": "d52dff13a089a05cbf53f4790eb7059742eb76c6927f584fdaa483eb0059b6f7",
+    "sha256": "3d4db8efebfd3236e42651b4690f19c686d56a11e6656b1735b30c9019444e81",
+    "bytes": 779512,
+    "acquiredAt": "2026-11-22T06:27:15.522Z"
+  }
+]

@@ -15,7 +15,7 @@ const SLAB = 0.3;   // floor thickness under each walkable surface, metres
 // `mass` wins; anything not listed keeps its density.
 const KG = {
   'ph-side-table-01': 6, 'ph-coffee-table-round-01': 14, 'ph-modern-coffee-table-01': 18, 'hotel-lounge-chair-navy': 16,
-  'hotel-task-chair': 13, 'hotel-bar-stool': 7, 'ph-modern-arm-chair-01': 9, 'hotel-luggage-cart': 30,
+  'hotel-task-chair': 13, 'hotel-bar-stool': 7, 'ph-modern-arm-chair-01': 9, 'hotel-luggage-cart-brass': 30,
   'ph-wetfloorsign-01': 1.1, 'g3-traffic-cone': 2.5, 'ph-potted-plant-04': 2.5,
   'hotel-table-lamp': { kg: 1.8, low: 0.08 }, 'hotel-tv-remote': 0.15, 'hotel-coffee-cup': 0.3, 'hotel-newspaper': 0.2,
   'hotel-floor-lamp': { kg: 6, low: 0.05 },   // a weighted iron base under a brass pole and a shade
@@ -28,7 +28,7 @@ const HOLD_YAW = { 'hotel-tv-remote': Math.PI };
 // What they're made of, for the sound they make when they land (sound.js impact). Unlisted: plastic.
 const MADE = {
   wood: ['ph-side-table-01', 'ph-coffee-table-round-01', 'ph-modern-coffee-table-01', 'hotel-bar-stool', 'cookie', 'tea box'],
-  ceramic: ['hotel-table-lamp', 'mug', 'ph-potted-plant-04'], metal: ['hotel-luggage-cart', 'stapler', 'hotel-floor-lamp'],
+  ceramic: ['hotel-table-lamp', 'mug', 'ph-potted-plant-04'], metal: ['hotel-luggage-cart-brass', 'stapler', 'hotel-floor-lamp'],
   soft: ['hotel-roller-bag', 'hotel-lounge-chair-navy', 'ph-modern-arm-chair-01', 'hotel-task-chair', 'hotel-coffee-cup', 'apple', 'creamer'],
   paper: ['hotel-newspaper', 'brochure', 'bible', 'tent card', 'registration card'],
 };

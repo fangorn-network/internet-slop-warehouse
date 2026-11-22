@@ -1,0 +1,56 @@
+[
+  {
+    "id": "acg-coffee-wicker-color",
+    "file": "acg/acg-coffee-wicker-color.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Wicker008A · color",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "coffee",
+      "wicker",
+      "color"
+    ],
+    "description": "Wicker008A color map, 1K, from https://ambientcg.com/a/Wicker008A. sRGB base color. CC0-1.0."
+  },
+  {
+    "id": "acg-coffee-wicker-normal",
+    "file": "acg/acg-coffee-wicker-normal.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Wicker008A · normal",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "coffee",
+      "wicker",
+      "normal"
+    ],
+    "description": "Wicker008A normal map, 1K, from https://ambientcg.com/a/Wicker008A. OpenGL normal, linear. CC0-1.0."
+  },
+  {
+    "id": "acg-coffee-wicker-roughness",
+    "file": "acg/acg-coffee-wicker-roughness.jpg",
+    "type": "asset",
+    "mime": "image/jpeg",
+    "title": "ambientCG Wicker008A · roughness",
+    "author": "ambientCG (Lennart Demes)",
+    "license": "CC0-1.0",
+    "tags": [
+      "ambientcg",
+      "pbr",
+      "texture",
+      "coffee",
+      "wicker",
+      "roughness"
+    ],
+    "description": "Wicker008A roughness map, 1K, from https://ambientcg.com/a/Wicker008A. Linear roughness. CC0-1.0."
+  }
+]

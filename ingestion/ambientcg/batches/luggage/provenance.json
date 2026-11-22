@@ -1,0 +1,98 @@
+[
+  {
+    "id": "acg-luggage-nylon-color",
+    "source": "https://ambientcg.com/a/Fabric004",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric004_1K-JPG.zip",
+      "size": 3046393
+    },
+    "archiveSha256": "15f04b93e9ed3cb537a5fbc403dcc1d0ea43cb879aaae4a1cf46d601c0b47faf",
+    "sha256": "6f825ef50cab7a7d12af2a4726aab8311fb96d574062397c27d984cdf64652a4",
+    "bytes": 173775,
+    "acquiredAt": "2026-11-22T06:28:55.642Z"
+  },
+  {
+    "id": "acg-luggage-nylon-normal",
+    "source": "https://ambientcg.com/a/Fabric004",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric004_1K-JPG.zip",
+      "size": 3046393
+    },
+    "archiveSha256": "15f04b93e9ed3cb537a5fbc403dcc1d0ea43cb879aaae4a1cf46d601c0b47faf",
+    "sha256": "9f3d8162fbb58ab59a702ff74244263dcae3077f3fa9d9035f69b4b16894a38a",
+    "bytes": 513131,
+    "acquiredAt": "2026-11-22T06:28:55.655Z"
+  },
+  {
+    "id": "acg-luggage-nylon-roughness",
+    "source": "https://ambientcg.com/a/Fabric004",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric004_1K-JPG.zip",
+      "size": 3046393
+    },
+    "archiveSha256": "15f04b93e9ed3cb537a5fbc403dcc1d0ea43cb879aaae4a1cf46d601c0b47faf",
+    "sha256": "701222c33d62245be1ea68a68fc4c0db0e3bf2bcf89eb849641b52f2074da10e",
+    "bytes": 342401,
+    "acquiredAt": "2026-11-22T06:28:55.663Z"
+  },
+  {
+    "id": "acg-luggage-deck-carpet-color",
+    "source": "https://ambientcg.com/a/Fabric026",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric026_1K-JPG.zip",
+      "size": 8021292
+    },
+    "archiveSha256": "b47a2965c035772400524000926be3afe2dd9afc2fff052346e1c264476afd1b",
+    "sha256": "5c9f3d473cb4752dab042e5161728b6bd71cb74c2f5ad2c21bba6f5b5e0712d4",
+    "bytes": 1406949,
+    "acquiredAt": "2026-11-22T06:28:56.652Z"
+  },
+  {
+    "id": "acg-luggage-deck-carpet-normal",
+    "source": "https://ambientcg.com/a/Fabric026",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric026_1K-JPG.zip",
+      "size": 8021292
+    },
+    "archiveSha256": "b47a2965c035772400524000926be3afe2dd9afc2fff052346e1c264476afd1b",
+    "sha256": "d445a33dbee003c3c6ae606bc9c4d1216f389735a861163ef06165946beae84f",
+    "bytes": 1908907,
+    "acquiredAt": "2026-11-22T06:28:56.674Z"
+  },
+  {
+    "id": "acg-luggage-deck-carpet-roughness",
+    "source": "https://ambientcg.com/a/Fabric026",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://docs.ambientcg.com/license/",
+    "archive": {
+      "attributes": "1K-JPG",
+      "extension": "zip",
+      "url": "https://ambientcg.com/get?file=Fabric026_1K-JPG.zip",
+      "size": 8021292
+    },
+    "archiveSha256": "b47a2965c035772400524000926be3afe2dd9afc2fff052346e1c264476afd1b",
+    "sha256": "80c188d9c811bb316cfb27ea068d8f6cd82946d377645383e40f13858db31ee2",
+    "bytes": 599047,
+    "acquiredAt": "2026-11-22T06:28:56.692Z"
+  }
+]
