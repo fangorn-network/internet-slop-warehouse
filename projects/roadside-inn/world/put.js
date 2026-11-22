@@ -38,7 +38,60 @@ export function buildPut(ctx) {
       thing.plug = pluggable(o, { out: opts.out, tether, noun: kind.noun, glow: shadeGlow(o, kind.power.glow), light: anchor, under: () => opts.on ?? null, switchable: !!kind.switch, lit: opts.lit ?? true });
     }
     if (kind.bin) thing.bin = bin(o, kind);
+    if (kind.stack) stack(o, kind);
+    if (kind.dispenser) dispenser(o, kind, id);
     return o;
+  }
+
+  // ---------- the coffee sequence: rules on what you hold, not on pairs of objects ----------
+  // A cup is a cup: userData.cup = { contents, lid, sleeve, sugar, creamer, stirred }. Any stack, caddy or dispenser
+  // reads the held thing's cup state, so a cup carried in from anywhere works at any station.
+  const held = () => game.physics?.held?.o ?? null, cupHeld = () => held()?.userData.cup ?? null;
+  const show = (o, node, on) => { const n = o.getObjectByName(node); if (n) n.visible = on; };
+  /** A new empty paper cup in your hand. Its liquid, lid and sleeve nodes (Victor's hotel-coffee-cup) start hidden. */
+  function newCup() {
+    const o = lib.model('hotel-coffee-cup', { origin: true }); o.name = 'hotel-coffee-cup';
+    for (const n of ['liquid', 'lid', 'sleeve']) show(o, n, false);
+    o.userData.cup = { contents: null, lid: false, sleeve: false, sugar: 0, creamer: 0, stirred: false };
+    o.userData.loose = { rest: true, density: 0.3 };
+    scene.add(o); o.position.copy(game.camera?.()?.position ?? new T.Vector3());
+    const l = game.physics?.add(o); if (l) game.physics.grab(l);
+    return o;
+  }
+  // Hook nodes are renamed out of take_ so world/handling.js's takeables() leaves them be (a stack hands out copies).
+  const hooks = (o, prefix) => { const out = []; o.traverse(n => { if (n.name.startsWith(prefix)) out.push(n); }); for (const n of out) n.name = 'stack_' + n.name.slice(5); return out; };
+  // stack: each hook hands out an item (cups) or, with `fits`, goes onto the cup you hold (lids). A caddy (hook 'take_')
+  // has one hook per thing: take_sleeve, take_sugar, take_creamer, take_stirrer, each done to the held cup.
+  const DO = {
+    sleeve: c => !c.sleeve && ['Slide a sleeve on', o => { c.sleeve = true; show(o, 'sleeve', true); }],
+    sugar: c => c.contents && !c.lid && ['Add a sugar', () => { c.sugar++; game.sound?.paper?.(); }],
+    creamer: c => c.contents && !c.lid && ['Add a creamer', () => { c.creamer++; }],
+    stirrer: c => c.contents && !c.lid && ['Stir it', () => { c.stirred = true; }],
+    lid: c => !c.lid && ['Put a lid on', o => { c.lid = true; show(o, 'lid', true); game.sound?.click?.(); }],
+  };
+  function stack(o, kind) {
+    const S = kind.stack; let left = S.count ?? Infinity;
+    for (const n of hooks(o, S.hook)) {
+      const at = n.getWorldPosition(new T.Vector3()), what = S.fits ? 'lid' : (n.name.slice(6).replace(/[_\d]+$/, '') || S.item);
+      const act = () => { const c = cupHeld(); return c ? DO[what]?.(c) : null; };
+      if (S.item && !S.fits) interact.push({ pos: at, r: 0.8, precise: true, when: () => !held() && left > 0, label: () => `Take a ${S.item}`, use: () => { left--; newCup(); game.sound?.paper?.(); } });
+      else interact.push({ pos: at, r: 0.8, precise: true, when: () => !!act(), label: () => act()[0], use: () => act()?.[1](held()) });
+    }
+  }
+  // dispenser: holding an empty, unlidded cup, E at the tap fills it over a few seconds (the coffee rises in the cup).
+  function dispenser(o, kind, id) {
+    const D = kind.dispenser, p = o.getObjectByName(D.point) ?? o, at = p.getWorldPosition(new T.Vector3());
+    const fills = D.fills ?? (/water/.test(id) ? 'hot water' : 'coffee');
+    let pouring = null;
+    interact.push({ pos: at, r: 0.9, precise: true, when: () => { const c = cupHeld(); return !!c && !c.contents && !c.lid && !pouring; }, label: () => `Fill the cup with ${fills}`,
+      use: () => { const cup = held(), liquid = cup.getObjectByName('liquid'); pouring = { cup, liquid, t: 0, y: liquid?.position.y ?? 0 }; if (liquid) liquid.visible = true; game.sound?.pour?.(); } });
+    updaters.push(dt => {
+      if (!pouring) return;
+      const P = pouring; P.t = Math.min(1, P.t + dt / D.seconds);
+      if (P.liquid) P.liquid.position.y = P.y - 0.07 * (1 - P.t);   // rises to its modelled level just under the rim
+      if (held() !== P.cup) { P.cup.userData.cup.contents = P.t > 0.3 ? fills : null; pouring = null; return; }   // walked off mid-pour
+      if (P.t >= 1) { P.cup.userData.cup.contents = fills; if (fills === 'coffee') game.give?.('coffee'); pouring = null; }
+    });
   }
   const putAll = list => list.map(([id, x, y, z, yaw, opts]) => put(id, x, y, z, yaw, opts));
 

@@ -37,6 +37,8 @@ export function buildLivedIn(ctx) {
     // pantry: vending machine cord to the outlet between the two machines; a spare by the clock
     outlet(E, -5.99, -Math.PI / 2); cord([[6.3, 0.02, -6.12], [6.36, 0.016, -6.03], [E - 0.03, 0.05, -6.0], [E - 0.03, 0.27, -5.99]]);
     outlet(0.4, N, 0, false); outlet(-3.2, N, 0, false);
+    // coffee counter: two duplexes on the wall behind the towers at 1 m (specs/lobby-coffee.md), the hot-water box's cord goes in the right one
+    outlet(2.95, N, 0, false, 0.72); outlet(3.75, N, 0, false, 0.72);
     // business center: the PCs' power strip cord runs from the grommet down the back to the wall
     outlet(E, -2.15, -Math.PI / 2); cord([[6.18, 0.74, -2.9], [6.24, 0.4, -2.75], [6.3, 0.02, -2.5], [6.38, 0.016, -2.25], [E - 0.03, 0.05, -2.16], [E - 0.03, 0.27, -2.15]]);
     // market: the cooler and the office face; a spare by the brochure rack
@@ -46,12 +48,17 @@ export function buildLivedIn(ctx) {
     outlet(R.x1 - 0.09, 4.5, -Math.PI / 2, false, R.y); outlet(R.x0 + 0.07, 4.65, Math.PI / 2, false, R.y);
     // the far nightstand's lamp, and the desk lamp: hotel desks have their outlet on the wall just above the top
     outlet(R.x1 - 0.09, 8.7, -Math.PI / 2, false, R.y); outlet(R.x0 + 0.07, 8.55, Math.PI / 2, false, R.y + 0.81);
+    // 212's bath: the GFCI on the side wall at the vanity's end, 107 cm up, for a hair dryer or razor
+    outlet(13.97, 1.3, Math.PI / 2, false, R.y + 0.77);
     // a phone left charging on the communal table, a half-finished coffee, the morning papers
     const ph = add(lib.model('hotel-phone', { origin: true }), -1.98, 1.05, -5.13, 0.5);
     cord([[-2.055, 1.0585, -5.4], [-2.05, 1.07, -5.33], [-2.03, 1.052, -5.25], [-1.98 + 0.085 * Math.sin(0.5), 1.054, -5.13 + 0.085 * Math.cos(0.5)]], whiteCords);
     loose(add(lib.model('hotel-coffee-cup', { origin: true }), -1.15, 1.05, -5.62, 2.1), { rest: true });
     loose(add(lib.model('hotel-coffee-cup', { origin: true }), 4.05, 0.42, 6.5, -0.7), { rest: true });
     loose(add(lib.model('hotel-coffee-cup', { origin: true }), 5.86, 0.763, -2.25, 0.9), { rest: true });
+    // ponytail: the abandoned cup at the coffee counter's end (spec) waits for the bare counter rebuild (briefs/
+    // hotel-coffee-station.md): on today's counter its box (towers baked in, 1.53 m) makes lint call it an overlap.
+    // loose(add(lib.model('hotel-coffee-cup', { origin: true }), 4.78, 0.94, -8.37, 1.3), { rest: true });
     loose(add(lib.model('hotel-newspaper', { origin: true }), 4.4, 0.421, 6.85, 0.35), { rest: true }).userData.edition = 'today';
     loose(add(lib.model('hotel-newspaper', { origin: true }), -8.15, 0.401, 5.45, -1.9), { rest: true }).userData.edition = 'yesterday';
     // The morning papers: five separate copies, each one you can take and read (main.js), squared
@@ -291,7 +298,8 @@ export function buildSpills(ctx) {
     return null;
   };
   ctx.spill = (o, speed, eye) => {
-    const L = LIQUIDS[o.name]; if (!L || speed < L.min || o.userData.spilt) return;
+    const L = LIQUIDS[o.name], cup = o.userData.cup;   // a cup from the station (world/put.js) spills only what's in it
+    if (!L || o.userData.spilt || (cup && !cup.contents) || speed < L.min * (cup?.lid ? 2.5 : 1)) return;   // a lid holds until a hard hit
     const land = landing(o, Math.sqrt(L.ml / 150) * (L.kind === 'milk' ? 1.0 : 0.85)); if (!land) return;
     const { at } = land; o.userData.spilt = true;
     const soft = at.y < 0.1 && carpetAreas.some(([x0, x1, z0, z1]) => at.x > x0 && at.x < x1 && at.z > z0 && at.z < z1);

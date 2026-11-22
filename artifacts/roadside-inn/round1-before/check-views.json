@@ -1,0 +1,14 @@
+{
+  "flow": {},
+  "lint": null,
+  "errors": [],
+  "shots": 6,
+  "stats": {
+    "colliders": 474,
+    "interact": 182,
+    "drawCalls": 384,
+    "textures": 394,
+    "programs": 103,
+    "triangles": 502914
+  }
+}

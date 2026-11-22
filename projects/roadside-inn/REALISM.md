@@ -380,6 +380,21 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Casual looks are slow, startles are quick.** Head spring 6 rad/s for looking about, 14 for a noise.
 - **Carts don't dodge.** In a corridor the pusher only eases over and keeps rolling; the person on foot keeps to the
   wall and slows.
+- **Being hit is a story, not an event** (2026-11-22). The first hit startles (a ~0.15 s beat, then hands up to the
+  face and the head to the impact), the second annoys (turn to face you, hands up at the chest, a sharp plain line),
+  the third ends it (guests leave for their room or car; Dana calls the police, `game.flags.policeCalled`, saved, and
+  won't serve you). Data in each resident's `reacts` (intent.js `reaction()`); a cooldown stops one rolling prop from
+  counting three times. People aren't physics bodies: a per-frame distance test from flying props to each body, and
+  the prop bounces off (reversed, 20 %) instead of flying through them.
+- **Hands blend between every hold.** Keys → guard → rest snapped in one frame when hold() was set directly; one
+  smoothed pair of targets per walker (staff.js hands()) that falls back to where the idle carries the hands (caught
+  in the body's frame while standing) fixes every transition, including leaving the keyboard.
+- **A check-in is beats at the keyboard.** She types with her eyes on the screen, looks up only when she talks or
+  needs something, keeps her hands on the keys while she does, steps to the counter to take the card, and holds the key
+  card out over the counter's near edge (an arm only reaches ~0.6 m: the far edge was out of reach, the IK fell short).
+  Scripted looks use `person.fix(at)`; attention's random glances would break the beat.
+- **The stillness check was measuring the housekeeper.** `__inn.people[0]` is Maria (residents order), not Dana; it
+  passed or failed with whether Maria happened to be walking. Now it measures `world.clerk`.
 
 ## Things say how they're used (2026-11-21)
 - Seen: the rep's hands floated 20 cm short of his keyboard (hand points typed in by hand, guessed); Dana stood still and
@@ -477,3 +492,11 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Cord through the wall behind a desk** → pushed out of the desk's nearest side, which was its back against the wall → cords collide with the walker's colliders too, leaving toward the lamp's side first (a thin wall's nearest face can be the outside).
 - **Extinguisher in the pool-corridor door swing; two semis overlapping by 2 m** → nobody checks placements → `check.mjs lint` (overlaps, door swings, sunk props).
 - **Floor lamp through the floor / vanished when dragged by its plug** → continuous collision was only on for held props, and anything below -30 m was deleted → CCD on while leashed; a prop that falls 2.5 m below where it started goes back there instead of being deleted.
+
+## Set pipeline round 1: king room, king bath, coffee counter (2026-11-22, Natasha)
+- **Walk-in glass shower in a standard king** → the bath was dressed from a generic bathroom, not this class of room (every ref shows a tub/shower combo with a curtain) → `hotel-tub-shower` across the far wall, spout at the outside end, grab bars hidden (those are the accessible room's).
+- **Lounge armchair at the desk** → a chair that existed stood in for the one that belongs → black swivel task chair on casters (`hotel-task-chair`), loose.
+- **No wastebaskets in the room or bath** → nobody lists what's missing → the spec's inventory + `pipeline/diff.mjs` SHORT list; `small-bin` kind (stand-in: the lobby bin at 0.3 m until `hotel-room-wastebasket` lands).
+- **Bath with no outlet** → GFCI on the side wall at the vanity end, 107 cm up; two duplexes behind the coffee towers at 1 m.
+- **Lint calls a cup on the coffee counter an overlap** → the counter's box includes the towers baked into it (1.53 m), so nothing "stands on" it → bake nothing onto counters: items that do something are their own models with kinds (briefs/hotel-coffee-station.md); the abandoned cup waits for the bare counter.
+- **Baked props can't have behaviour** → a kind attaches to a model, not to a node inside one (the headboard's stub sconces, the counter's towers) → brief anything a guest will use as its own GLB with its hooks.

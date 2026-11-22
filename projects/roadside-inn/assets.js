@@ -36,7 +36,7 @@ export const url = (id, ext = 'glb') => globalThis.WAREHOUSE_PARTS?.[id] ?? here
 
 const MODELS = [
   'rb-sophia-formal', 'rb-marcus-formal', 'rb-emma-casual', 'rb-andre-casual',
-  'g3-shower-cabin', 'g3-treadmill', 'g3-exercise-bike',
+  'g3-treadmill', 'g3-exercise-bike', 'hotel-tub-shower',
   'ph-modern-arm-chair-01', 'ph-ottoman-01',
   'ph-modern-coffee-table-01', 'ph-side-table-01', 'ph-modern-ceiling-lamp-01', 'ph-potted-plant-01',
   'ph-potted-plant-04', 'ph-round-wooden-table-01',

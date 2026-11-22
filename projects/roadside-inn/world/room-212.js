@@ -103,14 +103,21 @@ export function buildRoom212(ctx) {
       updaters.push((dt, t, player) => { mirror.visible = player.y > 2.5 && player.x > R.x0 && player.x < R.x1 && player.z > R.z0 && player.z < R.z1; });
     }
     add(lib.model('hotel-toilet', { origin: true, rotate: -Math.PI / 2 }), 16.15, y, 1.53); solid(15.72, 16.4, y, y + 0.8, 1.28, 1.78);
-    const shower = add(lib.model('g3-shower-cabin', { height: 2.1, rotate: -Math.PI / 2 }), 15.9, y + 0.02, 3.55); shower.name = 'Textured shower enclosure';
-    solid(15.43, 16.38, y, y + 2.1, 3.08, 4.02);
+    // Tub/shower combo across the far (north) wall, spout and valve at the outside (east) end: what a standard king of
+    // this class has (specs/room-king-bath.md); the glass shower cabin was a walk-in, which these rooms don't have.
+    // Grab bars are the accessible room's, so they're hidden here.
+    const tub = add(lib.model('hotel-tub-shower', { origin: true, rotate: Math.PI }), 15.57, y, 3.6);
+    tub.traverse(n => { if (/^grab_bar/.test(n.name)) n.visible = false; });
+    solid(14.77, 16.38, y, y + 0.5, 3.13, 4.04);
     // Victor's bathroom pieces (briefs/natasha-2026-11-21.md), placed once their GLBs are in assets.js.
     const fit = (id, x, yy, z, ry = 0) => { if (!lib.models.has(id)) return null; const o = add(lib.model(id, { origin: true }), x, yy, z, ry); o.userData.onWall = true; return o; };
-    fit('hotel-towel-bar', 15.0, y + 1.2, 4.03, Math.PI);             // north wall, beside the shower door, bar at 48 in
+    fit('hotel-towel-bar-towels', 16.44, y + 1.15, 1.53, -Math.PI / 2);   // east wall over the toilet tank (briefs/hotel-towel-bar-towels.md)
     fit('hotel-towel-shelf', VX, y + 0.22, 1.07);                       // under the sink, on the back wall
-    fit('hotel-toilet-paper', 15.67, y + 0.66, 1.07);                   // side wall, 8 in ahead of the bowl (ADA 604.7)
-    fit('hotel-bath-amenities', 16.36, y + 1.25, 3.55, -Math.PI / 2);   // inside the shower, on its back wall
+    fit('hotel-tp-holder', 15.67, y + 0.66, 1.06);                      // side wall, 8 in ahead of the bowl (ADA 604.7)
+    fit('hotel-bath-amenities', 16.37, y + 1.3, 3.75, -Math.PI / 2);    // tub end wall, by the shower head
+    // Wastebasket on the floor between the vanity and the toilet; a small one (kinds.js small-bin) until
+    // hotel-room-wastebasket (briefs/) replaces this scaled-down lobby bin.
+    put('hotel-waste-bin', 15.585, y, 1.22, 0, { kind: 'small-bin', model: { origin: true, height: 0.3 } });
     const bathLight = { pos: new T.Vector3(15.2, y + 2.94, 2.5), color: new T.Color('#fff1e0'), intensity: 4.5, distance: 5 };   // just above the ceiling face, so it lights the room and not the ceiling (at 2.5 m it blew out the ceiling and tile)
     lightAnchors.push(bathLight);
     interact.push({ pos: new T.Vector3(13.95, y + 1.3, 2.4), r: 1.2, label: () => `Bathroom light ${st.bath ? 'off' : 'on'}`, use: () => { st.setBath(!st.bath); game.sound.click(); } });
@@ -180,8 +187,11 @@ export function buildRoom212(ctx) {
     Object.defineProperty(st, 'desk', { get: () => deskPlug.lit, configurable: true });
     st.setDesk = on => deskPlug.setOn(on);
  solid(R.x0, R.x0 + 0.71, y, y + 0.81, 7.72, 8.83);
-    add(lib.model('ph-modern-arm-chair-01', { height: 0.88 }), R.x0 + 1.15, y, 8.1, -Math.PI / 2);
-    // One chair, at the desk: the accent chair by the far nightstand made two (R3).
+    // One chair, at the desk: the accent chair by the far nightstand made two (R3). A swivel task chair on casters, as
+    // the spec's rooms have (a lounge armchair was standing in for it).
+    loose(add(lib.model('hotel-task-chair', { origin: true }), R.x0 + 1.05, y, 8.2, -Math.PI / 2 + 0.25), { density: 0.4 });
+    // Wastebasket by the desk, on the room side of it (the credenza closes the other).
+    put('hotel-waste-bin', R.x0 + 0.85, y, 7.47, 0, { kind: 'small-bin', model: { origin: true, height: 0.3 } });
     add(lib.model('hotel-ptac', { origin: true, rotate: Math.PI }), 14.25, y, 8.82); solid(13.7, 14.8, y, y + 0.6, 8.6, 9);
     const roomWindow = placeWindow(14.25, y + 0.75, 8.95, 1.6, 1.5, Math.PI);
     interact.push({ pos: new T.Vector3(14.25, y + 1.4, 8.6), r: 1.5, label: () => st.drapes > 0.5 ? 'Close curtains' : 'Open curtains', use: () => { st.drapes = st.drapes > 0.5 ? 0 : 1; game.sound.swish(); } });

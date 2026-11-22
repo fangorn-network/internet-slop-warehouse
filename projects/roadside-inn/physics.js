@@ -218,6 +218,8 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
     throw: () => held && throwHeld(),
     /** Let go of what's held, gently, just ahead. */
     drop,
+    /** A prop made after start (a cup taken from a stack): tag it `userData.loose` first. Returns its entry. */
+    add(o) { pending.push(o); attachLoose(); return loose.find(l => l.o === o); },
     /** Put what's held into `parent` (a bin) at world point `at`, out of physics for good: it stays there as a plain
      *  model. Returns it, or null if nothing's held. */
     stow(parent, at) {
