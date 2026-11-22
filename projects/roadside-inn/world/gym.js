@@ -19,7 +19,7 @@ export function buildGym(ctx) {
   // room. Desktop renders a real reflection while you stand where you can see it; phones get a dim mirror with no reflection.
   {
     const dim = new T.Mesh(new T.PlaneGeometry(4.2, 2), F.mat('#5d6266', { metalness: 0, roughness: 0.35 }));
-    dim.material.envMapIntensity = 0; dim.position.set(15.75, 1.3, -8.84); scene.add(dim);
+    dim.material.envMapIntensity = 0; dim.position.set(15.75, 1.3, -8.84); dim.userData.keep = true; scene.add(dim);   // keep: toggled (assets.js mergeSceneMeshes)
     if (!economy) {
       const real = new Reflector(new T.PlaneGeometry(4.2, 2), { textureWidth: 768, textureHeight: 366, color: 0xb8bcbf, clipBias: 0.003 });
       real.position.set(15.75, 1.3, -8.83); real.visible = false; scene.add(real);

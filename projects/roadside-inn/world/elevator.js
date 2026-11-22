@@ -116,6 +116,8 @@ export function buildElevator(ctx) {
     updaters.push((dt, t, player) => {
       const target = state.open ? 1 : 0;
       state.doors += Math.sign(target - state.doors) * Math.min(Math.abs(target - state.doors), dt * 1.2);
+      // Behind shut doors the car can't be seen: ~30 draw calls of buttons and plates saved from the lobby (perf, phones).
+      car.visible = state.doors > 0.005 || (player.x > 6.6 && player.x < 9 && player.z > -4.5 && player.z < -0.6 && Math.abs(player.y - state.y) < 2.6);
       // Don't close on someone standing in the doorway.
       const inDoorway = Math.abs(player.y - state.floor * FLOOR2) < 1 && player.x > ELEV.x0 - 0.1 && player.x < ELEV.x1 + 0.1 && player.z > -1.4 && player.z < -0.6;
       // Dwell by presence, not a clock: someone in the doorway, or in the car with nowhere called, holds the doors open

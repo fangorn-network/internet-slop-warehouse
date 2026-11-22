@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: CC0-1.0
 // Loads warehouse parts. Published builds set globalThis.WAREHOUSE_PARTS = {id: url}; locally they come from the repo.
 import * as T from 'three';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { createPerson } from './people.js';
@@ -261,4 +262,97 @@ export function captureEnv(renderer, scene, at, { bounces = 2, intensity = 1 } =
   scene.environment = env; scene.environmentIntensity = envI;
   pmrem.dispose(); renderer.setRenderTarget(rt);   // the canvas again, whatever the generator left bound
   return target.texture;
+}
+
+// Merge each placed model's static meshes by material: a check-in pod was 10 draw calls, a cooler 14, an outlet 2. Run
+// once the world is built (takeables are out by then) and before zone culling buckets the scene. Leaves alone anything
+// code moves or finds by name (doors, leaves, drawers, sockets, screens, buttons, lights), loose and moving props,
+// skinned people, and mirrored parts (their winding would flip). Returns how many meshes it removed.
+// ponytail: name-based guard. A new animated part needs a name matching KEEP (or userData.moves on its model).
+const KEEP = /^(un)?made|open_|socket|take_|door|leaf|drawer|lid|handle|hinge|screen|tv_|button|btn|led|light|glow|shade|mirror|rail|display|ceiling/i;
+const SKIP_MODEL = /elevator|cart|bag|semi-truck|sedan|suv|wagon|hatchback|pickup|minivan/i;   // things that move as a whole or by part
+// Phones also collapse flat-colour materials (no maps, no glow, opaque) into a few shared vertex-colour ones, keyed by
+// roughness and metalness rounded to a step: a cooler's 14 coloured caps and plastics become 2-3 draw calls.
+const FLAT = new Map(), MAPS = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'alphaMap', 'bumpMap', 'lightMap'];
+const flatKey = m => {
+  if (!economy || !m.isMeshStandardMaterial || m.isMeshPhysicalMaterial || m.transparent || m.vertexColors || MAPS.some(k => m[k]) || (m.emissive.getHex() && m.emissiveIntensity > 0) || m.userData.noEnv) return null;
+  const r = Math.round(m.roughness * 4) / 4, mt = m.metalness > 0.5 ? 1 : 0;
+  return `flat|${r}|${mt}|${m.side}`;
+};
+const flatMaterial = key => FLAT.get(key) ?? FLAT.set(key, (([, r, mt, side]) => new T.MeshStandardMaterial({ name: `flat r${r} m${mt}`, vertexColors: true, roughness: Math.max(0.05, +r), metalness: +mt, side: +side }))(key.split('|'))).get(key);
+export function mergeStatic(scene) {
+  let removed = 0;
+  // Loose props merge inside themselves too (physics moves the group root): a bar stool is one call per material, not per part.
+  const groups = []; scene.traverse(o => { if (o.userData.hotelProp && !o.userData.moves && !SKIP_MODEL.test(o.name)) groups.push(o); });
+  const rel = new T.Matrix4(), inv = new T.Matrix4();
+  for (const g of groups) {
+    g.updateMatrixWorld(true); inv.copy(g.matrixWorld).invert();
+    const buckets = new Map();
+    g.traverse(n => {
+      if (!n.isMesh || n.isSkinnedMesh || n.isInstancedMesh || Array.isArray(n.material) || n.morphTargetInfluences || (n !== g && n.userData.loose)) return;
+      for (let p = n; p && p !== g; p = p.parent) if (KEEP.test(p.name) || p.userData.loose || p.userData.moves || !p.visible) return;   // hidden now = shown later by code
+      rel.multiplyMatrices(inv, n.matrixWorld); if (rel.determinant() < 0) return;
+      const a = n.geometry.attributes, flat = !a.color && flatKey(n.material), key = [flat || n.material.uuid, Object.keys(a).sort().map(k => k + a[k].itemSize + a[k].normalized).join(), !!n.geometry.index, n.castShadow, n.receiveShadow, n.renderOrder, n.visible].join('|');
+      (buckets.get(key) ?? buckets.set(key, []).get(key)).push(n);
+    });
+    for (const list of buckets.values()) {
+      const flat = !list[0].geometry.attributes.color && flatKey(list[0].material);
+      if (list.length < 2 && !flat) continue;
+      const geos = list.map(n => {
+        rel.multiplyMatrices(inv, n.matrixWorld); const q = n.geometry.clone().applyMatrix4(rel); for (const k of Object.keys(q.morphAttributes)) delete q.morphAttributes[k];
+        if (flat) { const c = n.material.color, cnt = q.attributes.position.count, arr = new Float32Array(cnt * 3); for (let i = 0; i < cnt; i++) arr.set([c.r, c.g, c.b], i * 3); q.setAttribute('color', new T.BufferAttribute(arr, 3)); }
+        return q;
+      });
+      const merged = geos.length > 1 ? mergeGeometries(geos) : geos[0]; if (!merged) continue;
+      const m = new T.Mesh(merged, flat ? flatMaterial(flat) : list[0].material); m.name = `merged ${list[0].material.name || ''}`.trim();
+      Object.assign(m, { castShadow: list[0].castShadow, receiveShadow: list[0].receiveShadow, renderOrder: list[0].renderOrder });
+      g.add(m); for (const n of list) n.removeFromParent(); removed += list.length - 1;
+    }
+  }
+  return removed;
+}
+
+// The building's own loose meshes (walls, slabs, trims, F.box details, decals): direct children of the scene that share a
+// material, merged per 8 m cell so frustum and zone culling still work. Skips anything code may move, hide or find:
+// named KEEP, userData.keep/moves/loose, hidden, transparent, instanced, skinned.
+export function mergeSceneMeshes(scene) {
+  const buckets = new Map(), p = new T.Vector3(), box = new T.Box3();
+  for (const n of scene.children) {
+    if (!n.isMesh || n.isInstancedMesh || n.isSkinnedMesh || !n.visible || n.children.length || Array.isArray(n.material) || n.material.transparent) continue;
+    if (!n.geometry.attributes.position || n.userData.keep || n.userData.moves || n.userData.loose || n.userData.hotelProp || KEEP.test(n.name) || n.morphTargetInfluences) continue;
+    n.updateMatrixWorld(true); if (n.matrixWorld.determinant() < 0) continue;
+    box.setFromObject(n); box.getCenter(p); const size = box.getSize(new T.Vector3());
+    if (Math.max(size.x, size.y, size.z) > 12) continue;   // big pieces (whole walls, slabs) already cross cells: leave them as they are
+    const a = n.geometry.attributes, flat = !a.color && flatKey(n.material);
+    const key = [flat || n.material.uuid, Object.keys(a).sort().map(k => k + a[k].itemSize).join(), !!n.geometry.index, n.castShadow, n.receiveShadow, n.renderOrder, n.layers.mask, Math.floor(p.x / 8), Math.floor(p.y / 3), Math.floor(p.z / 8)].join('|');
+    (buckets.get(key) ?? buckets.set(key, []).get(key)).push(n);
+  }
+  let removed = 0;
+  for (const list of buckets.values()) {
+    const flat = !list[0].geometry.attributes.color && flatKey(list[0].material);
+    if (list.length < 2) continue;
+    const geos = list.map(n => {
+      const q = n.geometry.clone().applyMatrix4(n.matrixWorld);
+      if (flat) { const c = n.material.color, cnt = q.attributes.position.count, arr = new Float32Array(cnt * 3); for (let i = 0; i < cnt; i++) arr.set([c.r, c.g, c.b], i * 3); q.setAttribute('color', new T.BufferAttribute(arr, 3)); }
+      return q;
+    });
+    let merged; try { merged = mergeGeometries(geos); } catch (e) { console.warn('MERGEFAIL', list.map(n => n.name || n.geometry.type).join(), e.message); continue; } if (!merged) continue;
+    const m = new T.Mesh(merged, flat ? flatMaterial(flat) : list[0].material); m.name = `merged ${list[0].name || list[0].material.name || ''}`.trim();
+    Object.assign(m, { castShadow: list[0].castShadow, receiveShadow: list[0].receiveShadow, renderOrder: list[0].renderOrder });
+    scene.add(m); for (const n of list) n.removeFromParent(); removed += list.length - 1;
+  }
+  return removed;
+}
+
+// For instancing: [{ geometry, material, matrix }] -> the same list with every flat-colour part (flatKey, where ok(material))
+// baked into one geometry per shared vertex-colour material, in the parts' common frame (matrix = identity). Desktop: unchanged.
+export function flatParts(parts, ok = () => true) {
+  const keep = [], byKey = new Map();
+  for (const p of parts) { const k = !p.geometry.attributes.color && ok(p.material) && flatKey(p.material); if (k && p.matrix.determinant() > 0) (byKey.get(k) ?? byKey.set(k, []).get(k)).push(p); else keep.push(p); }
+  for (const [k, list] of byKey) {
+    const geos = list.map(p => { const q = p.geometry.clone().applyMatrix4(p.matrix), c = p.material.color, n = q.attributes.position.count, a = new Float32Array(n * 3); for (let i = 0; i < n; i++) a.set([c.r, c.g, c.b], i * 3); q.setAttribute('color', new T.BufferAttribute(a, 3)); for (const m of Object.keys(q.morphAttributes)) delete q.morphAttributes[m]; return q; });
+    let merged = null; try { merged = mergeGeometries(geos); } catch { /* attribute sets differ: keep them apart */ }
+    if (merged) keep.push({ geometry: merged, material: flatMaterial(k), matrix: new T.Matrix4() }); else keep.push(...list);
+  }
+  return keep;
 }

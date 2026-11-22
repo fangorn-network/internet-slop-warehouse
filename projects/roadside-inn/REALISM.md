@@ -426,3 +426,16 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
   KHR_materials_transmission; whenever one is in view three renders every opaque object again into a transmission
   target. Lobby at the phone tier: 1853 -> 956 draw calls from the entrance, with no visible change. assets.js budget()
   turns transmission into plain alpha for every model. Check `transmission > 0` before anything else.
+- **Where the calls went** (phone tier, from the entrance, after the transmission fix: 956): parked cars instanced as one
+  InstancedMesh per part across the whole lot (its bounding sphere held the camera, so it was never frustum-culled);
+  every loose prop drawn from everywhere (zone culling treats anything movable as "always"); anything placed against a
+  wall (zone culling wants 25 cm to spare) drawn from every zone, so room 212's furniture from the lobby; the elevator
+  car's ~30 button materials behind shut doors; one draw call per material per prop.
+- **Fixes, none visible:** instance per 32 m cell; on phones, hide loose props (and the moving housekeeping cart) whose
+  zone can't be seen or which are too small to read at their distance (8 m + 30 m per metre of size); pin small statics to
+  the zone of their centre; hide the car while its doors are shut and you're not in it; merge each prop's meshes by
+  material and, on phones, collapse flat-colour materials into shared vertex-colour ones (roughness in 0.25 steps,
+  metal or not); merge the building's small loose meshes per 8 m cell; a brochure's four edges in one group, not four.
+- **Merging breaks what code finds by name or toggles.** Guard by name (doors, leaves, drawers, sockets, screens, lights,
+  made/unmade bedding) and skip anything hidden at merge time (the unmade bed is hidden until you sleep; merged, it
+  would have shown). Meshes code toggles directly get `userData.keep`.

@@ -2,6 +2,7 @@
 // The Heartland Inn: a two-storey interstate hotel, its parking lot, and the highway beyond.
 // Plan (meters): building x -24..30, z -9..9; south (+z) faces the lot and I-44. Floor 1 is y=0, floor 2 is y=3.2.
 import * as T from 'three';
+import { flatParts } from './assets.js';
 import * as F from './fixtures.js';
 import { buildLamps } from './world/lamps.js';
 import { buildLobby } from './world/lobby.js';
@@ -362,18 +363,26 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     const src = lib.models.get(id).scene;
     src.updateMatrixWorld(true);
     const minY = new T.Box3().setFromObject(src).min.y;
-    src.traverse(n => {
-      if (!n.isMesh) return;
-      const local = new T.Matrix4().makeTranslation(0, -minY, 0).multiply(n.matrixWorld);
+    // One InstancedMesh per 32 m cell, not one for the whole lot: a single bounding sphere over every parked car holds the
+    // camera from almost anywhere, so frustum culling never dropped them (~100 draw calls from inside the lobby).
+    const cells = new Map(), p = new T.Vector3();
+    placements.forEach((m, i) => { p.setFromMatrixPosition(m); const k = `${Math.floor(p.x / 32)},${Math.floor(p.z / 32)}`; (cells.get(k) ?? cells.set(k, []).get(k)).push(i); });
+    // Phones: a car's flat-colour parts (tyres, rims, hubcaps, trim) share one vertex-colour material (assets.js flatParts).
+    const parts = [];
+    src.traverse(n => { if (n.isMesh) parts.push({ geometry: n.geometry, material: n.material, matrix: new T.Matrix4().makeTranslation(0, -minY, 0).multiply(n.matrixWorld) }); });
+    for (const n of flatParts(parts, m => !(emissiveHeads && /led|lamp/i.test(m.name)) && !(paints && /body_pbr|paint/.test(m.name)))) {
+      const local = n.matrix;
       const material = emissiveHeads && /led|lamp/i.test(n.material.name) ? F.glow('#fff1d6', 3) : n.material;
-      const im = new T.InstancedMesh(n.geometry, material, placements.length);
-      placements.forEach((m, i) => im.setMatrixAt(i, m.clone().multiply(local)));
-      if (paints && /body_pbr|paint/.test(n.material.name)) paints.forEach((c, i) => im.setColorAt(i, new T.Color(c)));
-      im.castShadow = true; im.receiveShadow = true;
-      im.computeBoundingSphere();
-      if (zone) im.userData.zone = zone;
-      scene.add(im);
-    });
+      for (const idx of cells.values()) {
+        const im = new T.InstancedMesh(n.geometry, material, idx.length);
+        idx.forEach((pi, i) => im.setMatrixAt(i, placements[pi].clone().multiply(local)));
+        if (paints && /body_pbr|paint/.test(n.material.name)) idx.forEach((pi, i) => im.setColorAt(i, new T.Color(paints[pi])));
+        im.castShadow = true; im.receiveShadow = true;
+        im.computeBoundingSphere();
+        if (zone) im.userData.zone = zone;
+        scene.add(im);
+      }
+    }
   }
 
   // Recessed downlight: a diffused lens that falls off into a dark baffle and a white trim ring (one material for every

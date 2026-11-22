@@ -80,7 +80,7 @@ export function buildRoom212(ctx) {
       old.updateWorldMatrix(true, false);
       const box = new T.Box3().setFromObject(old), size = box.getSize(new T.Vector3()), mid = box.getCenter(new T.Vector3());
       const mirror = economy ? new T.Mesh(new T.PlaneGeometry(size.x, size.y), new T.MeshStandardMaterial({ color: 0xb8bcbf, metalness: 1, roughness: 0.12 })) : new Reflector(new T.PlaneGeometry(size.x, size.y), { textureWidth: 768, textureHeight: Math.round(768 * size.y / size.x), color: 0xb8bcbf, clipBias: 0.003 });
-      mirror.position.set(mid.x, mid.y, box.max.z + 0.002);
+      mirror.position.set(mid.x, mid.y, box.max.z + 0.002); mirror.userData.keep = true;   // toggled: never merged (assets.js)
       old.visible = false;
       scene.add(mirror);
       updaters.push((dt, t, player) => { mirror.visible = player.y > 2.5 && player.x > R.x0 && player.x < R.x1 && player.z > R.z0 && player.z < R.z1; });

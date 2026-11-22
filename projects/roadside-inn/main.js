@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CC0-1.0
 import * as T from 'three';
 import { attach as attachInput } from './input.js';
-import { loadLibrary, captureEnv } from './assets.js';
+import { loadLibrary, captureEnv, mergeStatic, mergeSceneMeshes } from './assets.js';
 import { buildWorld, FLOOR2 } from './world.js';
 import { createSound } from './sound.js';
 import { quality } from './quality.js';
@@ -90,6 +90,23 @@ const sound = createSound(lib.foley);
 game.sound = sound;
 world = buildWorld(scene, lib, game);
 applySky('dusk');
+console.info('merged meshes away:', mergeStatic(scene), mergeSceneMeshes(scene));   // draw calls: one per material per model (assets.js)
+// Zone culling only buckets what fits inside a zone with 25 cm to spare; anything placed against a wall (a bed, a
+// fridge, a door frame) "touches" two zones and was drawn from everywhere: room 212's furniture from the lobby. Pin each
+// small static top-level object to the zone its centre is in. Never lights (hiding one recompiles every shader), never
+// loose or moving things, never big pieces that really span zones.
+{
+  const bySize = [...world.zones].sort((a, b) => (a.x1 - a.x0) * (a.y1 - a.y0) * (a.z1 - a.z0) - (b.x1 - b.x0) * (b.y1 - b.y0) * (b.z1 - b.z0));
+  const box = new T.Box3(), c = new T.Vector3(), size = new T.Vector3();
+  for (const o of scene.children) {
+    if (o.userData.zone !== undefined || o.userData.loose || o.userData.moves || o.isLight || o.isInstancedMesh) continue;
+    let skip = false; o.traverse(n => { if (n.isLight || n.isSkinnedMesh) skip = true; }); if (skip) continue;
+    box.setFromObject(o); if (box.isEmpty()) continue; box.getCenter(c); box.getSize(size);
+    if (Math.max(size.x, size.y, size.z) > 4) continue;
+    const z = bySize.find(z => c.x >= z.x0 && c.x <= z.x1 && c.y >= z.y0 && c.y <= z.y1 && c.z >= z.z0 && c.z <= z.z1);
+    if (z) o.userData.zone = z.id ?? z.name;
+  }
+}
 const zones = zoneCulling(scene, { zones: world.zones, sees: world.sees });
 // One indoor environment for the whole building: reflections and fill light captured once (per time of day) from the
 // lobby's middle, with the lobby's lamps aimed and lit, and set on every material inside the building. They never switch
@@ -125,6 +142,10 @@ function captureInterior() {
 captureInterior(); tagInterior();
 const detailProps = [];
 scene.traverse(o => { if (o.userData.hotelProp) detailProps.push(o); });
+// Loose props (anything you can pick up or knock over) are drawn from everywhere by zone culling, since they can move.
+// Phones hide each one when its current zone can't be seen from the camera's, or when it's too small to read at its
+// distance (a pen past ~9 m is two pixels). The held one is always near. The housekeeping cart moves too (staff.js).
+const looseProps = scene.children.filter(o => o.userData.loose || o.name === 'hotel-housekeeping-cart').map(o => { const s = new T.Box3().setFromObject(o).getSize(new T.Vector3()); return { o, far: Math.min(26, 8 + 30 * Math.max(s.x, s.y, s.z)) }; });
 let detailClock = 0, tagClock = 2;
 const detailPosition = new T.Vector3();
 // The player (player.js, shared with Late Checkout): physics when Rapier loads, the old walker when it doesn't.
@@ -352,6 +373,12 @@ function frame(now = performance.now()) {
       prop.getWorldPosition(detailPosition);
       prop.userData.distanceCulled = detailPosition.distanceTo(camera.position) >= distance + prop.userData.visibilityRadius;
       prop.visible = !prop.userData.distanceCulled;
+    }
+    const here = zones.zoneAt(camera.position), seen = world.sees[here] ? new Set([here, ...world.sees[here]]) : null;
+    for (const { o, far } of looseProps) {
+      o.getWorldPosition(detailPosition);
+      const show = (!seen || seen.has(zones.zoneAt(detailPosition))) && detailPosition.distanceTo(camera.position) < far;
+      if (o.visible !== show) o.visible = show;
     }
   }
   if ((tagClock -= dt) <= 0) { tagClock = 2; tagInterior(); }
