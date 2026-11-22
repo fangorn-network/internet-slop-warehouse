@@ -44,6 +44,8 @@ export function buildLivedIn(ctx) {
     // room 212: beside the nightstand (the headboard wall's accent panel is 2 cm proud of the wall) and on the west wall
     // between the micro-fridge and the credenza: carry a lamp up and it plugs in here
     outlet(R.x1 - 0.09, 4.5, -Math.PI / 2, false, R.y); outlet(R.x0 + 0.07, 4.65, Math.PI / 2, false, R.y);
+    // the far nightstand's lamp, and the desk lamp: hotel desks have their outlet on the wall just above the top
+    outlet(R.x1 - 0.09, 8.7, -Math.PI / 2, false, R.y); outlet(R.x0 + 0.07, 8.55, Math.PI / 2, false, R.y + 0.81);
     // a phone left charging on the communal table, a half-finished coffee, the morning papers
     const ph = add(lib.model('hotel-phone', { origin: true }), -1.98, 1.05, -5.13, 0.5);
     cord([[-2.055, 1.0585, -5.4], [-2.05, 1.07, -5.33], [-2.03, 1.052, -5.25], [-1.98 + 0.085 * Math.sin(0.5), 1.054, -5.13 + 0.085 * Math.cos(0.5)]], whiteCords);

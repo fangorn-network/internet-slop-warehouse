@@ -5,6 +5,7 @@ import * as T from 'three';
 import { flatParts } from './assets.js';
 import * as F from './fixtures.js';
 import { buildLamps } from './world/lamps.js';
+import { buildPut } from './world/put.js';
 import { buildLobby } from './world/lobby.js';
 import { buildLivedIn, buildFloorShade, buildCoveBase, buildSpills, buildApplianceSpill } from './world/lived-in.js';
 import { buildPool } from './world/pool.js';
@@ -644,7 +645,7 @@ export function buildWorld(scene, lib, game, { outside = true, people = true, st
     placeWindow, R, people, outside, station, colliders, zones, trees, outdoor, lawn,
     concrete, equipDoor,
   };
-  buildLamps(ctx);
+  buildLamps(ctx); buildPut(ctx);   // put(): place a model with everything its kind says it is (kinds.js)
   buildLobby(ctx);
   buildLivedIn(ctx);
   buildPool(ctx);

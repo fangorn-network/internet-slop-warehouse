@@ -23,3 +23,9 @@ Always:
 5. Export to projects/roadside-inn/assets/<id>.glb, keep the origin convention (floor centre, front -Y in Blender),
    and say what world.js must change (placement, collider) for Natasha.
 Log fine-detail lessons in projects/roadside-inn/REALISM.md. Report each asset with its reference URLs and preview paths.
+
+Pipeline (projects/roadside-inn/pipeline/README.md): briefs come in BRIEF-TEMPLATE.md form, a round at a time. Build
+every hook node the brief lists, named exactly (cord_exit, bin_opening, open_*, take_*, fill_spout, grab, ...): that is
+how behaviour and later physics attach without a rebuild. Add each new GLB to a new assets-N.parts.json (copy the
+newest one's shape) but never publish; the lead publishes. Report in ≤ 10 lines per asset: id, tris, hooks, refs,
+preview paths.

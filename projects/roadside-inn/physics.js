@@ -96,7 +96,7 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   // Carrying: E on a small loose prop picks it up; E again throws it the way you're looking. Each carriable prop gets
   // its prompt when it's attached, so props streamed in after the first frame (Late Checkout) can be picked up too.
   let held = null;
-  const SAY = { wetfloorsign: 'wet floor sign', 'bar chair round': 'bar stool' };   // part ids that don't read as words
+  const SAY = { wetfloorsign: 'wet floor sign', 'bar chair round': 'bar stool', 'desk lamp arm': 'desk lamp' };   // part ids that don't read as words
   const ahead = new T.Vector3(), to = new T.Vector3(), up = new T.Vector3(), still = new T.Vector3(), name = o => { const n = (o.name || 'it').replace(/^(ph|hotel|g3)-/, '').replace(/-0?\d+$/, '').replace(/-/g, ' '); return SAY[n] ?? n; };
   // The prompt aims at the prop's middle, not its origin on the floor, and follows it as it's knocked about.
   const targets = [];
@@ -155,7 +155,7 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
   // Small things grip what they rest on (felt pads, rubber feet, a cup's damp ring): their friction wins over the
   // surface's, so a table stopping short under them doesn't leave them sliding.
   const GRIP = 0.9, grip = b => { b.collider.setFrictionCombineRule(R.CoefficientCombineRule.Max); return b; };
-  const wake = l => { if (!l.b) l.b = grip(attach(l.o, { world: pw, shape: l.spec.shape, mass: l.spec.mass ?? 0.1, centerOfMass: l.spec.centerOfMass, friction: GRIP, damping: 1, settle: 5, onContact: heard(l.o, () => l.b.body.mass()) })); };
+  const wake = l => { l.start ??= l.o.position.clone(); if (!l.b) l.b = grip(attach(l.o, { world: pw, shape: l.spec.shape, mass: l.spec.mass ?? 0.1, centerOfMass: l.spec.centerOfMass, friction: GRIP, damping: 1, settle: 5, onContact: heard(l.o, () => l.b.body.mass()) })); };
   attachLoose();
 
   world.interact.push({ pos: new T.Vector3(), r: 2, heldEntry: true, when: () => !!held, label: () => held ? `Throw the ${name(held.o)}` : 'Throw', use: () => throwHeld() });   // pos follows the held prop
@@ -218,6 +218,15 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
     throw: () => held && throwHeld(),
     /** Let go of what's held, gently, just ahead. */
     drop,
+    /** Put what's held into `parent` (a bin) at world point `at`, out of physics for good: it stays there as a plain
+     *  model. Returns it, or null if nothing's held. */
+    stow(parent, at) {
+      const l = held; if (!l) return null;
+      held = null; me.unignore(l.b.collider); l.b.dispose(); l.b = null;
+      loose.splice(loose.indexOf(l), 1);
+      l.o.position.copy(at); l.o.rotation.set(0.3, Math.random() * 6, 0.2); parent.attach(l.o);
+      return l.o;
+    },
     /** Where the hand holds a rolled bag's handle (world space), or null: for the player's body (Cast). */
     get grip() { return held?.o.userData.loose.hold === 'roll' ? hold : null; },
     /** Pull loose object `o` by a rope `length` long from the point `at` (a Vector3 you keep moving), e.g. a lamp by
@@ -303,6 +312,7 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
       }
       if (leash) {
         if (!leash.l.b && leash.l.o.position.distanceTo(leash.at) > leash.length) wake(leash.l);   // taut: it comes off its table
+        if (leash.l.b && !leash.joint) leash.l.b.body.enableCcd(true);   // dragged hard by its cord, a floor lamp's thin base tunnelled through the floor (user report)
         if (leash.l.b && !leash.joint) leash.joint = pw.raw.createImpulseJoint(R.JointData.rope(leash.length, { x: 0, y: 0.02, z: 0 }, { x: 0, y: 0, z: 0 }), leash.l.b.body, hand, true);
         hand.setNextKinematicTranslation(leash.at);
         if (leash.joint && leash.l.o.position.distanceTo(leash.at) > leash.length * 0.98) leash.l.b.body.wakeUp();
@@ -327,7 +337,9 @@ export async function createPhysics(scene, world, { spawn, radius = 0.28, height
         }
       }
       for (const l of loose) if (l.on?.v && !l.b) l.on.v.copy(l.on.b ? l.on.b.body.linvel() : still);   // for the next frame's jolt
-      for (let i = loose.length - 1; i >= 0; i--) if (loose[i].o.position.y < -30) { const [l] = loose.splice(i, 1); l.b?.dispose(); l.o.visible = false; }   // fell out of the world: once
+      for (const l of loose) if (l.b && l.o.position.y < (l.start?.y ?? 0) - 2.5) {   // (below the 1.6 m pool) through the floor anyway: back where it started, not lost (a lamp vanished)
+        const s = l.start ?? l.o.position.clone().setY(1); l.b.body.setTranslation(s, true); l.b.body.setLinvel({ x: 0, y: 0, z: 0 }, true); l.b.body.setAngvel({ x: 0, y: 0, z: 0 }, true); l.b.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
+      }
     },
   };
 }

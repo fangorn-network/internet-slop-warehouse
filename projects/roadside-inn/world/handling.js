@@ -78,20 +78,15 @@ export function buildHandling(ctx) {
   const sockets = []; scene.traverse(o => { if (/^socket(_|$)/.test(o.name)) sockets.push(o); });
   for (const o of sockets) socket(o, false, false, o.getWorldPosition(new T.Vector3()).y > 2.5 ? 3.212 : 0.01, new T.Vector3());
 
-  // ---------- room 212's lamps, one switch each (R4) ----------
-  // Each bedside lamp has its own switch under its shade; the ceiling light is on the wall by the door. room.setLamps(on)
-  // (Late Checkout and Catherine set the scene with it) still sets all three.
+  // ---------- room 212's ceiling light (R4) ----------
+  // The bedside lamps carry their own switches (they're lamps: kinds.js, world/put.js); the ceiling light's switch is on
+  // the wall by the door. room.setLamps(on) (Late Checkout and Catherine set the scene with it) still sets all three.
   const parts = room.parts;
   if (parts) {
     const y = parts.y;
-    const switches = parts.lamps.map((l, i) => ({ noun: 'bedside lamp', on: true, at: l.getWorldPosition(new T.Vector3()).add(new T.Vector3(0, 0.3, 0)),
-      set(on) { this.on = on; l.userData.shade.material.emissiveIntensity = on ? 0.8 : 0; parts.bedLights[i].intensity = on ? 1.8 : 0; } }));
-    switches.push({ noun: 'ceiling light', on: true, at: new T.Vector3(R.x0 + 1.5, y + 1.2, 1.1), set(on) { this.on = on; parts.roomLight.intensity = on ? parts.roomBright : 0; } });
-    const old = interact.findIndex(i => /^Lamps (on|off)$/.test(i.label?.() ?? '')); if (old >= 0) interact.splice(old, 1);
-    for (const s of switches) interact.push({ pos: s.at, r: 1.1, when: p => Math.abs(p.y - y) < 1 && p.x > R.x0 && p.x < R.x1 && p.z > R.z0 && p.z < R.z1, precise: s.noun !== 'ceiling light', label: () => `Turn the ${s.noun} ${s.on ? 'off' : 'on'}`, use: () => { s.set(!s.on); game.sound?.click?.(); } });
-    const all = on => switches.forEach(s => s.set(on));
-    Object.defineProperty(room, 'lamps', { get: () => switches.some(s => s.on), set: all, configurable: true });
-    room.setLamps = all; room.switches = switches;
+    const ceiling = { noun: 'ceiling light', get on() { return parts.roomLight.intensity > 0; }, at: new T.Vector3(R.x0 + 1.5, y + 1.2, 1.1), set(on) { parts.roomLight.intensity = on ? parts.roomBright : 0; } };
+    interact.push({ pos: ceiling.at, r: 1.1, when: p => Math.abs(p.y - y) < 1 && p.x > R.x0 && p.x < R.x1 && p.z > R.z0 && p.z < R.z1, label: () => `Turn the ${ceiling.noun} ${ceiling.on ? 'off' : 'on'}`, use: () => { ceiling.set(!ceiling.on); game.sound?.click?.(); } });
+    room.switches = [...parts.lamps.map(l => ({ noun: l.noun, get on() { return l.on; }, set: on => l.setOn(on) })), ceiling];
   }
 
   // ---------- the bed you slept in (R6) ----------

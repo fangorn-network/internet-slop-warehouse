@@ -10,7 +10,7 @@ import { FLOOR2 } from '../world.js';
 
 export function buildRoom212(ctx) {
   const {
-    scene, lib, game, interact, updaters, lightAnchors, add, loose, solid, placeWindow,
+    scene, lib, game, interact, updaters, lightAnchors, add, loose, solid, put, placeWindow,
     openableDoor, R, tvSet,
   } = ctx;
   // ---------- room 212 ----------
@@ -125,22 +125,21 @@ export function buildRoom212(ctx) {
     // Bedroom: headboard wall (east), king bed, nightstands, lamps.
     add(lib.model('hotel-headboard', { origin: true, rotate: -Math.PI / 2 }), R.x1 - 0.03, y, 6.6);
     add(lib.model('hotel-king-bed', { rotate: -Math.PI / 2 }), R.x1 - 1.18, y, 6.6); solid(R.x1 - 2.52, R.x1 - 0.28, y, y + 0.7, 5.47, 7.73);
+    // Bedside lamps are lamps (kinds.js): each has its cord to the outlet beside its nightstand and its own switch.
     const lamps = [];
     for (const z of [5.05, 8.15]) {
       add(lib.model('hotel-nightstand', { origin: true, rotate: -Math.PI / 2 }), R.x1 - 0.27, y, z); solid(R.x1 - 0.76, R.x1 - 0.28, y, y + 0.6, z - 0.27, z + 0.27);
-      const l = add(lib.model('hotel-table-lamp', { origin: true }), R.x1 - 0.36, y + 0.572, z);
+      lamps.push(put('hotel-table-lamp', R.x1 - 0.36, y + 0.572, z, 0, { out: [R.x1 - 0.09, z < 6 ? 4.5 : 8.7], noun: 'bedside lamp' }).userData.thing.plug);
       if (z < 6) loose(add(lib.model('hotel-tv-remote', { origin: true }), R.x1 - 0.46, y + 0.573, z + 0.14, 1.9), { rest: true });   // by the bed
-      l.traverse(n => { if (n.isMesh && n.material.name === 'lampshade') { n.material = n.material.clone(); n.material.emissive.set('#ffcf8a'); l.userData.shade = n; } });
-      lamps.push(l);
     }
-    const bedLights = [5.05, 8.15].map(z => ({ pos: new T.Vector3(R.x1 - 0.4, y + 1.1, z), color: new T.Color('#ffe0b5'), intensity: 1.8, distance: 4.5 }));
     const roomLight = { pos: new T.Vector3(14.2, y + 2.94, 6.5), color: new T.Color('#ffe9d0'), intensity: 3.5, distance: 7 };   // just above the ceiling face: no hotspot
-    lightAnchors.push(...bedLights, roomLight);
-    const setLamps = on => { st.lamps = on; lamps.forEach(l => (l.userData.shade.material.emissiveIntensity = on ? 0.8 : 0)); bedLights.forEach(b => (b.intensity = on ? 1.8 : 0)); roomLight.intensity = on ? 3.5 : 0; bedSpill.intensity = st.lamps || st.desk ? 0.5 : 0; };
-    setLamps(true);
-    st.setLamps = setLamps;
-    st.parts = { lamps, bedLights, roomLight, roomBright: roomLight.intensity || 3.5, y };   // God's hook: world/handling.js gives each lamp its own switch (R4)
-    interact.push({ pos: new T.Vector3(R.x1 - 0.3, y + 0.9, 5.05), r: 1.3, label: () => `Lamps ${st.lamps ? 'off' : 'on'}`, use: () => { setLamps(!st.lamps); game.sound.click(); } });
+    lightAnchors.push(roomLight);
+    // st.lamps: any bedside lamp or the ceiling light giving light (the lamps can be unplugged and carried off).
+    const spillLight = () => { bedSpill.intensity = st.lamps || st.desk ? 0.5 : 0; };
+    Object.defineProperty(st, 'lamps', { get: () => lamps.some(l => l.lit) || roomLight.intensity > 0, configurable: true });
+    lamps.forEach(l => (l.onChange = spillLight));
+    st.setLamps = on => { lamps.forEach(l => l.setOn(on)); roomLight.intensity = on ? 3.5 : 0; spillLight(); };
+    st.parts = { lamps, roomLight, roomBright: 3.5, y };   // world/handling.js: the ceiling light's wall switch
     interact.push({ pos: new T.Vector3(R.x1 - 1.4, y + 0.6, 6.6), r: 1.6, label: () => 'Lie down', use: () => game.event('sleep') });
     // Credenza + TV on the west wall, desk by the window, armchair, PTAC, window with drapes.
     const credModel = add(lib.model('hotel-credenza-tv', { origin: true, rotate: Math.PI / 2 }), R.x0 + 0.33, y, 6.4);
@@ -154,22 +153,16 @@ export function buildRoom212(ctx) {
     } solid(R.x0, R.x0 + 0.55, y, y + 0.8, 5.2, 7.6);
     const desk = add(lib.model('hotel-desk', { origin: true, rotate: Math.PI / 2 }), R.x0 + 0.32, y, 8.27);
     desk.scale.z = 0.84; // leave a joint between the desk and TV cabinet, preserving desk height
-    const deskLamp = add(lib.model('ph-desk-lamp-arm-01', { height: 0.6, rotate: Math.PI / 2 }), R.x0 + 0.35, y + 0.807, 8.0);
+    // The desk lamp is a lamp too: it stands loose on the desk, corded to the outlet above the desk; pick it up and move it.
+    const deskLamp = put('ph-desk-lamp-arm-01', R.x0 + 0.35, y + 0.807, 8.0, 0, { model: { height: 0.6, rotate: Math.PI / 2 }, out: [R.x0 + 0.07, 8.55], on: desk });
     deskLamp.updateMatrixWorld(true);
     const lampBounds = new T.Box3().setFromObject(deskLamp);
     deskLamp.position.x += Math.max(0, R.x0 + 0.12 - lampBounds.min.x);
-    const deskBulb = { pos: new T.Vector3(deskLamp.position.x, y + 1.25, 8.0), color: new T.Color('#ffe0b0'), intensity: 1.8, distance: 3.5 };
-    lightAnchors.push(deskBulb);
-    let deskLampOn = true;
-    st.setDesk = on => { deskLampOn = st.desk = on; deskBulb.intensity = on ? 1.8 : 0; lampMaterials.forEach(m => m.emissiveIntensity = on ? 0.6 : 0); bedSpill.intensity = st.lamps || st.desk ? 0.5 : 0; };
-    const lampMaterials = [];
-    deskLamp.traverse(n => { if (n.isMesh) {
-      n.material = n.material.clone();
-      if (/bulb|light|emiss/i.test(n.material.name)) { n.material.emissive.set('#ffd39a'); n.material.emissiveIntensity = 0.6; lampMaterials.push(n.material); }
-    } });
-    interact.push({ pos: new T.Vector3(deskLamp.position.x + 0.2, y + 1, 8.0), r: 1.25, label: () => `Desk lamp ${deskLampOn ? 'off' : 'on'}`, use: () => {
-      st.setDesk(!deskLampOn); game.sound.click();
-    } }); solid(R.x0, R.x0 + 0.71, y, y + 0.81, 7.72, 8.83);
+    const deskPlug = deskLamp.userData.thing.plug;
+    deskPlug.onChange = spillLight;
+    Object.defineProperty(st, 'desk', { get: () => deskPlug.lit, configurable: true });
+    st.setDesk = on => deskPlug.setOn(on);
+ solid(R.x0, R.x0 + 0.71, y, y + 0.81, 7.72, 8.83);
     add(lib.model('ph-modern-arm-chair-01', { height: 0.88 }), R.x0 + 1.15, y, 8.1, -Math.PI / 2);
     // One chair, at the desk: the accent chair by the far nightstand made two (R3).
     add(lib.model('hotel-ptac', { origin: true, rotate: Math.PI }), 14.25, y, 8.82); solid(13.7, 14.8, y, y + 0.6, 8.6, 9);

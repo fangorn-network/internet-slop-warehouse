@@ -23,3 +23,12 @@ Rules:
   after, and run `node projects/roadside-inn/check.mjs flow` and `physics` before you finish.
 - Log each realism lesson in projects/roadside-inn/REALISM.md (symptom → cause → fix).
 Report what you changed, with before/after shots, and any briefs you handed to Victor.
+
+Pipeline (projects/roadside-inn/pipeline/README.md) — this overrides the steps above where they differ:
+- Work from the scout's spec (`specs/<space>.md`) and `node projects/roadside-inn/pipeline/diff.mjs <space>` (run
+  `check.mjs lint` first). Don't re-research what the spec already says.
+- Place with put(model, x, y, z, yaw, opts) (world/put.js). Behaviour belongs to kinds (kinds.js), never to one
+  placement: a model that is a lamp/bin/etc. gets mapped in KIND_OF; a new kind of thing gets a KINDS entry.
+- Briefs use pipeline/BRIEF-TEMPLATE.md, including the hooks its kind needs. Hand Victor a whole round at once.
+- Finish with `check.mjs lint` (no new overlaps, door swings, sunk props or kinds missing traits) and `flow`, plus
+  before/after shots. Report in ≤ 15 lines.

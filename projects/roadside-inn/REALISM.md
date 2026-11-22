@@ -469,3 +469,11 @@ with `intent.js`), applied to the Rocketbox rigs by `people.js`.
 - **Lit appliances throw light on the floor.** A soft cold additive pool in front of the cooler and vending machines,
   no light source (phones have four). Make the pool fade to nothing at every edge except the machine's, or it's a
   bright rectangle on the floor.
+
+## Kinds pass (2026-11-21)
+- **Lamps without cords (room 212)** → each lamp was wired where it was placed, so the bedroom's were built without the lobby's cord code → `kinds.js` + `world/put.js`: a model's kind gives it its cord, plug, switch, light; every lamp in the building now comes from one path. `check.mjs lint` reports any model of a kind placed without `put()`.
+- **Cords climbing walls** → the cord's ground cast starts 30 cm above each link; a link against a wall starts inside it, the hit at distance 0 read as ground 30 cm up, every frame → ground only counts within 5 cm above the link.
+- **Cords springing up 70 cm** → Verlet keeps a position correction as velocity: a link snapped onto a nightstand top bounced → kill the vertical velocity when a link is stopped by a surface.
+- **Cord through the wall behind a desk** → pushed out of the desk's nearest side, which was its back against the wall → cords collide with the walker's colliders too, leaving toward the lamp's side first (a thin wall's nearest face can be the outside).
+- **Extinguisher in the pool-corridor door swing; two semis overlapping by 2 m** → nobody checks placements → `check.mjs lint` (overlaps, door swings, sunk props).
+- **Floor lamp through the floor / vanished when dragged by its plug** → continuous collision was only on for held props, and anything below -30 m was deleted → CCD on while leashed; a prop that falls 2.5 m below where it started goes back there instead of being deleted.

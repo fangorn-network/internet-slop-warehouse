@@ -138,7 +138,7 @@ export function buildOutside(ctx) {
     // The Route 66 Travel Stop across the interstate (station.js) and the billboard.
     if (station) buildStation(scene, lib, game, { colliders, interact, lightAnchors, zones });
     flat(-95, -45, 98, 130, lib.surface('asphalt', { repeat: [8, 5], color: '#6a6a6a' }), 0.007);
-    for (const [x, z] of [[-60, 126], [-76, 126.5]]) add(vehicle('g3-semi-truck', Math.PI / 2), x, 0, z);
+    for (const [x, z] of [[-60, 126], [-78.6, 126.5]]) add(vehicle('g3-semi-truck', Math.PI / 2), x, 0, z);   // ~20 m rigs: 18.6 m apart, they overlapped (check.mjs lint)
     const bb = new T.Group();
     for (const x of [-3, 3]) { const p = mbox(0.5, 8, 0.5, F.mat('#5a5f63')); p.position.set(x, 4, 0); bb.add(p); }
     const face = F.sign('CAVE TOURS\nEXIT 129 · OPEN DAILY', { w: 12, h: 4, bg: '#3a2416', fg: '#ffe8a3', font: 'bold 96px Georgia, serif', emissive: 0.4 }); face.position.set(0, 9.5, 0.3); bb.add(face);

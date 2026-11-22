@@ -10,7 +10,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 export function buildLobby(ctx) {
   const {
     scene, lib, game, interact, lightAnchors, add, loose, unboxed, takeables, solid,
-    light, statics, drywall, charcoal, regionalMap, painting, mbox, dm, tableLamp, floorLamp, downlight,
+    light, statics, drywall, charcoal, regionalMap, painting, mbox, dm, tableLamp, floorLamp, downlight, put,
   } = ctx;
   // Accent chairs: the reference lobbies mix mustard and heather grey in with the navy (same chair, its fabric recoloured).
   // (glTF keeps Blender's .001 suffix on material names, hence the prefix match.)
@@ -29,7 +29,7 @@ export function buildLobby(ctx) {
   // What's on the pods: Dana's working clutter (bell, apples, Wi-Fi card, keys) and the closed pod's "next agent" card.
   takeables(add(lib.model('hotel-desk-items', { origin: true }), -7.65, 0, -3.0)); takeables(add(lib.model('hotel-desk-closed', { origin: true }), -9.9, 0, -3.0));
   // Wastebaskets where guests actually drop things: by the business center, the communal table and the entry.
-  for (const [x, z] of [[5.95, -1.6], [-3.55, -4.75], [0.15, 8.45]]) { add(lib.model('hotel-waste-bin', { origin: true }), x, 0, z, 0.1); solid(x - 0.17, x + 0.17, 0, 0.62, z - 0.17, z + 0.17); }
+  for (const [x, z] of [[5.95, -1.6], [-3.55, -4.75], [0.15, 8.45]]) put('hotel-waste-bin', x, 0, z, 0.1);   // bins take rubbish (kinds.js)
   // Linear LED pendant over the pods.
   { const bar = F.box(3.4, 0.05, 0.1, F.mat('#1b1d21', { roughness: 0.5 }), -8.8, 2.3, -3.0, scene); bar.name = 'Pod pendant';
     F.box(3.36, 0.006, 0.07, F.glow('#fff6ea', 2.6), -8.8, 2.296, -3.0, scene);
@@ -121,7 +121,7 @@ export function buildLobby(ctx) {
   // Fire extinguisher cabinets (NFPA 10: one within 75 ft of travel, top under 5 ft): the east wall just
   // north of the corridor mouth (the map mural fills the wall south of it) and the west wall by the reading chairs. Semi-recessed, so they stand 7 cm proud (blender/lifesafety.py).
   add(lib.model('hotel-extinguisher-cabinet', { origin: true }), 6.42, 0.85, -1.6, -Math.PI / 2);
-  add(lib.model('hotel-extinguisher-cabinet', { origin: true }), -11.905, 0.85, -1.9, Math.PI / 2);
+  add(lib.model('hotel-extinguisher-cabinet', { origin: true }), -11.905, 0.85, -0.85, Math.PI / 2);   // clear of the pool-corridor door's swing (it overlapped: check.mjs lint)
   // Brochure rack and luggage cart near the entrance; a walk-off mat inside the doors.
   add(lib.model('hotel-brochure-rack', { origin: true }), -4.6, 0, 1.2, Math.PI / 2); solid(-4.78, -4.42, 0, 1.45, 1.02, 1.38);
   loose(add(lib.model('hotel-luggage-cart', { origin: true }), -5.0, 0, 6.3, 0.3), { density: 0.35 }); solid(-5.6, -4.4, 0, 2, -0.4 + 6.3, 0.4 + 6.3); unboxed();

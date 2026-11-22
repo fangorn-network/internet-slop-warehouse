@@ -20,7 +20,7 @@ const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome'
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 // Keep logic/control regressions independent of the headless GPU and audio device.
 // The repairs audit above exercises normal rendering; mobile captures one real frame at the end.
-if (mode === 'flow' || mode === 'mobile' || mode === 'physics' || mode === 'people') {
+if (mode === 'flow' || mode === 'mobile' || mode === 'physics' || mode === 'people' || mode === 'lint') {
   await page.context().route('**/main.js', async route => {
     let source = await readFile(resolve(root, 'projects/roadside-inn/main.js'), 'utf8');
     source = source.replace('await renderer.compileAsync(scene, camera);', 'globalThis.__renderAudit = () => renderer.render(scene, camera);');
@@ -39,7 +39,7 @@ page.on('requestfailed', r => errors.push(`request failed: ${r.url()} (${r.failu
 if (mode !== 'mobile') {
   await page.goto(`http://localhost:${port}/projects/roadside-inn/index.html${process.env.FULL ? '' : '?quality=low'}`);
   await page.waitForFunction(() => globalThis.__inn, null, { timeout: 180000 });
-  if (mode === 'flow' || mode === 'physics' || mode === 'people') await page.evaluate(() => {
+  if (mode === 'flow' || mode === 'physics' || mode === 'people' || mode === 'lint') await page.evaluate(() => {
     // Movement/interaction checks should not be limited by the software rasterizer.
     // Render explicitly before each capture; the visual audit uses the normal renderer.
     const render = __inn.renderer.render.bind(__inn.renderer);
@@ -58,7 +58,7 @@ const repairViews = {
   'repairs-gym': [14.5, 0, -3.5, 0, -0.1],
   'repairs-sign': [-8, 0, -2.4, 1.57, 0.2],
 };
-const views = mode === 'repairs' ? repairViews : ['flow', 'profile', 'mobile', 'physics', 'people'].includes(mode) ? {} : (mode ? JSON.parse(mode) : null) ?? {
+const views = mode === 'repairs' ? repairViews : ['flow', 'profile', 'mobile', 'physics', 'people', 'lint'].includes(mode) ? {} : (mode ? JSON.parse(mode) : null) ?? {
   arrival: [3.4, 0, 19.4, 0.48, 0.05],
   lobby: [-2, 0, 7, 0.3, -0.05],
   desk: [-6.5, 0, 0.5, 0.5, -0.05],
@@ -559,6 +559,46 @@ if (mode === 'mobile' || !mode) {
   await phone.screenshot({ path: `${out}/mobile.png`, timeout: 180000 });
   await phone.close();
 }
+// Lint: what a set dresser would catch walking the building. Every placed model (assets.js marks them hotelProp) against
+// every other, the doors' swings and the floor; and every model whose kind (kinds.js) needs something it hasn't got
+// (a lamp placed without put(): no cord). A list to review, ranked: some overlaps are meant (a chair tucked under a table).
+let lint = null;
+if (mode === 'lint') {
+  await page.waitForTimeout(1500);   // a few frames: lamps plug in, things settle
+  lint = await page.evaluate(async () => {
+    const { KIND_OF, KINDS } = await import('/projects/roadside-inn/kinds.js');
+    const out = { overlaps: [], doors: [], sunk: [], kinds: [] };
+    const props = [];
+    const box = o => { const b = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] }; o.updateMatrixWorld(true);
+      o.traverse(n => { if (!n.isMesh || !n.visible) return; n.geometry.computeBoundingBox(); const g = n.geometry.boundingBox;
+        for (const x of [g.min.x, g.max.x]) for (const y of [g.min.y, g.max.y]) for (const z of [g.min.z, g.max.z]) { const v = { x, y, z }; const e = n.matrixWorld.elements, w = [e[0] * x + e[4] * y + e[8] * z + e[12], e[1] * x + e[5] * y + e[9] * z + e[13], e[2] * x + e[6] * y + e[10] * z + e[14]]; for (let k = 0; k < 3; k++) { b.min[k] = Math.min(b.min[k], w[k]); b.max[k] = Math.max(b.max[k], w[k]); } } });
+      return b.min[0] === Infinity ? null : b; };
+    __inn.scene.traverse(o => { if (!o.userData.hotelProp) return; for (let p = o.parent; p; p = p.parent) if (p.userData.hotelProp) return; if (/rug|carpet|mat$/i.test(o.name)) return; const b = box(o); if (b) props.push({ o, name: o.name, b, at: o.position.toArray().map(v => +v.toFixed(2)) }); });
+    const pen = (a, b) => [0, 1, 2].map(k => Math.min(a.max[k], b.max[k]) - Math.max(a.min[k], b.min[k]));
+    for (let i = 0; i < props.length; i++) for (let j = i + 1; j < props.length; j++) {
+      const a = props[i], b = props[j], d = pen(a.b, b.b);
+      if (d.some(v => v < 0.04)) continue;
+      if (Math.abs(a.b.min[1] - b.b.max[1]) < 0.05 || Math.abs(b.b.min[1] - a.b.max[1]) < 0.05) continue;   // one stands on the other
+      out.overlaps.push({ a: a.name, at: a.at, b: b.name, bAt: b.at, cm: d.map(v => Math.round(v * 100)), vol: +(d[0] * d[1] * d[2] * 1000).toFixed(1) });
+    }
+    out.overlaps.sort((x, y) => y.vol - x.vol);
+    // doors: a collider that comes and goes (on()) is a door leaf; its swing reaches its width either side of it
+    for (const c of __inn.world.colliders) {
+      if (!c.on) continue;
+      const w = Math.max(c.x1 - c.x0, c.z1 - c.z0), thinX = c.x1 - c.x0 < c.z1 - c.z0;
+      const s = { min: [c.x0 - (thinX ? w : 0.05), c.y0, c.z0 - (thinX ? 0.05 : w)], max: [c.x1 + (thinX ? w : 0.05), c.y1, c.z1 + (thinX ? 0.05 : w)] };
+      for (const p of props) { const d = pen(s, p.b); if (d.every(v => v > 0.02) && p.b.min[1] > c.y0 + 0.1 && p.b.max[1] - p.b.min[1] < 2.5) out.doors.push({ door: [+((c.x0 + c.x1) / 2).toFixed(2), +c.y0.toFixed(2), +((c.z0 + c.z1) / 2).toFixed(2)], prop: p.name, at: p.at }); }
+    }
+    for (const p of props) { const floor = p.b.min[1] > 2.6 ? __inn.FLOOR2 : 0; if (p.b.min[1] < floor - 0.03 && p.b.max[1] > floor) out.sunk.push({ prop: p.name, at: p.at, cm: Math.round((floor - p.b.min[1]) * 100) }); }
+    // kinds: a model of a kind placed without put() is missing what its kind gives (a lamp without a cord)
+    __inn.scene.traverse(o => { const k = KIND_OF[o.name]; if (k && o.userData.hotelProp && !o.userData.thing) out.kinds.push({ prop: o.name, kind: k, at: o.position.toArray().map(v => +v.toFixed(2)), missing: Object.keys(KINDS[k]).filter(t => t !== 'noun') }); });
+    // what's where, for the space diff (pipeline/diff.mjs): every placed model and every zone
+    out.props = props.map(p => ({ name: p.name, at: p.at, kind: KIND_OF[p.name] ?? null }));
+    out.zones = __inn.world.zones.map(z => ({ name: z.id ?? z.name, box: [z.x0, z.x1, z.y0, z.y1, z.z0, z.z1] }));
+    return out;
+  });
+  console.log(JSON.stringify({ overlaps: lint.overlaps.length, doors: lint.doors.length, sunk: lint.sunk.length, kinds: lint.kinds.length }));
+}
 if (process.env.TV) {   // turn the room TV on and photograph it (checks the screen's UVs)
   await page.evaluate(() => { __inn.teleport(13.9, 3.2, 6.4, 1.57, 0.05); const tv = __inn.world.interact.find(i => /TV on/.test(i.label()) && i.pos.y > 3 && i.pos.x < 14); tv.use(); tv.use(); });
   await page.waitForTimeout(3000); await page.evaluate(() => globalThis.__inn?.forceRender?.()); await page.screenshot({ path: `${out}/tv-room.png`, timeout: 180000 });
@@ -576,7 +616,7 @@ if (mode === 'profile') {
     return Object.entries(by).sort((a, b) => b[1][0] - a[1][0]).slice(0, 25).map(([k, [t, n]]) => `${k}: ${Math.round(t / 1000)}k tris, ${n} meshes`);
   }), null, 1));
 }
-const result = { flow, errors, shots: Object.keys(views).length, stats: mode === 'mobile' ? null : await page.evaluate(() => ({ colliders: __inn.world.colliders.length, interact: __inn.world.interact.length, drawCalls: __inn.renderer.info.render.calls, textures: __inn.renderer.info.memory.textures, programs: __inn.renderer.info.programs.length, triangles: __inn.renderer.info.render.triangles })) };
+const result = { flow, lint, errors, shots: Object.keys(views).length, stats: mode === 'mobile' ? null : await page.evaluate(() => ({ colliders: __inn.world.colliders.length, interact: __inn.world.interact.length, drawCalls: __inn.renderer.info.render.calls, textures: __inn.renderer.info.memory.textures, programs: __inn.renderer.info.programs.length, triangles: __inn.renderer.info.render.triangles })) };
 await writeFile(`${out}/check-${mode?.startsWith("{") ? "views" : mode || 'all'}.json`, JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 1));
 await browser.close(); server.close();
