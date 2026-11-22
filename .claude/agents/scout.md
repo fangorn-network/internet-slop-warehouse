@@ -10,6 +10,13 @@ The place: an upper-midscale US limited-service highway hotel (Holiday Inn Expre
 Fairfield class), built or refreshed 2015-2023, somewhere roadside on the interstate between Oklahoma and Ohio. Never
 name a state, a real brand or a logo in the spec's text meant for the game; refs may be any real photos.
 
+Seeing photos (do this first; a spec written without looking at photos is a failed spec):
+- If WebSearch/WebFetch aren't callable, load them: ToolSearch with query "select:WebSearch,WebFetch".
+- Search for image-bearing pages, then download the image itself: `curl -sL -A "Mozilla/5.0" -o <scratch>/refs/<n>.jpg
+  "<image url>"` (check `file` for the real format; rename .webp that are JPEGs). Then Read the file: you see it.
+  Image URLs come from search results, page HTML (`curl` the page, grep og:image / <img src>), or product CDNs.
+- Every refs entry must be an image you actually Read. Say how many you viewed in the report.
+
 How:
 1. Find 4-8 real photos of this exact kind of space (guest-posted photos on travel sites, hotel listings, renovation
    portfolios, product spec sheets for the fixtures). Prefer guest photos: they show the wear, the clutter and the bad

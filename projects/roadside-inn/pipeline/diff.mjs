@@ -44,7 +44,7 @@ for (const r of rows) {
 }
 const extra = {}; for (const p of here) if (!used.has(p)) extra[p.name] = (extra[p.name] ?? 0) + 1;
 
-console.log(`${space}: ${rows.length} spec rows, ${here.length} models in the zone box`);
+console.log(`${space}: ${rows.length} spec rows, ${here.length} models in the zone box: ${[...new Set(here.map(p => p.name))].join(', ')}`);
 console.log(`\nSHORT (place more; models exist):\n${short.map(s => '  ' + s).join('\n') || '  -'}`);
-console.log(`\nNO MODEL (brief for Victor, or map an existing model to the kind):\n${noModel.map(s => '  ' + s).join('\n') || '  -'}`);
+console.log(`\nUNMATCHED (no model/kind mapping: part of a bigger model, built in code, or truly missing → brief):\n${noModel.map(s => '  ' + s).join('\n') || '  -'}`);
 console.log(`\nEXTRA (in the scene, not in the spec; mostly structure and unmatched kinds):\n${Object.entries(extra).map(([k, n]) => `  ${k} ×${n}`).join('\n') || '  -'}`);

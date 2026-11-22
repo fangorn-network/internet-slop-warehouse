@@ -31,11 +31,28 @@ export function buildRoom212(ctx) {
         st.open = true; st.timer = 7; game.event('room-open');
       } });
     interact.push({ pos: new T.Vector3(R.x0 + 0.9, y + 1.1, 1.5), r: 1.0, when: p => p.z > 1, label: () => st.open ? 'Close door' : 'Open door', use: () => { st.open = !st.open; st.timer = st.open ? 7 : 0; } });
+    // The hall light under the shut door: a bright line along the gap and a faint fan on the carpet inside, the one
+    // thing you see with the lights off and the drapes shut. Fades as the door opens (then the doorway spill takes over).
+    const seam = new T.Group();
+    {
+      d.group.updateMatrixWorld(true); const lb = new T.Box3().setFromObject(d.leaf), w = lb.max.x - lb.min.x - 0.02, cx = (lb.min.x + lb.max.x) / 2, z = lb.max.z + 0.004;
+      // the fan: bright at the gap, gone in 30 cm, and fading out at both ends (light spreads past the door's width)
+      const c = document.createElement('canvas'); c.width = 64; c.height = 64; const g = c.getContext('2d'), img = g.createImageData(64, 64);
+      for (let j = 0; j < 64; j++) for (let i = 0; i < 64; i++) { const v = j / 63, u = Math.abs(i / 63 - 0.5) * 2, a = (0.25 * Math.exp(-v * 4) + 0.75 * Math.exp(-v * 40)) * Math.max(0, 1 - u ** 4) ** 2; img.data.set([255, 232, 200, Math.round(a * 255)], (j * 64 + i) * 4); }
+      g.putImageData(img, 0, 0);
+      const mat = new T.MeshBasicMaterial({ map: new T.CanvasTexture(c), transparent: true, blending: T.AdditiveBlending, depthWrite: false, opacity: 0.4 });
+      const fan = new T.Mesh(new T.PlaneGeometry(w + 0.25, 0.32), mat); fan.rotation.x = -Math.PI / 2; fan.position.set(cx, y + 0.016, z + 0.16); seam.add(fan);
+      const line = new T.Mesh(new T.PlaneGeometry(w, 0.008), new T.MeshBasicMaterial({ color: '#ffe9c8', transparent: true, opacity: 0.9, depthWrite: false }));
+      line.position.set(cx, y + 0.016, z); seam.add(line);   // the gap itself, 8 mm, on the door's face just above the carpet (top at y + 0.012)
+      for (const m of [mat, line.material]) m.userData.noEnv = true;   // main.js tagInterior: an env map multiplies an unlit colour by dark reflections (it went black)
+      scene.add(seam);
+    }
     // Hall light through the open door: a spill just inside the doorway, as bright as the door is open.
     const spill = { pos: new T.Vector3(R.x0 + 0.9, y + 1.9, 1.5), color: new T.Color('#fff2dc'), intensity: 0, distance: 6 };
     lightAnchors.push(spill);
     updaters.push((dt, t, player) => {
       spill.intensity = 7 * Math.min(1, st.angle / 1.2);
+      seam.visible = st.angle < 0.15;
       const inDoorway = Math.abs(player.y - y) < 1 && player.x > R.x0 + 0.3 && player.x < R.x0 + 1.5 && player.z > 0.5 && player.z < 2.2;
       if (st.open) { st.timer -= dt; if (st.timer < 0 && !inDoorway) { st.open = false; game.sound.thud(); } }
       const target = st.open ? 1.45 : 0;
