@@ -22,8 +22,8 @@ await writeFile(resolve(out, 'heartland-inn.html'), html);
 
 await writeFile(resolve(here, 'release.parts.json'), JSON.stringify([hotel.entry, {
   id: 'heartland-inn', type: 'game', file: '../artifacts/roadside-inn/heartland-inn.html',
-  title: 'Heartland Inn Express · a night off I-44', author: 'the internet slop warehouse', license: 'CC0-1.0 AND MIT',
-  description: 'Realistic first-person walk through an interstate chain hotel in rural Missouri at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Textured rigged human staff and guests, textured shower enclosure and cardio equipment, functional desk lamp, corrected wall-mounted art and signage, clear elevator shaft. Automatic mobile battery profile. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.',
+  title: 'Heartland Inn Express · a night off I-62', author: 'the internet slop warehouse', license: 'CC0-1.0 AND MIT',
+  description: 'Realistic first-person walk through an interstate chain hotel somewhere in the rural Midwest at dusk. Check in with the desk clerk, take the working elevator or switchback stairs, open room 212 with your key card. Vending, lobby coffee, lounge and room TVs with channels, pool and hot tub, gym through glass, ice machine, housekeeping, parking lot, highway traffic, truck stop. Textured rigged human staff and guests, textured shower enclosure and cardio equipment, functional desk lamp, corrected wall-mounted art and signage, clear elevator shaft. Automatic mobile battery profile. Day/dusk toggle, desktop and touch controls. Exploration, no fail state.',
   tags: ['hotel', 'first-person', 'exploration', 'realistic', 'walking-sim', 'missouri', 'roadside', 'polyhaven', 'grab3d', 'cc0', 'mobile'],
   uses: parts,
 }], null, 2) + '\n');

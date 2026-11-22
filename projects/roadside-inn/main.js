@@ -277,7 +277,7 @@ function closePanel() {
 function sleep() {
   const minutes = Math.round(performance.now() / 60000);
   const tried = [game.has('coffee') && 'drank the lobby coffee', bag.some(i => SNACKS.concat(DRINKS).some(([n]) => n.toLowerCase() === i)) && 'raided the vending machine', game.has('ice bucket (full)') && 'got ice', world.room.tv.on && 'fell asleep to the TV'].filter(Boolean);
-  openPanel(`<h2>Good night.</h2><p>The PTAC rattles on. Somewhere down the hall, a door thuds shut. Out on I-44, a truck downshifts for the exit.</p>
+  openPanel(`<h2>Good night.</h2><p>The PTAC rattles on. Somewhere down the hall, a door thuds shut. Out on I-62, a truck downshifts for the exit.</p>
     <p>${tried.length ? 'You ' + tried.join(', ') + '.' : 'You didn’t even look at the vending machine. Admirable.'}</p>
     <p class="sub">${minutes} minute${minutes === 1 ? '' : 's'} at the Heartland Inn</p>
     ${timeOfDay === 'dusk' ? '<button id="morning">Sleep until morning</button> ' : ''}<button id="closePanel" class="${timeOfDay === 'dusk' ? 'ghost' : ''}">Keep exploring</button>`);

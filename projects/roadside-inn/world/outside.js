@@ -62,7 +62,7 @@ export function buildOutside(ctx) {
     for (let x = -26.6; x < 34; x += 2.75) if (rnd() < 0.25) park(x, -20, 0, carIds[Math.floor(rnd() * carIds.length)]);
     park(1.6, 20.75, Math.PI + 0.02, 'g3-1990s-station-wagon', '#3c6e91');
     for (const [id, cars] of parked) instances(id, cars.map(c => c.m), false, cars.map(c => c.paint), 'outside');
-    interact.push({ pos: new T.Vector3(1.6, 1, 20.75), r: 2.8, label: () => 'Your car', use: () => game.say(game.has('key card') ? 'Everything you need is already in your bag. Room 212 awaits.' : 'Your car, ticking as it cools. Seven hours on I-44. Time to check in.') });
+    interact.push({ pos: new T.Vector3(1.6, 1, 20.75), r: 2.8, label: () => 'Your car', use: () => game.say(game.has('key card') ? 'Everything you need is already in your bag. Room 212 awaits.' : 'Your car, ticking as it cools. Seven hours on I-62. Time to check in.') });
     // Parking lot lights.
     for (const [x, z] of [[-30, 27], [-10, 27], [10, 27], [30, 27], [-20, 42.5], [20, 42.5]]) {
       add(lightPole(), x, 0, z);

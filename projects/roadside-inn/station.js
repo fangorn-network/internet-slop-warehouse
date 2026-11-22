@@ -88,7 +88,7 @@ export function buildStation(scene, lib, game, world) {
   place('g3-freezer-chest', { width: 1.6 }, x0 + 2.2, 0, z0 - 0.62, Math.PI); solid(x0 + 1.4, x0 + 3.0, 0, 0.95, z0 - 1.05, z0 - 0.15);
   const ice = F.sign('ICE', { w: 0.9, h: 0.35, bg: '#ffffff', fg: '#1d6fb8', font: 'bold 160px system-ui' }); ice.position.set(x0 + 2.2, 1.45, z0 - 0.115); ice.rotation.y = Math.PI; live.add(ice);
   place('g3-newspaper-stand', { height: 1.0 }, door[0] - 1.0, 0, z0 - 0.4, Math.PI); solid(door[0] - 1.28, door[0] - 0.72, 0, 1, z0 - 0.66, z0 - 0.12);
-  world.interact.push({ pos: new T.Vector3(door[0] - 1.0, 1.0, z0 - 0.75), r: 1.2, label: () => 'Newspaper box', use: () => game.say('The Joplin Globe. The window is fogged from the inside, as if the newspaper were breathing, and you cannot read the date.') });
+  world.interact.push({ pos: new T.Vector3(door[0] - 1.0, 1.0, z0 - 0.75), r: 1.2, label: () => 'Newspaper box', use: () => game.say('The Cedar Gap Courier. The window is fogged from the inside, as if the newspaper were breathing, and you cannot read the date.') });
   const vend = lib.model('g3-vending-machine', { height: 1.85, rotate: Math.PI }); vend.position.set(x1 - 2.4, 0, z0 - 0.55); live.add(vend); solid(x1 - 2.9, x1 - 1.9, 0, 1.9, z0 - 1, z0 - 0.1);
   place('g3-trash-can', { height: 0.9 }, door[1] + 0.7, 0, z0 - 0.45);
 

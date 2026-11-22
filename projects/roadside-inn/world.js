@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: CC0-1.0
 // The Heartland Inn: a two-storey interstate hotel, its parking lot, and the highway beyond.
-// Plan (meters): building x -24..30, z -9..9; south (+z) faces the lot and I-44. Floor 1 is y=0, floor 2 is y=3.2.
+// Plan (meters): building x -24..30, z -9..9; south (+z) faces the lot and I-62. Floor 1 is y=0, floor 2 is y=3.2.
 import * as T from 'three';
 import { flatParts } from './assets.js';
 import * as F from './fixtures.js';

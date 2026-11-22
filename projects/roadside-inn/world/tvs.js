@@ -43,17 +43,17 @@ export function buildTvs(ctx) {
     for (let i = 0; i < 6; i++) { g.strokeStyle = '#2d4a24'; g.beginPath(); g.moveTo(20, 60 + i * 30); g.lineTo(320, 70 + i * 28); g.stroke(); }
     const cx = 60 + (t * 8) % 300;
     for (const [dx, dy, r, c] of [[0, 0, 55, 'rgba(60,200,60,.65)'], [10, 5, 35, 'rgba(240,220,40,.75)'], [16, 8, 18, 'rgba(230,50,40,.85)']]) { g.fillStyle = c; g.beginPath(); g.arc(cx + dx, 140 + dy, r, 0, 7); g.fill(); }
-    g.fillStyle = '#fff'; g.font = 'bold 16px system-ui'; g.fillText('Springfield', 230, 120); g.fillText('Rolla', 120, 200); g.fillText('Joplin', 30, 100);
+    g.fillStyle = '#fff'; g.font = 'bold 16px system-ui'; g.fillText('Harlow Springs', 200, 120); g.fillText('Harlan', 120, 200); g.fillText('Millbrook', 30, 100);   // invented: the hotel's state is never named
     g.font = 'bold 22px system-ui'; g.fillText('TONIGHT', 345, 80); g.font = 'bold 54px system-ui'; g.fillText('58°', 350, 140); g.font = '18px system-ui'; g.fillText('Scattered storms', 345, 170); g.fillText('after midnight', 345, 192);
-    header(g, w, 'OZARKS FIRST WEATHER · LIVE DOPPLER', '#c1121f');
-    ticker(g, w, h, t, 'Severe thunderstorm watch for Phelps, Pulaski and Laclede counties until 2 AM  ·  Wind gusts to 50 mph possible  ·  ');
+    header(g, w, 'STORM TEAM 6 WEATHER · LIVE DOPPLER', '#c1121f');
+    ticker(g, w, h, t, 'Severe thunderstorm watch for Harlan, Osage Fork and Cedar counties until 2 AM  ·  Wind gusts to 50 mph possible  ·  ');
   }
   function news(g, w, h, t) {
     g.fillStyle = '#20262e'; g.fillRect(0, 0, w, h);
     g.fillStyle = '#c9ad8e'; g.beginPath(); g.arc(256, 150, 46, 0, 7); g.fill();
     g.fillStyle = '#2b2d42'; g.fillRect(180, 195, 152, 70); g.fillStyle = '#3d5a80'; g.fillRect(0, 205, w, 4);
     g.fillStyle = '#d90429'; g.fillRect(0, 210, 210, 34); g.fillStyle = '#fff'; g.font = 'bold 20px system-ui'; g.textAlign = 'left'; g.fillText('BREAKING', 14, 234);
-    g.fillStyle = '#edf2f4'; g.fillRect(210, 210, 302, 34); g.fillStyle = '#111'; g.fillText('I-44 resurfacing near exit 127', 222, 234);
+    g.fillStyle = '#edf2f4'; g.fillRect(210, 210, 302, 34); g.fillStyle = '#111'; g.fillText('I-62 resurfacing near exit 127', 222, 234);
     header(g, w, 'KY3 NEWS AT TEN', '#0b2545');
     ticker(g, w, h, t, 'County fair opens Saturday  ·  Gas $2.89 at the Route 66 Travel Stop  ·  High school football: Hornets 21, Tigers 17  ·  ');
   }

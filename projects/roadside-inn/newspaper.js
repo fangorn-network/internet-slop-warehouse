@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CC0-1.0
 // The local paper you can pick up in the lobby and read: it opens in your hands (world/reading.js), one sheet folded in
 // half, four pages: the front (local news), inside the weather and the classifieds, and the back page. Invented: the
-// town, the paper and everyone in it. It agrees with the rest of the inn: the storms the TV weather promises, the I-44
+// town, the paper and everyone in it. It agrees with the rest of the inn: the storms the TV weather promises, the I-62
 // work by exit 127, the fair, tonight's ballgame on channel 4.
 const MASTHEAD = 'The Harlow Springs Courier-Ledger';
 const EDITIONS = {
@@ -9,9 +9,9 @@ const EDITIONS = {
     date: 'Thursday · 75¢ · Vol. 118, No. 211',
     pages: [
       ['Local', `
-        <h3>Night lane closures on I-44 begin at Exit 127</h3>
+        <h3>Night lane closures on I-62 begin at Exit 127</h3>
         <p class="by">By Carol Pruitt, Courier-Ledger staff</p>
-        <p>Eastbound I-44 drivers should expect one lane between mile markers 126 and 129 from 7 p.m. to 6 a.m. starting
+        <p>Eastbound I-62 drivers should expect one lane between mile markers 126 and 129 from 7 p.m. to 6 a.m. starting
         Monday, as crews mill and resurface the stretch past the Exit 127 interchange. The work is expected to run through
         the end of October, weather permitting.</p>
         <p>“We're asking truckers to watch for the merge well before the overpass,” said district engineer Dale Overbey.
@@ -35,7 +35,7 @@ const EDITIONS = {
         <p>Yesterday's high 84°, low 63°. Normal 79° / 57°. Rain yesterday: none. Month to date: 1.12 in.
         Sunrise 6:58 a.m. Sunset 7:21 p.m. Gasconade River at Jerome: 4.1 ft and steady.</p>
         <h4>On the road</h4>
-        <p>I-44: one lane eastbound, MM 126-129, nights from Monday. Route V: fair traffic Saturday, expect delays at the
+        <p>I-62: one lane eastbound, MM 126-129, nights from Monday. Route V: fair traffic Saturday, expect delays at the
         fairgrounds entrance from 8 a.m.</p>`],
       ['Classifieds', `
         <div class="ads">
