@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy policy · The internet slop warehouse</title>
+<link rel="stylesheet" href="./warehouse.css">
+<style>.policy{max-width:720px;padding:40px 0}.policy h1{font-size:clamp(40px,7vw,64px);margin:0 0 8px}.policy h2{margin-top:32px}.policy a{color:var(--accent)}</style>
+</head>
+<body>
+<main>
+  <article class="policy">
+    <p><a href="./">← Back to the warehouse</a></p>
+    <h1>Privacy policy</h1>
+    <p>Last updated 23 November 2026.</p>
+    <p>The internet slop warehouse is run by <a href="https://fangorn.network">Fangorn</a>. It has no accounts, no ads, no analytics and no tracking cookies. Here is everything it handles.</p>
+
+    <h2>Votes</h2>
+    <p>When you like or dislike a part, we store the vote with a salted SHA-256 hash of your IP address so you get one vote per part. We don't store the IP address itself. Removing your vote deletes that row.</p>
+
+    <h2>Stored in your browser</h2>
+    <p>Game saves and the list of games you've played are kept in your browser's local storage. They never reach us. Clearing your site data removes them.</p>
+
+    <h2>Published records</h2>
+    <p>Games and parts are signed records on Fangorn, published by their wallet addresses. Anyone can read them, and records anchored on chain or stored on IPFS can't be fully withdrawn. Only publish what you're happy to make permanent and public. Publishing needs a Fangorn sign-in, which <a href="https://fangorn.network">fangorn.network</a> handles, not this site.</p>
+
+    <h2>Other services the page contacts</h2>
+    <ul>
+      <li><strong>Cloudflare</strong> hosts the site and the vote database, and keeps standard request logs.</li>
+      <li><strong>fangorn.network</strong> and its catalog API supply the list of games, parts and publishers.</li>
+      <li><strong>An IPFS gateway</strong> serves game and asset files.</li>
+      <li><strong>cdn.jsdelivr.net</strong> serves one charting library.</li>
+    </ul>
+    <p>Each of these sees your IP address and browser details as part of a normal web request. Games run sandboxed and can't read this page, its storage or cookies.</p>
+
+    <h2>Changes and contact</h2>
+    <p>If this policy changes, we'll update the date above. For questions, email <a href="mailto:fangorn@fangorn.network">fangorn@fangorn.network</a>.</p>
+  </article>
+  <footer class="footer"><span><strong>Internet slop warehouse</strong> / made by <a href="https://fangorn.network">Fangorn</a></span><span><a href="./privacy.html">Privacy</a></span></footer>
+</main>
+</body>
+</html>

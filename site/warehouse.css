@@ -60,3 +60,4 @@ dialog.is-expanded{width:var(--player-width,100vw);height:var(--player-height,10
 @media (max-width: 650px) { #player-shell #next-game { flex: 1.5; } }
 
 .vote-status { color: var(--muted); font: 12px var(--mono); }
+.footer a{color:inherit;text-decoration:underline}.footer a:hover{color:var(--accent)}
