@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Night Audit</title>
+<link rel="icon" href="data:,">
+<script type="importmap">{"imports":{"three":"../../node_modules/three/build/three.module.js","three/addons/":"../../node_modules/three/examples/jsm/","@dimforge/rapier3d-compat":"https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-compat@0.21.0/dist/rapier.mjs"}}</script>
+<style>
+  :root { --ink: #f4f1ea; --dim: rgba(244, 241, 234, .72); --panel: rgba(17, 22, 30, .78); }
+  html, body { margin: 0; height: 100%; background: #06080d; color: var(--ink); font: 15px/1.4 system-ui, -apple-system, Segoe UI, sans-serif; overflow: hidden; }
+  canvas#world { display: block; width: 100vw; height: 100vh; outline: none; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #goal { position: absolute; left: 16px; top: 14px; max-width: min(420px, 70vw); background: var(--panel); padding: 8px 12px; border-radius: 8px; }
+  #goal[hidden] { display: none; }
+  #crosshair { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: rgba(255,255,255,.6); box-shadow: 0 0 2px #000; }
+  #prompt { position: absolute; left: 50%; top: calc(50% + 28px); transform: translateX(-50%); background: var(--panel); padding: 5px 12px; border-radius: 6px; white-space: nowrap; display: none; }
+  #prompt kbd { background: var(--ink); color: #111; border-radius: 4px; padding: 0 6px; margin-right: 6px; font: 700 13px system-ui; }
+  #say { position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%); max-width: min(680px, 90vw); text-align: center; font: 18px/1.4 Georgia, serif; text-shadow: 0 1px 3px #000, 0 0 12px #000; opacity: 0; transition: opacity .6s; }
+  #say.on { opacity: 1; }
+  #keys { position: absolute; right: 16px; bottom: 14px; color: var(--dim); font-size: 12px; text-shadow: 0 1px 2px #000; }
+  .overlay { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(4, 6, 10, .7); }
+  .overlay[hidden] { display: none; }
+  .card { background: #f1eee6; color: #1b2430; border-radius: 10px; padding: 24px 28px; width: min(460px, calc(100vw - 64px)); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .card h1 { font: 700 30px Georgia, serif; margin: 0 0 4px; color: #2b3440; }
+  .card p { margin: 8px 0; }
+  .card blockquote { margin: 10px 0; padding-left: 12px; border-left: 3px solid #b9b2a2; font: italic 15px/1.45 Georgia, serif; color: #3b4450; }
+  .card .sub { color: #5b6470; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .card button { font: 600 15px system-ui; border: 0; border-radius: 8px; padding: 10px 16px; background: #2b3440; color: #fff; cursor: pointer; margin-top: 12px; }
+  .bar { height: 6px; background: #d9d3c6; border-radius: 3px; overflow: hidden; margin-top: 14px; }
+  .bar i { display: block; height: 100%; width: 0; background: #2b3440; transition: width .2s; }
+  .credits { font-size: 12px; color: #5b6470; margin-top: 14px; }
+  #touch { display: none; }
+  @media (pointer: coarse) {
+    #touch { display: block; } #keys { display: none; }
+    #stick { position: fixed; left: 24px; bottom: 28px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.35); pointer-events: auto; touch-action: none; }
+    #stick i { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px; border-radius: 50%; background: rgba(255,255,255,.55); }
+    #useBtn { position: fixed; right: 28px; bottom: 40px; width: 76px; height: 76px; border-radius: 50%; border: 0; background: rgba(220,228,236,.8); color: #111; font: 700 22px system-ui; pointer-events: auto; touch-action: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="world" tabindex="0" aria-label="First-person night in a roadside hotel"></canvas>
+<div id="hud">
+  <div id="goal" hidden></div>
+  <div id="crosshair"></div>
+  <div id="prompt"></div>
+  <div id="say" role="status" aria-live="polite"></div>
+  <div id="touch"><div id="stick" aria-label="Move"><i></i></div><button id="useBtn" aria-label="Interact">E</button></div>
+  <div id="keys">WASD move · mouse look · E interact · M mute · Esc release mouse</div>
+</div>
+<div class="overlay" id="loading"><div class="card"><div class="sub">Heartland Inn Express · Room 212 · 3:13 AM</div><h1>Night Audit</h1><p>The hotel is rearranging itself…</p><div class="bar"><i id="progress"></i></div></div></div>
+<div class="overlay" id="start" hidden><div class="card">
+  <div class="sub">Heartland Inn Express · Room 212 · 3:13 AM</div>
+  <h1>Night Audit</h1>
+  <p>Someone knocks. By the time you’re in the hall, your door has locked behind you and the elevator won’t come.</p>
+  <p>The lobby is playing music. Follow it down. The TVs will try to talk over it, so turn them off.</p>
+  <p>Wear headphones.</p>
+  <button id="begin">Begin</button>
+  <div class="credits">In the lobby: 식료품groceries, <i>인터넷 쇼핑 (Ascension)</i>, via the Internet Archive (ascension-raw-flac), CC0; excerpts. On the TVs: <i>Hotel and Restaurant Workers</i> and <i>Duck and Cover</i> (1951), Prelinger Archives, public domain; Universal Newsreel, <i>Arctic Sentinels</i> (1956), public domain; via the Internet Archive. Hotel: Heartland Inn Express (CC0). Furniture, textures and sky: Poly Haven, ambientCG (CC0). People: Microsoft Rocketbox / Avatar Studio (MIT). Code: original, CC0.</div>
+</div></div>
+<div class="overlay" id="end" hidden><div class="card">
+  <div class="sub">Heartland Inn Express · front desk · 4 AM</div>
+  <h1>Night Audit</h1>
+  <p id="tally"></p>
+  <p class="credits">Every night the floors under stair A are different. Share the link to share the night.</p>
+  <a id="again" href="?"><button>Another night</button></a>
+</div></div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

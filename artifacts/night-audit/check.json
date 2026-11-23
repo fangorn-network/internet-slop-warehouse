@@ -1,0 +1,61 @@
+{
+  "buffers": {
+    "music": 204,
+    "tv": [
+      150,
+      150,
+      150
+    ]
+  },
+  "locked": {
+    "keyDead": true,
+    "open": false
+  },
+  "floors": [
+    {
+      "startMusic": {
+        "gain": 0.06536974757909775,
+        "cutoff": 302.45855712890625
+      },
+      "exitMusic": {
+        "gain": 0.4941883385181427,
+        "cutoff": 11137.166015625
+      },
+      "tv": {
+        "on": 0.914087176322937,
+        "off": 0.00018343335250392556
+      }
+    },
+    {
+      "startMusic": {
+        "gain": 0.043295178562402725,
+        "cutoff": 300.0593566894531
+      },
+      "exitMusic": {
+        "gain": 0.4941883683204651,
+        "cutoff": 11137.1669921875
+      },
+      "tv": {
+        "on": 0.914087176322937,
+        "off": 0.00005317585601005703
+      }
+    },
+    {
+      "startMusic": {
+        "gain": 0.06061119586229324,
+        "cutoff": 301.17218017578125
+      },
+      "exitMusic": {
+        "gain": 0.49418818950653076,
+        "cutoff": 11137.162109375
+      },
+      "tv": {
+        "on": 0.914087176322937,
+        "off": 0.0006328596500679851
+      }
+    }
+  ],
+  "lobbyMusic": 0.3588699996471405,
+  "tally": "3 flights down, in a building with two floors. 3 TVs switched off. 2 minutes. Night 1234.",
+  "errors": []
+}
