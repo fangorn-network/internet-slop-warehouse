@@ -23,7 +23,7 @@
       },
       "tv": {
         "on": 0.914087176322937,
-        "off": 0.0020210985094308853
+        "off": 0.00018343335250392556
       }
     },
     {
@@ -36,8 +36,8 @@
         "cutoff": 11137.1669921875
       },
       "tv": {
-        "on": 0.914087176322937,
-        "off": 0.0003541603800840676
+        "on": 0.9140871167182922,
+        "off": 0.00006971064431127161
       }
     },
     {
@@ -50,8 +50,8 @@
         "cutoff": 11137.162109375
       },
       "tv": {
-        "on": 0.9140871167182922,
-        "off": 0.0006088358350098133
+        "on": 0.914087176322937,
+        "off": 0.0001482649677200243
       }
     }
   ],
@@ -65,6 +65,6 @@
     "atStart": true
   },
   "lobbyMusic": 0.3588699996471405,
-  "tally": "3 flights down, in a building with two floors. 3 TVs switched off. It found you once. 4 minutes. Night 1234.",
+  "tally": "3 flights down, in a building with two floors. 3 TVs switched off. It found you once. 3 minutes. Night 1234.",
   "errors": []
 }

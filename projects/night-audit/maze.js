@@ -416,6 +416,15 @@ function buildRoom({ lib, world, game, group, solid }, { c, d, out, rt, oy, leve
     },
     line: ROOM_LINES[k % ROOM_LINES.length],
   };
+  // Sometimes somebody left money on the nightstand. It's yours if you go in for it.
+  if (r() < 0.5) {
+    const at = far.clone().addScaledVector(out, -IN - 0.25).addScaledVector(rt, -1.3).setY(oy + 0.66), amount = [10, 20, 20, 50][Math.floor(r() * 4)];
+    const bill = new T.Mesh(new T.PlaneGeometry(0.156, 0.066), F.mat('#8fa37a', { roughness: 0.8 })); bill.rotation.x = -Math.PI / 2; bill.rotation.z = r(); bill.position.copy(at); g.add(bill);
+    world.interact.push({ pos: at.clone().setY(oy + 0.8), r: 1.1, when: () => bill.visible && room.here?.(), label: () => `Take the $${amount}`, use: () => {
+      bill.visible = false; game.sound.synth.burst(0.12, 0.06, 2600, 'bandpass'); game.money?.(amount);
+      game.say(amount === 50 ? 'A fifty, folded once. Under it, a note in pencil: STAY OUT OF THE HALL.' : `$${amount}. Nobody’s coming back for it.`, 3.5);
+    } });
+  }
   // From the hall: open it (and the line about what's in there, the first time). From inside: close, lock.
   let seen = false;
   world.interact.push({ pos: lockAt(1), r: 1.2, when: p => !room.inside(p) && room.here?.(), label: () => st.open ? 'Close the door' : 'Open the door',

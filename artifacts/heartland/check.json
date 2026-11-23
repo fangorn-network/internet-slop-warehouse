@@ -1,0 +1,59 @@
+{
+  "night1": {
+    "day": 1,
+    "money": 91,
+    "nerve": 100,
+    "items": [],
+    "act": "night"
+  },
+  "morning": {
+    "day": 1,
+    "money": 91,
+    "nerve": 100,
+    "items": [],
+    "act": "morning"
+  },
+  "reversed": 5.783999999999997,
+  "east": [
+    150.38456090862437,
+    47.8,
+    12.951935093685812
+  ],
+  "offRoad": [
+    162.88850854758806,
+    48.11842392770203,
+    -0.06521739130434782
+  ],
+  "cave": {
+    "lit": 0,
+    "flashlight": 9
+  },
+  "evening": {
+    "day": 2,
+    "money": 77,
+    "nerve": 95,
+    "items": [
+      "onyx"
+    ],
+    "act": "evening"
+  },
+  "night2": {
+    "day": 2,
+    "money": 18,
+    "nerve": 95,
+    "items": [
+      "onyx"
+    ],
+    "act": "night"
+  },
+  "end": {
+    "title": "Kept",
+    "tally": "It found you one time too many. In the morning there’s a new name on the night shift, and it’s yours. You lasted 2 nights at the Heartland, with $18 and onyx in your pockets.",
+    "memories": [
+      "music",
+      "onyx",
+      "kept"
+    ]
+  },
+  "errors": []
+}

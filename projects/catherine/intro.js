@@ -41,7 +41,7 @@ function install(ctx) {
 async function sleep(ctx) {
   if (ctx.director.name !== 'arrival' || ctx.busy) return ctx.game.say('Not now.');
   ctx.busy = true; ctx.goal('');
-  ctx.game.say('The PTAC rattles on. Somewhere down the hall, a door thuds shut. Out on I-44, a truck downshifts for the exit.', 5);
+  ctx.game.say('The PTAC rattles on. Somewhere down the hall, a door thuds shut. Out on I-62, a truck downshifts for the exit.', 5);
   ctx.fx.set({ lids: 1 }, 4);
   await new Promise(r => setTimeout(r, 4500));
   ctx.busy = false;
@@ -61,7 +61,7 @@ export const arrival = {
     if (world.clerk) world.clerk.root.visible = true;
     fx.snap({ dream: 0, lids: 0, peep: 0, flash: 0 });
     ctx.goal('Check in at the front desk');
-    ctx.say('Seven hours on I-44. The pole sign just flickered on. Your bag is light.', 5);
+    ctx.say('Seven hours on I-62. The pole sign just flickered on. Your bag is light.', 5);
   },
 };
 

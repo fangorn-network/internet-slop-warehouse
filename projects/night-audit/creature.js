@@ -30,7 +30,7 @@ export function createCreature(ctx, fig) {
   };
 
   /** A new floor: it isn't here yet. */
-  c.enter = (f, delay = ARRIVE[f.level] ?? 16) => {
+  c.enter = (f, delay = (ARRIVE[f.level] ?? 16) * Math.pow(0.8, (ctx.run?.day ?? 1) - 1)) => {   // sooner every night of a run
     Object.assign(c, { f, state: 'away', timer: delay, threat: 0, room: null, target: -1, seen: false });
     fig.root.visible = false;
     for (const l of f.lights) l.base ??= l.intensity;
@@ -102,6 +102,7 @@ export function createCreature(ctx, fig) {
     s.burst(0.5, 0.9, 90, 'lowpass', 0, out); s.tone(38, 2.5, 0.4, 'sine', 0.6, 0, out); s.burst(1.2, 0.25, 3000, 'highpass', 0.02, out);
     await ctx.fx.to({ flash: 1 }, 0.12);
     ctx.fx.snap({ fade: 1, flash: 0 });
+    if (ctx.run?.hurt?.(25, 'kept')) return;   // a run's nerve: at nothing, it keeps you
     ctx.say(['It doesn’t have a face. You knew it wouldn’t.', 'Up close it is only the shape of someone.', 'It is colder than the hall.'][Math.min(c.catches - 1, 2)], 4);
     await new Promise(r => setTimeout(r, 3500));
     const st = centre(c.f.m.start);
@@ -148,7 +149,7 @@ export function createCreature(ctx, fig) {
       if (c.timer < 4.5 && !c.knocked) { c.knocked = true; knock(); }
       if (c.timer <= 0) {
         const r2 = c.waitAt;
-        if (r2.door.locked) { rattle(); c.state = 'search'; wander(pc);
+        if (r2.door.locked) { rattle(); c.state = 'search'; wander(pc); c.heldOut = true;
           setTimeout(() => ctx.say(r2.inside(p) ? 'The handle turns as far as the lock lets it. Then the steps go away.' : '', 4), 900); }
         else { r2.door.slow = true; r2.setOpen(true, 'it'); c.state = 'chase'; c.room = r2; setTimeout(() => { r2.door.slow = false; }, 3000); }
         c.waitAt = null; c.knocked = false;
