@@ -51,8 +51,9 @@ export function createAir(synth, { economy = false } = {}) {
       src.start(0, offset % buffer.duration);
       const buf = new Float32Array(256);
       const v = {
-        set({ gain, cutoff, pos }, glide = 0.25) {
+        set({ gain, cutoff, pos, rate }, glide = 0.25) {
           const t = ac.currentTime;
+          if (rate !== undefined) src.playbackRate.setTargetAtTime(rate, t, 0.8);   // tape sag: slow, so it groans rather than jumps
           if (gain !== undefined) g.gain.setTargetAtTime(gain, t, glide);
           if (cutoff !== undefined) lp.frequency.setTargetAtTime(cutoff, t, glide);
           if (pos) { p.positionX.setTargetAtTime(pos.x, t, 0.15); p.positionY.setTargetAtTime(pos.y, t, 0.15); p.positionZ.setTargetAtTime(pos.z, t, 0.15); }
@@ -66,6 +67,26 @@ export function createAir(synth, { economy = false } = {}) {
       };
       voices.add(v);
       return v;
+    },
+    /** A one-off at a point: play(dest, synth) sends its voices into dest, through a low-pass at `cutoff`, at `gain`. */
+    shot(pos, play, { gain = 1, cutoff = 20000 } = {}) {
+      if (!init()) return;
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = cutoff;
+      const g = ac.createGain(); g.gain.value = gain;
+      const p = ac.createPanner();
+      Object.assign(p, { panningModel: economy ? 'equalpower' : 'HRTF', distanceModel: 'linear', refDistance: 1, maxDistance: 1e4, rolloffFactor: 0 });
+      p.positionX.value = pos.x; p.positionY.value = pos.y; p.positionZ.value = pos.z;
+      const send = ac.createGain(); send.gain.value = 1.3;   // far things are mostly reverb
+      lp.connect(g).connect(p); p.connect(dry); p.connect(send).connect(wet);
+      play(lp, synth);
+      setTimeout(() => lp.disconnect(), 9000);
+    },
+    /** A bed under everything, not placed: room tone, a heartbeat in your own ears. */
+    bed(buffer, { rate = 1 } = {}) {
+      if (!init() || !buffer) return null;
+      const src = ac.createBufferSource(); src.buffer = buffer; src.loop = true; src.playbackRate.value = rate;
+      const g = ac.createGain(); g.gain.value = 0; src.connect(g).connect(dry); src.start();
+      return { set({ gain, rate: r }, glide = 0.5) { const t = ac.currentTime; if (gain !== undefined) g.gain.setTargetAtTime(gain, t, glide); if (r !== undefined) src.playbackRate.setTargetAtTime(r, t, glide); }, get gain() { return g.gain.value; } };
     },
     async decode(url) {
       if (!init()) return null;
@@ -124,3 +145,38 @@ export async function muzak(sampleRate = 22050) {
   }
   return oc.startRendering();
 }
+
+// ---------------------------------------------------------------- rendered once, offline
+const render = async (seconds, fn, sampleRate = 22050) => { const oc = new OfflineAudioContext(1, Math.ceil(seconds * sampleRate), sampleRate); fn(oc, sampleRate); return oc.startRendering(); };
+const noiseOf = (oc, sr, seconds, brown = false) => {
+  const b = oc.createBuffer(1, Math.ceil(sr * seconds), sr), d = b.getChannelData(0); let last = 0;
+  for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; d[i] = brown ? (last = (last + 0.02 * w) / 1.02) * 3.5 : w; }
+  const s = oc.createBufferSource(); s.buffer = b; return s;
+};
+/** Building air: a far air handler's rumble, mains hum, a ballast's whine. 8 s, loops. */
+export const roomTone = () => render(8, (oc, sr) => {
+  const n = noiseOf(oc, sr, 8, true), f = oc.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 140;
+  const g = oc.createGain(); g.gain.value = 0.9; n.connect(f).connect(g).connect(oc.destination); n.start();
+  for (const [hz, v] of [[60, 0.05], [120, 0.035], [180, 0.012], [7800, 0.0025]]) { const o = oc.createOscillator(); o.frequency.value = hz; const og = oc.createGain(); og.gain.value = v; o.connect(og).connect(oc.destination); o.start(); }
+});
+/** Something breathing: slow, wet, too deep for the chest it comes from. In 1.6 s, out 2.4 s, a catch at the top. */
+export const breath = () => render(8, (oc, sr) => {
+  const n = noiseOf(oc, sr, 8), bp = oc.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 520; bp.Q.value = 1.4;
+  const lo = oc.createBiquadFilter(); lo.type = 'lowpass'; lo.frequency.value = 1600;
+  const g = oc.createGain(); g.gain.value = 0; n.connect(bp).connect(lo).connect(g).connect(oc.destination); n.start();
+  for (const t0 of [0, 4]) {
+    g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.5, t0 + 1.3); g.gain.linearRampToValueAtTime(0.05, t0 + 1.6);   // in, and it catches
+    g.gain.linearRampToValueAtTime(0.75, t0 + 1.9); g.gain.exponentialRampToValueAtTime(0.01, t0 + 3.9);                              // out, long
+    bp.frequency.setValueAtTime(700, t0); bp.frequency.linearRampToValueAtTime(430, t0 + 1.6); bp.frequency.linearRampToValueAtTime(300, t0 + 3.9);
+    const o = oc.createOscillator(), og = oc.createGain(); o.frequency.setValueAtTime(58, t0 + 1.7); o.frequency.linearRampToValueAtTime(46, t0 + 3.6);   // a groan under the out-breath
+    og.gain.setValueAtTime(0, t0 + 1.7); og.gain.linearRampToValueAtTime(0.35, t0 + 2.2); og.gain.linearRampToValueAtTime(0, t0 + 3.7); o.connect(og).connect(oc.destination); o.start(t0 + 1.7); o.stop(t0 + 3.8);
+  }
+});
+/** Your own heart, in your ears: lub-dub at 60 bpm (play faster to race it). */
+export const heartbeat = () => render(1, (oc) => {
+  for (const [t, v] of [[0, 1], [0.28, 0.7]]) {
+    const o = oc.createOscillator(), g = oc.createGain(); o.frequency.setValueAtTime(62, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.14);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + 0.015); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    o.connect(g).connect(oc.destination); o.start(t); o.stop(t + 0.2);
+  }
+});

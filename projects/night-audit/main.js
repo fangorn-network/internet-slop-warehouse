@@ -91,7 +91,7 @@ const ctx = {
   end() {
     document.exitPointerLock?.(); started = false;
     const st = ctx.audit?.stats;
-    if (st) $('tally').textContent = `${st.flights} flight${st.flights === 1 ? '' : 's'} down, in a building with two floors. ${st.off} TV${st.off === 1 ? '' : 's'} switched off. ${st.minutes} minute${st.minutes === 1 ? '' : 's'}. Night ${st.seed}.`;
+    if (st) $('tally').textContent = `${st.flights} flight${st.flights === 1 ? '' : 's'} down, in a building with two floors. ${st.off} TV${st.off === 1 ? "" : "s"} switched off. ${st.caught ? `It found you ${st.caught === 1 ? "once" : st.caught + " times"}. ` : "It never found you. "}${st.minutes} minute${st.minutes === 1 ? '' : 's'}. Night ${st.seed}.`;
     $('again').href = `?seed=${seed}`; $('end').hidden = false;
   },
   teleport(x, y, z, yaw = 0, pitch = 0) { Object.assign(player, { x, y, z, vy: 0 }); controls.setLook(yaw, pitch); },   // player.js syncs the capsule

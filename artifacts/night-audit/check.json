@@ -14,8 +14,8 @@
   "floors": [
     {
       "startMusic": {
-        "gain": 0.06536974757909775,
-        "cutoff": 302.45855712890625
+        "gain": 0,
+        "cutoff": 317.2127380371094
       },
       "exitMusic": {
         "gain": 0.4941883385181427,
@@ -23,7 +23,7 @@
       },
       "tv": {
         "on": 0.914087176322937,
-        "off": 0.00018343335250392556
+        "off": 0.0020210985094308853
       }
     },
     {
@@ -37,7 +37,7 @@
       },
       "tv": {
         "on": 0.914087176322937,
-        "off": 0.00005317585601005703
+        "off": 0.0003541603800840676
       }
     },
     {
@@ -50,12 +50,21 @@
         "cutoff": 11137.162109375
       },
       "tv": {
-        "on": 0.914087176322937,
-        "off": 0.0006328596500679851
+        "on": 0.9140871167182922,
+        "off": 0.0006088358350098133
       }
     }
   ],
+  "lockedDoor": {
+    "state": "search",
+    "open": false
+  },
+  "caught": {
+    "catches": 1,
+    "state": "away",
+    "atStart": true
+  },
   "lobbyMusic": 0.3588699996471405,
-  "tally": "3 flights down, in a building with two floors. 3 TVs switched off. 2 minutes. Night 1234.",
+  "tally": "3 flights down, in a building with two floors. 3 TVs switched off. It found you once. 4 minutes. Night 1234.",
   "errors": []
 }

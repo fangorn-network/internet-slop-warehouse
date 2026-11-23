@@ -63,6 +63,39 @@ try {
     await page.waitForFunction(k => __audit.ctx.audit.floor === k && __audit.director.name === 'below', k, { timeout: 60000, polling: 250 });
     await A(() => __audit.fx.snap({ fade: 0 }));
     await sleep(3000); await shot(`floor${k + 1}-start`);
+    if (k === 0) {
+      // A guest room: open it from the hall, step in, shut and lock it.
+      const rm = await A(() => { const f = __audit.ctx.audit.floors[0], r = f.rooms[0], c = f.centre(r.cell); return [c.x, f.origin[1], c.z, Math.atan2(-(r.doorway.x - c.x), -(r.doorway.z - c.z)), r.centre.x, r.centre.z, Math.atan2(-(c.x - r.centre.x), -(c.z - r.centre.z))]; });
+      await at(rm[0], rm[1], rm[2], rm[3]);
+      await sleep(1500); await shot('room-door');
+      if (!(await use('Open the door'))) throw Error('no room door to open');
+      await page.waitForFunction(() => __audit.ctx.audit.floors[0].rooms[0].door.angle > 1.2, null, { timeout: 60000 });
+      await at(rm[4], rm[1], rm[5], rm[6] + Math.PI);
+      await sleep(3000); await shot('room-inside');
+      await at(rm[4], rm[1], rm[5], rm[6]);
+      if (!(await use('Close the door'))) throw Error('no close from inside');
+      await page.waitForFunction(() => __audit.ctx.audit.floors[0].rooms[0].door.angle < 0.05, null, { timeout: 60000 });
+      if (!(await use('Lock the door'))) throw Error('no lock');
+      // It arrives, hears you (loudly), and comes to the door: locked, so it knocks, tries the handle and goes.
+      await A(() => { __audit.ctx.audit.creature.timer = 0; });
+      await page.waitForFunction(() => __audit.ctx.audit.creature.state !== 'away', null, { timeout: 60000 });
+      await A(() => { const c = __audit.ctx.audit.creature, f = c.f, r = f.rooms[0]; const n = f.m; c.pos.copy(f.centre(r.cell)); c.cell = r.cell; c.hear(99); });
+      await page.waitForFunction(() => __audit.ctx.audit.creature.state === 'door', null, { timeout: 120000, polling: 250 });
+      await A(() => { __audit.ctx.audit.creature.timer = 0.2; });
+      await page.waitForFunction(() => __audit.ctx.audit.creature.state !== 'door', null, { timeout: 120000, polling: 250 });
+      result.lockedDoor = await A(() => ({ state: __audit.ctx.audit.creature.state, open: __audit.ctx.audit.floors[0].rooms[0].door.open }));
+      if (result.lockedDoor.open) throw Error('it opened a locked door');
+      // Now unlocked and open, with it right outside: it comes in.
+      await use('Unlock the door'); await use('Open the door');
+      await A(() => { const c = __audit.ctx.audit.creature, f = c.f, r = f.rooms[0]; c.pos.copy(f.centre(r.cell)); c.cell = r.cell; c.state = 'search'; c.hear(99); });
+      await at(rm[4], rm[1], rm[5], rm[6]);
+      await page.waitForFunction(() => { const c = __audit.ctx.audit.creature; return c.state === 'caught' || c.pos.distanceTo(__audit.camera.position) < 2.2; }, null, { timeout: 180000, polling: 100 });
+      await shot('creature');
+      await page.waitForFunction(() => __audit.ctx.audit.creature.catches === 1 && !__audit.ctx.busy, null, { timeout: 180000 });
+      await A(() => __audit.fx.snap({ fade: 0 }));
+      result.caught = await A(() => ({ catches: __audit.ctx.audit.creature.catches, state: __audit.ctx.audit.creature.state, atStart: __audit.ctx.audit.floors[0].cellAt(__audit.camera.position) === __audit.ctx.audit.floors[0].m.start }));
+      if (!result.caught.atStart) throw Error('caught, but not sent back to the stair door');
+    }
     // The music: louder and brighter by the stairs down than where you came in.
     const startMusic = await A(() => ({ gain: __audit.ctx.audit.music.gain, cutoff: __audit.ctx.audit.music.cutoff }));
     const exit = await A(() => { const f = __audit.ctx.audit.floors[__audit.ctx.audit.floor], e = f.stairs.exit; return [e.pos.x, f.origin[1], e.pos.z, e.facing]; });

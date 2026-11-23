@@ -14,11 +14,23 @@ node projects/night-audit/check.mjs       # plays a night in Chrome → artifact
 node projects/night-audit/package.mjs     # → artifacts/night-audit/night-audit.html, assets.parts.json, release.parts.json
 ```
 
+## What's down there
+
+- **It.** Whatever was at your door comes down the stairs after you, 38, 26 and then 16 seconds after you reach each floor. You hear the stair door, then one heavy foot and one that drags, and breathing too deep for its chest. All of it reaches you by walking distance, round corners. It searches near you, slowly.
+  - **Hearing:** running carries seven cells, walking two or three, crouching (C) nothing. Opening doors and switching TVs carry four.
+  - **Sight:** it sees down a straight hall and then runs, a little slower than you can.
+  - **When it's near:** downlights stutter, the music sags like a slowed tape, the picture drains, and your heart comes up.
+  - **If it catches you:** you're back at that floor's stair door, and it comes down again.
+- **Guest rooms.** Three or four per floor, off the outer halls. Their doors really open, close, and lock from inside. Each has a made or unmade king bed, nightstands, a TV credenza, and either a lamp left on or a TV showing snow. Shut in a room, you're hidden. It can come and stand outside: three slow knocks, like the first ones. If the door's unlocked, it opens it, slowly.
+- **The building's sound.** A room tone of air handlers, mains hum and a ballast whine. Every 7–18 s there's something far off, from a real cell in the halls: a door pulled shut, a cart wheel squealing, an ice machine dropping a load, a phone ringing twice, a cough behind a door, three knocks, a TV changing channels. The halls fade to black 20 m off.
+- **The hall upstairs.** Nine seconds after the lockout, it's at the far end of the hall, walking toward you. Get close, or go for the stairs, and the lights stutter and it's gone.
+
 ## Pieces
 
 - `audit.js`: the scene `{ acts: { night, below, lobby }, start: 'night', install }` plus `prebuild()`, which must run before the player exists because physics reads colliders once. It starts in bed in 212 and ends at the desk, so a coordinator can put any intro before it.
 - `maze.js`: `generate()` is pure (seed → grid). It carves halls that prefer long straight runs and adds a few loops. `buildFloor()` turns a grid into merged meshes (walls, carpet, ceiling, downlights, door plates on one atlas, instanced doors), colliders, light anchors and interactions. Floors sit 40 m apart under the hotel, each with its own culling zone that sees nothing else.
-- `air.js`: path-routed voices. Each sound's loudness and muffling come from the walking distance, not the straight line, and its panner sits two cells toward the source, so the music comes round corners. `muzak()` is a generated placeholder lounge loop.
+- `creature.js`: the hunter, a state machine on the cell graph (away, search, hunt, chase, door, look, caught).
+- `air.js`: path-routed voices, placed one-shots, beds, and offline-rendered room tone, breath and heartbeat. Each sound's loudness and muffling come from the walking distance, not the straight line, and its panner sits two cells toward the source, so the music comes round corners. `muzak()` is a generated placeholder lounge loop.
 
 ## Escalation
 

@@ -17,8 +17,10 @@
 import * as T from 'three';
 import * as F from '../roadside-inn/fixtures.js';
 import { createSoundscape } from '../roadside-inn/stage/audio.js';
-import { generate, buildFloor, distances, neighbours, C } from './maze.js';
-import { createAir, muzak } from './air.js';
+import { generate, buildFloor, distances, route } from './maze.js';
+import { createAir, muzak, roomTone, breath, heartbeat } from './air.js';
+import { createCreature } from './creature.js';
+import { distances as cellDistances } from './maze.js';
 
 const DOOR_X = 12.9;                                    // centre of 212's door; its plane is z = 1, the hall is z < 1
 const LENS = new T.Vector3(DOOR_X, 1.55, 0.93);         // y is added to FLOOR2
@@ -74,6 +76,7 @@ function install(ctx) {
   scene.add(fig.root); fig.root.visible = false;
   a.figure = fig;
   a.place = z => { fig.root.position.set(DOOR_X, y, z); fig.root.rotation.y = 0; fig.update(0); face(fig, new T.Vector3(0, 0, 1)); fig.root.visible = true; };
+  a.creature = createCreature(ctx, fig);
 
   // Hall and stair lights, to turn cold or out.
   a.hall = world.lightAnchors.filter(l => l.pos.y > y + 2 && Math.abs(l.pos.z) < 0.5 && l.pos.y < y + 4).map(l => [l, l.intensity, l.color.clone()]);
@@ -115,11 +118,16 @@ function install(ctx) {
       tv.tex = F.canvasTexture(256, 144, g => { g.fillStyle = '#000'; g.fillRect(0, 0, 256, 144); });
       tv.screen.material = new T.MeshBasicMaterial({ map: tv.tex, color: '#ffffff' });
       world.interact.push({ pos: tv.pos, r: 1.6, when: here, label: () => tv.on ? 'Turn off the TV' : 'Turn on the TV', use: () => {
-        tv.on = !tv.on; game.sound.click(); a.off += tv.on ? -1 : 1;
+        tv.on = !tv.on; game.sound.click(); a.off += tv.on ? -1 : 1; a.creature.hear(4);
         tv.screen.material.color.set(tv.on ? '#ffffff' : '#000000');
         if (!tv.on) game.say(a.off === 1 ? 'The picture shrinks to a dot. Under the quiet, the music again.' : 'Off.', 2.5);
       } });
     });
+    for (const rm of f.rooms) {
+      rm.here = here;
+      rm.onDoor = (open, who) => { if (who === 'you') a.creature.hear(4); else if (open) ctx.say('The door opens. Slowly, the way you’d open a door on someone sleeping.', 4); };
+      if (rm.screen) { rm.tex = F.canvasTexture(128, 72, g => { g.fillStyle = '#000'; g.fillRect(0, 0, 128, 72); }); rm.screen.material = new T.MeshBasicMaterial({ map: rm.tex }); }
+    }
     world.interact.push({ pos: f.stairs.start.pos, r: 1.3, when: here, label: () => 'Stair door', use: () => game.say('It won’t open from this side. There’s no handle on this side.') });
     world.interact.push({ pos: f.stairs.exit.pos, r: 1.3, priority: 1, when: here, label: () => 'Take the stairs down', use: () => descend(ctx) });
   }
@@ -145,27 +153,45 @@ async function loadAudio(ctx) {
   if (a.buffers || !a.air.ready) return;
   const music = (MUSIC ? a.air.decode(asset(MUSIC)) : Promise.resolve(null)).then(b => b ?? muzak());
   const tv = Promise.all(BROADCASTS.map(b => a.air.decode(asset(b.id))));
-  a.buffers = { music: await music, tv: await tv };
+  const [tone, br, heart] = await Promise.all([roomTone(), breath(), heartbeat()]);
+  a.buffers = { music: await music, tv: await tv, staticHiss: await staticHiss() };
   a.music = a.air.voice(a.buffers.music);
+  a.bedTone = a.air.bed(tone);       // the building breathing: air handlers, mains hum, a ballast somewhere
+  a.heart = a.air.bed(heart);        // yours
+  a.breath = a.air.voice(br);        // its
+}
+// A guest room's TV between channels.
+async function staticHiss() {
+  const sr = 22050, oc = new OfflineAudioContext(1, sr * 3, sr), b = oc.createBuffer(1, sr * 3, sr), d = b.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * 0.5;
+  const s = oc.createBufferSource(); s.buffer = b; s.connect(oc.destination); s.start(); return oc.startRendering();
+}
+
+// Far off on a floor, now and then: things a hotel does at night, from a real place in its halls, heard round corners.
+const EVENTS = [
+  ['a door, far off, pulled shut by its closer', (s, d) => { s.burst(0.3, 0.8, 130, 'lowpass', 0, d); s.tone(58, 0.3, 0.25, 'sine', 0.6, 0, d); }],
+  ['a housekeeping cart, one wheel squealing', (s, d) => { for (let i = 0; i < 4; i++) s.tone(1700 + i * 60, 0.35, 0.025, 'sawtooth', 0.85, i * 0.55, d); s.burst(2.2, 0.05, 300, 'lowpass', 0, d); }],
+  ['an ice machine dropping a load', (s, d) => { for (let i = 0; i < 16; i++) s.burst(0.05, 0.18, 2500 + Math.random() * 2500, 'bandpass', 0.2 + i * 0.06 + Math.random() * 0.04, d); s.tone(80, 1.5, 0.08, 'sawtooth', 1, 0, d); }],
+  ['a phone ringing twice, and stopping', (s, d) => { for (const t of [0, 0.4, 3, 3.4]) { s.tone(440, 0.38, 0.05, 'sine', 1, t, d); s.tone(480, 0.38, 0.05, 'sine', 1, t, d); } }],
+  ['someone coughing behind a door', (s, d) => { s.burst(0.18, 0.4, 700, 'bandpass', 0, d); s.burst(0.22, 0.35, 600, 'bandpass', 0.35, d); }],
+  ['three knocks on a door, somewhere', (s, d) => { for (let i = 0; i < 3; i++) s.burst(0.09, 0.6, 200, 'lowpass', i * 0.9, d); }],
+  ['a TV changing channels', (s, d) => { s.burst(0.25, 0.25, 4000, 'highpass', 0, d); s.burst(0.15, 0.2, 1200, 'bandpass', 0.3, d); }],
+];
+function distant(ctx, f) {
+  const a = ctx.audit, cam = ctx.camera.position, here = f.roomAt(cam)?.cell ?? f.cellAt(cam);
+  if (here < 0) return;
+  const d = cellDistances(f.m, here), pool = [];
+  for (let i = 0; i < d.length; i++) if (d[i] >= 3 && d[i] <= 9) pool.push(i);
+  if (!pool.length) return;
+  const from = pool[Math.floor(Math.random() * pool.length)], q = route(f, cellDistances(f.m, from), cam, f.centre(from).setY(f.origin[1] + 1.2));
+  if (!q) return;
+  const [, play] = EVENTS[Math.floor(Math.random() * EVENTS.length)];
+  a.air.shot(q.pos, d => play(ctx.sound.synth, d), { gain: 1.2 / (1 + 0.12 * q.steps * q.steps), cutoff: 300 + 7000 * Math.exp(-0.4 * q.steps) * (q.muffled ? 0.3 : 1) });
 }
 function knock(ctx, n = 3, vol = 0.5, gap = 0.9) {
   const s = ctx.sound.synth, at = [DOOR_X, ctx.FLOOR2 + 1.2, 1.0];
   ctx.audit.sc.at(at, dest => { for (let i = 0; i < n; i++) { s.burst(0.09, vol, 200, 'lowpass', i * gap, dest); s.tone(90, 0.12, vol * 0.2, 'sine', 0.7, i * gap, dest); } }, { range: 30, ref: 1.5 });
 }
-// Where a sound reaches you from on a floor, by walking: how many cells off (fractional, so it glides), and the point it
-// seems to come from: the cell two steps toward it, or the source itself once it's in sight.
-const _p = new T.Vector3();
-function route(f, dist, from, src) {
-  const cell = f.cellAt(from);
-  if (cell < 0 || dist[cell] < 0) return null;
-  if (dist[cell] === 0) return { steps: from.distanceTo(src) / C * 0.5, pos: src };
-  const next = neighbours(f.m, cell).find(j => dist[j] === dist[cell] - 1);
-  const steps = dist[next] + _p.copy(f.centre(next)).setY(from.y).distanceTo(from) / C;
-  let c = next;
-  if (dist[c] > 0) c = neighbours(f.m, c).find(j => dist[j] === dist[c] - 1);
-  return { steps, pos: dist[c] === 0 && dist[cell] <= 2 ? src : f.centre(c).setY(f.origin[1] + 1.5) };
-}
-
 // ---------------------------------------------------------------- the peephole
 function peep(ctx) {
   const { fx, FLOOR2: y, audit: a } = ctx;
@@ -212,7 +238,7 @@ async function dana(ctx, clerk) {
   ];
   for (const [anim, text] of script) { clerk.play(anim); ctx.say(text, 3.8); await new Promise(r => setTimeout(r, 4000)); }
   a.keyDead = false; ctx.game.sound.beep(true);
-  a.stats = { flights: a.flights, off: a.off, minutes: mins, seed: ctx.seed };
+  a.stats = { flights: a.flights, off: a.off, minutes: mins, seed: ctx.seed, caught: a.creature.catches };
   ctx.busy = false;
   ctx.next({ fadeOut: 2.5 });
 }
@@ -230,8 +256,8 @@ const night = {
     if (world.clerk) world.clerk.root.visible = false;
     for (const [l, i] of a.hall) { l.intensity = i * 1.6; l.color.set('#f2f6ff'); }
     if (world.elevator) { world.elevator.stopped = true; if (world.elevator.floor) Object.assign(world.elevator, { floor: 0, y: 0, open: false }); }
-    Object.assign(a, { state: 'asleep', t: 0, peeks: 0, keyDead: false, dark: false, heard: false, began: performance.now() });
-    a.figure.root.visible = false;
+    Object.assign(a, { state: 'asleep', t: 0, peeks: 0, keyDead: false, dark: false, heard: false, began: performance.now(), hallWalk: null });
+    a.figure.root.visible = false; a.figure.root.scale.setScalar(1); a.creature.leave();
     ctx.teleport(14.0, y, 5.0, 0.27, -0.05);
     fx.snap({ lids: 1, dream: 0.3, peep: 0, flash: 0 });
     await loadAudio(ctx);
@@ -261,7 +287,25 @@ const night = {
       world.room.open = false; world.room.timer = 0;
       setTimeout(() => { game.sound.thud(); ctx.say('Behind you the door swings shut. The latch clicks.', 3.5); }, 700);
       ctx.goal('Get down to the front desk');
+      // It's at the far end of the hall, by the ice machine, and it starts walking. Slowly.
+      setTimeout(() => {
+        const f = a.figure; f.root.position.set(-10.5, y, 0); f.root.rotation.y = 0; f.update(0); face(f, new T.Vector3(1, 0, 0)); f.root.visible = true; f.play('Walk'); f.pace?.(0.5);
+        a.hallWalk = { x: -10.5 };
+      }, 9000);
     }
+    if (a.hallWalk) {
+      const f = a.figure, hw = a.hallWalk;
+      hw.x += 0.5 * dt; f.root.position.x = hw.x;
+      if ((hw.step = (hw.step ?? 0) - dt) <= 0) { hw.step = 1.25; a.sc.at([hw.x, y + 0.1, 0], d => { ctx.sound.synth.burst(0.08, 0.35, 160, 'lowpass', 0, d); }, { range: 40, ref: 2 }); }
+      // close enough to see properly, or you've gone for the stairs: the hall lights stutter, and it isn't there
+      if (Math.abs(player.x - hw.x) < 4.5 || inStair) {
+        a.hallWalk = null; f.root.visible = false; f.play('Idle');
+        for (const [l, i] of a.hall) { l.intensity = 0.2; setTimeout(() => (l.intensity = i * 1.6), 350 + Math.random() * 250); }
+        ctx.sound.synth.tone(110, 0.35, 0.05, 'sawtooth', 0.6);
+        if (!inStair) ctx.say('The hall lights stutter. When they steady, the hall is empty.', 4);
+      }
+    }
+    a.bedTone?.set({ gain: 0.1 });
     // Stair A: the lights go on the way down, and the stairs keep going.
     if (a.state === 'out' && inStair && !a.dark && player.y < y - 0.6) {
       a.dark = true;
@@ -295,20 +339,42 @@ const below = {
     a.tick = 0;
     ctx.goal('Follow the music to the lobby');
     setTimeout(() => ctx.say(ARRIVE[f.level] ?? ARRIVE.at(-1), 5), 1200);
+    // No ambient fill down here, and the halls go to black twenty metres off.
+    const fog = ctx.scene.fog; a.fog0 ??= { color: fog.color.clone(), near: fog.near, far: fog.far };
+    fog.color.set('#020203'); fog.near = 3; fog.far = 19; ctx.exposure = 0.85;
+    a.roomVoices = f.rooms.map(rm => rm.screen && !rm.lit ? a.air.voice(a.buffers?.staticHiss, { tinny: true }) : null);
+    a.creature.enter(f);
+    a.nextEvent = 6 + Math.random() * 6;
   },
   update(dt, ctx) {
     const a = ctx.audit, f = a.floors[a.floor], cam = ctx.camera.position;
     for (const o of a.people) o.visible = false;
     a.air.update(ctx.camera);
+    const cr = a.creature;
+    cr.update(dt);
+    // what the creature does to everything else: your heart, the music, the colour
+    a.heart?.set({ gain: 0.5 * cr.threat * cr.threat, rate: 1 + 1.3 * cr.threat });
+    a.bedTone?.set({ gain: 0.22 * (1 - 0.6 * cr.threat) });
+    ctx.fx.set({ dream: 0.12 + 0.55 * cr.threat }, 0.6);
+    if ((a.nextEvent -= dt) <= 0) { a.nextEvent = 7 + Math.random() * 11; distant(ctx, f); }
     if ((a.tick -= dt) <= 0) {
       a.tick = 0.1;
+      if (a.breath && cr.state !== 'away' && cr.cell >= 0) {
+        const q = route(f, cellDistances(f.m, cr.cell), cam, cr.pos.clone().setY(f.origin[1] + 1.7));
+        a.breath.set(q ? { gain: 0.9 / (1 + 0.55 * q.steps * q.steps), cutoff: 300 + 6000 * Math.exp(-0.6 * q.steps) * (q.muffled ? 0.3 : 1), pos: q.pos } : { gain: 0 }, 0.2);
+      } else a.breath?.set({ gain: 0 });
+      f.rooms.forEach((rm, k) => {
+        const v = a.roomVoices?.[k]; if (!v) return;
+        const inside = f.roomAt(cam) === rm, q = inside ? { steps: 0.3, pos: rm.glow.pos } : route(f, cellDistances(f.m, rm.cell), cam, rm.doorway.clone().setY(f.origin[1] + 1));
+        v.set(q ? { gain: 0.12 / (1 + (inside ? 0 : 1.2 + (rm.door.angle < 0.1 ? 2 : 0)) * (1 + q.steps * q.steps)), cutoff: inside ? 6000 : 1200, pos: q.pos } : { gain: 0 }, 0.2);
+      });
       const exit = f.stairs.exit.pos.clone().setY(f.origin[1] + 1.8);
       const r = route(f, f.musicDist, cam, exit);
-      if (r) a.music?.set({ gain: 0.5 / (1 + 0.3 * r.steps), cutoff: 300 + 11000 * Math.exp(-0.38 * r.steps), pos: r.pos });
+      if (r) a.music?.set({ gain: 0.5 / (1 + 0.3 * r.steps), cutoff: (300 + 11000 * Math.exp(-0.38 * r.steps)) * (r.muffled ? 0.35 : 1), pos: r.pos, rate: 1 - 0.16 * cr.threat });
       f.tvs.forEach((tv, k) => {
         const v = a.tvVoices[k], q = route(f, tv.dist, cam, tv.pos);
         if (!v || !q) return;
-        v.set({ gain: tv.on ? 0.95 / (1 + 0.7 * q.steps * q.steps) : 0, cutoff: 300 + 7500 * Math.exp(-0.75 * q.steps), pos: q.pos }, 0.15);
+        v.set({ gain: tv.on ? 0.95 / (1 + 0.7 * q.steps * q.steps) : 0, cutoff: (300 + 7500 * Math.exp(-0.75 * q.steps)) * (q.muffled ? 0.35 : 1), pos: q.pos }, 0.15);
       });
     }
     // Screens: what's on, flickering with what's being said, only drawn when you're near enough to see.
@@ -320,13 +386,20 @@ const below = {
         tv.light.intensity = tv.on ? 0.9 + 1.4 * (a.tvVoices[k]?.level() ?? 0.3) : 0;
         if (tv.on && tv.pos.distanceTo(cam) < 11) tv.tex.redraw((g, w, h) => screen(g, w, h, t + k * 13, tv.channel, a.tvVoices[k]?.level() ?? 0.3));
       });
+      for (const rm of f.rooms) {   // the rooms' TVs: snow, and its blue light jumping on the walls
+        if (!rm.tex || rm.lit) continue;
+        rm.glow.intensity = 0.6 + Math.random() * 0.9;
+        if (rm.centre.distanceTo(cam) < 9) rm.tex.redraw((g, w, h) => { const im = g.createImageData(w, h); for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 200 | 0; im.data[i] = im.data[i + 1] = v; im.data[i + 2] = v + 20; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); });
+      }
     }
   },
   exit(ctx) {
     const a = ctx.audit;
-    for (const v of a.tvVoices) v?.stop();
-    a.tvVoices = [];
-    ctx.envScale = 1;
+    for (const v of [...a.tvVoices, ...(a.roomVoices ?? [])]) v?.stop();
+    a.tvVoices = []; a.roomVoices = [];
+    a.creature.leave(); a.breath?.set({ gain: 0 }); a.heart?.set({ gain: 0 }); a.music?.set({ rate: 1 });
+    const fog = ctx.scene.fog; if (a.fog0) { fog.color.copy(a.fog0.color); fog.near = a.fog0.near; fog.far = a.fog0.far; }
+    ctx.envScale = 1; ctx.exposure = 1;
   },
 };
 
@@ -350,6 +423,7 @@ const lobby = {
     const inLobby = cam.x < 6.5 && cam.z > -9 && cam.z < 9 && cam.y < 3, inStair = cam.x > 9.4 && cam.x < 12.1 && cam.z < -1;
     const d = cam.distanceTo(SPEAKER);
     a.music?.set({ gain: 0.55 / (1 + 0.1 * d), cutoff: inLobby ? 14000 : inStair ? 900 : 2600, pos: SPEAKER }, 0.4);
+    a.bedTone?.set({ gain: 0.06 });
   },
 };
 

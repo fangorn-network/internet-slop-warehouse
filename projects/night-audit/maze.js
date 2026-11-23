@@ -14,6 +14,7 @@ import * as F from '../roadside-inn/fixtures.js';
 const CEIL = 2.95;   // the hotel's ceiling height (roadside-inn/world.js; the heartland-hotel part doesn't export it)
 
 export const C = 2.4;          // a cell: one corridor's width and a door's bay
+const DOOR_W = 0.5, DOOR_H = 2.13;   // a guest room doorway: half its width, and its head (the door model's jambs cover the reveals)
 const WT = 0.07;               // half a partition's thickness: wall faces stand this far inside each cell
 export const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]];   // N E S W (north is -z)
 
@@ -56,6 +57,27 @@ export function distances(m, from) {
   const d = new Int16Array(m.w * m.h).fill(-1), q = [from]; d[from] = 0;
   for (let k = 0; k < q.length; k++) for (const j of neighbours(m, q[k])) if (d[j] < 0) { d[j] = d[q[k]] + 1; q.push(j); }
   return d;
+}
+
+// Where a sound reaches you from on a floor, by walking: how many cells off (fractional, so it glides), and the point it
+// seems to come from: the cell two steps toward it, or the source itself once it's in sight.
+const _p = new T.Vector3();
+// In a guest room you hear the hall through its doorway: a step further, and much further with the door shut.
+export function route(f, dist, from, src) {
+  let cell = f.cellAt(from);
+  if (cell < 0) {
+    const rm = f.roomAt?.(from);
+    if (!rm || dist[rm.cell] < 0) return null;
+    const via = route(f, dist, rm.doorway.clone().setY(from.y), src);
+    return via && { steps: via.steps + 0.8 + (rm.door.angle < 0.1 ? 1.8 : 0), pos: rm.doorway.clone().setY(from.y), muffled: rm.door.angle < 0.1 };
+  }
+  if (dist[cell] < 0) return null;
+  if (dist[cell] === 0) return { steps: from.distanceTo(src) / C * 0.5, pos: src };
+  const next = neighbours(f.m, cell).find(j => dist[j] === dist[cell] - 1);
+  const steps = dist[next] + _p.copy(f.centre(next)).setY(from.y).distanceTo(from) / C;
+  let c = next;
+  if (dist[c] > 0) c = neighbours(f.m, c).find(j => dist[j] === dist[c] - 1);
+  return { steps, pos: dist[c] === 0 && dist[cell] <= 2 ? src : f.centre(c).setY(f.origin[1] + 1.5) };
 }
 
 // ---------------------------------------------------------------- geometry helpers
@@ -130,10 +152,29 @@ export function buildFloor({ scene, lib, world, game }, m, { origin, level, seed
   const [ox, oy, oz] = origin, W = m.w * C, H = m.h * C;
   const centre = i => V(ox + (i % m.w + 0.5) * C, oy, oz + (((i / m.w) | 0) + 0.5) * C);
   const cellAt = p => { const x = Math.floor((p.x - ox) / C), z = Math.floor((p.z - oz) / C); return p.y > oy - 1 && p.y < oy + CEIL + 1 ? m.at(x, z) : -1; };
-  const solid = (x0, x1, y0, y1, z0, z1) => world.colliders.push({ x0: Math.min(x0, x1), x1: Math.max(x0, x1), y0, y1, z0: Math.min(z0, z1), z1: Math.max(z0, z1) });
+  const solid = (x0, x1, y0, y1, z0, z1, on) => world.colliders.push({ x0: Math.min(x0, x1), x1: Math.max(x0, x1), y0, y1, z0: Math.min(z0, z1), z1: Math.max(z0, z1), on });
   const closed = (i, d) => !(m.open[i] & (1 << d));
   const out = (d) => V(DIRS[d][0], 0, DIRS[d][1]);
   const right = (d) => V(-DIRS[d][1], 0, DIRS[d][0]);   // looking out through side d, your right
+
+  // Guest rooms you can walk into: off the outer halls, behind a closed wall on the floor's edge, built outward. Two
+  // cells apart at least (a room is wider than a cell), never on a stair door's wall.
+  const roomSites = [];
+  {
+    const edge = [];
+    for (let i = 0; i < m.w * m.h; i++) for (let d = 0; d < 4; d++) {
+      if (!closed(i, d) || m.at(i % m.w + DIRS[d][0], ((i / m.w) | 0) + DIRS[d][1]) >= 0) continue;
+      if ((i === m.start && d === 3) || (i === m.exit && d === m.exitSide)) continue;
+      edge.push([i, d]);
+    }
+    for (const [i, d] of shuffle(edge, r)) {
+      if (roomSites.length >= [3, 4, 4][level]) break;
+      const x = i % m.w, z = (i / m.w) | 0;
+      if (roomSites.some(([j, e]) => j === i || e === d && Math.abs(j % m.w - x) + Math.abs(((j / m.w) | 0) - z) < 2)) continue;
+      roomSites.push([i, d]);
+    }
+  }
+  const isRoom = (i, d) => roomSites.some(([j, e]) => j === i && e === d);
 
   // Walls: a face per closed side of every cell, pillars at the corners so wall ends don't show a slit, a vinyl base.
   const walls = quads(), base = quads(), up = V(0, CEIL, 0), baseUp = V(0, 0.1, 0);
@@ -143,6 +184,17 @@ export function buildFloor({ scene, lib, world, game }, m, { origin, level, seed
     sides.push([i, d]);
     const c = centre(i), face = c.clone().addScaledVector(out(d), C / 2 - WT), rt = right(d), n = out(d).negate();
     const a = face.clone().addScaledVector(rt, -C / 2), b = face.clone().addScaledVector(rt, C / 2);
+    if (isRoom(i, d)) {   // a doorway: the wall either side of it, and over its head
+      const l = face.clone().addScaledVector(rt, -DOOR_W), rr = face.clone().addScaledVector(rt, DOOR_W);
+      walls.add(a, l, up, n); walls.add(rr, b, up, n); walls.add(l.clone().setY(oy + DOOR_H), rr.clone().setY(oy + DOOR_H), V(0, CEIL - DOOR_H, 0), n);
+      base.add(a.clone().addScaledVector(n, 0.004), l.clone().addScaledVector(n, 0.004), baseUp, n); base.add(rr.clone().addScaledVector(n, 0.004), b.clone().addScaledVector(n, 0.004), baseUp, n);
+      const mid = c.clone().addScaledVector(out(d), C / 2), lo = C / 2 - DOOR_W;
+      for (const sgn of [-1, 1]) {
+        const q = mid.clone().addScaledVector(rt, sgn * (DOOR_W + lo / 2));
+        if (d % 2) solid(q.x - WT, q.x + WT, oy, oy + CEIL, q.z - lo / 2, q.z + lo / 2); else solid(q.x - lo / 2, q.x + lo / 2, oy, oy + CEIL, q.z - WT, q.z + WT);
+      }
+      continue;
+    }
     walls.add(a, b, up, n, (d % 2 ? c.z : c.x) - C / 2);
     base.add(a.clone().addScaledVector(n, 0.004), b.clone().addScaledVector(n, 0.004), baseUp, n);
     // the partition, once per pair (each wall belongs to the cell on its north or west side, or to the edge)
@@ -196,7 +248,7 @@ export function buildFloor({ scene, lib, world, game }, m, { origin, level, seed
 
   // Which closed sides are free: not the stair doors' walls.
   const startSide = 3;   // the start cell is on the west edge
-  const taken = new Set([`${m.start}:${startSide}`, `${m.exit}:${m.exitSide}`]);
+  const taken = new Set([`${m.start}:${startSide}`, `${m.exit}:${m.exitSide}`, ...roomSites.map(([i, d]) => `${i}:${d}`)]);
   const free = sides.filter(([i, d]) => !taken.has(`${i}:${d}`));
   const deadEnds = [];
   for (let i = 0; i < m.w * m.h; i++) if (i !== m.start && i !== m.exit && degree(m, i) === 1) deadEnds.push(i);
@@ -267,10 +319,118 @@ export function buildFloor({ scene, lib, world, game }, m, { origin, level, seed
     solid(at.x - hx, at.x + hx, oy, oy + height, at.z - hz, at.z + hz);
   }
 
+  const rooms = roomSites.map(([i, d], k) => buildRoom({ lib, world, game, group, solid }, { c: centre(i), d, out: out(d), rt: right(d), oy, level, r, k, cell: i }));
+
   scene.add(group);
-  const zone = { name: 'audit', id: `audit${level + 1}`, x0: ox - 0.5, x1: ox + W + 0.5, y0: oy - 1, y1: oy + CEIL + 1, z0: oz - 0.5, z1: oz + H + 0.5, indoor: true };
-  return { m, level, origin, group, centre, cellAt, stairs, tvs, lights, zone, label };
+  const zone = { name: 'audit', id: `audit${level + 1}`, x0: ox - RD - 0.5, x1: ox + W + RD + 0.5, y0: oy - 1, y1: oy + CEIL + 1, z0: oz - RD - 0.5, z1: oz + H + RD + 0.5, indoor: true };
+  const roomAt = p => rooms.find(rm => rm.inside(p)) ?? null;
+  return { m, level, origin, group, centre, cellAt, stairs, tvs, lights, zone, label, rooms, roomAt };
 }
+
+// ---------------------------------------------------------------- guest rooms
+const RW = 3.6, RD = 4.6;   // a room's width along the hall and its depth: a small king, as built at limited-service hotels
+const ROOM_LINES = [
+  'Somebody’s room. The bed is made so tight it looks painted on.',
+  'The TV is on. Nobody has been in here for a long time, and the TV has been on the whole time.',
+  'A suitcase-shaped dent in the bedspread. No suitcase.',
+  'The PTAC breathes in when you come in, and doesn’t breathe out.',
+];
+/** One room behind the wall on side d of the cell at c. Its door is a real one: it opens, closes, and can be locked from inside. */
+function buildRoom({ lib, world, game, group, solid }, { c, d, out, rt, oy, level, r, k, cell }) {
+  const n = out.clone().negate();   // the corridor's way, seen from the doorway
+  const wallAt = c.clone().addScaledVector(out, C / 2);   // the partition's centre line
+  const far = wallAt.clone().addScaledVector(out, RD);
+  // corners: the rectangle from the partition out to the back wall, RW wide
+  const xs = [wallAt.x, far.x, wallAt.x + rt.x * RW / 2, wallAt.x - rt.x * RW / 2], zs = [wallAt.z, far.z, wallAt.z + rt.z * RW / 2, wallAt.z - rt.z * RW / 2];
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), z0 = Math.min(...zs), z1 = Math.max(...zs);
+  const g = new T.Group(); g.name = 'guest room';
+  // shell: plaster walls inside (the back one in the brand's blue), the room carpet, the ceiling
+  const plaster = color => lib.surface('wall-plaster', { repeat: [1, 1], color, normalScale: 0.18 });
+  const wq = quads(), aq = quads(), fq = quads(), cq = quads(), H = V(0, CEIL, 0);
+  const inner = (p, q, nn, into) => into.add(p, q, H, nn);
+  const IN = WT;   // the room's faces stand off the partitions like the hall's
+  const A = wallAt.clone().addScaledVector(out, IN), B = far.clone().addScaledVector(out, -IN);
+  const L = rt.clone().multiplyScalar(-RW / 2 + IN), R = rt.clone().multiplyScalar(RW / 2 - IN);
+  // the door wall (room side), with its opening
+  const dl = A.clone().addScaledVector(rt, -DOOR_W), dr = A.clone().addScaledVector(rt, DOOR_W);
+  inner(A.clone().add(R), dr, out.clone(), wq); inner(dl, A.clone().add(L), out.clone(), wq);
+  wq.add(dr.clone().setY(oy + DOOR_H), dl.clone().setY(oy + DOOR_H), V(0, CEIL - DOOR_H, 0), out.clone());
+  inner(B.clone().add(L), B.clone().add(R), n.clone(), aq);                 // back wall, facing the door: the accent
+  inner(A.clone().add(L), B.clone().add(L), rt.clone(), wq);                // side walls
+  inner(B.clone().add(R), A.clone().add(R), rt.clone().negate(), wq);
+  fq.add(...floorCorners(x0, x1, z0, z1, oy), V(0, 1, 0)); cq.add(...ceilCorners(x0, x1, z0, z1, oy + CEIL), V(0, -1, 0));
+  const matte = s => new T.MeshPhysicalMaterial({ map: s.map, normalMap: s.normalMap, normalScale: s.normalScale, color: s.color, roughness: 1, specularIntensity: 0 });
+  g.add(new T.Mesh(wq.geometry(), plaster('#e9e7e2')), new T.Mesh(aq.geometry(), plaster(level === 2 ? '#5a3b2e' : '#2d6a90')));
+  g.add(Object.assign(new T.Mesh(fq.geometry(), matte(lib.surface('lobby-carpet', { repeat: [1, 1], color: '#c3c5c9', grade: 'contrast(1.8)' }))), { receiveShadow: true }));
+  const tile = lib.surface('ceiling', { repeat: [1 / 0.61, 1 / 0.61], grade: 'saturate(15%) brightness(1.45) contrast(0.85)' }).clone(); tile.emissive = new T.Color('#3a3936'); tile.emissiveMap = tile.map;
+  g.add(new T.Mesh(cq.geometry(), tile));
+  world.surfaces.push({ x0, x1, z0, z1, y: oy, name: 'audit room' });
+  // outer walls: back and both sides
+  const T2 = WT * 2;
+  solid(Math.min(far.x, far.x) - (out.x ? T2 / 2 : RW / 2), far.x + (out.x ? T2 / 2 : RW / 2), oy, oy + CEIL, far.z - (out.z ? T2 / 2 : RW / 2), far.z + (out.z ? T2 / 2 : RW / 2));
+  for (const sg of [-1, 1]) { const s0 = wallAt.clone().addScaledVector(rt, sg * RW / 2), s1 = far.clone().addScaledVector(rt, sg * RW / 2); solid(Math.min(s0.x, s1.x) - (out.x ? 0 : WT), Math.max(s0.x, s1.x) + (out.x ? 0 : WT), oy, oy + CEIL, Math.min(s0.z, s1.z) - (out.z ? 0 : WT), Math.max(s0.z, s1.z) + (out.z ? 0 : WT)); }
+  // the partition either side of the room beyond the hall cell (the room is wider than the cell)
+  for (const sg of [-1, 1]) { const p0 = wallAt.clone().addScaledVector(rt, sg * C / 2), p1 = wallAt.clone().addScaledVector(rt, sg * RW / 2); solid(Math.min(p0.x, p1.x) - (out.x ? WT : 0), Math.max(p0.x, p1.x) + (out.x ? WT : 0), oy, oy + CEIL, Math.min(p0.z, p1.z) - (out.z ? WT : 0), Math.max(p0.z, p1.z) + (out.z ? WT : 0)); }
+  // furniture: the bed against the back wall, nightstands, a TV credenza on the side wall by the door
+  const yaw = Math.atan2(n.x, n.z);
+  const put = (id, at, ry, box) => { if (!lib.models.has(id)) return null; const o = lib.model(id, { origin: true }); o.position.copy(at); o.rotation.y = ry; g.add(o); if (box) solid(at.x - box[0], at.x + box[0], oy, oy + box[1], at.z - box[2], at.z + box[2]); return o; };
+  const bedAt = far.clone().addScaledVector(out, -IN - 1.05).setY(oy);
+  put(r() < 0.4 ? 'hotel-king-bed-unmade' : 'hotel-king-bed', bedAt, yaw, out.x ? [1.05, 0.7, 0.98] : [0.98, 0.7, 1.05]);
+  for (const sg of [-1, 1]) put('hotel-nightstand', far.clone().addScaledVector(out, -IN - 0.25).addScaledVector(rt, sg * 1.3).setY(oy), yaw);
+  const tvSide = r() < 0.5 ? -1 : 1, credAt = A.clone().addScaledVector(out, 0.9).addScaledVector(rt, tvSide * (RW / 2 - IN - 0.28)).setY(oy);
+  const cred = put('hotel-credenza-tv', credAt, Math.atan2(-rt.x * tvSide, -rt.z * tvSide), out.x ? [0.8, 0.8, 0.28] : [0.28, 0.8, 0.8]);
+  const screen = cred?.getObjectByName('tv_screen');
+  if (screen) {   // flat 0–1 UVs (as room-212.js does), and a screen of its own to fill with static
+    const sg = screen.geometry = screen.geometry.clone(); sg.computeBoundingBox();
+    const { min, max } = sg.boundingBox, p = sg.attributes.position, uv = sg.attributes.uv;
+    for (let i = 0; i < p.count; i++) uv.setXY(i, (p.getX(i) - min.x) / (max.x - min.x), (p.getY(i) - min.y) / (max.y - min.y));
+    uv.needsUpdate = true; screen.material = new T.MeshBasicMaterial({ color: '#000000' });
+  }
+  group.add(g);
+  // light: a bedside lamp left on, or only the TV
+  const lamp = r() < 0.55;
+  const glow = { pos: credAt.clone().addScaledVector(rt, -tvSide * 1.2).setY(oy + 1.3), color: new T.Color('#8fa8d0'), intensity: 0, distance: 4.5 };
+  const bedside = { pos: far.clone().addScaledVector(out, -IN - 0.3).addScaledVector(rt, 1.3).setY(oy + 0.9), color: new T.Color('#ffc58a'), intensity: lamp ? 2.2 : 0, distance: 4.5 };
+  world.lightAnchors.push(glow, bedside);
+  // the door: a real leaf on its hinge, swinging into the room
+  const door = lib.model('hotel-room-door', { origin: true });
+  door.position.copy(wallAt); door.rotation.y = yaw; group.add(door);
+  const leaf = door.getObjectByName('door_leaf');
+  const plate = F.sign(doorLabel(level, 20 + k, r) || '—', { w: 0.2, h: 0.12, bg: '#24303f', font: 'bold 150px system-ui, sans-serif' });
+  plate.position.set(0.78, 1.5, 0.11); door.add(plate);
+  const st = { open: false, angle: 0, locked: false, inside: false };
+  const lockAt = (s) => wallAt.clone().addScaledVector(n, s * 0.3).setY(oy + 1.15);
+  if (d % 2) solid(wallAt.x - 0.03, wallAt.x + 0.03, oy, oy + DOOR_H, wallAt.z - DOOR_W, wallAt.z + DOOR_W, () => st.angle < 1.1);
+  else solid(wallAt.x - DOOR_W, wallAt.x + DOOR_W, oy, oy + DOOR_H, wallAt.z - 0.03, wallAt.z + 0.03, () => st.angle < 1.1);
+  const room = {
+    cell, side: d, door: st, leaf, screen, glow, lamp: bedside, lit: lamp,
+    centre: wallAt.clone().addScaledVector(out, RD * 0.42).setY(oy),
+    doorway: wallAt.clone().setY(oy),
+    inside: p => p.x > x0 + 0.05 && p.x < x1 - 0.05 && p.z > z0 + 0.05 && p.z < z1 - 0.05 && p.y > oy - 1 && p.y < oy + CEIL + 1,
+    setOpen(open, who = 'you') {
+      if (st.open === open) return;
+      if (open && st.locked && who !== 'it') return game.say('Locked from the other side.');
+      st.open = open; if (open) st.locked = false;
+      game.sound.synth.burst(0.06, 0.12, 900, 'bandpass'); if (!open) game.sound.thud();
+      room.onDoor?.(open, who);
+    },
+    line: ROOM_LINES[k % ROOM_LINES.length],
+  };
+  // From the hall: open it (and the line about what's in there, the first time). From inside: close, lock.
+  let seen = false;
+  world.interact.push({ pos: lockAt(1), r: 1.2, when: p => !room.inside(p) && room.here?.(), label: () => st.open ? 'Close the door' : 'Open the door',
+    use: () => { room.setOpen(!st.open); if (st.open && !seen) { seen = true; setTimeout(() => game.say(room.line, 4.5), 700); } } });
+  world.interact.push({ pos: lockAt(-1), r: 1.2, when: p => room.inside(p) && room.here?.(), label: () => st.open ? 'Close the door' : st.locked ? 'Unlock the door' : 'Lock the door',
+    use: () => { if (st.open) return room.setOpen(false); st.locked = !st.locked; game.sound.click(); game.sound.synth.burst(0.05, 0.2, 1400, 'bandpass', 0.05); } });
+  world.updaters.push(dt => {
+    const want = st.open ? 1.45 : 0;
+    st.angle += Math.sign(want - st.angle) * Math.min(Math.abs(want - st.angle), dt * (st.slow ? 0.5 : 2.2));
+    if (leaf) leaf.rotation.y = st.angle;
+  });
+  return room;
+}
+function floorCorners(x0, x1, z0, z1, y) { return [V(x0, y, z1), V(x1, y, z1), V(0, 0, z0 - z1)]; }
+function ceilCorners(x0, x1, z0, z1, y) { return [V(x0, y, z0), V(x1, y, z0), V(0, 0, z1 - z0)]; }
 
 const KNOCKS = [
   ['No answer.', 'A TV goes quiet behind the door, then comes back on, louder.', 'Somebody on the other side knocks back. Twice.'],
