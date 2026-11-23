@@ -429,8 +429,12 @@ function buildRoom({ lib, world, game, group, solid }, { c, d, out, rt, oy, leve
   let seen = false;
   world.interact.push({ pos: lockAt(1), r: 1.2, when: p => !room.inside(p) && room.here?.(), label: () => st.open ? 'Close the door' : 'Open the door',
     use: () => { room.setOpen(!st.open); if (st.open && !seen) { seen = true; setTimeout(() => game.say(room.line, 4.5), 700); } } });
-  world.interact.push({ pos: lockAt(-1), r: 1.2, when: p => room.inside(p) && room.here?.(), label: () => st.open ? 'Close the door' : st.locked ? 'Unlock the door' : 'Lock the door',
-    use: () => { if (st.open) return room.setOpen(false); st.locked = !st.locked; game.sound.click(); game.sound.synth.burst(0.05, 0.2, 1400, 'bandpass', 0.05); } });
+  // Inside: the handle opens and closes it (turning the handle draws a deadbolt back, as hotel locks do); the deadbolt, a
+  // hand's width toward the latch side and a little higher, locks it.
+  world.interact.push({ pos: lockAt(-1), r: 1.5, when: p => room.inside(p) && room.here?.(), label: () => st.open ? 'Close the door' : 'Open the door',
+    use: () => { if (!st.open && st.locked) { st.locked = false; game.sound.click(); } room.setOpen(!st.open); } });
+  world.interact.push({ pos: lockAt(-1).addScaledVector(rt, 0.4).setY(oy + 1.4), r: 1.5, priority: -0.2, when: p => room.inside(p) && room.here?.() && st.angle < 0.05, label: () => st.locked ? 'Unlock the deadbolt' : 'Lock the deadbolt',
+    use: () => { st.locked = !st.locked; game.sound.click(); game.sound.synth.burst(0.05, 0.2, 1400, 'bandpass', 0.05); } });
   world.updaters.push(dt => {
     const want = st.open ? 1.45 : 0;
     st.angle += Math.sign(want - st.angle) * Math.min(Math.abs(want - st.angle), dt * (st.slow ? 0.5 : 2.2));

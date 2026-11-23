@@ -75,7 +75,7 @@ try {
       await at(rm[4], rm[1], rm[5], rm[6]);
       if (!(await use('Close the door'))) throw Error('no close from inside');
       await page.waitForFunction(() => __audit.ctx.audit.floors[0].rooms[0].door.angle < 0.05, null, { timeout: 60000 });
-      if (!(await use('Lock the door'))) throw Error('no lock');
+      if (!(await use('Lock the deadbolt'))) throw Error('no lock');
       // It arrives, hears you (loudly), and comes to the door: locked, so it knocks, tries the handle and goes.
       await A(() => { __audit.ctx.audit.creature.timer = 0; });
       await page.waitForFunction(() => __audit.ctx.audit.creature.state !== 'away', null, { timeout: 60000 });
@@ -85,8 +85,11 @@ try {
       await page.waitForFunction(() => __audit.ctx.audit.creature.state !== 'door', null, { timeout: 120000, polling: 250 });
       result.lockedDoor = await A(() => ({ state: __audit.ctx.audit.creature.state, open: __audit.ctx.audit.floors[0].rooms[0].door.open }));
       if (result.lockedDoor.open) throw Error('it opened a locked door');
+      // and you can always get out: from inside, the handle opens a locked door
+      result.canLeave = await A(() => { const it = __audit.world.interact.find(i => i.when?.(__audit.player) && i.label() === 'Open the door'); return !!it; });
+      if (!result.canLeave) throw Error('no way to open the door from inside');
       // Now unlocked and open, with it right outside: it comes in.
-      await use('Unlock the door'); await use('Open the door');
+      await use('Open the door');   // the handle draws the bolt back
       await A(() => { const c = __audit.ctx.audit.creature, f = c.f, r = f.rooms[0]; c.pos.copy(f.centre(r.cell)); c.cell = r.cell; c.state = 'search'; c.hear(99); });
       await at(rm[4], rm[1], rm[5], rm[6]);
       await page.waitForFunction(() => { const c = __audit.ctx.audit.creature; return c.state === 'caught' || c.pos.distanceTo(__audit.camera.position) < 2.2; }, null, { timeout: 180000, polling: 100 });

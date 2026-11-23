@@ -59,7 +59,7 @@ try {
   // Steer into the trees: it stops at the edge of the road.
   const off = await drive(3, 1, -1);
   result.offRoad = off;
-  if (off[1] > 49.7 || off[1] < 45.9) throw Error('the car left the road: ' + off);
+  if (off[1] > 53.1 || off[1] < 45.9) throw Error('the car left the road: ' + off);
   // Route V, then the lot.
   await H(() => { const c = __heartland.ctx.caves.car; c.object.position.set(266, 0, -40); c.heading = Math.PI; c.speed = 0; c.camInit = false; });
   await drive(1, 0, -1);

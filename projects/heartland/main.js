@@ -81,7 +81,7 @@ const evening = {
       enter(ctx) {
         const { world } = ctx, c = ctx.caves;
         ctx.applyLook('dusk'); world.setTimeOfDay?.('dusk');
-        c.wagon.position.set(1.6, 0, 20.75); c.car.heading = Math.PI + 0.02; c.wagon.rotation.y = c.car.heading; c.wagon.visible = true; c.showParked(false);
+        c.wagon.position.set(1.6, 0, 20.75); c.car.heading = 0.02; c.wagon.rotation.y = c.car.heading; c.wagon.visible = true; c.showParked(false);
         ctx.teleport(3.5, 0, 20.2, -Math.PI / 2 + 0.4, 0);
         const room = world.room; room.setLamps(true); room.setBath(true); room.setDesk(false); room.open = false;
         if (world.clerk) world.clerk.root.visible = true;

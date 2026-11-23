@@ -18,13 +18,22 @@ import { createAir } from '../night-audit/air.js';
 import { rng } from '../night-audit/maze.js';
 import { createCar } from './car.js';
 
-const CAR_SPOT = new T.Vector3(1.6, 0, 20.75), CAR_HEADING = Math.PI + 0.02;   // your wagon, nose-in by the canopy (world/outside.js)
+const CAR_SPOT = new T.Vector3(1.6, 0, 20.75), CAR_HEADING = 0.02;   // your wagon, by the canopy (world/outside.js), backed in: nose to the lane out
 const ROAD_X = 266, LOT = [242, 290, -162, -132];                                 // Route V, and the caverns' lot
 const MOUTH = new T.Vector3(266, 0, -176);                                         // the cave's mouth in the hill
 const CAVE_Y = -100, CELL = 4, CAVE_H = 3.2;                                        // the cave is drawn under everything, like the audit floors
 const TICKET = 14;
-// Where the car may go: the hotel lot, its apron, the frontage road east to Route V, Route V, the caverns' lot.
-export const AREAS = [[-45, 50, 10.6, 46], [-45, ROAD_X + 4, 46, 49.6], [ROAD_X - 4, ROAD_X + 4, LOT[3] - 1, 49.6], LOT];
+// Where the car may go: the hotel lot, the frontage road (both lanes: a wagon needs them to turn onto it) east to
+// Route V, the flared junction, Route V, the caverns' lot.
+export const AREAS = [[-45, 50, 10.6, 46], [-45, ROAD_X + 6, 46, 53], [ROAD_X - 10, ROAD_X + 5, 39, 53], [ROAD_X - 4, ROAD_X + 4, LOT[3] - 1, 53], LOT];
+// The way, for the heading shown while you drive: out of the lot, left (east) on the frontage road, left onto Route V.
+const WAY = [
+  { to: new T.Vector3(1.6, 0, 49.5), until: p => p.z > 44, say: 'Straight up the lane and out of the driveway' },
+  { to: new T.Vector3(ROAD_X, 0, 49.5), until: p => p.x > ROAD_X - 10, say: 'Left onto the frontage road, east to Route V' },
+  { to: new T.Vector3(ROAD_X, 0, LOT[3]), until: p => p.z < LOT[3] + 2, say: 'Left at the brown sign: Route V, through the trees' },
+  { to: new T.Vector3((LOT[0] + LOT[1]) / 2, 0, (LOT[2] + LOT[3]) / 2), until: () => false, say: 'Into the caverns’ lot. Stop, and E to get out' },
+];
+const ARROWS = ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'];
 
 // ---------------------------------------------------------------- before the player
 export function prebuild({ scene, lib, world }, { seed }) {
@@ -37,9 +46,19 @@ export function prebuild({ scene, lib, world }, { seed }) {
   const dash = []; for (let z = LOT[3] + 2; z < 44; z += 9) { const d = new T.BoxGeometry(0.12, 0.01, 3); d.translate(ROAD_X, 0.016, z); dash.push(d); }
   g.add(new T.Mesh(mergeGeometries(dash), F.mat('#d8b23a', { roughness: 0.7 })));
   flat(LOT[0], LOT[1], LOT[2], LOT[3], lib.surface('concrete', { repeat: [6, 4], color: '#9a8f80' }), 0.01);
+  flat(ROAD_X - 10, ROAD_X + 5, 39, 46, lib.surface('asphalt', { repeat: [2, 1], color: '#4f4f4f' }), 0.0085);   // the junction's flare
+  // A lane out of the hotel lot: the parked cars in the two rows ahead of your spot are gone (and their boxes with them),
+  // so you can drive straight up to the driveway (world/outside.js parks them at random; this keeps the way open).
+  const lane = (x, z) => x > -1.6 && x < 4.8 && z > 28 && z < 43;
+  const m4l = new T.Matrix4(), vl = new T.Vector3(), none = new T.Matrix4().makeScale(0, 0, 0);
+  const gone = [];   // a parked car's box is 2 x 1.7 x 5 m, centred on it
+  for (let i = world.colliders.length - 1; i >= 0; i--) { const b = world.colliders[i], cx = (b.x0 + b.x1) / 2, cz = (b.z0 + b.z1) / 2; if (Math.abs(b.y1 - 1.7) < 0.01 && Math.abs(b.x1 - b.x0 - 2) < 0.01 && Math.abs(b.z1 - b.z0 - 5) < 0.01 && lane(cx, cz)) { gone.push([cx, cz]); world.colliders.splice(i, 1); } }
+  scene.traverse(o => { if (!o.isInstancedMesh || !gone.length) return; let hit = false; for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, m4l); vl.setFromMatrixPosition(m4l); if (vl.y < 0.5 && gone.some(([x, z]) => Math.abs(vl.x - x) < 0.05 && Math.abs(vl.z - z) < 0.05)) { o.setMatrixAt(i, none); hit = true; } } if (hit) o.instanceMatrix.needsUpdate = true; });
   // Brown attraction signs: at the turn off the frontage road, and at the lot.
   const brown = (text, x, z, ry, w = 3.2) => { const s = new T.Group(); for (const dx of [-w / 2 + 0.2, w / 2 - 0.2]) F.box(0.1, 2.2, 0.1, F.mat('#5a5f63'), dx, 0, 0, s); const face = F.sign(text, { w, h: 1.3, bg: '#5a3a1e', fg: '#f3e6c4', font: 'bold 60px Georgia, serif' }); face.position.y = 2.75; s.add(face); s.position.set(x, 0, z); s.rotation.y = ry; g.add(s); };
-  brown('ONYX CAVERNS\n◄ ROUTE V · ½ MI', ROAD_X + 7, 44.5, Math.PI / 2 + Math.PI);
+  brown('ONYX CAVERNS\n◄ ROUTE V', ROAD_X + 7, 44.5, Math.PI / 2 + Math.PI);
+  brown('ONYX CAVERNS\nROUTE V · NEXT LEFT ◄', ROAD_X - 70, 44.8, Math.PI / 2 + Math.PI, 3.8);
+  brown('◄ ONYX CAVERNS\nEXIT LEFT · ROUTE V', 7.5, 44.2, Math.PI, 3.4);   // at the driveway, facing the lot
   brown('ONYX CAVERNS\nGUIDED TOURS DAILY', ROAD_X - 6.5, LOT[3] + 3, Math.PI / 2, 3.6);
   // The ticket hut, at the walk up to the hill: board-and-batten, a window, an honour box.
   const hut = new T.Group(), wood = F.mat('#6e5137', { roughness: 0.9 }), trim = F.mat('#e8e0cc', { roughness: 0.7 });
@@ -157,6 +176,7 @@ function install(ctx) {
   c.parked = [];
   scene.traverse(o => { if (!o.isInstancedMesh) return; for (let i = 0; i < o.count; i++) { o.getMatrixAt(i, m4); v.setFromMatrixPosition(m4); if (Math.abs(v.x - CAR_SPOT.x) < 0.3 && Math.abs(v.z - CAR_SPOT.z) < 0.3 && v.y < 0.5) c.parked.push([o, i, m4.clone()]); } });
   c.showParked = on => { for (const [o, i, m] of c.parked) { o.setMatrixAt(i, on ? m : new T.Matrix4().makeScale(0, 0, 0)); o.instanceMatrix.needsUpdate = true; } };
+  c.showParked(false); wagon.visible = true;   // the real wagon all along, so it's the same car (backed in) every scene
   // what the car can hit: low outdoor boxes, minus the one that stood for your own car
   const boxes = world.colliders.filter(b => !b.on && b.y0 < 1 && b.y1 > 0.4 && b.y0 > -1 && !(CAR_SPOT.x > b.x0 && CAR_SPOT.x < b.x1 && CAR_SPOT.z > b.z0 && CAR_SPOT.z < b.z1));
   c.car = createCar(wagon, { areas: AREAS, boxes, synth: ctx.sound.synth, onHit: s => { game.sound.thud(); if (s > 8) game.say('The wagon bangs into it. Something in the back slides over.'); } });
@@ -197,7 +217,18 @@ function install(ctx) {
   world.interact.push({ pos: cv.entry.clone().setY(cv.entry.y + 1.3), r: 2, when: () => act() === 'cave', label: () => 'Back out into daylight', use: () => ctx.director.go('morning', { fadeOut: 0.8, fadeIn: 1.4 }) });
   world.updaters.push(dt => {   // the car moves under the interaction and the camera
     c.carInteract.pos.copy(wagon.position).setY(1.2);
-    if (c.driving) { c.car.update(dt, ctx.controls.input); Object.assign(ctx.view, c.car.camera(dt)); ctx.view.label = Math.abs(c.car.speed) < 0.6 ? (inLot() ? 'Park and get out' : c.onyx ? 'Drive back' : '') : ''; }
+    if (c.driving) {
+      c.car.update(dt, ctx.controls.input); Object.assign(ctx.view, c.car.camera(dt)); ctx.view.label = Math.abs(c.car.speed) < 0.6 ? (inLot() ? 'Park and get out' : c.onyx ? 'Drive back' : '') : '';
+      // the way: how far, which way from the bonnet, what to do next
+      if (!c.paid && (c.wayT = (c.wayT ?? 0) - dt) <= 0) {
+        c.wayT = 0.25;
+        const p = wagon.position;
+        c.leg = c.leg ?? 0; while (c.leg < WAY.length - 1 && WAY[c.leg].until(p)) c.leg++;
+        const w = WAY[c.leg], to = w.to.clone().sub(p), dist = WAY.slice(c.leg + 1).reduce((s, x, i) => s + x.to.distanceTo(WAY[c.leg + i].to), to.length());
+        const rel = Math.atan2(to.x, to.z) - c.car.heading, k = ((Math.round(-rel / (Math.PI / 4)) % 8) + 8) % 8;
+        ctx.goal(`Onyx Caverns ${ARROWS[k]} ${dist > 950 ? (dist / 1000).toFixed(1) + ' km' : Math.round(dist / 10) * 10 + ' m'} · ${w.say}`);
+      }
+    }
   });
 }
 

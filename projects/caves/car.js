@@ -21,7 +21,13 @@ export function createCar(object, { areas, boxes, synth, onHit = () => {} }) {
   // whatever the car already stands in where it's parked (its own bay's box, a wheel stop) can't hold it there
   const start = corners(object.position.x, object.position.z, object.rotation.y);
   boxes = boxes.filter(b => !start.some(([px, pz]) => px > b.x0 && px < b.x1 && pz > b.z0 && pz < b.z1));
-  const free = (x, z, h) => corners(x, z, h).every(([px, pz]) => inside(px, pz) && !boxes.some(b => px > b.x0 && px < b.x1 && pz > b.z0 && pz < b.z1));
+  const hits = (px, pz) => boxes.filter(b => px > b.x0 && px < b.x1 && pz > b.z0 && pz < b.z1);
+  // a move is free if every corner stays on a drivable area and out of any box it isn't already touching: pressed against
+  // a car, you can always back away from it (a box you're in can't hold you), never drive further into another
+  const free = (x, z, h) => {
+    const now = new Set(corners(object.position.x, object.position.z, c.heading).flatMap(([px, pz]) => hits(px, pz)));
+    return corners(x, z, h).every(([px, pz]) => inside(px, pz) && hits(px, pz).every(b => now.has(b)));
+  };
 
   function sound() {   // an old six at idle, rising with road speed; tyres hiss on asphalt
     const ac = synth.ctx; if (!ac || c.engine) return;
